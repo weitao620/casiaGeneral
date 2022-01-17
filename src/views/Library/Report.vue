@@ -377,7 +377,7 @@
     <div style="height:0;width:100%;overflow:hidden">
       <someReport :iList="pdfList"></someReport>
     </div>
-    <!-- 批量导出记录 -->
+    <!-- 批量导出记录1 -->
     <!-- <div style="height:0;width:100%;overflow:hidden">
       <wordFile :wList="wordList"></wordFile>
     </div> -->
