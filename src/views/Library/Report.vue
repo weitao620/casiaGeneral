@@ -144,10 +144,10 @@
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出报告
+              批量导出
             </el-button>
           </div>
-          <div class="el_one" v-if="tabActive == 0 && power14">
+          <!-- <div class="el_one" v-if="tabActive == 0 && power14">
             <el-button
               class="el_btn_one"
               @click="someReport('all')"
@@ -156,7 +156,7 @@
               <i class="iconfont icon-icon-"></i>
               批量导出记录
             </el-button>
-          </div>
+          </div> -->
           <div class="el_two" v-if="tabActive == 0 && power15">
             <el-button
               class="el_btn_two"
@@ -174,10 +174,10 @@
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出报告
+              批量导出
             </el-button>
           </div>
-          <div class="el_one" v-if="tabActive == 1 && power24">
+          <!-- <div class="el_one" v-if="tabActive == 1 && power24">
             <el-button
               class="el_btn_one"
               @click="someReport('all')"
@@ -186,7 +186,7 @@
               <i class="iconfont icon-icon-"></i>
               批量导出记录
             </el-button>
-          </div>
+          </div> -->
           <div class="el_two" v-if="tabActive == 1 && power25">
             <el-button
               class="el_btn_two"
@@ -248,9 +248,9 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <span v-if="!power11 && !power12 && !power13">暂无权限</span>
-                <el-button @click="toWord(scope.row)" type="text" size="small"
+                <!-- <el-button @click="toWord(scope.row)" type="text" size="small"
                   >记录</el-button
-                >
+                > -->
                 <el-button
                   @click="toDetail(scope.row)"
                   v-if="power11"
@@ -316,9 +316,9 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <span v-if="!power21 && !power22 && !power23">暂无权限</span>
-                <el-button @click="toWord(scope.row)" type="text" size="small"
+                <!-- <el-button @click="toWord(scope.row)" type="text" size="small"
                   >记录</el-button
-                >
+                > -->
                 <el-button
                   @click="toDetail(scope.row)"
                   v-if="power21"
