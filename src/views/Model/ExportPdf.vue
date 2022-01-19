@@ -1287,18 +1287,18 @@ export default {
             const { PDF, name, count } = pdfs[i]
             // 如果只是导出一个pdf，则导出pdf格式
             if (pdfs.length === 1) {
-              PDF.save(`${name}-第${count}次-${new Date().getTime()}.pdf`)
+              PDF.save(`${name}-第${count}次-${new Date().getTime()}-测评报告.pdf`)
               setTimeout(() => {
                 this.loading.close()
               }, 1000);
             } else {
               // 否则添加到压缩包里面
-              await zip.file(`${name}-第${count}次-${new Date().getTime()}.pdf`, PDF.output('blob'))
+              await zip.file(`${name}-第${count}次-${new Date().getTime()}-测评报告.pdf`, PDF.output('blob'))
             }
           }
           if (pdfs.length > 1) {
             await zip.generateAsync({ type: 'blob' }).then(content => {
-              let nameZip = '评估报告 - ' + '共' + selectedData.length + '人 - ' + this.formTimes(new Date())
+              let nameZip = '测评报告 - ' + '共' + selectedData.length + '人 - ' + this.formTimes(new Date())
               FileSaver.saveAs(content, nameZip + '.zip')
             })
             setTimeout(() => {

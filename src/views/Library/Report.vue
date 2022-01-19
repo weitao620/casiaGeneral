@@ -137,24 +137,24 @@
           列表
         </div>
         <div class="el_btn_box">
-          <div class="el_one" v-if="tabActive == 0 && power14">
-            <el-button
-              class="el_btn_one"
-              @click="someExport('all')"
-              type="primary"
-            >
-              <i class="iconfont icon-icon-"></i>
-              批量导出报告
-            </el-button>
-          </div>
-          <div class="el_one" v-if="tabActive == 0 && power14">
+          <div class="el_one" v-if="tabActive == 0 && power26">
             <el-button
               class="el_btn_one"
               @click="someReport('all')"
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出记录
+              批量导出咨询记录
+            </el-button>
+          </div>
+          <div class="el_two" v-if="tabActive == 0 && power14">
+            <el-button
+              class="el_btn_two"
+              @click="someExport('all')"
+              type="primary"
+            >
+              <i class="iconfont icon-icon-"></i>
+              批量导出测评报告
             </el-button>
           </div>
           <div class="el_two" v-if="tabActive == 0 && power15">
@@ -167,24 +167,24 @@
               批量删除
             </el-button>
           </div>
-          <div class="el_one" v-if="tabActive == 1 && power24">
-            <el-button
-              class="el_btn_one"
-              @click="someExport('all')"
-              type="primary"
-            >
-              <i class="iconfont icon-icon-"></i>
-              批量导出
-            </el-button>
-          </div>
-          <div class="el_one" v-if="tabActive == 1 && power24">
+          <div class="el_one" v-if="tabActive == 1 && power27">
             <el-button
               class="el_btn_one"
               @click="someReport('all')"
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出记录
+              批量导出咨询记录
+            </el-button>
+          </div>
+          <div class="el_two" v-if="tabActive == 1 && power24">
+            <el-button
+              class="el_btn_two"
+              @click="someExport('all')"
+              type="primary"
+            >
+              <i class="iconfont icon-icon-"></i>
+              批量导出测评报告
             </el-button>
           </div>
           <div class="el_two" v-if="tabActive == 1 && power25">
@@ -248,23 +248,23 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <span v-if="!power11 && !power12 && !power13">暂无权限</span>
-                <el-button @click="toWord(scope.row)" type="text" size="small"
-                  >记录</el-button
+                <el-button v-if="power12" @click="toWord(scope.row)" type="text" size="small"
+                  >咨询记录</el-button
                 >
                 <el-button
                   @click="toDetail(scope.row)"
                   v-if="power11"
                   type="text"
                   size="small"
-                  >查看</el-button
+                  >测评报告</el-button
                 >
-                <el-button
+                <!-- <el-button
                   type="text"
                   size="small"
                   @click="oneExport(scope.row)"
                   v-if="power12"
                   >导出</el-button
-                >
+                > -->
                 <el-button
                   type="text"
                   size="small"
@@ -316,23 +316,27 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <span v-if="!power21 && !power22 && !power23">暂无权限</span>
-                <el-button @click="toWord(scope.row)" type="text" size="small"
-                  >记录</el-button
+                <el-button
+                  @click="toWord(scope.row)"
+                  type="text"
+                  v-if="power22"
+                  size="small"
+                  >咨询记录</el-button
                 >
                 <el-button
                   @click="toDetail(scope.row)"
                   v-if="power21"
                   type="text"
                   size="small"
-                  >查看</el-button
+                  >测评报告</el-button
                 >
-                <el-button
+                <!-- <el-button
                   type="text"
                   size="small"
                   @click="oneExport(scope.row)"
                   v-if="power22"
                   >导出</el-button
-                >
+                > -->
                 <el-button
                   type="text"
                   size="small"
@@ -424,6 +428,8 @@ export default {
       power23: false,
       power24: false,
       power25: false,
+      power26: false,
+      power27: false,
       power3: false,
 
       checkedList: [],
@@ -729,15 +735,19 @@ export default {
     powerData() {
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
       this.power11 = power.includes(20101); // 用户-查看
-      this.power12 = power.includes(20102); // 用户-导出
+      this.power12 = power.includes(20102); // 用户-咨询记录
+      // this.power12 = true; //
       this.power13 = power.includes(20103); // 用户-删除
       this.power14 = power.includes(20104); // 用户-批量导出
       this.power15 = power.includes(20105); // 用户-批量删除
       this.power21 = power.includes(20106); // 游客-查看
-      this.power22 = power.includes(20107); // 游客-导出
+      this.power22 = power.includes(20107); // 游客-咨询记录
+      // this.power22 = true; //
       this.power23 = power.includes(20108); // 游客-删除
       this.power24 = power.includes(20109); // 游客-批量导出
       this.power25 = power.includes(20110); // 游客-批量删除
+      this.power26 = power.includes(20111); // 用户-批量导出测评报告
+      this.power27 = power.includes(20112); // 游客-批量导出咨询记录
     },
     indexMethod(index) {
       let that = this;
@@ -779,10 +789,12 @@ export default {
       this.groupFlag = val;
     },
     isWord(val) {
+      console.log(val);
       this.$router.push({
         name: "expword",
-        params: { userID: val.reportId }
+        params: { userID: val.reportId, num: val.evaluationTime }
       });
+      // localStorage.setItem("wordVal", JSON.stringify(val));
       // let routeData = this.$router.resolve({
       //   name: "expword",
       //   params: { userID: val.reportId }
@@ -1527,7 +1539,9 @@ export default {
             );
             for (let i in data.data.suggestionPersonality) {
               if (i > 0) {
-                data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+                data.data.suggestionPersonality[
+                  i
+                ] = data.data.suggestionPersonality[i].split("@@");
               }
             }
 
@@ -1809,13 +1823,19 @@ export default {
             let perList = [];
             for (let i in data.data.personalitySubDim) {
               if (data.data.personalitySubDim[i].analysis != "") {
-                data.data.personalitySubDim[i].analysis = data.data.personalitySubDim[i].analysis.split("|||");
+                data.data.personalitySubDim[
+                  i
+                ].analysis = data.data.personalitySubDim[i].analysis.split(
+                  "|||"
+                );
                 for (let k in data.data.personalitySubDim[i].analysis) {
                   if (
                     data.data.personalitySubDim[i].analysis[k].indexOf("@@") !=
                     -1
                   ) {
-                    data.data.personalitySubDim[i].analysis[k] = data.data.personalitySubDim[i].analysis[k].split("@@");
+                    data.data.personalitySubDim[i].analysis[
+                      k
+                    ] = data.data.personalitySubDim[i].analysis[k].split("@@");
                   }
                 }
                 perList.push(data.data.personalitySubDim[i]);
@@ -2050,7 +2070,9 @@ export default {
       for (let i in this.checkList) {
         console.log(this.checkList[i]);
         checkArr.push({
-          reportId: this.checkList[i].reportId
+          reportId: this.checkList[i].reportId,
+          evaluationTime: this.checkList[i].evaluationTime,
+          passport: this.checkList[i].passport
         });
       }
       this.wordList = checkArr;
@@ -2068,20 +2090,20 @@ export default {
       let selectedData = [];
       for (let i in list) {
         selectedData.push(
-          await this.getMeetingAll(list[i].reportId, Number(i) + 1, list.length)
+          await this.getMeetingAll(list[i], Number(i) + 1, list.length)
         );
       }
       console.log(selectedData);
       this.loading.setText("正在拼命导出");
       this.exportWord(selectedData);
     },
-    getMeetingAll(id, count, len) {
-      console.log(id, count, len);
+    getMeetingAll(list, count, len) {
+      console.log(list, count, len);
       let that = this;
       return new Promise((resolve, reject) => {
         console.log("????");
         let param = {
-          reportId: id
+          reportId: list.reportId
         };
         that.$http
           .get(Url + "/aimw/report/consultationInfo", {
@@ -2090,7 +2112,7 @@ export default {
           .then(res => {
             let data = res.data;
             console.log(data);
-            let allAjax = {}
+            let allAjax = {};
             if (data.code == 0) {
               this.$http
                 .get(Url + "/aimw/report/reportBirdView", {
@@ -2102,18 +2124,29 @@ export default {
                     let bird = "data:image/jpg;base64," + data1.data.birdView;
                     if (data.data) {
                       console.log(data.data);
-                      let consultationInfo = JSON.parse(data.data.consultationInfo)
-                      let typeStart = []
-                      let typeStartStr = []
+                      let consultationInfo = JSON.parse(
+                        data.data.consultationInfo
+                      );
+                      let typeStart = [];
+                      let typeStartStr = [];
                       for (let i in consultationInfo.type_stat) {
-                        typeStart.push(i + '<i>' + consultationInfo.type_stat[i] + '</i>个')
-                        typeStartStr.push(i + consultationInfo.type_stat[i] + '个')
+                        typeStart.push(
+                          i + "<i>" + consultationInfo.type_stat[i] + "</i>个"
+                        );
+                        typeStartStr.push(
+                          i + consultationInfo.type_stat[i] + "个"
+                        );
                       }
-                      consultationInfo.typeStat = typeStart.join('，')
-                      consultationInfo.typeStatStr = typeStartStr.join('，')
-                      consultationInfo.duringStr = this.getTime1(consultationInfo.during)
-                      consultationInfo.sandList = consultationInfo.sand_record.records
-                      consultationInfo.sand_picture = bird
+                      consultationInfo.typeStat = typeStart.join("，");
+                      consultationInfo.typeStatStr = typeStartStr.join("，");
+                      consultationInfo.duringStr = this.getTime1(
+                        consultationInfo.during
+                      );
+                      consultationInfo.sandList =
+                        consultationInfo.sand_record.records;
+                      consultationInfo.sand_picture = bird;
+                      consultationInfo.passport = list.passport;
+                      consultationInfo.evaluationTime = list.evaluationTime;
                       allAjax = consultationInfo;
                     } else {
                       allAjax = {
@@ -2128,17 +2161,19 @@ export default {
                         discuss_process: "",
                         visitor_feeling: "",
                         sand_picture: bird,
-                        during: '',
-                        duringStr: '',
+                        during: "",
+                        duringStr: "",
                         type_stat: {},
                         typeStat: [],
-                        typeStatStr: '',
+                        typeStatStr: "",
                         world_name: "",
+                        passport: list.passport,
+                        evaluationTime: list.evaluationTime,
                         theme: "",
                         assessment: "",
                         next_time: "",
                         next_aim: ""
-                      }
+                      };
                     }
                     setTimeout(() => {
                       resolve(allAjax);
@@ -2243,7 +2278,7 @@ export default {
             doc.loadZip(piz);
             console.log(doc);
             // 设置模板变量的值
-            doc.setData(item)
+            doc.setData(item);
             // doc.setData({
             //   name: item.name,
             //   school: item.name,
@@ -2306,7 +2341,7 @@ export default {
               item.evaluationTime +
               "次-" +
               new Date().getTime() +
-              ".docx";
+              "-咨询记录.docx";
             zip.file(fileName, out, { binary: true });
             resolve();
           });
@@ -2873,16 +2908,16 @@ export default {
         //   width: 1.4rem;
         // }
         col:nth-child(7) {
-          width: 1rem;
+          width: 0.9rem;
         }
         col:nth-child(8) {
-          width: 1.5rem;
+          width: 1.8rem;
         }
         col:nth-child(9) {
-          width: 0.8rem;
+          width: 0.9rem;
         }
         col:nth-child(10) {
-          width: 1.8rem;
+          width: 2.2rem;
         }
         col:nth-child(11) {
           width: 0;

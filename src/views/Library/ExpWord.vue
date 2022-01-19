@@ -40,24 +40,36 @@
       </div>
       <div class="eww_video">
         <div class="eww_v_box" v-if="sandVideoPath != '' && usbVideoPath != ''">
-          <div class="v_per_box">
+          <div class="v_per_layer" @click="playPause"  @mouseover="mouseOver" @mouseleave="mouseLeave">
+            <div class="v_per_box">
+              <video
+                ref="videop"
+                class="video_per"
+                :controls="false"
+                controlslist="nodownload"
+              >
+                <source :src="usbVideoPath" type="video/mp4" />
+              </video>
+            </div>
             <video
-              ref="videop"
-              class="video_per"
+              ref="videos"
+              class="video_sha"
               :controls="false"
               controlslist="nodownload"
             >
-              <source :src="usbVideoPath" type="video/mp4" />
+              <source :src="sandVideoPath" type="video/mp4" />
             </video>
+            <div v-show="centerFlag">
+              <el-button @click.stop="playPause" class="ev_btn ev_btn_c stop">
+                <img
+                  v-if="isPlayFlag"
+                  src="../../assets/images/word/stop.png"
+                  alt=""
+                />
+                <img v-else src="../../assets/images/word/play.png" alt="" />
+              </el-button>
+            </div>
           </div>
-          <video
-            ref="videos"
-            class="video_sha"
-            :controls="false"
-            controlslist="nodownload"
-          >
-            <source :src="sandVideoPath" type="video/mp4" />
-          </video>
           <div class="eww_btns">
             <!-- <div class="eww_btn_bg"></div> -->
             <div class="ev_pst_box">
@@ -192,6 +204,7 @@ import Url from "@/assets/js/url.js";
 export default {
   data() {
     return {
+      centerFlag: false,
       playerOptions: {
         playbackRates: [0.5, 1.0, 1.5, 2.0], // 可选的播放速度
         autoplay: false, // 如果为true,浏览器准备好时开始回放。
@@ -295,6 +308,14 @@ export default {
     this.queryVideo();
   },
   methods: {
+    mouseOver() {
+      console.log(111)
+      this.centerFlag = true
+    },
+    mouseLeave() {
+      console.log(222)
+      this.centerFlag = false
+    },
     queryVideo() {},
     getInfo() {
       let that = this;
@@ -382,12 +403,20 @@ export default {
               // this.sandVideoPath = "/video/" + data.data.sandVideoPath;
               // this.usbVideoPath = "/video/" + data.data.usbVideoPath;
               console.log(data.data.sandVideoPath)
-              console.log(data.data.sandVideoPath)
+              console.log(data.data.usbVideoPath)
               this.sandVideoPath = data.data.sandVideoPath.replace(/\\/g, "/");
-              this.usbVideoPath = data.data.usbVideoPath.replace(/\\/g, "/");
-              console.log(data.data)
-              console.log(this.sandVideoPath)
-              console.log(this.usbVideoPath)
+              if (data.data.usbVideoPath) {
+                this.usbVideoPath = data.data.usbVideoPath.replace(/\\/g, "/");
+              } else {
+                this.usbVideoPath = data.data.UsbVideoPath.replace(/\\/g, "/");
+              }
+              
+              // console.log(data.data)
+              // this.sandVideoPath = "/video/test.mp4"
+              // console.log(this.sandVideoPath)
+              // this.usbVideoPath = "/video/test.mp4"
+              // console.log(this.sandVideoPath)
+              // console.log(this.usbVideoPath)
               // this.details = JSON.parse(data.data.consultationInfo)
               setTimeout(() => {
                 this.init();
@@ -548,9 +577,8 @@ export default {
     // },
     // 播放和暂停
     playPause() {
+      console.log(112221)
       let classStr = this.isPlay.className;
-      console.log(this.videos.duration);
-      console.log(this.isPlay.className);
       if (this.hasClass(this.isPlay, "stop")) {
         this.videos.play();
         this.videop.play();
@@ -575,6 +603,18 @@ export default {
         this.isPlay.className = classStr.replace("play", "stop");
         this.isPlayFlag = false;
       }
+      // let classStr1 = this.isPlay1.className;
+      // if (this.hasClass(this.isPlay1, "stop")) {
+      //   this.videos.play();
+      //   this.videop.play();
+      //   this.isPlay1.className = classStr.replace("stop", "play");
+      // } else if (this.hasClass(this.isPlay1, "play")) {
+      //   this.videos.pause();
+      //   this.videop.pause();
+      //   clearInterval(this.timer);
+      //   this.isPlay1.className = classStr.replace("play", "stop");
+      //   this.isPlayFlag = false;
+      // }
     },
     // 视频播放进度改变触发
     timeupdate() {
@@ -772,6 +812,26 @@ export default {
       margin-bottom: 0.6rem;
       .eww_v_box {
         background: rgba(0, 0, 0, 1);
+        .v_per_layer{
+          position: relative;
+          .ev_btn_c{
+            width: 0.8rem;
+            height: 0.8rem;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            padding: 0 !important;
+            background: transparent !important;
+            border: 0 !important;
+            img{
+              width: 0.8rem;
+              height: 0.8rem;
+            }
+          }
+        }
         .v_per_box {
           display: flex;
           justify-content: flex-end;

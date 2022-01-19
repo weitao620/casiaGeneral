@@ -285,8 +285,8 @@
             </div>
           </div>
           <template>
-            <el-table :data="tableData" :class="[tabFlag == 0 ? 'yhsClass' : 'yksclass']" style="width: 100%">
-              <el-table-column prop="photo" v-if="tabFlag == 0" label="头像">
+            <el-table v-if="tabFlag == 0" :data="tableData" class="yhsClass" style="width: 100%">
+              <el-table-column prop="photo" label="头像">
                 <template slot-scope="scope">
                   <div class="sex_li_head">
                     <img
@@ -304,14 +304,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                v-else
-                prop="passport"
-                label="ID"
-              ></el-table-column>
-              <el-table-column prop="name" v-if="tabFlag == 0" label="姓名">
-              </el-table-column>
-              <el-table-column prop="name" v-else label="昵称">
+              <el-table-column prop="name" label="姓名">
               </el-table-column>
               <el-table-column prop="gender" label="性别">
                 <template slot-scope="scope">
@@ -326,13 +319,12 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="departmentName" v-if="tabFlag == 0" label="所属部门">
+              <el-table-column prop="departmentName" label="所属部门">
               </el-table-column>
-              <el-table-column prop="passport" v-if="tabFlag == 0" label="登录账号">
+              <el-table-column prop="passport" label="登录账号">
               </el-table-column>
               <el-table-column
                 prop="evaluationTime"
-                v-if="tabFlag == 0"
                 label="测评次数"
               >
               </el-table-column>
@@ -354,21 +346,77 @@
               </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <span v-if="tabFlag == 0 && !power3">暂无权限</span>
+                  <span v-if="tabFlag == 0 && !power3 && !power31">暂无权限</span>
+                  <el-button
+                    @click="toWord(scope.row)"
+                    v-if="tabFlag == 0 && power31"
+                    type="text"
+                    size="small"
+                    >咨询记录</el-button
+                  >
                   <el-button
                     @click="toDetail(scope.row)"
                     v-if="tabFlag == 0 && power3"
                     type="text"
                     size="small"
-                    >查看</el-button
+                    >测评报告</el-button
                   >
-                  <span v-if="tabFlag == 1 && !power4">暂无权限</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-table v-if="tabFlag == 1" :data="tableData" class="yksclass" style="width: 100%">
+              <el-table-column
+                prop="passport"
+                label="ID"
+              ></el-table-column>
+              <el-table-column prop="name" label="昵称">
+              </el-table-column>
+              <el-table-column prop="gender" label="性别">
+                <template slot-scope="scope">
+                  <div class="sex_li">
+                    <img
+                      v-if="scope.row.gender == 1"
+                      src="../../assets/images/man.png"
+                      alt=""
+                    />
+                    <img v-else src="../../assets/images/woman.png" alt="" />
+                    <div>{{ scope.row.gender == 1 ? "男" : "女" }}</div>
+                  </div>
+                </template>
+              </el-table-column>
+              
+              <el-table-column prop="date" sortable label="测评时间">
+              </el-table-column>
+              <el-table-column prop="warning" label="评估结果">
+                <template slot-scope="scope">
+                  <div class="primary_r" v-if="scope.row.warning == 1">
+                    <el-button type="danger" plain size="small"
+                      >需关注</el-button
+                    >
+                  </div>
+                  <div class="primary_g" v-else>
+                    <el-button type="primary" plain size="small"
+                      >正常</el-button
+                    >
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <span v-if="tabFlag == 1 && !power4 && !power41">暂无权限</span>
+                  <el-button
+                    @click="toWord(scope.row)"
+                    v-if="tabFlag == 1 && power41"
+                    type="text"
+                    size="small"
+                    >咨询记录</el-button
+                  >
                   <el-button
                     @click="toDetail(scope.row)"
                     v-if="tabFlag == 1 && power4"
                     type="text"
                     size="small"
-                    >查看</el-button
+                    >测评报告</el-button
                   >
                 </template>
               </el-table-column>
@@ -404,6 +452,8 @@ export default {
       power2: false,
       power3: false,
       power4: false,
+      power31: false,
+      power41: false,
       power5: false,
       power6: false,
       days: 7,
@@ -726,8 +776,10 @@ export default {
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
       this.power1 = power.includes(10100); // 系统主页
       this.power2 = power.includes(20000); // 最近十条数据
-      this.power3 = power.includes(20101); // 用户查看
-      this.power4 = power.includes(20106); // 游客查看
+      this.power3 = power.includes(20101); // 用户-测评报告
+      this.power31 = power.includes(20102); // 用户-咨询记录
+      this.power4 = power.includes(20106); // 游客-测评报告
+      this.power41 = power.includes(20107); // 游客-咨询记录
     },
     isService(val) {
       let routeData = this.$router.resolve({
@@ -739,6 +791,19 @@ export default {
     toDetail(data) {
       localStorage.setItem("openReport", data.reportId);
       this.isService(data);
+    },
+
+    isWord(val) {
+      console.log(val)
+      this.$router.push({
+        name: "expword",
+        params: { userID: val.reportId, num: val.evaluationTime }
+      });
+    },
+    toWord(data) {
+      localStorage.setItem("openReport", data.reportId);
+      localStorage.setItem("expGender", data.gender);
+      this.isWord(data);
     },
     toPerson() {
       this.$router.push({
@@ -2286,12 +2351,30 @@ export default {
         .el-table thead tr {
           color: #354b70;
         }
-        .el-table__header,
-        .el-table__body {
-          col:nth-child(7) {
-            width: 2rem;
+        .yhsClass{
+          .el-table__header,
+          .el-table__body {
+            col:nth-child(1) {
+              width: 1rem;
+            }
+            col:nth-child(3) {
+              width: 1rem;
+            }
+            col:nth-child(6) {
+              width: 1.2rem;
+            }
+            col:nth-child(7) {
+              width: 2.2rem;
+            }
+            col:nth-child(9) {
+              width: 2.2rem;
+            }
+            col:nth-child(8) {
+              width: 1.2rem;
+            }
           }
         }
+        
         .el-table td {
           color: #7786ac;
         }

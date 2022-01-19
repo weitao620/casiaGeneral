@@ -45,9 +45,12 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <span v-if="!power1">暂无权限</span>
+                <span v-if="!power1 && !power11">暂无权限</span>
+                <el-button v-if="power11" @click="toWord(scope.row)" type="text" size="small"
+                  >咨询记录</el-button
+                >
                 <el-button v-if="power1" @click="toDetail(scope.row)" type="text" size="small"
-                  >查看测评报告</el-button
+                  >测评报告</el-button
                 >
               </template>
             </el-table-column>
@@ -377,6 +380,7 @@ export default {
   data() {
     return {
       power1: false,
+      power11: false,
       sbAct: 1,
       trendAct: 1,
       tabActive: 1,
@@ -457,7 +461,8 @@ export default {
       // this.violenceFlag = 1
       // this.personalityFlag = 0
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
-      this.power1 = power.includes(30103); // 心理档案--查看
+      this.power1 = power.includes(30103); // 心理档案--测评报告
+      this.power11 = power.includes(30104); // 心理档案--咨询记录
     },
     isService(val) {
       let routeData = this.$router.resolve({
@@ -469,6 +474,18 @@ export default {
     toDetail(data) {
       localStorage.setItem("openReport", data.reportId);
       this.isService(data);
+    },
+    isWord(val) {
+      console.log(val)
+      this.$router.push({
+        name: "expword",
+        params: { userID: val.reportId, num: val.evaNum }
+      });
+    },
+    toWord(data) {
+      localStorage.setItem("openReport", data.reportId);
+      localStorage.setItem("expGender", data.gender);
+      this.isWord(data);
     },
     choseStar() {
       let starArr = [];
@@ -1775,6 +1792,21 @@ export default {
       .el-button--text {
         font-size: 0.16rem;
         padding: 0.09rem 0.06rem;
+      }
+      .el-table__header,
+      .el-table__body {
+        col:nth-child(1) {
+          width: 0.6rem;
+        }
+        col:nth-child(5) {
+          width: 1.2rem;
+        }
+        col:nth-child(7) {
+          width: 2.4rem;
+        }
+        col:nth-child(8) {
+          width: 0;
+        }
       }
       .primary_g,
       .primary_r {

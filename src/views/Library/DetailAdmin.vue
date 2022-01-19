@@ -593,8 +593,10 @@ export default {
       }
     },
     singleChange(txt) {
+      console.log(txt)
       this.singleBtn ? (this.singleBtn = false) : (this.singleBtn = txt);
-      this.formAddUser.password = "";
+      console.log(this.singleBtn)
+      this.formAddAdmin.password = "";
       this.newRight1 = false;
       this.newRight2 = false;
       this.newRight3 = false;

@@ -41,7 +41,7 @@ export default new Router({
     },
     // 导出word
     {
-      path: '/library/expword/:userID',
+      path: '/library/expword/:userID/:num/',
       name: 'expword',
       component: () => import('./views/Library/ExpWord.vue')
     },

@@ -409,15 +409,15 @@ export default {
           if (data.code == 0) {
             this.details.sand_picture = "data:image/jpg;base64," + data.data.birdView;
             console.log(this.details)
-
-            this.getInfo()
           } else {
             that.$message.error(data.msg);
+            this.details.sand_picture = "";
           }
         })
         .catch(res => {
           console.log(res);
         });
+      this.getInfo()
     },
     getInfo() {
       let that = this;
@@ -479,7 +479,6 @@ export default {
       if (!base64Regex.test(dataURL)) {
         return false;
       }
-      
       const stringBase64 = dataURL.replace(base64Regex, "");
       let binaryString;
       if (typeof window !== "undefined") {
@@ -568,7 +567,7 @@ export default {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         });
         // 将目标文件对象保存为目标类型的文件，并命名
-        saveAs(out, "咨询记录.docx");
+        saveAs(out, that.details.name + "-第" + that.$route.params.num + "次-" + new Date().getTime() + "-咨询记录.docx");
       });
     },
 
