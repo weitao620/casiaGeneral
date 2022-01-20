@@ -28,6 +28,7 @@
             <el-input
               v-model="formAddAdmin.newPassport"
               :placeholder="'请输入' + fid40101.fieldName"
+               :disabled="formAddAdmin.newPassport == 'administrator'"
             ></el-input>
             <div style="width:4rem;height:0.36rem"></div>
             <div class="tip_left" v-show="passportFlag">
