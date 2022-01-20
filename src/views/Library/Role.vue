@@ -584,6 +584,11 @@ export default {
               }
             }
           }
+          for (let i in data) {
+            if (data[i].passport == "administrator") {
+              data.splice(i, 1)
+            }
+          }
           that.teacherData = data;
         });
     },

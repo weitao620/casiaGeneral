@@ -124,7 +124,7 @@
           @sort-change="sortChange"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection"> </el-table-column>
+          <el-table-column type="selection" :selectable="checkSelectable"> </el-table-column>
           <el-table-column type="index" label="序号" :index="indexMethod"> </el-table-column>
           <el-table-column prop="name" label="姓名"> </el-table-column>
           <el-table-column prop="roleName" label="角色"> </el-table-column>
@@ -368,6 +368,9 @@ export default {
     this.getRoles()
   },
   methods: {
+    checkSelectable(row) {
+      return row.passport != 'administrator'
+    },
     fieldData () {
       let that = this;
       var param = {
@@ -521,9 +524,16 @@ export default {
         return false;
       }
       var checkArr = [];
+      // for (let i in this.checkList) {
+      //   if (this.checkList[i].passport == "administrator") {
+      //     this.$message.warning(this.checkList[i].name + '不允许进行该操作')
+      //     this.checkList.splice(i, 1)
+      //   }
+      // }
       for (let i in this.checkList) {
         checkArr.push(this.checkList[i]);
       }
+      console.log(checkArr)
       this.dialogSomeStop = true
       if (this.checkList.length < 2) {
         this.allowDelFlag = false
