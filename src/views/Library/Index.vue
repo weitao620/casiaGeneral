@@ -527,7 +527,7 @@ export default {
                     that.detail.warningMale = that.perctInfo(that.detail.warningStatistics.warningMalePerct);
                     that.detail.warningFemale = that.perctInfo(that.detail.warningStatistics.warningFemalePerct);
                     that.detail.changePerct = that.perctInfo(that.detail.changePerct) + "%"
-                    value = that.perctInfo(that.detail.monthHealthPerct);
+                    value = Number(that.detail.monthHealthPerct.toFixed(2));
                     pointerAngle =
                       (startAngle - endAngle) * (1 - value) + endAngle;
                     this.getUserInfo();
