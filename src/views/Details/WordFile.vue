@@ -263,16 +263,22 @@ export default {
     });
   },
   watch: {
-    // wList: function(newValue, oldValue) {
-    //   console.log(newValue)
-    //   console.log(oldValue)
-    //   this.details = newValue;
-    //   this.table_data = this.details.sandList
-    //   for (let i in this.table_data) {
-    //     this.table_data[i].mark = this.table_data[i].note
-    //   }
-    //   console.log(this.details)
-    // },
+    wList: function(newValue, oldValue) {
+      console.log('wList')
+      console.log(newValue)
+      console.log(oldValue)
+      this.details = newValue;
+      this.table_data = this.details.sandList
+      for (let i in this.table_data) {
+        this.table_data[i].mark = this.table_data[i].note
+      }
+      console.log(this.details)
+    },
+    details: function(newValue, oldValue) {
+      console.log('details')
+      console.log(newValue)
+      console.log(oldValue)
+    },
     space_color: function() {
       // 监听数据变化
       this.$nextTick(function() {
@@ -327,7 +333,8 @@ export default {
       // this.table_data = []
       console.log(this.table_data)
       this.$nextTick(() => {
-        this.getBird()
+        // this.getBird()
+        this.getInfo()
         // for (let i in this.table_data) {
         //   this.table_data[i].note = this.table_data[i].mark
         // }
@@ -385,7 +392,8 @@ export default {
             if (data) {
               console.log(data)
               this.isEditFlag = false
-              this.getBird()
+              // this.getBird()
+              this.getInfo()
             }
           } else {
             this.$message.error(data.msg);
@@ -417,7 +425,7 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      this.getInfo()
+      // this.getInfo()
     },
     getInfo() {
       let that = this;

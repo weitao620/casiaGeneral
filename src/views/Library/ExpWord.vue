@@ -417,7 +417,7 @@ export default {
               // this.usbVideoPath = "/video/test.mp4"
               // console.log(this.sandVideoPath)
               // console.log(this.usbVideoPath)
-              // this.details = JSON.parse(data.data.consultationInfo)
+              this.details = JSON.parse(data.data.consultationInfo)
               setTimeout(() => {
                 this.init();
               }, 1000);
