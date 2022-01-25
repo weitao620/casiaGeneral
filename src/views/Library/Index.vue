@@ -27,7 +27,7 @@
 
               <div class="per_msg">
                 <div class="per_msg_t">{{ detail.name }}</div>
-                <div class="per_msg_b">{{ detail.remark }}</div>
+                <div class="per_msg_b">{{ detail.roleName }}</div>
               </div>
               <div class="per_msg">
                 <div class="per_msg_t">上次登陆时间</div>
@@ -468,7 +468,7 @@ export default {
         name: "",
         gender: "1",
         participationNum: "",
-        remark: "",
+        roleName: "",
         warningFemale: "",
         warningMale: "",
         warningNum: "",
