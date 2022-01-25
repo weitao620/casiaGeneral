@@ -332,6 +332,18 @@ export default {
             if (data.data) {
               console.log(data.data.consultationInfo);
               let consultationInfo = JSON.parse(data.data.consultationInfo)
+              let typeStart = []
+              let typeStartStr = []
+              for (let i in consultationInfo.type_stat) {
+                typeStart.push(i + '<i>' + consultationInfo.type_stat[i] + '</i>个')
+                typeStartStr.push(i + consultationInfo.type_stat[i] + '个')
+              }
+              consultationInfo.typeStat = typeStart.join('，')
+              consultationInfo.typeStatStr = typeStartStr.join('，')
+              consultationInfo.duringStr = this.getTime1(consultationInfo.during)
+              consultationInfo.sandList = consultationInfo.sand_record.records
+              consultationInfo.sand_picture = this.details.sand_picture
+              console.log(consultationInfo)
               // let consultationInfo = {
               //   sand_record: {
               //     records_num: 3,
@@ -411,13 +423,14 @@ export default {
                 this.usbVideoPath = data.data.UsbVideoPath.replace(/\\/g, "/");
               }
               
+              this.details = consultationInfo
               // console.log(data.data)
               // this.sandVideoPath = "/video/test.mp4"
               // console.log(this.sandVideoPath)
               // this.usbVideoPath = "/video/test.mp4"
               // console.log(this.sandVideoPath)
               // console.log(this.usbVideoPath)
-              this.details = JSON.parse(data.data.consultationInfo)
+              // this.details = JSON.parse(data.data.consultationInfo)
               setTimeout(() => {
                 this.init();
               }, 1000);

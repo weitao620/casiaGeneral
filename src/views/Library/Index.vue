@@ -384,7 +384,6 @@
                   </div>
                 </template>
               </el-table-column>
-              
               <el-table-column prop="date" sortable label="测评时间">
               </el-table-column>
               <el-table-column prop="warning" label="评估结果">
@@ -2374,7 +2373,6 @@ export default {
             }
           }
         }
-        
         .el-table td {
           color: #7786ac;
         }

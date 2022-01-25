@@ -376,7 +376,6 @@ export default {
       //   next_time: info.next_time,
       //   next_aim: info.next_aim
       // }
-      
       this.details.sand_picture = ''
       console.log(this.details)
       let param = {
@@ -452,6 +451,7 @@ export default {
               consultationInfo.duringStr = this.getTime1(consultationInfo.during)
               consultationInfo.sandList = consultationInfo.sand_record.records
               consultationInfo.sand_picture = this.details.sand_picture
+              console.log(consultationInfo)
               this.details = consultationInfo
               console.log(this.details)
             }
@@ -810,7 +810,6 @@ export default {
             //   textarea{
             //     border:0
             //   }
-              
             // }
           }
         }
