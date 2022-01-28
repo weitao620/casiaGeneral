@@ -11,6 +11,7 @@
     "@easydarwin/easyplayer": "^4.0.7",
     "@liveqing/liveplayer": "^2.6.4",
     "axios": "^0.21.1",
+    "compression-webpack-plugin": "^5.0.1",
     "core-js": "^2.6.5",
     "docxtemplater": "^3.28.2",
     "docxtemplater-image-module-free": "^1.1.1",

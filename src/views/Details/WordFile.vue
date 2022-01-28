@@ -369,7 +369,6 @@ export default {
       //   next_time: info.next_time,
       //   next_aim: info.next_aim
       // }
-      
       this.details.sand_picture = ''
       console.log(this.details)
       let param = {
@@ -479,7 +478,6 @@ export default {
       if (!base64Regex.test(dataURL)) {
         return false;
       }
-      
       const stringBase64 = dataURL.replace(base64Regex, "");
       let binaryString;
       if (typeof window !== "undefined") {
@@ -803,7 +801,6 @@ export default {
             //   textarea{
             //     border:0
             //   }
-              
             // }
           }
         }
