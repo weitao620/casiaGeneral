@@ -124,6 +124,7 @@
             <el-form-item label="确认密码：">
               <el-input
                 type="password"
+                @input="twoChange"
                 @blur="twoChange"
                 v-model="formPerson.twoPass"
                 placeholder="请再次输入新密码"
@@ -253,16 +254,8 @@ export default {
         this.passportFlag = true;
         return false;
       }
-      if (this.formPerson.phone == "") {
-        this.phoneFlag = true;
-        return false;
-      }
       if (this.formPerson.phone != "" && !regp.test(this.formPerson.phone)) {
         this.phoneFlag = true;
-        return false;
-      }
-      if (this.formPerson.email == "") {
-        this.emailFlag = true;
         return false;
       }
       if (this.formPerson.email != "" && !rege.test(this.formPerson.email)) {
@@ -307,6 +300,8 @@ export default {
               that.$router.replace({
                 path: "/login"
               });
+            } else {
+              that.$message.success('更新成功');
             }
           } else {
             that.$message.error(data.msg);
