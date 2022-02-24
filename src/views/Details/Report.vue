@@ -4291,10 +4291,13 @@ export default {
               font-family: Source Han Sans CN;
               font-weight: 500;
               color: #354b70;
+              word-break: break-all;
+              flex: 1;
+              padding-right: 0.04rem;
             }
             .dt_blod {
               font-weight: 600;
-              min-width: 1rem;
+              flex: none;
             }
           }
         }
