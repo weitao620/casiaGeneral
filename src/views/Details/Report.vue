@@ -1692,6 +1692,7 @@ export default {
             }
             console.log(data.data.actionInfoRet)
             fuluList = JSON.parse(data.data.actionInfoRet);
+            console.log(fuluList)
             that.total = fuluList.length;
             that.actionInfo = this.pagination(1, this.limit, fuluList);
             that.pageNum = fuluList.length == 0 ? 1 : Math.ceil(fuluList.length / that.limit);
