@@ -77,6 +77,8 @@
                 v-model="scope.row[item.prop]"
                 @input="noteChange(scope.row)"
                 :placeholder="'可编辑'"
+                maxlength="300"
+                show-word-limit
               ></el-input>
               <div v-else>
                 {{scope.row[item.prop]}}
@@ -90,7 +92,7 @@
         <span>讨论过程：</span>
       </div>
       <div class="wm_text" v-if="isEditFlag">
-        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 6}" type="textarea" v-model="details.discuss_process"></el-input>
+        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 7}" type="textarea" v-model="details.discuss_process" maxlength="300" show-word-limit></el-input>
       </div>
       <div class="wm_text" v-else>
         {{details.discuss_process}}
@@ -100,7 +102,7 @@
         <span>治疗者感受</span>
       </div>
       <div class="wm_text wm_max100" v-if="isEditFlag">
-        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 6}" type="textarea" v-model="details.visitor_feeling"></el-input>
+        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 7}" type="textarea" v-model="details.visitor_feeling" maxlength="300" show-word-limit></el-input>
       </div>
       <div class="wm_text" v-else>
         {{details.visitor_feeling}}
@@ -142,7 +144,7 @@
         <span>评估</span>
       </div>
       <div class="wm_text" v-if="isEditFlag">
-        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 6}" type="textarea" v-model="details.assessment"></el-input>
+        <el-input placeholder="请填写" :autosize="{ minRows: 3, maxRows: 7}" type="textarea" v-model="details.assessment" maxlength="300" show-word-limit></el-input>
       </div>
       <div class="wm_text" v-else>
         {{details.assessment}}
@@ -156,7 +158,7 @@
         <span>下次咨询时间、地点：</span>
       </div>
       <div class="wm_text wm_text_i" v-if="isEditFlag">
-        <el-input placeholder="请填写" :autosize="{ minRows: 1, maxRows: 1}" type="textarea" v-model="details.next_time"></el-input>
+        <el-input placeholder="请填写" :autosize="{ minRows: 1, maxRows: 7}" type="textarea" v-model="details.next_time" maxlength="300" show-word-limit></el-input>
       </div>
       <div class="wm_text" style="margin-bottom:0.2rem" v-else>
         {{details.next_time}}
@@ -166,7 +168,7 @@
         <span>咨询方向：</span>
       </div>
       <div class="wm_text wm_text_i" v-if="isEditFlag">
-        <el-input placeholder="请填写" :autosize="{ minRows: 1, maxRows: 1}" type="textarea" v-model="details.next_aim"></el-input>
+        <el-input placeholder="请填写" :autosize="{ minRows: 1, maxRows: 7}" type="textarea" v-model="details.next_aim" maxlength="300" show-word-limit></el-input>
       </div>
       <div class="wm_text" v-else>
         {{details.next_aim}}
@@ -699,11 +701,17 @@ export default {
       padding: 0 0.44rem 0 0.6rem;
       .el-textarea{
         font-size: 0.16rem;
+        height: 100%;
         .el-textarea__inner{
           resize: none;
           font-size: 0.16rem;
           color: #354B70;
-          padding: 0.1rem 0.15rem 0.1rem !important;
+          height: 100%;
+          padding: 12px 0.15rem 12px !important;
+        }
+        .el-input__count{
+          bottom: 2px;
+          right: 8px;
         }
       }
     }
@@ -805,7 +813,11 @@ export default {
             font-size: 0.16rem;
           }
           div.cell{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding:0.04rem;
+            height:100%;
             // .el-textarea{
             //   textarea{
             //     border:0
