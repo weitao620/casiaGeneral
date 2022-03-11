@@ -393,7 +393,7 @@ export default {
             if (data) {
               console.log(data)
               this.isEditFlag = false
-              // this.getBird()
+              this.getBird()
               this.getInfo()
             }
           } else {
@@ -416,7 +416,11 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            this.details.sand_picture = "data:image/jpg;base64," + data.data.birdView;
+            if (data.data.birdView != '') {
+              this.details.sand_picture = "data:image/jpg;base64," + data.data.birdView;
+            } else {
+              this.details.sand_picture = '';
+            }
             console.log(this.details)
           } else {
             that.$message.error(data.msg);
@@ -442,6 +446,7 @@ export default {
           if (data.code == 0) {
             if (data.data) {
               let consultationInfo = JSON.parse(data.data.consultationInfo)
+              console.log(consultationInfo)
               let typeStart = []
               let typeStartStr = []
               for (let i in consultationInfo.type_stat) {
@@ -605,7 +610,7 @@ export default {
 .word_wrap {
   .ww_title {
     width: 100%;
-    min-height: 1.2rem;
+    height: 1.31rem;
     background: linear-gradient(0deg, #E3EAED, #EFF3F5, #FFFFFF, #FFFFFF);
     position: relative;
     .wwt_top{
@@ -696,9 +701,15 @@ export default {
   .word_main_box{
     padding-bottom: 0.4rem;
     background: #ffffff;
+    position: absolute;
+    top: 1.31rem;
+    bottom: 0;
+    overflow: hidden;
+    overflow-y: auto;
     .wm_text{
       text-align: left;
       padding: 0 0.44rem 0 0.6rem;
+      word-break: break-all;
       .el-textarea{
         font-size: 0.16rem;
         height: 100%;
@@ -814,10 +825,17 @@ export default {
           }
           div.cell{
             display: flex;
-            align-items: center;
+            // align-items: center;
             justify-content: center;
-            padding:0.04rem;
-            height:100%;
+            padding:0.06rem;
+            max-height: 1.2rem;
+            // overflow: auto;
+            // height:100%;
+            div{
+              // height: 100%;
+              padding:0  0.04rem ;
+              overflow: auto;
+            }
             // .el-textarea{
             //   textarea{
             //     border:0

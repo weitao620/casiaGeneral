@@ -822,7 +822,7 @@ export default {
       padding: 0.7rem 0.22rem 0.26rem;
       text-align: left;
       background: rgba(0, 0, 0, 0.6);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.3rem;
       .eww_v_box {
         background: rgba(0, 0, 0, 1);
         .v_per_layer{
@@ -1108,6 +1108,9 @@ export default {
     .eww_report {
       width: 9rem;
       box-shadow: 0 0 0.3rem 0 rgba(0, 0, 0, 0.2);
+      position: relative;
+      height: 100vh;
+      min-height: 10.14rem;
     }
   }
 }
