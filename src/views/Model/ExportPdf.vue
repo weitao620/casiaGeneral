@@ -128,7 +128,7 @@
         </div>
         <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
           <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
-            该生心理健康水平良好。
+            该受测者心理健康水平良好。
           </div>
           <div v-else>
             <div v-for="(item,index) in details.warningList" :key="item.id">
@@ -310,19 +310,19 @@
               <div class="top_top" v-if="details.sysList[0].subDim">
                 <span class="tt_txt">{{details.sysList[0].subDim[0].name}}</span>
                 <div class="demsb_tool">
-                  <div class="demsb_score">学生得分：<span>{{ parseInt(details.sysList[0].subDim[0].score) }}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[0].score) }}</span></div>
                 </div>
               </div>
               <div class="bottom_left" v-if="details.sysList[0].subDim">
                 <span class="tt_txt">{{details.sysList[0].subDim[2].name}}</span>
                 <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">学生得分：<span>{{ parseInt(details.sysList[0].subDim[2].score) }}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[2].score) }}</span></div>
                 </div>
               </div>
               <div class="bottom_right" v-if="details.sysList[0].subDim">
                 <span class="tt_txt">{{details.sysList[0].subDim[1].name}}</span>
                 <div class="demsb_tool1">
-                  <div class="demsb_score">学生得分：<span>{{ parseInt(details.sysList[0].subDim[1].score) }}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[1].score) }}</span></div>
                 </div>
               </div>
               <div
@@ -415,19 +415,19 @@
               <div class="top_top" v-if="details.sysList[1].subDim">
                 <span class="tt_txt">{{details.sysList[1].subDim[0].name}}</span>
                 <div class="demsb_tool">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[1].subDim[0].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[0].score)}}</span></div>
                 </div>
               </div>
               <div class="bottom_left" v-if="details.sysList[1].subDim">
                 <span class="tt_txt">{{details.sysList[1].subDim[2].name}}</span>
                 <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[1].subDim[2].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[2].score)}}</span></div>
                 </div>
               </div>
               <div class="bottom_right" v-if="details.sysList[1].subDim">
                 <span class="tt_txt">{{details.sysList[1].subDim[1].name}}</span>
                 <div class="demsb_tool1">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[1].subDim[1].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[1].score)}}</span></div>
                 </div>
               </div>
               <div
@@ -523,19 +523,19 @@
               <div class="top_top" v-if="details.sysList[2].subDim">
                 <span class="tt_txt">{{details.sysList[2].subDim[0].name}}</span>
                 <div class="demsb_tool">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[2].subDim[0].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[0].score)}}</span></div>
                 </div>
               </div>
               <div class="bottom_left" v-if="details.sysList[2].subDim">
                 <span class="tt_txt">{{details.sysList[2].subDim[2].name}}</span>
                 <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[2].subDim[2].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[2].score)}}</span></div>
                 </div>
               </div>
               <div class="bottom_right" v-if="details.sysList[2].subDim">
                 <span class="tt_txt">{{details.sysList[2].subDim[1].name}}</span>
                 <div class="demsb_tool1">
-                  <div class="demsb_score">学生得分：<span>{{parseInt(details.sysList[2].subDim[1].score)}}</span></div>
+                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[1].score)}}</span></div>
                 </div>
               </div>
               <div
@@ -685,7 +685,7 @@
                 <span class="tt_txt">{{ item.subDim[0].name }}</span>
                 <div class="demsb_tool">
                   <div class="demsb_score">
-                    学生得分：<span>{{
+                    本次得分：<span>{{
                       parseInt(item.subDim[0].score)
                     }}</span>
                   </div>
@@ -695,7 +695,7 @@
                 <span class="tt_txt">{{ item.subDim[2].name }}</span>
                 <div class="demsb_tool" style="margin-left:290px">
                   <div class="demsb_score">
-                    学生得分：<span>{{
+                    本次得分：<span>{{
                       parseInt(item.subDim[2].score)
                     }}</span>
                   </div>
@@ -705,7 +705,7 @@
                 <span class="tt_txt">{{ item.subDim[1].name }}</span>
                 <div class="demsb_tool1">
                   <div class="demsb_score">
-                    学生得分：<span>{{
+                    本次得分：<span>{{
                       parseInt(item.subDim[1].score)
                     }}</span>
                   </div>
@@ -2722,7 +2722,7 @@ export default {
                     that.details.sysList[0].subDim[1].score,
                     that.details.sysList[0].subDim[2].score
                   ],
-                  name: "学生得分",
+                  name: "本次得分",
                   symbol: "circle",
                   symbolSize: 4,
                   areaStyle: {
@@ -2891,7 +2891,7 @@ export default {
                     that.details.sysList[1].subDim[1].score,
                     that.details.sysList[1].subDim[2].score
                   ],
-                  name: "学生得分",
+                  name: "本次得分",
                   symbol: "circle",
                   symbolSize: 4,
                   areaStyle: {
@@ -3060,7 +3060,7 @@ export default {
                     that.details.sysList[2].subDim[1].score,
                     that.details.sysList[2].subDim[2].score
                   ],
-                  name: "学生得分",
+                  name: "本次得分",
                   symbol: "circle",
                   symbolSize: 4,
                   areaStyle: {
@@ -3348,7 +3348,7 @@ export default {
                     that.details.sysList2[1].subDim[1].score,
                     that.details.sysList2[1].subDim[2].score
                   ],
-                  name: "学生得分",
+                  name: "本次得分",
                   symbol: "circle",
                   symbolSize: 4,
                   itemStyle: {
@@ -3514,7 +3514,7 @@ export default {
                     that.details.sysList2[0].subDim[1].score,
                     that.details.sysList2[0].subDim[2].score
                   ],
-                  name: "学生得分",
+                  name: "本次得分",
                   symbol: "circle",
                   symbolSize: 4,
                   itemStyle: {
