@@ -1490,6 +1490,7 @@ export default {
     // 表格样式
     .el-table {
       margin-bottom: 0.2rem;
+      min-height: 6.08rem;
       .el-table--border,
       .el-table--group,
       .el-table--border:after,

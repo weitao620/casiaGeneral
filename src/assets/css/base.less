@@ -1110,6 +1110,81 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
     }
   }
 }
+// // 底部分页
+// .table_page {
+//   display: flex;
+//   font-family: Source Han Sans CN;
+//   font-weight: 400;
+//   font-size: 0.14rem;
+//   align-items: center;
+//   justify-content: flex-end;
+//   margin-bottom: 0.36rem;
+//   .page_total {
+//     font-size: 0.14rem;
+//     color: #828fb2;
+//     span {
+//       color: #006cff;
+//     }
+//   }
+//   .el-pagination {
+//     .el-pager {
+//       .number {
+//         padding: 0 0.04rem;
+//         // width: 0.28rem;
+//         height: 0.28rem;
+//         line-height: 0.26rem;
+//         border: 0.01rem solid #e1e9ff;
+//         font-size: 0.14rem;
+//         color: #7786ac;
+//         min-width: 0.28rem;
+//         background: linear-gradient(
+//           0deg,
+//           rgba(196, 236, 255, 0.14) 0%,
+//           rgba(151, 205, 255, 0.14) 100%
+//         );
+//         margin: 0 0.03rem;
+//       }
+//       .number.active {
+//         color: #ffffff;
+//         background: linear-gradient(0deg, #0075ff, #00c2ff);
+//       }
+//     }
+//     .btn-next,
+//     .btn-prev {
+//       background: center center no-repeat
+//         linear-gradient(0deg, #c4ecff 0%, #97cdff 100%);
+//       background-size: 100%;
+//       cursor: pointer;
+//       margin: 0;
+//       color: #85b4ff;
+//       min-width: 0.28rem;
+//       padding: 0;
+//       margin: 0 0.04rem;
+//     }
+//     .el-select .el-input .el-input__inner {
+//       color: #7786ac;
+//     }
+//     button,
+//     span:not([class*="suffix"]) {
+//       display: inline-block;
+//       font-size: 0.14rem;
+//       min-width: 0.28rem;
+//       height: 0.28rem;
+//       line-height: 0.28rem;
+//     }
+//     .el-pagination__sizes {
+//       margin-right: 0.05rem;
+//       color: #7786ac;
+//     }
+//     .el-pagination__jump {
+//       margin: 0;
+//       color: #7786ac;
+//       .el-pagination__editor.el-input .el-input__inner {
+//         color: #006cff;
+//       }
+//     }
+//   }
+// }
 // 底部分页
 .table_page {
   display: flex;
@@ -1118,7 +1193,8 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
   font-size: 0.14rem;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 0.36rem;
+  margin-bottom: 0;
+  margin-top: 0.18rem;
   .page_total {
     font-size: 0.14rem;
     color: #828fb2;
@@ -1130,7 +1206,6 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
     .el-pager {
       .number {
         padding: 0 0.04rem;
-        // width: 0.28rem;
         height: 0.28rem;
         line-height: 0.26rem;
         border: 0.01rem solid #e1e9ff;
@@ -1162,7 +1237,14 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
       margin: 0 0.04rem;
     }
     .el-select .el-input .el-input__inner {
+      height: 0.28rem;
+      line-height: 0.28rem;
       color: #7786ac;
+      font-size: 0.14rem;
+    }
+    .el-input--mini .el-input__icon {
+      height: 0.28rem;
+      line-height: 0.28rem !important;
     }
     button,
     span:not([class*="suffix"]) {
@@ -1181,11 +1263,12 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
       color: #7786ac;
       .el-pagination__editor.el-input .el-input__inner {
         color: #006cff;
+        line-height: 0.28rem;
+        height: 0.28rem;
       }
     }
   }
 }
-
 // Tab切换
 .power_tabs {
   margin: 0.2rem 0 0.24rem;
