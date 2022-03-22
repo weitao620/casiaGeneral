@@ -11,9 +11,9 @@ module.exports = {
     proxy: {
       '/api': {
         // 目标 API 地址
-        target: 'http://10.0.6.28:6120',
+        // target: 'http://10.0.6.28:6120',
         // target: "http://172.18.40.12",
-        // target: "http://119.90.45.121:16666",
+        target: "http://119.90.45.121:15555",
         // target: 'https://ipathy.net',
         // 如果要代理 websockets
         ws: true,
