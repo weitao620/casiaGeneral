@@ -212,8 +212,8 @@
             />
             <span>箱庭鸟瞰图</span>
           </div>
-          <div class="dtmcl_pic" v-if="details.birdView" @click="birdView">
-            <img :src="'data:image;base64,' + details.birdView" alt="" />
+          <div class="dtmcl_pic" v-if="birdViewImg !=''" @click="birdView">
+            <img :src="'data:image;base64,' + birdViewImg" alt="" />
           </div>
           <div class="dtmcl_pic" v-else>
             <img src="../../assets/images/report/t001.png" alt="" />
@@ -1340,8 +1340,8 @@
     >
       <img
         class="dtmcl_click"
-        v-if="details.birdView"
-        :src="'data:image;base64,' + details.birdView"
+        v-if="birdViewImg != ''"
+        :src="'data:image;base64,' + birdViewImg"
         alt=""
       />
       <img
@@ -1405,6 +1405,7 @@ export default {
   },
   data() {
     return {
+      birdViewImg: '',
       actionInfo: [],
       limit: 30,
       total: 0,
@@ -1756,6 +1757,7 @@ export default {
           let data = res.data;
           if (data.code == 0) {
             this.details.birdView = data.data.birdView;
+            this.birdViewImg = data.data.birdView;
             this.getfourImg(data.data.birdView);
           } else {
             that.$message.error(data.msg);
