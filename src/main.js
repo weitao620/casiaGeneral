@@ -28,7 +28,10 @@ axios.defaults.withCredentials = true;
 axios.interceptors.request.use(
   res => {
     if (res.url.indexOf("/user/getUserProfile") != -1 || res.url.indexOf("/index/listLatestReportsUserIcon") != -1 || res.url.indexOf("/report/reportReviewImgs") != -1 || res.url.indexOf("/report/reportBirdView") != -1 || res.url.indexOf("/report/appendix") != -1 || res.url.indexOf("/report/reportReview") != -1 || res.url.indexOf("/report/reportInfo") != -1 || res.url.indexOf("report/consultationInfo") != -1) {
+      console.log('不需要')
+      console.log(res.url)
     } else {
+      console.log('需要')
       load = kkload.$loading({
         lock: true,
         text: '数据加载中',
