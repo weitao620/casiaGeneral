@@ -1674,7 +1674,7 @@ export default {
       let that = this;
       this.loading = this.$loading({
         lock: true,
-        text: "数据加载中",
+        text: "报告生成中",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)"
       });
@@ -1742,23 +1742,6 @@ export default {
             setTimeout(() => {
               that.myTxtFlag = true;
             }, 500);
-          } else {
-            that.$message.error(data.msg);
-          }
-        })
-        .catch(res => {
-          console.log(res);
-        });
-      this.$http
-        .get(Url + "/aimw/report/reportBirdView", {
-          params: param
-        })
-        .then(res => {
-          let data = res.data;
-          if (data.code == 0) {
-            this.details.birdView = data.data.birdView;
-            this.birdViewImg = data.data.birdView;
-            this.getfourImg(data.data.birdView);
           } else {
             that.$message.error(data.msg);
           }
@@ -2500,12 +2483,36 @@ export default {
             console.log(data.data)
             data.data.personalitySubDim2 = perList
             that.details = that.justInfo(data.data);
+            that.getBird()
             that.myChartInit();
             this.part33 = true;
             setTimeout(() => {
               that.myTxtFlag = true;
               that.topBacks();
             }, 500);
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    getBird() {
+      let that = this;
+      var param = {
+        reportId: that.reportId
+      };
+      this.$http
+        .get(Url + "/aimw/report/reportBirdView", {
+          params: param
+        })
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            this.details.birdView = data.data.birdView;
+            this.birdViewImg = data.data.birdView;
+            this.getfourImg(data.data.birdView);
           } else {
             that.$message.error(data.msg);
           }
