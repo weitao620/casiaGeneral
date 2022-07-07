@@ -2,6 +2,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
   outputDir: 'web',
   assetsDir: 'static',
+  publicPath: './',
   devServer: {
     // 设置主机地址
     host: '0.0.0.0',
