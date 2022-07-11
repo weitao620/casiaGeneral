@@ -706,6 +706,7 @@ export default {
     bottom: 0;
     overflow: hidden;
     overflow-y: auto;
+    width: 100%;
     .wm_text{
       text-align: left;
       padding: 0 0.44rem 0 0.6rem;

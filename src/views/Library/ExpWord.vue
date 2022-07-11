@@ -822,7 +822,8 @@ export default {
       padding: 0.7rem 0.22rem 0.26rem;
       text-align: left;
       background: rgba(0, 0, 0, 0.6);
-      margin-bottom: 0.3rem;
+      // margin-bottom: 0.3rem;
+      min-height: 100vh;
       .eww_v_box {
         background: rgba(0, 0, 0, 1);
         .v_per_layer{
