@@ -401,7 +401,7 @@ export default {
                   objs.phone = obj[key];
                 }
                 if (key == str[3]) {
-                  objs.passport = obj[key];
+                  objs.passport = obj[key].replace(/\s+/g, '');
                 }
               }
               if (

@@ -223,7 +223,7 @@
                   <label>{{ details.lastWarningInfo.violenceLevelTxt }}</label>
                   <label>{{ details.lastWarningInfo.violenceScore }}</label>
                 </span>
-                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.sviolenceLevel == -1" :class="[ 'gp_w_ll']">
+                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
                   <label>/</label>
                   <label>/</label>
                 </span>
@@ -265,7 +265,7 @@
                   <label>{{ details.warningAvgInfo.violenceLevelTxt }}</label>
                   <label>{{ details.warningAvgInfo.violenceScore }}</label>
                 </span>
-                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.sviolenceLevel == -1" :class="[ 'gp_w_ll']">
+                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
                   <label>/</label>
                   <label>/</label>
                 </span>
@@ -3022,7 +3022,7 @@ export default {
               margin-left: -70px;
               left: 0;
               bottom: 0;
-              top: 105px;
+              top: 90px;
               width: 140px;
               height: 59px;
               display: flex;
