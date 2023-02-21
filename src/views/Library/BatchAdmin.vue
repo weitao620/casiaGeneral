@@ -342,7 +342,7 @@ export default {
                   objs.phone = obj[key];
                 }
                 if (key == str[2]) {
-                  objs.passport = obj[key].replace(/\s+/g, '');
+                  objs.passport = String(obj[key]).replace(/\s+/g, '');
                 }
               }
               if (
