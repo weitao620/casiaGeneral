@@ -32,7 +32,7 @@ export default {
       setTimeout(() => {
         // 这句挺重要
         html2Canvas(el, {
-          scale: 1.2,
+          scale: 1,
           dpi: 300,
           useCORS: true,
           imageTimeout: 0
