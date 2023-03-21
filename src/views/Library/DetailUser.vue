@@ -97,6 +97,24 @@
               <el-radio :label="0">女</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item v-if="fid30210.enable == 1" :required="fid30210.required == 1" :label="fid30210.fieldName + '：'">
+            <el-date-picker
+              v-model="formAddUser.birth"
+              type="date"
+              :placeholder="'请选择'+ fid30210.fieldName"
+              format="yyyy年MM月dd日"
+              :editable="false"
+              :clearable="false"
+            >
+            </el-date-picker>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="birthFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                请选择{{fid30210.fieldName}}
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item v-if="fid30205.enable == 1" :required="fid30205.required == 1" :label="fid30205.fieldName + '：'">
             <el-input
               v-model="formAddUser.phone"
@@ -208,6 +226,7 @@ export default {
       passwordFlag: false,
       nameFlag: false,
       phoneFlag: false,
+      birthFlag: false,
       emailFlag: false,
       jobFlag: false,
       remarkFlag: false,
@@ -218,6 +237,7 @@ export default {
         name: "", // 用户姓名
         gender: 1, // 性别
         phone: "", // 手机号
+        birth: "", // 出生日期
         email: "", // 邮箱地址
         department: "", // 所属部门ID
         departmentName: "", // 所属部门名称
@@ -329,6 +349,17 @@ export default {
         ifModify: 1,
         ifRequired: 1,
         required: 0
+      },
+      fid30210: {
+        enable: 1,
+        fieldId: 30210,
+        fieldName: "出生日期",
+        fieldType: "筛选框",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 1,
+        ifRequired: 0,
+        required: 1
       }
     };
   },
@@ -370,6 +401,9 @@ export default {
                 }
                 if (datas[i].fieldId == 30205) {
                   this.fid30205 = datas[i]
+                }
+                if (datas[i].fieldId == 30210) {
+                  this.fid30210 = datas[i]
                 }
                 if (datas[i].fieldId == 30206) {
                   this.fid30206 = datas[i]
@@ -429,6 +463,9 @@ export default {
             }
             if (this.fid30205.enable == 1) {
               this.formAddUser.phone = data.data.phone
+            }
+            if (this.fid30210.enable == 1) {
+              this.formAddUser.birth = data.data.birth
             }
             if (this.fid30206.enable == 1) {
               this.formAddUser.email = data.data.email
@@ -613,7 +650,7 @@ export default {
     // 新增用户提交
     addSubmit() {
       let that = this;
-      this.passportFlag = this.passwordFlag = this.nameFlag = this.phoneFlag = this.emailFlag = this.jobFlag = this.remarkFlag = this.frameFlag = false;
+      this.passportFlag = this.passwordFlag = this.nameFlag = this.phoneFlag = this.birthFlag = this.emailFlag = this.jobFlag = this.remarkFlag = this.frameFlag = false;
       var regp = /^1[3456789]\d{9}$/;
       var regzh = /^[A-Za-z0-9]{6,20}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -639,6 +676,10 @@ export default {
       }
       if (this.fid30205.enable == 1 && this.fid30205.required == 1 && ((this.formAddUser.phone != "" && !regp.test(this.formAddUser.phone)) || this.formAddUser.phone == "")) {
         this.phoneFlag = true;
+        return false;
+      }
+      if (this.fid30210.enable == 1 && this.fid30210.required == 1 && this.formAddUser.birth == "") {
+        this.birthFlag = true;
         return false;
       }
       if (this.fid30206.enable == 1 && this.fid30206.required == 1 && ((this.formAddUser.email != "" && !rege.test(this.formAddUser.email)) || this.formAddUser.email == "")) {
@@ -669,6 +710,11 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
+      let birth = ''
+      if (this.formAddUser.birth != '') {
+        birth = this.formTimes(this.formAddUser.birth)
+        this.formAddUser.birth = birth
+      }
       that.$http
         .put(Url + "/aimw/user/updateUserInfo", this.formAddUser)
         .then(res => {
@@ -685,6 +731,21 @@ export default {
         .catch(res => {
           console.log(res);
         });
+    },
+    formTimes(date) {
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      var d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      // var h = date.getHours();
+      // h = h < 10 ? "0" + h : h;
+      // var minute = date.getMinutes();
+      // minute = minute < 10 ? "0" + minute : minute;
+      // var second = date.getSeconds();
+      // second = second < 10 ? "0" + second : second;
+      // + ' ' + h + ':' + minute + ':' + second
+      return y + "-" + m + "-" + d;
     },
     // 返回
     goBack() {

@@ -1822,7 +1822,7 @@ export default {
               }
             }
             data.data.personalitySubDim2 = perList;
-
+            data.data.reportId = param.reportId;
             that.details = that.justInfo(data.data);
             this.part3 = true;
             setTimeout(() => {

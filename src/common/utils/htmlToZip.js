@@ -4,7 +4,7 @@ import html2Canvas from 'html2canvas';
 import JsPDFs from 'jspdf';
 
 export default {
-  getPdfs: (el, pdfName, countNum) => {
+  getPdfs: (el, pdfName, countNum, reportId) => {
     // 滚轮滑动造成的，主要是html2canvas是根据body进行截图，若内容高度高于body时，就会出现这样的问题
     // 解决方案：(在生成截图前，先把滚动条置顶)
     // console.log("开始生成图片")
@@ -61,7 +61,7 @@ export default {
                 }
               }
             }
-            resolve({ PDF, name: pdfName, count: countNum });
+            resolve({ PDF, name: pdfName, count: countNum, id: reportId });
           })
           .catch((e) => {
             reject(e);

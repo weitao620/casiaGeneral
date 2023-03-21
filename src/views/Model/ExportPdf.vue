@@ -34,8 +34,17 @@
                 src="../../assets/images/report/person3.png"
                 alt=""
               />
-              <span class="dt_blod">手机号：</span>
+              <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
               <span>{{details.phone}}</span>
+            </li>
+            <li>
+              <img
+                class="dt_per4"
+                src="../../assets/images/report/person4.png"
+                alt=""
+              />
+              <span class="dt_blod">出生日期：</span>
+              <span>{{details.birth}}</span>
             </li>
             <li>
               <img
@@ -55,7 +64,7 @@
               <span class="dt_blod">测评次数：</span>
               <span>第{{ details.evaluationTime }}次</span>
             </li>
-            <li>
+            <li style="width:400px">
               <img
                 class="dt_per8"
                 src="../../assets/images/report/person8.png"
@@ -1278,22 +1287,22 @@ export default {
           this.sandUseNumInfoName = selectedData[i].row4
           this.sandUseNumInfoNum = selectedData[i].row5
           this.initEchart();
-          const p = await htmlToZip.getPdfs(this.$refs.sprintSomePdf, selectedData[i].row.name, selectedData[i].row.evaluationTime)
+          const p = await htmlToZip.getPdfs(this.$refs.sprintSomePdf, selectedData[i].row.name, selectedData[i].row.evaluationTime, this.iList[i].reportId)
           promises.push(p)
         }
         // 等到所有的promise执行完成依次压缩到zip中
         Promise.all(promises).then(async (pdfs) => {
           for (let i = 0; i < pdfs.length; i++) {
-            const { PDF, name, count } = pdfs[i]
+            const { PDF, name, count, id } = pdfs[i]
             // 如果只是导出一个pdf，则导出pdf格式
             if (pdfs.length === 1) {
-              PDF.save(`${name}-第${count}次-${new Date().getTime()}.pdf`)
+              PDF.save(`${name}-第${count}次-${id}.pdf`)
               setTimeout(() => {
                 this.loading.close()
               }, 1000);
             } else {
               // 否则添加到压缩包里面
-              await zip.file(`${name}-第${count}次-${new Date().getTime()}.pdf`, PDF.output('blob'))
+              await zip.file(`${name}-第${count}次-${id}.pdf`, PDF.output('blob'))
             }
           }
           if (pdfs.length > 1) {

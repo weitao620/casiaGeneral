@@ -163,6 +163,11 @@
               :label="fid30207.fieldName"
             >
             </el-table-column>
+            <el-table-column
+              prop="birth"
+              label="出生日期"
+            >
+            </el-table-column>
             <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column>
             <el-table-column prop="mark" label="错误提示">
               <template slot-scope="scope">
@@ -373,11 +378,13 @@ export default {
             });
           }
           outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+          console.log(outdata)
           let str = [
             "用户账号导入数据",
             "__EMPTY",
             "__EMPTY_1",
-            "__EMPTY_2"
+            "__EMPTY_2",
+            "__EMPTY_3"
           ];
           let listNew = [];
           outdata.map(item => {
@@ -387,6 +394,7 @@ export default {
                 name: "",
                 passport: "",
                 gender: "",
+                birth: "",
                 phone: "",
                 row: obj.__rowNum__ + 1
               };
@@ -398,15 +406,19 @@ export default {
                   objs.gender = obj[key];
                 }
                 if (key == str[2]) {
-                  objs.phone = obj[key];
+                  objs.birth = that.formatDate(obj[key], '/');
                 }
                 if (key == str[3]) {
+                  objs.phone = obj[key];
+                }
+                if (key == str[4]) {
                   objs.passport = String(obj[key]).replace(/\s+/g, '');
                 }
               }
               if (
                 objs.name == "" &&
                 objs.gender == "" &&
+                objs.birth == "" &&
                 objs.passport == "" &&
                 objs.phone == ""
               ) {
@@ -424,6 +436,16 @@ export default {
               }
               if (listNew[i].gender == "") {
                 listNew[i].mark.push("性别为必填项！");
+              }
+              if (
+                listNew[i].birth != "" &&
+                (listNew[i].birth.indexOf("年") == -1 ||
+                  listNew[i].birth.indexOf("月") == -1 ||
+                  listNew[i].birth.indexOf("日") == -1)
+              ) {
+                listNew[i].mark.push(
+                  "出生日期格式有误(例:2000年01月01日)"
+                );
               }
               if (listNew[i].passport == "") {
                 listNew[i].mark.push("登录账号为必填项！");
@@ -446,6 +468,21 @@ export default {
         reader.readAsArrayBuffer(f);
       } else {
         reader.readAsBinaryString(f);
+      }
+    },
+    formatDate(numb, format) {
+      console.log(numb)
+      if (String(numb).indexOf('年') != -1) {
+        return numb
+      } else {
+        const time = new Date((numb) * 24 * 3600000 + 1)
+        time.setYear(time.getFullYear() - 70)
+        const year = time.getFullYear() + ''
+        const month = time.getMonth() + 1 + ''
+        const date = time.getDate() - 1 + ''
+        if (format && format.length === 1) {
+          return year + '年' + month + '月' + date + "日"
+        }
       }
     },
     updataExcel() {
@@ -570,10 +607,21 @@ export default {
         }
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
+        let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
+        let birthArr = birthStr.split(',')
+        for (let i in birthArr) {
+          if (birthArr[i] < 13) {
+            if (birthArr[i] < 10 && birthArr[i].indexOf('0') == -1) {
+              birthArr[i] = "0" + birthArr[i]
+            }
+          }
+        }
+        let birth = birthArr.join("")
         let vObj = {
           passport: this.visibleList[i].passport,
           password: passwordStr,
           name: this.visibleList[i].name,
+          birth: birth,
           department: this.visibleList[i].department,
           departmentName: this.visibleList[i].departmentName,
           gender: genstr,
@@ -992,10 +1040,16 @@ export default {
           col:nth-child(2) {
             width: 1.2rem;
           }
-          col:nth-child(7) {
-            width: 2rem;
+          col:nth-child(4) {
+            width: 0.7rem;
+          }
+          col:nth-child(6) {
+            width: 1.4rem;
           }
           col:nth-child(8) {
+            width: 1.8rem;
+          }
+          col:nth-child(9) {
             width: 0;
           }
         }
