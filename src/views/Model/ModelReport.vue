@@ -34,9 +34,19 @@
                 src="../../assets/images/report/person3.png"
                 alt=""
               />
-              <span class="dt_blod">手机号：</span>
+              <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
               <span>{{details.phone}}</span>
             </li>
+            <li>
+              <img
+                class="dt_per4"
+                src="../../assets/images/report/person4.png"
+                alt=""
+              />
+              <span class="dt_blod">出生日期：</span>
+              <span>{{details.birth}}</span>
+            </li>
+
             <li>
               <img
                 class="dt_per6"
@@ -55,7 +65,7 @@
               <span class="dt_blod">测评次数：</span>
               <span>第{{ details.evaluationTime }}次</span>
             </li>
-            <li>
+            <li style="width:400px">
               <img
                 class="dt_per8"
                 src="../../assets/images/report/person8.png"
@@ -1200,7 +1210,7 @@ export default {
   methods: {
     ...mapMutations(["setPersonFlag"]),
     downloadSprintTestReport() {
-      this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + new Date().getTime());
+      this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
         this.setPersonFlag(false)
       })

@@ -165,6 +165,15 @@
               <span class="dt_blod">手机号：</span>
               <span>{{ details.phone }}</span>
             </li>
+            <li style="width:3rem">
+              <img
+                class="dt_per4"
+                src="../../assets/images/report/person4.png"
+                alt=""
+              />
+              <span class="dt_blod">出生日期：</span>
+              <span>{{ details.birth }}</span>
+            </li>
           </ul>
           <ul>
             <li style="width:3rem">
@@ -2482,6 +2491,7 @@ export default {
             }
             console.log(data.data)
             data.data.personalitySubDim2 = perList
+            data.data.reportId = that.reportId
             that.details = that.justInfo(data.data);
             that.getBird()
             that.myChartInit();
@@ -4257,7 +4267,7 @@ export default {
           display: flex;
           flex-wrap: wrap;
           li {
-            padding: 0.16rem 0;
+            padding: 0.1rem 0;
             text-align: left;
             display: flex;
             align-items: center;
