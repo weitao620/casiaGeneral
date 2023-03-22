@@ -165,7 +165,8 @@
             </el-table-column>
             <el-table-column
               prop="birth"
-              label="出生日期"
+              :render-header="renderHeader"
+               :label="fid30210.fieldName"
             >
             </el-table-column>
             <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column>
@@ -229,6 +230,17 @@ export default {
         ifModify: 1,
         ifRequired: 1,
         required: 0
+      },
+      fid30210: {
+        enable: 1,
+        fieldId: 30210,
+        fieldName: "出生日期",
+        fieldType: "筛选框",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 1,
+        ifRequired: 0,
+        required: 1
       }
     };
   },
@@ -257,6 +269,9 @@ export default {
                 }
                 if (datas[i].fieldId == 30205) {
                   this.fid30205 = datas[i]
+                }
+                if (datas[i].fieldId == 30210) {
+                  this.fid30210 = datas[i]
                 }
               }
             } else {
@@ -406,7 +421,8 @@ export default {
                   objs.gender = obj[key];
                 }
                 if (key == str[2]) {
-                  objs.birth = that.formatDate(obj[key], '/');
+                  objs.birth = String(obj[key])
+                  // objs.birth = that.formatDate(obj[key], '/');
                 }
                 if (key == str[3]) {
                   objs.phone = obj[key];
@@ -436,6 +452,12 @@ export default {
               }
               if (listNew[i].gender == "") {
                 listNew[i].mark.push("性别为必填项！");
+              }
+              if (
+                listNew[i].birth == "") {
+                listNew[i].mark.push(
+                  "出生日期为必填项！"
+                );
               }
               if (
                 listNew[i].birth != "" &&
