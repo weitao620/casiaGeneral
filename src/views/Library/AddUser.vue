@@ -890,6 +890,12 @@ export default {
         .el-textarea {
           width: 3.5rem;
         }
+        .el-input--prefix .el-input__inner{
+          padding-left: 0.3rem;
+        }
+        .el-input--suffix .el-input__inner{
+          padding-right: 0.3rem;
+        }
       }
       .el-input__inner {
         height: 0.36rem;

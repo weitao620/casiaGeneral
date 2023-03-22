@@ -46,16 +46,6 @@
               <span class="dt_blod">出生日期：</span>
               <span>{{details.birth}}</span>
             </li>
-
-            <li>
-              <img
-                class="dt_per6"
-                src="../../assets/images/report/person6.png"
-                alt=""
-              />
-              <span class="dt_blod">所属部门：</span>
-              <span>{{details.departmentName}}</span>
-            </li>
             <li>
               <img
                 class="dt_per7"
@@ -64,6 +54,15 @@
               />
               <span class="dt_blod">测评次数：</span>
               <span>第{{ details.evaluationTime }}次</span>
+            </li>
+            <li>
+              <img
+                class="dt_per6"
+                src="../../assets/images/report/person6.png"
+                alt=""
+              />
+              <span class="dt_blod">所属部门：</span>
+              <span>{{details.departmentName}}</span>
             </li>
             <li style="width:400px">
               <img
@@ -2624,9 +2623,10 @@ export default {
             margin-right: 9px;
           }
           .dt_per6{
-            width: 16px;
-            height: 17px;
-            margin-right: 13px;
+            width: 18px;
+            height: 19px;
+            margin-right: 10px;
+            margin-left: 2px;
           }
           .dt_per7{
             width: 19px;
@@ -2639,16 +2639,16 @@ export default {
             margin-right: 11px;
           }
         }
-        li:nth-child(3n+1){
-          width: 290px;
-          padding-right:10px;
+        li:nth-child(2n+1){
+          width: 45%;
+          // padding-right:10px;
         }
-        li:nth-child(3n+2){
-          width: 270px;
+        li:nth-child(2n+2){
+          width: 55%;
         }
-        li:nth-child(3n+3){
-          width: 330px;
-        }
+        // li:nth-child(3n+3){
+        //   width: 40%;
+        // }
       }
     }
   }
