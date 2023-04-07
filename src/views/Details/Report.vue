@@ -4856,7 +4856,7 @@ export default {
                 margin-left: -0.7rem;
                 left: 0;
                 bottom: 0;
-                top: 0.88rem;
+                top: 0.78rem;
                 width: 1.4rem;
                 height: 0.59rem;
                 display: flex;
