@@ -448,7 +448,8 @@ export default {
       personalityFlag: 0,
       chart1List: [],
       piePrect: [],
-      pieName: []
+      pieName: [],
+      screenWidth: document.body.clientWidth
     };
   },
   created() {
@@ -456,6 +457,12 @@ export default {
   },
   mounted() {
     let that = this;
+    window.onresize = () => {
+      return (() => {
+        window.screenWidth = document.body.clientWidth
+        that.screenWidth = window.screenWidth
+      })()
+    }
     this.auth();
   },
   methods: {
@@ -687,10 +694,10 @@ export default {
                   setTimeout(() => {
                     this.myTxtFlag = true;
                   }, 500);
+
                   this.myChart.resize();
                   this.myChartPie.resize();
                   this.myChartZero.resize();
-                  this.myChartGauge.resize();
                   this.myChartLine.resize();
                 }, 100);
               });
@@ -931,6 +938,12 @@ export default {
     },
     draw() {
       let that = this;
+      // 当前视口宽度
+      let nowClientWidth = document.documentElement.clientWidth;
+      // 换算方法
+      let nowSize = function (val, initWidth = 1920) {
+        return val * (nowClientWidth / initWidth);
+      };
       this.myChartGauge = echarts.init(this.$refs.myChartGauge);
       this.myChartGauge.setOption({
         series: [
@@ -943,24 +956,24 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                width: 3,
+                width: nowSize(3),
                 opacity: 0
               }
             },
             anchor: {
               show: true,
               showAbove: true,
-              size: 6,
+              size: nowSize(6),
               itemStyle: {
                 borderColor: "transparent",
-                borderWidth: 3
+                borderWidth: nowSize(3)
               }
             },
             title: { show: false },
             detail: {
               show: true,
               valueAnimation: true,
-              fontSize: 24,
+              fontSize: nowSize(24),
               color: "#006CFF",
               offsetCenter: [0, "30%"],
               formatter: function(value) {
@@ -970,11 +983,11 @@ export default {
             },
             splitLine: { show: false },
             axisTick: {
-              length: 16,
+              length: nowSize(15),
               splitNumber: Math.ceil((1 - value) * splitCount),
               lineStyle: {
                 color: "#E6EDFF",
-                width: 1.5
+                width: nowSize(2)
               }
             },
             axisLabel: { show: false },
@@ -1016,7 +1029,7 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                width: 1.5,
+                width: nowSize(2),
                 opacity: 0
               }
             },
@@ -1045,7 +1058,7 @@ export default {
                   ],
                   globalCoord: false
                 },
-                width: 1.5
+                width: nowSize(2)
               }
             },
             axisLabel: { show: false },
@@ -1067,7 +1080,7 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                width: 1.5,
+                width: nowSize(2),
                 opacity: 0
               }
             },
@@ -1096,7 +1109,7 @@ export default {
                   ],
                   globalCoord: false
                 },
-                width: 1.5
+                width: nowSize(2)
               }
             },
             axisLabel: { show: false },
@@ -1120,7 +1133,7 @@ export default {
           axisPointer: {
             type: "shadow",
             shadowStyle: {
-              width: "35px",
+              width: nowSize(35),
               color: "rgba(72, 117, 174, 0.25)"
             }
           },
@@ -1161,14 +1174,14 @@ export default {
               emphasis: {
                 show: false,
                 textStyle: {
-                  fontSize: "14"
+                  fontSize: nowSize(14)
                 },
                 color: "#5B6C89",
                 formatter: "累计预警频次\n{hr|{c}次}",
                 rich: {
                   hr: {
                     color: "#51A7FF",
-                    padding: [0, 0, 6, 0]
+                    padding: [0, 0,  nowSize(6), 0]
                   }
                 }
               }
@@ -1176,7 +1189,7 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                fontSize: "30",
+                fontSize: nowSize(30),
                 fontWeight: "bold"
               }
             },
@@ -1192,7 +1205,7 @@ export default {
       this.myChartPie = echarts.init(this.$refs.myChartPie);
       this.myChartPie.setOption({
         tooltip: {
-          padding: 10,
+          padding: nowSize(10),
           axisPointer: {
             type: "shadow"
           },
@@ -1280,9 +1293,9 @@ export default {
           left: "center",
           bottom: "0",
           icon: "circle",
-          itemWidth: 10,
-          itemHeight: 10,
-          itemGap: 40,
+          itemWidth: nowSize(10),
+          itemHeight: nowSize(10),
+          itemGap: nowSize(40),
           textStyle: {
             color: "#354B70"
           },
@@ -1295,7 +1308,7 @@ export default {
             color: ["rgba(0,117,255,0.1)"],
             emphasis: {
               lineStyle: {
-                width: 2,
+                width: nowSize(2),
                 color: "rgba(0, 117, 255, 0.6)"
               }
             },
@@ -1333,7 +1346,7 @@ export default {
                   }
                 },
                 lineStyle: {
-                  width: 3
+                  width: nowSize(3)
                 }
               }
             ]
@@ -1344,6 +1357,13 @@ export default {
       // 预警指标分析
       this.myChartZero = echarts.init(this.$refs.myChartZero);
       this.myChartZero.setOption({
+        grid: {
+          left: nowSize(20),
+          top: nowSize(40),
+          right: nowSize(20),
+          bottom: nowSize(10),
+          containLabel: true
+        },
         xAxis: {
           type: "value",
           max: 100,
@@ -1419,7 +1439,7 @@ export default {
             name: "男",
             type: "bar",
             stack: "total",
-            barWidth: 20,
+            barWidth: nowSize(20),
             label: {
               show: true,
               color: "#ffffff",
@@ -1472,6 +1492,11 @@ export default {
       this.myChartZero.resize();
       this.myChartGauge.resize();
       this.myChartLine.resize();
+    },
+    screenWidth(val) {
+      this.screenWidth = val;
+      this.draw()
+      this.myChartGauge.resize();
     }
   }
 };
