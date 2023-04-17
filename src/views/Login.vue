@@ -155,7 +155,7 @@ export default {
                 }
               }
               localStorage.setItem("userAuth", data.data.userAuth);
-              localStorage.setItem("userType", data.data.type);
+              localStorage.setItem("userType", 1);
               localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
               if (that.ruleForm.remember) {
                 localStorage.setItem("loginData", JSON.stringify(that.ruleForm));

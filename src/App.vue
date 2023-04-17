@@ -78,7 +78,7 @@ export default {
               }
             }
             localStorage.setItem("userAuth", data.data.userAuth);
-            localStorage.setItem("userType", data.data.type);
+            localStorage.setItem("userType", 1);
             localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
           } else {
             that.$message.error(data.msg);

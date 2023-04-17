@@ -36,9 +36,10 @@
           :inline="true"
           ref="formSearch"
           :model="formSearch"
-          class="search_form"
+          class="search_form search_form0"
         >
-          <el-form-item label="姓名:" prop="name">
+          <el-form-item  prop="name" class="sf_name">
+            <label slot="label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
             <el-input
               v-model="formSearch.name"
               placeholder="请输入姓名"
@@ -73,6 +74,15 @@
               end-placeholder="结束日期"
             >
             </el-date-picker>
+          </el-form-item>
+          <el-form-item prop="warning" label="评估结果:">
+            <el-select v-model="formSearch.warning" placeholder="全部">
+              <el-option label="全部" :value="4"></el-option>
+              <el-option label="正常" :value="0"></el-option>
+              <el-option label="轻度预警" :value="1"></el-option>
+              <el-option label="中度预警" :value="2"></el-option>
+              <el-option label="重度预警" :value="3"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -115,9 +125,11 @@
           </el-form-item>
           <el-form-item prop="warning" label="评估结果:">
             <el-select v-model="formSearchYou.warning" placeholder="全部">
-              <el-option label="全部" value=""></el-option>
-              <el-option label="正常" value="0"></el-option>
-              <el-option label="需关注" value="1"></el-option>
+              <el-option label="全部" :value="4"></el-option>
+              <el-option label="正常" :value="0"></el-option>
+              <el-option label="轻度预警" :value="1"></el-option>
+              <el-option label="中度预警" :value="2"></el-option>
+              <el-option label="重度预警" :value="3"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -237,11 +249,17 @@
             </el-table-column>
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
-                <div class="primary_g" v-if="scope.row.warning == 0">
+                <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
-                <div class="primary_r" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">需关注</el-button>
+                <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
+                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                </div>
+                <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
+                  <el-button type="danger" plain size="small">中度预警</el-button>
+                </div>
+                <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
+                  <el-button type="danger" plain size="small">重度预警</el-button>
                 </div>
               </template>
             </el-table-column>
@@ -305,11 +323,17 @@
             </el-table-column>
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
-                <div class="primary_g" v-if="scope.row.warning == 0">
+                <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
-                <div class="primary_r" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">需关注</el-button>
+                <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
+                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                </div>
+                <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
+                  <el-button type="danger" plain size="small">中度预警</el-button>
+                </div>
+                <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
+                  <el-button type="danger" plain size="small">重度预警</el-button>
                 </div>
               </template>
             </el-table-column>
@@ -454,17 +478,18 @@ export default {
         name: "",
         passport: "",
         department: "",
-        level: "",
-        grade: "",
-        class: "",
-        time: ""
+        // level: "",
+        // grade: "",
+        // class: "",
+        time: "",
+        warning: 4
       },
       formSearchYou: {
         name: "",
         passport: "",
         department: "",
         time: "",
-        warning: ""
+        warning: 4
       },
       tableData: [],
 
@@ -692,7 +717,7 @@ export default {
               }
             }
             localStorage.setItem("userAuth", data.data.userAuth);
-            localStorage.setItem("userType", data.data.type);
+            localStorage.setItem("userType", 1);
             localStorage.setItem(
               "algTypes",
               JSON.stringify(data.data.algTypes)
@@ -893,6 +918,7 @@ export default {
         } else {
           frameArr = this.formSearch.department;
         }
+        let warns = that.formSearch.warning;
         console.log(frameArr);
         param = {
           currentPage: page,
@@ -903,6 +929,7 @@ export default {
           departments: frameArr,
           startDate: star,
           endDate: end,
+          warning: warns,
           userAuth: localStorage.getItem("userAuth")
         };
       } else {
@@ -914,12 +941,12 @@ export default {
             that.formTimes(that.formSearchYou.time[1]).replace(/-/g, "") +
             "235959";
         }
-        let warns = "";
-        if (that.formSearchYou.warning == "") {
-          warns = 2;
-        } else {
-          warns = that.formSearchYou.warning;
-        }
+        let warns = that.formSearchYou.warning;
+        // if (that.formSearchYou.warning == "") {
+        //   warns = 2;
+        // } else {
+        // warns = that.formSearchYou.warning;
+        // }
         param = {
           currentPage: page,
           pageSize: that.limit,
@@ -2685,6 +2712,7 @@ export default {
       background: linear-gradient(261deg, #8fb1d7, #b8d5f5);
       box-shadow: 0px 2px 10px 0px rgba(171, 196, 227, 0.45);
     }
+    
     // 搜索项
     .el-form--inline {
       .el-form-item {
@@ -2741,6 +2769,23 @@ export default {
           }
         }
       }
+    }
+    .search_form0{
+      .el-form-item {
+        .el-form-item__content {
+          width: 2.4rem;
+        }
+        .time_data {
+          .el-input__inner {
+            width: 2.9rem !important;
+            padding-left: 0.2rem !important;
+          }
+          .el-form-item__content {
+            width: 2.9rem;
+          }
+        }
+      }
+      
     }
   }
   // 表格
@@ -2873,13 +2918,13 @@ export default {
         //   width: 1.4rem;
         // }
         col:nth-child(7) {
-          width: 1rem;
+          width: 0.8rem;
         }
         col:nth-child(8) {
           width: 1.5rem;
         }
         col:nth-child(9) {
-          width: 0.8rem;
+          width: 1rem;
         }
         col:nth-child(10) {
           width: 1.8rem;
@@ -2890,15 +2935,18 @@ export default {
       }
       .primary_g,
       .primary_r {
-        width: 0.6rem;
-        height: 0.24rem;
+        width: auto;
+        max-width: 0.9rem;
+        height: 0.32rem;
         line-height: 1;
         margin: 0 auto;
-        background: linear-gradient(
-          45deg,
-          rgba(196, 236, 255, 1) 0%,
-          rgba(151, 205, 255, 1) 100%
-        );
+        background: #ffffff;
+        // background: linear-gradient(
+        //   45deg,
+        //   rgba(196, 236, 255, 1) 0%,
+        //   rgba(151, 205, 255, 1) 100%
+        // );
+        color: #006CFF;
         padding: 1px;
         border-radius: 0.02rem;
         .el-button--primary.is-plain,
@@ -2915,21 +2963,73 @@ export default {
         .el-button--primary.is-plain,
         .el-button--primary.is-plain:focus,
         .el-button--primary.is-plain:hover {
-          color: #006cff;
+          // color: #006cff;
+          background: transparent !important;
         }
         .el-button--danger.is-plain,
         .el-button--danger.is-plain:focus,
         .el-button--danger.is-plain:hover {
-          color: #ff8854;
+          // color: #ff8854;
+          background: transparent !important;
         }
       }
-      .primary_r {
-        background: linear-gradient(
-          45deg,
-          rgba(253, 186, 133, 1) 0%,
-          rgba(255, 126, 117, 1) 100%
-        );
+      .primary_r0{
+        color:#006cff !important;
+        background: rgba(0, 108, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #006cff !important;
+        }
       }
+      .primary_r1 {
+        color: #6671FF !important;
+        background: rgba(102, 113, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #6671FF !important;
+        }
+      }
+      .primary_r2 {
+        color: #D674FF !important;
+        background: rgba(214, 116, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #D674FF !important;
+        }
+      }
+      .primary_r3 {
+        color: #FE5FB8 !important;
+        background: rgba(254, 95, 184, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #FE5FB8 !important;
+        }
+      }
+      // .primary_r {
+      //   background: linear-gradient(
+      //     45deg,
+      //     rgba(253, 186, 133, 1) 0%,
+      //     rgba(255, 126, 117, 1) 100%
+      //   );
+      // }
+      // .primary_r2 {
+      //   background: linear-gradient(
+      //     45deg,
+      //     rgba(253, 186, 133, 1) 0%,
+      //     rgba(255, 126, 117, 1) 100%
+      //   );
+      // }
+      // .primary_r3 {
+      //   background: linear-gradient(
+      //     45deg,
+      //     rgba(253, 186, 133, 1) 0%,
+      //     rgba(255, 126, 117, 1) 100%
+      //   );
+      // }
     }
     .ykClas {
       .el-table__header,

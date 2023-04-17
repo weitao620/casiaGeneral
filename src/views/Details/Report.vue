@@ -265,13 +265,28 @@
               {{ details.warningNum }}项
             </div>
             <div class="c_o_my_num c_red" v-show="myTxtFlag">
-              需关注
+              预警
             </div>
           </div>
           <div class="dtmcl_sys">
             <div class="dtmcl_du dtmcl_du1">
-              <img src="../../assets/images/report/icon2.png" alt="" />
-              <span>风险评估</span>
+              <img v-if="details.warning == 0" src="../../assets/images/report/per_i0.png" alt="" />
+              <img v-if="details.warning == 1" src="../../assets/images/report/per_i1.png" alt="" />
+              <img v-if="details.warning == 2" src="../../assets/images/report/per_i2.png" alt="" />
+              <img v-if="details.warning == 3" src="../../assets/images/report/per_i3.png" alt="" />
+              <span>总体评估：</span>
+              <div class="wdrjst_res" v-if="details.warning == 0">
+                <span class="wdrjstr_txt wd_col1">正常</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 1">
+                <span class="wdrjstr_txt wd_col2">轻度预警</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 2">
+                <span class="wdrjstr_txt wd_col3">中度预警</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 3">
+                <span class="wdrjstr_txt wd_col4">重度预警</span>
+              </div>
             </div>
             <div v-if="details.reportWarningInfo">
               <div
@@ -909,11 +924,11 @@
                   <div v-if="index == 1" id="myChartPies2" class="myChartPies2" ref="myChartPies2"></div>
                   <div v-if="index == 2" id="myChartPies3" class="myChartPies3" ref="myChartPies3"></div>
                 </div>
-                <ul class="dtmsb_ulc">
+                <!-- <ul class="dtmsb_ulc">
                   <li>
                     <img src="../../assets/images/report/fwLine.png" alt="" />
                   </li>
-                </ul>
+                </ul> -->
               </div>
               <div class="dtmcr_bts">
                 <div class="db_img" :style="{ color: item.txtColor }">
@@ -1024,20 +1039,21 @@
               <span>评估结果</span>
               <div class="wdrjst_res" v-if="item.levelNum == 0">
                 <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">低风险</span>
+                <span class="wdrjstr_txt wd_col1">正常</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 1">
                 <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">中风险</span>
+                <span class="wdrjstr_txt wd_col2">轻度预警</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 2">
                 <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">高风险</span>
+                <span class="wdrjstr_txt wd_col3">中度预警</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 3">
                 <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">极高风险</span>
+                <span class="wdrjstr_txt wd_col4">重度预警</span>
               </div>
+              
             </div>
           </div>
           <div class="dtmsb_tar">
@@ -1077,13 +1093,13 @@
               <div v-if="item.title == '自杀' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
               <div v-if="item.title == '自杀' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
             </div>
-            <ul class="dtmsb_ulc">
+            <!-- <ul class="dtmsb_ulc">
               <li>
                 <img src="../../assets/images/report/fwLine.png" alt="" />
               </li>
-            </ul>
+            </ul> -->
           </div>
-          <div class="wdrj_suger" style="margin-top:1rem">
+          <div class="wdrj_suger" style="margin-top:0.3rem">
             <div class="wdrjs_title">
               <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
             </div>
@@ -1197,7 +1213,25 @@
           </div>
         </div>
       </div>
+      <div class="dtm_title dtm_title1" style=" height: auto;margin: 0 auto 0.62rem">
+        补充说明
+      </div>
+      <div class="wdrj_box">
+        <div class="wdrj_main">
+          <!-- <div class="wdrj_title" >
+            <img src="../../assets/images/report/f_icon6.png" alt="" />
+            补充说明
+          </div> -->
+          <div class="wm_text">
+            <el-input v-if="!assessmentFlag" placeholder="请填写" :autosize="{ minRows: 5}" type="textarea" v-model="assessment" @input="noteChange" maxlength="300" show-word-limit></el-input>
+            <el-input v-else  disabled :autosize="{ minRows: 5}" type="textarea" v-model="assessment"></el-input>
+            <el-button type="primary" v-if="!assessmentFlag" @click="recordSub">提交</el-button>
+            <el-button type="primary primary1" v-if="assessmentFlag" @click="assessmentFlag = !assessmentFlag">编辑</el-button>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="dt_mains2" v-show="reviewFlag">
       <div class="dtm_title" ref="parts11">
         图片回顾
@@ -1415,6 +1449,9 @@ export default {
   },
   data() {
     return {
+
+      assessment: '',
+      assessmentFlag: false,
       birdViewImg: '',
       actionInfo: [],
       limit: 30,
@@ -1608,6 +1645,73 @@ export default {
   },
   methods: {
     ...mapMutations(["setPersonFlag"]),
+    noteChange(val) {
+      console.log(val)
+
+      let row = 0
+      val.split('\n').forEach(item => {
+        // if (item.length === 0) {
+        row += 1
+        // } else {
+        //   row += Math.ceil(item.replace())
+        // }
+      });
+      console.log(row)
+      if (row > 10) {
+        this.assessment = val.split('\n').slice(0, 10).join('\n')
+        this.$message({
+          type: "warning",
+          message: "最多不能超过10行!"
+        });
+      } else {
+        this.assessment = val
+      }
+      console.log(this.assessment)
+    },
+    recordSub() {
+      let that = this;
+      
+      let param = {
+        reportId: that.reportId,
+        note: that.assessment
+      }
+      console.log(param)
+      // return
+      this.$http
+        .put(Url + "/aimw/report/updateNote", param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            if (that.assessment != '') {
+              this.assessmentFlag = true
+              this.$message({
+                type: "success",
+                message: "补充说明提交成功!"
+              });
+            } else {
+              that.$message({
+                type: "success",
+                message: "补充说明已清空!"
+              })
+              this.assessmentFlag = false
+            }
+            // this.record.unshift({
+            //   name: param.name,
+            //   dateTime: param.datetime,
+            //   info: param.record
+            // })
+            // this.assessment = ''
+            this.$forceUpdate()
+            // console.log(this.record)
+            // that.$router.go(-1)
+          } else {
+            this.$message({
+              type: "error",
+              message: "补充说明提交失败!"
+            });
+          }
+        });
+    },
     pagination(pageNo, pageSize, array) {
       var offset = (pageNo - 1) * pageSize;
       return offset + pageSize >= array.length
@@ -2494,6 +2598,15 @@ export default {
             console.log(data.data)
             data.data.personalitySubDim2 = perList
             data.data.reportId = that.reportId
+            // data.data.note = '111222'
+            if (data.data.note) {
+              that.assessment = data.data.note
+              if (data.data.note == '') {
+                that.assessmentFlag = false
+              } else {
+                that.assessmentFlag = true
+              }
+            }
             that.details = that.justInfo(data.data);
             that.getBird()
             that.myChartInit();
@@ -4491,11 +4604,15 @@ export default {
           }
         }
         .dtmcl_du1 {
+          
           margin-bottom: 0.12rem;
           img {
             width: 0.23rem;
             height: 0.25rem;
             margin-right: 0.06rem;
+          }
+          span{
+            font-size:0.2rem
           }
         }
         .dtmcl_sys {
@@ -4893,7 +5010,7 @@ export default {
 
         .dtmsb_tar {
           width: 5.25rem;
-          margin: 0.2rem auto 0.5rem;
+          margin: 0.2rem auto 0.3rem;
           position: relative;
           .top_top {
             position: absolute;
@@ -5649,6 +5766,44 @@ export default {
         }
         .wdrj_suger1 {
           margin-top: 0.1rem;
+        }
+        .wm_text{
+          text-align: center;
+          padding: 0;
+          margin: 0.16rem 0 0.16rem;
+          word-break: break-all;
+          .el-button {
+            margin-top: 0.16rem;
+            border: 0.01rem solid #dcdfe6;
+            padding: 0.09rem 0.27rem;
+            font-size: 0.16rem;
+            border-radius: 0.04rem;
+
+            color: #ffffff;
+            background: linear-gradient(263deg, #00c2ff, #0075ff);
+            box-shadow: 0px 3px 18px 0px rgba(62, 150, 253, 0.19);
+          }
+          .primary1{
+            color: #0075ff;
+            border: 0.01rem solid #0075ff !important;
+            background: linear-gradient(263deg, #ffffff, #ffffff);
+            box-shadow: 0px 3px 18px 0px rgba(250, 250, 250, 0.19);
+          }
+          .el-textarea{
+            font-size: 0.16rem;
+            height: 100%;
+            .el-textarea__inner{
+              resize: none;
+              font-size: 0.16rem;
+              color: #354B70;
+              height: 100%;
+              padding: 12px 0.15rem 12px !important;
+            }
+            .el-input__count{
+              bottom: 2px;
+              right: 8px;
+            }
+          }
         }
       }
     }
