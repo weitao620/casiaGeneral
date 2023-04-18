@@ -25,19 +25,25 @@
             style="width: 100%"
             @sort-change="sortChange"
           >
-            <el-table-column type="index" width="80" label="序号">
-            </el-table-column>
+            <!-- <el-table-column prop="index" width="80" label="序号">
+            </el-table-column> -->
             <el-table-column prop="date" label="评估时间"> </el-table-column>
             <el-table-column prop="evaNum" label="第几次箱庭评估">
             </el-table-column>
             <el-table-column prop="evaTime" label="所用时长"> </el-table-column>
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
-                <div class="primary_g" v-if="scope.row.warning == 0">
+                <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
-                <div class="primary_r" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">需关注</el-button>
+                <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
+                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                </div>
+                <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
+                  <el-button type="danger" plain size="small">中度预警</el-button>
+                </div>
+                <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
+                  <el-button type="danger" plain size="small">重度预警</el-button>
                 </div>
               </template>
             </el-table-column>
@@ -56,10 +62,24 @@
             </el-table-column>
           </el-table>
         </template>
-        <div class="table_page">
+        <!-- <div class="table_page">
           <div class="page_total">
             共 <span>{{ total }}</span> 条
           </div>
+        </div> -->
+        <div class="table_page">
+          <div class="page_total">
+            共 <span>{{ total }}</span> 条 , 第
+            <span>{{ currentPage }}/{{ pageNum }}</span> 页
+          </div>
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="limit"
+            layout="prev, pager, next"
+            :total="total"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -375,6 +395,7 @@
 import echarts from "../../assets/js/echarts";
 import Url from "@/assets/js/url.js";
 let reviewDada = [];
+var fuluList = [];
 export default {
   name: "report",
   data() {
@@ -386,8 +407,8 @@ export default {
       tabActive: 1,
       limit: 10,
       total: 0,
-      pageNum: 4,
-      currentPage: 2,
+      pageNum: 1,
+      currentPage: 1,
       formSearchR: {
         time: "",
         name: "",
@@ -426,7 +447,7 @@ export default {
   mounted() {
     this.passport = this.$route.params.userID;
     this.powerData()
-    this.getList();
+    this.getList(1);
     window.addEventListener("resize", () => {
       setTimeout(() => {
         this.myChartZhe1.resize();
@@ -439,6 +460,16 @@ export default {
     });
   },
   methods: {
+    pagination(pageNo, pageSize, array) {
+      var offset = (pageNo - 1) * pageSize;
+      return offset + pageSize >= array.length
+        ? array.slice(offset, array.length)
+        : array.slice(offset, offset + pageSize);
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.tableData = this.pagination(val, this.limit, fuluList);
+    },
     powerData() {
       let algTypes = JSON.parse(localStorage.getItem("algTypes"));
       // 是否显示抑郁
@@ -526,9 +557,13 @@ export default {
       // this.myChartZhe3s();
       // this.myChartZhe4s();
     },
-    getList() {
+    getList(page) {
       let that = this;
+
+      this.currentPage = page;
       let param = {
+        currentPage: page,
+        pageSize: that.limit,
         passport: that.passport
       };
       this.$http
@@ -538,64 +573,76 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            for (let i in data.data) {
-              let tipsNames = "/";
-              let tipsArr = [];
-              if (this.anxietyFlag == 1) {
-                if (
-                  data.data[i].anxietyScore.score > 2
-                ) {
-                  tipsArr.push("焦虑");
+            if (data.data) {
+              for (let i in data.data) {
+                let tipsNames = "/";
+                let tipsArr = [];
+                if (this.anxietyFlag == 1) {
+                  if (
+                    data.data[i].anxietyScore.score > 2
+                  ) {
+                    tipsArr.push("焦虑");
+                  }
                 }
-              }
-              if (this.personalityFlag == 1) {
-                if (
-                  data.data[i].depressionScore.score > 2
-                ) {
-                  tipsArr.push("抑郁");
+                if (this.personalityFlag == 1) {
+                  if (
+                    data.data[i].depressionScore.score > 2
+                  ) {
+                    tipsArr.push("抑郁");
+                  }
                 }
-              }
-              if (this.forcedFlag == 1) {
-                if (
-                  data.data[i].forcedScore.score > 2
-                ) {
-                  tipsArr.push("强迫");
+                if (this.forcedFlag == 1) {
+                  if (
+                    data.data[i].forcedScore.score > 2
+                  ) {
+                    tipsArr.push("强迫");
+                  }
                 }
-              }
-              if (this.suicideFlag == 1) {
-                if (
-                  data.data[i].suicideScore.score > 2
-                ) {
-                  tipsArr.push("自杀");
+                if (this.suicideFlag == 1) {
+                  if (
+                    data.data[i].suicideScore.score > 2
+                  ) {
+                    tipsArr.push("自杀");
+                  }
                 }
-              }
-              if (this.violenceFlag == 1) {
-                if (
-                  data.data[i].violenceScore.score > 2
-                ) {
-                  tipsArr.push("暴力");
+                if (this.violenceFlag == 1) {
+                  if (
+                    data.data[i].violenceScore.score > 2
+                  ) {
+                    tipsArr.push("暴力");
+                  }
                 }
+                if (tipsArr.length > 0) {
+                  tipsNames = tipsArr.join("、") + "水平高";
+                }
+                data.data[i].dateCount = data.data[i].date.split(' ')[0] + " 第" + data.data[i].evaNum + "次";
+                data.data[i].evaTime = that.toHHmmss(data.data[i].evaTime * 1000);
+                data.data[i].tipsName = tipsNames;
               }
-              if (tipsArr.length > 0) {
-                tipsNames = tipsArr.join("、") + "水平高";
+              let sArr = data.data;
+              for (let i in data.data) {
+                data.data[i].index = Number(i) + 1
               }
-              data.data[i].dateCount = data.data[i].date.split(' ')[0] + " 第" + data.data[i].evaNum + "次";
-              data.data[i].evaTime = that.toHHmmss(data.data[i].evaTime * 1000);
-              data.data[i].tipsName = tipsNames;
+              fuluList = JSON.parse(JSON.stringify(data.data));
+              console.log(fuluList)
+              that.total = fuluList.length;
+              that.tableData = this.pagination(1, this.limit, fuluList);
+              that.pageNum = fuluList.length == 0 ? 1 : Math.ceil(fuluList.length / that.limit);
+              reviewDada = data.data;
+              that.chartData = data.data.slice(0, 3);
+              that.starData = data.data;
+              that.endData = data.data;
+              this.myChartZhe1s();
+              this.myChartZhe2s();
+              this.myChartZhe3s();
+              this.myChartZhe4s();
+              this.myChartZhe5s();
+              this.myChartZhe6s();
+            } else {
+              that.tableData = [];
+              that.total = 0;
+              that.pageNum = 1;
             }
-            let sArr = data.data;
-            that.tableData = data.data;
-            that.total = data.data.length
-            reviewDada = data.data;
-            that.chartData = data.data.slice(0, 3);
-            that.starData = data.data;
-            that.endData = data.data;
-            this.myChartZhe1s();
-            this.myChartZhe2s();
-            this.myChartZhe3s();
-            this.myChartZhe4s();
-            this.myChartZhe5s();
-            this.myChartZhe6s();
           } else {
             that.$message.error(data.msg);
           }
@@ -1810,15 +1857,18 @@ export default {
       }
       .primary_g,
       .primary_r {
-        width: 0.6rem;
-        height: 0.24rem;
+        width: auto;
+        max-width: 0.9rem;
+        height: 0.32rem;
         line-height: 1;
         margin: 0 auto;
-        background: linear-gradient(
-          45deg,
-          rgba(196, 236, 255, 1) 0%,
-          rgba(151, 205, 255, 1) 100%
-        );
+        background: #ffffff;
+        // background: linear-gradient(
+        //   45deg,
+        //   rgba(196, 236, 255, 1) 0%,
+        //   rgba(151, 205, 255, 1) 100%
+        // );
+        color: #006CFF;
         padding: 1px;
         border-radius: 0.02rem;
         .el-button--primary.is-plain,
@@ -1835,20 +1885,51 @@ export default {
         .el-button--primary.is-plain,
         .el-button--primary.is-plain:focus,
         .el-button--primary.is-plain:hover {
-          color: #006cff;
+          // color: #006cff;
+          background: transparent !important;
         }
         .el-button--danger.is-plain,
         .el-button--danger.is-plain:focus,
         .el-button--danger.is-plain:hover {
-          color: #ff8854;
+          // color: #ff8854;
+          background: transparent !important;
         }
       }
-      .primary_r {
-        background: linear-gradient(
-          45deg,
-          rgba(253, 186, 133, 1) 0%,
-          rgba(255, 126, 117, 1) 100%
-        );
+      .primary_r0{
+        color:#006cff !important;
+        background: rgba(0, 108, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #006cff !important;
+        }
+      }
+      .primary_r1 {
+        color: #6671FF !important;
+        background: rgba(102, 113, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #6671FF !important;
+        }
+      }
+      .primary_r2 {
+        color: #D674FF !important;
+        background: rgba(214, 116, 255, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #D674FF !important;
+        }
+      }
+      .primary_r3 {
+        color: #FE5FB8 !important;
+        background: rgba(254, 95, 184, 0.1) !important;
+        .el-button.is-plain,
+        .el-button.is-plain:focus,
+        .el-button.is-plain:hover {
+          color: #FE5FB8 !important;
+        }
       }
     }
     // 底部分页

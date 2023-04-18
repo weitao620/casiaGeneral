@@ -116,7 +116,7 @@
           <div class="myChartTips">
             <p>{{ details.warningNum }}项</p>
             <p class="c_o_my_num c_red">
-              需关注
+              预警
             </p>
           </div>
         </div>
@@ -127,13 +127,32 @@
           </div>
         </div>
         <div class="gp2b_tips">
-          <img src="../../assets/images/model/m_002.png" alt="" style="margin-left:48px;margin-right:12px;">
+          <!-- <div class="dtmcl_du dtmcl_du1"> -->
+            <img  v-if="details.warning == 0" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i0.png" alt="" />
+            <img v-if="details.warning == 1" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i1.png" alt="" />
+            <img v-if="details.warning == 2" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i2.png" alt="" />
+            <img v-if="details.warning == 3" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i3.png" alt="" />
+            <span>总体评估：</span>
+            <div class="wdrjst_res" v-if="details.warning == 0">
+              <span class="wdrjstr_txt wd_col1">正常</span>
+            </div>
+            <div class="wdrjst_res" v-if="details.warning == 1">
+              <span class="wdrjstr_txt wd_col2">轻度预警</span>
+            </div>
+            <div class="wdrjst_res" v-if="details.warning == 2">
+              <span class="wdrjstr_txt wd_col3">中度预警</span>
+            </div>
+            <div class="wdrjst_res" v-if="details.warning == 3">
+              <span class="wdrjstr_txt wd_col4">重度预警</span>
+            </div>
+          <!-- </div> -->
+          <!-- <img src="../../assets/images/model/m_002.png" alt="" style="margin-left:48px;margin-right:12px;">
           <p>
             总体评估：
           </p>
           <p class="c_o_my_num c_red" v-if="details.warningNum != 0">
             需关注
-          </p>
+          </p> -->
         </div>
         <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
           <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
@@ -340,11 +359,11 @@
                 ref="myChartPies11"
               ></div>
             </div>
-            <ul class="dtmsb_ulc">
+            <!-- <ul class="dtmsb_ulc">
               <li>
                 <img src="../../assets/images/report/fwLine.png" alt="" />
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="dtmcr_bts">
             <div class="db_img" :style="{ color: details.sysList[0].txtColor }">
@@ -445,11 +464,11 @@
                 ref="myChartPies22"
               ></div>
             </div>
-            <ul class="dtmsb_ulc">
+            <!-- <ul class="dtmsb_ulc">
               <li>
                 <img src="../../assets/images/report/fwLine.png" alt="" />
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="dtmcr_bts">
             <div class="db_img" :style="{ color: details.sysList[1].txtColor }">
@@ -553,11 +572,11 @@
                 ref="myChartPies33"
               ></div>
             </div>
-            <ul class="dtmsb_ulc">
+            <!-- <ul class="dtmsb_ulc">
               <li>
                 <img src="../../assets/images/report/fwLine.png" alt="" />
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="dtmcr_bts">
             <div class="db_img" :style="{ color: details.sysList[2].txtColor }">
@@ -672,19 +691,19 @@
               <span>评估结果</span>
               <div class="wdrjst_res" v-if="item.levelNum == 0">
                 <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">低风险</span>
+                <span class="wdrjstr_txt wd_col1">正常</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 1">
                 <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">中风险</span>
+                <span class="wdrjstr_txt wd_col2">轻度预警</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 2">
                 <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">高风险</span>
+                <span class="wdrjstr_txt wd_col3">中度预警</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 3">
                 <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">极高风险</span>
+                <span class="wdrjstr_txt wd_col4">高度预警</span>
               </div>
             </div>
           </div>
@@ -725,11 +744,11 @@
               <div v-if="item.title == '自杀' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
               <div v-if="item.title == '自杀' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
             </div>
-            <ul class="dtmsb_ulc">
+            <!-- <ul class="dtmsb_ulc">
               <li>
                 <img src="../../assets/images/report/fwLine.png" alt="" />
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="wdrj_suger">
             <div class="wdrjs_title">
@@ -956,6 +975,16 @@
         <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
         <span class="gp2_t_txt">附录</span>
         <span class="gp2_t_eng">Appendix</span>
+      </div>
+      <div class="gp5_img_tle" v-if="details.note != ''">
+        <img src="../../assets/images/model/m_011.png" alt="">
+        <span>补充说明</span>
+        <img src="../../assets/images/model/m_011.png" alt="">
+      </div>
+      <div class="wm_text1" v-if="details.note != ''">
+
+        <div class="wm_note" v-html="details.note"></div>
+        <!-- <el-input  disabled :autosize="{ minRows: 5}" type="textarea" v-model="details.note"></el-input> -->
       </div>
       <div class="gp5_img_tle">
         <img src="../../assets/images/model/m_011.png" alt="">
@@ -1201,7 +1230,6 @@ export default {
     this.initEchart();
     setTimeout(() => {
       this.$nextTick(() => {
-        // this.loading.close()
         this.downloadSprintTestReport()
       })
     }, 800)
@@ -1211,7 +1239,7 @@ export default {
     downloadSprintTestReport() {
       this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
-        this.setPersonFlag(false)
+        // this.setPersonFlag(false)
       })
     },
     initEchart() {
@@ -2493,6 +2521,20 @@ export default {
   }
 };
 </script>
+<style lang="less">
+  .table-class{
+    .el-textarea.is-disabled .el-textarea__inner{
+      background: linear-gradient(0deg, rgba(203, 235, 253, 0.1), rgba(161, 204, 250, 0.1));
+      border-color: rgba(118, 154, 255, 1);
+      color: #333333;
+      cursor: not-allowed;
+      font-size: 20px;
+      color: #354B70;
+      height: 100%;
+      padding: 15px 20px 15px !important;
+    }
+  }
+</style>
 <style lang="less" scoped>
 .table-class {
   display: grid;
@@ -2853,11 +2895,17 @@ export default {
     }
     .gp2b_tips{
       display: flex;
+      align-items: center;
       img{
         width: 22px;
         height: 26px;
         margin-left: 46px;
         margin-right: 10px;
+      }
+      span{
+        font-size: 20px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
       }
       p{
         font-size: 20px;
@@ -3807,6 +3855,26 @@ export default {
     img{
       width: 22px;
       height: 8px;
+    }
+  }
+  .wm_text1{
+    // text-align: right;
+    width: 1060px;
+    padding: 0;
+    margin: 44px auto 60px;
+    word-break: break-all;
+    .wm_note{
+      background: linear-gradient(0deg, rgba(203, 235, 253, 0.1), rgba(161, 204, 250, 0.1));
+      border: 1px solid #769aff;
+      border-radius: 4px;
+      color: #333333;
+      padding: 15px 20px 15px !important;
+      resize: none;
+      font-size: 20px;
+      height: auto;
+      white-space: pre-wrap;
+      text-align: left;
+      max-height: 310px;
     }
   }
   .gp5_img_ul{

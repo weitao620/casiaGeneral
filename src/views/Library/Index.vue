@@ -172,14 +172,22 @@
               </div>
             </div>
             <div class="myChartLine" id="myChartLine" ref="myChartLine"></div>
-            <div class="center_pie">
+            <div class="center_pie" style="justify-content: center;">
               <div class="c_pie_li">
-                <span class="c_pie_th c_th0"></span>
+                <span class="c_pie_th c_ths0"></span>
                 测评人数
               </div>
               <div class="c_pie_li">
-                <span class="c_pie_th c_th1"></span>
-                预警人数
+                <span class="c_pie_th c_ths1"></span>
+                轻度预警
+              </div>
+              <div class="c_pie_li">
+                <span class="c_pie_th c_ths2"></span>
+                中度预警
+              </div>
+              <div class="c_pie_li">
+                <span class="c_pie_th c_ths3"></span>
+                重度预警
               </div>
             </div>
           </div>
@@ -332,7 +340,19 @@
               </el-table-column>
               <el-table-column prop="warning" label="评估结果">
                 <template slot-scope="scope">
-                  <div class="primary_r" v-if="scope.row.warning == 1">
+                  <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
+                    <el-button type="primary" plain size="small">正常</el-button>
+                  </div>
+                  <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
+                    <el-button type="danger" plain size="small">轻度预警</el-button>
+                  </div>
+                  <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
+                    <el-button type="danger" plain size="small">中度预警</el-button>
+                  </div>
+                  <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
+                    <el-button type="danger" plain size="small">重度预警</el-button>
+                  </div>
+                  <!-- <div class="primary_r" v-if="scope.row.warning == 1">
                     <el-button type="danger" plain size="small"
                       >需关注</el-button
                     >
@@ -341,7 +361,7 @@
                     <el-button type="primary" plain size="small"
                       >正常</el-button
                     >
-                  </div>
+                  </div> -->
                 </template>
               </el-table-column>
               <el-table-column label="操作">
@@ -459,6 +479,8 @@ export default {
       listT1: [],
       listT2: [],
       listT3: [],
+      listT4: [],
+      listT5: [],
       detail: {
         changePerct: "",
         evaluationCount: "",
@@ -544,7 +566,7 @@ export default {
               }
             }
             localStorage.setItem("userAuth", data.data.userAuth);
-            localStorage.setItem("userType", data.data.type);
+            localStorage.setItem("userType", 1);
             localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
             // 是否显示抑郁
             this.depressionFlag = data.data.algTypes.depression
@@ -857,14 +879,24 @@ export default {
           let listA1 = [];
           let listA2 = [];
           let listA3 = [];
+          let listA4 = [];
+          let listA5 = [];
           for (let i in list) {
             listA1.push(list[i].date.split(" ")[0]);
-            listA2.push(list[i].evaluateNum);
-            listA3.push(list[i].warningNUM);
+            listA2.push(list[i].evaluateNum ? list[i].evaluateNum : 0);
+            listA3.push(list[i].mildWzarningNum ? list[i].mildWzarningNum : 0);
+            listA4.push(list[i].moderateWarningNum ? list[i].moderateWarningNum : 0);
+            listA5.push(list[i].severeWarningNum ? list[i].severeWarningNum : 0);
+            
+            // listA3.push(list[i].warningNUM);
           }
           that.listT1 = listA1;
           that.listT2 = listA2;
           that.listT3 = listA3;
+          that.listT4 = listA4;
+          that.listT5 = listA5;
+          console.log(listA5)
+          // that.listT3 = listA3;
           this.draw1();
         });
     },
@@ -873,9 +905,11 @@ export default {
       var datax = that.listT1;
       var datas1 = that.listT2;
       var datas2 = that.listT3;
+      var datas3 = that.listT4;
+      var datas4 = that.listT5;
       this.myChartLine = echarts.init(this.$refs.myChartLine);
       this.myChartLine.setOption({
-        color: ["#0075FF", "#FD67CA"],
+        color: ["#0075FF", "#6671FF", "#D674FF", "#FE5FB8"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -891,15 +925,25 @@ export default {
               '<div style="border-bottom: 1px solid rgba(255,255,255,.3);font-weight: 600; font-size: 14px;padding-bottom: 0px;margin-bottom: 7px">' +
               obj[0].name +
               "</div>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(0deg, #0075FF 0%, #00C2FF 100%);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(0deg, rgba(124, 192, 255, 1) 0%, rgba(83, 184, 255, 0.7) 100%);border-radius: 50%;margin-right:0.04rem"></span>' +
               "测评人数" +
-              "：<span style='color:#006CFF'>" +
+              "：<span style='color:#0075FF'>" +
               obj[0].value +
               "</span><br>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, #FE5FB8, #FF83DF);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "预警人数" +
-              "：<span style='color:#FE5FB8'>" +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(102, 113, 255, 1), rgba(102, 113, 255, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "轻度预警" +
+              "：<span style='color:#6671FF'>" +
               obj[1].value +
+              "</span><br>" +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(214, 116, 255, 1), rgba(214, 116, 255, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "中度预警" +
+              "：<span style='color:#D674FF'>" +
+              obj[2].value +
+              "</span><br>" +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(254, 95, 184, 1), rgba(254, 95, 184, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "重度预警" +
+              "：<span style='color:#FE5FB8'>" +
+              obj[3].value +
               "</span>"
             );
           }
@@ -960,7 +1004,7 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0.5,
-                    color: "rgba(124, 192, 255, 1)"
+                    color: "rgba(124, 192, 255, 0.1)"
                   },
                   {
                     offset: 1,
@@ -972,30 +1016,82 @@ export default {
             data: datas1
           },
           {
-            name: "预警人数",
+            name: "轻度预警",
             type: "line",
             smooth: true,
             itemStyle: {
-              color: "#FD67CA"
+              color: "#6671FF"
             },
             lineStyle: {
-              color: "#FD67CA"
+              color: "#6671FF"
             },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0.5,
-                    color: "rgba(253, 103, 202, 0.26)"
+                    color: "rgba(102, 113, 255, 0.1)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(233, 232, 232, 0)"
+                    color: "rgba(102, 113, 255, 0)"
                   }
                 ])
               }
             },
             data: datas2
+          },
+          {
+            name: "中度预警",
+            type: "line",
+            smooth: true,
+            itemStyle: {
+              color: "#D674FF"
+            },
+            lineStyle: {
+              color: "#D674FF"
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0.5,
+                    color: "rgba(214, 116, 255, 0.1)"
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(214, 116, 255, 0)"
+                  }
+                ])
+              }
+            },
+            data: datas3
+          },
+          {
+            name: "重度预警",
+            type: "line",
+            smooth: true,
+            itemStyle: {
+              color: "#FE5FB8"
+            },
+            lineStyle: {
+              color: "#FE5FB8"
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0.5,
+                    color: "rgba(254, 95, 184, 0.1)"
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(254, 95, 184, 0)"
+                  }
+                ])
+              }
+            },
+            data: datas4
           }
         ]
       });
@@ -2066,8 +2162,8 @@ export default {
           }
           .total_o {
             margin: 0 0.2rem;
-            background: linear-gradient(-90deg, #fe5fb8 0%, #ff8ee2 67%);
-            box-shadow: 0px 4px 10px 0px rgba(254, 96, 186, 0.39);
+            background: linear-gradient(-90deg, #6B8BDF 0%, #A1B6ED 99%);
+            box-shadow: 0px 4px 10px 0px rgba(113,141,212,0.39);
             img {
               width: 0.72rem;
               height: 0.52rem;
@@ -2108,7 +2204,7 @@ export default {
             top: 0.75rem;
             z-index: 11;
             .c_pie_li {
-              padding: 0;
+              padding: 0 0.3rem;
               font-size: 0.14rem;
               font-family: Source Han Sans CN;
               font-weight: 400;
@@ -2136,6 +2232,18 @@ export default {
               }
               .c_th4 {
                 background: linear-gradient(90deg, #00D8FF, #46F7CB);
+              }
+              .c_ths0{
+                background: linear-gradient(0deg, rgba(124, 192, 255, 1) 0%, rgba(83, 184, 255, 0.7) 100%);
+              }
+              .c_ths1{
+                background: linear-gradient(-90deg, rgba(102, 113, 255, 1), rgba(102, 113, 255, 0.7));
+              }
+              .c_ths2{
+                background: linear-gradient(-90deg, rgba(214, 116, 255, 1), rgba(214, 116, 255, 0.7));
+              }
+              .c_ths3{
+                background: linear-gradient(-90deg, rgba(254, 95, 184, 1), rgba(254, 95, 184, 0.7));
               }
               .c_pie_td {
                 display: inline-block;
@@ -2419,15 +2527,18 @@ export default {
         }
         .primary_g,
         .primary_r {
-          width: 0.6rem;
-          height: 0.24rem;
+          width: auto;
+          max-width: 0.9rem;
+          height: 0.32rem;
           line-height: 1;
           margin: 0 auto;
-          background: linear-gradient(
-            45deg,
-            rgba(196, 236, 255, 1) 0%,
-            rgba(151, 205, 255, 1) 100%
-          );
+          background: #ffffff;
+          // background: linear-gradient(
+          //   45deg,
+          //   rgba(196, 236, 255, 1) 0%,
+          //   rgba(151, 205, 255, 1) 100%
+          // );
+          color: #006CFF;
           padding: 1px;
           border-radius: 0.02rem;
           .el-button--primary.is-plain,
@@ -2444,20 +2555,51 @@ export default {
           .el-button--primary.is-plain,
           .el-button--primary.is-plain:focus,
           .el-button--primary.is-plain:hover {
-            color: #006cff;
+            // color: #006cff;
+            background: transparent !important;
           }
           .el-button--danger.is-plain,
           .el-button--danger.is-plain:focus,
           .el-button--danger.is-plain:hover {
-            color: #ff8854;
+            // color: #ff8854;
+            background: transparent !important;
           }
         }
-        .primary_r {
-          background: linear-gradient(
-            45deg,
-            rgba(253, 186, 133, 1) 0%,
-            rgba(255, 126, 117, 1) 100%
-          );
+        .primary_r0{
+          color:#006cff !important;
+          background: rgba(0, 108, 255, 0.1) !important;
+          .el-button.is-plain,
+          .el-button.is-plain:focus,
+          .el-button.is-plain:hover {
+            color: #006cff !important;
+          }
+        }
+        .primary_r1 {
+          color: #6671FF !important;
+          background: rgba(102, 113, 255, 0.1) !important;
+          .el-button.is-plain,
+          .el-button.is-plain:focus,
+          .el-button.is-plain:hover {
+            color: #6671FF !important;
+          }
+        }
+        .primary_r2 {
+          color: #D674FF !important;
+          background: rgba(214, 116, 255, 0.1) !important;
+          .el-button.is-plain,
+          .el-button.is-plain:focus,
+          .el-button.is-plain:hover {
+            color: #D674FF !important;
+          }
+        }
+        .primary_r3 {
+          color: #FE5FB8 !important;
+          background: rgba(254, 95, 184, 0.1) !important;
+          .el-button.is-plain,
+          .el-button.is-plain:focus,
+          .el-button.is-plain:hover {
+            color: #FE5FB8 !important;
+          }
         }
       }
     }
