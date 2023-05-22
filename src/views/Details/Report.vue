@@ -134,7 +134,8 @@
       <img src="../../assets/images/report/teacherRbg.png" alt="" />
       <div class="dt_person" ref="parts0">
         <div class="dtp_photo">
-          <img src="../../assets/images/report/human.png" alt="" />
+          <img v-if="String(details.gender) == '1'"  src="../../assets/images/report/human.png" alt="" />
+          <img v-if="String(details.gender) == '0'" style="width: 1.3rem;height:1.3rem;margin-top:0.09rem" src="../../assets/images/report/huwoman.png" alt="" />
         </div>
         <div class="dtp_main">
           <ul>
@@ -931,8 +932,13 @@
                 </ul> -->
               </div>
               <div class="dtmcr_bts">
-                <div class="db_img" :style="{ color: item.txtColor }">
+                <!-- :style="{ color: item.txtColor }" -->
+                <div class="db_img">
                   <img
+                    src="../../assets/images/report/sys1.png"
+                    alt=""
+                  />
+                  <!-- <img
                     v-if="item.imgType == 1"
                     src="../../assets/images/report/sys1.png"
                     alt=""
@@ -951,11 +957,15 @@
                     v-if="item.imgType == 4"
                     src="../../assets/images/report/sys4.png"
                     alt=""
-                  />
+                  /> -->
                   测评结果分析
                 </div>
                 <p v-for="(items, keps) in item.list" :key="keps">
                   <img
+                    src="../../assets/images/report/icon0.png"
+                    alt=""
+                  />
+                  <!-- <img
                     v-if="item.imgType == 1"
                     src="../../assets/images/report/icon0.png"
                     alt=""
@@ -974,7 +984,7 @@
                     v-if="item.imgType == 4"
                     src="../../assets/images/report/icon7.png"
                     alt=""
-                  />
+                  /> -->
                   {{ items }}
                 </p>
               </div>
@@ -1159,11 +1169,11 @@
             </div>
             <div v-for="item in details.personalitySubDim2" :key="item.name">
               <div class="wdrjst_res wdrjst_res1">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
+                <img src="../../assets/images/report/per_i3.png" alt="" />
                 <span>{{item.name}}：</span>
               </div>
               <div class="wdrjst_del wdrjst_del2">
-                <div>
+                <div style="">
                   <img src="../../assets/images/report/jt_h.png" alt="" />释义
                 </div>
                 <div class="pd24">
@@ -1345,7 +1355,7 @@
           <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
           <el-table-column prop="action_content" label="操作内容">
             <template slot-scope="scope">
-              <span style="color:#006CFF">{{scope.row.action_content}}</span>
+              <span style="color:#006cff">{{scope.row.action_content}}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -1409,11 +1419,11 @@ const transColor = [
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
         offset: 0,
-        color: "#FC4FB0"
+        color: "rgba(255, 42, 84, 1)"
       },
       {
         offset: 1,
-        color: "#FF9CE5"
+        color: "rgba(255, 171, 150, 1)"
       }
     ])
   },
@@ -1695,6 +1705,7 @@ export default {
               })
               this.assessmentFlag = false
             }
+            this.details.note = that.assessment
             // this.record.unshift({
             //   name: param.name,
             //   dateTime: param.datetime,
@@ -1894,14 +1905,14 @@ export default {
                   data.data.selfDiscription.length
                 );
             }
-
+            
             if (data.data.depressionWarning.indexOf("正常") != -1) {
               data.data.depressionWarning =
                 data.data.depressionWarning.substring(
                   0,
                   data.data.depressionWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("正常"),
                   data.data.depressionWarning.indexOf("正常") + 2
@@ -1918,7 +1929,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("轻度"),
                   data.data.depressionWarning.indexOf("轻度") + 2
@@ -1935,7 +1946,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("中度"),
                   data.data.depressionWarning.indexOf("中度") + 2
@@ -1952,7 +1963,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("重度"),
                   data.data.depressionWarning.indexOf("重度") + 2
@@ -1963,14 +1974,13 @@ export default {
                   data.data.depressionWarning.length
                 );
             }
-
             if (data.data.anxietyWarning.indexOf("正常") != -1) {
               data.data.anxietyWarning =
                 data.data.anxietyWarning.substring(
                   0,
                   data.data.anxietyWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("正常"),
                   data.data.anxietyWarning.indexOf("正常") + 2
@@ -1987,7 +1997,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("轻度"),
                   data.data.anxietyWarning.indexOf("轻度") + 2
@@ -2004,7 +2014,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("中度"),
                   data.data.anxietyWarning.indexOf("中度") + 2
@@ -2021,7 +2031,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("重度"),
                   data.data.anxietyWarning.indexOf("重度") + 2
@@ -2039,7 +2049,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("正常"),
                   data.data.forcedWarning.indexOf("正常") + 2
@@ -2056,7 +2066,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("轻度"),
                   data.data.forcedWarning.indexOf("轻度") + 2
@@ -2073,7 +2083,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("中度"),
                   data.data.forcedWarning.indexOf("中度") + 2
@@ -2090,7 +2100,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("重度"),
                   data.data.forcedWarning.indexOf("重度") + 2
@@ -2108,7 +2118,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("正常"),
                   data.data.suicideWarning.indexOf("正常") + 2
@@ -2125,7 +2135,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("轻度"),
                   data.data.suicideWarning.indexOf("轻度") + 2
@@ -2142,7 +2152,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("中度"),
                   data.data.suicideWarning.indexOf("中度") + 2
@@ -2159,7 +2169,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("重度"),
                   data.data.suicideWarning.indexOf("重度") + 2
@@ -2177,7 +2187,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("正常"),
                   data.data.violenceWarning.indexOf("正常") + 2
@@ -2194,7 +2204,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("轻度"),
                   data.data.violenceWarning.indexOf("轻度") + 2
@@ -2211,7 +2221,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("中度"),
                   data.data.violenceWarning.indexOf("中度") + 2
@@ -2228,7 +2238,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("重度"),
                   data.data.violenceWarning.indexOf("重度") + 2
@@ -2292,6 +2302,7 @@ export default {
             }
             data.data.warningNum = data.data.whatWarn.length;
             data.data.suggestion = data.data.suggestion.split("|||");
+            console.log(data.data.suggestion)
             for (let i in data.data.suggestion) {
               if (data.data.suggestion[i].indexOf("针对") != -1) {
                 data.data.suggestion[i] = data.data.suggestion[i].split("@@");
@@ -2314,24 +2325,24 @@ export default {
             let depressionImgStr = "";
 
             if (warningInfo.depressionLevel == 0) {
-              depressionColorStr = "#006CFF";
+              depressionColorStr = "#00e805";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "1";
             } else if (warningInfo.depressionLevel == 1) {
-              depressionColorStr = "#6671FF";
+              depressionColorStr = "#ffe400";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "2";
             } else if (warningInfo.depressionLevel == 2) {
-              depressionColorStr = "#D674FF";
+              depressionColorStr = "#fc9b2f";
               depressionBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "3";
             } else if (warningInfo.depressionLevel == 3) {
-              depressionColorStr = "#FE5FB8";
+              depressionColorStr = "#fe2727";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "4";
             }
             let anxietyColorStr = "";
@@ -2339,24 +2350,24 @@ export default {
             let anxietyBgStr = "";
             let anxietyImgStr = "";
             if (warningInfo.anxietyLevel == 0) {
-              anxietyColorStr = "#006CFF";
+              anxietyColorStr = "#00e805";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "1";
             } else if (warningInfo.anxietyLevel == 1) {
-              anxietyColorStr = "#6671FF";
+              anxietyColorStr = "#ffe400";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "2";
             } else if (warningInfo.anxietyLevel == 2) {
-              anxietyColorStr = "#D674FF";
+              anxietyColorStr = "#fc9b2f";
               anxietyBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "3";
             } else if (warningInfo.anxietyLevel == 3) {
-              anxietyColorStr = "#FE5FB8";
+              anxietyColorStr = "#fe2727";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "4";
             }
             let forcedColorStr = "";
@@ -2364,24 +2375,24 @@ export default {
             let forcedBgStr = "";
             let forcedImgStr = "";
             if (warningInfo.forcedLevel == 0) {
-              forcedColorStr = "#006CFF";
+              forcedColorStr = "#00e805";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "1";
             } else if (warningInfo.forcedLevel == 1) {
-              forcedColorStr = "#6671FF";
+              forcedColorStr = "#ffe400";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "2";
             } else if (warningInfo.forcedLevel == 2) {
-              forcedColorStr = "#D674FF";
+              forcedColorStr = "#fc9b2f";
               forcedBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "3";
             } else if (warningInfo.forcedLevel == 3) {
-              forcedColorStr = "#FE5FB8";
+              forcedColorStr = "#fe2727";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "4";
             }
             let suicideColorStr = "";
@@ -2389,24 +2400,24 @@ export default {
             let suicideBgStr = "";
             let suicideImgStr = "";
             if (warningInfo.suicideLevel == 0) {
-              suicideColorStr = "#006CFF";
+              suicideColorStr = "#00e805";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "1";
             } else if (warningInfo.suicideLevel == 1) {
-              suicideColorStr = "#6671FF";
+              suicideColorStr = "#ffe400";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "2";
             } else if (warningInfo.suicideLevel == 2) {
-              suicideColorStr = "#D674FF";
+              suicideColorStr = "#fc9b2f";
               suicideBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "3";
             } else if (warningInfo.suicideLevel == 3) {
-              suicideColorStr = "#FE5FB8";
+              suicideColorStr = "#fe2727";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "4";
             }
             let violenceColorStr = "";
@@ -2414,24 +2425,24 @@ export default {
             let violenceBgStr = "";
             let violenceImgStr = "";
             if (warningInfo.violenceLevel == 0) {
-              violenceColorStr = "#006CFF";
+              violenceColorStr = "#00e805";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "1";
             } else if (warningInfo.violenceLevel == 1) {
-              violenceColorStr = "#6671FF";
+              violenceColorStr = "#ffe400";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "2";
             } else if (warningInfo.violenceLevel == 2) {
-              violenceColorStr = "#D674FF";
+              violenceColorStr = "#fc9b2f";
               violenceBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "3";
             } else if (warningInfo.violenceLevel == 3) {
-              violenceColorStr = "#FE5FB8";
+              violenceColorStr = "#fe2727";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "4";
             }
             if (data.data.depressionDim) {
@@ -3062,26 +3073,26 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -10]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   }
                 }
               }
@@ -3230,26 +3241,26 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -10]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   }
                 }
               }
@@ -3398,26 +3409,26 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -10]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   }
                 }
               }
@@ -3492,7 +3503,7 @@ export default {
         this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
         this.myChartLd1.setOption({
           grid: {
-            bottom: 30,
+            bottom: 40,
             left: 20,
             top: 40,
             right: 60
@@ -3514,7 +3525,8 @@ export default {
               formatter: "{value}",
               textStyle: {
                 color: "#354B70",
-                fontSize: 14
+                fontSize: 12,
+                padding: [-10, -10]
               }
             },
             splitArea: {
@@ -3556,9 +3568,9 @@ export default {
               ],
               label: {
                 show: true,
-                fontSize: 14,
+                fontSize: 12,
                 textStyle: {
-                  fontSize: 14,
+                  fontSize: 12,
                   color: "#354B70"
                 },
                 formatter: function(params) {
@@ -3688,26 +3700,26 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -10]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   }
                 }
               }
@@ -3857,27 +3869,28 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -10]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: 12,
-                    fontWeight: "bold",
-                    padding: [-1, -12]
+                    // fontWeight: "bold",
+                    padding: [3, -12]
                   }
+                  
                 }
               }
             }
@@ -4077,7 +4090,7 @@ export default {
                   formatter: "{b} {a|{d}%}",
                   rich: {
                     a: {
-                      color: "#FE5FB8"
+                      color: "#fe2727"
                     }
                   }
                 }
@@ -4113,7 +4126,7 @@ export default {
                   formatter: "{b} {a|{d}%}",
                   rich: {
                     a: {
-                      color: "#6671FF"
+                      color: "#ffe400"
                     }
                   }
                 }
@@ -4125,7 +4138,7 @@ export default {
                   formatter: "{b} {a|{d}%}",
                   rich: {
                     a: {
-                      color: "#006CFF"
+                      color: "#00e805"
                     }
                   }
                 }
@@ -4580,7 +4593,7 @@ export default {
             right: 0;
           }
           .c_red {
-            color: #fe5fb8;
+            color: rgba(255, 42, 84, 1);
           }
         }
         .dtmcl_du {
@@ -4607,7 +4620,7 @@ export default {
           
           margin-bottom: 0.12rem;
           img {
-            width: 0.23rem;
+            width: 0.22rem;
             height: 0.25rem;
             margin-right: 0.06rem;
           }
@@ -4700,16 +4713,16 @@ export default {
             justify-content: center;
             align-items: center;
             .dr_sp0 {
-              color: #006cff;
+              color: #00e805;
             }
             .dr_sp1 {
-              color: #6671ff;
+              color: #ffe400;
             }
             .dr_sp2 {
-              color: #d674ff;
+              color: #fc9b2f;
             }
             .dr_sp3 {
-              color: #fe5fb8;
+              color: #fe2727;
             }
             .dr_li11 {
               img {
@@ -4721,7 +4734,7 @@ export default {
               span {
                 display: block;
                 border-radius: 0.16rem;
-                color: #fe5fb8;
+                color: #FE5FB8;
                 height: 100%;
                 line-height: 0.32rem;
                 font-size: 0.18rem;
@@ -4736,14 +4749,14 @@ export default {
               width: 0.88rem;
               line-height: 0.32rem;
               margin-right: 0.08rem;
-              background: linear-gradient(0deg, #fe5fb8, #ff83df);
+              background: linear-gradient(0deg, #FE5FB8, #ff83df);
               border-radius: 0.16rem;
               padding: 1px;
               overflow: hidden;
               span {
                 display: block;
                 border-radius: 0.16rem;
-                color: #fe5fb8;
+                color: #FE5FB8;
                 height: 100%;
                 line-height: 0.32rem;
                 font-size: 0.18rem;
@@ -4759,7 +4772,7 @@ export default {
             .dr_li2 {
               background: linear-gradient(0deg, #a6acff, #7279ff);
               span {
-                color: #6671ff;
+                color: #6671FF;
                 background: linear-gradient(
                   94deg,
                   rgba(186, 191, 255, 0.12),
@@ -4806,7 +4819,7 @@ export default {
             font-size: 0.18rem;
             font-family: PingFang SC;
             font-weight: 400;
-            color: #6671ff;
+            color: #006cff;
             margin-bottom: 0.1rem;
             img {
               width: 0.28rem;
@@ -4924,7 +4937,7 @@ export default {
       }
       .dtms_box {
         .dtmsb_tle {
-          height: 1.6rem;
+          height: 1.7rem;
           h3 {
             font-size: 0.22rem;
             font-family: Source Han Sans CN;
@@ -4970,11 +4983,11 @@ export default {
               .dttr_lv {
                 position: absolute;
                 margin: auto;
-                margin-left: -0.7rem;
+                margin-left: -0.8rem;
                 left: 0;
                 bottom: 0;
                 top: 0.78rem;
-                width: 1.4rem;
+                width: 1.6rem;
                 height: 0.59rem;
                 display: flex;
                 align-items: center;
@@ -5224,7 +5237,7 @@ export default {
             font-size: 0.18rem;
             font-family: PingFang SC;
             font-weight: 400;
-            color: #6671ff;
+            color: #006cff;
             margin-bottom: 0.1rem;
             img {
               width: 0.28rem;
@@ -5588,6 +5601,13 @@ export default {
                 font-weight: bold;
                 color: #ffffff;
               }
+              p {
+                font-size: 0.16rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #354B70;
+                line-height: 0.4rem;
+              }
               img{
                 width: 0.16rem;
                 height: 0.16rem;
@@ -5623,7 +5643,7 @@ export default {
                 font-size: 0.18rem;
                 font-family: Source Han Sans CN;
                 font-weight: 400;
-                color: #fe5fb8;
+                color: #FE5FB8;
               }
             }
           }
@@ -5646,6 +5666,7 @@ export default {
               text-align: left;
               padding-left: 0;
               flex: 1;
+              font-size: 0.16rem;
               span {
                 color: #ff7e00;
               }
@@ -5672,7 +5693,7 @@ export default {
               font-size: 0.18rem;
               font-family: Source Han Sans CN;
               font-weight: 400;
-              color: #fe5fb8;
+              color: #FE5FB8;
             }
           }
           .wdrjst_del {
@@ -5688,6 +5709,11 @@ export default {
               font-size: 0.16rem;
             }
             div {
+              line-height: 0.39rem;
+              font-size: 0.18rem;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #354b70;
               img {
                 width: 0.16rem;
                 height: 0.12rem;
@@ -5696,10 +5722,17 @@ export default {
             }
             ul {
               li {
+                font-size: 0.14rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #354b70;
+                display: flex;
                 img {
                   width: 0.06rem;
                   height: 0.06rem;
                   margin-right: 0.1rem;
+                  margin-top: 0.16rem;
+                  
                 }
               }
             }
@@ -6398,7 +6431,7 @@ export default {
             font-size: 0.18rem;
             font-family: PingFang SC;
             font-weight: 400;
-            color: #6671ff;
+            color: #006cff;
             margin-bottom: 0.1rem;
             img {
               width: 0.28rem;

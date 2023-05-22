@@ -366,8 +366,13 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[0].txtColor }">
+            <!-- :style="{ color: details.sysList[0].txtColor }" -->
+            <div class="db_img">
               <img
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
                 v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
@@ -386,11 +391,15 @@
                 v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[0].list" :key="keps">
               <img
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
                 v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
@@ -409,7 +418,7 @@
                 v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -471,50 +480,58 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[1].txtColor }">
+            <div class="db_img">
               <img
-                v-if="details.sysList[1].imgType == 1"
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/sys2.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/sys3.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[1].list" :key="keps">
               <img
-                v-if="details.sysList[1].imgType == 1"
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/icon1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/icon6.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -579,50 +596,58 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[2].txtColor }">
+            <div class="db_img">
               <img
-                v-if="details.sysList[2].imgType == 1"
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/sys2.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/sys3.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[2].list" :key="keps">
               <img
-                v-if="details.sysList[2].imgType == 1"
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/icon1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/icon6.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -813,15 +838,15 @@
             </div>
             <div class="wdrjs_tips" v-if="details.personalityDim">
               <img src="../../assets/images/report/ai_res.png" alt="" />
-              <p style="padding: 0.1rem 0.08rem;line-height: 0.28rem">
+              <p style="padding: 10px 8px;">
                 {{details.personalityDim}}
               </p>
             </div>
             <div v-for="(item, index) in details.personalitySubDim2" :key="item.name">
               <div class="wdrjst_res wdrjst_res1" v-if="index < 2">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
+                <img src="../../assets/images/report/per_i3.png" alt="" />
                 <span>{{item.name}}：</span>
-                <span class="wdrjstr_txt wd_col4">高风险</span>
+                <!-- <span class="wdrjstr_txt wd_col4">高风险</span> -->
               </div>
               <div class="wdrjst_del wdrjst_del2" v-if="index < 2">
                 <div>
@@ -1284,11 +1309,11 @@ export default {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                       {
                         offset: 0,
-                        color: "#F5BEF6"
+                        color: "rgba(255, 42, 84, 1)"
                       },
                       {
                         offset: 1,
-                        color: "#F086B6"
+                        color: "rgba(255, 171, 150, 1)"
                       }
                     ])
                   }
@@ -1488,7 +1513,7 @@ export default {
                     formatter: "{b} {a|{d}%}",
                     rich: {
                       a: {
-                        color: "#006CFF"
+                        color: "#006cff"
                       }
                     }
                   }
@@ -1633,7 +1658,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -1802,7 +1827,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -1971,7 +1996,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -2263,7 +2288,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -2429,7 +2454,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -2813,10 +2838,10 @@ export default {
           font-size: 20px;
           font-family: Source Han Sans CN;
           font-weight: 500;
-          color: #006CFF;
+          color: #006cff;
         }
         p.c_red{
-          color: #FE5FB8;
+          color: rgba(255, 42, 84, 1);
         }
       }
       .myChartLab{
@@ -2930,7 +2955,7 @@ export default {
         color: #006cff;
       }
       p.c_red{
-        color: #FE5FB8;
+        color: rgba(255, 42, 84, 1);
       }
     }
     .dtmcl_txt{
@@ -2963,16 +2988,16 @@ export default {
             border-right: 0;
           }
           .wran_col0{
-            color: #006CFF !important;
+            color: #00e805 !important;
           }
           .wran_col1{
-            color: #6671FF !important;
+            color: #ffe400 !important;
           }
           .wran_col2{
-            color: #D674FF !important;
+            color: #fc9b2f !important;
           }
           .wran_col3{
-            color: #FF33A7 !important;
+            color: #fe2727 !important;
           }
         }
         li:last-child{
@@ -3289,7 +3314,7 @@ export default {
           font-size: 18px;
           font-family: PingFang SC;
           font-weight: 400;
-          color: #6671ff;
+          color: #006cff;
           margin-bottom: 10px;
           img {
             width: 28px;
@@ -3574,7 +3599,14 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
-              }
+            }
+            p {
+              font-size: 16px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #354B70;
+              line-height: 36px;
+            }
             img{
               width: 16px;
               height: 16px;
@@ -3610,7 +3642,7 @@ export default {
               font-size: 18px;
               font-family: Source Han Sans CN;
               font-weight: 400;
-              color: #fe5fb8;
+              color: #FE5FB8;
             }
           }
         }
@@ -3623,16 +3655,22 @@ export default {
           border-radius: 2px;
           padding: 0 10px;
           margin: 15px 15px 0;
-          min-height: 42px;
+          min-height: 48px;
           img {
             width: 32px;
             height: 34px;
             margin-top: 10px;
           }
           p {
+            font-size: 16px;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #354B70;
+            line-height: 28px;
             text-align: left;
             padding-left: 0;
             flex: 1;
+
             span {
               color: #ff7e00;
             }
@@ -3659,7 +3697,7 @@ export default {
             font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #fe5fb8;
+            color: #FE5FB8;
           }
         }
         .wdrjst_del {
@@ -3675,6 +3713,11 @@ export default {
             font-size: 16px;
           }
           div {
+            line-height: 39px;
+            font-size: 18px;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #354b70;
             img {
               width: 16px;
               height: 12px;
@@ -3683,10 +3726,17 @@ export default {
           }
           ul {
             li {
+              line-height: 39px;
+              font-size: 14px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #354b70;
+              display: flex;
               img {
                 width: 6px;
                 height: 6px;
                 margin-right: 10px;
+                margin-top: 16px;
               }
             }
           }
@@ -4068,16 +4118,16 @@ export default {
           border-right: 0;
         }
         .wran_col0{
-          color: #006CFF !important;
+          color: #00e805 !important;
         }
         .wran_col1{
-          color: #6671FF !important;
+          color: #ffe400 !important;
         }
         .wran_col2{
-          color: #D674FF !important;
+          color: #fc9b2f !important;
         }
         .wran_col3{
-          color: #FF33A7 !important;
+          color: #fe2727 !important;
         }
       }
       li:last-child{

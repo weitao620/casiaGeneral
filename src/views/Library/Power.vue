@@ -1320,7 +1320,7 @@ export default {
         }
         span:first-child{
           font-size: 0.2rem;
-          color: #006CFF;
+          color: #006cff;
           margin-bottom: 0.18rem;
         }
       }

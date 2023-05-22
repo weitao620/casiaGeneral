@@ -153,7 +153,7 @@
                 :class="['tab_btns tab_btns_l', { tab_act: tabActive == 1 }]"
                 @click="tabChange(1)"
               >
-                本周
+                近7天
               </div>
               <div
                 :class="[
@@ -162,13 +162,13 @@
                 ]"
                 @click="tabChange(2)"
               >
-                本月
+                近30天
               </div>
               <div
                 :class="['tab_btns', { tab_act: tabActive == 3 }]"
                 @click="tabChange(3)"
               >
-                半年
+                近半年
               </div>
             </div>
             <div class="myChartLine" id="myChartLine" ref="myChartLine"></div>
@@ -349,16 +349,20 @@
               <el-table-column prop="warning" label="评估结果">
                 <template slot-scope="scope">
                   <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                    <el-button type="primary" plain size="small">正常</el-button>
+                    <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                    <!-- <el-button type="primary" plain size="small">正常</el-button> -->
                   </div>
                   <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                    <el-button type="danger" plain size="small">轻度预警</el-button>
+                    <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                    <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                    <el-button type="danger" plain size="small">中度预警</el-button>
+                    <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                    <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                    <el-button type="danger" plain size="small">重度预警</el-button>
+                    <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                    <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                   </div>
                   <!-- <div class="primary_r" v-if="scope.row.warning == 1">
                     <el-button type="danger" plain size="small"
@@ -820,7 +824,7 @@ export default {
           for (let i in list) {
             listA1.push(list[i].date.split(" ")[0]);
             listA2.push(list[i].evaluateNum ? list[i].evaluateNum : 0);
-            listA3.push(list[i].mildWzarningNum ? list[i].mildWzarningNum : 0);
+            listA3.push(list[i].mildWarningNum ? list[i].mildWarningNum : 0);
             listA4.push(list[i].moderateWarningNum ? list[i].moderateWarningNum : 0);
             listA5.push(list[i].severeWarningNum ? list[i].severeWarningNum : 0);
             
@@ -861,26 +865,26 @@ export default {
               '<div style="border-bottom: 1px solid rgba(255,255,255,.3);font-weight: 600; font-size: 14px;padding-bottom: 0px;margin-bottom: 7px">' +
               obj[0].name +
               "</div>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(0deg, rgba(124, 192, 255, 1) 0%, rgba(83, 184, 255, 0.7) 100%);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
               "测评人数" +
-              "：<span style='color:#0075FF'>" +
+              "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
               obj[0].value +
-              "</span><br>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(102, 113, 255, 1), rgba(102, 113, 255, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "</span></div>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
               "轻度预警" +
-              "：<span style='color:#6671FF'>" +
+              "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
               obj[1].value +
-              "</span><br>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(214, 116, 255, 1), rgba(214, 116, 255, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "</span></div>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
               "中度预警" +
-              "：<span style='color:#D674FF'>" +
+              "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
               obj[2].value +
-              "</span><br>" +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, rgba(254, 95, 184, 1), rgba(254, 95, 184, 0.7));border-radius: 50%;margin-right:0.04rem"></span>' +
+              "</span></div>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
               "重度预警" +
-              "：<span style='color:#FE5FB8'>" +
+              "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
               obj[3].value +
-              "</span>"
+              "</span></div>"
             );
           }
         },
@@ -930,21 +934,21 @@ export default {
             type: "line",
             smooth: true,
             itemStyle: {
-              color: "#0075FF"
+              color: "rgba(0,194,255,1)"
             },
             lineStyle: {
-              color: "#0075FF"
+              color: "rgba(0,194,255,1)"
             },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
-                    offset: 0.5,
-                    color: "rgba(124, 192, 255, 0.1)"
+                    offset: 0,
+                    color: "rgba(0,194,255,0.04)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(83, 184, 255, 0)"
+                    color: "rgba(0,194,255,0)"
                   }
                 ])
               }
@@ -956,21 +960,21 @@ export default {
             type: "line",
             smooth: true,
             itemStyle: {
-              color: "#6671FF"
+              color: "rgba(255, 210, 0, 1)"
             },
             lineStyle: {
-              color: "#6671FF"
+              color: "rgba(255, 210, 0, 1)"
             },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
-                    offset: 0.5,
-                    color: "rgba(102, 113, 255, 0.1)"
+                    offset: 0,
+                    color: "rgba(255, 210, 0, 0.04)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(102, 113, 255, 0)"
+                    color: "rgba(255, 210, 0, 0)"
                   }
                 ])
               }
@@ -982,21 +986,21 @@ export default {
             type: "line",
             smooth: true,
             itemStyle: {
-              color: "#D674FF"
+              color: "rgba(252, 155, 47, 1)"
             },
             lineStyle: {
-              color: "#D674FF"
+              color: "rgba(252, 155, 47, 1)"
             },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
-                    offset: 0.5,
-                    color: "rgba(214, 116, 255, 0.1)"
+                    offset: 0,
+                    color: "rgba(252, 155, 47, 0.04)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(214, 116, 255, 0)"
+                    color: "rgba(252, 155, 47, 0)"
                   }
                 ])
               }
@@ -1008,21 +1012,21 @@ export default {
             type: "line",
             smooth: true,
             itemStyle: {
-              color: "#FE5FB8"
+              color: "rgba(254, 39, 39, 1)"
             },
             lineStyle: {
-              color: "#FE5FB8"
+              color: "rgba(254, 39, 39, 1)"
             },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
-                    offset: 0.5,
-                    color: "rgba(254, 95, 184, 0.1)"
+                    offset: 0,
+                    color: "rgba(254, 39, 39, 0.04)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(254, 95, 184, 0)"
+                    color: "rgba(254, 39, 39, 0)"
                   }
                 ])
               }
@@ -1070,7 +1074,7 @@ export default {
               show: true,
               valueAnimation: true,
               fontSize: nowSize(24),
-              color: "#006CFF",
+              color: "#006cff",
               offsetCenter: [0, "30%"],
               formatter: function(value) {
                 console.log(value)
@@ -1319,12 +1323,12 @@ export default {
             if (that.anxietyFlag == 1) {
               html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(0deg, #0075FF 0%, #00C2FF 100%);border-radius: 50%;margin-right:0.04rem"></span>' +
               "焦虑" +
-              "：<span style='color:#006CFF'>" +
+              "：<span style='color:#006cff'>" +
               (parseInt(value[0] * 100) + "%") +
               "</span><br>"
             }
             if (that.depressionFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, #fe5fb8, #ff83df);border-radius: 50%;margin-right:0.04rem"></span>' +
+              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, #FE5FB8, #ff83df);border-radius: 50%;margin-right:0.04rem"></span>' +
               "抑郁" +
               "：<span style='color:#FF55B6'>" +
               (parseInt(value[1] * 100) + "%") +
@@ -1664,7 +1668,7 @@ export default {
                 background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
               }
               .c_th1 {
-                background: linear-gradient(-90deg, #fe5fb8, #ff83df);
+                background: linear-gradient(-90deg, #FE5FB8, #ff83df);
               }
               .c_th2 {
                 background: linear-gradient(90deg, #c4c8ff, #7279ff);
@@ -1746,7 +1750,7 @@ export default {
                 background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
               }
               .c_th1 {
-                background: linear-gradient(-90deg, #fe5fb8, #ff83df);
+                background: linear-gradient(-90deg, #FE5FB8, #ff83df);
               }
               .c_th2 {
                 background: linear-gradient(90deg, #c4c8ff, #7279ff);
@@ -1887,7 +1891,7 @@ export default {
                   color: #03e2f1;
                 }
                 .stxt_r {
-                  color: #fe5fb8;
+                  color: #FE5FB8;
                 }
                 .stxt_g {
                   color: #03e2f1;
@@ -1979,7 +1983,7 @@ export default {
                   background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
                 }
                 .c_th1 {
-                  background: linear-gradient(-90deg, #fe5fb8, #ff83df);
+                  background: linear-gradient(-90deg, #FE5FB8, #ff83df);
                 }
                 .c_th2 {
                   background: linear-gradient(90deg, #c4c8ff, #7279ff);
@@ -2032,7 +2036,7 @@ export default {
                   background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
                 }
                 .c_th1 {
-                  background: linear-gradient(-90deg, #fe5fb8, #ff83df);
+                  background: linear-gradient(-90deg, #FE5FB8, #ff83df);
                 }
                 .c_th2 {
                   background: linear-gradient(90deg, #c4c8ff, #7279ff);
@@ -2158,7 +2162,7 @@ export default {
                 background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
               }
               .c_th1 {
-                background: linear-gradient(-90deg, #fe5fb8, #ff83df);
+                background: linear-gradient(-90deg, #FE5FB8, #ff83df);
               }
               .c_th2 {
                 background: linear-gradient(90deg, #c4c8ff, #7279ff);
@@ -2170,16 +2174,16 @@ export default {
                 background: linear-gradient(90deg, #00D8FF, #46F7CB);
               }
               .c_ths0{
-                background: linear-gradient(0deg, rgba(124, 192, 255, 1) 0%, rgba(83, 184, 255, 0.7) 100%);
+                background: linear-gradient(268deg, #0075ff, #00c2ff);
               }
               .c_ths1{
-                background: linear-gradient(-90deg, rgba(102, 113, 255, 1), rgba(102, 113, 255, 0.7));
+                background: linear-gradient(90deg, #FEF569, #FFD800);
               }
               .c_ths2{
-                background: linear-gradient(-90deg, rgba(214, 116, 255, 1), rgba(214, 116, 255, 0.7));
+                background: linear-gradient(90deg, #FFCE9F, #FF849C);
               }
               .c_ths3{
-                background: linear-gradient(-90deg, rgba(254, 95, 184, 1), rgba(254, 95, 184, 0.7));
+                background: linear-gradient(74deg, #FFAB96, #FF0F47);
               }
               .c_pie_td {
                 display: inline-block;
@@ -2451,15 +2455,21 @@ export default {
           height: 0.32rem;
           line-height: 1;
           margin: 0 auto;
-          background: #ffffff;
+          // background: #ffffff;
           // background: linear-gradient(
           //   45deg,
           //   rgba(196, 236, 255, 1) 0%,
           //   rgba(151, 205, 255, 1) 100%
           // );
-          color: #006CFF;
-          padding: 1px;
-          border-radius: 0.02rem;
+          // color: #006cff;
+          // padding: 1px;
+          // border-radius: 0.02rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .primary_g_img{
+            width: 0.74rem;
+          }
           .el-button--primary.is-plain,
           .el-button--danger.is-plain {
             width: 100%;
@@ -2484,42 +2494,42 @@ export default {
             background: transparent !important;
           }
         }
-        .primary_r0{
-          color:#006cff !important;
-          background: rgba(0, 108, 255, 0.1) !important;
-          .el-button.is-plain,
-          .el-button.is-plain:focus,
-          .el-button.is-plain:hover {
-            color: #006cff !important;
-          }
-        }
-        .primary_r1 {
-          color: #6671FF !important;
-          background: rgba(102, 113, 255, 0.1) !important;
-          .el-button.is-plain,
-          .el-button.is-plain:focus,
-          .el-button.is-plain:hover {
-            color: #6671FF !important;
-          }
-        }
-        .primary_r2 {
-          color: #D674FF !important;
-          background: rgba(214, 116, 255, 0.1) !important;
-          .el-button.is-plain,
-          .el-button.is-plain:focus,
-          .el-button.is-plain:hover {
-            color: #D674FF !important;
-          }
-        }
-        .primary_r3 {
-          color: #FE5FB8 !important;
-          background: rgba(254, 95, 184, 0.1) !important;
-          .el-button.is-plain,
-          .el-button.is-plain:focus,
-          .el-button.is-plain:hover {
-            color: #FE5FB8 !important;
-          }
-        }
+        // .primary_r0{
+        //   color:rgba(0, 232, 5, 1) !important;
+        //   background: rgba(0, 232, 5, 0.1) !important;
+        //   .el-button.is-plain,
+        //   .el-button.is-plain:focus,
+        //   .el-button.is-plain:hover {
+        //     color: rgba(0, 232, 5, 1) !important;
+        //   }
+        // }
+        // .primary_r1 {
+        //   color: rgba(255, 210, 0, 1) !important;
+        //   background: rgba(255, 210, 0, 0.1) !important;
+        //   .el-button.is-plain,
+        //   .el-button.is-plain:focus,
+        //   .el-button.is-plain:hover {
+        //     color: rgba(255, 210, 0, 1) !important;
+        //   }
+        // }
+        // .primary_r2 {
+        //   color: rgba(252, 155, 47, 1) !important;
+        //   background: rgba(252, 155, 47, 0.1) !important;
+        //   .el-button.is-plain,
+        //   .el-button.is-plain:focus,
+        //   .el-button.is-plain:hover {
+        //     color: rgba(252, 155, 47, 1) !important;
+        //   }
+        // }
+        // .primary_r3 {
+        //   color: rgba(254, 39, 39, 1) !important;
+        //   background: rgba(254, 39, 39, 0.1) !important;
+        //   .el-button.is-plain,
+        //   .el-button.is-plain:focus,
+        //   .el-button.is-plain:hover {
+        //     color: rgba(254, 39, 39, 1) !important;
+        //   }
+        // }
       }
     }
   }

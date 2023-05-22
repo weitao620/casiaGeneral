@@ -34,16 +34,20 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <el-button type="danger" plain size="small">中度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <el-button type="danger" plain size="small">重度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
             </el-table-column>
@@ -719,7 +723,7 @@ export default {
           barMaxWidth: 16,
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#fe5fb8" },
+              { offset: 0, color: "#FE5FB8" },
               { offset: 1, color: "#ff83df" }
             ])
           },
@@ -775,7 +779,7 @@ export default {
         symbol: "none",
         lineStyle: {
           normal: {
-            color: "#006CFF"
+            color: "#006cff"
           }
         },
         data: [
@@ -918,7 +922,7 @@ export default {
               symbol: "none",
               lineStyle: {
                 normal: {
-                  color: "#006CFF"
+                  color: "#006cff"
                 }
               },
               data: [
@@ -961,7 +965,7 @@ export default {
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#fe5fb8" }
+                { offset: 1, color: "#FE5FB8" }
               ])
             },
             data: qArr
@@ -1063,7 +1067,7 @@ export default {
               symbol: "none",
               lineStyle: {
                 normal: {
-                  color: "#006CFF"
+                  color: "#006cff"
                 }
               },
               data: [
@@ -1106,7 +1110,7 @@ export default {
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#fe5fb8" }
+                { offset: 1, color: "#FE5FB8" }
               ])
             },
             data: qArr
@@ -1208,7 +1212,7 @@ export default {
               symbol: "none",
               lineStyle: {
                 normal: {
-                  color: "#006CFF"
+                  color: "#006cff"
                 }
               },
               data: [
@@ -1251,7 +1255,7 @@ export default {
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#fe5fb8" }
+                { offset: 1, color: "#FE5FB8" }
               ])
             },
             data: qArr
@@ -1353,7 +1357,7 @@ export default {
               symbol: "none",
               lineStyle: {
                 normal: {
-                  color: "#006CFF"
+                  color: "#006cff"
                 }
               },
               data: [
@@ -1396,7 +1400,7 @@ export default {
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#fe5fb8" }
+                { offset: 1, color: "#FE5FB8" }
               ])
             },
             data: qArr
@@ -1498,7 +1502,7 @@ export default {
               symbol: "none",
               lineStyle: {
                 normal: {
-                  color: "#006CFF"
+                  color: "#006cff"
                 }
               },
               data: [
@@ -1541,7 +1545,7 @@ export default {
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#fe5fb8" }
+                { offset: 1, color: "#FE5FB8" }
               ])
             },
             data: qArr
@@ -1830,15 +1834,21 @@ export default {
         height: 0.32rem;
         line-height: 1;
         margin: 0 auto;
-        background: #ffffff;
+        // background: #ffffff;
         // background: linear-gradient(
         //   45deg,
         //   rgba(196, 236, 255, 1) 0%,
         //   rgba(151, 205, 255, 1) 100%
         // );
-        color: #006CFF;
-        padding: 1px;
-        border-radius: 0.02rem;
+        // color: #006cff;
+        // padding: 1px;
+        // border-radius: 0.02rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .primary_g_img{
+          width: 0.74rem;
+        }
         .el-button--primary.is-plain,
         .el-button--danger.is-plain {
           width: 100%;
@@ -1863,42 +1873,42 @@ export default {
           background: transparent !important;
         }
       }
-      .primary_r0{
-        color:#006cff !important;
-        background: rgba(0, 108, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #006cff !important;
-        }
-      }
-      .primary_r1 {
-        color: #6671FF !important;
-        background: rgba(102, 113, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #6671FF !important;
-        }
-      }
-      .primary_r2 {
-        color: #D674FF !important;
-        background: rgba(214, 116, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #D674FF !important;
-        }
-      }
-      .primary_r3 {
-        color: #FE5FB8 !important;
-        background: rgba(254, 95, 184, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #FE5FB8 !important;
-        }
-      }
+      // .primary_r0{
+      //   color:#006cff !important;
+      //   background: rgba(0, 108, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #006cff !important;
+      //   }
+      // }
+      // .primary_r1 {
+      //   color: #6671FF !important;
+      //   background: rgba(102, 113, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #6671FF !important;
+      //   }
+      // }
+      // .primary_r2 {
+      //   color: #D674FF !important;
+      //   background: rgba(214, 116, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #D674FF !important;
+      //   }
+      // }
+      // .primary_r3 {
+      //   color: #FE5FB8 !important;
+      //   background: rgba(254, 95, 184, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #FE5FB8 !important;
+      //   }
+      // }
     }
     // 底部分页
     .table_page {
@@ -2225,7 +2235,7 @@ export default {
                   background: linear-gradient(0deg, #0075ff, #00c2ff);
                 }
                 span.r_cir2 {
-                  background: linear-gradient(0deg, #fe5fb8, #ff83df);
+                  background: linear-gradient(0deg, #FE5FB8, #ff83df);
                 }
                 span.r_cir3 {
                   background: linear-gradient(0deg, #c4c8ff, #7279ff);

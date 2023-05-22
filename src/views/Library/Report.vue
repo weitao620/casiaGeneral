@@ -250,16 +250,20 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <el-button type="danger" plain size="small">中度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <el-button type="danger" plain size="small">重度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
             </el-table-column>
@@ -324,16 +328,20 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <el-button type="danger" plain size="small">轻度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <el-button type="danger" plain size="small">中度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <el-button type="danger" plain size="small">重度预警</el-button>
+                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
             </el-table-column>
@@ -1145,7 +1153,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("正常"),
                   data.data.depressionWarning.indexOf("正常") + 2
@@ -1162,7 +1170,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("轻度"),
                   data.data.depressionWarning.indexOf("轻度") + 2
@@ -1179,7 +1187,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("中度"),
                   data.data.depressionWarning.indexOf("中度") + 2
@@ -1196,7 +1204,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("重度"),
                   data.data.depressionWarning.indexOf("重度") + 2
@@ -1207,14 +1215,13 @@ export default {
                   data.data.depressionWarning.length
                 );
             }
-
             if (data.data.anxietyWarning.indexOf("正常") != -1) {
               data.data.anxietyWarning =
                 data.data.anxietyWarning.substring(
                   0,
                   data.data.anxietyWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("正常"),
                   data.data.anxietyWarning.indexOf("正常") + 2
@@ -1231,7 +1238,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("轻度"),
                   data.data.anxietyWarning.indexOf("轻度") + 2
@@ -1248,7 +1255,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("中度"),
                   data.data.anxietyWarning.indexOf("中度") + 2
@@ -1265,7 +1272,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("重度"),
                   data.data.anxietyWarning.indexOf("重度") + 2
@@ -1283,7 +1290,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("正常"),
                   data.data.forcedWarning.indexOf("正常") + 2
@@ -1300,7 +1307,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("轻度"),
                   data.data.forcedWarning.indexOf("轻度") + 2
@@ -1317,7 +1324,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("中度"),
                   data.data.forcedWarning.indexOf("中度") + 2
@@ -1334,7 +1341,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("重度"),
                   data.data.forcedWarning.indexOf("重度") + 2
@@ -1352,7 +1359,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("正常"),
                   data.data.suicideWarning.indexOf("正常") + 2
@@ -1369,7 +1376,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("轻度"),
                   data.data.suicideWarning.indexOf("轻度") + 2
@@ -1386,7 +1393,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("中度"),
                   data.data.suicideWarning.indexOf("中度") + 2
@@ -1403,7 +1410,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("重度"),
                   data.data.suicideWarning.indexOf("重度") + 2
@@ -1421,7 +1428,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("正常"),
                   data.data.violenceWarning.indexOf("正常") + 2
@@ -1438,7 +1445,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("轻度"),
                   data.data.violenceWarning.indexOf("轻度") + 2
@@ -1455,7 +1462,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("中度"),
                   data.data.violenceWarning.indexOf("中度") + 2
@@ -1472,7 +1479,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("重度"),
                   data.data.violenceWarning.indexOf("重度") + 2
@@ -1565,24 +1572,24 @@ export default {
             let depressionImgStr = "";
 
             if (warningInfo.depressionLevel == 0) {
-              depressionColorStr = "#006CFF";
+              depressionColorStr = "#00e805";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "1";
             } else if (warningInfo.depressionLevel == 1) {
-              depressionColorStr = "#6671FF";
+              depressionColorStr = "#ffe400";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "2";
             } else if (warningInfo.depressionLevel == 2) {
-              depressionColorStr = "#D674FF";
+              depressionColorStr = "#fc9b2f";
               depressionBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "3";
             } else if (warningInfo.depressionLevel == 3) {
-              depressionColorStr = "#FE5FB8";
+              depressionColorStr = "#fe2727";
               depressionBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               depressionImgStr = "4";
             }
             let anxietyColorStr = "";
@@ -1590,24 +1597,24 @@ export default {
             let anxietyBgStr = "";
             let anxietyImgStr = "";
             if (warningInfo.anxietyLevel == 0) {
-              anxietyColorStr = "#006CFF";
+              anxietyColorStr = "#00e805";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "1";
             } else if (warningInfo.anxietyLevel == 1) {
-              anxietyColorStr = "#6671FF";
+              anxietyColorStr = "#ffe400";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "2";
             } else if (warningInfo.anxietyLevel == 2) {
-              anxietyColorStr = "#D674FF";
+              anxietyColorStr = "#fc9b2f";
               anxietyBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "3";
             } else if (warningInfo.anxietyLevel == 3) {
-              anxietyColorStr = "#FE5FB8";
+              anxietyColorStr = "#fe2727";
               anxietyBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               anxietyImgStr = "4";
             }
             let forcedColorStr = "";
@@ -1615,24 +1622,24 @@ export default {
             let forcedBgStr = "";
             let forcedImgStr = "";
             if (warningInfo.forcedLevel == 0) {
-              forcedColorStr = "#006CFF";
+              forcedColorStr = "#00e805";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "1";
             } else if (warningInfo.forcedLevel == 1) {
-              forcedColorStr = "#6671FF";
+              forcedColorStr = "#ffe400";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "2";
             } else if (warningInfo.forcedLevel == 2) {
-              forcedColorStr = "#D674FF";
+              forcedColorStr = "#fc9b2f";
               forcedBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "3";
             } else if (warningInfo.forcedLevel == 3) {
-              forcedColorStr = "#FE5FB8";
+              forcedColorStr = "#fe2727";
               forcedBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               forcedImgStr = "4";
             }
             let suicideColorStr = "";
@@ -1640,24 +1647,24 @@ export default {
             let suicideBgStr = "";
             let suicideImgStr = "";
             if (warningInfo.suicideLevel == 0) {
-              suicideColorStr = "#006CFF";
+              suicideColorStr = "#00e805";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "1";
             } else if (warningInfo.suicideLevel == 1) {
-              suicideColorStr = "#6671FF";
+              suicideColorStr = "#ffe400";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "2";
             } else if (warningInfo.suicideLevel == 2) {
-              suicideColorStr = "#D674FF";
+              suicideColorStr = "#fc9b2f";
               suicideBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "3";
             } else if (warningInfo.suicideLevel == 3) {
-              suicideColorStr = "#FE5FB8";
+              suicideColorStr = "#fe2727";
               suicideBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               suicideImgStr = "4";
             }
             let violenceColorStr = "";
@@ -1665,24 +1672,24 @@ export default {
             let violenceBgStr = "";
             let violenceImgStr = "";
             if (warningInfo.violenceLevel == 0) {
-              violenceColorStr = "#006CFF";
+              violenceColorStr = "#00e805";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "1";
             } else if (warningInfo.violenceLevel == 1) {
-              violenceColorStr = "#6671FF";
+              violenceColorStr = "#ffe400";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(186, 191, 255, 0.78), rgba(114, 121, 255, 0.78))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "2";
             } else if (warningInfo.violenceLevel == 2) {
-              violenceColorStr = "#D674FF";
+              violenceColorStr = "#fc9b2f";
               violenceBgStr =
-                "linear-gradient(0deg, rgba(214,116,255, 0.7), rgba(217,162,255, 0.7))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "3";
             } else if (warningInfo.violenceLevel == 3) {
-              violenceColorStr = "#FE5FB8";
+              violenceColorStr = "#fe2727";
               violenceBgStr =
-                "linear-gradient(90deg, rgba(255, 119, 195, 0.8), rgba(255, 182, 236, 0.8))";
+                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "4";
             }
             if (data.data.depressionDim) {
@@ -2940,15 +2947,21 @@ export default {
         height: 0.32rem;
         line-height: 1;
         margin: 0 auto;
-        background: #ffffff;
+        // background: #ffffff;
         // background: linear-gradient(
         //   45deg,
         //   rgba(196, 236, 255, 1) 0%,
         //   rgba(151, 205, 255, 1) 100%
         // );
-        color: #006CFF;
-        padding: 1px;
-        border-radius: 0.02rem;
+        // color: #006cff;
+        // padding: 1px;
+        // border-radius: 0.02rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .primary_g_img{
+          width: 0.74rem;
+        }
         .el-button--primary.is-plain,
         .el-button--danger.is-plain {
           width: 100%;
@@ -2973,42 +2986,42 @@ export default {
           background: transparent !important;
         }
       }
-      .primary_r0{
-        color:#006cff !important;
-        background: rgba(0, 108, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #006cff !important;
-        }
-      }
-      .primary_r1 {
-        color: #6671FF !important;
-        background: rgba(102, 113, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #6671FF !important;
-        }
-      }
-      .primary_r2 {
-        color: #D674FF !important;
-        background: rgba(214, 116, 255, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #D674FF !important;
-        }
-      }
-      .primary_r3 {
-        color: #FE5FB8 !important;
-        background: rgba(254, 95, 184, 0.1) !important;
-        .el-button.is-plain,
-        .el-button.is-plain:focus,
-        .el-button.is-plain:hover {
-          color: #FE5FB8 !important;
-        }
-      }
+      // .primary_r0{
+      //   color:#006cff !important;
+      //   background: rgba(0, 108, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #006cff !important;
+      //   }
+      // }
+      // .primary_r1 {
+      //   color: #6671FF !important;
+      //   background: rgba(102, 113, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #6671FF !important;
+      //   }
+      // }
+      // .primary_r2 {
+      //   color: #D674FF !important;
+      //   background: rgba(214, 116, 255, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #D674FF !important;
+      //   }
+      // }
+      // .primary_r3 {
+      //   color: #FE5FB8 !important;
+      //   background: rgba(254, 95, 184, 0.1) !important;
+      //   .el-button.is-plain,
+      //   .el-button.is-plain:focus,
+      //   .el-button.is-plain:hover {
+      //     color: #FE5FB8 !important;
+      //   }
+      // }
       // .primary_r {
       //   background: linear-gradient(
       //     45deg,

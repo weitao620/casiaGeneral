@@ -755,7 +755,7 @@ export default {
             margin-top: 0.24rem;
           }
           .steps_num_r {
-            color: #fe5fb8;
+            color: #FE5FB8;
           }
         }
       }

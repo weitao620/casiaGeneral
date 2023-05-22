@@ -290,7 +290,7 @@ export default {
         top: -0.17rem;
         line-height: 1;
         left: 0;
-        color: #fe5fb8 !important;
+        color: #FE5FB8 !important;
         font-size: 0.14rem !important;
       }
       .login_logo {

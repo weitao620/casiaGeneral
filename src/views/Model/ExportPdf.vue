@@ -367,8 +367,12 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[0].txtColor }">
+            <div class="db_img">
               <img
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
                 v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
@@ -387,11 +391,15 @@
                 v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[0].list" :key="keps">
               <img
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
                 v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
@@ -410,7 +418,7 @@
                 v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -472,50 +480,58 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[1].txtColor }">
+            <div class="db_img">
               <img
-                v-if="details.sysList[1].imgType == 1"
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/sys2.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/sys3.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[1].list" :key="keps">
               <img
-                v-if="details.sysList[1].imgType == 1"
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/icon1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/icon6.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[1].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -580,50 +596,58 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
-            <div class="db_img" :style="{ color: details.sysList[2].txtColor }">
+            <div class="db_img">
               <img
-                v-if="details.sysList[2].imgType == 1"
+                src="../../assets/images/report/sys1.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/sys1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/sys2.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/sys3.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/sys4.png"
                 alt=""
-              />
+              /> -->
               测评结果分析
             </div>
             <p v-for="(items, keps) in details.sysList[2].list" :key="keps">
               <img
-                v-if="details.sysList[2].imgType == 1"
+                src="../../assets/images/report/icon0.png"
+                alt=""
+              />
+              <!-- <img
+                v-if="details.sysList[0].imgType == 1"
                 src="../../assets/images/report/icon0.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 2"
+                v-if="details.sysList[0].imgType == 2"
                 src="../../assets/images/report/icon1.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 3"
+                v-if="details.sysList[0].imgType == 3"
                 src="../../assets/images/report/icon6.png"
                 alt=""
               />
               <img
-                v-if="details.sysList[2].imgType == 4"
+                v-if="details.sysList[0].imgType == 4"
                 src="../../assets/images/report/icon7.png"
                 alt=""
-              />
+              /> -->
               {{ items }}
             </p>
           </div>
@@ -814,7 +838,7 @@
             </div>
             <div class="wdrjs_tips" v-if="details.personalityDim">
               <img src="../../assets/images/report/ai_res.png" alt="" />
-              <p style="padding: 0.1rem 0.08rem;line-height: 0.28rem">
+              <p style="padding: 10px 8px;">
                 {{details.personalityDim}}
               </p>
             </div>
@@ -822,7 +846,7 @@
               <div class="wdrjst_res wdrjst_res1" v-if="index < 2">
                 <img src="../../assets/images/report/per_i2.png" alt="" />
                 <span>{{item.name}}：</span>
-                <span class="wdrjstr_txt wd_col4">高风险</span>
+                <!-- <span class="wdrjstr_txt wd_col4">高风险</span> -->
               </div>
               <div class="wdrjst_del wdrjst_del2" v-if="index < 2">
                 <div>
@@ -1470,7 +1494,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("正常"),
                   data.data.depressionWarning.indexOf("正常") + 2
@@ -1487,7 +1511,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("轻度"),
                   data.data.depressionWarning.indexOf("轻度") + 2
@@ -1504,7 +1528,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("中度"),
                   data.data.depressionWarning.indexOf("中度") + 2
@@ -1521,7 +1545,7 @@ export default {
                   0,
                   data.data.depressionWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.depressionWarning.substring(
                   data.data.depressionWarning.indexOf("重度"),
                   data.data.depressionWarning.indexOf("重度") + 2
@@ -1532,14 +1556,13 @@ export default {
                   data.data.depressionWarning.length
                 );
             }
-
             if (data.data.anxietyWarning.indexOf("正常") != -1) {
               data.data.anxietyWarning =
                 data.data.anxietyWarning.substring(
                   0,
                   data.data.anxietyWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("正常"),
                   data.data.anxietyWarning.indexOf("正常") + 2
@@ -1556,7 +1579,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("轻度"),
                   data.data.anxietyWarning.indexOf("轻度") + 2
@@ -1573,7 +1596,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("中度"),
                   data.data.anxietyWarning.indexOf("中度") + 2
@@ -1590,7 +1613,7 @@ export default {
                   0,
                   data.data.anxietyWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.anxietyWarning.substring(
                   data.data.anxietyWarning.indexOf("重度"),
                   data.data.anxietyWarning.indexOf("重度") + 2
@@ -1608,7 +1631,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("正常"),
                   data.data.forcedWarning.indexOf("正常") + 2
@@ -1625,7 +1648,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("轻度"),
                   data.data.forcedWarning.indexOf("轻度") + 2
@@ -1642,7 +1665,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("中度"),
                   data.data.forcedWarning.indexOf("中度") + 2
@@ -1659,7 +1682,7 @@ export default {
                   0,
                   data.data.forcedWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.forcedWarning.substring(
                   data.data.forcedWarning.indexOf("重度"),
                   data.data.forcedWarning.indexOf("重度") + 2
@@ -1677,7 +1700,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("正常"),
                   data.data.suicideWarning.indexOf("正常") + 2
@@ -1694,7 +1717,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("轻度"),
                   data.data.suicideWarning.indexOf("轻度") + 2
@@ -1711,7 +1734,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("中度"),
                   data.data.suicideWarning.indexOf("中度") + 2
@@ -1728,7 +1751,7 @@ export default {
                   0,
                   data.data.suicideWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.suicideWarning.substring(
                   data.data.suicideWarning.indexOf("重度"),
                   data.data.suicideWarning.indexOf("重度") + 2
@@ -1746,7 +1769,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("正常")
                 ) +
-                '<span style="color:#006CFF">' +
+                '<span style="color:#00e805">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("正常"),
                   data.data.violenceWarning.indexOf("正常") + 2
@@ -1763,7 +1786,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("轻度")
                 ) +
-                '<span style="color:#6671FF">' +
+                '<span style="color:#ffe400">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("轻度"),
                   data.data.violenceWarning.indexOf("轻度") + 2
@@ -1780,7 +1803,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("中度")
                 ) +
-                '<span style="color:#D674FF">' +
+                '<span style="color:#fc9b2f">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("中度"),
                   data.data.violenceWarning.indexOf("中度") + 2
@@ -1797,7 +1820,7 @@ export default {
                   0,
                   data.data.violenceWarning.indexOf("重度")
                 ) +
-                '<span style="color:#FE5FB8">' +
+                '<span style="color:#fe2727">' +
                 data.data.violenceWarning.substring(
                   data.data.violenceWarning.indexOf("重度"),
                   data.data.violenceWarning.indexOf("重度") + 2
@@ -1883,7 +1906,7 @@ export default {
             let depressionImgStr = "";
 
             if (warningInfo.depressionLevel == 0) {
-              depressionColorStr = "#006CFF";
+              depressionColorStr = "#006cff";
               depressionBgStr =
                 "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
               depressionImgStr = "1";
@@ -1907,7 +1930,7 @@ export default {
             let anxietyBgStr = "";
             let anxietyImgStr = "";
             if (warningInfo.anxietyLevel == 0) {
-              anxietyColorStr = "#006CFF";
+              anxietyColorStr = "#006cff";
               anxietyBgStr =
                 "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
               anxietyImgStr = "1";
@@ -1931,7 +1954,7 @@ export default {
             let forcedBgStr = "";
             let forcedImgStr = "";
             if (warningInfo.forcedLevel == 0) {
-              forcedColorStr = "#006CFF";
+              forcedColorStr = "#006cff";
               forcedBgStr =
                 "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
               forcedImgStr = "1";
@@ -1955,7 +1978,7 @@ export default {
             let suicideBgStr = "";
             let suicideImgStr = "";
             if (warningInfo.suicideLevel == 0) {
-              suicideColorStr = "#006CFF";
+              suicideColorStr = "#006cff";
               suicideBgStr =
                 "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
               suicideImgStr = "1";
@@ -1979,7 +2002,7 @@ export default {
             let violenceBgStr = "";
             let violenceImgStr = "";
             if (warningInfo.violenceLevel == 0) {
-              violenceColorStr = "#006CFF";
+              violenceColorStr = "#006cff";
               violenceBgStr =
                 "linear-gradient(90deg, rgba(5, 157, 255, 0.7), rgba(49, 204, 255, 0.7))";
               violenceImgStr = "1";
@@ -2355,11 +2378,11 @@ export default {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                       {
                         offset: 0,
-                        color: "#F5BEF6"
+                        color: "rgba(255, 42, 84, 1)"
                       },
                       {
                         offset: 1,
-                        color: "#F086B6"
+                        color: "rgba(255, 171, 150, 1)"
                       }
                     ])
                   }
@@ -2559,7 +2582,7 @@ export default {
                     formatter: "{b} {a|{d}%}",
                     rich: {
                       a: {
-                        color: "#006CFF"
+                        color: "#006cff"
                       }
                     }
                   }
@@ -2704,7 +2727,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -2873,7 +2896,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -3042,7 +3065,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -3334,7 +3357,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -3500,7 +3523,7 @@ export default {
                     padding: [-1, -12]
                   },
                   yxStyle1: {
-                    color: "#006CFF",
+                    color: "#006cff",
                     fontSize: 12,
                     fontWeight: "bold",
                     padding: [-1, -10]
@@ -3890,10 +3913,10 @@ export default {
           font-size: 20px;
           font-family: Source Han Sans CN;
           font-weight: 500;
-          color: #006CFF;
+          color: #006cff;
         }
         p.c_red{
-          color: #FE5FB8;
+          color: rgba(255, 42, 84, 1);
         }
       }
       .myChartLab{
@@ -4007,7 +4030,7 @@ export default {
         color: #006cff;
       }
       p.c_red{
-        color: #FE5FB8;
+        color: rgba(255, 42, 84, 1);
       }
     }
     .dtmcl_txt{
@@ -4040,16 +4063,16 @@ export default {
             border-right: 0;
           }
           .wran_col0{
-            color: #006CFF !important;
+            color: #00e805 !important;
           }
           .wran_col1{
-            color: #6671FF !important;
+            color: #ffe400 !important;
           }
           .wran_col2{
-            color: #D674FF !important;
+            color: #fc9b2f !important;
           }
           .wran_col3{
-            color: #FF33A7 !important;
+            color: #fe2727 !important;
           }
         }
         li:last-child{
@@ -4366,7 +4389,7 @@ export default {
           font-size: 18px;
           font-family: PingFang SC;
           font-weight: 400;
-          color: #6671ff;
+          color: #006cff;
           margin-bottom: 10px;
           img {
             width: 28px;
@@ -4639,19 +4662,26 @@ export default {
             color: #354B70;
             line-height: 36px;
             span {
-                margin-top: 10px;
-                margin-right: 10px;
-                text-align: center;
-                line-height: 16px;
-                width: 16px;
-                height: 16px;
-                background: linear-gradient(177deg, #1becff, #00c6ff);
-                border-radius: 50%;
-                font-size: 12px;
-                font-family: Source Han Sans CN;
-                font-weight: bold;
-                color: #ffffff;
-              }
+              margin-top: 10px;
+              margin-right: 10px;
+              text-align: center;
+              line-height: 16px;
+              width: 16px;
+              height: 16px;
+              background: linear-gradient(177deg, #1becff, #00c6ff);
+              border-radius: 50%;
+              font-size: 12px;
+              font-family: Source Han Sans CN;
+              font-weight: bold;
+              color: #ffffff;
+            }
+            p {
+              font-size: 16px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #354B70;
+              line-height: 36px;
+            }
             img{
               width: 16px;
               height: 16px;
@@ -4687,7 +4717,7 @@ export default {
               font-size: 18px;
               font-family: Source Han Sans CN;
               font-weight: 400;
-              color: #fe5fb8;
+              color: #FE5FB8;
             }
           }
         }
@@ -4700,13 +4730,18 @@ export default {
           border-radius: 2px;
           padding: 0 10px;
           margin: 15px 15px 0;
-          min-height: 42px;
+          min-height: 48px;
           img {
             width: 32px;
             height: 34px;
             margin-top: 10px;
           }
           p {
+            font-size: 16px;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #354B70;
+            line-height: 28px;
             text-align: left;
             padding-left: 0;
             flex: 1;
@@ -4736,7 +4771,7 @@ export default {
             font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #fe5fb8;
+            color: #FE5FB8;
           }
         }
         .wdrjst_del {
@@ -4752,6 +4787,11 @@ export default {
             font-size: 16px;
           }
           div {
+            line-height: 39px;
+            font-size: 18px;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #354b70;
             img {
               width: 16px;
               height: 12px;
@@ -4760,10 +4800,16 @@ export default {
           }
           ul {
             li {
+              font-size: 14px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #354b70;
+              display: flex;
               img {
                 width: 6px;
                 height: 6px;
                 margin-right: 10px;
+                margin-top: 16px;
               }
             }
           }
@@ -5145,16 +5191,16 @@ export default {
           border-right: 0;
         }
         .wran_col0{
-          color: #006CFF !important;
+          color: #00e805 !important;
         }
         .wran_col1{
-          color: #6671FF !important;
+          color: #ffe400 !important;
         }
         .wran_col2{
-          color: #D674FF !important;
+          color: #fc9b2f !important;
         }
         .wran_col3{
-          color: #FF33A7 !important;
+          color: #fe2727 !important;
         }
       }
       li:last-child{

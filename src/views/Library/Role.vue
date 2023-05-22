@@ -1638,7 +1638,7 @@ export default {
         font-size: 0.16rem;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #006CFF;
+        color: #006cff;
         height: 0.36rem;
         line-height: 0.36rem;
         padding-left: 0.18rem;
