@@ -169,7 +169,7 @@
                :label="fid30210.fieldName"
             >
             </el-table-column>
-            <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column>
+            <!-- <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column> -->
             <el-table-column prop="mark" label="错误提示">
               <template slot-scope="scope">
                 <div class="sex_li" v-for="item in scope.row.mark" :key="item">
@@ -220,17 +220,17 @@ export default {
         ifRequired: 1,
         required: 0
       },
-      fid30205: {
-        enable: 1,
-        fieldId: 30205,
-        fieldName: "手机号码",
-        fieldType: "单行文本",
-        ifDelete: 1,
-        ifEnable: 0,
-        ifModify: 1,
-        ifRequired: 1,
-        required: 0
-      },
+      // fid30205: {
+      //   enable: 1,
+      //   fieldId: 30205,
+      //   fieldName: "手机号码",
+      //   fieldType: "单行文本",
+      //   ifDelete: 1,
+      //   ifEnable: 0,
+      //   ifModify: 1,
+      //   ifRequired: 1,
+      //   required: 0
+      // },
       fid30210: {
         enable: 1,
         fieldId: 30210,
@@ -267,9 +267,9 @@ export default {
                 if (datas[i].fieldId == 30207) {
                   this.fid30207 = datas[i]
                 }
-                if (datas[i].fieldId == 30205) {
-                  this.fid30205 = datas[i]
-                }
+                // if (datas[i].fieldId == 30205) {
+                //   this.fid30205 = datas[i]
+                // }
                 if (datas[i].fieldId == 30210) {
                   this.fid30210 = datas[i]
                 }
@@ -410,7 +410,7 @@ export default {
                 passport: "",
                 gender: "",
                 birth: "",
-                phone: "",
+                // phone: "",
                 row: obj.__rowNum__ + 1
               };
               for (let key in obj) {
@@ -424,9 +424,9 @@ export default {
                   objs.birth = String(obj[key])
                   // objs.birth = that.formatDate(obj[key], '/');
                 }
-                if (key == str[3]) {
-                  objs.phone = obj[key];
-                }
+                // if (key == str[3]) {
+                //   objs.phone = obj[key];
+                // }
                 if (key == str[4]) {
                   objs.passport = String(obj[key]).replace(/\s+/g, '');
                 }
@@ -435,8 +435,9 @@ export default {
                 objs.name == "" &&
                 objs.gender == "" &&
                 objs.birth == "" &&
-                objs.passport == "" &&
-                objs.phone == ""
+                objs.passport == ""
+                //  &&
+                // objs.phone == ""
               ) {
               } else {
                 listNew.push(objs);
@@ -477,9 +478,9 @@ export default {
               ) {
                 listNew[i].mark.push("登录账号不得少于6位！");
               }
-              if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
-                listNew[i].mark.push(that.fid30205.fieldName + "格式有误！");
-              }
+              // if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
+              //   listNew[i].mark.push(that.fid30205.fieldName + "格式有误！");
+              // }
             }
           });
           that.exlJson = listNew;
@@ -646,8 +647,8 @@ export default {
           birth: birth,
           department: this.visibleList[i].department,
           departmentName: this.visibleList[i].departmentName,
-          gender: genstr,
-          phone: this.visibleList[i].phone
+          gender: genstr
+          // phone: this.visibleList[i].phone
         };
         visArr.push(vObj);
       }

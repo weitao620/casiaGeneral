@@ -115,7 +115,7 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item v-if="fid30205.enable == 1" :required="fid30205.required == 1" :label="fid30205.fieldName + '：'">
+          <!-- <el-form-item v-if="fid30205.enable == 1" :required="fid30205.required == 1" :label="fid30205.fieldName + '：'">
             <el-input
               v-model="formAddUser.phone"
               :placeholder="'请输入' + fid30205.fieldName"
@@ -127,7 +127,7 @@
                 {{fid30205.fieldName}}不能为空 / 格式有误
               </div>
             </div>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item v-if="fid30206.enable == 1" :required="fid30206.required == 1" :label="fid30206.fieldName + '：'">
             <el-input
               v-model="formAddUser.email"
@@ -254,7 +254,7 @@ export default {
       fid30201: {
         enable: 1,
         fieldId: 30201,
-        fieldName: "登录账号",
+        fieldName: "登录手机号",
         fieldType: "单行文本",
         ifDelete: 0,
         ifEnable: 0,
@@ -295,17 +295,17 @@ export default {
         ifRequired: 0,
         required: 1
       },
-      fid30205: {
-        enable: 1,
-        fieldId: 30205,
-        fieldName: "手机号码",
-        fieldType: "单行文本",
-        ifDelete: 1,
-        ifEnable: 0,
-        ifModify: 1,
-        ifRequired: 1,
-        required: 0
-      },
+      // fid30205: {
+      //   enable: 1,
+      //   fieldId: 30205,
+      //   fieldName: "手机号码",
+      //   fieldType: "单行文本",
+      //   ifDelete: 1,
+      //   ifEnable: 0,
+      //   ifModify: 1,
+      //   ifRequired: 1,
+      //   required: 0
+      // },
       fid30206: {
         enable: 1,
         fieldId: 30206,
@@ -399,9 +399,7 @@ export default {
                 if (datas[i].fieldId == 30204) {
                   this.fid30204 = datas[i]
                 }
-                if (datas[i].fieldId == 30205) {
-                  this.fid30205 = datas[i]
-                }
+                
                 if (datas[i].fieldId == 30210) {
                   this.fid30210 = datas[i]
                 }
@@ -461,9 +459,7 @@ export default {
             if (this.fid30204.enable == 1) {
               this.formAddUser.gender = data.data.gender
             }
-            if (this.fid30205.enable == 1) {
-              this.formAddUser.phone = data.data.phone
-            }
+            
             if (this.fid30210.enable == 1) {
               this.formAddUser.birth = data.data.birth
             }
@@ -674,10 +670,10 @@ export default {
         this.nameFlag = true;
         return false;
       }
-      if (this.fid30205.enable == 1 && this.fid30205.required == 1 && ((this.formAddUser.phone != "" && !regp.test(this.formAddUser.phone)) || this.formAddUser.phone == "")) {
-        this.phoneFlag = true;
-        return false;
-      }
+      // if (this.fid30205.enable == 1 && this.fid30205.required == 1 && ((this.formAddUser.phone != "" && !regp.test(this.formAddUser.phone)) || this.formAddUser.phone == "")) {
+      //   this.phoneFlag = true;
+      //   return false;
+      // }
       if (this.fid30210.enable == 1 && this.fid30210.required == 1 && this.formAddUser.birth == "") {
         this.birthFlag = true;
         return false;

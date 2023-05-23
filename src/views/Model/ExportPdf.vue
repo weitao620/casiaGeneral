@@ -25,10 +25,10 @@
                 src="../../assets/images/report/person2.png"
                 alt=""
               />
-              <span class="dt_blod">登陆账号：</span>
+              <span style="width:120px" class="dt_blod">登录手机号：</span>
               <span>{{details.passport}}</span>
             </li>
-            <li>
+            <!-- <li>
               <img
                 class="dt_per3"
                 src="../../assets/images/report/person3.png"
@@ -36,7 +36,7 @@
               />
               <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
               <span>{{details.phone}}</span>
-            </li>
+            </li> -->
             <li>
               <img
                 class="dt_per4"
@@ -45,16 +45,6 @@
               />
               <span class="dt_blod">出生日期：</span>
               <span>{{details.birth}}</span>
-            </li>
-
-            <li>
-              <img
-                class="dt_per7"
-                src="../../assets/images/report/person7.png"
-                alt=""
-              />
-              <span class="dt_blod">测评次数：</span>
-              <span>第{{ details.evaluationTime }}次</span>
             </li>
             <li>
               <img
@@ -65,6 +55,16 @@
               <span class="dt_blod">所属部门：</span>
               <span>{{details.departmentName}}</span>
             </li>
+            <li>
+              <img
+                class="dt_per7"
+                src="../../assets/images/report/person7.png"
+                alt=""
+              />
+              <span class="dt_blod">测评次数：</span>
+              <span>第{{ details.evaluationTime }}次</span>
+            </li>
+            
             <li style="width:400px">
               <img
                 class="dt_per8"
@@ -1463,7 +1463,9 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            data.data.birth = data.data.birth.split(" ")[0];
+            if (data.data.birth) {
+              data.data.birth = data.data.birth.split(" ")[0];
+            }
             if (data.data.confidenceLevel == 1) {
               data.data.confidenceLevel = "可信";
             } else {

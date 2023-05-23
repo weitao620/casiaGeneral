@@ -25,10 +25,10 @@
                 src="../../assets/images/report/person2.png"
                 alt=""
               />
-              <span class="dt_blod">登陆账号：</span>
+              <span style="width:120px" class="dt_blod">登录手机号：</span>
               <span>{{details.passport}}</span>
             </li>
-            <li>
+            <!-- <li>
               <img
                 class="dt_per3"
                 src="../../assets/images/report/person3.png"
@@ -36,7 +36,7 @@
               />
               <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
               <span>{{details.phone}}</span>
-            </li>
+            </li> -->
             <li>
               <img
                 class="dt_per4"

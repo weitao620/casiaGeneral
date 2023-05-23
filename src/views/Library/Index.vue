@@ -30,7 +30,7 @@
                 <div class="per_msg_b">{{ detail.roleName }}</div>
               </div>
               <div class="per_msg">
-                <div class="per_msg_t">上次登陆时间</div>
+                <div class="per_msg_t">上次登录时间</div>
                 <div class="per_msg_b montserrat">
                   {{ detail.lastLoginTime }}
                 </div>
@@ -89,7 +89,19 @@
             </div>
             <div id="myChart" ref="myChart"></div>
             <div class="center_pie">
-              <div class="c_pie_li" v-if="anxietyFlag == 1">
+              <div class="c_pie_li">
+                <span class="c_pie_th c_ths1"></span>
+                轻度预警
+              </div>
+              <div class="c_pie_li">
+                <span class="c_pie_th c_ths2"></span>
+                中度预警
+              </div>
+              <div class="c_pie_li">
+                <span class="c_pie_th c_ths3"></span>
+                重度预警
+              </div>
+              <!-- <div class="c_pie_li" v-if="anxietyFlag == 1">
                 <span class="c_pie_th c_th0"></span>
                 焦虑
               </div>
@@ -108,7 +120,7 @@
               <div class="c_pie_li" v-if="violenceFlag == 1">
                 <span class="c_pie_th c_th4"></span>
                 暴力
-              </div>
+              </div> -->
             </div>
             <div class="c_o_my_txt" v-show="myTxtFlag">累计预警频次</div>
             <div class="c_o_my_num" v-show="myTxtFlag">
@@ -275,18 +287,18 @@
           </div>
           <div class="b_o_tab">
             <div class="tab_box">
-              <div
+              <!-- <div
                 :class="['tab_btns tab_btns_l', { tab_act: tabFlag == 0 }]"
                 @click="tabFalgChange(0)"
               >
                 用户
-              </div>
-              <div
+              </div> -->
+              <!-- <div
                 :class="['tab_btns', { tab_act: tabFlag == 1 }]"
                 @click="tabFalgChange(1)"
               >
                 游客
-              </div>
+              </div> -->
             </div>
             <div class="b_o_more" @click="toReport">
               查看更多&gt;
@@ -334,9 +346,9 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="departmentName" v-if="tabFlag == 0" label="所属部门">
+              <el-table-column prop="departmentName" v-if="tabFlag == 0" :label="fid30207.fieldName">
               </el-table-column>
-              <el-table-column prop="passport" v-if="tabFlag == 0" label="登录账号">
+              <el-table-column prop="passport" v-if="tabFlag == 0" :label="fid30201.fieldName">
               </el-table-column>
               <el-table-column
                 prop="evaluationTime"
@@ -475,7 +487,40 @@ export default {
       chart1List: [],
       piePrect: [],
       pieName: [],
-      screenWidth: document.body.clientWidth
+      screenWidth: document.body.clientWidth,
+      fid30201: {
+        enable: 1,
+        fieldId: 30201,
+        fieldName: "登录手机号",
+        fieldType: "单行文本",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 0,
+        ifRequired: 0,
+        required: 1
+      },
+      fid30207: {
+        enable: 1,
+        fieldId: 30207,
+        fieldName: "所属部门",
+        fieldType: "筛选框",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 1,
+        ifRequired: 1,
+        required: 0
+      },
+      // fid30206: {
+      //   enable: 1,
+      //   fieldId: 30206,
+      //   fieldName: "",
+      //   fieldType: "单行文本",
+      //   ifDelete: 0,
+      //   ifEnable: 0,
+      //   ifModify: 0,
+      //   ifRequired: 0,
+      //   required: 1
+      // },
     };
   },
   created() {
@@ -483,6 +528,7 @@ export default {
   },
   mounted() {
     let that = this;
+    this.fieldData()
     window.onresize = () => {
       return (() => {
         window.screenWidth = document.body.clientWidth
@@ -492,6 +538,36 @@ export default {
     this.auth();
   },
   methods: {
+    fieldData () {
+      let that = this;
+      var param = {
+        fieldId: 30000
+      };
+      that.$http
+        .get(Url + "/aimw/field/listFieldInfo", {
+          params: param
+        })
+        .then(res => {
+          let datas = res.data.data;
+          if (res.data.code == 0) {
+            if (datas) {
+              for (let i in datas) {
+                if (datas[i].fieldId == 30201) {
+                  this.fid30201 = datas[i]
+                }
+                if (datas[i].fieldId == 30207) {
+                  this.fid30207 = datas[i]
+                }
+              }
+            }
+          } else {
+            that.$message.error(res.data.msg);
+          }
+        })
+        .catch(res => {
+          that.$message.error(res.data.msg);
+        });
+    },
     perctInfo (data) {
       return Math.round(data.toFixed(4) * 10000) / 100
     },
@@ -565,106 +641,109 @@ export default {
                       (startAngle - endAngle) * (1 - value) + endAngle;
                     this.getUserInfo();
                     let chartArr = []
-                    if (this.anxietyFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.anxietyNum,
-                        name: "焦虑",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#00C2FF"
-                              },
-                              {
-                                offset: 1,
-                                color: "#0075FF"
-                              }
-                            ])
-                          }
+                    // if (this.anxietyFlag == 1) {
+                    // that.detail.warningStatistics.mildWarningNum = 1
+                    chartArr.push({
+                      value: that.detail.warningStatistics.mildWarningNum,
+                      name: "轻度预警",
+                      itemStyle: {
+                        normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                              offset: 0,
+                              color: "#FFD800"
+                            },
+                            {
+                              offset: 1,
+                              color: "#FEF569"
+                            }
+                          ])
                         }
-                      })
-                    }
-                    if (this.depressionFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.depressionNum,
-                        name: "抑郁",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#FC4FB0"
-                              },
-                              {
-                                offset: 1,
-                                color: "#FF9CE5"
-                              }
-                            ])
-                          }
+                      }
+                    })
+                    // }
+                    // if (this.depressionFlag == 1) {
+                    // that.detail.warningStatistics.moderateWarningNum = 2
+                    chartArr.push({
+                      value: that.detail.warningStatistics.moderateWarningNum,
+                      name: "中度预警",
+                      itemStyle: {
+                        normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                              offset: 0,
+                              color: "#FF849C"
+                            },
+                            {
+                              offset: 1,
+                              color: "#FFCE9F"
+                            }
+                          ])
                         }
-                      })
-                    }
-                    if (this.forcedFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.forceNum,
-                        name: "强迫",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#7279FF"
-                              },
-                              {
-                                offset: 1,
-                                color: "#C4C8FF"
-                              }
-                            ])
-                          }
+                      }
+                    })
+                    // }
+                    // if (this.forcedFlag == 1) {
+                    // that.detail.warningStatistics.severeWarningNum = 3
+                    chartArr.push({
+                      value: that.detail.warningStatistics.severeWarningNum,
+                      name: "重度预警",
+                      itemStyle: {
+                        normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                              offset: 0,
+                              color: "#FF0F47"
+                            },
+                            {
+                              offset: 1,
+                              color: "#FFAB96"
+                            }
+                          ])
                         }
-                      })
-                    }
-                    if (this.suicideFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.suicideNum,
-                        name: "自杀",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#46F7CB"
-                              },
-                              {
-                                offset: 1,
-                                color: "#00D8FF"
-                              }
-                            ])
-                          }
-                        }
-                      })
-                    }
-                    if (this.violenceFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.violenceNum,
-                        name: "暴力",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#FFE792"
-                              },
-                              {
-                                offset: 1,
-                                color: "#FFC90C"
-                              }
-                            ])
-                          }
-                        }
-                      })
-                    }
+                      }
+                    })
+                    // }
+                    // if (this.suicideFlag == 1) {
+                    //   chartArr.push({
+                    //     value: that.detail.warningStatistics.suicideNum,
+                    //     name: "自杀",
+                    //     itemStyle: {
+                    //       normal: {
+                    //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    //           {
+                    //             offset: 0,
+                    //             color: "#46F7CB"
+                    //           },
+                    //           {
+                    //             offset: 1,
+                    //             color: "#00D8FF"
+                    //           }
+                    //         ])
+                    //       }
+                    //     }
+                    //   })
+                    // }
+                    // if (this.violenceFlag == 1) {
+                    //   chartArr.push({
+                    //     value: that.detail.warningStatistics.violenceNum,
+                    //     name: "暴力",
+                    //     itemStyle: {
+                    //       normal: {
+                    //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    //           {
+                    //             offset: 0,
+                    //             color: "#FFE792"
+                    //           },
+                    //           {
+                    //             offset: 1,
+                    //             color: "#FFC90C"
+                    //           }
+                    //         ])
+                    //       }
+                    //     }
+                    //   })
+                    // }
                     this.chart1List = chartArr
                     let piePrect = []
                     let pieName = []
@@ -1679,6 +1758,18 @@ export default {
               .c_th4 {
                 background: linear-gradient(90deg, #FFE792, #FFC90C);
               }
+              .c_ths0{
+                background: linear-gradient(268deg, #0075ff, #00c2ff);
+              }
+              .c_ths1{
+                background: linear-gradient(90deg, #FEF569, #FFD800);
+              }
+              .c_ths2{
+                background: linear-gradient(90deg, #FFCE9F, #FF849C);
+              }
+              .c_ths3{
+                background: linear-gradient(74deg, #FFAB96, #FF0F47);
+              }
               .c_pie_td {
                 display: inline-block;
                 font-size: 0.14rem;
@@ -2301,6 +2392,7 @@ export default {
           .b_o_more {
             font-size: 0.16rem;
             color: #009aff;
+            padding: 0.04rem 0 0.1rem;
           }
           .tab_box {
             margin: 0.18rem 0 0.15rem;

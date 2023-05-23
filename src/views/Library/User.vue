@@ -33,10 +33,10 @@
             <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="登录账号:" prop="passport">
+        <el-form-item label="登录手机号:" prop="passport">
           <el-input
             v-model="formSearch.passport"
-            placeholder="请输入登录账号"
+            placeholder="请输入登录手机号"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -132,8 +132,8 @@
             </template>
           </el-table-column>
           <el-table-column prop="departmentName" :label="fid30207.fieldName"> </el-table-column>
-          <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column>
-          <el-table-column prop="passport" label="登录账号"> </el-table-column>
+          <!-- <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column> -->
+          <el-table-column prop="passport" :label="fid30201.fieldName"> </el-table-column>
           <el-table-column prop="accountState" label="状态">
             <template slot-scope="scope">
               <div class="naturalize">
@@ -244,7 +244,7 @@
                 <span></span>
               </div>
             </div>
-            <span>默认密码: 登陆账号后6位</span>
+            <span>默认密码: 登录账号后6位</span>
           </div>
         </el-form-item>
       </el-form>
@@ -444,16 +444,27 @@ export default {
         ifRequired: 1,
         required: 1
       },
-      fid30205: {
+      // fid30205: {
+      //   enable: 1,
+      //   fieldId: 30205,
+      //   fieldName: "手机号码",
+      //   fieldType: "单行文本",
+      //   ifDelete: 1,
+      //   ifEnable: 0,
+      //   ifModify: 1,
+      //   ifRequired: 1,
+      //   required: 0
+      // },
+      fid30201: {
         enable: 1,
-        fieldId: 30205,
-        fieldName: "手机号码",
+        fieldId: 30201,
+        fieldName: "登录手机号",
         fieldType: "单行文本",
-        ifDelete: 1,
+        ifDelete: 0,
         ifEnable: 0,
-        ifModify: 1,
-        ifRequired: 1,
-        required: 0
+        ifModify: 0,
+        ifRequired: 0,
+        required: 1
       },
       fid30207: {
         enable: 1,
@@ -511,8 +522,11 @@ export default {
                 if (datas[i].fieldId == 30501) {
                   this.fid30501 = datas[i]
                 }
-                if (datas[i].fieldId == 30205) {
-                  this.fid30205 = datas[i]
+                // if (datas[i].fieldId == 30205) {
+                //   this.fid30205 = datas[i]
+                // }
+                if (datas[i].fieldId == 30201) {
+                  this.fid30201 = datas[i]
                 }
                 if (datas[i].fieldId == 30207) {
                   this.fid30207 = datas[i]
@@ -964,8 +978,10 @@ export default {
     download() {
       const content = [...this.checkList];
       import("@/excel/Export2Excel").then(excel => {
-        const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30205.fieldName, "登录账号", "状态"];
-        const filterVal = ["name", "genderStr", "departmentName", "phone", "passport", "accountStateStr"];
+        // const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30205.fieldName, "登录账号", "状态"];
+        // const filterVal = ["name", "genderStr", "departmentName", "phone", "passport", "accountStateStr"];
+        const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30201.fieldName, "状态"];
+        const filterVal = ["name", "genderStr", "departmentName", "passport", "accountStateStr"];
         const content = this.checkList
         for (let i in content) {
           if (content[i].accountState == 1) {
@@ -1381,13 +1397,13 @@ export default {
         col:nth-child(6) {
           width: 1.2rem;
         }
-        col:nth-child(8) {
+        col:nth-child(7) {
           width: 1rem;
         }
-        col:nth-child(9) {
+        col:nth-child(8) {
           width: 1.6rem;
         }
-        col:nth-child(10) {
+        col:nth-child(9) {
           width: 0;
         }
       }

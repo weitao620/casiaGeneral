@@ -154,10 +154,10 @@
                 src="../../assets/images/report/person2.png"
                 alt=""
               />
-              <span class="dt_blod">登陆账号：</span>
+              <span style="width:120px" class="dt_blod">登录手机号：</span>
               <span>{{ details.passport }}</span>
             </li>
-            <li style="width:3.2rem">
+            <!-- <li style="width:3.2rem">
               <img
                 class="dt_per3"
                 src="../../assets/images/report/person3.png"
@@ -165,7 +165,7 @@
               />
               <span class="dt_blod">手机号：</span>
               <span>{{ details.phone }}</span>
-            </li>
+            </li> -->
             <li style="width:3.2rem">
               <img
                 class="dt_per4"
@@ -177,7 +177,7 @@
             </li>
           <!-- </ul>
           <ul> -->
-            <li style="width:3.8rem">
+            <li style="width:3.2rem">
               <img
                 class="dt_per4"
                 style="margin-left: 0.02rem;"
@@ -187,7 +187,7 @@
               <span class="dt_blod">所属部门：</span>
               <span>{{ details.departmentName }}</span>
             </li>
-            <li style="width:3.2rem">
+            <li style="width:3.8rem">
               <img
                 class="dt_per7"
                 src="../../assets/images/report/person7.png"
@@ -1881,7 +1881,9 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            data.data.birth = data.data.birth.split(" ")[0];
+            if (data.data.birth) {
+              data.data.birth = data.data.birth.split(" ")[0];
+            }
             if (data.data.confidenceLevel == 1) {
               data.data.confidenceLevel = "可信";
             } else {

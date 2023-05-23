@@ -45,12 +45,6 @@
               placeholder="请输入姓名"
             ></el-input>
           </el-form-item>
-          <el-form-item label="登陆账号:" prop="passport">
-            <el-input
-              v-model="formSearch.passport"
-              placeholder="请输入账号"
-            ></el-input>
-          </el-form-item>
           <el-form-item :label="fid30207.fieldName + ':'" prop="department">
             <el-select
               v-model="formSearch.department"
@@ -65,6 +59,13 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item  :label="fid30201.fieldName" prop="passport">
+            <el-input
+              v-model="formSearch.passport"
+              :placeholder="'请输入'+fid30201.fieldName"
+            ></el-input>
+          </el-form-item>
+          
           <el-form-item class="time_data" label="测评时间:" prop="time">
             <el-date-picker
               v-model="formSearch.time"
@@ -238,7 +239,7 @@
             </el-table-column>
             <el-table-column prop="departmentName" :label="fid30207.fieldName">
             </el-table-column>
-            <el-table-column prop="passport" label="登录账号">
+            <el-table-column prop="passport" :label="fid30201.fieldName">
             </el-table-column>
             <el-table-column prop="evaluationTime" sortable label="测评次数">
               <template slot-scope="scope">
@@ -542,6 +543,17 @@ export default {
       violenceFlag: 0,
       personalityFlag: 0,
       studyList: [],
+      fid30201: {
+        enable: 1,
+        fieldId: 30201,
+        fieldName: "登录手机号",
+        fieldType: "单行文本",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 0,
+        ifRequired: 0,
+        required: 1
+      },
       fid30207: {
         enable: 1,
         fieldId: 30207,
@@ -624,6 +636,9 @@ export default {
           if (res.data.code == 0) {
             if (datas) {
               for (let i in datas) {
+                if (datas[i].fieldId == 30201) {
+                  this.fid30201 = datas[i]
+                }
                 if (datas[i].fieldId == 30207) {
                   this.fid30207 = datas[i];
                 }

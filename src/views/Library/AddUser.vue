@@ -26,6 +26,19 @@
             <img src="../../assets/images/personMsg.png" alt="" />
             基础信息
           </div>
+          <el-form-item v-if="fid30203.enable == 1" :required="fid30203.required == 1" :label="fid30203.fieldName + '：'">
+            <el-input
+              v-model="formAddUser.name"
+              :placeholder="'请输入' + fid30203.fieldName"
+            ></el-input>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="nameFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                请输入{{fid30203.fieldName}}
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item v-if="fid30201.enable == 1" :required="fid30201.required == 1" :label="fid30201.fieldName + '：'">
             <el-input
               v-model="formAddUser.passport"
@@ -36,7 +49,8 @@
             <div class="tip_left" v-show="passportFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
-                请输入{{fid30201.fieldName}}且只能包含数字、字母的6~20位字符
+                {{fid30201.fieldName}}不能为空 / 格式有误
+                <!-- 请输入{{fid30201.fieldName}}且只能包含数字、字母的6~20位字符 -->
               </div>
             </div>
           </el-form-item>
@@ -79,38 +93,25 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item v-if="fid30203.enable == 1" :required="fid30203.required == 1" :label="fid30203.fieldName + '：'">
-            <el-input
-              v-model="formAddUser.name"
-              :placeholder="'请输入' + fid30203.fieldName"
-            ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
-            <div class="tip_left" v-show="nameFlag">
-              <div class="tip_msg">
-                <img src="../../assets/images/x.png" alt="" />
-                请输入{{fid30203.fieldName}}
-              </div>
-            </div>
-          </el-form-item>
           <el-form-item v-if="fid30204.enable == 1" :required="fid30204.required == 1" :label="fid30204.fieldName + '：'">
             <el-radio-group v-model="formAddUser.gender">
               <el-radio :label="1">男</el-radio>
               <el-radio :label="0">女</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="fid30205.enable == 1" :required="fid30205.required == 1" :label="fid30205.fieldName + '：'">
+          <!-- <el-form-item v-if="fid30206.enable == 1" :required="fid30206.required == 1" :label="fid30206.fieldName + '：'">
             <el-input
               v-model="formAddUser.phone"
-              :placeholder="'请输入' + fid30205.fieldName"
+              :placeholder="'请输入' + fid30206.fieldName"
             ></el-input>
             <div style="width:4rem;height:0.36rem"></div>
             <div class="tip_left" v-show="phoneFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
-                {{fid30205.fieldName}}不能为空 / 格式有误
+                {{fid30206.fieldName}}不能为空 / 格式有误
               </div>
             </div>
-          </el-form-item>
+          </el-form-item> -->
           <!-- class="time_data time_bg1" label="出生日期："   -->
           <el-form-item v-if="fid30210.enable == 1" :required="fid30210.required == 1" :label="fid30210.fieldName + '：'">
             <el-date-picker
@@ -256,7 +257,7 @@ export default {
       fid30201: {
         enable: 1,
         fieldId: 30201,
-        fieldName: "登录账号",
+        fieldName: "登录手机号",
         fieldType: "单行文本",
         ifDelete: 0,
         ifEnable: 0,
@@ -297,17 +298,17 @@ export default {
         ifRequired: 0,
         required: 1
       },
-      fid30205: {
-        enable: 1,
-        fieldId: 30205,
-        fieldName: "手机号码",
-        fieldType: "单行文本",
-        ifDelete: 1,
-        ifEnable: 0,
-        ifModify: 1,
-        ifRequired: 1,
-        required: 0
-      },
+      // fid30206: {
+      //   enable: 1,
+      //   fieldId: 30206,
+      //   fieldName: "手机号码",
+      //   fieldType: "单行文本",
+      //   ifDelete: 1,
+      //   ifEnable: 0,
+      //   ifModify: 1,
+      //   ifRequired: 1,
+      //   required: 0
+      // },
       fid30206: {
         enable: 1,
         fieldId: 30206,
@@ -399,9 +400,9 @@ export default {
                 if (datas[i].fieldId == 30204) {
                   this.fid30204 = datas[i]
                 }
-                if (datas[i].fieldId == 30205) {
-                  this.fid30205 = datas[i]
-                }
+                // if (datas[i].fieldId == 30206) {
+                //   this.fid30206 = datas[i]
+                // }
                 if (datas[i].fieldId == 30210) {
                   this.fid30210 = datas[i]
                 }
@@ -595,14 +596,23 @@ export default {
     // 新增用户提交
     addSubmit() {
       let that = this;
+     
       this.passportFlag = this.passwordFlag = this.nameFlag = this.phoneFlag = this.birthFlag = this.emailFlag = this.jobFlag = this.remarkFlag = this.frameFlag = false;
       var regp = /^1[3456789]\d{9}$/;
       var regzh = /^[A-Za-z0-9]{6,20}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (this.fid30201.enable == 1 && this.fid30201.required == 1 && (this.formAddUser.passport == "" || !regzh.test(this.formAddUser.passport))) {
+      if (this.fid30203.enable == 1 && this.fid30203.required == 1 && this.formAddUser.name == "") {
+        this.nameFlag = true;
+        return false;
+      }
+      if (this.fid30201.enable == 1 && this.fid30201.required == 1 && ((this.formAddUser.passport != "" && !regp.test(this.formAddUser.passport)) || this.formAddUser.passport == "")) {
         this.passportFlag = true;
         return false;
       }
+      // if (this.fid30201.enable == 1 && this.fid30201.required == 1 && (this.formAddUser.passport == "" || !regzh.test(this.formAddUser.passport))) {
+      //   this.passportFlag = true;
+      //   return false;
+      // }
       if (this.singleBtn) {
 
       } else {
@@ -615,26 +625,22 @@ export default {
           }
         }
       }
-      if (this.fid30203.enable == 1 && this.fid30203.required == 1 && this.formAddUser.name == "") {
-        this.nameFlag = true;
-        return false;
-      }
-      if (this.fid30205.enable == 1 && this.fid30205.required == 1 && ((this.formAddUser.phone != "" && !regp.test(this.formAddUser.phone)) || this.formAddUser.phone == "")) {
-        this.phoneFlag = true;
-        return false;
-      }
+      console.log(1)
       if (this.fid30210.enable == 1 && this.fid30210.required == 1 && this.formAddUser.birth == "") {
         this.birthFlag = true;
         return false;
       }
+      console.log(2)
       if (this.fid30206.enable == 1 && this.fid30206.required == 1 && ((this.formAddUser.email != "" && !rege.test(this.formAddUser.email)) || this.formAddUser.email == "")) {
         this.emailFlag = true;
         return false;
       }
+      console.log(3)
       if (this.fid30207.enable == 1 && this.fid30207.required == 1 && this.formAddUser.department == "") {
         this.frameFlag = true;
         return false;
       }
+      console.log(4)
       if (this.fid30207.enable == 1) {
         for (let i in this.studyList) {
           if (this.studyList[i].Pid == this.formAddUser.department) {
@@ -644,6 +650,7 @@ export default {
       } else {
         this.formAddUser.departmentName = ''
       }
+      console.log(5)
       if (this.fid30208.enable == 1 && this.fid30208.required == 1 && this.formAddUser.jobNumber == "") {
         this.jobFlag = true;
         return false;

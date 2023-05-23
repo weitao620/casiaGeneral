@@ -26,10 +26,10 @@
             placeholder="请输入姓名"
           ></el-input>
         </el-form-item>
-        <el-form-item label="登录账号:" prop="passport">
+        <el-form-item :label="fid30201.fieldName + ':'" prop="passport">
           <el-input
             v-model="formSearch.passport"
-            placeholder="请输入登录账号"
+            :placeholder="'请输入'+ fid30201.fieldName"
           ></el-input>
         </el-form-item>
         <el-form-item :label="fid30207.fieldName + ':'" prop="department">
@@ -95,7 +95,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="departmentName" :label="fid30207.fieldName"> </el-table-column>
-          <el-table-column prop="passport" label="登录账号"> </el-table-column>
+          <el-table-column prop="passport" :label="fid30201.fieldName"> </el-table-column>
           <el-table-column prop="status" label="状态">
             <template slot-scope="scope">
               <div class="naturalize">
@@ -173,6 +173,17 @@ export default {
         label: "Name"
       },
       studyList: [],
+      fid30201: {
+        enable: 1,
+        fieldId: 30201,
+        fieldName: "登录手机号",
+        fieldType: "单行文本",
+        ifDelete: 0,
+        ifEnable: 0,
+        ifModify: 0,
+        ifRequired: 0,
+        required: 1
+      },
       fid30207: {
         enable: 1,
         fieldId: 30207,
@@ -211,6 +222,9 @@ export default {
               for (let i in datas) {
                 if (datas[i].fieldId == 30207) {
                   this.fid30207 = datas[i]
+                }
+                if (datas[i].fieldId == 30201) {
+                  this.fid30201 = datas[i]
                 }
               }
             } else {
@@ -413,7 +427,7 @@ export default {
     download() {
       const content = [...this.checkList];
       import("@/excel/Export2Excel").then(excel => {
-        const tHeader = ["姓名", "性别", this.fid30207.fieldName, "登录账号", "状态", "评测次数", "最近一次测评时间"];
+        const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30201.fieldName, "状态", "评测次数", "最近一次测评时间"];
         const filterVal = ["name", "gender", "departmentName", "passport", "status", "evaluationTime", "date"];
         const content = this.checkList
         const data = this.formatJson(filterVal, content);
