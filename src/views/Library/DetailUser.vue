@@ -711,7 +711,7 @@ export default {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
       let birth = ''
-      if (this.formAddUser.birth != '') {
+      if (String(this.formAddUser.birth).indexOf('-') == -1) {
         birth = this.formTimes(this.formAddUser.birth)
         this.formAddUser.birth = birth
       }
