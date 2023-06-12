@@ -114,7 +114,7 @@
         <h3>批量导入完成</h3>
         <p>
           成功导入数据：<span>{{ visibleList.length }}</span>
-          条，默认密码：<span>登录账号后6位</span>
+          条，默认密码：<span>登录手机号后6位</span>
         </p>
       </div>
       <div class="steps_btn" v-if="stepsAct == 1">
@@ -148,7 +148,7 @@
             <el-table-column
               prop="passport"
               :render-header="renderHeader"
-              label="登录账号"
+              label="登录手机号"
             >
             </el-table-column>
             <el-table-column
@@ -398,8 +398,7 @@ export default {
             "用户账号导入数据",
             "__EMPTY",
             "__EMPTY_1",
-            "__EMPTY_2",
-            "__EMPTY_3"
+            "__EMPTY_2"
           ];
           let listNew = [];
           outdata.map(item => {
@@ -407,10 +406,9 @@ export default {
             if (obj.__rowNum__ > 2) {
               var objs = {
                 name: "",
-                passport: "",
                 gender: "",
                 birth: "",
-                // phone: "",
+                passport: "",
                 row: obj.__rowNum__ + 1
               };
               for (let key in obj) {
@@ -421,13 +419,20 @@ export default {
                   objs.gender = obj[key];
                 }
                 if (key == str[2]) {
-                  objs.birth = String(obj[key])
+                  console.log(obj[key])
+                  console.log(new Date(obj[key]))
+                  if (typeof obj[key] === 'number') {
+                    objs.birth = that.formatDate(obj[key], '/');
+                  } else {
+                    objs.birth = String(obj[key])
+                  }
+                  console.log(objs.birth)
                   // objs.birth = that.formatDate(obj[key], '/');
                 }
                 // if (key == str[3]) {
                 //   objs.phone = obj[key];
                 // }
-                if (key == str[4]) {
+                if (key == str[3]) {
                   objs.passport = String(obj[key]).replace(/\s+/g, '');
                 }
               }
@@ -453,6 +458,12 @@ export default {
               }
               if (listNew[i].gender == "") {
                 listNew[i].mark.push("性别为必填项！");
+              } else {
+                if (listNew[i].gender == "男" || listNew[i].gender == "女") {
+                 
+                } else {
+                  listNew[i].mark.push("性别填写有误！");
+                }
               }
               if (
                 listNew[i].birth == "") {
@@ -471,12 +482,12 @@ export default {
                 );
               }
               if (listNew[i].passport == "") {
-                listNew[i].mark.push("登录账号为必填项！");
+                listNew[i].mark.push("登录手机号为必填项！");
               } else if (
                 listNew[i].passport != "" &&
-                !regzh.test(listNew[i].passport)
+                !regp.test(listNew[i].passport)
               ) {
-                listNew[i].mark.push("登录账号不得少于6位！");
+                listNew[i].mark.push("登录手机号格式有误！");
               }
               // if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
               //   listNew[i].mark.push(that.fid30205.fieldName + "格式有误！");
@@ -493,20 +504,29 @@ export default {
         reader.readAsBinaryString(f);
       }
     },
+    // formatDate(numb, format) {
+    //   console.log(numb)
+    //   if (String(numb).indexOf('年') != -1) {
+    //     return numb
+    //   } else {
+    //     const time = new Date((numb) * 24 * 3600000 + 1)
+    //     time.setYear(time.getFullYear() - 70)
+    //     const year = time.getFullYear() + ''
+    //     const month = time.getMonth() + 1 + ''
+    //     const date = time.getDate() - 1 + ''
+    //     if (format && format.length === 1) {
+    //       return year + '年' + month + '月' + date + "日"
+    //     }
+    //   }
+    // },
     formatDate(numb, format) {
-      console.log(numb)
-      if (String(numb).indexOf('年') != -1) {
-        return numb
-      } else {
-        const time = new Date((numb) * 24 * 3600000 + 1)
-        time.setYear(time.getFullYear() - 70)
-        const year = time.getFullYear() + ''
-        const month = time.getMonth() + 1 + ''
-        const date = time.getDate() - 1 + ''
-        if (format && format.length === 1) {
-          return year + '年' + month + '月' + date + "日"
-        }
-      }
+      const old = numb - 1;
+      const t = Math.round((old - Math.floor(old)) * 24 * 60 * 60);
+      const time = new Date(1900, 0, old, 0, 0, t)
+      const year = time.getFullYear()
+      const month = time.getMonth() + 1
+      const date = time.getDate()
+      return year + '年' + (month < 10 ? '0' + month : month) + '月' + (date < 10 ? '0' + date : date) + "日"
     },
     updataExcel() {
 
@@ -621,6 +641,7 @@ export default {
         taskID: this.uuids
       };
       let visArr = [];
+
       for (let i in this.visibleList) {
         let genstr = "";
         if (this.visibleList[i].gender == "男") {
@@ -651,7 +672,10 @@ export default {
           // phone: this.visibleList[i].phone
         };
         visArr.push(vObj);
+       
       }
+      console.log(visArr)
+      // return
       this.$http
         .post(Url + "/aimw/addUsers/importData", visArr)
         .then(res => {

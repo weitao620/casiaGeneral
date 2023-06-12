@@ -26,6 +26,19 @@
             <img src="../../assets/images/personMsg.png" alt="" />
             基础信息
           </div>
+          <el-form-item v-if="fid30203.enable == 1" :required="fid30203.required == 1" :label="fid30203.fieldName + '：'">
+            <el-input
+              v-model="formAddUser.name"
+              :placeholder="'请输入' + fid30203.fieldName"
+            ></el-input>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="nameFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                请输入{{fid30203.fieldName}}
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item v-if="fid30201.enable == 1" :required="fid30201.required == 1" :label="fid30201.fieldName + '：'">
             <el-input
               disabled
@@ -78,19 +91,7 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item v-if="fid30203.enable == 1" :required="fid30203.required == 1" :label="fid30203.fieldName + '：'">
-            <el-input
-              v-model="formAddUser.name"
-              :placeholder="'请输入' + fid30203.fieldName"
-            ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
-            <div class="tip_left" v-show="nameFlag">
-              <div class="tip_msg">
-                <img src="../../assets/images/x.png" alt="" />
-                请输入{{fid30203.fieldName}}
-              </div>
-            </div>
-          </el-form-item>
+          
           <el-form-item v-if="fid30204.enable == 1" :required="fid30204.required == 1" :label="fid30204.fieldName + '：'">
             <el-radio-group v-model="formAddUser.gender">
               <el-radio :label="1">男</el-radio>
@@ -706,8 +707,11 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
+      console.log(this.formAddUser)
+      
+      // return
       let birth = ''
-      if (this.formAddUser.birth != '') {
+      if (String(this.formAddUser.birth).indexOf('-') == -1) {
         birth = this.formTimes(this.formAddUser.birth)
         this.formAddUser.birth = birth
       }

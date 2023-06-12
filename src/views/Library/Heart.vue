@@ -26,18 +26,19 @@
             placeholder="请输入姓名"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="fid30201.fieldName + ':'" prop="passport">
-          <el-input
-            v-model="formSearch.passport"
-            :placeholder="'请输入'+ fid30201.fieldName"
-          ></el-input>
-        </el-form-item>
         <el-form-item :label="fid30207.fieldName + ':'" prop="department">
           <el-select v-model="formSearch.department" multiple placeholder="全部">
             <!-- <el-option label="全部" value=""></el-option> -->
             <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item :label="fid30201.fieldName + ':'" prop="passport">
+          <el-input
+            v-model="formSearch.passport"
+            :placeholder="'请输入'+ fid30201.fieldName"
+          ></el-input>
+        </el-form-item>
+        
         <el-form-item label="状态:" prop="status">
           <el-select v-model="formSearch.status" placeholder="全部">
             <el-option label="全部" value=""></el-option>

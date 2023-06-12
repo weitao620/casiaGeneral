@@ -145,12 +145,12 @@
               label="登录账号"
             >
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="roleName"
               :render-header="renderHeader"
               label="角色"
             >
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column prop="phone" :label="fid40104.fieldName"> </el-table-column>
             <el-table-column prop="mark" label="错误提示">
               <template slot-scope="scope">
@@ -500,6 +500,7 @@ export default {
         };
         visArr.push(vObj);
       }
+      console.log(visArr)
       this.$http
         .post(Url + "/aimw/addManagers/importData", visArr)
         .then(res => {

@@ -46,15 +46,7 @@
               <span class="dt_blod">出生日期：</span>
               <span>{{details.birth}}</span>
             </li>
-            <li>
-              <img
-                class="dt_per7"
-                src="../../assets/images/report/person7.png"
-                alt=""
-              />
-              <span class="dt_blod">测评次数：</span>
-              <span>第{{ details.evaluationTime }}次</span>
-            </li>
+            
             <li>
               <img
                 class="dt_per6"
@@ -63,6 +55,15 @@
               />
               <span class="dt_blod">所属部门：</span>
               <span>{{details.departmentName}}</span>
+            </li>
+            <li>
+              <img
+                class="dt_per7"
+                src="../../assets/images/report/person7.png"
+                alt=""
+              />
+              <span class="dt_blod">测评次数：</span>
+              <span>第{{ details.evaluationTime }}次</span>
             </li>
             <li style="width:400px">
               <img

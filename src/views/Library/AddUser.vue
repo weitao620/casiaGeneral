@@ -239,7 +239,7 @@ export default {
         password: "", // 登录密码
         name: "", // 用户姓名
         gender: 1, // 性别
-        phone: "", // 手机号
+        // phone: "", // 手机号
         birth: "", // 出生日期
         email: "", // 邮箱地址
         department: "", // 所属部门ID
@@ -662,9 +662,13 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
+
+      console.log(this.formAddUser)
+      // return
       let birth = ''
       if (this.formAddUser.birth != '') {
-        birth = this.formTimes(this.formAddUser.birth)
+        console.log(new Date(this.formAddUser.birth))
+        birth = this.formTimes(new Date(this.formAddUser.birth))
         this.formAddUser.birth = birth
       }
       that.$http
@@ -685,6 +689,8 @@ export default {
         });
     },
     formTimes(date) {
+      console.log(date)
+      
       var y = date.getFullYear();
       var m = date.getMonth() + 1;
       m = m < 10 ? "0" + m : m;

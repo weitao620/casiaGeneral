@@ -154,7 +154,7 @@
                 src="../../assets/images/report/person2.png"
                 alt=""
               />
-              <span style="width:120px" class="dt_blod">登录手机号：</span>
+              <span class="dt_blod">登录手机号：</span>
               <span>{{ details.passport }}</span>
             </li>
             <!-- <li style="width:3.2rem">

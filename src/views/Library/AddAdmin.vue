@@ -25,11 +25,62 @@
             <img src="../../assets/images/personMsg.png" alt="" />
             基础信息
           </div>
+          <el-form-item v-if="fid40103.enable == 1" :required="fid40103.required == 1" :label="fid40103.fieldName + '：'">
+            <el-input
+              v-model="formAddAdmin.name"
+              :placeholder="'请输入' + fid40103.fieldName"
+            ></el-input>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="nameFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                请输入{{fid40103.fieldName}}
+              </div>
+            </div>
+          </el-form-item>
+          <el-form-item v-if="fid40104.enable == 1" :required="fid40104.required == 1" :label="fid40104.fieldName + '：'">
+            <el-input
+              style="width:2.44rem"
+              v-model="formAddAdmin.phone"
+              :placeholder="'请输入' + fid40104.fieldName"
+            ></el-input>
+            <div style="margin-left:0.1rem">
+              <el-radio-group v-model="singleBtn1">
+                <!-- :disabled="!singleBtn1" -->
+                <el-radio
+                  :label="1"
+                  @click.native.prevent="singleChange1(1)"
+                  >接收预警短信</el-radio
+                >
+              </el-radio-group>
+            </div>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="phoneFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                {{fid40104.fieldName}}不能为空 / 格式有误
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item v-if="fid40101.enable == 1" :required="fid40101.required == 1" :label="fid40101.fieldName + '：'">
             <el-input
+              style="width:2.44rem"
+              @input="newChange2"
+              @focus="newFcous2"
+              @blur="newBlur2"
               v-model="formAddAdmin.passport"
               :placeholder="'请输入' + fid40101.fieldName"
             ></el-input>
+            <div style="margin-left:0.1rem">
+              <el-radio-group v-model="singleBtn2">
+                <el-radio
+                  :label="1"
+                  :disabled="!singleBtn2"
+                  @click.native.prevent="singleChange2(1)"
+                  >与手机号一致</el-radio
+                >
+              </el-radio-group>
+            </div>
             <el-input class="dis_none"></el-input>
             <div style="width:4rem;height:0.36rem"></div>
             <div class="tip_left" v-show="passportFlag">
@@ -78,32 +129,7 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item v-if="fid40103.enable == 1" :required="fid40103.required == 1" :label="fid40103.fieldName + '：'">
-            <el-input
-              v-model="formAddAdmin.name"
-              :placeholder="'请输入' + fid40103.fieldName"
-            ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
-            <div class="tip_left" v-show="nameFlag">
-              <div class="tip_msg">
-                <img src="../../assets/images/x.png" alt="" />
-                请输入{{fid40103.fieldName}}
-              </div>
-            </div>
-          </el-form-item>
-          <el-form-item v-if="fid40104.enable == 1" :required="fid40104.required == 1" :label="fid40104.fieldName + '：'">
-            <el-input
-              v-model="formAddAdmin.phone"
-              :placeholder="'请输入' + fid40104.fieldName"
-            ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
-            <div class="tip_left" v-show="phoneFlag">
-              <div class="tip_msg">
-                <img src="../../assets/images/x.png" alt="" />
-                {{fid40104.fieldName}}不能为空 / 格式有误
-              </div>
-            </div>
-          </el-form-item>
+          
           <el-form-item v-if="fid40105.enable == 1" :required="fid40105.required == 1" :label="fid40105.fieldName + '：'">
             <el-input
               v-model="formAddAdmin.email"
@@ -194,6 +220,8 @@ export default {
   name: "person",
   data() {
     return {
+      singleBtn1: 1,
+      singleBtn2: 1,
       singleBtn: 1,
       newPassFlag: false,
       newRight1: false,
@@ -231,6 +259,7 @@ export default {
         name: "", // 用户姓名
         roleId: "", // 角色
         phone: "", // 手机号
+        ifSendSms: 0,
         email: "", // 邮箱地址
         areaCode: "", // 区号
         telephone: "", // 座机号码
@@ -428,9 +457,28 @@ export default {
       var regp = /^1[3456789]\d{9}$/;
       var regzh = /^[A-Za-z0-9]{6,20}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (this.fid40101.enable == 1 && this.fid40101.required == 1 && (this.formAddAdmin.passport == "" || !regzh.test(this.formAddAdmin.passport))) {
-        this.passportFlag = true;
+      if (this.fid40103.enable == 1 && this.fid40103.required == 1 && this.formAddAdmin.name == "") {
+        this.nameFlag = true;
         return false;
+      }
+      if (this.fid40104.enable == 1 && this.fid40104.required == 1 && ((this.formAddAdmin.phone != "" && !regp.test(this.formAddAdmin.phone)) || this.formAddAdmin.phone == "")) {
+        this.phoneFlag = true;
+        return false;
+      }
+      let ifSendSms = 0
+      if (this.singleBtn1) {
+        ifSendSms = 1
+      } else {
+        ifSendSms = 0
+      }
+      
+      if (this.singleBtn2) {
+        this.formAddAdmin.passport = this.formAddAdmin.phone
+      } else {
+        if (this.fid40101.enable == 1 && this.fid40101.required == 1 && (this.formAddAdmin.passport == "" || !regzh.test(this.formAddAdmin.passport))) {
+          this.passportFlag = true;
+          return false;
+        }
       }
       if (this.singleBtn) {
       } else {
@@ -442,14 +490,7 @@ export default {
           }
         }
       }
-      if (this.fid40103.enable == 1 && this.fid40103.required == 1 && this.formAddAdmin.name == "") {
-        this.nameFlag = true;
-        return false;
-      }
-      if (this.fid40104.enable == 1 && this.fid40104.required == 1 && ((this.formAddAdmin.phone != "" && !regp.test(this.formAddAdmin.phone)) || this.formAddAdmin.phone == "")) {
-        this.phoneFlag = true;
-        return false;
-      }
+      
       if (this.fid40105.enable == 1 && this.fid40105.required == 1 && ((this.formAddAdmin.email != "" && !rege.test(this.formAddAdmin.email)) || this.formAddAdmin.email == "")) {
         this.emailFlag = true;
         return false;
@@ -473,6 +514,7 @@ export default {
       if (this.formAddAdmin.password == '') {
         this.formAddAdmin.password = this.formAddAdmin.passport.substring(this.formAddAdmin.passport.length - 6, this.formAddAdmin.passport.length)
       }
+      this.formAddAdmin.ifSendSms = ifSendSms
       that.$http
         .post(Url + "/aimw/manager/addManager", this.formAddAdmin)
         .then(res => {
@@ -494,6 +536,81 @@ export default {
       this.$router.push({
         path: "/library/admin"
       });
+    },
+    newChange1(value) {
+      console.log('不需要')
+      // var reg = /(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,20}$/;
+      // var reg1 = value.length >= 6 && value.length <= 20;
+      // // eslint-disable-next-line no-useless-escape
+      // var reg2 = /^[A-Za-z0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]+$/.test(
+      //   value
+      // );
+      // var reg3 = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{1,30}$/.test(
+      //   value
+      // );
+      // if (!(reg1 && reg2 && reg3)) {
+      //   if (!reg1) {
+      //     this.newRight1 = false;
+      //   } else {
+      //     this.newRight1 = true;
+      //   }
+      //   if (!reg2) {
+      //     this.newRight2 = false;
+      //   } else {
+      //     this.newRight2 = true;
+      //   }
+      //   if (!reg3) {
+      //     this.newRight3 = false;
+      //   } else {
+      //     this.newRight3 = true;
+      //   }
+      //   this.newPassFlag = true;
+      //   return false;
+      // } else {
+      //   this.newRight1 = true;
+      //   this.newRight2 = true;
+      //   this.newRight3 = true;
+      //   setTimeout(() => {
+      //     this.newPassFlag = false;
+      //   }, 100);
+      // }
+    },
+    newChange2(value) {
+      // var reg = /(?!.*\s)(?!^[\u4e00-\u9fa5]+$)(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{8,20}$/;
+      // var reg1 = value.length >= 6 && value.length <= 20;
+      // // eslint-disable-next-line no-useless-escape
+      // var reg2 = /^[A-Za-z0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]+$/.test(
+      //   value
+      // );
+      // var reg3 = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{1,30}$/.test(
+      //   value
+      // );
+      // if (!(reg1 && reg2 && reg3)) {
+      //   if (!reg1) {
+      //     this.newRight1 = false;
+      //   } else {
+      //     this.newRight1 = true;
+      //   }
+      //   if (!reg2) {
+      //     this.newRight2 = false;
+      //   } else {
+      //     this.newRight2 = true;
+      //   }
+      //   if (!reg3) {
+      //     this.newRight3 = false;
+      //   } else {
+      //     this.newRight3 = true;
+      //   }
+      //   this.newPassFlag = true;
+      //   return false;
+      // } else {
+      //   this.newRight1 = true;
+      //   this.newRight2 = true;
+      //   this.newRight3 = true;
+      //   setTimeout(() => {
+      //     this.newPassFlag = false;
+      //   }, 100);
+      // }
     },
     // 密码修改 -- 验证新密码
     newChange(value) {
@@ -533,16 +650,46 @@ export default {
         }, 100);
       }
     },
+    
+    newFcous2(val) {
+      console.log(3)
+      this.singleBtn2 = false;
+      // this.newPassFlag = true;
+      // this.twoPassFlag = false;
+    },
     // 密码修改 -- 新密码获得焦点时
     newFcous(val) {
       this.singleBtn = false;
       this.newPassFlag = true;
       this.twoPassFlag = false;
     },
+   
+    newBlur2(val) {
+      // this.singleBtn2 = 1;
+      // console.log(1)
+      if (this.formAddAdmin.passport == "") {
+        console.log(this.singleBtn2)
+        this.singleBtn2 = 1;
+        // this.singleChange2(1)
+      }
+      var value = this.formAddAdmin.passport;
+      // var reg1 = value.length >= 6 && value.length <= 20;
+      // eslint-disable-next-line no-useless-escape
+      // var reg2 = /^[A-Za-z0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、]+$/.test(
+      //   value
+      // );
+      // var reg3 = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^.{1,30}$/.test(
+      //   value
+      // );
+      // if (reg1 && reg2 && reg3) {
+      //   this.newPassFlag = false;
+      // }
+    },
     // 密码修改 -- 新密码失去焦点时
     newBlur(val) {
       if (this.formAddAdmin.password == "") {
         this.singleBtn = 1;
+        this.newPassFlag = false;
       }
       var value = this.formAddAdmin.password;
       var reg1 = value.length >= 6 && value.length <= 20;
@@ -557,9 +704,44 @@ export default {
         this.newPassFlag = false;
       }
     },
+    singleChange1(txt) {
+      this.singleBtn1 ? (this.singleBtn1 = false) : (this.singleBtn1 = txt);
+      // console.log(this.singleBtn1)
+      // this.formAddAdmin.password = "";
+      // this.newRight1 = false;
+      // this.newRight2 = false;
+      // this.newRight3 = false;
+      // if (this.singleBtn1) {
+      //   this.newPassFlag = false;
+      // } else {
+      //   this.newPassFlag = true;
+      // }
+    },
+    singleChange2(txt) {
+      console.log(2)
+      if (this.formAddAdmin.passport == "") {
+        this.singleBtn2 = 1
+      } else {
+        this.singleBtn2 ? (this.singleBtn2 = false) : (this.singleBtn2 = txt);
+        this.formAddAdmin.passport = "";
+      }
+     
+      // this.newRight1 = false;
+      // this.newRight2 = false;
+      // this.newRight3 = false;
+      // if (this.singleBtn2) {
+      //   this.newPassFlag = false;
+      // } else {
+      //   this.newPassFlag = true;
+      // }
+    },
     singleChange(txt) {
-      this.singleBtn ? (this.singleBtn = false) : (this.singleBtn = txt);
-      this.formAddAdmin.password = "";
+      if (this.formAddAdmin.password == "") {
+        this.singleBtn = 1;
+      } else {
+        this.singleBtn ? (this.singleBtn = false) : (this.singleBtn = txt);
+        this.formAddAdmin.password = "";
+      }
       this.newRight1 = false;
       this.newRight2 = false;
       this.newRight3 = false;

@@ -9,7 +9,7 @@
           <el-breadcrumb-item>评估报告</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="tab_box">
+      <!-- <div class="tab_box">
         <div
           :class="['tab_btns tab_btns_l', { tab_act: tabActive == 0 }]"
           @click="tabChange(0)"
@@ -24,7 +24,7 @@
           <i class="iconfont icon-wode"></i>
           游客
         </div>
-      </div>
+      </div> -->
     </div>
     <div>
       <div class="search_form_box">
