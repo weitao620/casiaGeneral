@@ -205,6 +205,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -662,7 +663,9 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
-
+      console.log(this.formAddUser.passport + '' + this.formAddUser.password)
+      let passMd5 = md5(this.formAddUser.passport + '' + this.formAddUser.password).substring(8, 24)
+      this.formAddUser.password = passMd5
       console.log(this.formAddUser)
       // return
       let birth = ''

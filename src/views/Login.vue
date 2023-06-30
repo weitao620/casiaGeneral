@@ -55,6 +55,7 @@
 <script>
 import { mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   inject: ["reload"],
   name: "login",
@@ -118,10 +119,14 @@ export default {
     },
     subLogin() {
       let that = this;
+      let passMd5 = md5(that.ruleForm.password).substring(8, 24)
       let param = {
         passport: that.ruleForm.usercount,
-        password: that.ruleForm.password
+        // password: that.ruleForm.password
+        password: passMd5
       };
+      console.log(param)
+      // return false
       localStorage.setItem('passport', that.ruleForm.usercount)
       if (that.ruleForm.usercount == 'admins') {
         localStorage.setItem("isLogin", true);
@@ -135,10 +140,13 @@ export default {
           path: "/library"
         });
       } else {
+        console.log(111)
         that.$http
           .post(Url + "/aimw/user/login", param)
           .then(res => {
+            console.log(res)
             var data = res.data;
+            console.log(res)
             if (data.code == 0) {
               let obja = {
                 menuAuthID: []

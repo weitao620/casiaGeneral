@@ -77,7 +77,7 @@
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="频次：即所有用户在游戏操作中出现的报警的次数，每出现一种记为一次。"
+                content="频次：预警等级划分为“”轻、中、重”三级，此处统计不同等级预警的出现频次。"
                 placement="right"
               >
                 <img
@@ -265,7 +265,7 @@
                 预警指标分析
               </div>
               <div id="myChartZero" ref="myChartZero"></div>
-              <div class="center_pie">
+              <!-- <div class="center_pie">
                 <div class="c_pie_li">
                   <span class="c_pie_th c_th0"></span>
                   男
@@ -274,7 +274,7 @@
                   <span class="c_pie_th c_th1"></span>
                   女
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -1156,7 +1156,7 @@ export default {
               color: "#006cff",
               offsetCenter: [0, "30%"],
               formatter: function(value) {
-                console.log(value)
+                // console.log(value)
                 return Math.round(value.toFixed(4) * 10000) / 100 + "%";
               }
             },
@@ -1540,56 +1540,11 @@ export default {
           left: nowSize(20),
           top: nowSize(40),
           right: nowSize(20),
-          bottom: nowSize(10),
+          bottom: nowSize(0),
           containLabel: true
         },
-        xAxis: {
-          type: "value",
-          max: 100,
-          boundaryGap: false,
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#DEE7FF"
-            }
-          },
-          showBackground: true,
-          backgroundStyle: {
-            color: "rgba(180, 180, 180, 0.2)"
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            color: "#7786AC",
-            showMaxLabel: true
-          }
-        },
-        yAxis: {
-          type: "category",
-          data: ["女", "男"],
-          axisTick: {
-            show: false
-          },
-          axisLine: {
-            show: false,
-            lineStyle: {
-              color: "#fffff"
-            }
-          },
-          splitLine: {
-            show: false
-          },
-          axisLabel: {
-            color: "#7786AC",
-            showMaxLabel: true
-          },
-          minInterval: 1
-        },
         tooltip: {
+          show: false,
           padding: 0,
           axisPointer: {
             type: "shadow"
@@ -1598,13 +1553,14 @@ export default {
           textStyle: {
             color: "#5B6C89"
           },
-          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+          // extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(obj) {
+            console.log(obj)
             var value = obj.value;
             return (
               '<div style="padding:0.1rem 0.14rem;">' +
               '<div style="border-bottom: 0.01rem solid rgba(255,255,255,.3); font-size: 0.18rem;padding-bottom:0.02rem;margin-bottom:0.02rem">' +
-              obj.seriesName +
+              obj.name +
               "</div>" +
               "占比" +
               "：" +
@@ -1615,48 +1571,226 @@ export default {
         },
         series: [
           {
-            name: "男",
-            type: "bar",
-            stack: "total",
-            barWidth: nowSize(20),
+            name: "",
+            type: "pie",
+            center: ["50%", "50%"],
+            radius: '70%',
+            hoverAnimation: false,
+            avoidLabelOverlap: false,
             label: {
-              show: true,
-              color: "#ffffff",
-              formatter: '{c}%'
+              normal: {
+                show: true,
+                fontSize: nowSize(18),
+              //   position: "center"
+              },
+              // emphasis: {
+              //   show: false
+              // }
             },
-            color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+            emphasis: {
+              // label: {
+              //   show: true,
+              //   fontSize: nowSize(30),
+              //   fontWeight: "bold",
+              //   borderWidth: 0
+              // }
+            },
+            // labelLine: {
+            //   show: false
+            // },
+            data: [
               {
-                offset: 0,
-                color: "rgba(0,192,255,0.64)"
+                value: that.detail.warningMale,
+                name: '男: ' + that.detail.warningMale + '%',
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+                      {
+                        offset: 0,
+                        color: "rgba(0,192,255,0.64)"
+                      },
+                      {
+                        offset: 1,
+                        color: "rgba(5,157,255,0.64)"
+                      }
+                    ])
+                  }
+                }
               },
               {
-                offset: 1,
-                color: "rgba(5,157,255,0.64)"
+                value: that.detail.warningFemale,
+                name: '女: ' + that.detail.warningFemale + '%',
+                avoidLabelOverlap: false,
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+                      {
+                        offset: 0,
+                        color: "rgba(255,131,223,0.64)"
+                      },
+                      {
+                        offset: 1,
+                        color: "rgba(254,95,184,0.64)"
+                      }
+                    ])
+                  }
+                },
+                emphasis: {
+                  // borderWidth: 0,
+                  // borderColor:'yellow',
+                  areaColor: ""
+                }
               }
-            ]),
-            data: ["女", that.detail.warningMale]
-          },
-          {
-            name: "女",
-            type: "bar",
-            stack: "total",
-            label: {
-              show: true,
-              color: "#ffffff",
-              formatter: '{c}%'
-            },
-            color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
-              {
-                offset: 0,
-                color: "rgba(255,131,223,0.64)"
-              },
-              {
-                offset: 1,
-                color: "rgba(254,95,184,0.64)"
-              }
-            ]),
-            data: [that.detail.warningFemale, "男"]
+            ]
           }
+          // {
+          //   name: '',
+          //   type: 'pie',
+          //   radius: '70%',
+          //   center: ['50%', '50%'],
+          //   hoverAnimation: false,
+          //   // // avoidLabelOverlap: false,
+          //   label: {
+          //     show: false,
+          //     position: 'center'
+          //   },
+          //   emphasis: {
+          //     color: function(params) {
+          //       var colorList = [
+          //         '#407cbb', '#407cbb', '#407cbb'
+          //       ];
+          //       return colorList[params.dataIndex]
+          //     },
+
+          //     disabled: false,
+          //     label: {
+          //       show: false
+          //     },
+          //     itemStyle: {
+          //       areaColor: 'inherit',
+          //       color: 'auto',
+          //       borderColor: '',
+          //       borderWidth: 2
+          //     }
+          //   },
+          //   // // emphasis: {
+          //   // //   disabled: false,
+          //   // //   scale: false,
+          //   // //   scaleSize: 0,
+          //   // //   boxShadow: 'none'
+          //   // // },
+          //   labelLine: {
+          //     show: false
+          //   },
+          //   data: [
+          //     {
+          //       value: that.detail.warningMale,
+          //       name: '男',
+          //       itemStyle: {
+          //         normal: {
+          //           color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+          //             {
+          //               offset: 0,
+          //               color: "rgba(0,192,255,0.64)"
+          //             },
+          //             {
+          //               offset: 1,
+          //               color: "rgba(5,157,255,0.64)"
+          //             }
+          //           ])
+          //         }
+          //       }
+          //     },
+          //     {
+          //       value: that.detail.warningFemale,
+          //       name: '女',
+          //       avoidLabelOverlap: false,
+          //       itemStyle: {
+          //         normal: {
+          //           color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+          //             {
+          //               offset: 0,
+          //               color: "rgba(255,131,223,0.64)"
+          //             },
+          //             {
+          //               offset: 1,
+          //               color: "rgba(254,95,184,0.64)"
+          //             }
+          //           ])
+          //         }
+          //       },
+          //       emphasis: {
+          //         // borderWidth: 1,
+          //         // borderColor:'yellow',
+          //         areaColor: ""
+          //       }
+                
+          //     }
+          //     // {
+          //     //   value: 100 - that.detail.warningFemale - that.detail.warningMale,
+          //     //   name: '',
+          //     //   itemStyle: {
+          //     //     normal: {
+          //     //       color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+          //     //         {
+          //     //           offset: 0,
+          //     //           color: "rgba(255,255,255,0.64)"
+          //     //         },
+          //     //         {
+          //     //           offset: 1,
+          //     //           color: "rgba(255,255,255,0.64)"
+          //     //         }
+          //     //       ])
+          //     //     }
+          //     //   }
+                
+          //     // }
+          //   ],
+            
+          // }
+          // {
+          //   name: "男",
+          //   type: "bar",
+          //   stack: "total",
+          //   barWidth: nowSize(20),
+          //   label: {
+          //     show: true,
+          //     color: "#ffffff",
+          //     formatter: '{c}%'
+          //   },
+          //   color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+          //     {
+          //       offset: 0,
+          //       color: "rgba(0,192,255,0.64)"
+          //     },
+          //     {
+          //       offset: 1,
+          //       color: "rgba(5,157,255,0.64)"
+          //     }
+          //   ]),
+          //   data: ["女", that.detail.warningMale]
+          // },
+          // {
+          //   name: "女",
+          //   type: "bar",
+          //   stack: "total",
+          //   label: {
+          //     show: true,
+          //     color: "#ffffff",
+          //     formatter: '{c}%'
+          //   },
+          //   color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
+          //     {
+          //       offset: 0,
+          //       color: "rgba(255,131,223,0.64)"
+          //     },
+          //     {
+          //       offset: 1,
+          //       color: "rgba(254,95,184,0.64)"
+          //     }
+          //   ]),
+          //   data: [that.detail.warningFemale, "男"]
+          // }
         ]
       });
     }
@@ -1699,6 +1833,9 @@ export default {
   #myChartZero {
     width: 100%;
     height: 2.54rem;
+  }
+  #myChartZero{
+    margin-top:0.1rem
   }
   .index_main {
     .index_main_top {
@@ -2106,7 +2243,8 @@ export default {
               margin: auto;
               left: 0;
               right: 0;
-              top: 0.75rem;
+              // top: 0.75rem;
+              bottom: 0.28rem;
               z-index: 11;
               .c_pie_li {
                 padding: 0;

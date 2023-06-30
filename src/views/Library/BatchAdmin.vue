@@ -168,6 +168,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "batchadmin",
   data() {
@@ -490,9 +491,11 @@ export default {
         let genstr = "";
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
+
+        let passMd5 = md5(passwordStr).substring(8, 24)
         let vObj = {
           passport: this.visibleList[i].passport,
-          password: passwordStr,
+          password: passMd5,
           name: this.visibleList[i].name,
           roleId: this.visibleList[i].roleId,
           roleName: this.visibleList[i].roleName,

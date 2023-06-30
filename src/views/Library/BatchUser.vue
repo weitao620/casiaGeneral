@@ -186,6 +186,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "batchuser",
   data() {
@@ -651,6 +652,7 @@ export default {
         }
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
+        let passMd5 = md5(passportInt + '' + passwordStr).substring(8, 24)
         let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
         let birthArr = birthStr.split(',')
         for (let i in birthArr) {
@@ -663,7 +665,7 @@ export default {
         let birth = birthArr.join("")
         let vObj = {
           passport: this.visibleList[i].passport,
-          password: passwordStr,
+          password: passMd5,
           name: this.visibleList[i].name,
           birth: birth,
           department: this.visibleList[i].department,
@@ -672,7 +674,6 @@ export default {
           // phone: this.visibleList[i].phone
         };
         visArr.push(vObj);
-       
       }
       console.log(visArr)
       // return

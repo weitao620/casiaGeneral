@@ -70,7 +70,7 @@
               :placeholder="'请输入' + fid40101.fieldName"
                :disabled="formAddAdmin.newPassport == 'administrator'"
             ></el-input>
-            <div style="margin-left:0.1rem">
+            <div style="margin-left:0.1rem" v-if="formAddAdmin.newPassport != 'administrator'">
               <el-radio-group v-model="singleBtn2">
                 <el-radio
                   :label="1"
@@ -213,6 +213,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -420,11 +421,18 @@ export default {
       let that = this;
       let detail = JSON.parse(localStorage.getItem("adminDetail"))
       this.oldPassport = detail.passport
+      console.log(detail)
+      if (detail.passport == detail.phone) {
+        this.singleBtn2 = 1
+      } else {
+        this.singleBtn2 = false
+      }
       if (detail.password == '') {
         this.singleBtn = 1
       } else {
         this.singleBtn = false
       }
+      localStorage.setItem('passMd5', detail.password)
       if (this.fid40101.enable == 1) {
         this.formAddAdmin.passport = this.oldPassport
         this.formAddAdmin.newPassport = detail.passport
@@ -512,7 +520,7 @@ export default {
       }
       
       if (this.singleBtn2) {
-        this.formAddAdmin.passport = this.formAddAdmin.phone
+        this.formAddAdmin.newPassport = this.formAddAdmin.phone
       } else {
         if (this.fid40101.enable == 1 && this.fid40101.required == 1 && (this.formAddAdmin.passport == "" || !regzh.test(this.formAddAdmin.passport))) {
           this.passportFlag = true;
@@ -555,7 +563,14 @@ export default {
       if (this.formAddAdmin.password == '') {
         this.formAddAdmin.password = this.formAddAdmin.newPassport.substring(this.formAddAdmin.newPassport.length - 6, this.formAddAdmin.newPassport.length)
       }
+      if (this.formAddAdmin.password != localStorage.getItem('passMd5')) {
+        console.log(this.formAddAdmin.password)
+        let passMd5 = md5(this.formAddAdmin.password).substring(8, 24)
+        this.formAddAdmin.password = passMd5
+      }
       this.formAddAdmin.ifSendSms = ifSendSms
+      console.log(this.formAddAdmin)
+      // return false
       that.$http
         .put(Url + "/aimw/manager/updateUserInfo", this.formAddAdmin)
         .then(res => {
@@ -682,11 +697,15 @@ export default {
     },
     singleChange2(txt) {
       console.log(2)
+      console.log(txt)
+      console.log(this.formAddAdmin)
+      // return
       if (this.formAddAdmin.passport == "") {
         this.singleBtn2 = 1
       } else {
         this.singleBtn2 ? (this.singleBtn2 = false) : (this.singleBtn2 = txt);
-        this.formAddAdmin.passport = "";
+        // this.formAddAdmin.passport = this.oldPassport;
+        this.formAddAdmin.newPassport = this.formAddAdmin.phone;
       }
      
       // this.newRight1 = false;
@@ -700,7 +719,7 @@ export default {
     },
     singleChange(txt) {
       this.singleBtn ? (this.singleBtn = false) : (this.singleBtn = txt);
-      this.formAddUser.password = "";
+      this.formAddAdmin.password = "";
       this.newRight1 = false;
       this.newRight2 = false;
       this.newRight3 = false;

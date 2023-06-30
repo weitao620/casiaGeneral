@@ -42,6 +42,7 @@ axios.interceptors.request.use(
         load.close();
       }, 10000)
     }
+    console.log(res)
     return res;
   },
   error => {
@@ -50,10 +51,11 @@ axios.interceptors.request.use(
 )
 axios.interceptors.response.use(
   res => {
+    console.log(res)
     if (load) {
       load.close();
     }
-    if (res.data.code == 2) {
+    if (res.data.code == 2 || (res.config.url.indexOf("/user/login") == -1 && res.data.code == 1 && res.data.msg == "账号或密码错误")) {
       router.replace({ path: "/login" });
       localStorage.removeItem("isLogin");
       localStorage.removeItem("userInfo");

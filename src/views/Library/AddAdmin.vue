@@ -216,6 +216,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -514,6 +515,9 @@ export default {
       if (this.formAddAdmin.password == '') {
         this.formAddAdmin.password = this.formAddAdmin.passport.substring(this.formAddAdmin.passport.length - 6, this.formAddAdmin.passport.length)
       }
+      console.log(this.formAddAdmin.password)
+      let passMd5 = md5(this.formAddAdmin.password).substring(8, 24)
+      this.formAddAdmin.password = passMd5
       this.formAddAdmin.ifSendSms = ifSendSms
       that.$http
         .post(Url + "/aimw/manager/addManager", this.formAddAdmin)
