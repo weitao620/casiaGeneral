@@ -1265,7 +1265,8 @@ export default {
     downloadSprintTestReport() {
       this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
-        // this.setPersonFlag(false)
+        // 123
+        this.setPersonFlag(false)
       })
     },
     initEchart() {
