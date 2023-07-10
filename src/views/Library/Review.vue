@@ -134,7 +134,7 @@
             <el-select
               v-model="formSearchVs.star"
               @change="choseStar"
-              placeholder="全部"
+              placeholder=""
             >
               <el-option
                 v-for="item in starData"
@@ -149,7 +149,7 @@
             <el-select
               v-model="formSearchVs.end"
               @change="choseEnd"
-              placeholder="全部"
+              placeholder=""
             >
               <el-option
                 v-for="item in endData"
@@ -1570,6 +1570,8 @@ export default {
     tabChange(type) {
       let that = this;
       this.tabActive = type;
+      this.formSearchVs.star = ''
+      this.formSearchVs.end = ''
       let today = new Date();
       let yearb = new Date();
       yearb.setMonth(yearb.getMonth() - 6);
@@ -1617,7 +1619,6 @@ export default {
     },
     onSubmit() {
       let that = this;
-      this.tabActive = 0;
       let fuckArr = [];
       for (let i in reviewDada) {
         if (
@@ -1628,6 +1629,18 @@ export default {
         }
       }
       this.chartData = fuckArr;
+      if (fuckArr.length == 0) {
+        // this.$refs['formSearchVs'].resetFields();
+        // this.tabChange(1);
+        this.$message({
+          type: "warning",
+          message: "请选择要对比的数据"
+        });
+        return false
+      } else {
+        this.tabActive = 0;
+      }
+      console.log(fuckArr)
       this.myChartZhe1s();
       this.myChartZhe2s();
       this.myChartZhe3s();
