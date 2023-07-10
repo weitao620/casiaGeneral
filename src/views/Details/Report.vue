@@ -148,6 +148,15 @@
               <span class="dt_blod">姓名：</span>
               <span>{{ details.name }}</span>
             </li>
+            <li style="width:3.2rem">
+              <img
+                class="dt_per2"
+                src="../../assets/images/report/person2.png"
+                alt=""
+              />
+              <span class="dt_blod">工号：</span>
+              <span>{{ details.jobNumber }}</span>
+            </li>
             <li style="width:3.8rem">
               <img
                 class="dt_per2"

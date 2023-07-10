@@ -19,6 +19,7 @@
               <span class="dt_blod">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
               <span>{{details.name}}</span>
             </li>
+            
             <li>
               <img
                 class="dt_per2"
@@ -27,6 +28,15 @@
               />
               <span style="width:120px" class="dt_blod">登录手机号：</span>
               <span>{{details.passport}}</span>
+            </li>
+            <li>
+              <img
+                class="dt_per4"
+                src="../../assets/images/report/person4.png"
+                alt=""
+              />
+              <span class="dt_blod">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+              <span>{{details.jobNumber}}</span>
             </li>
             <!-- <li>
               <img
@@ -1265,7 +1275,7 @@ export default {
     downloadSprintTestReport() {
       this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
-        // this.setPersonFlag(false)
+        this.setPersonFlag(false)
       })
     },
     initEchart() {

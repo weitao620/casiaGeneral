@@ -348,6 +348,8 @@
               </el-table-column>
               <el-table-column prop="departmentName" v-if="tabFlag == 0" :label="fid30207.fieldName">
               </el-table-column>
+              <el-table-column prop="jobNumber" v-if="tabFlag == 0" label="工号">
+              </el-table-column>
               <el-table-column prop="passport" v-if="tabFlag == 0" :label="fid30201.fieldName">
               </el-table-column>
               <el-table-column
@@ -2655,8 +2657,23 @@ export default {
         }
         .el-table__header,
         .el-table__body {
+          col:nth-child(1) {
+            width: 1rem;
+          }
+          col:nth-child(2) {
+            width: 1rem;
+          }
+          col:nth-child(3) {
+            width: 1rem;
+          }
           col:nth-child(7) {
+            width: 1rem;
+          }
+          col:nth-child(8) {
             width: 2rem;
+          }
+          col:nth-child(10) {
+            width: 1rem;
           }
         }
         .el-table td {

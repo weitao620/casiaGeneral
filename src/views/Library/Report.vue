@@ -45,6 +45,30 @@
               placeholder="请输入姓名"
             ></el-input>
           </el-form-item>
+          
+          <el-form-item  prop="name" class="sf_name">
+            <label slot="label">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+            <el-input
+              v-model="formSearch.jobNumber"
+              placeholder="请输入工号"
+            ></el-input>
+          </el-form-item>
+          <el-form-item  :label="fid30201.fieldName" prop="passport">
+            <el-input
+              v-model="formSearch.passport"
+              :placeholder="'请输入'+fid30201.fieldName"
+            ></el-input>
+          </el-form-item>
+          <el-form-item class="time_data" label="测评时间:" prop="time">
+            <el-date-picker
+              v-model="formSearch.time"
+              type="daterange"
+              range-separator="~"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            >
+            </el-date-picker>
+          </el-form-item>
           <el-form-item :label="fid30207.fieldName + ':'" prop="department">
             <el-select
               v-model="formSearch.department"
@@ -58,23 +82,6 @@
                 :value="item.Pid"
               ></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item  :label="fid30201.fieldName" prop="passport">
-            <el-input
-              v-model="formSearch.passport"
-              :placeholder="'请输入'+fid30201.fieldName"
-            ></el-input>
-          </el-form-item>
-          
-          <el-form-item class="time_data" label="测评时间:" prop="time">
-            <el-date-picker
-              v-model="formSearch.time"
-              type="daterange"
-              range-separator="~"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            >
-            </el-date-picker>
           </el-form-item>
           <el-form-item prop="warning" label="评估结果:">
             <el-select v-model="formSearch.warning" placeholder="全部">
@@ -238,6 +245,8 @@
               </template>
             </el-table-column>
             <el-table-column prop="departmentName" :label="fid30207.fieldName">
+            </el-table-column>
+            <el-table-column prop="jobNumber" label="工号">
             </el-table-column>
             <el-table-column prop="passport" :label="fid30201.fieldName">
             </el-table-column>
@@ -487,6 +496,7 @@ export default {
         name: "",
         passport: "",
         department: "",
+        jobNumber: "",
         // level: "",
         // grade: "",
         // class: "",
@@ -950,6 +960,7 @@ export default {
           name: that.formSearch.name,
           passport: that.formSearch.passport,
           departments: frameArr,
+          jobNumber: that.formSearch.jobNumber,
           startDate: star,
           endDate: end,
           warning: warns,
@@ -2939,19 +2950,19 @@ export default {
         // col:nth-child(5) {
         //   width: 1.4rem;
         // }
-        col:nth-child(7) {
+        col:nth-child(8) {
           width: 0.8rem;
         }
-        col:nth-child(8) {
-          width: 1.5rem;
-        }
         col:nth-child(9) {
-          width: 1rem;
-        }
-        col:nth-child(10) {
           width: 1.8rem;
         }
+        col:nth-child(10) {
+          width: 1rem;
+        }
         col:nth-child(11) {
+          width: 1.8rem;
+        }
+        col:nth-child(12) {
           width: 0;
         }
       }
