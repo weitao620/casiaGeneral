@@ -39,6 +39,19 @@
               </div>
             </div>
           </el-form-item>
+          <el-form-item v-if="fid30208.enable == 1" :required="fid30208.required == 1" :label="fid30208.fieldName + '：'">
+            <el-input
+              v-model="formAddUser.jobNumber"
+              :placeholder="'请输入8位数字的' + fid30208.fieldName"
+            ></el-input>
+            <div style="width:4rem;height:0.36rem"></div>
+            <div class="tip_left" v-show="jobFlag">
+              <div class="tip_msg">
+                <img src="../../assets/images/x.png" alt="" />
+                {{fid30208.fieldName}}不能为空 / 格式有误
+              </div>
+            </div>
+          </el-form-item>
           <el-form-item v-if="fid30201.enable == 1" :required="fid30201.required == 1" :label="fid30201.fieldName + '：'">
             <el-input
               v-model="formAddUser.passport"
@@ -160,19 +173,7 @@
             <img src="../../assets/images/personMsg.png" alt="" />
             辅助信息
           </div>
-          <el-form-item v-if="fid30208.enable == 1" :required="fid30208.required == 1" :label="fid30208.fieldName + '：'">
-            <el-input
-              v-model="formAddUser.jobNumber"
-              :placeholder="'请输入' + fid30208.fieldName"
-            ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
-            <div class="tip_left" v-show="jobFlag">
-              <div class="tip_msg">
-                <img src="../../assets/images/x.png" alt="" />
-                {{fid30208.fieldName}}不能为空
-              </div>
-            </div>
-          </el-form-item>
+          
           <el-form-item v-if="fid30209.enable == 1" :required="fid30209.required == 1" :label="fid30209.fieldName + '：'">
             <el-input
               type="textarea"
@@ -600,10 +601,16 @@ export default {
      
       this.passportFlag = this.passwordFlag = this.nameFlag = this.phoneFlag = this.birthFlag = this.emailFlag = this.jobFlag = this.remarkFlag = this.frameFlag = false;
       var regp = /^1[3456789]\d{9}$/;
+      var regj = /^[1-9]\d{7}$/;
       var regzh = /^[A-Za-z0-9]{6,20}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (this.fid30203.enable == 1 && this.fid30203.required == 1 && this.formAddUser.name == "") {
         this.nameFlag = true;
+        return false;
+      }
+      console.log(this.formAddUser.jobNumber)
+      if (this.fid30208.enable == 1 && this.fid30208.required == 1 && ((this.formAddUser.jobNumber != "" && !regj.test(this.formAddUser.jobNumber)) || this.formAddUser.jobNumber == "")) {
+        this.jobFlag = true;
         return false;
       }
       if (this.fid30201.enable == 1 && this.fid30201.required == 1 && ((this.formAddUser.passport != "" && !regp.test(this.formAddUser.passport)) || this.formAddUser.passport == "")) {
@@ -652,10 +659,7 @@ export default {
         this.formAddUser.departmentName = ''
       }
       console.log(5)
-      if (this.fid30208.enable == 1 && this.fid30208.required == 1 && this.formAddUser.jobNumber == "") {
-        this.jobFlag = true;
-        return false;
-      }
+      
       if (this.fid30209.enable == 1 && this.fid30209.required == 1 && this.formAddUser.remark == "") {
         this.remarkFlag = true;
         return false;
@@ -663,8 +667,8 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
-      console.log(this.formAddUser.passport + '' + this.formAddUser.password)
-      let passMd5 = md5(this.formAddUser.passport + '' + this.formAddUser.password).substring(8, 24)
+      console.log('aimw-mb' + this.formAddUser.password)
+      let passMd5 = md5('aimw-mb' + this.formAddUser.password).substring(8, 24)
       this.formAddUser.password = passMd5
       console.log(this.formAddUser)
       // return

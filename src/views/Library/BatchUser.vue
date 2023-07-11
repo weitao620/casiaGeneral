@@ -399,7 +399,8 @@ export default {
             "用户账号导入数据",
             "__EMPTY",
             "__EMPTY_1",
-            "__EMPTY_2"
+            "__EMPTY_2",
+            "__EMPTY_3"
           ];
           let listNew = [];
           outdata.map(item => {
@@ -407,9 +408,10 @@ export default {
             if (obj.__rowNum__ > 2) {
               var objs = {
                 name: "",
+                jobNumber: "",
+                passport: "",
                 gender: "",
                 birth: "",
-                passport: "",
                 row: obj.__rowNum__ + 1
               };
               for (let key in obj) {
@@ -417,9 +419,15 @@ export default {
                   objs.name = obj[key];
                 }
                 if (key == str[1]) {
-                  objs.gender = obj[key];
+                  objs.jobNumber = obj[key];
                 }
                 if (key == str[2]) {
+                  objs.passport = String(obj[key]).replace(/\s+/g, '');
+                }
+                if (key == str[3]) {
+                  objs.gender = obj[key];
+                }
+                if (key == str[4]) {
                   console.log(obj[key])
                   console.log(new Date(obj[key]))
                   if (typeof obj[key] === 'number') {
@@ -433,15 +441,14 @@ export default {
                 // if (key == str[3]) {
                 //   objs.phone = obj[key];
                 // }
-                if (key == str[3]) {
-                  objs.passport = String(obj[key]).replace(/\s+/g, '');
-                }
+                
               }
               if (
                 objs.name == "" &&
+                objs.jobNumber == "" &&
+                objs.passport == "" &&
                 objs.gender == "" &&
-                objs.birth == "" &&
-                objs.passport == ""
+                objs.birth == ""
                 //  &&
                 // objs.phone == ""
               ) {
@@ -450,12 +457,29 @@ export default {
               }
             }
             var regp = /^1[3456789]\d{9}$/;
+            var regj = /^[1-9]\d{7}$/;
             var regzh = /^[A-Za-z0-9]{6,20}$/;
             var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
             for (let i in listNew) {
               listNew[i].mark = [];
               if (listNew[i].name == "") {
                 listNew[i].mark.push("姓名为必填项！");
+              }
+              if (listNew[i].jobNumber == "") {
+                listNew[i].mark.push("工号为必填项！");
+              } else if (
+                listNew[i].jobNumber != "" &&
+                !regj.test(listNew[i].jobNumber)
+              ) {
+                listNew[i].mark.push("工号格式有误！");
+              }
+              if (listNew[i].passport == "") {
+                listNew[i].mark.push("登录手机号为必填项！");
+              } else if (
+                listNew[i].passport != "" &&
+                !regp.test(listNew[i].passport)
+              ) {
+                listNew[i].mark.push("登录手机号格式有误！");
               }
               if (listNew[i].gender == "") {
                 listNew[i].mark.push("性别为必填项！");
@@ -482,14 +506,7 @@ export default {
                   "出生日期格式有误(例:2000年01月01日)"
                 );
               }
-              if (listNew[i].passport == "") {
-                listNew[i].mark.push("登录手机号为必填项！");
-              } else if (
-                listNew[i].passport != "" &&
-                !regp.test(listNew[i].passport)
-              ) {
-                listNew[i].mark.push("登录手机号格式有误！");
-              }
+              
               // if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
               //   listNew[i].mark.push(that.fid30205.fieldName + "格式有误！");
               // }
@@ -652,7 +669,7 @@ export default {
         }
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
-        let passMd5 = md5(passportInt + '' + passwordStr).substring(8, 24)
+        let passMd5 = md5('aimw-mb' + passwordStr).substring(8, 24)
         let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
         let birthArr = birthStr.split(',')
         for (let i in birthArr) {
@@ -666,6 +683,7 @@ export default {
         let vObj = {
           passport: this.visibleList[i].passport,
           password: passMd5,
+          jobNumber: this.visibleList[i].jobNumber,
           name: this.visibleList[i].name,
           birth: birth,
           department: this.visibleList[i].department,

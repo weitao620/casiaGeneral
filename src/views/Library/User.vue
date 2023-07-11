@@ -33,6 +33,12 @@
             <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="工号:" prop="jobNumber">
+          <el-input
+            v-model="formSearch.jobNumber"
+            placeholder="请输入工号"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="登录手机号:" prop="passport">
           <el-input
             v-model="formSearch.passport"
@@ -132,6 +138,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="departmentName" :label="fid30207.fieldName"> </el-table-column>
+          <el-table-column prop="jobNumber" label="工号"> </el-table-column>
           <!-- <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column> -->
           <el-table-column prop="passport" :label="fid30201.fieldName"> </el-table-column>
           <el-table-column prop="accountState" label="状态">
@@ -337,7 +344,8 @@ export default {
       formSearch: {
         name: "",
         department: "",
-        passport: ""
+        passport: "",
+        jobNumber: ""
       },
       department: '',
       departmentName: '',
@@ -1124,7 +1132,8 @@ export default {
         pageSize: that.limit,
         name: that.formSearch.name,
         departments: frameArr,
-        passport: that.formSearch.passport
+        passport: that.formSearch.passport,
+        jobNumber: that.formSearch.jobNumber
       };
       this.$http
         .get(Url + "/aimw/user/listUsersInfo", {
@@ -1389,7 +1398,7 @@ export default {
           width: 0.8rem;
         }
         col:nth-child(3) {
-          width: 1.2rem;
+          width: 1rem;
         }
         col:nth-child(4) {
           width: 0.8rem;
@@ -1398,12 +1407,15 @@ export default {
           width: 1.2rem;
         }
         col:nth-child(7) {
-          width: 1rem;
+          width: 1.2rem;
         }
         col:nth-child(8) {
-          width: 1.6rem;
+          width: 1rem;
         }
         col:nth-child(9) {
+          width: 1.6rem;
+        }
+        col:nth-child(10) {
           width: 0;
         }
       }

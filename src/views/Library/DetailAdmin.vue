@@ -422,6 +422,11 @@ export default {
       let detail = JSON.parse(localStorage.getItem("adminDetail"))
       this.oldPassport = detail.passport
       console.log(detail)
+      if (detail.ifSendSms == 1) {
+        this.singleBtn1 = 1
+      } else {
+        this.singleBtn1 = false
+      }
       if (detail.passport == detail.phone) {
         this.singleBtn2 = 1
       } else {
