@@ -2951,7 +2951,7 @@ export default {
         //   width: 1.4rem;
         // }
         col:nth-child(8) {
-          width: 0.8rem;
+          width: 1rem;
         }
         col:nth-child(9) {
           width: 1.8rem;

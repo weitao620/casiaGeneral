@@ -1333,7 +1333,7 @@ export default {
               '<span style="color:#7786AC">' +
               params.name +
               "</span>" +
-              ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:' +
+              ':<span style="display:inline-block;font-weight:bold;margin-left:5px;font-size:14px;color:' +
               params.color.colorStops[1].color +
               '">' +
               params.value +

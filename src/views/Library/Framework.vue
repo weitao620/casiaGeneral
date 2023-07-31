@@ -543,6 +543,7 @@ export default {
         departmentName: that.frameForm.name,
         departmentInfo: that.frameForm.frameAuthNotice
       };
+      console.log(param)
       that.$http
         .post(Url + "/aimw/organization/addDepartment", param)
         .then(res => {
@@ -658,6 +659,9 @@ export default {
       that.getStr2(data);
     },
     handleNodeClick(data, node) {
+      console.log(data)
+      console.log(node)
+      
       if (data.Mark == 0) {
         return false;
       }
@@ -666,19 +670,32 @@ export default {
       let cont = 0;
       let total = -1;
       if (data.list1 && data.list1.length > 0) {
+        
         len1 = data.list1.length - 1;
+        // data.list1[len1].Pid
         pidStr = String(data.list1[len1].Pid);
+        console.log(pidStr)
         let num = pidStr.length;
+        let min = String(data.list1[0].Pid).replace(/(0+)$/g, "").length
+        console.log(min)
         for (let i = num; i >= 0; i--) {
-          let s = pidStr.substring(i - 1, i);
+          let s = pidStr.substring(i-1 , i);
+          // console.log(s)
+          // console.log(i)
+          // console.log(i-min)
           total++;
-          if (s > 0) {
+          // s > 0 && 
+          if (i == min) {
             cont = i;
             break;
           }
         }
+        console.log(cont)
+        console.log(total)
         let pidNo0 = Number(Number(pidStr.substring(0, cont)) + 1);
+        console.log(pidNo0)
         let newPid = pidNo0 * Math.pow(10, total);
+        console.log(newPid)
         this.framePid = newPid;
       } else {
         len1 = 0;

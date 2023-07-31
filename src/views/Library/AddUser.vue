@@ -84,7 +84,9 @@
                   :label="1"
                   :disabled="!singleBtn"
                   @click.native.prevent="singleChange(1)"
-                  >默认密码:{{fid30201.fieldName}}后6位</el-radio
+                  >
+                  默认密码:666666
+                  </el-radio
                 >
               </el-radio-group>
             </div>
@@ -601,7 +603,7 @@ export default {
      
       this.passportFlag = this.passwordFlag = this.nameFlag = this.phoneFlag = this.birthFlag = this.emailFlag = this.jobFlag = this.remarkFlag = this.frameFlag = false;
       var regp = /^1[3456789]\d{9}$/;
-      var regj = /^[1-9]\d{7}$/;
+      var regj = /^[0-9]\d{7}$/;
       var regzh = /^[A-Za-z0-9]{6,20}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (this.fid30203.enable == 1 && this.fid30203.required == 1 && this.formAddUser.name == "") {
@@ -665,7 +667,8 @@ export default {
         return false;
       }
       if (this.formAddUser.password == '') {
-        this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
+        // this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
+        this.formAddUser.password = '666666'
       }
       console.log('aimw-mb' + this.formAddUser.password)
       let passMd5 = md5('aimw-mb' + this.formAddUser.password).substring(8, 24)

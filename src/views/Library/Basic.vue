@@ -604,6 +604,14 @@ export default {
         }
       }
       .person_contain {
+        .el-textarea{
+          .el-textarea__inner{
+            font-size: .16rem;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #354b70;
+          }
+        }
         .person_msg {
           display: flex;
           align-items: center;

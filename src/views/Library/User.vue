@@ -251,7 +251,7 @@
                 <span></span>
               </div>
             </div>
-            <span>默认密码: 登录账号后6位</span>
+            <span>默认密码:666666</span>
           </div>
         </el-form-item>
       </el-form>
@@ -988,8 +988,8 @@ export default {
       import("@/excel/Export2Excel").then(excel => {
         // const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30205.fieldName, "登录账号", "状态"];
         // const filterVal = ["name", "genderStr", "departmentName", "phone", "passport", "accountStateStr"];
-        const tHeader = ["姓名", "性别", this.fid30207.fieldName, this.fid30201.fieldName, "状态"];
-        const filterVal = ["name", "genderStr", "departmentName", "passport", "accountStateStr"];
+        const tHeader = ["姓名", "性别", this.fid30207.fieldName, "工号", this.fid30201.fieldName, "状态"];
+        const filterVal = ["name", "genderStr", "departmentName", "jobNumber", "passport", "accountStateStr"];
         const content = this.checkList
         for (let i in content) {
           if (content[i].accountState == 1) {

@@ -114,7 +114,7 @@
         <h3>批量导入完成</h3>
         <p>
           成功导入数据：<span>{{ visibleList.length }}</span>
-          条，默认密码：<span>登录手机号后6位</span>
+          条，默认密码：<span>666666</span>
         </p>
       </div>
       <div class="steps_btn" v-if="stepsAct == 1">
@@ -143,6 +143,12 @@
               prop="name"
               :render-header="renderHeader"
               label="姓名"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="jobNumber"
+              :render-header="renderHeader"
+              label="工号"
             >
             </el-table-column>
             <el-table-column
@@ -428,20 +434,19 @@ export default {
                   objs.gender = obj[key];
                 }
                 if (key == str[4]) {
-                  console.log(obj[key])
-                  console.log(new Date(obj[key]))
+                  // console.log(obj[key])
+                  // console.log(new Date(obj[key]))
                   if (typeof obj[key] === 'number') {
                     objs.birth = that.formatDate(obj[key], '/');
                   } else {
                     objs.birth = String(obj[key])
                   }
-                  console.log(objs.birth)
+                  // console.log(objs.birth)
                   // objs.birth = that.formatDate(obj[key], '/');
                 }
                 // if (key == str[3]) {
                 //   objs.phone = obj[key];
                 // }
-                
               }
               if (
                 objs.name == "" &&
@@ -457,7 +462,7 @@ export default {
               }
             }
             var regp = /^1[3456789]\d{9}$/;
-            var regj = /^[1-9]\d{7}$/;
+            var regj = /^[0-9]\d{7}$/;
             var regzh = /^[A-Za-z0-9]{6,20}$/;
             var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
             for (let i in listNew) {
@@ -667,8 +672,9 @@ export default {
         } else if (this.visibleList[i].gender == "女") {
           genstr = 0;
         }
-        let passportInt = String(this.visibleList[i].passport);
-        let passwordStr = passportInt.substring(passportInt.length - 6);
+        // let passportInt = String(this.visibleList[i].passport);
+        // let passwordStr = passportInt.substring(passportInt.length - 6);
+        let passwordStr = '666666'
         let passMd5 = md5('aimw-mb' + passwordStr).substring(8, 24)
         let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
         let birthArr = birthStr.split(',')
@@ -1106,10 +1112,13 @@ export default {
           col:nth-child(2) {
             width: 1.2rem;
           }
-          col:nth-child(4) {
+          col:nth-child(3) {
+            width: 1.0rem;
+          }
+          col:nth-child(5) {
             width: 0.7rem;
           }
-          col:nth-child(6) {
+          col:nth-child(7) {
             width: 1.4rem;
           }
           col:nth-child(8) {
