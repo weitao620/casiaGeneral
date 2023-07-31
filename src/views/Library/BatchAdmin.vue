@@ -363,6 +363,12 @@ export default {
               if (listNew[i].name == "") {
                 listNew[i].mark.push("姓名为必填项！");
               }
+              if (listNew[i].phone == "") {
+                listNew[i].mark.push(that.fid40104.fieldName + "为必填项！");
+              }
+              if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
+                listNew[i].mark.push(that.fid40104.fieldName + "格式有误！");
+              }
               if (listNew[i].passport == "") {
                 listNew[i].mark.push("登录账号为必填项！");
               } else if (
@@ -370,9 +376,6 @@ export default {
                 !regzh.test(listNew[i].passport)
               ) {
                 listNew[i].mark.push("登录账号不得少于6位！");
-              }
-              if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
-                listNew[i].mark.push(that.fid40104.fieldName + "格式有误！");
               }
             }
           });
