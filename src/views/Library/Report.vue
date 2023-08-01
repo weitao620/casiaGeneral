@@ -1792,7 +1792,7 @@ export default {
             data.data.sysList = this.sysList;
             let sysList02 = [
               {
-                title: "自杀",
+                title: "自我伤害",
                 grade: warningInfo.suicideScore,
                 gradep:
                   Number(warningInfo.suicideScore) * 0.44 +
@@ -1812,7 +1812,7 @@ export default {
                 flag: this.suicideFlag
               },
               {
-                title: "暴力",
+                title: "敌对",
                 grade: warningInfo.violenceScore,
                 gradep:
                   Number(warningInfo.violenceScore) * 0.44 +
@@ -2048,9 +2048,9 @@ export default {
             this.anxietyFlag = data.data.algTypes.anxiety;
             // 是否显示强迫
             this.forcedFlag = data.data.algTypes.forced;
-            // 是否显示自杀
+            // 是否显示自我伤害
             this.suicideFlag = data.data.algTypes.suicide;
-            // 是否显示暴力
+            // 是否显示敌对
             this.violenceFlag = data.data.algTypes.violence;
             // 是否显示人格
             this.personalityFlag = data.data.algTypes.personality;

@@ -645,7 +645,7 @@
               </li>
             </ul>
             <ul class="dtmcr_ul" v-if="suicideFlag == 1">
-              <li>自杀</li>
+              <li>自我伤害</li>
               <li v-if="details.reportWarningInfo">
                 <div class="dr_li11">
                   <img
@@ -751,7 +751,7 @@
               </li>
             </ul>
             <ul class="dtmcr_ul" v-if="violenceFlag == 1">
-              <li>暴力</li>
+              <li>敌对</li>
               <li v-if="details.reportWarningInfo">
                 <div class="dr_li11">
                   <img
@@ -1030,13 +1030,13 @@
         <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList2" :key="item.title">
           <div class="wdrj_title">
             <img
-              v-if="item.title == '暴力'"
+              v-if="item.title == '敌对'"
               src="../../assets/images/report/f_icon1.png"
               alt=""
               style="width: 0.32rem;height: 0.28rem"
             />
             <img
-              v-if="item.title == '自杀'"
+              v-if="item.title == '自我伤害'"
               src="../../assets/images/report/f_icon2.png"
               alt=""
               style="width: 0.32rem;height: 0.32rem"
@@ -1098,10 +1098,10 @@
                   </div>
                 </div>
               </div>
-              <div v-if="item.title == '暴力' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '暴力' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
-              <div v-if="item.title == '自杀' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '自杀' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
+              <div v-if="item.title == '敌对' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
+              <div v-if="item.title == '敌对' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
+              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
+              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
             </div>
             <!-- <ul class="dtmsb_ulc">
               <li>
@@ -1611,9 +1611,9 @@ export default {
           this.anxietyFlag = data.data.algTypes.anxiety
           // 是否显示强迫
           this.forcedFlag = data.data.algTypes.forced
-          // 是否显示自杀
+          // 是否显示自我伤害
           this.suicideFlag = data.data.algTypes.suicide
-          // 是否显示暴力
+          // 是否显示敌对
           this.violenceFlag = data.data.algTypes.violence
           // 是否显示人格
           this.personalityFlag = data.data.algTypes.personality
@@ -2545,7 +2545,7 @@ export default {
             data.data.sysList = this.sysList;
             let sysList02 = [
               {
-                title: "自杀",
+                title: "自我伤害",
                 grade: warningInfo.suicideScore,
                 gradep:
                   Number(warningInfo.suicideScore) * 0.44 +
@@ -2565,7 +2565,7 @@ export default {
                 flag: this.suicideFlag
               },
               {
-                title: "暴力",
+                title: "敌对",
                 grade: warningInfo.violenceScore,
                 gradep:
                   Number(warningInfo.violenceScore) * 0.44 +
