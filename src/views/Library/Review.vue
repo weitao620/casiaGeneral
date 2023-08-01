@@ -200,8 +200,8 @@
                 <li v-if="anxietyFlag == 1"><span class="r_cir1"></span>焦虑</li>
                 <li v-if="depressionFlag == 1"><span class="r_cir2"></span>抑郁</li>
                 <li v-if="forcedFlag == 1"><span class="r_cir3"></span>强迫</li>
-                <li v-if="suicideFlag == 1"><span class="r_cir4"></span>自杀</li>
-                <li v-if="violenceFlag == 1"><span class="r_cir5"></span>暴力</li>
+                <li v-if="suicideFlag == 1"><span class="r_cir4"></span>自我伤害</li>
+                <li v-if="violenceFlag == 1"><span class="r_cir5"></span>敌对</li>
                 <li><span class="r_line1"></span>预警线</li>
               </ul>
             </div>
@@ -259,7 +259,7 @@
                     ]"
                     @click="sbTab(5)"
                   >
-                    自杀
+                    自我伤害
                   </li>
                   <li
                     v-if="violenceFlag == 1"
@@ -270,7 +270,7 @@
                     ]"
                     @click="sbTab(6)"
                   >
-                    暴力
+                    敌对
                   </li>
                 </ul>
               </div>
@@ -345,7 +345,7 @@
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 5">
                 <div class="c_titless">
                   <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
-                  自杀
+                  自我伤害
                 </div>
               </div>
               <div
@@ -359,7 +359,7 @@
                   <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
-                  <li><span class="r_line2"></span>自杀水平</li>
+                  <li><span class="r_line2"></span>自我伤害水平</li>
                 </ul>
               </div>
             </div>
@@ -367,7 +367,7 @@
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 6">
                 <div class="c_titless">
                   <img style="width:0.32rem" src="../../assets/images/report/f_icon1.png" alt="" />
-                  暴力
+                  敌对
                 </div>
               </div>
               <div
@@ -381,7 +381,7 @@
                   <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
-                  <li><span class="r_line2"></span>暴力水平</li>
+                  <li><span class="r_line2"></span>敌对水平</li>
                 </ul>
               </div>
             </div>
@@ -478,9 +478,9 @@ export default {
       this.anxietyFlag = algTypes.anxiety
       // 是否显示强迫
       this.forcedFlag = algTypes.forced
-      // 是否显示自杀
+      // 是否显示自我伤害
       this.suicideFlag = algTypes.suicide
-      // 是否显示暴力
+      // 是否显示敌对
       this.violenceFlag = algTypes.violence
       // 是否显示人格
       this.personalityFlag = algTypes.personality
@@ -589,14 +589,14 @@ export default {
                   if (
                     data.data[i].suicideScore.score > 2
                   ) {
-                    tipsArr.push("自杀");
+                    tipsArr.push("自我伤害");
                   }
                 }
                 if (this.violenceFlag == 1) {
                   if (
                     data.data[i].violenceScore.score > 2
                   ) {
-                    tipsArr.push("暴力");
+                    tipsArr.push("敌对");
                   }
                 }
                 if (tipsArr.length > 0) {
@@ -747,7 +747,7 @@ export default {
       }
       if (this.suicideFlag == 1) {
         serseArr.push({
-          name: "自杀",
+          name: "自我伤害",
           type: "bar",
           // barWidth: 16,
           barMaxWidth: 16,
@@ -762,7 +762,7 @@ export default {
       }
       if (this.violenceFlag == 1) {
         serseArr.push({
-          name: "暴力",
+          name: "敌对",
           type: "bar",
           // barWidth: 16,
           barMaxWidth: 16,
@@ -1406,7 +1406,7 @@ export default {
             data: qArr
           },
           {
-            name: "自杀水平",
+            name: "自我伤害水平",
             type: "line",
             yAxisIndex: 1,
             itemStyle: {
@@ -1551,7 +1551,7 @@ export default {
             data: qArr
           },
           {
-            name: "暴力水平",
+            name: "敌对水平",
             type: "line",
             yAxisIndex: 1,
             itemStyle: {
