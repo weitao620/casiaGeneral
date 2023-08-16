@@ -200,8 +200,8 @@
                 <span v-if="details.depressionFlag == 1">抑郁</span>
                 <span v-if="details.anxietyFlag == 1">焦虑</span>
                 <span v-if="details.forcedFlag == 1">强迫</span>
-                <span v-if="details.suicideFlag == 1">自杀</span>
-                <span v-if="details.violenceFlag == 1">暴力</span>
+                <span v-if="details.suicideFlag == 1">自我伤害</span>
+                <span v-if="details.violenceFlag == 1">敌对</span>
               </div>
               <div v-if="details.reportWarningInfo">
                 <span v-if="details.depressionFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.depressionLevel == 0 }, { wran_col1: details.reportWarningInfo.depressionLevel == 1 }, { wran_col2: details.reportWarningInfo.depressionLevel == 2 }, { wran_col3: details.reportWarningInfo.depressionLevel == 3 }]">
@@ -708,13 +708,13 @@
         <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in details.sysList2" :key="item.title">
           <div class="wdrj_title">
             <img
-              v-if="item.title == '暴力'"
+              v-if="item.title == '敌对'"
               src="../../assets/images/report/f_icon1.png"
               alt=""
               style="width: 32px;height: 28px"
             />
             <img
-              v-if="item.title == '自杀'"
+              v-if="item.title == '自我伤害'"
               src="../../assets/images/report/f_icon2.png"
               alt=""
               style="width: 33px;height: 33px"
@@ -775,10 +775,10 @@
                   </div>
                 </div>
               </div>
-              <div v-if="item.title == '暴力' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-              <div v-if="item.title == '暴力' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-              <div v-if="item.title == '自杀' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-              <div v-if="item.title == '自杀' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+              <div v-if="item.title == '敌对' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+              <div v-if="item.title == '敌对' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
             </div>
             <!-- <ul class="dtmsb_ulc">
               <li>

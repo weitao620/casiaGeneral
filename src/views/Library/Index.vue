@@ -115,11 +115,11 @@
               </div>
               <div class="c_pie_li" v-if="suicideFlag == 1">
                 <span class="c_pie_th c_th3"></span>
-                自杀
+                自我伤害
               </div>
               <div class="c_pie_li" v-if="violenceFlag == 1">
                 <span class="c_pie_th c_th4"></span>
-                暴力
+                敌对
               </div> -->
             </div>
             <div class="c_o_my_txt" v-show="myTxtFlag">累计预警频次</div>
@@ -246,14 +246,14 @@
                 </div>
                 <div class="c_pie_li" v-if="suicideFlag == 1">
                   <span class="c_pie_th c_th3"></span>
-                  自杀
+                  自我伤害
                   <span class="c_pie_td clo3">{{
                     parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
                   }}</span>
                 </div>
                 <div class="c_pie_li" v-if="violenceFlag == 1">
                   <span class="c_pie_th c_th4"></span>
-                  暴力
+                  敌对
                   <span class="c_pie_td clo4">{{
                     parseInt(detail.warningStatistics.violencePerct * 100) + "%"
                   }}</span>
@@ -607,9 +607,9 @@ export default {
             this.anxietyFlag = data.data.algTypes.anxiety
             // 是否显示强迫
             this.forcedFlag = data.data.algTypes.forced
-            // 是否显示自杀
+            // 是否显示自我伤害
             this.suicideFlag = data.data.algTypes.suicide
-            // 是否显示暴力
+            // 是否显示敌对
             this.violenceFlag = data.data.algTypes.violence
             // 是否显示人格
             this.personalityFlag = data.data.algTypes.personality
@@ -709,7 +709,7 @@ export default {
                     // if (this.suicideFlag == 1) {
                     //   chartArr.push({
                     //     value: that.detail.warningStatistics.suicideNum,
-                    //     name: "自杀",
+                    //     name: "自我伤害",
                     //     itemStyle: {
                     //       normal: {
                     //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -729,7 +729,7 @@ export default {
                     // if (this.violenceFlag == 1) {
                     //   chartArr.push({
                     //     value: that.detail.warningStatistics.violenceNum,
-                    //     name: "暴力",
+                    //     name: "敌对",
                     //     itemStyle: {
                     //       normal: {
                     //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -773,14 +773,14 @@ export default {
                     if (this.suicideFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.suicidePerct)
                       pieName.push({
-                        name: "自杀",
+                        name: "自我伤害",
                         max: 1
                       })
                     }
                     if (this.violenceFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.violencePerct)
                       pieName.push({
-                        name: "暴力",
+                        name: "敌对",
                         max: 1
                       })
                     }
@@ -1424,14 +1424,14 @@ export default {
             }
             if (that.suicideFlag == 1) {
               html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #00D8FF, #46F7CB);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "自杀" +
+              "自我伤害" +
               "：<span style='color:#04DAFC'>" +
               (parseInt(value[3] * 100) + "%") +
               "</span><br>"
             }
             if (that.violenceFlag == 1) {
               html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFE792, #FFC90C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "暴力" +
+              "敌对" +
               "：<span style='color:#FFB300'>" +
               (parseInt(value[4] * 100) + "%") +
               "</span><br>"
