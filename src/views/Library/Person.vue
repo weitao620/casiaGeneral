@@ -282,7 +282,7 @@ export default {
         }
         return false;
       }
-      if (that.formPerson.oldPass == that.formPerson.newPass) {
+      if (that.formPerson.oldPass == that.formPerson.newPass && that.formPerson.newPass != '') {
         this.$message.warning('新密码与旧密码一致，无需修改')
         return false;
       }
