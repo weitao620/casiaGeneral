@@ -282,7 +282,9 @@ export default {
         }
         return false;
       }
-      if (this.password == md5(that.formPerson.newPass).substring(8, 24)) {
+      console.log(that.formPerson.newPass)
+      console.log(that.formPerson.oldPass)
+      if (that.formPerson.newPass == that.formPerson.oldPass && that.formPerson.newPass != '') {
         that.$message.warning('新密码与旧密码一致，无需修改');
         return false
       }
@@ -291,10 +293,9 @@ export default {
         phone: that.formPerson.phone,
         email: that.formPerson.email,
         password: this.password,
-        newPassword: md5(that.formPerson.newPass).substring(8, 24)
+        newPassword: that.formPerson.newPass == '' ? '' : md5(that.formPerson.newPass).substring(8, 24)
       };
       // console.log(param)
-      // return 
       that.$http
         .put(Url + "/aimw/user/updateUserProfile", param)
         .then(res => {
