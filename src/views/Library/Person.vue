@@ -70,6 +70,7 @@
                   输入邮箱地址有误
                 </div>
               </div>
+            <el-input class="dis_none"></el-input>
             </el-form-item>
           </div>
           <div>
@@ -78,6 +79,7 @@
               修改密码
             </div>
             <el-form-item label="原密码：">
+              <el-input type="password" class="dis_none"></el-input>
               <el-input
                 type="password"
                 @change="oldChange"
@@ -153,6 +155,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -279,13 +282,20 @@ export default {
         }
         return false;
       }
+      if (that.formPerson.oldPass == that.formPerson.newPass) {
+        this.$message.warning('新密码与旧密码一致，无需修改')
+        return false;
+      }
       let param = {
         passport: that.formPerson.passport,
         phone: that.formPerson.phone,
         email: that.formPerson.email,
         password: this.password,
-        newPassword: that.formPerson.newPass
+        newPassword: that.formPerson.newPass == '' ? '' : md5(that.formPerson.newPass).substring(8, 24)
       };
+      console.log(that.formPerson.newPass)
+      console.log(param)
+      // return
       that.$http
         .put(Url + "/aimw/user/updateUserProfile", param)
         .then(res => {
@@ -383,10 +393,11 @@ export default {
     },
     oldChange(val) {
       this.formPerson.oldPass = val;
-      if (val == this.password) {
+      let passMd5 = md5(val).substring(8, 24)
+      if (passMd5 == this.password) {
         this.oldPassFlag = true;
         this.oldRight = true;
-      } else if (val != this.password || val == "") {
+      } else if (passMd5 != this.password || passMd5 == "") {
         this.oldPassFlag = true;
         this.oldRight = false;
       }
