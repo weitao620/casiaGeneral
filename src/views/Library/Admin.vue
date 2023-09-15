@@ -145,24 +145,24 @@
               <el-button v-if="power7" @click="toDetail(scope.row)" type="text" size="small"
                 >编辑</el-button
               >
-              <el-button v-if="power8 && scope.row.passport != 'administrator'" type="text" size="small" @click="onesStop(scope.row)"
+              <el-button v-if="power8 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' )" type="text" size="small" @click="onesStop(scope.row)"
                 >{{ scope.row.accountState ? "停用" : "启用" }}</el-button
               >
-              <el-button v-if="power8 && scope.row.passport == 'administrator'" type="text" disabled size="small"
+              <el-button v-if="power8 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong')" type="text" disabled size="small"
                 >停用</el-button
               >
               <el-button
                 type="text"
                 size="small"
                 @click="singleDelete(scope.row)"
-                v-if="power9 && scope.row.passport != 'administrator'"
+                v-if="power9 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' )"
                 >删除</el-button
               >
               <el-button
                 type="text"
                 size="small"
                 disabled
-                v-if="power9 && scope.row.passport == 'administrator'"
+                v-if="power9 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong')"
                 >删除</el-button
               >
             </template>
@@ -369,7 +369,7 @@ export default {
   },
   methods: {
     checkSelectable(row) {
-      return row.passport != 'administrator'
+      return row.passport != 'administrator' || row.passport != 'jiankong'
     },
     fieldData () {
       let that = this;

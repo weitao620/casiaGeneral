@@ -27,7 +27,7 @@ var load = null;
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use(
   res => {
-    if (res.url.indexOf("/user/getUserProfile") != -1 || res.url.indexOf("/index/listLatestReportsUserIcon") != -1 || res.url.indexOf("/report/reportReviewImgs") != -1 || res.url.indexOf("/report/reportBirdView") != -1 || res.url.indexOf("/report/appendix") != -1 || res.url.indexOf("/report/reportReview") != -1 || res.url.indexOf("/report/reportInfo") != -1 || res.url.indexOf("report/consultationInfo") != -1) {
+    if (res.url.indexOf("/user/getUserProfile") != -1 || res.url.indexOf("/index/listLatestReportsUserIcon") != -1 || res.url.indexOf("/report/reportReviewImgs") != -1 || res.url.indexOf("/report/reportBirdView") != -1 || res.url.indexOf("/report/appendix") != -1 || res.url.indexOf("/report/reportReview") != -1 || res.url.indexOf("/report/reportInfo") != -1 || res.url.indexOf("report/consultationInfo") != -1 || (res.params && res.params.type == 'y')) {
       console.log('不需要')
       console.log(res.url)
     } else {
@@ -50,8 +50,14 @@ axios.interceptors.request.use(
 )
 axios.interceptors.response.use(
   res => {
-    if (load) {
-      load.close();
+    if (res.config.url.indexOf("/index/screenTrend") != -1 && res.config.params && res.config.params.type == 'n') {
+      console.log('什么' + res.config.url)
+    } else {
+      if (load) {
+        console.log('load')
+        load.close();
+        console.log('request管2222' + res.config.url)
+      }
     }
     if (res.data.code == 2) {
       router.replace({ path: "/login" });
@@ -80,24 +86,53 @@ axios.interceptors.response.use(
 )
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
   var isLogin = localStorage.getItem('isLogin');
   var passport = localStorage.getItem('passport');
   var open = localStorage.getItem('openReport');
   var userType = localStorage.getItem('userType');
   if (isLogin) {
+    console.log(to)
+
     if (to.name == 'login') {
-      if (userType == 2) {
-        next()
+      console.log(1)
+      // if (userType == 2) {
+      //   next()
+      //   console.log(2)
+      // } else {
+      if (localStorage.getItem('passport') === 'jiankong') {
+        console.log(441)
+        next({ path: '/screen' })
       } else {
+        console.log(3)
         next({ path: '/library' })
       }
+      // }
+    } else if (to.path.indexOf('library') !== -1 && localStorage.getItem('passport') === 'jiankong') {
+      console.log(442)
+      next({ path: '/screen' })
+    } else if (to.path.indexOf('screen') !== -1 && localStorage.getItem('passport') !== 'jiankong') {
+      console.log(442)
+      next({ path: '/library' })
     } else {
+      console.log(41)
+      // console.log(localStorage.getItem('passport'))
+      // console.log(localStorage.getItem('passport') === 'jiankong')
+      // console.log(4)
+      // if (localStorage.getItem('passport') === 'jiankong') {
+      //   console.log(442)
+      //   next({ path: '/screen' })
+      // } else {
       next()
+      // }
     }
   } else {
+    console.log(5)
     if (to.name !== 'login') {
+      console.log(6)
       next({ path: '/login' })
     } else {
+      console.log(7)
       next()
     }
   }

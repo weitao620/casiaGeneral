@@ -26,6 +26,20 @@ export default new Router({
       component: Login
     },
     {
+      path: '/screen',
+      name: 'screen',
+      redirect: '/screen/index',
+      component: () => import('./views/Screen.vue'),
+      children: [
+        // 主页--主页
+        {
+          path: '/screen/index',
+          name: 'screenindex',
+          component: () => import('./views/Screen/Index.vue')
+        }
+      ]
+    },
+    {
       path: '/details',
       name: 'details',
       redirect: '/details/report',

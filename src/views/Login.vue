@@ -192,9 +192,17 @@ export default {
             localStorage.setItem("userInfo", JSON.stringify(data.data));
             sessionStorage.setItem("userName", data.data.name);
             that.setUserName(data.data.name);
-            that.$router.replace({
-              path: "/library/index"
-            });
+            if (that.ruleForm.usercount === 'jiankong') {
+              console.log('跳转到大屏')
+              that.$router.replace({
+                path: "/screen/index"
+              });
+            } else {
+              console.log('跳转到正常后台')
+              that.$router.replace({
+                path: "/library/index"
+              });
+            }
           }
         })
         .catch(res => {
