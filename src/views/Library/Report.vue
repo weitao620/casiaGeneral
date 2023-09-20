@@ -703,11 +703,11 @@ export default {
     auth() {
       let that = this;
       let param = {
-        passport: JSON.parse(localStorage.getItem("userInfo")).passport,
-        password: JSON.parse(localStorage.getItem("userInfo")).password
+        passport: JSON.parse(localStorage.getItem("userInfo")).passport
+        // password: JSON.parse(localStorage.getItem("userInfo")).password
       };
       that.$http
-        .post(Url + "/aimw/user/login", param)
+        .get(Url + "/aimw/user/getAuthInfo", { params: param })
         .then(res => {
           var data = res.data;
           if (data.code == 0) {

@@ -202,6 +202,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -230,6 +231,7 @@ export default {
       emailFlag: false,
       jobFlag: false,
       remarkFlag: false,
+      oldPassword: '',
       // 表单
       formAddUser: {
         passport: "", // 登录账号
@@ -445,6 +447,7 @@ export default {
             } else {
               this.singleBtn = 1
             }
+            this.oldPassword = data.data.password
             if (data.data.department == 0) {
               data.data.department = ''
             }
@@ -709,6 +712,13 @@ export default {
       }
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
+      }
+      if (this.formAddUser.password === this.oldPassword) {
+        this.formAddUser.password = ''
+      } else {
+        // console.log(this.formAddUser.passport + '' + this.formAddUser.password)
+        let passMd5 = md5('AIMW-G' + this.formAddUser.password).substring(8, 24)
+        this.formAddUser.password = passMd5
       }
       let birth = ''
       if (String(this.formAddUser.birth).indexOf('-') == -1) {

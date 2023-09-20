@@ -55,6 +55,7 @@
 <script>
 import { mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   inject: ["reload"],
   name: "login",
@@ -97,9 +98,9 @@ export default {
 
   },
   created() {
-    let loginData = JSON.parse(localStorage.getItem("loginData"));
-    if (loginData) {
-      this.ruleForm = loginData;
+    let loginDatas = JSON.parse(localStorage.getItem("loginDatas"));
+    if (loginDatas) {
+      this.ruleForm = loginDatas;
     }
   },
   methods: {
@@ -118,17 +119,32 @@ export default {
     },
     subLogin() {
       let that = this;
-      let param = {
-        passport: that.ruleForm.usercount,
-        password: that.ruleForm.password
-      };
+      let param = {}
+      // console.log(JSON.parse(localStorage.getItem("loginDatas")).password)
+      // console.log(that.ruleForm.password)
+      if (localStorage.getItem("loginDatas") && JSON.parse(localStorage.getItem("loginDatas")).password === that.ruleForm.password) {
+        param = {
+          passport: that.ruleForm.usercount,
+          password: that.ruleForm.password
+        };
+      } else {
+        let passMd5 = md5('AIMW-G' + that.ruleForm.password).substring(8, 24)
+        param = {
+          passport: that.ruleForm.usercount,
+          password: passMd5
+        };
+      }
       localStorage.setItem('passport', that.ruleForm.usercount)
+      console.log(param)
+      // return
       if (that.ruleForm.usercount == 'admins') {
         localStorage.setItem("isLogin", true);
         if (that.ruleForm.remember) {
-          localStorage.setItem("loginData", JSON.stringify(that.ruleForm));
+          param.remember = that.ruleForm.remember
+          param.usercount = that.ruleForm.usercount
+          localStorage.setItem("loginDatas", JSON.stringify(param));
         } else {
-          localStorage.removeItem("loginData");
+          localStorage.removeItem("loginDatas");
         }
         that.setUserName("系统管理员");
         that.$router.replace({
@@ -154,13 +170,17 @@ export default {
                   data.data.userAuth = JSON.stringify(nOb)
                 }
               }
+              localStorage.setItem('passGMd5', param.password)
               localStorage.setItem("userAuth", data.data.userAuth);
               localStorage.setItem("userType", 1);
+              console.log(data.data.algTypes)
               localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
               if (that.ruleForm.remember) {
-                localStorage.setItem("loginData", JSON.stringify(that.ruleForm));
+                param.remember = that.ruleForm.remember
+                param.usercount = that.ruleForm.usercount
+                localStorage.setItem("loginDatas", JSON.stringify(param));
               } else {
-                localStorage.removeItem("loginData");
+                localStorage.removeItem("loginDatas");
               }
               that.getUserInfo();
             } else {
@@ -295,7 +315,7 @@ export default {
       }
       .error_msg {
         position: absolute;
-        top: -0.17rem;
+        top: -0.2rem;
         line-height: 1;
         left: 0;
         color: #FE5FB8 !important;

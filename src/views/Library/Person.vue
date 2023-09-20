@@ -153,6 +153,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -247,6 +248,7 @@ export default {
     },
     // 提交个人信息
     onSubmit() {
+      console.log(1111)
       let that = this;
       var regp = /^1[3456789]\d{9}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -262,30 +264,35 @@ export default {
         this.emailFlag = true;
         return false;
       }
-      if (!((that.formPerson.oldPass != "" && that.formPerson.newPass != "" && that.formPerson.twoPass != "" && (that.oldRight || !that.oldPassFlag) && that.oldRight && !that.newPassFlag && !that.twoPassFlag) || (that.formPerson.oldPass == "" && that.formPerson.newPass == "" && that.formPerson.twoPass == ""))) {
-        if (that.formPerson.oldPass == "") {
-          that.oldPassFlag = true;
-          that.newPassFlag = false;
-          that.twoPassFlag = false;
-          return false;
-        }
-        if (that.oldRight && that.formPerson.newPass == "") {
-          that.newPassFlag = true;
-          return false;
-        }
-        if (that.formPerson.newPass == "") {
-          that.oldPassFlag = true;
-          return false;
-        }
-        return false;
-      }
+      console.log(2222)
+      // if (!((that.formPerson.oldPass != "" && that.formPerson.newPass != "" && that.formPerson.twoPass != "" && (that.oldRight || !that.oldPassFlag) && that.oldRight && !that.newPassFlag && !that.twoPassFlag) || (that.formPerson.oldPass == "" && that.formPerson.newPass == "" && that.formPerson.twoPass == ""))) {
+      // if (!((that.formPerson.oldPass != "" && that.formPerson.newPass != "" && that.formPerson.twoPass != "" && (that.oldRight) && that.oldRight && !that.newPassFlag && !that.twoPassFlag) || (that.formPerson.oldPass == "" && that.formPerson.newPass == "" && that.formPerson.twoPass == ""))) {
+      //   if (that.formPerson.oldPass == "") {
+      //     that.oldPassFlag = true;
+      //     that.newPassFlag = false;
+      //     that.twoPassFlag = false;
+      //     return false;
+      //   }
+      //   if (that.oldRight && that.formPerson.newPass == "") {
+      //     that.newPassFlag = true;
+      //     return false;
+      //   }
+      //   if (that.formPerson.newPass == "") {
+      //     that.oldPassFlag = true;
+      //     return false;
+      //   }
+      //   return false;
+      // }
       let param = {
         passport: that.formPerson.passport,
         phone: that.formPerson.phone,
         email: that.formPerson.email,
-        password: this.password,
-        newPassword: that.formPerson.newPass
+        password: md5('AIMW-G' + that.formPerson.oldPass).substring(8, 24),
+        newPassword: that.formPerson.newPass == '' ? '' : md5('AIMW-G' + that.formPerson.newPass).substring(8, 24)
       };
+      console.log(333)
+      console.log(param)
+      // return
       that.$http
         .put(Url + "/aimw/user/updateUserProfile", param)
         .then(res => {
@@ -304,7 +311,11 @@ export default {
               that.$message.success('更新成功');
             }
           } else {
-            that.$message.error(data.msg);
+            if (data.msg == '原密码错误') {
+              that.oldPassFlag = true;
+            } else {
+              that.$message.error(data.msg);
+            }
           }
         })
         .catch(res => {
@@ -383,13 +394,21 @@ export default {
     },
     oldChange(val) {
       this.formPerson.oldPass = val;
-      if (val == this.password) {
-        this.oldPassFlag = true;
-        this.oldRight = true;
-      } else if (val != this.password || val == "") {
-        this.oldPassFlag = true;
-        this.oldRight = false;
-      }
+      // let passMd5 = md5(val).substring(8, 24)
+      // if (passMd5 == this.password) {
+      //   this.oldPassFlag = true;
+      //   this.oldRight = true;
+      // } else if (passMd5 != this.password || passMd5 == "") {
+      //   this.oldPassFlag = true;
+      //   this.oldRight = false;
+      // }
+      // if (val == this.password) {
+      //   this.oldPassFlag = true;
+      //   this.oldRight = true;
+      // } else if (val != this.password || val == "") {
+      //   this.oldPassFlag = true;
+      //   this.oldRight = false;
+      // }
     },
     userChange(val) {
       if (val != "") {

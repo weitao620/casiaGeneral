@@ -188,6 +188,7 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import md5 from 'js-md5';
 export default {
   name: "person",
   data() {
@@ -240,6 +241,7 @@ export default {
       },
       headIcons: '',
       oldPassport: '',
+      oldPassword: '',
       fid40101: {
         enable: 1,
         fieldId: 40101,
@@ -393,11 +395,13 @@ export default {
       let that = this;
       let detail = JSON.parse(localStorage.getItem("adminDetail"))
       this.oldPassport = detail.passport
+      this.oldPassword = detail.password
       if (detail.password == '') {
         this.singleBtn = 1
       } else {
         this.singleBtn = false
       }
+      // localStorage.setItem('passGMd5', detail.password)
       if (this.fid40101.enable == 1) {
         this.formAddAdmin.passport = this.oldPassport
         this.formAddAdmin.newPassport = detail.passport
@@ -509,6 +513,18 @@ export default {
       if (this.formAddAdmin.password == '') {
         this.formAddAdmin.password = this.formAddAdmin.newPassport.substring(this.formAddAdmin.newPassport.length - 6, this.formAddAdmin.newPassport.length)
       }
+      if (this.formAddAdmin.password === this.oldPassword) {
+        this.formAddAdmin.password = ''
+      } else {
+        // if (this.formAddAdmin.password != localStorage.getItem('passGMd5')) {
+        // console.log(this.formAddAdmin.password)
+        let passMd5 = md5('AIMW-G' + this.formAddAdmin.password).substring(8, 24)
+        this.formAddAdmin.password = passMd5
+        // }
+      }
+      
+      console.log(this.formAddAdmin)
+      // return
       that.$http
         .put(Url + "/aimw/manager/updateUserInfo", this.formAddAdmin)
         .then(res => {
@@ -595,7 +611,7 @@ export default {
     },
     singleChange(txt) {
       this.singleBtn ? (this.singleBtn = false) : (this.singleBtn = txt);
-      this.formAddUser.password = "";
+      this.formAddAdmin.password = "";
       this.newRight1 = false;
       this.newRight2 = false;
       this.newRight3 = false;
