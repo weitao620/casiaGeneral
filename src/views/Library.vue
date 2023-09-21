@@ -516,7 +516,7 @@ export default {
         .tab_logo_text {
           margin: 0 0.08rem 0 0.06rem;
           width: 1.44rem;
-          height: 0.62rem;
+          height: 0.58rem;
         }
       }
       .tab_nemu {
