@@ -17,7 +17,7 @@ module.exports = {
         // target: "http://36.110.172.217:16666/",
 
         // target: "http://10.0.6.31:6120/",
-        target: "http://36.110.172.216:11300",
+        target: "http://36.110.172.216:11300", // 放弃这个分支了，同步total分支，通用版和北航版本一样
         // target: "http://8.134.56.37:5120/",
         // target: 'https://ipathy.net',
         // 如果要代理 websockets
