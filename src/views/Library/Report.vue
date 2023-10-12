@@ -2030,30 +2030,29 @@ export default {
       localStorage.setItem("expGender", datas.gender);
       let that = this;
       let param = {
-        passport: JSON.parse(localStorage.getItem("userInfo")).passport,
-        password: JSON.parse(localStorage.getItem("userInfo")).password
+        passport: JSON.parse(localStorage.getItem("userInfo")).passport
+        // password: JSON.parse(localStorage.getItem("userInfo")).password
       };
       this.$http
-        .post(Url + "/aimw/user/login", param)
+        .get(Url + "/aimw/user/getAuthInfo", { params: param })
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
-            localStorage.setItem(
-              "algTypes",
-              JSON.stringify(data.data.algTypes)
-            );
-            // 是否显示抑郁
-            this.depressionFlag = data.data.algTypes.depression;
-            // 是否显示焦虑
-            this.anxietyFlag = data.data.algTypes.anxiety;
-            // 是否显示强迫
-            this.forcedFlag = data.data.algTypes.forced;
-            // 是否显示自我伤害
-            this.suicideFlag = data.data.algTypes.suicide;
-            // 是否显示敌对
-            this.violenceFlag = data.data.algTypes.violence;
-            // 是否显示人格
-            this.personalityFlag = data.data.algTypes.personality;
+            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            if (data.data.algTypes) {
+              // 是否显示抑郁
+              this.depressionFlag = data.data.algTypes.depression
+              // 是否显示焦虑
+              this.anxietyFlag = data.data.algTypes.anxiety
+              // 是否显示强迫
+              this.forcedFlag = data.data.algTypes.forced
+              // 是否显示自我伤害
+              this.suicideFlag = data.data.algTypes.suicide
+              // 是否显示敌对
+              this.violenceFlag = data.data.algTypes.violence
+              // 是否显示人格
+              this.personalityFlag = data.data.algTypes.personality
+            }
             //
             // this.depressionFlag = 1
             // this.anxietyFlag = 1

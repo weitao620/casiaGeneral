@@ -15,6 +15,7 @@ let nowSize = function(val, initWidth = 1920) {
 };
 const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, opacity = 1, pieNum) => {
   const series = []
+  console.log(pieData)
   let sumValue = 0
   let startValue = 0
   let endValue = 0
@@ -26,6 +27,8 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
   })
   // 为每一个饼图数据，生成一个 series-surface 配置
   for (let i = 0; i < pieData.length; i++) {
+    console.log(pieData[i])
+    // return
     sumValue += pieData[i].value
     const seriesItem = {
       name:
@@ -46,6 +49,7 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
       // minAngle: 10
       // center: ['50%', '50%']
     }
+    console.log(seriesItem)
     if (typeof pieData[i].itemStyle !== 'undefined') {
       const itemStyle = {}
       itemStyle.color =
@@ -60,12 +64,14 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
     }
     series.push(seriesItem)
   }
- 
+  console.log(series)
+//  return
   // 使用上一次遍历时，计算出的数据和 sumValue，调用 getParametricEquation 函数，
   // 向每个 series-surface 传入不同的参数方程 series-surface.parametricEquation，也就是实现每一个扇形。
   legendData = []
   legendBfb = []
   for (let i = 0; i < series.length; i++) {
+    console.log(series[i])
     endValue = startValue + series[i].pieData.value
     series[i].pieData.startRatio = startValue / sumValue
     series[i].pieData.endRatio = endValue / sumValue
@@ -88,8 +94,10 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
       value: bfb
     })
   }
+  console.log(series)
   const boxHeight = getHeight3D(series, pieHeight, pieNum) // 通过pieHeight设定3d饼/环的高度，单位是px
   // 准备待返回的配置项，把准备好的 legendData、series 传入。
+  // return
   const option = {
     legend: {
       show: false,
@@ -129,22 +137,50 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
         fontSize: 13
       },
       formatter: params => {
+        console.log(params)
         if (
           params.seriesName !== 'mouseoutSeries' &&
             params.seriesName !== 'pie2d'
         ) {
-          console.log(option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio)
-          console.log(((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(2) % 1 === 0)
-          let nums = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(2) % 1 === 0 ? 0 : 2
-          const bfb = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(nums)
-          console.log(bfb)
-          console.log(pieNum)
-          const bfbNum = Math.round((bfb / 100) * pieNum)
-          return (
-            `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600">${params.seriesName}</span>` +
-            `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${params.color};"></span>` +
-            `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum}人</span><span style="color:#fff;font-size:0.16rem;">占比${bfb}%</span></div></div>`
-          )
+          // console.log(option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio)
+          // console.log(((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(2) % 1 === 0)
+          let nums = null
+          console.log(option.series[params.seriesIndex])
+          // console.log(option.series[params.seriesIndex].pieData)
+          if (params.seriesIndex < option.series.length - 1) {
+            if (option.series[params.seriesIndex].pieData) {
+              nums = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(2) % 1 === 0 ? 0 : 2
+            } else {
+              nums = 2
+            }
+            // let bfb = null
+            // if (option.series[params.seriesIndex].pieData) {
+            const bfb = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(nums)
+            // } else {
+            //   bfb = 0
+            // }
+            console.log(nums)
+            console.log(bfb)
+            // console.log(bfb)
+            console.log(pieNum)
+            let bfbNum = 0
+            if (pieNum == -1) {
+              console.log(option.series[params.seriesIndex].num)
+              bfbNum = 0
+              return (
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600">${params.seriesName}</span>` +
+                `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${params.color};"></span>` +
+                `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum}次</span><span style="color:#fff;font-size:0.16rem;">占比${bfb}%</span></div></div>`
+              )
+            } else {
+              bfbNum = Math.ceil((bfb / 100) * pieNum)
+              return (
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600">${params.seriesName}</span>` +
+                `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${params.color};"></span>` +
+                `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum}人</span><span style="color:#fff;font-size:0.16rem;">占比${bfb}%</span></div></div>`
+              )
+            }
+          }
         }
       }
     },
@@ -189,6 +225,7 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
     },
     series: series
   }
+  console.log()
   return option
 }
  
@@ -270,6 +307,7 @@ const getParametricEquation = (startRatio, endRatio, isSelected, isHovered, k, h
 const getHeight3D = (series, height, pieNum) => {
 
   console.log(series)
+  // return
   console.log(height)
   // console.log(Math.round(series[0].pieData.endRatio * 100))
   series.sort((a, b) => {

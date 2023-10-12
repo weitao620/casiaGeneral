@@ -136,23 +136,52 @@
                     </div>
                   </div>
                 </div>
-
-                <el-tooltip effect="light" placement="top">
+                <!-- <block v-for="item in fiveList" :key="item.index">
+                  <block v-for="items in item.list" :key="items.frame"></block> -->
+                <el-tooltip
+                  effect="light"
+                  placement="top"
+                  v-for="(items, indexs) in fiveList"
+                  :key="items.frame"
+                >
                   <div slot="content">
                     <div class="top_title">预警因子</div>
                     <div class="c_pies">
-                      <span :class="['c_pie_th', warningFactor.qxdl < 10 ? 'c_thq1' : '', warningFactor.qxdl > 9 && warningFactor.qxdl < 50 ? 'c_thq2' : '',  warningFactor.qxdl > 49 && warningFactor.qxdl < 100 ? 'c_thq3' : '', warningFactor.qxdl > 99 ? 'c_thq4' : '']"></span>
-                      <span>情绪低落：</span>
-                      <span>{{ warningFactor.qxdl }}次</span>
+                      <span
+                        :class="[
+                          'c_pie_th',
+                          items.value < 10 ? 'c_thq1' : '',
+                          items.value > 9 && items.value < 50 ? 'c_thq2' : '',
+                          items.value > 49 && items.value < 100 ? 'c_thq3' : '',
+                          items.value > 99 ? 'c_thq4' : ''
+                        ]"
+                      ></span>
+                      <span>{{ items.name }}：</span>
+                      <span>{{ items.value }}次</span>
                     </div>
                   </div>
-                  <div :class="['hvm_mb_bg', 'yy_qxdl', warningFactor.qxdl < 10 ? 'level_bg1' : '', warningFactor.qxdl > 9 && warningFactor.qxdl < 50 ? 'level_bg2' : '',  warningFactor.qxdl > 49 && warningFactor.qxdl < 100 ? 'level_bg3' : '', warningFactor.qxdl > 99 ? 'level_bg4' : '']">
-                    <div class="level_txt level_txt_t">情绪</div>
-                    <div class="level_txt">低落</div>
+                  <div
+                    :class="[
+                      'wddw' + indexs,
+                      items.value < 10 ? 'level_bg1' : '',
+                      items.value > 9 && items.value < 50 ? 'level_bg2' : '',
+                      items.value > 49 && items.value < 100 ? 'level_bg3' : '',
+                      items.value > 99 ? 'level_bg4' : ''
+                    ]"
+                  >
+                    <div
+                      :style="{
+                        'font-size': items.size / 100 + 'rem',
+                        'line-height': 1
+                      }"
+                    >
+                      {{ items.name }}
+                    </div>
                   </div>
                 </el-tooltip>
-
-                <el-tooltip effect="light" placement="top">
+                <!-- </block>
+                </block> -->
+                <!-- <el-tooltip effect="light" placement="top">
                   <div slot="content">
                     <div class="top_title">预警因子</div>
                     <div class="c_pies">
@@ -356,7 +385,7 @@
                   <div :class="['hvm_mb_bg', 'dd_dy', warningFactor.dy < 10 ? 'level_bg1' : '', warningFactor.dy > 9 && warningFactor.dy < 50 ? 'level_bg2' : '',  warningFactor.dy > 49 && warningFactor.dy < 100 ? 'level_bg3' : '', warningFactor.dy > 99 ? 'level_bg4' : '']">
                     <div class="level_txt level_txt_s">敌意</div>
                   </div>
-                </el-tooltip>
+                </el-tooltip> -->
               </div>
             </div>
           </div>
@@ -366,7 +395,7 @@
             <div class="lib_boxz">
               <div class="lib_b_lizi"></div>
             </div>
-            
+
             <img
               class="img0 img1"
               src="../../assets/images/heart/bottom1.png"
@@ -378,7 +407,7 @@
               src="../../assets/images/heart/bottom2.png"
               alt=""
             />
-            
+
             <img
               class="img0 img3"
               src="../../assets/images/heart/bottom3.png"
@@ -459,7 +488,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">反社会</div>
-                
+
                   <el-tooltip effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">反社会</div>
@@ -467,29 +496,60 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.fshPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.fshPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.fshPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.fshPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.fshPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.fshPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width:  warningFactor.fshPerctLow * 4 + 'rem' }">
-                        <div v-if="warningFactor.fshPerct !== 1" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.fshPerct !== 1" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.fshPerct !== 1" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_left"
+                        :style="{
+                          width: warningFactor.fshPerctLow * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.fshPerct !== 1"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.fshPerct !== 1"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.fshPerct !== 1"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.fshPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.fshPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.fshPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.fshPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.fshPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.fshPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.fshPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.fshPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
-
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">完美主义</div>
@@ -500,25 +560,57 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.wmzyPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.wmzyPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.wmzyPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.wmzyPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.wmzyPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.wmzyPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width: warningFactor.wmzyPerctLow * 4 + 'rem' }">
-                        <div v-if="warningFactor.wmzyPerct !== 1" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.wmzyPerct !== 1" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.wmzyPerct !== 1" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_left"
+                        :style="{
+                          width: warningFactor.wmzyPerctLow * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 1"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 1"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 1"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.wmzyPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.wmzyPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.wmzyPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.wmzyPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.wmzyPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.wmzyPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
@@ -532,26 +624,58 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.gjxPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.gjxPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.gjxPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.gjxPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.gjxPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.gjxPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width: warningFactor.gjxPerctLow * 4 + 'rem' }">
+                      <div
+                        class="huml_plb_left"
+                        :style="{
+                          width: warningFactor.gjxPerctLow * 4 + 'rem'
+                        }"
+                      >
                         <!-- {{warningFactor.gjxPerct == 0}} -->
-                        <div v-if="warningFactor.gjxPerct !== 1" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.gjxPerct !== 1" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.gjxPerct !== 1" class="huml_plb_t"></div>
+                        <div
+                          v-if="warningFactor.gjxPerct !== 1"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.gjxPerct !== 1"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.gjxPerct !== 1"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.gjxPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.gjxPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.gjxPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.gjxPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.gjxPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.gjxPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.gjxPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.gjxPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
@@ -565,25 +689,55 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.zlPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.zlPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.zlPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.zlPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.zlPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.zlPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width: warningFactor.zlPerctLow * 4 + 'rem' }">
-                        <div v-if="warningFactor.zlPerct !== 1" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.zlPerct !== 1" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.zlPerct !== 1" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_left"
+                        :style="{ width: warningFactor.zlPerctLow * 4 + 'rem' }"
+                      >
+                        <div
+                          v-if="warningFactor.zlPerct !== 1"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.zlPerct !== 1"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.zlPerct !== 1"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.zlPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.zlPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.zlPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.zlPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.zlPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.zlPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.zlPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.zlPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
@@ -597,25 +751,55 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.byPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.byPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.byPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.byPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.byPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.byPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width: warningFactor.byPerctLow * 4 + 'rem' }">
-                        <div v-if="warningFactor.byPerct !== 1" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.byPerct !== 1" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.byPerct !== 1" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_left"
+                        :style="{ width: warningFactor.byPerctLow * 4 + 'rem' }"
+                      >
+                        <div
+                          v-if="warningFactor.byPerct !== 1"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.byPerct !== 1"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.byPerct !== 1"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.byPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.byPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.byPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.byPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.byPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.byPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.byPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.byPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
@@ -629,25 +813,55 @@
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
                         <span>{{ warningFactor.pzPerctLowNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{ warningFactor.pzPerctLowPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.pzPerctLowPer }}%</span
+                        >
                       </div>
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
                         <span>{{ warningFactor.pzPerctHeighNum }}人</span>
-                        <span style="margin-left:0.1rem">占比{{warningFactor.pzPerctHeighPer }}%</span>
+                        <span style="margin-left:0.1rem"
+                          >占比{{ warningFactor.pzPerctHeighPer }}%</span
+                        >
                       </div>
                     </div>
                     <div class="huml_pl_box">
-                      <div class="huml_plb_left" :style="{ width: warningFactor.pzPerctLow * 4 + 'rem' }">
-                        <div v-if="warningFactor.pzPerct === 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.pzPerct === 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.pzPerct === 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_left"
+                        :style="{ width: warningFactor.pzPerctLow * 4 + 'rem' }"
+                      >
+                        <div
+                          v-if="warningFactor.pzPerct === 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.pzPerct === 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.pzPerct === 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
-                      <div class="huml_plb_right" :style="{ width: warningFactor.pzPerctHeigh * 4 + 'rem' }">
-                        <div v-if="warningFactor.pzPerct !== 0" class="huml_plb_c"></div>
-                        <div v-if="warningFactor.pzPerct !== 0" class="huml_plb_l"></div>
-                        <div v-if="warningFactor.pzPerct !== 0" class="huml_plb_t"></div>
+                      <div
+                        class="huml_plb_right"
+                        :style="{
+                          width: warningFactor.pzPerctHeigh * 4 + 'rem'
+                        }"
+                      >
+                        <div
+                          v-if="warningFactor.pzPerct !== 0"
+                          class="huml_plb_c"
+                        ></div>
+                        <div
+                          v-if="warningFactor.pzPerct !== 0"
+                          class="huml_plb_l"
+                        ></div>
+                        <div
+                          v-if="warningFactor.pzPerct !== 0"
+                          class="huml_plb_t"
+                        ></div>
                       </div>
                     </div>
                   </el-tooltip>
@@ -771,7 +985,7 @@
           </div>
           <div class="hvml_box">
             <div class="hvml_b_head" style="left: 0.93rem;">
-              受欢迎的舒缓游戏
+              舒缓游戏使用排行
             </div>
             <img
               class="hvml_b_bg"
@@ -999,10 +1213,13 @@
 import echarts from "@/assets/js/echarts";
 import "echarts-gl";
 import { mapMutations } from "vuex";
-import { getPie3D, getParametricEquation } from '@/assets/js/chart.js'
+import { getPie3D, getParametricEquation } from "@/assets/js/chart.js";
+import highcharts from "highcharts"; // 必须引入
+import highcharts3d from "highcharts/highcharts-3d"; // 3D必须有引入
 // import { PictorialBarChart } from 'echarts/charts';
 import Url from "@/assets/js/url.js";
-import NP from 'number-precision';
+import NP from "number-precision";
+highcharts3d(highcharts);
 // NP.strip(num)         // strip a number to nearest right number
 // NP.plus(num1, num2, num3, ...)   // addition, num + num2 + num3, two numbers is required at least.
 // NP.minus(num1, num2, num3, ...)  // subtraction, num1 - num2 - num3
@@ -1022,9 +1239,15 @@ import NP from 'number-precision';
 
 // echarts.use([PictorialBarChart]);
 
-const pieColor = ['rgba(157, 113, 255, 1)', 'rgba(103, 135, 250, 1)', 'rgba(255, 212, 105, 1)', 'rgba(92, 212, 247, 1)', 'rgba(244, 142, 46, 1)']
-const crlColor = ['#FFD469', '#9D71FF', '#7795FF', '#5CD4F7']
-const sexColor = ['#7795FF', '#9D71FF']
+const pieColor = [
+  "rgba(157, 113, 255, 1)",
+  "rgba(103, 135, 250, 1)",
+  "rgba(255, 212, 105, 1)",
+  "rgba(92, 212, 247, 1)",
+  "rgba(244, 142, 46, 1)"
+];
+const crlColor = ["#FFD469", "#9D71FF", "#7795FF", "#5CD4F7"];
+const sexColor = ["#7795FF", "#9D71FF"];
 export default {
   name: "screenindex",
   data() {
@@ -1102,6 +1325,7 @@ export default {
         yycd: 0,
         zlPerct: 0
       },
+      fiveList: [],
       imgData: "",
       imgFlag: false,
       alarmCount: 0,
@@ -1216,8 +1440,8 @@ export default {
 
     // let  parseInt(erStr, 2)
     // 调接口
-    this.getLines('n')
-    this.getInfo('n')
+    this.getLines("n");
+    this.getInfo("n");
     this.$forceUpdate();
   },
   beforeDestroy() {
@@ -1322,9 +1546,10 @@ export default {
             console.log("initWebSocket");
             let info = data.data.reverse();
             for (let i in info) {
-              let nowDate = info[i].date.split(' ')[0]
-              info[i].date = nowDate.split('-')[1] + '/' + nowDate.split('-')[2]
-              info[i].date1 = nowDate
+              let nowDate = info[i].date.split(" ")[0];
+              info[i].date =
+                nowDate.split("-")[1] + "/" + nowDate.split("-")[2];
+              info[i].date1 = nowDate;
             }
             this.statistic = info;
 
@@ -1357,11 +1582,12 @@ export default {
             // console.log("initWebSocket");
             let info = data.data.reverse();
             for (let i in info) {
-              let nowDate = info[i].date.split(' ')[0]
-              info[i].date = nowDate.split('-')[1] + '/' + nowDate.split('-')[2]
-              info[i].date1 = nowDate
+              let nowDate = info[i].date.split(" ")[0];
+              info[i].date =
+                nowDate.split("-")[1] + "/" + nowDate.split("-")[2];
+              info[i].date1 = nowDate;
             }
-            console.log(info)
+            console.log(info);
             this.statistic = info;
             this.echartInit1();
           } else {
@@ -1397,14 +1623,14 @@ export default {
             this.moderateNum = info.moderateNum;
             this.severeNum = info.severeNum;
             // 受欢迎的游戏
-            this.gameNew = []
-            let erStr = ''
+            this.gameNew = [];
+            let erStr = "";
             if (info.popularGame !== 0) {
               erStr = info.popularGame.toString(2);
             } else {
-              erStr = '11010'
+              erStr = "11010";
             }
-            console.log(erStr)
+            console.log(erStr);
             let erArr = erStr.split("");
             for (let i in erArr) {
               if (erArr[i] == 1) {
@@ -1419,68 +1645,403 @@ export default {
               }
             }
             console.log(this.gameNew);
-            this.warningStatistic = info.warningStatistic
+            this.warningStatistic = info.warningStatistic;
             // info.warningFactor.qxdl = 110
             // 反社会
-            info.warningFactor.fshPerctLow = NP.minus(1, info.warningFactor.fshPerct)
-            info.warningFactor.fshPerctLowPer = NP.times(info.warningFactor.fshPerctLow, 100)
-            info.warningFactor.fshPerctHeigh = info.warningFactor.fshPerct.toFixed(4)
-            info.warningFactor.fshPerctHeighPer = NP.times(info.warningFactor.fshPerctHeigh, 100)
-            info.warningFactor.fshPerctLowNum = Math.round(info.participationNum * info.warningFactor.fshPerctLow)
-            info.warningFactor.fshPerctHeighNum = Math.round(info.participationNum * info.warningFactor.fshPerctHeigh)
+            info.warningFactor.fshPerctLow = NP.minus(
+              1,
+              info.warningFactor.fshPerct
+            );
+            info.warningFactor.fshPerctLowPer = NP.times(
+              info.warningFactor.fshPerctLow,
+              100
+            );
+            info.warningFactor.fshPerctHeigh = info.warningFactor.fshPerct.toFixed(
+              4
+            );
+            info.warningFactor.fshPerctHeighPer = NP.times(
+              info.warningFactor.fshPerctHeigh,
+              100
+            );
+            info.warningFactor.fshPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.fshPerctLow
+            );
+            info.warningFactor.fshPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.fshPerctHeigh
+            );
             // 完美主义
             // console.log(InStall)
-            
-            info.warningFactor.wmzyPerctLow = NP.minus(1, info.warningFactor.wmzyPerct)
-            info.warningFactor.wmzyPerctLowPer = NP.times(info.warningFactor.wmzyPerctLow, 100)
-            info.warningFactor.wmzyPerctHeigh = info.warningFactor.wmzyPerct.toFixed(4)
-            info.warningFactor.wmzyPerctHeighPer = NP.times(info.warningFactor.wmzyPerctHeigh, 100)
-            info.warningFactor.wmzyPerctLowNum = Math.round(info.participationNum * info.warningFactor.wmzyPerctLow)
-            info.warningFactor.wmzyPerctHeighNum = Math.round(info.participationNum * info.warningFactor.wmzyPerctHeigh)
+
+            info.warningFactor.wmzyPerctLow = NP.minus(
+              1,
+              info.warningFactor.wmzyPerct
+            );
+            info.warningFactor.wmzyPerctLowPer = NP.times(
+              info.warningFactor.wmzyPerctLow,
+              100
+            );
+            info.warningFactor.wmzyPerctHeigh = info.warningFactor.wmzyPerct.toFixed(
+              4
+            );
+            info.warningFactor.wmzyPerctHeighPer = NP.times(
+              info.warningFactor.wmzyPerctHeigh,
+              100
+            );
+            info.warningFactor.wmzyPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.wmzyPerctLow
+            );
+            info.warningFactor.wmzyPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.wmzyPerctHeigh
+            );
             // 攻击性
-            info.warningFactor.gjxPerctLow = NP.minus(1, info.warningFactor.gjxPerct)
-            info.warningFactor.gjxPerctLowPer = NP.times(info.warningFactor.gjxPerctLow, 100)
-            info.warningFactor.gjxPerctHeigh = info.warningFactor.gjxPerct.toFixed(4)
-            info.warningFactor.gjxPerctHeighPer = NP.times(info.warningFactor.gjxPerctHeigh, 100)
-            info.warningFactor.gjxPerctLowNum = Math.round(info.participationNum * info.warningFactor.gjxPerctLow)
-            info.warningFactor.gjxPerctHeighNum = Math.round(info.participationNum * info.warningFactor.gjxPerctHeigh)
+            info.warningFactor.gjxPerctLow = NP.minus(
+              1,
+              info.warningFactor.gjxPerct
+            );
+            info.warningFactor.gjxPerctLowPer = NP.times(
+              info.warningFactor.gjxPerctLow,
+              100
+            );
+            info.warningFactor.gjxPerctHeigh = info.warningFactor.gjxPerct.toFixed(
+              4
+            );
+            info.warningFactor.gjxPerctHeighPer = NP.times(
+              info.warningFactor.gjxPerctHeigh,
+              100
+            );
+            info.warningFactor.gjxPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.gjxPerctLow
+            );
+            info.warningFactor.gjxPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.gjxPerctHeigh
+            );
             // 自恋
-            info.warningFactor.zlPerctLow = NP.minus(1, info.warningFactor.zlPerct)
-            info.warningFactor.zlPerctLowPer = NP.times(info.warningFactor.zlPerctLow, 100)
-            info.warningFactor.zlPerctHeigh = info.warningFactor.zlPerct.toFixed(4)
-            info.warningFactor.zlPerctHeighPer = NP.times(info.warningFactor.zlPerctHeigh, 100)
-            info.warningFactor.zlPerctLowNum = Math.round(info.participationNum * info.warningFactor.zlPerctLow)
-            info.warningFactor.zlPerctHeighNum = Math.round(info.participationNum * info.warningFactor.zlPerctHeigh)
+            info.warningFactor.zlPerctLow = NP.minus(
+              1,
+              info.warningFactor.zlPerct
+            );
+            info.warningFactor.zlPerctLowPer = NP.times(
+              info.warningFactor.zlPerctLow,
+              100
+            );
+            info.warningFactor.zlPerctHeigh = info.warningFactor.zlPerct.toFixed(
+              4
+            );
+            info.warningFactor.zlPerctHeighPer = NP.times(
+              info.warningFactor.zlPerctHeigh,
+              100
+            );
+            info.warningFactor.zlPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.zlPerctLow
+            );
+            info.warningFactor.zlPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.zlPerctHeigh
+            );
             // 边缘
-            info.warningFactor.byPerctLow = NP.minus(1, info.warningFactor.byPerct)
-            info.warningFactor.byPerctLowPer = NP.times(info.warningFactor.byPerctLow, 100)
-            info.warningFactor.byPerctHeigh = info.warningFactor.byPerct.toFixed(4)
-            info.warningFactor.byPerctHeighPer = NP.times(info.warningFactor.byPerctHeigh, 100)
-            info.warningFactor.byPerctLowNum = Math.round(info.participationNum * info.warningFactor.byPerctLow)
-            info.warningFactor.byPerctHeighNum = Math.round(info.participationNum * info.warningFactor.byPerctHeigh)
+            info.warningFactor.byPerctLow = NP.minus(
+              1,
+              info.warningFactor.byPerct
+            );
+            info.warningFactor.byPerctLowPer = NP.times(
+              info.warningFactor.byPerctLow,
+              100
+            );
+            info.warningFactor.byPerctHeigh = info.warningFactor.byPerct.toFixed(
+              4
+            );
+            info.warningFactor.byPerctHeighPer = NP.times(
+              info.warningFactor.byPerctHeigh,
+              100
+            );
+            info.warningFactor.byPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.byPerctLow
+            );
+            info.warningFactor.byPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.byPerctHeigh
+            );
             // 偏执
-            info.warningFactor.pzPerctLow = NP.minus(1, info.warningFactor.pzPerct)
-            info.warningFactor.pzPerctLowPer = NP.times(info.warningFactor.pzPerctLow, 100)
-            info.warningFactor.pzPerctHeigh = info.warningFactor.pzPerct.toFixed(4)
-            info.warningFactor.pzPerctHeighPer = NP.times(info.warningFactor.pzPerctHeigh, 100)
-            info.warningFactor.pzPerctLowNum = Math.round(info.participationNum * info.warningFactor.pzPerctLow)
-            info.warningFactor.pzPerctHeighNum = Math.round(info.participationNum * info.warningFactor.pzPerctHeigh)
-            
-            this.warningFactor = info.warningFactor
+            info.warningFactor.pzPerctLow = NP.minus(
+              1,
+              info.warningFactor.pzPerct
+            );
+            info.warningFactor.pzPerctLowPer = NP.times(
+              info.warningFactor.pzPerctLow,
+              100
+            );
+            info.warningFactor.pzPerctHeigh = info.warningFactor.pzPerct.toFixed(
+              4
+            );
+            info.warningFactor.pzPerctHeighPer = NP.times(
+              info.warningFactor.pzPerctHeigh,
+              100
+            );
+            info.warningFactor.pzPerctLowNum = Math.round(
+              info.participationNum * info.warningFactor.pzPerctLow
+            );
+            info.warningFactor.pzPerctHeighNum = Math.round(
+              info.participationNum * info.warningFactor.pzPerctHeigh
+            );
 
+            this.warningFactor = info.warningFactor;
+            console.log(this.warningFactor);
+            let yinList = [
+              {
+                name: "情绪低落",
+                frame: "qxdl",
+                type: "1",
+                typeName: "抑郁",
+                // value: info.warningFactor.qxdl
+                value: 15
+              },
+              {
+                name: "思维迟缓",
+                frame: "swch",
+                type: "1",
+                typeName: "抑郁",
+                // value: info.warningFactor.swch
+                value: 14
+              },
+              {
+                name: "精力缺乏",
+                frame: "jlqf",
+                type: "1",
+                typeName: "抑郁",
+                // value: info.warningFactor.jlqf
+                value: 13
+              },
+
+              {
+                name: "消极预期",
+                frame: "xjyq",
+                type: "2",
+                typeName: "焦虑",
+                // value: info.warningFactor.xjyq
+                value: 12
+              },
+              {
+                name: "易激怒",
+                frame: "yjr",
+                type: "2",
+                typeName: "焦虑",
+                // value: info.warningFactor.yjr
+                value: 11
+              },
+              {
+                name: "惶恐不安",
+                frame: "hkba",
+                type: "2",
+                typeName: "焦虑",
+                // value: info.warningFactor.hkba
+                value: 10
+              },
+
+              {
+                name: "强迫行为",
+                frame: "qpxw",
+                type: "3",
+                typeName: "强迫",
+                // value: info.warningFactor.qpxw
+                value: 9
+              },
+              {
+                name: "强迫思维",
+                frame: "qpsw",
+                type: "3",
+                typeName: "强迫",
+                // value: info.warningFactor.qpsw
+                value: 8
+              },
+              {
+                name: "对抗强迫",
+                frame: "dkqp",
+                type: "3",
+                typeName: "强迫",
+                // value: info.warningFactor.dkqp
+                value: 700
+              },
+
+              {
+                name: "人际孤独",
+                frame: "rjgd",
+                type: "4",
+                typeName: "自我伤害",
+                // value: info.warningFactor.rjgd
+                value: 600
+              },
+              {
+                name: "抑郁程度",
+                frame: "yycd",
+                type: "4",
+                typeName: "自我伤害",
+                // value: info.warningFactor.yycd
+                value: 88
+              },
+              {
+                name: "创伤经历",
+                frame: "csjl",
+                type: "4",
+                typeName: "自我伤害",
+                // value: info.warningFactor.csjl
+                value: 55
+              },
+
+              {
+                name: "冲动性",
+                frame: "cdx",
+                type: "5",
+                typeName: "敌对",
+                // value: info.warningFactor.cdx
+                value: 333
+              },
+              {
+                name: "无规则感",
+                frame: "wgzg",
+                type: "5",
+                typeName: "敌对",
+                // value: info.warningFactor.wgzg
+                value: 23
+              },
+              {
+                name: "敌意",
+                frame: "dy",
+                type: "5",
+                typeName: "敌对",
+                // value: info.warningFactor.dy
+                value: 12
+              }
+            ];
+            yinList.sort((a, b) => {
+              return b.value - a.value;
+            });
+            console.log(yinList);
+            for (let i in yinList) {
+              console.log(i % 2);
+              if (i == 0) {
+                yinList[i].size = 60;
+              }
+              if (i == 1) {
+                yinList[i].size = 40;
+              }
+              if (i == 2) {
+                yinList[i].size = 38;
+              }
+              if (i == 3) {
+                yinList[i].size = 36;
+              }
+              if (i == 4) {
+                yinList[i].size = 36;
+              }
+              if (i == 5) {
+                yinList[i].size = 34;
+              }
+              if (i == 6) {
+                yinList[i].size = 32;
+              }
+
+              if (i == 7) {
+                yinList[i].size = 30;
+              }
+              if (i == 8) {
+                yinList[i].size = 28;
+              }
+              if (i == 9) {
+                yinList[i].size = 26;
+              }
+              if (i == 10) {
+                yinList[i].size = 24;
+              }
+              if (i == 11) {
+                yinList[i].size = 22;
+              }
+              if (i == 12) {
+                yinList[i].size = 20;
+              }
+              if (i == 13) {
+                yinList[i].size = 18;
+              }
+              if (i == 14) {
+                yinList[i].size = 16;
+              }
+              console.log(yinList[i].size);
+            }
+            console.log(yinList);
+            let ar1 = [];
+            let ar2 = [];
+            let ar3 = [];
+            let ar4 = [];
+            let ar5 = [];
+            // yinList.sort((a, b) => {
+            //   return a.type - b.type
+            // })
+            // console.log(yinList)
+            for (let i in yinList) {
+              if (yinList[i].type == 1) {
+                ar1.push(yinList[i]);
+              }
+              if (yinList[i].type == 2) {
+                ar2.push(yinList[i]);
+              }
+              if (yinList[i].type == 3) {
+                ar3.push(yinList[i]);
+              }
+              if (yinList[i].type == 4) {
+                ar4.push(yinList[i]);
+              }
+              if (yinList[i].type == 5) {
+                ar5.push(yinList[i]);
+              }
+            }
+            console.log(ar1, ar2, ar3, ar4, ar5);
+            let arTal = [
+              { list: ar1 },
+              { list: ar2 },
+              { list: ar3 },
+              { list: ar4 },
+              { list: ar5 }
+            ];
+            arTal.sort((a, b) => {
+              return b.list[0].value - a.list[0].value;
+            });
+            // console.log(yinList)
+            console.log(arTal);
+
+            let yinArr = [];
+            for (let i in arTal) {
+              for (let j in arTal[i].list) {
+                yinArr.push(arTal[i].list[j]);
+              }
+            }
+            console.log(yinArr);
+            this.fiveList = yinArr;
             // 男 女
-            info.ageGenderStatistic.malePerct = info.ageGenderStatistic.malePerct.toFixed(4)
-            info.ageGenderStatistic.femalePerct = info.ageGenderStatistic.femalePerct.toFixed(4)
-            info.ageGenderStatistic.malePerctNum = Math.round(info.ageGenderStatistic.malePerct * info.participationNum)
-            info.ageGenderStatistic.femalePerctNum = Math.round(info.ageGenderStatistic.femalePerct * info.participationNum)
-            
-            info.ageGenderStatistic.belowThirtyPerct = info.ageGenderStatistic.belowThirtyPerct.toFixed(4)
-            info.ageGenderStatistic.thirtyToFortyPerct = info.ageGenderStatistic.thirtyToFortyPerct.toFixed(4)
-            info.ageGenderStatistic.fortyToFiftyPerct = info.ageGenderStatistic.fortyToFiftyPerct.toFixed(4)
-            info.ageGenderStatistic.aboveFiftyPerct = info.ageGenderStatistic.aboveFiftyPerct.toFixed(4)
+            info.ageGenderStatistic.malePerct = info.ageGenderStatistic.malePerct.toFixed(
+              4
+            );
+            info.ageGenderStatistic.femalePerct = info.ageGenderStatistic.femalePerct.toFixed(
+              4
+            );
+            info.ageGenderStatistic.malePerctNum = Math.round(
+              info.ageGenderStatistic.malePerct * info.participationNum
+            );
+            info.ageGenderStatistic.femalePerctNum = Math.round(
+              info.ageGenderStatistic.femalePerct * info.participationNum
+            );
 
-            this.ageGenderStatistic = info.ageGenderStatistic
-            console.log(info)
+            info.ageGenderStatistic.belowThirtyPerct = info.ageGenderStatistic.belowThirtyPerct.toFixed(
+              4
+            );
+            info.ageGenderStatistic.thirtyToFortyPerct = info.ageGenderStatistic.thirtyToFortyPerct.toFixed(
+              4
+            );
+            info.ageGenderStatistic.fortyToFiftyPerct = info.ageGenderStatistic.fortyToFiftyPerct.toFixed(
+              4
+            );
+            info.ageGenderStatistic.aboveFiftyPerct = info.ageGenderStatistic.aboveFiftyPerct.toFixed(
+              4
+            );
+
+            this.ageGenderStatistic = info.ageGenderStatistic;
+            console.log(info);
             this.echartInit();
             // this.todayProcessNum = info.todayProcessNum;
             // this.processCount = info.processCount;
@@ -1538,12 +2099,11 @@ export default {
     },
     // 监听鼠标事件，实现饼图选中效果（单选），近似实现高亮（放大）效果。
     // optionName是防止有多个图表进行定向option传递，单个图表可以不传，默认是opiton
-    bindListen (myChart, optionName) {
-      
-      let selectedIndex = ''
-      let hoveredIndex = ''
-      console.log(myChart)
-      console.log(this[optionName])
+    bindListen(myChart, optionName) {
+      let selectedIndex = "";
+      let hoveredIndex = "";
+      console.log(myChart);
+      console.log(this[optionName]);
       // 监听点击事件，实现选中效果（单选）
       // myChart.on('click', (params) => {
       //   console.log(params)
@@ -1585,101 +2145,113 @@ export default {
       //   myChart.setOption(this[optionName])
       // })
       // 监听 mouseover，近似实现高亮（放大）效果
-      myChart.on('mouseover', (params) => {
+      myChart.on("mouseover", params => {
         // console.log(params)
         // 准备重新渲染扇形所需的参数
-        let isSelected
-        let isHovered
-        let startRatio
-        let endRatio
-        let k
+        let isSelected;
+        let isHovered;
+        let startRatio;
+        let endRatio;
+        let k;
         // 如果触发 mouseover 的扇形当前已高亮，则不做操作
         if (hoveredIndex === params.seriesIndex) {
           // 否则进行高亮及必要的取消高亮操作
         } else {
           // 如果当前有高亮的扇形，取消其高亮状态（对 option 更新）
-          if (hoveredIndex !== '') {
+          if (hoveredIndex !== "") {
             // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 false。
-            isSelected = this[optionName].series[hoveredIndex].pieStatus.selected
-            isHovered = false
-            startRatio = this[optionName].series[hoveredIndex].pieData.startRatio
-            endRatio = this[optionName].series[hoveredIndex].pieData.endRatio
-            k = this[optionName].series[hoveredIndex].pieStatus.k
+            isSelected = this[optionName].series[hoveredIndex].pieStatus
+              .selected;
+            isHovered = false;
+            startRatio = this[optionName].series[hoveredIndex].pieData
+              .startRatio;
+            endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
+            k = this[optionName].series[hoveredIndex].pieStatus.k;
             // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-            this[optionName].series[hoveredIndex].parametricEquation = getParametricEquation(
+            this[optionName].series[
+              hoveredIndex
+            ].parametricEquation = getParametricEquation(
               startRatio,
               endRatio,
               isSelected,
               isHovered,
               k,
               this[optionName].series[hoveredIndex].pieData.value
-            )
-            this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered
+            );
+            this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered;
             // 将此前记录的上次选中的扇形对应的系列号 seriesIndex 清空
-            hoveredIndex = ''
+            hoveredIndex = "";
           }
           // 如果触发 mouseover 的扇形不是透明圆环，将其高亮（对 option 更新）
           if (
-            params.seriesName !== 'mouseoutSeries' &&
-            params.seriesName !== 'pie2d' && params.seriesName !== '预警'
+            params.seriesName !== "mouseoutSeries" &&
+            params.seriesName !== "pie2d" &&
+            params.seriesName !== "预警"
           ) {
             // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 true。
-            console.log(this[optionName].series[params.seriesIndex])
-            isSelected =
-              this[optionName].series[params.seriesIndex].pieStatus.selected
-            isHovered = true
-            startRatio =
-              this[optionName].series[params.seriesIndex].pieData.startRatio
-            endRatio = this[optionName].series[params.seriesIndex].pieData.endRatio
-            k = this[optionName].series[params.seriesIndex].pieStatus.k
+            console.log(this[optionName].series[params.seriesIndex]);
+            isSelected = this[optionName].series[params.seriesIndex].pieStatus
+              .selected;
+            isHovered = true;
+            startRatio = this[optionName].series[params.seriesIndex].pieData
+              .startRatio;
+            endRatio = this[optionName].series[params.seriesIndex].pieData
+              .endRatio;
+            k = this[optionName].series[params.seriesIndex].pieStatus.k;
             // 对当前点击的扇形，执行高亮操作（对 option 更新）
-            this[optionName].series[params.seriesIndex].parametricEquation = getParametricEquation(
+            this[optionName].series[
+              params.seriesIndex
+            ].parametricEquation = getParametricEquation(
               startRatio,
               endRatio,
               isSelected,
               isHovered,
               k,
               this[optionName].series[params.seriesIndex].pieData.value + 2
-            )
-            this[optionName].series[params.seriesIndex].pieStatus.hovered = isHovered
+            );
+            this[optionName].series[
+              params.seriesIndex
+            ].pieStatus.hovered = isHovered;
             // 记录上次高亮的扇形对应的系列号 seriesIndex
-            hoveredIndex = params.seriesIndex
+            hoveredIndex = params.seriesIndex;
           }
           // 使用更新后的 option，渲染图表
-          myChart.setOption(this[optionName])
+          myChart.setOption(this[optionName]);
         }
-      })
+      });
       // 修正取消高亮失败的 bug
-      myChart.on('globalout', () => {
+      myChart.on("globalout", () => {
         // 准备重新渲染扇形所需的参数
-        let isSelected
-        let isHovered
-        let startRatio
-        let endRatio
-        let k
-        if (hoveredIndex !== '') {
+        let isSelected;
+        let isHovered;
+        let startRatio;
+        let endRatio;
+        let k;
+        if (hoveredIndex !== "") {
           // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 true。
-          isSelected = this[optionName].series[hoveredIndex].pieStatus.selected
-          isHovered = false
-          k = this[optionName].series[hoveredIndex].pieStatus.k
-          startRatio = this[optionName].series[hoveredIndex].pieData.startRatio
-          endRatio = this[optionName].series[hoveredIndex].pieData.endRatio
+          isSelected = this[optionName].series[hoveredIndex].pieStatus.selected;
+          isHovered = false;
+          k = this[optionName].series[hoveredIndex].pieStatus.k;
+          startRatio = this[optionName].series[hoveredIndex].pieData.startRatio;
+          endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
           // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-          this[optionName].series[hoveredIndex].parametricEquation = getParametricEquation(
+          this[optionName].series[
+            hoveredIndex
+          ].parametricEquation = getParametricEquation(
             startRatio,
             endRatio,
             isSelected,
             isHovered,
             k,
             this[optionName].series[hoveredIndex].pieData.value
-          )
-          this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered
+          );
+          this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered;
           // 将此前记录的上次选中的扇形对应的系列号 seriesIndex 清空
-          hoveredIndex = ''
+          hoveredIndex = "";
         }
         // 使用更新后的 option，渲染图表
-        myChart.setOption(this[optionName])
-      })
+        myChart.setOption(this[optionName]);
+      });
     },
 
     // // 3D饼图的配置项，同echarjs的series
@@ -2014,7 +2586,7 @@ export default {
             }
           },
           backgroundColor: "rgba(5, 16, 62, 1)",
-          borderColor: 'rgba(138, 184, 255, 1)',
+          borderColor: "rgba(138, 184, 255, 1)",
           borderWidth: nowSize(1),
           textStyle: {
             color: "#ffffff"
@@ -2191,6 +2763,17 @@ export default {
         ]
       });
     },
+    fontChart(res) {
+      let docEl = document.documentElement;
+      let clientWidth =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+      if (!clientWidth) return;
+      // 此处的3840 为设计稿的宽度，记得修改！
+      let fontSize = clientWidth / 1920;
+      return res * fontSize;
+    },
     echartInit() {
       let that = this;
       console.log(456);
@@ -2201,27 +2784,340 @@ export default {
         return val * (nowClientWidth / initWidth);
       };
       // 绘制立体饼图
-      let flag = false
-      this.pieList = [{
-        name: "抑郁",
-        value: NP.times(this.warningStatistic.depressionPerct, 100)
-      },
-      {
-        name: "焦虑",
-        value: NP.times(this.warningStatistic.anxietyPerct, 100)
-      },
-      {
-        name: "强迫",
-        value: NP.times(this.warningStatistic.forcePerct, 100)
-      },
-      {
-        name: "自我伤害",
-        value: NP.times(this.warningStatistic.suicidePerct, 100)
-      },
-      {
-        name: "敌对",
-        value: NP.times(this.warningStatistic.violencePerct, 100)
-      }];
+      let flag = false;
+      this.pieList = [
+        {
+          name: "抑郁",
+          value: NP.times(this.warningStatistic.depressionPerct, 100),
+          y: NP.times(this.warningStatistic.depressionPerct, 100),
+          num: this.warningStatistic.depressionNum
+            ? this.warningStatistic.depressionNum
+            : 0
+        },
+        {
+          name: "焦虑",
+          value: NP.times(this.warningStatistic.anxietyPerct, 100),
+          y: NP.times(this.warningStatistic.anxietyPerct, 100),
+          num: this.warningStatistic.anxietyNum
+            ? this.warningStatistic.anxietyNum
+            : 0
+        },
+        {
+          name: "强迫",
+          value: NP.times(this.warningStatistic.forcePerct, 100),
+          y: NP.times(this.warningStatistic.forcePerct, 100),
+          num: this.warningStatistic.forceNum
+            ? this.warningStatistic.forceNum
+            : 0
+        },
+        {
+          name: "自我伤害",
+          value: NP.times(this.warningStatistic.suicidePerct, 100),
+          y: NP.times(this.warningStatistic.suicidePerct, 100),
+          num: this.warningStatistic.suicideNum
+            ? this.warningStatistic.suicideNum
+            : 0
+        },
+        {
+          name: "敌对",
+          value: NP.times(this.warningStatistic.violencePerct, 100),
+          y: NP.times(this.warningStatistic.violencePerct, 100),
+          num: this.warningStatistic.violenceNum
+            ? this.warningStatistic.violenceNum
+            : 0
+        }
+      ];
+      // this.dataList = [
+      //   { name: "测试1:", y: 6.3, color: "#388D60" },
+      //   { name: "测试2:", y: 2.3, color: "#BEB84C" },
+      //   { name: "测试3:", y: 2.3, color: "#3A55B0" },
+      //   { name: "测试4:", y: 9.3, color: "#7B40A5" },
+      //   { name: "测试5:", y: 0.0, color: "#B76B3D" }
+      // ]
+      // this.option = {
+      //   chart: {
+      //     type: "pie", // 饼图
+      //     options3d: {
+      //       enabled: true, // 使用3d功能
+      //       alpha: 70, // 延y轴向内的倾斜角度
+      //       beta: 0
+      //     },
+      //     backgroundColor: "rgba(0, 0, 0, 0)", // 不显示背景色
+      //     width: 520,
+      //     height: 220 // 设置大小是为了饼图能在想要的区域中显示
+      //   },
+      //   legend: {
+      //     bottom: "0%",
+      //     itemStyle: {
+      //       // 图例文字的样式
+      //       color: "#999",
+      //       fontSize: 10
+      //     },
+      //     left: "center",
+      //     itemWidth: 100,
+      //     // doesn't perfectly work with our tricks, disable it
+      //     selectedMode: false,
+      //     data: this.dataList.map((item, index) => {
+      //       item.icon = "circle";
+      //       return item;
+      //     })
+      //   },
+      //   title: {
+      //     text: "" // 图表的标题文字
+      //   },
+      //   subtitle: {
+      //     text: "" // 副标题文字
+      //   },
+      //   plotOptions: {
+      //     pie: {
+      //       allowPointSelect: true, // 每个扇块能否选中
+      //       cursor: "pointer", // 鼠标指针
+      //       size: 150,
+      //       showInLegend: true, // 是否显示图例
+      //       depth: 35, // 饼图的厚度
+      //       dataLabels: {
+      //         enabled: true, // 是否显示饼图的线形tip
+      //         distance: 30, // 设置引导线的长度
+      //         color: "#999", // 全局设置字体颜色
+      //         style: {
+      //           textOutline: "none", // 去掉文字白边
+      //           fontSize: "12"
+      //         },
+      //         formatter: function () {
+      //           return this.point.name + this.y + "%";
+      //         }
+      //       }
+      //     }
+      //   },
+      //   credits: {
+      //     enabled: false // 禁用版权url    此处不设置
+      //   },
+      //   series: [
+      //     {
+      //       type: "pie",
+      //       name: "", // 统一的前置词,非必须
+      //       data: this.dataList,
+      //       startAngle: 0, // 调整饼图的角度   方向：顺时针
+      //       label: {
+      //         show: true,
+      //         position: "outside",
+      //         formatter: "{b}：{d}%",
+      //         normal: {
+      //           show: true,
+      //           fontSize: 14,
+      //           formatter: ["  {a|{b}：{d}%}"].join("\n"), // 用\n来换行
+      //           rich: {
+      //             a: {
+      //               left: 20,
+      //               padding: [0, -140, 0, -180] // 位置按需要调整
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   ]
+      // }
+      // this.option.series[0].data.forEach((item, index) => {
+      //   item.name = this.dataList[index].name;
+      //   item.y = this.dataList[index].y;
+      // });
+      // Highcharts.chart("myChartPie", this.option);
+
+      // 可以用
+      // this.dataList = this.pieList;
+      // let quantity = 0; // 总数
+      // console.log(this.dataList)
+      // this.dataList.forEach(item => {
+      //   quantity += item.y;
+      // });
+      // this.dataList.forEach(item => {
+      //   item.bfb = parseInt((item.y / quantity) * 100);
+      //   item.h = item.bfb * 1.5 >= 70 ? 70 : item.bfb * 1.5;
+      //   // item.h = parseInt(0.86 * item.bfb); // 最高高度60，根据比例渲染高度
+      //   // console.log(this.dataList, "dataList----->>>");
+      // });
+      // console.log(this.dataList)
+      // // 修改3d饼图绘制过程
+      // var each = highcharts.each;
+      // var round = Math.round;
+      // var cos = Math.cos;
+      // var sin = Math.sin;
+      // var deg2rad = Math.deg2rad;
+      // highcharts.wrap(
+      //   highcharts.seriesTypes.pie.prototype,
+      //   "translate",
+      //   function(proceed) {
+      //     proceed.apply(this, [].slice.call(arguments, 1));
+      //     // Do not do this if the chart is not 3D
+      //     console.log(this.chart)
+      //     if (!this.chart.is3d()) {
+      //       return;
+      //     }
+      //     var series = this;
+      //     var chart = series.chart;
+      //     var options = chart.options;
+      //     var seriesOptions = series.options;
+      //     var depth = seriesOptions.depth || 0;
+      //     var options3d = options.chart.options3d;
+      //     var alpha = options3d.alpha;
+      //     var beta = options3d.beta;
+      //     var z = seriesOptions.stacking
+      //       ? (seriesOptions.stack || 0) * depth
+      //       : series._i * depth;
+      //     z += depth / 2;
+      //     if (seriesOptions.grouping !== false) {
+      //       z = 0;
+      //     }
+      //     each(series.data, function(point) {
+      //       var shapeArgs = point.shapeArgs;
+      //       var angle;
+      //       point.shapeType = "arc3d";
+      //       var ran = point.options.h;
+      //       shapeArgs.z = z;
+      //       shapeArgs.depth = depth * 0.75 + ran;
+      //       shapeArgs.alpha = alpha;
+      //       shapeArgs.beta = beta;
+      //       shapeArgs.center = series.center;
+      //       shapeArgs.ran = ran;
+      //       angle = (shapeArgs.end + shapeArgs.start) / 2;
+      //       point.slicedTranslation = {
+      //         translateX: round(
+      //           cos(angle) * seriesOptions.slicedOffset * cos(alpha * deg2rad)
+      //         ),
+      //         translateY: round(
+      //           sin(angle) * seriesOptions.slicedOffset * cos(alpha * deg2rad)
+      //         )
+      //       };
+      //     });
+      //   }
+      // );
+      // (function(H) {
+      //   H.wrap(highcharts.SVGRenderer.prototype, "arc3dPath", function(
+      //     proceed
+      //   ) {
+      //     // Run original proceed method
+      //     var ret = proceed.apply(this, [].slice.call(arguments, 1));
+      //     ret.zTop = (ret.zOut + 0.5) / 100;
+      //     return ret;
+      //   });
+      // })(highcharts);
+      // highcharts.chart('myChartPie', {
+      //   chart: {
+      //     animation: false,
+      //     backgroundColor: "none",
+      //     type: "pie", // 饼图
+      //     margin: [0, 0, 0, 0],
+      //     options3d: {
+      //       enabled: true, // 使用3d功能
+      //       alpha: 58, // 延y轴向内的倾斜角度
+      //       beta: 0
+      //     },
+      //     events: {
+      //       load: function() {
+      //         var each = highcharts.each;
+      //         var points = this.series[0].points;
+      //         each(points, function(p, i) {
+      //           p.graphic.attr({
+      //             translateY: -p.shapeArgs.ran
+      //           });
+      //           p.graphic.side1.attr({
+      //             translateY: -p.shapeArgs.ran
+      //           });
+      //           p.graphic.side2.attr({
+      //             translateY: -p.shapeArgs.ran
+      //           });
+      //         });
+      //       }
+      //     }
+      //   },
+      //   legend: {
+      //     enabled: false // 关闭图例
+      //     // align: "center", // 水平方向位置
+      //     // verticalAlign: "center", // 垂直方向位置
+      //     // layout: "vertical",
+      //     // x: that.fontChart(0),
+      //     // y: that.fontChart(30),
+      //     // symbolWidth: that.fontChart(10),
+      //     // symbolHeight: that.fontChart(10),
+      //     // symbolRadius: "50%", // 修改成圆
+      //     // itemMarginBottom: that.fontChart(8),
+      //     // labelFormat: "{name}&nbsp;&nbsp;&nbsp;&nbsp;{y}",
+      //     // itemStyle: {
+      //     //   color: "#f4f4f6",
+      //     //   fontSize: that.fontChart(12)
+      //     // }
+      //   },
+      //   title: {
+      //     // enabled: false,
+      //     text: ""
+      //   },
+      //   subtitle: {
+      //     text: ""
+      //   },
+      //   plotOptions: {
+      //     pie: {
+      //       // allowPointSelect: true, // 每个扇块能否选中
+      //       // cursor: "pointer", // 鼠标指针
+      //       // size: 150,
+      //       // showInLegend: true, // 是否显示图例
+      //       // depth: 35, // 饼图的厚度
+      //       // dataLabels: {
+      //       //   enabled: true, // 是否显示饼图的线形tip
+      //       //   distance: 30, // 设置引导线的长度
+      //       //   color: "#999", // 全局设置字体颜色
+      //       //   style: {
+      //       //     textOutline: "none", // 去掉文字白边
+      //       //     fontSize: "12"
+      //       //   },
+      //       //   formatter: function () {
+      //       //     return this.point.name + this.y + "%";
+      //       //   }
+      //       // },
+      //       allowPointSelect: false, // 禁用点击
+      //       cursor: "pointer",
+      //       depth: that.fontChart(45),
+      //       showInLegend: true,
+      //       size: "100%", // 外圈直径大小
+      //       innerSize: that.fontChart(95), // 内圈直径大小
+      //       center: ["50%", "60%"],
+      //       colors: [
+      //         "rgba(157, 88, 32, .9)",
+      //         "rgba(169, 199, 62, .9)",
+      //         "rgba(11, 146, 89, .9)",
+      //         "rgba(16, 138, 174, .9)",
+      //         "rgba(0, 77, 161, .9)",
+      //         "rgba(60, 32, 173, .9)"
+      //       ],
+      //       dataLabels: {
+      //         enabled: true, // 是否显示饼图的线形tip
+      //         distance: that.fontChart(30),
+      //         align: "center",
+      //         position: "center",
+      //         // format: "{point.bfb}%",
+      //         // formatter: (point,b) => {
+      //         //   console.log(point,'ponit-->>')
+      //         //   console.log(b,'ponit-->>')
+      //         // },
+      //         style: {
+      //           fontSize: that.fontChart(13)
+      //         },
+      //         formatter: function () {
+      //           return this.point.name + this.y + "%";
+      //         }
+      //       }
+      //     }
+      //   },
+      //   credits: {
+      //     enabled: false // 禁用版权信息
+      //   },
+      //   series: [
+      //     {
+      //       type: "pie",
+      //       name: "",
+      //       data: that.dataList
+      //     }
+      //   ]
+      // });
       if (this.pieList[0].value === 0 &&
       this.pieList[1].value === 0 &&
       this.pieList[2].value === 0 &&
@@ -2300,7 +3196,8 @@ export default {
         }
       })
       this.myChartPie = echarts.init(this.$refs.myChartPie);
-      this.pieOption = getPie3D(this.pieList, 2, 300, 45, 20, 1, this.participationNum)
+      console.log(this.pieList)
+      this.pieOption = getPie3D(this.pieList, 2, 300, 45, 20, 1, -1)
       this.myChartPie.setOption(this.pieOption);
       // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
       let pieList1 = JSON.parse(JSON.stringify(this.pieList))
@@ -2322,22 +3219,21 @@ export default {
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
         radius: flag ? ['0%', '60%'] : ['60%', '60%'],
-        center: ['50%', '55%'],
+        center: ['50%', '60%'],
         data: pieList1,
         itemStyle: {
           color: "transparent",
-          opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
+          opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
         }
       })
       this.myChartPie.setOption(this.pieOption)
       this.bindListen(this.myChartPie, 'pieOption')
       // this.bindListen(this.myChartPieCrl, 'crlOption')
-      // let optionPie = this.getPie3D(pieList, '');
-      // this.myChartPie.setOption(optionPie);
-
+      // // let optionPie = this.getPie3D(pieList, '');
+      // // this.myChartPie.setOption(optionPie);
 
       // 绘制立体环饼图1
-      let crlFlag = false
+      let crlFlag = false;
       this.crlList = [
         {
           name: "30岁以下",
@@ -2356,17 +3252,19 @@ export default {
           value: NP.times(this.ageGenderStatistic.aboveFiftyPerct, 100)
         }
       ];
-      if (this.crlList[0].value === 0 &&
-      this.crlList[1].value === 0 &&
-      this.crlList[2].value === 0 &&
-      this.crlList[3].value === 0) {
-        crlFlag = true
+      if (
+        this.crlList[0].value === 0 &&
+        this.crlList[1].value === 0 &&
+        this.crlList[2].value === 0 &&
+        this.crlList[3].value === 0
+      ) {
+        crlFlag = true;
       }
       this.crlList.forEach((item, index) => {
         item.itemStyle = {
           opacity: 1,
           color: crlColor[index]
-        }
+        };
         item.tooltip = {
           formatter: params => {
             if (params.seriesName !== "mouseoutSeries") {
@@ -2374,37 +3272,33 @@ export default {
                 params.seriesName
               }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                 params.color
-              };"></span>${
-                params.series[params.seriesIndex].pieData.value
-              }`;
+              };"></span>${params.series[params.seriesIndex].pieData.value}`;
             }
           }
-        }
+        };
         item.label = {
           normal: {
             show: true,
             lineHeight: nowSize(20),
             color: crlColor[index],
-            overflow: 'none',
-            formatter: [
-              '{b|{b}：}\n{d|{d}%}'
-            ].join('\n'), // 用\n来换行
+            overflow: "none",
+            formatter: ["{b|{b}：}\n{d|{d}%}"].join("\n"), // 用\n来换行
             rich: {
               b: {
                 fontSize: nowSize(12),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 400,
-                color: '#fff',
+                color: "#fff",
                 lineHeight: nowSize(14),
-                align: 'left'
+                align: "left"
               },
               d: {
                 fontSize: nowSize(12),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 600,
                 lineHeight: nowSize(14),
                 color: crlColor[index],
-                align: 'left'
+                align: "left"
               },
               hr: {
                 backgroundColor: crlColor[index],
@@ -2414,7 +3308,7 @@ export default {
               }
             }
           }
-        }
+        };
         item.labelLine = {
           normal: {
             length: nowSize(25),
@@ -2427,24 +3321,32 @@ export default {
               color: crlColor[index]
             }
           }
-        }
-      })
+        };
+      });
 
       this.myChartPieCrl = echarts.init(this.$refs.myChartPieCrl);
-      this.crlOption = getPie3D(this.crlList, 0.75, 260, 30, 20, 1, this.participationNum)
+      this.crlOption = getPie3D(
+        this.crlList,
+        0.75,
+        260,
+        30,
+        20,
+        1,
+        this.participationNum
+      );
       this.myChartPieCrl.setOption(this.crlOption);
       // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
-      let crlList1 = JSON.parse(JSON.stringify(this.crlList))
+      let crlList1 = JSON.parse(JSON.stringify(this.crlList));
       if (!crlFlag) {
         for (let i in crlList1) {
-          crlList1[i].itemStyle.color = "transparent"
+          crlList1[i].itemStyle.color = "transparent";
         }
       }
       this.crlOption.series.push({
-        name: '预警', // 自己根据场景修改
-        backgroundColor: 'transparent',
-        color: 'transparent',
-        type: 'pie',
+        name: "预警", // 自己根据场景修改
+        backgroundColor: "transparent",
+        color: "transparent",
+        type: "pie",
         label: {
           opacity: 1,
           fontSize: nowSize(14),
@@ -2458,19 +3360,19 @@ export default {
         },
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: crlFlag ? ['0%', '38%'] : ['38%', '38%'],
-        center: ['50%', '60%'],
+        radius: crlFlag ? ["0%", "38%"] : ["38%", "38%"],
+        center: ["50%", "60%"],
         data: crlList1,
         itemStyle: {
           color: "transparent",
           opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
         }
-      })
-      this.myChartPieCrl.setOption(this.crlOption)
-      this.bindListen(this.myChartPieCrl, 'crlOption')
+      });
+      this.myChartPieCrl.setOption(this.crlOption);
+      this.bindListen(this.myChartPieCrl, "crlOption");
 
       // 绘制立体环饼图2
-      let sexFlag = false
+      let sexFlag = false;
       this.sexList = [
         {
           name: "男性",
@@ -2483,15 +3385,14 @@ export default {
           // value: 0
         }
       ];
-      if (this.sexList[0].value === 0 &&
-      this.sexList[1].value === 0) {
-        sexFlag = true
+      if (this.sexList[0].value === 0 && this.sexList[1].value === 0) {
+        sexFlag = true;
       }
       this.sexList.forEach((item, index) => {
         item.itemStyle = {
           opacity: 1,
           color: sexColor[index]
-        }
+        };
         item.tooltip = {
           formatter: params => {
             // console.log(params)
@@ -2500,18 +3401,18 @@ export default {
                 params.seriesName
               }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                 params.color
-              };"></span>${
-                params.series[params.seriesIndex].pieData.value / 100 * this.participationNum
-              }`;
+              };"></span>${(params.series[params.seriesIndex].pieData.value /
+                100) *
+                this.participationNum}`;
             }
           }
-        }
+        };
         item.label = {
           normal: {
             show: true,
             // lineHeight: nowSize(18),
             color: sexColor[index],
-            overflow: 'none',
+            overflow: "none",
             // formatter: function(obj) {
             //   // var value = obj.value;
             //   console.log(obj);
@@ -2522,9 +3423,7 @@ export default {
             //   );
             // },
             // formatter: '{b|{b}：}{c}{hr|}  {per|{d}%}', // 用\n来换行
-            formatter: [
-              '{b|{b}：}{d|{d}%}'
-            ].join('\n'), // 用\n来换行
+            formatter: ["{b|{b}：}{d|{d}%}"].join("\n"), // 用\n来换行
             // formatter: function(params) {
             //   console.log(params)
             //   // str = params.data.flag+ params.name+params.percent
@@ -2533,30 +3432,30 @@ export default {
             rich: {
               b: {
                 fontSize: nowSize(12),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 400,
-                color: '#fff',
+                color: "#fff",
                 lineHeight: nowSize(18),
-                align: 'left'
+                align: "left"
               },
               c: {
                 // width: '100%',
                 fontSize: nowSize(14),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 600,
                 color: sexColor[index],
                 // color: '#fff',
                 lineHeight: nowSize(18),
-                align: 'left'
+                align: "left"
               },
               d: {
                 fontSize: nowSize(12),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 600,
                 color: sexColor[index],
                 padding: [0, 0, 0, -nowSize(4)],
                 lineHeight: nowSize(18),
-                align: 'left'
+                align: "left"
               },
               hr: {
                 backgroundColor: sexColor[index],
@@ -2571,13 +3470,13 @@ export default {
               //   height: 0
               // },
               per: {
-                color: 'transparent',
-                backgroundColor: '#f00',
+                color: "transparent",
+                backgroundColor: "#f00",
                 width: nowSize(6)
               }
             }
           }
-        }
+        };
         item.labelLine = {
           normal: {
             length: nowSize(20),
@@ -2590,24 +3489,32 @@ export default {
               color: sexColor[index]
             }
           }
-        }
-      })
+        };
+      });
 
       this.myChartPieSex = echarts.init(this.$refs.myChartPieSex);
-      this.sexOption = getPie3D(this.sexList, 0.75, 260, 30, 20, 1, this.participationNum)
+      this.sexOption = getPie3D(
+        this.sexList,
+        0.75,
+        260,
+        30,
+        20,
+        1,
+        this.participationNum
+      );
       this.myChartPieSex.setOption(this.sexOption);
-      let sexList1 = JSON.parse(JSON.stringify(this.sexList))
+      let sexList1 = JSON.parse(JSON.stringify(this.sexList));
       if (!sexFlag) {
         for (let i in sexList1) {
-          sexList1[i].itemStyle.color = "transparent"
+          sexList1[i].itemStyle.color = "transparent";
         }
       }
-      
+
       this.sexOption.series.push({
-        name: '预警', // 自己根据场景修改
-        backgroundColor: 'transparent',
-        color: 'transparent',
-        type: 'pie',
+        name: "预警", // 自己根据场景修改
+        backgroundColor: "transparent",
+        color: "transparent",
+        type: "pie",
         label: {
           opacity: 1,
           fontSize: nowSize(13),
@@ -2615,38 +3522,38 @@ export default {
         },
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: sexFlag ? ['0%', '38%'] : ['38%', '38%'],
-        center: ['50%', '60%'],
+        radius: sexFlag ? ["0%", "38%"] : ["38%", "38%"],
+        center: ["50%", "60%"],
         data: sexList1,
         itemStyle: {
           color: "transparent",
           opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
         }
-      })
-      this.myChartPieSex.setOption(this.sexOption)
-      this.bindListen(this.myChartPieSex, 'sexOption')
+      });
+      this.myChartPieSex.setOption(this.sexOption);
+      this.bindListen(this.myChartPieSex, "sexOption");
     }
   }
 };
 </script>
 <style lang="less">
-.el-tooltip__popper.is-light{
+.el-tooltip__popper.is-light {
   background: rgba(5, 16, 62, 1);
   border: 0.01rem solid rgba(138, 184, 255, 1);
   color: #fff;
-  .top_title{
-    font-size: 0.20rem;
+  .top_title {
+    font-size: 0.2rem;
     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 0.06rem 0 0.12rem;
   }
-  .c_pies{
+  .c_pies {
     display: flex;
     font-size: 0.16rem;
     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     align-items: center;
     padding: 0 0 0.06rem 0;
     .c_pie_th {
@@ -2657,42 +3564,54 @@ export default {
       margin-right: 0.08rem;
     }
     .c_thq11 {
-      background: linear-gradient(270deg, #66FFFF 0%, #0077FF 100%);
+      background: linear-gradient(270deg, #66ffff 0%, #0077ff 100%);
     }
     .c_thq12 {
-      background: linear-gradient(180deg, #FEDB65 0%, #FFBE44 100%);
+      background: linear-gradient(180deg, #fedb65 0%, #ffbe44 100%);
     }
     .c_thq1 {
-      background: linear-gradient(
-        270deg,
-        #66ffff 0%,
-        #0077ff 100%
-      );
+      background: linear-gradient(270deg, #66ffff 0%, #54a4ff 100%);
     }
     .c_thq2 {
-      background: linear-gradient(
-        270deg,
-        #ffffff 0%,
-        #53ff6d 100%
-      );
+      background: linear-gradient(270deg, #3c97ff 0%, #6787fa 100%);
     }
     .c_thq3 {
-      background: linear-gradient(
-        180deg,
-        #fedb65 0%,
-        #ffbe44 100%
-      );
+      background: linear-gradient(270deg, #a181ff 0%, #7e5dff 100%);
     }
     .c_thq4 {
-      background: linear-gradient(
-        270deg,
-        #dcb6ff 0%,
-        #b973ff 100%
-      );
+      background: linear-gradient(180deg, #fedb65 0%, #ffbe44 100%);
     }
+    // .c_thq1 {
+    //   background: linear-gradient(
+    //     270deg,
+    //     #66ffff 0%,
+    //     #0077ff 100%
+    //   );
+    // }
+    // .c_thq2 {
+    //   background: linear-gradient(
+    //     270deg,
+    //     #ffffff 0%,
+    //     #53ff6d 100%
+    //   );
+    // }
+    // .c_thq3 {
+    //   background: linear-gradient(
+    //     180deg,
+    //     #fedb65 0%,
+    //     #ffbe44 100%
+    //   );
+    // }
+    // .c_thq4 {
+    //   background: linear-gradient(
+    //     270deg,
+    //     #dcb6ff 0%,
+    //     #b973ff 100%
+    //   );
+    // }
   }
 }
-.el-tooltip__popper .popper__arrow{
+.el-tooltip__popper .popper__arrow {
   border-width: 0;
   opacity: 0;
   // border-color: rgba(151, 205, 255, 0.3);
@@ -2833,7 +3752,7 @@ export default {
           height: 6.34rem;
           margin-bottom: 0.2rem;
           position: relative;
-          .lib_boxz{
+          .lib_boxz {
             position: absolute;
             margin: auto;
             top: 0;
@@ -2846,7 +3765,6 @@ export default {
             height: 9.26rem;
             z-index: -1;
             .lib_b_lizi {
-
               width: 9.98rem;
               height: 9.26rem;
               // position: absolute;
@@ -2899,7 +3817,7 @@ export default {
               }
             }
           }
-          
+
           // @keyframes sizeAnimation {
           //   0% { background-position: 0 200%; opacity: 0.2;}
           //   15% { background-position: 0 140%; opacity: 1;}
@@ -2975,7 +3893,7 @@ export default {
           }
           @keyframes cir {
             0% {
-              transform: translate(0, 0)
+              transform: translate(0, 0);
               // opacity: 1;
               // scale: 1;
               // height: 4.57rem;
@@ -2983,7 +3901,7 @@ export default {
               // bottom: 0.32rem;
             }
             25% {
-              transform: translate(0, 0.18rem)
+              transform: translate(0, 0.18rem);
               // opacity: 0.9;
               // scale: 1;
               // // height: 4.87rem;
@@ -2991,7 +3909,7 @@ export default {
               // bottom: 0.52rem;
             }
             50% {
-              transform: translate(0, 0)
+              transform: translate(0, 0);
               // opacity: 1;
               // scale: 1;
               // // height: 4.57rem;
@@ -2999,7 +3917,7 @@ export default {
               // bottom: 0.32rem;
             }
             75% {
-              transform: translate(0, -0.18rem)
+              transform: translate(0, -0.18rem);
               // opacity: 0.9;
               // scale: 1;
               // // height: 4.27rem;
@@ -3007,7 +3925,7 @@ export default {
               // bottom: 0.12rem;
             }
             100% {
-              transform: translate(0, 0)
+              transform: translate(0, 0);
               // opacity: 1;
               // scale: 1;
               // height: 4.57rem;
@@ -3367,28 +4285,28 @@ export default {
                       background: linear-gradient(
                         270deg,
                         #66ffff 0%,
-                        #0077ff 100%
+                        #54a4ff 100%
                       );
                     }
                     .c_thq2 {
                       background: linear-gradient(
                         270deg,
-                        #ffffff 0%,
-                        #53ff6d 100%
+                        #3c97ff 0%,
+                        #6787fa 100%
                       );
                     }
                     .c_thq3 {
                       background: linear-gradient(
-                        180deg,
-                        #fedb65 0%,
-                        #ffbe44 100%
+                        270deg,
+                        #a181ff 0%,
+                        #7e5dff 100%
                       );
                     }
                     .c_thq4 {
                       background: linear-gradient(
-                        270deg,
-                        #dcb6ff 0%,
-                        #b973ff 100%
+                        180deg,
+                        #fedb65 0%,
+                        #ffbe44 100%
                       );
                     }
                   }
@@ -3401,7 +4319,7 @@ export default {
               }
               .myChartPie {
                 width: 100%;
-                height: 2.6rem;
+                height: 2.5rem;
                 // background: #ffffff;
               }
               .myChartPieCrl {
@@ -3474,6 +4392,83 @@ export default {
                   margin-top: 0.16rem;
                 }
               }
+
+              .wddw0 {
+                position: absolute;
+                bottom: 0.97rem;
+                left: 1.76rem;
+              }
+              .wddw1 {
+                position: absolute;
+                bottom: 1.69rem;
+                left: 2.42rem;
+              }
+              .wddw2 {
+                position: absolute;
+                bottom: 0.62rem;
+                left: 2.03rem;
+              }
+              .wddw3 {
+                position: absolute;
+                bottom: 0.94rem;
+                right: 0.2rem;
+              }
+              .wddw4 {
+                position: absolute;
+                bottom: 1.8rem;
+                right: 0.7rem;
+              }
+              .wddw5 {
+                position: absolute;
+                bottom: 1.48rem;
+                right: 0.31rem;
+              }
+              .wddw6 {
+                position: absolute;
+                bottom: 0.2rem;
+                left: 0.2rem;
+              }
+              .wddw7 {
+                position: absolute;
+                bottom: 0.65rem;
+                left: 0.56rem;
+              }
+              .wddw8 {
+                position: absolute;
+                bottom: 1.14rem;
+                left: 0.74rem;
+              }
+              .wddw9 {
+                position: absolute;
+                bottom: 1.41rem;
+                left: 0.56rem;
+              }
+              .wddw10 {
+                position: absolute;
+                bottom: 1.82rem;
+                left: 0.2rem;
+              }
+              .wddw11 {
+                position: absolute;
+                bottom: 1.82rem;
+                left: 1.5rem;
+              }
+              .wddw12 {
+                position: absolute;
+                bottom: 0.21rem;
+                left: 3.1rem;
+              }
+              .wddw13 {
+                position: absolute;
+                bottom: 0.31rem;
+                right: 0.4rem;
+              }
+              .wddw14 {
+                position: absolute;
+                bottom: 0.7rem;
+                left: 4.01rem;
+              }
+
               .yy_qxdl {
                 position: absolute;
                 top: 1.28rem;
@@ -3554,24 +4549,28 @@ export default {
               }
 
               .level_bg1 {
-                background: url("../../assets/images/heart/level1.png")
-                  no-repeat center;
-                background-size: cover;
+                color: rgba(92, 212, 247, 1);
+                // background: url("../../assets/images/heart/level1.png")
+                //   no-repeat center;
+                // background-size: cover;
               }
               .level_bg2 {
-                background: url("../../assets/images/heart/level2.png")
-                  no-repeat center;
-                background-size: cover;
+                color: rgba(63, 106, 255, 1);
+                // background: url("../../assets/images/heart/level2.png")
+                //   no-repeat center;
+                // background-size: cover;
               }
               .level_bg3 {
-                background: url("../../assets/images/heart/level3.png")
-                  no-repeat center;
-                background-size: cover;
+                color: rgba(156, 113, 255, 1);
+                // background: url("../../assets/images/heart/level3.png")
+                //   no-repeat center;
+                // background-size: cover;
               }
               .level_bg4 {
-                background: url("../../assets/images/heart/level4.png")
-                  no-repeat center;
-                background-size: cover;
+                color: rgba(255, 212, 105, 1);
+                // background: url("../../assets/images/heart/level4.png")
+                //   no-repeat center;
+                // background-size: cover;
               }
             }
             .hvml_person {
