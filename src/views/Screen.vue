@@ -84,9 +84,13 @@ export default {
     // this.getCode();
   },
   created() {
-    this.sceneId = "AIMW-G";
-    this.initMqtt(this.sceneId);
-    console.log("AIMW");
+    if (localStorage.getItem("mqttTopic") && localStorage.getItem("mqttTopic") != 'undefined') {
+      this.sceneId = localStorage.getItem("mqttTopic");
+      this.initMqtt(this.sceneId);
+    } else {
+      console.log("缺少mqttTopic")
+    }
+    console.log(this.sceneId);
   },
   destroyed() {
     console.log("销毁");
@@ -121,6 +125,7 @@ export default {
         localStorage.removeItem("userAuth");
         localStorage.removeItem("passport");
         localStorage.removeItem("userType");
+        localStorage.removeItem("mqttTopic");
         this.$router.replace({
           path: "/login"
         });
@@ -208,8 +213,24 @@ export default {
     //     }, () => {}, () => {});
     //   }
     // },
+    generateUUID() {
+      var d = new Date().getTime();
+      if (window.performance && typeof window.performance.now === "function") {
+        d += performance.now();
+      }
+      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function(c) {
+          var r = (d + Math.random() * 16) % 16 | 0;
+          d = Math.floor(d / 16);
+          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      );
+      return uuid;
+    },
     // 初始化mqtt
     initMqtt(seceneId) {
+      // console.log(this.generateUUID())
       console.log(seceneId);
       const _this = this;
       // 建立连接，需要搭建消息中间件服务器的（我这里是后台）提供用户名或密码
@@ -224,7 +245,7 @@ export default {
           "AIMW-G_" +
           Math.random()
             .toString(16)
-            .substring(2, 8),
+            .substring(2, 15),
         connectTimeout: 4000
       };
       // 在data中定义MQTT,以便断开连接
