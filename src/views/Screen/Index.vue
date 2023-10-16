@@ -168,6 +168,7 @@
                       items.value > 49 && items.value < 100 ? 'level_bg3' : '',
                       items.value > 99 ? 'level_bg4' : ''
                     ]"
+                    style="cursor: pointer"
                   >
                     <div
                       :style="{
@@ -1434,6 +1435,9 @@ export default {
         that.screenWidth = window.screenWidth;
       })();
     };
+
+    document.removeEventListener('touchstart', this.hideTip);
+    document.addEventListener('touchstart', this.hideTip);
     // this.echartInit();
     // 二进制转成数组
     // 5
@@ -1790,24 +1794,24 @@ export default {
                 frame: "qxdl",
                 type: "1",
                 typeName: "抑郁",
-                // value: info.warningFactor.qxdl
-                value: 15
+                value: info.warningFactor.qxdl
+                // value: 15
               },
               {
                 name: "思维迟缓",
                 frame: "swch",
                 type: "1",
                 typeName: "抑郁",
-                // value: info.warningFactor.swch
-                value: 14
+                value: info.warningFactor.swch
+                // value: 14
               },
               {
                 name: "精力缺乏",
                 frame: "jlqf",
                 type: "1",
                 typeName: "抑郁",
-                // value: info.warningFactor.jlqf
-                value: 13
+                value: info.warningFactor.jlqf
+                // value: 13
               },
 
               {
@@ -1815,24 +1819,24 @@ export default {
                 frame: "xjyq",
                 type: "2",
                 typeName: "焦虑",
-                // value: info.warningFactor.xjyq
-                value: 12
+                value: info.warningFactor.xjyq
+                // value: 12
               },
               {
                 name: "易激怒",
                 frame: "yjr",
                 type: "2",
                 typeName: "焦虑",
-                // value: info.warningFactor.yjr
-                value: 11
+                value: info.warningFactor.yjr
+                // value: 11
               },
               {
                 name: "惶恐不安",
                 frame: "hkba",
                 type: "2",
                 typeName: "焦虑",
-                // value: info.warningFactor.hkba
-                value: 10
+                value: info.warningFactor.hkba
+                // value: 10
               },
 
               {
@@ -1840,24 +1844,24 @@ export default {
                 frame: "qpxw",
                 type: "3",
                 typeName: "强迫",
-                // value: info.warningFactor.qpxw
-                value: 9
+                value: info.warningFactor.qpxw
+                // value: 9
               },
               {
                 name: "强迫思维",
                 frame: "qpsw",
                 type: "3",
                 typeName: "强迫",
-                // value: info.warningFactor.qpsw
-                value: 8
+                value: info.warningFactor.qpsw
+                // value: 8
               },
               {
                 name: "对抗强迫",
                 frame: "dkqp",
                 type: "3",
                 typeName: "强迫",
-                // value: info.warningFactor.dkqp
-                value: 700
+                value: info.warningFactor.dkqp
+                // value: 700
               },
 
               {
@@ -1865,24 +1869,24 @@ export default {
                 frame: "rjgd",
                 type: "4",
                 typeName: "自我伤害",
-                // value: info.warningFactor.rjgd
-                value: 600
+                value: info.warningFactor.rjgd
+                // value: 600
               },
               {
                 name: "抑郁程度",
                 frame: "yycd",
                 type: "4",
                 typeName: "自我伤害",
-                // value: info.warningFactor.yycd
-                value: 88
+                value: info.warningFactor.yycd
+                // value: 88
               },
               {
                 name: "创伤经历",
                 frame: "csjl",
                 type: "4",
                 typeName: "自我伤害",
-                // value: info.warningFactor.csjl
-                value: 55
+                value: info.warningFactor.csjl
+                // value: 55
               },
 
               {
@@ -1890,24 +1894,24 @@ export default {
                 frame: "cdx",
                 type: "5",
                 typeName: "敌对",
-                // value: info.warningFactor.cdx
-                value: 333
+                value: info.warningFactor.cdx
+                // value: 333
               },
               {
                 name: "无规则感",
                 frame: "wgzg",
                 type: "5",
                 typeName: "敌对",
-                // value: info.warningFactor.wgzg
-                value: 23
+                value: info.warningFactor.wgzg
+                // value: 23
               },
               {
                 name: "敌意",
                 frame: "dy",
                 type: "5",
                 typeName: "敌对",
-                // value: info.warningFactor.dy
-                value: 12
+                value: info.warningFactor.dy
+                // value: 12
               }
             ];
             yinList.sort((a, b) => {
@@ -2100,50 +2104,37 @@ export default {
     // 监听鼠标事件，实现饼图选中效果（单选），近似实现高亮（放大）效果。
     // optionName是防止有多个图表进行定向option传递，单个图表可以不传，默认是opiton
     bindListen(myChart, optionName) {
-      let selectedIndex = "";
-      let hoveredIndex = "";
+      let that = this;
+      let selectedIndex = '';
+      let hoveredIndex = '';
       console.log(myChart);
       console.log(this[optionName]);
       // 监听点击事件，实现选中效果（单选）
-      // myChart.on('click', (params) => {
+      // myChart.on('click', function (params) {
+      //   console.log(params)
+      //   console.log(that.option)
+      //   console.log(that[optionName])
       //   console.log(params)
       //   // 从 option.series 中读取重新渲染扇形所需的参数，将是否选中取反。
-      //   const isSelected = !this[optionName].series[params.seriesIndex].pieStatus
-      //     .selected
-      //   const isHovered =
-      //     this[optionName].series[params.seriesIndex].pieStatus.hovered
-      //   const k = this[optionName].series[params.seriesIndex].pieStatus.k
-      //   const startRatio =
-      //     this[optionName].series[params.seriesIndex].pieData.startRatio
-      //   const endRatio =
-      //     this[optionName].series[params.seriesIndex].pieData.endRatio
+      //   let isSelected = !that[optionName].series[params.seriesIndex].pieStatus.selected;
+      //   let isHovered = that[optionName].series[params.seriesIndex].pieStatus.hovered;
+      //   let k = that[optionName].series[params.seriesIndex].pieStatus.k;
+      //   let startRatio = that[optionName].series[params.seriesIndex].pieData.startRatio;
+      //   let endRatio = that[optionName].series[params.seriesIndex].pieData.endRatio;
       //   // 如果之前选中过其他扇形，将其取消选中（对 option 更新）
       //   if (selectedIndex !== '' && selectedIndex !== params.seriesIndex) {
-      //     this[optionName].series[selectedIndex].parametricEquation = getParametricEquation(
-      //       this[optionName].series[selectedIndex].pieData.startRatio,
-      //       this[optionName].series[selectedIndex].pieData.endRatio,
-      //       false,
-      //       false,
-      //       k,
-      //       this[optionName].series[selectedIndex].pieData.value
-      //     )
-      //     this[optionName].series[selectedIndex].pieStatus.selected = false
+      //     that[optionName].series[selectedIndex].parametricEquation = that.getParametricEquation(that[optionName].series[selectedIndex].pieData.startRatio, that[optionName].series[selectedIndex].pieData.endRatio, false, false, k, that[optionName].series[selectedIndex].pieData.value);
+      //     that[optionName].series[selectedIndex].pieStatus.selected = false;
       //   }
       //   // 对当前点击的扇形，执行选中/取消选中操作（对 option 更新）
-      //   this[optionName].series[params.seriesIndex].parametricEquation = getParametricEquation(
-      //     startRatio,
-      //     endRatio,
-      //     isSelected,
-      //     isHovered,
-      //     k,
-      //     this[optionName].series[params.seriesIndex].pieData.value
-      //   )
-      //   this[optionName].series[params.seriesIndex].pieStatus.selected = isSelected
+      //   that[optionName].series[params.seriesIndex].parametricEquation = that.getParametricEquation(startRatio, endRatio, isSelected, isHovered, k, that[optionName].series[params.seriesIndex].pieData.value);
+      //   that[optionName].series[params.seriesIndex].pieStatus.selected = isSelected;
       //   // 如果本次是选中操作，记录上次选中的扇形对应的系列号 seriesIndex
-      //   selectedIndex = isSelected ? params.seriesIndex : null
+      //   // eslint-disable-next-line no-unused-expressions
+      //   selectedIndex = isSelected ? params.seriesIndex : null;
       //   // 使用更新后的 option，渲染图表
-      //   myChart.setOption(this[optionName])
-      // })
+      //   myChart.setOption(that[optionName]);
+      // });
       // 监听 mouseover，近似实现高亮（放大）效果
       myChart.on("mouseover", params => {
         // console.log(params)
@@ -2774,6 +2765,41 @@ export default {
       let fontSize = clientWidth / 1920;
       return res * fontSize;
     },
+    hideTip(e) {
+      console.log(e.target.nodeName != 'CANVAS')
+      // 点击事件 是否是 Echarts图
+      if (e.target.nodeName != 'CANVAS') {
+        // getInstanceByDom:获取 dom 容器上的实例
+        this.myChartTrend.dispatchAction({
+          type: 'hideTip'
+        })
+        this.myChartTrend.dispatchAction({
+          type: 'updateAxisPointer',
+          currTrigger: 'leave'
+        })
+        this.myChartPie.dispatchAction({
+          type: 'hideTip'
+        })
+        this.myChartPie.dispatchAction({
+          type: 'updateAxisPointer',
+          currTrigger: 'leave'
+        })
+        this.myChartPieSex.dispatchAction({
+          type: 'hideTip'
+        })
+        this.myChartPieSex.dispatchAction({
+          type: 'updateAxisPointer',
+          currTrigger: 'leave'
+        })
+        this.myChartPieCrl.dispatchAction({
+          type: 'hideTip'
+        })
+        this.myChartPieCrl.dispatchAction({
+          type: 'updateAxisPointer',
+          currTrigger: 'leave'
+        })
+      }
+    },
     echartInit() {
       let that = this;
       console.log(456);
@@ -2785,19 +2811,21 @@ export default {
       };
       // 绘制立体饼图
       let flag = false;
+      console.log(this.warningStatistic.depressionNum)
+      console.log(this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0)
       this.pieList = [
         {
           name: "抑郁",
           value: NP.times(this.warningStatistic.depressionPerct, 100),
           y: NP.times(this.warningStatistic.depressionPerct, 100),
-          num: this.warningStatistic.depressionNum
-            ? this.warningStatistic.depressionNum
-            : 0
+          // y: 50,
+          num: this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0
         },
         {
           name: "焦虑",
           value: NP.times(this.warningStatistic.anxietyPerct, 100),
           y: NP.times(this.warningStatistic.anxietyPerct, 100),
+          // y: 10,
           num: this.warningStatistic.anxietyNum
             ? this.warningStatistic.anxietyNum
             : 0
@@ -2806,6 +2834,7 @@ export default {
           name: "强迫",
           value: NP.times(this.warningStatistic.forcePerct, 100),
           y: NP.times(this.warningStatistic.forcePerct, 100),
+          // y: 20,
           num: this.warningStatistic.forceNum
             ? this.warningStatistic.forceNum
             : 0
@@ -2814,6 +2843,7 @@ export default {
           name: "自我伤害",
           value: NP.times(this.warningStatistic.suicidePerct, 100),
           y: NP.times(this.warningStatistic.suicidePerct, 100),
+          // y: 10,
           num: this.warningStatistic.suicideNum
             ? this.warningStatistic.suicideNum
             : 0
@@ -2822,11 +2852,16 @@ export default {
           name: "敌对",
           value: NP.times(this.warningStatistic.violencePerct, 100),
           y: NP.times(this.warningStatistic.violencePerct, 100),
+          // y: 10,
           num: this.warningStatistic.violenceNum
             ? this.warningStatistic.violenceNum
             : 0
         }
       ];
+      console.log(this.pieList)
+      // this.pieList.sort((a, b) => {
+      //   return a.y - b.y;
+      // });
       // this.dataList = [
       //   { name: "测试1:", y: 6.3, color: "#388D60" },
       //   { name: "测试2:", y: 2.3, color: "#BEB84C" },
@@ -2923,7 +2958,7 @@ export default {
       // });
       // Highcharts.chart("myChartPie", this.option);
 
-      // 可以用
+      // // 可以用
       // this.dataList = this.pieList;
       // let quantity = 0; // 总数
       // console.log(this.dataList)
@@ -2932,8 +2967,8 @@ export default {
       // });
       // this.dataList.forEach(item => {
       //   item.bfb = parseInt((item.y / quantity) * 100);
-      //   item.h = item.bfb * 1.5 >= 70 ? 70 : item.bfb * 1.5;
-      //   // item.h = parseInt(0.86 * item.bfb); // 最高高度60，根据比例渲染高度
+      //   item.h = item.bfb * 0.5 >= 50 ? 50 : item.bfb * 0.5;
+      //   // item.h = parseInt(0.60 * item.bfb); // 最高高度60，根据比例渲染高度
       //   // console.log(this.dataList, "dataList----->>>");
       // });
       // console.log(this.dataList)
@@ -2972,7 +3007,7 @@ export default {
       //       var shapeArgs = point.shapeArgs;
       //       var angle;
       //       point.shapeType = "arc3d";
-      //       var ran = point.options.h;
+      //       var ran = that.fontChart(point.options.h);
       //       shapeArgs.z = z;
       //       shapeArgs.depth = depth * 0.75 + ran;
       //       shapeArgs.alpha = alpha;
@@ -3009,7 +3044,7 @@ export default {
       //     margin: [0, 0, 0, 0],
       //     options3d: {
       //       enabled: true, // 使用3d功能
-      //       alpha: 58, // 延y轴向内的倾斜角度
+      //       alpha: 60, // 延y轴向内的倾斜角度
       //       beta: 0
       //     },
       //     events: {
@@ -3029,6 +3064,29 @@ export default {
       //         });
       //       }
       //     }
+      //   },
+      //   tooltip: {
+      //     // show: false,
+      //     backgroundColor: 'rgb(5, 16, 62)',
+      //     borderColor: 'rgba(138, 184, 255, 1)',
+      //     borderWidth: nowSize(1),
+      //     textStyle: {
+      //       color: '#fff',
+      //       fontSize: 13
+      //     },
+      //     useHTML: true,
+      //     headerFormat: '<small style="color: #ffffff">{point.key}</small><table>',
+      //     pointFormat: '<tr><td ><small style="background: {point.color};width:0.08rem;height:0.08rem;border-radius:50%"></small></td>' +
+      //     '<td style="text-align: left;color: #ffffff">{point.num} {point.y}%</td></tr>',
+      //     footerFormat: '</table>'
+      //     // formatter: function() {
+      //     //   return (
+      //     //     '<span style="margin:-10px;padding:0.1rem;"><span style="display:block;color:#fff;font-size:0.2rem;font-weight:600">' + this.point.name + '</span><br style="line-height:0.2rem"/>' +
+              
+      //     //     `<span style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${this.point.color};"></span>` +
+      //     //     `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${this.point.num}次&nbsp;&nbsp;</span><span style="color:#fff;font-size:0.16rem;">占比${this.point.y}%</span></span></span>`
+      //     //   )
+      //     // }
       //   },
       //   legend: {
       //     enabled: false // 关闭图例
@@ -3077,32 +3135,43 @@ export default {
       //       cursor: "pointer",
       //       depth: that.fontChart(45),
       //       showInLegend: true,
-      //       size: "100%", // 外圈直径大小
-      //       innerSize: that.fontChart(95), // 内圈直径大小
-      //       center: ["50%", "60%"],
-      //       colors: [
-      //         "rgba(157, 88, 32, .9)",
-      //         "rgba(169, 199, 62, .9)",
-      //         "rgba(11, 146, 89, .9)",
-      //         "rgba(16, 138, 174, .9)",
-      //         "rgba(0, 77, 161, .9)",
-      //         "rgba(60, 32, 173, .9)"
-      //       ],
+      //       size: '85%', // 外圈直径大小
+      //       // innerSize: that.fontChart(95), // 内圈直径大小
+      //       center: ["50%", "65%"],
+      //       colors: pieColor,
       //       dataLabels: {
       //         enabled: true, // 是否显示饼图的线形tip
-      //         distance: that.fontChart(30),
+      //         distance: that.fontChart(20),
       //         align: "center",
-      //         position: "center",
+      //         position: "outside",
       //         // format: "{point.bfb}%",
-      //         // formatter: (point,b) => {
-      //         //   console.log(point,'ponit-->>')
-      //         //   console.log(b,'ponit-->>')
+      //         // formatter: (point, b) => {
+      //         //   console.log(point, 'ponit-->>')
+      //         //   console.log(b, 'ponit-->>')
       //         // },
       //         style: {
-      //           fontSize: that.fontChart(13)
+      //           textOutline: "none",
+      //           fontSize: that.fontChart(18),
+      //           padding: -10,
+      //           style: {
+      //             fontWeight: "bold",
+      //             fontSize: "14px",
+      //             color: "#fff",
+      //             textOutline: "1px 1px transparent"
+      //           }
       //         },
       //         formatter: function () {
-      //           return this.point.name + this.y + "%";
+      //           return (
+      //             '<div style="display:flex;margin-top:-0.2rem">' +
+      //             // '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: rgba(160, 208, 255, 1);margin-right:0.04rem"></span>' +
+      //             "<span style='color:#ffffff'>" +
+      //               this.point.name +
+      //             "：</span>" +
+      //             "<span style='color:#ffffff'>" +
+      //               this.y +
+      //             "%</span>" +
+      //             "</div>"
+      //           )
       //         }
       //       }
       //     }
@@ -3114,6 +3183,7 @@ export default {
       //     {
       //       type: "pie",
       //       name: "",
+      //       // startAngle: 0,
       //       data: that.dataList
       //     }
       //   ]
@@ -3218,7 +3288,7 @@ export default {
         },
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: flag ? ['0%', '60%'] : ['60%', '60%'],
+        radius: flag ? ['0%', '60%'] : ['0%', '60%'],
         center: ['50%', '60%'],
         data: pieList1,
         itemStyle: {
@@ -3227,10 +3297,11 @@ export default {
         }
       })
       this.myChartPie.setOption(this.pieOption)
+      console.log(this.myChartPie)
       this.bindListen(this.myChartPie, 'pieOption')
       // this.bindListen(this.myChartPieCrl, 'crlOption')
-      // // let optionPie = this.getPie3D(pieList, '');
-      // // this.myChartPie.setOption(optionPie);
+      // let optionPie = this.getPie3D(pieList, '');
+      // this.myChartPie.setOption(optionPie);
 
       // 绘制立体环饼图1
       let crlFlag = false;
@@ -3360,7 +3431,7 @@ export default {
         },
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: crlFlag ? ["0%", "38%"] : ["38%", "38%"],
+        radius: crlFlag ? ["0%", "38%"] : ["0%", "38%"],
         center: ["50%", "60%"],
         data: crlList1,
         itemStyle: {
@@ -3522,7 +3593,7 @@ export default {
         },
         startAngle: -60, // 起始角度，支持范围[0, 360]。
         clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: sexFlag ? ["0%", "38%"] : ["38%", "38%"],
+        radius: sexFlag ? ["0%", "38%"] : ["0%", "38%"],
         center: ["50%", "60%"],
         data: sexList1,
         itemStyle: {
