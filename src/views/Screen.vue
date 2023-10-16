@@ -237,15 +237,15 @@ export default {
       let host = "wss://ipathy.net";
       let port = "8084";
       let options = {
-        username: "admin",
-        password: "public",
+        username: "zrway",
+        password: "casia!@#123",
         cleanSession: false,
         keepAlive: 60,
         clientId:
           "AIMW-G_" +
           Math.random()
             .toString(16)
-            .substring(2, 15),
+            .substring(2, 10),
         connectTimeout: 4000
       };
       // 在data中定义MQTT,以便断开连接
