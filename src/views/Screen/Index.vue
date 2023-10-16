@@ -21,7 +21,7 @@
                   <div class="to_type i_col1">正常</div>
                   <div class="to_num">
                     <span>{{ normalNum }}</span
-                    >人
+                    >次
                   </div>
                 </div>
                 <div class="t_one">
@@ -33,7 +33,7 @@
                   <div class="to_type i_col2">轻度预警</div>
                   <div class="to_num">
                     <span>{{ mildNum }}</span
-                    >人
+                    >次
                   </div>
                 </div>
                 <div class="t_one">
@@ -45,7 +45,7 @@
                   <div class="to_type i_col3">中度预警</div>
                   <div class="to_num">
                     <span>{{ moderateNum }}</span
-                    >人
+                    >次
                   </div>
                 </div>
                 <div class="t_one">
@@ -57,7 +57,7 @@
                   <div class="to_type i_col4">重度预警</div>
                   <div class="to_num">
                     <span>{{ severeNum }}</span
-                    >人
+                    >次
                   </div>
                 </div>
               </div>
@@ -431,7 +431,7 @@
               </div>
               <div class="hvml_t_mian">
                 <ol>
-                  <li>
+                  <!-- <li>
                     <div style="margin-top:1.2rem">
                       <span>{{ participationNum }}人</span>
                       <p>参与测评</p>
@@ -441,8 +441,8 @@
                       src="../../assets/images/heart/bottom4.png"
                       alt=""
                     />
-                  </li>
-                  <li style="margin: 0 0.5rem;">
+                  </li> -->
+                  <li style="margin: 0rem 0.4rem 0;">
                     <div>
                       <span>{{ evaluationCount }}次</span>
                       <p>累计测评</p>
@@ -453,8 +453,8 @@
                       alt=""
                     />
                   </li>
-                  <li>
-                    <div style="margin-top:1.2rem">
+                  <li style="margin: 0rem 0.4rem 0;">
+                    <div>
                       <span>{{ warningNum }}次</span>
                       <p>风险预警</p>
                     </div>
@@ -496,7 +496,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.fshPerctLowNum }}人</span>
+                        <span>{{ warningFactor.fshPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.fshPerctLowPer }}%</span
                         >
@@ -504,7 +504,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.fshPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.fshPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.fshPerctHeighPer }}%</span
                         >
@@ -560,7 +560,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.wmzyPerctLowNum }}人</span>
+                        <span>{{ warningFactor.wmzyPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.wmzyPerctLowPer }}%</span
                         >
@@ -568,7 +568,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.wmzyPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.wmzyPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.wmzyPerctHeighPer }}%</span
                         >
@@ -624,7 +624,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.gjxPerctLowNum }}人</span>
+                        <span>{{ warningFactor.gjxPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.gjxPerctLowPer }}%</span
                         >
@@ -632,7 +632,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.gjxPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.gjxPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.gjxPerctHeighPer }}%</span
                         >
@@ -689,7 +689,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.zlPerctLowNum }}人</span>
+                        <span>{{ warningFactor.zlPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.zlPerctLowPer }}%</span
                         >
@@ -697,7 +697,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.zlPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.zlPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.zlPerctHeighPer }}%</span
                         >
@@ -751,7 +751,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.byPerctLowNum }}人</span>
+                        <span>{{ warningFactor.byPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.byPerctLowPer }}%</span
                         >
@@ -759,7 +759,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.byPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.byPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.byPerctHeighPer }}%</span
                         >
@@ -813,7 +813,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq11"></span>
                         <span>低：</span>
-                        <span>{{ warningFactor.pzPerctLowNum }}人</span>
+                        <span>{{ warningFactor.pzPerctLowNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.pzPerctLowPer }}%</span
                         >
@@ -821,7 +821,7 @@
                       <div class="c_pies">
                         <span class="c_pie_th c_thq12"></span>
                         <span>高：</span>
-                        <span>{{ warningFactor.pzPerctHeighNum }}人</span>
+                        <span>{{ warningFactor.pzPerctHeighNum }}次</span>
                         <span style="margin-left:0.1rem"
                           >占比{{ warningFactor.pzPerctHeighPer }}%</span
                         >
@@ -1668,10 +1668,10 @@ export default {
               100
             );
             info.warningFactor.fshPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.fshPerctLow
+              info.evaluationCount * info.warningFactor.fshPerctLow
             );
             info.warningFactor.fshPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.fshPerctHeigh
+              info.evaluationCount * info.warningFactor.fshPerctHeigh
             );
             // 完美主义
             // console.log(InStall)
@@ -1692,10 +1692,10 @@ export default {
               100
             );
             info.warningFactor.wmzyPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.wmzyPerctLow
+              info.evaluationCount * info.warningFactor.wmzyPerctLow
             );
             info.warningFactor.wmzyPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.wmzyPerctHeigh
+              info.evaluationCount * info.warningFactor.wmzyPerctHeigh
             );
             // 攻击性
             info.warningFactor.gjxPerctLow = NP.minus(
@@ -1714,10 +1714,10 @@ export default {
               100
             );
             info.warningFactor.gjxPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.gjxPerctLow
+              info.evaluationCount * info.warningFactor.gjxPerctLow
             );
             info.warningFactor.gjxPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.gjxPerctHeigh
+              info.evaluationCount * info.warningFactor.gjxPerctHeigh
             );
             // 自恋
             info.warningFactor.zlPerctLow = NP.minus(
@@ -1736,10 +1736,10 @@ export default {
               100
             );
             info.warningFactor.zlPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.zlPerctLow
+              info.evaluationCount * info.warningFactor.zlPerctLow
             );
             info.warningFactor.zlPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.zlPerctHeigh
+              info.evaluationCount * info.warningFactor.zlPerctHeigh
             );
             // 边缘
             info.warningFactor.byPerctLow = NP.minus(
@@ -1758,10 +1758,10 @@ export default {
               100
             );
             info.warningFactor.byPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.byPerctLow
+              info.evaluationCount * info.warningFactor.byPerctLow
             );
             info.warningFactor.byPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.byPerctHeigh
+              info.evaluationCount * info.warningFactor.byPerctHeigh
             );
             // 偏执
             info.warningFactor.pzPerctLow = NP.minus(
@@ -1780,10 +1780,10 @@ export default {
               100
             );
             info.warningFactor.pzPerctLowNum = Math.round(
-              info.participationNum * info.warningFactor.pzPerctLow
+              info.evaluationCount * info.warningFactor.pzPerctLow
             );
             info.warningFactor.pzPerctHeighNum = Math.round(
-              info.participationNum * info.warningFactor.pzPerctHeigh
+              info.evaluationCount * info.warningFactor.pzPerctHeigh
             );
 
             this.warningFactor = info.warningFactor;
@@ -2025,10 +2025,10 @@ export default {
               4
             );
             info.ageGenderStatistic.malePerctNum = Math.round(
-              info.ageGenderStatistic.malePerct * info.participationNum
+              info.ageGenderStatistic.malePerct * info.evaluationCount
             );
             info.ageGenderStatistic.femalePerctNum = Math.round(
-              info.ageGenderStatistic.femalePerct * info.participationNum
+              info.ageGenderStatistic.femalePerct * info.evaluationCount
             );
 
             info.ageGenderStatistic.belowThirtyPerct = info.ageGenderStatistic.belowThirtyPerct.toFixed(
@@ -3403,7 +3403,7 @@ export default {
         30,
         20,
         1,
-        this.participationNum
+        this.evaluationCount
       );
       this.myChartPieCrl.setOption(this.crlOption);
       // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
@@ -3474,7 +3474,7 @@ export default {
                 params.color
               };"></span>${(params.series[params.seriesIndex].pieData.value /
                 100) *
-                this.participationNum}`;
+                this.evaluationCount}`;
             }
           }
         };
@@ -3571,7 +3571,7 @@ export default {
         30,
         20,
         1,
-        this.participationNum
+        this.evaluationCount
       );
       this.myChartPieSex.setOption(this.sexOption);
       let sexList1 = JSON.parse(JSON.stringify(this.sexList));
@@ -4039,7 +4039,8 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 0;
+                padding: 0.3rem 0;
+                margin: 0;
                 li {
                   width: 1.6rem;
                   height: 1.6rem;
@@ -4088,7 +4089,7 @@ export default {
                     margin-top: 0rem;
                   }
                   .img22 {
-                    margin-top: 1.2rem;
+                    margin-top: 0;
                     transform: rotate(0deg);
                     animation: rotx2 15s linear infinite;
                   }
