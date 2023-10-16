@@ -16,6 +16,9 @@ import htmlToPdf from "@/common/utils/htmlToPdf"
 // require('video.js/dist/video-js.css')
 // require('vue-video-player/src/custom-theme.css')
 // Vue.use(VideoPlayer)
+import Highcharts from 'highcharts'
+import Highcharts3d from 'highcharts/highcharts-3d'
+Highcharts3d(Highcharts)
 
 Vue.use(htmlToPdf)
 Vue.prototype.JQ = $
