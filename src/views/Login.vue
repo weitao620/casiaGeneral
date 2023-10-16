@@ -170,6 +170,7 @@ export default {
                   data.data.userAuth = JSON.stringify(nOb)
                 }
               }
+              localStorage.setItem('mqttTopic', data.data.mqttTopic)
               localStorage.setItem('passGMd5', param.password)
               localStorage.setItem("userAuth", data.data.userAuth);
               localStorage.setItem("userType", 1);

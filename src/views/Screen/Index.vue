@@ -2593,14 +2593,14 @@ export default {
               dList1[obj[0].dataIndex] +
               "</div>" +
               '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0.1rem;line-height:1">' +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: rgba(160, 208, 255, 1);margin-right:0.04rem"></span>' +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: linear-gradient(270deg, #66FFFF 0%, #0077FF 100%);margin-right:0.04rem"></span>' +
               "测评人次" +
               "：<span style='color:#ffffff'>" +
               obj[0].value +
               "</span>" +
               "</div>" +
               '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem;background: rgba(102, 255, 255, 1);margin-right:0.04rem"></span>' +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem;background: linear-gradient(180deg, #FEDB65 0%, #FFBE44 100%);margin-right:0.04rem"></span>' +
               "预警人次" +
               "：<span style='color:#ffffff'>" +
               obj[1].value +
