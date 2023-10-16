@@ -164,25 +164,50 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
             // console.log(bfb)
             console.log(pieNum)
             let bfbNum = 0
+            console.log(option.series[params.seriesIndex])
             if (pieNum == -1) {
               console.log(option.series[params.seriesIndex].num)
-              bfbNum = 0
+              bfbNum = option.series[params.seriesIndex].pieData.num
               return (
-                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600">${params.seriesName}</span>` +
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600;line-height:0.3rem">${params.seriesName}</span>` +
                 `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${params.color};"></span>` +
                 `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum}次</span><span style="color:#fff;font-size:0.16rem;">占比${bfb}%</span></div></div>`
               )
             } else {
-              bfbNum = Math.ceil((bfb / 100) * pieNum)
+              bfbNum = Math.round((bfb / 100) * pieNum)
               return (
-                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600">${params.seriesName}</span>` +
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600;line-height:0.3rem">${params.seriesName}</span>` +
                 `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${params.color};"></span>` +
                 `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum}人</span><span style="color:#fff;font-size:0.16rem;">占比${bfb}%</span></div></div>`
+              )
+            }
+          } else {
+            // const bfb1 = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(nums)
+            
+          console.log(option.series)
+            // let bfbNum1 = 0
+            console.log(pieNum)
+            if (pieNum == -1) {
+              return (
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600;line-height:0.3rem">${option.series[params.seriesIndex].data[params.dataIndex].name}</span>` +
+                `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${option.series[params.seriesIndex].data[params.dataIndex].label.normal.color};"></span>` +
+                `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${option.series[params.seriesIndex].data[params.dataIndex].num}次</span><span style="color:#fff;font-size:0.16rem;">占比${option.series[params.seriesIndex].data[params.dataIndex].value}%</span></div></div>`
+              )
+            } else {
+              console.log(option.series[params.seriesIndex])
+              console.log(option.series[params.seriesIndex].data[params.dataIndex])
+              let bfbNum1 = Math.round((option.series[params.seriesIndex].data[params.dataIndex].value / 100) * pieNum)
+              console.log(bfbNum1)
+              return (
+                `<div style="margin:-10px;padding:0.1rem;"><span style="color:#fff;font-size:0.2rem;font-weight:600;line-height:0.3rem">${option.series[params.seriesIndex].data[params.dataIndex].name}</span>` +
+                `<div style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${option.series[params.seriesIndex].data[params.dataIndex].label.normal.color};"></span>` +
+                `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${bfbNum1}人</span><span style="color:#fff;font-size:0.16rem;">占比${option.series[params.seriesIndex].data[params.dataIndex].value}%</span></div></div>`
               )
             }
           }
         }
       }
+      // triggerOn: 'click'
     },
     xAxis3D: {
       min: -1,
