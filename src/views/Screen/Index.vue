@@ -1921,34 +1921,34 @@ export default {
             for (let i in yinList) {
               if (yinList[0].value < 10) {
                 if (yinList[i].value >= 0 && yinList[i].value < 10) {
-                  yinList[i].size = 40;
+                  yinList[i].size = 36;
                 }
               }
               if (yinList[0].value > 9 && yinList[0].value < 50) {
                 if (yinList[i].value >= 0 && yinList[i].value < 10) {
-                  yinList[i].size = 34;
+                  yinList[i].size = 30;
                 } else if (yinList[i].value > 9 && yinList[i].value < 50) {
-                  yinList[i].size = 40;
+                  yinList[i].size = 36;
                 }
               }
               if (yinList[0].value > 49 && yinList[0].value < 100) {
                 if (yinList[i].value >= 0 && yinList[i].value < 10) {
-                  yinList[i].size = 28;
+                  yinList[i].size = 24;
                 } else if (yinList[i].value > 9 && yinList[i].value < 50) {
-                  yinList[i].size = 34;
+                  yinList[i].size = 30;
                 } else if (yinList[i].value > 49 && yinList[i].value < 100) {
-                  yinList[i].size = 40;
+                  yinList[i].size = 36;
                 }
               }
               if (yinList[i].value > 99) {
                 if (yinList[i].value >= 0 && yinList[i].value < 10) {
-                  yinList[i].size = 22;
+                  yinList[i].size = 18;
                 } else if (yinList[i].value > 9 && yinList[i].value < 50) {
-                  yinList[i].size = 28;
+                  yinList[i].size = 24;
                 } else if (yinList[i].value > 49 && yinList[i].value < 100) {
-                  yinList[i].size = 34;
+                  yinList[i].size = 30;
                 } else if (yinList[i].value > 99) {
-                  yinList[i].size = 40;
+                  yinList[i].size = 36;
                 }
               }
               console.log(i % 2);
@@ -4526,22 +4526,22 @@ export default {
               .wddw2 {
                 position: absolute;
                 bottom: 0.83rem;
-    left: 2.45rem;
+                left: 2.45rem;
               }
               .wddw3 {
                 position: absolute;
                 bottom: 1rem;
-    right: 0.2rem;
+                right: 0.2rem;
               }
               .wddw4 {
                 position: absolute;
                 bottom: 1.82rem;
-    right: 0.14rem;
+                right: 0.14rem;
               }
               .wddw5 {
                 position: absolute;
                 bottom: 1.4rem;
-    right: 0.4rem;
+                right: 0.4rem;
               }
               .wddw6 {
                 position: absolute;
@@ -4551,42 +4551,42 @@ export default {
               .wddw7 {
                 position: absolute;
                 bottom: 0.6rem;
-    left: 0.7rem;
+                left: 0.7rem;
               }
               .wddw8 {
                 position: absolute;
                 bottom: 0.08rem;
-    left: 1.8rem;
+                left: 1.8rem;
               }
               .wddw9 {
                 position: absolute;
                 bottom: 1.45rem;
-    left: 0.7rem;
+                left: 0.7rem;
               }
               .wddw10 {
                 position: absolute;
                 bottom: 1.84rem;
-    left: 0.16rem;
+                left: 0.16rem;
               }
               .wddw11 {
                 position: absolute;
                 bottom: 1.08rem;
-    left: 0.2rem;
+                left: 0.2rem;
               }
               .wddw12 {
                 position: absolute;
-                bottom: 0.38rem;
-    left: 2.8rem;
+                bottom: 0.44rem;
+                left: 2.8rem;
               }
               .wddw13 {
                 position: absolute;
                 bottom: 0.04rem;
-    right: 0.1rem;
+                right: 0.1rem;
               }
               .wddw14 {
                 position: absolute;
-                bottom: 0.65rem;
-    left: 4.12rem;
+                bottom: 0.6rem;
+                left: 4.26rem;
               }
 
               .yy_qxdl {
