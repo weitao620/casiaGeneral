@@ -238,7 +238,7 @@ export default {
       let port = "8084";
       let options = {
         username: "zrway",
-        password: "casia!@#123",
+        password: "'casia!@#123'",
         cleanSession: false,
         keepAlive: 60,
         clientId:
