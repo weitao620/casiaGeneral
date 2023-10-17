@@ -16,7 +16,15 @@
                 <div class="lib_head_exit">
                   <img
                     @click="tofullscreenToggel"
+                    v-if="!isFullScreen"
                     src="../assets/images/heart/fullscreen.png"
+                    alt=""
+                    style="margin-right: 0.28rem;"
+                  />
+                  <img
+                    @click="tofullscreenToggel"
+                    v-else
+                    src="../assets/images/heart/fullscreens.png"
                     alt=""
                     style="margin-right: 0.28rem;"
                   />
