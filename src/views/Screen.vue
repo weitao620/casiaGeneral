@@ -71,6 +71,7 @@ export default {
       interVal: null,
       nowDate: "",
       websock: null,
+      isFullScreen: false,
       // mqtt
       MQTT: null,
       intTime: null
