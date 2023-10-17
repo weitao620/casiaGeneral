@@ -162,6 +162,7 @@
                   </div>
                   <div
                     :class="[
+                      'wddw',
                       'wddw' + indexs,
                       items.value < 10 ? 'level_bg1' : '',
                       items.value > 9 && items.value < 50 ? 'level_bg2' : '',
@@ -172,8 +173,7 @@
                   >
                     <div
                       :style="{
-                        'font-size': items.size / 100 + 'rem',
-                        'line-height': 1
+                        'font-size': items.size / 100 + 'rem'
                       }"
                     >
                       {{ items.name }}
@@ -1919,53 +1919,89 @@ export default {
             });
             console.log(yinList);
             for (let i in yinList) {
+              if (yinList[0].value < 10) {
+                if (yinList[i].value >= 0 && yinList[i].value < 10) {
+                  yinList[i].size = 40;
+                }
+              }
+              if (yinList[0].value > 9 && yinList[0].value < 50) {
+                if (yinList[i].value >= 0 && yinList[i].value < 10) {
+                  yinList[i].size = 34;
+                } else if (yinList[i].value > 9 && yinList[i].value < 50) {
+                  yinList[i].size = 40;
+                }
+              }
+              if (yinList[0].value > 49 && yinList[0].value < 100) {
+                if (yinList[i].value >= 0 && yinList[i].value < 10) {
+                  yinList[i].size = 28;
+                } else if (yinList[i].value > 9 && yinList[i].value < 50) {
+                  yinList[i].size = 34;
+                } else if (yinList[i].value > 49 && yinList[i].value < 100) {
+                  yinList[i].size = 40;
+                }
+              }
+              if (yinList[i].value > 99) {
+                if (yinList[i].value >= 0 && yinList[i].value < 10) {
+                  yinList[i].size = 22;
+                } else if (yinList[i].value > 9 && yinList[i].value < 50) {
+                  yinList[i].size = 28;
+                } else if (yinList[i].value > 49 && yinList[i].value < 100) {
+                  yinList[i].size = 34;
+                } else if (yinList[i].value > 99) {
+                  yinList[i].size = 40;
+                }
+              }
               console.log(i % 2);
-              if (i == 0) {
-                yinList[i].size = 60;
-              }
-              if (i == 1) {
-                yinList[i].size = 40;
-              }
-              if (i == 2) {
-                yinList[i].size = 38;
-              }
-              if (i == 3) {
-                yinList[i].size = 36;
-              }
-              if (i == 4) {
-                yinList[i].size = 36;
-              }
-              if (i == 5) {
-                yinList[i].size = 34;
-              }
-              if (i == 6) {
-                yinList[i].size = 32;
-              }
+              
+              // if (i == 0) {
+              //   // if (yinList[i].value >= 0 && yinList[i].value < 10) {
+              //   //   yinList[i].size = 20;
+              //   // }
+              //   yinList[i].size = 60;
+              // }
+              // if (i == 1) {
+              //   yinList[i].size = 40;
+              // }
+              // if (i == 2) {
+              //   yinList[i].size = 38;
+              // }
+              // if (i == 3) {
+              //   yinList[i].size = 36;
+              // }
+              // if (i == 4) {
+              //   yinList[i].size = 36;
+              // }
+              // if (i == 5) {
+              //   yinList[i].size = 34;
+              // }
+              // if (i == 6) {
+              //   yinList[i].size = 32;
+              // }
 
-              if (i == 7) {
-                yinList[i].size = 30;
-              }
-              if (i == 8) {
-                yinList[i].size = 28;
-              }
-              if (i == 9) {
-                yinList[i].size = 26;
-              }
-              if (i == 10) {
-                yinList[i].size = 24;
-              }
-              if (i == 11) {
-                yinList[i].size = 22;
-              }
-              if (i == 12) {
-                yinList[i].size = 20;
-              }
-              if (i == 13) {
-                yinList[i].size = 18;
-              }
-              if (i == 14) {
-                yinList[i].size = 16;
-              }
+              // if (i == 7) {
+              //   yinList[i].size = 30;
+              // }
+              // if (i == 8) {
+              //   yinList[i].size = 28;
+              // }
+              // if (i == 9) {
+              //   yinList[i].size = 26;
+              // }
+              // if (i == 10) {
+              //   yinList[i].size = 24;
+              // }
+              // if (i == 11) {
+              //   yinList[i].size = 22;
+              // }
+              // if (i == 12) {
+              //   yinList[i].size = 20;
+              // }
+              // if (i == 13) {
+              //   yinList[i].size = 18;
+              // }
+              // if (i == 14) {
+              //   yinList[i].size = 16;
+              // }
               console.log(yinList[i].size);
             }
             console.log(yinList);
@@ -4463,81 +4499,93 @@ export default {
                   margin-top: 0.16rem;
                 }
               }
+              .wddw {
+                width:1.8rem;
+                height: 0.42rem;
+                div{
 
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 100%;
+                  height: 100%;
+                  line-height: 0.42rem !important;
+                }
+              }
               .wddw0 {
                 position: absolute;
-                bottom: 0.97rem;
-                left: 1.76rem;
+                bottom: 1.24rem;
+                left: 2.3rem;
               }
               .wddw1 {
                 position: absolute;
-                bottom: 1.69rem;
-                left: 2.42rem;
+                bottom: 1.72rem;
+                left: 2.3rem;
               }
               .wddw2 {
                 position: absolute;
-                bottom: 0.62rem;
-                left: 2.03rem;
+                bottom: 0.83rem;
+    left: 2.45rem;
               }
               .wddw3 {
                 position: absolute;
-                bottom: 0.94rem;
-                right: 0.2rem;
+                bottom: 1rem;
+    right: 0.2rem;
               }
               .wddw4 {
                 position: absolute;
-                bottom: 1.8rem;
-                right: 0.7rem;
+                bottom: 1.82rem;
+    right: 0.14rem;
               }
               .wddw5 {
                 position: absolute;
-                bottom: 1.48rem;
-                right: 0.31rem;
+                bottom: 1.4rem;
+    right: 0.4rem;
               }
               .wddw6 {
                 position: absolute;
-                bottom: 0.2rem;
-                left: 0.2rem;
+                bottom: 0.15rem;
+                left: 0.1rem;
               }
               .wddw7 {
                 position: absolute;
-                bottom: 0.65rem;
-                left: 0.56rem;
+                bottom: 0.6rem;
+    left: 0.7rem;
               }
               .wddw8 {
                 position: absolute;
-                bottom: 1.14rem;
-                left: 0.74rem;
+                bottom: 0.08rem;
+    left: 1.8rem;
               }
               .wddw9 {
                 position: absolute;
-                bottom: 1.41rem;
-                left: 0.56rem;
+                bottom: 1.45rem;
+    left: 0.7rem;
               }
               .wddw10 {
                 position: absolute;
-                bottom: 1.82rem;
-                left: 0.2rem;
+                bottom: 1.84rem;
+    left: 0.16rem;
               }
               .wddw11 {
                 position: absolute;
-                bottom: 1.82rem;
-                left: 1.5rem;
+                bottom: 1.08rem;
+    left: 0.2rem;
               }
               .wddw12 {
                 position: absolute;
-                bottom: 0.21rem;
-                left: 3.1rem;
+                bottom: 0.38rem;
+    left: 2.8rem;
               }
               .wddw13 {
                 position: absolute;
-                bottom: 0.31rem;
-                right: 0.4rem;
+                bottom: 0.04rem;
+    right: 0.1rem;
               }
               .wddw14 {
                 position: absolute;
-                bottom: 0.7rem;
-                left: 4.01rem;
+                bottom: 0.65rem;
+    left: 4.12rem;
               }
 
               .yy_qxdl {
