@@ -1554,9 +1554,9 @@ export default {
       depressionFlag: 1,
       anxietyFlag: 1,
       forcedFlag: 1,
-      suicideFlag: 0,
-      violenceFlag: 0,
-      personalityFlag: 0
+      suicideFlag: 1,
+      violenceFlag: 1,
+      personalityFlag: 1
     };
   },
   computed: {
@@ -1595,61 +1595,62 @@ export default {
   mounted() {
     let that = this;
     this.reportId = this.$route.params.userID;
-    let param = {
-      passport: JSON.parse(localStorage.getItem('userInfo')).passport
-      // password: JSON.parse(localStorage.getItem('userInfo')).password
-    }
-    this.$http
-      .get(Url + "/aimw/user/getAuthInfo", { params: param })
-      .then(res => {
-        var data = res.data;
-        if (data.code == 0) {
-          let obja = {
-            menuAuthID: []
-          };
-          if (data.data.userAuth == "") {
-            data.data.userAuth = JSON.stringify(obja);
-          } else {
-            if (JSON.parse(data.data.userAuth).menuAuthID) {
+    this.getDetail();
+    // let param = {
+    //   passport: JSON.parse(localStorage.getItem('userInfo')).passport
+    //   // password: JSON.parse(localStorage.getItem('userInfo')).password
+    // }
+    // this.$http
+    //   .get(Url + "/aimw/user/getAuthInfo", { params: param })
+    //   .then(res => {
+    //     var data = res.data;
+    //     if (data.code == 0) {
+    //       let obja = {
+    //         menuAuthID: []
+    //       };
+    //       if (data.data.userAuth == "") {
+    //         data.data.userAuth = JSON.stringify(obja);
+    //       } else {
+    //         if (JSON.parse(data.data.userAuth).menuAuthID) {
 
-            } else {
-              let nOb = JSON.parse(data.data.userAuth);
-              nOb.menuAuthID = [];
-              data.data.userAuth = JSON.stringify(nOb);
-            }
-          }
-          localStorage.setItem("userAuth", data.data.userAuth);
-          localStorage.setItem("userType", 1);
-          localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
-          if (data.data.algTypes) {
-            // 是否显示抑郁
-            this.depressionFlag = data.data.algTypes.depression
-            // 是否显示焦虑
-            this.anxietyFlag = data.data.algTypes.anxiety
-            // 是否显示强迫
-            this.forcedFlag = data.data.algTypes.forced
-            // 是否显示自我伤害
-            this.suicideFlag = data.data.algTypes.suicide
-            // 是否显示敌对
-            this.violenceFlag = data.data.algTypes.violence
-            // 是否显示人格
-            this.personalityFlag = data.data.algTypes.personality
-          }
-          //
-          // this.depressionFlag = 1
-          // this.anxietyFlag = 1
-          // this.forcedFlag = 1
-          // this.suicideFlag = 0
-          // this.violenceFlag = 0
-          // this.personalityFlag = 0
-          this.getDetail();
-        } else {
-          that.$message.error(data.msg);
-        }
-      })
-      .catch(res => {
-        console.log(res);
-      });
+    //         } else {
+    //           let nOb = JSON.parse(data.data.userAuth);
+    //           nOb.menuAuthID = [];
+    //           data.data.userAuth = JSON.stringify(nOb);
+    //         }
+    //       }
+    //       localStorage.setItem("userAuth", data.data.userAuth);
+    //       localStorage.setItem("userType", 1);
+    //       localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+    //       if (data.data.algTypes) {
+    //         // 是否显示抑郁
+    //         this.depressionFlag = data.data.algTypes.depression
+    //         // 是否显示焦虑
+    //         this.anxietyFlag = data.data.algTypes.anxiety
+    //         // 是否显示强迫
+    //         this.forcedFlag = data.data.algTypes.forced
+    //         // 是否显示自我伤害
+    //         this.suicideFlag = data.data.algTypes.suicide
+    //         // 是否显示敌对
+    //         this.violenceFlag = data.data.algTypes.violence
+    //         // 是否显示人格
+    //         this.personalityFlag = data.data.algTypes.personality
+    //       }
+    //       //
+    //       // this.depressionFlag = 1
+    //       // this.anxietyFlag = 1
+    //       // this.forcedFlag = 1
+    //       // this.suicideFlag = 0
+    //       // this.violenceFlag = 0
+    //       // this.personalityFlag = 0
+    //       this.getDetail();
+    //     } else {
+    //       that.$message.error(data.msg);
+    //     }
+    //   })
+    //   .catch(res => {
+    //     console.log(res);
+    //   });
     window.addEventListener("resize", () => {
       setTimeout(() => {
         this.myTxtFlag = false;

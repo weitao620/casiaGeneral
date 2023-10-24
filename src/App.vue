@@ -55,39 +55,47 @@ export default {
       if (this.$route.name == 'login') {
         return false
       }
-      let param = {
-        passport: JSON.parse(localStorage.getItem('userInfo')).passport
-        // password: JSON.parse(localStorage.getItem('userInfo')).password
-      }
-      that.$http
-        .get(Url + "/aimw/user/getAuthInfo", { params: param })
-        .then(res => {
-          var data = res.data;
-          console.log(data)
-          if (data.code == 0) {
-            let obja = {
-              menuAuthID: []
-            }
-            if (data.data.userAuth == '') {
-              data.data.userAuth = JSON.stringify(obja)
-            } else {
-              if (JSON.parse(data.data.userAuth).menuAuthID) {
-              } else {
-                let nOb = JSON.parse(data.data.userAuth)
-                nOb.menuAuthID = []
-                data.data.userAuth = JSON.stringify(nOb)
-              }
-            }
-            localStorage.setItem("userAuth", data.data.userAuth);
-            localStorage.setItem("userType", 1);
-            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
-          } else {
-            that.$message.error(data.msg);
-          }
-        })
-        .catch(res => {
-          console.log(res);
-        });
+      console.log(this.$route)
+      console.log(this.$router)
+      console.log(localStorage.getItem('passport'))
+      // if (localStorage.getItem('passport') == 'jiankong') {
+
+      // } else {
+      //   let param = {
+      //     passport: JSON.parse(localStorage.getItem('userInfo')).passport
+      //     // password: JSON.parse(localStorage.getItem('userInfo')).password
+      //   }
+      //   that.$http
+      //     .get(Url + "/aimw/user/getAuthInfo", { params: param })
+      //     .then(res => {
+      //       var data = res.data;
+      //       console.log(data)
+      //       if (data.code == 0) {
+      //         let obja = {
+      //           menuAuthID: []
+      //         }
+      //         if (data.data.userAuth == '') {
+      //           data.data.userAuth = JSON.stringify(obja)
+      //         } else {
+      //           if (JSON.parse(data.data.userAuth).menuAuthID) {
+      //           } else {
+      //             let nOb = JSON.parse(data.data.userAuth)
+      //             nOb.menuAuthID = []
+      //             data.data.userAuth = JSON.stringify(nOb)
+      //           }
+      //         }
+      //         localStorage.setItem("userAuth", data.data.userAuth);
+      //         localStorage.setItem("userType", 1);
+      //         localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+      //       } else {
+      //         that.$message.error(data.msg);
+      //       }
+      //     })
+      //     .catch(res => {
+      //       console.log(res);
+      //     });
+      // }
+      
     },
     ...mapMutations(["setUserName"])
   },

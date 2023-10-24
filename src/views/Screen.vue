@@ -19,14 +19,14 @@
                     v-if="!isFullScreen"
                     src="../assets/images/heart/fullscreen.png"
                     alt=""
-                    style="margin-right: 0.28rem;"
+                    style="margin-right: 0.16rem;"
                   />
                   <img
                     @click="tofullscreenToggel"
                     v-else
                     src="../assets/images/heart/fullscreens.png"
                     alt=""
-                    style="margin-right: 0.28rem;"
+                    style="margin-right: 0.16rem;"
                   />
                   <el-popconfirm
                     popper-class="sybs_pop"
@@ -694,22 +694,20 @@ export default {
   // margin-top: 0.14rem;
   .lib_head_time {
     position: absolute;
-    font-size: 0.2rem;
     line-height: 1;
-    font-family: SourceHanSansCN-Bold, SourceHanSansCN;
-    font-weight: bold;
-    color: #ffffff;
     margin: auto;
-    top: 0.65rem;
-    left: 0;
-    right: 0;
-    margin-left: -12.2rem;
+    top: 0.45rem;
+    left: 0.37rem;
+    font-size: 0.16rem;
+    font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+    font-weight: 400;
+    color: #FFFFFF;
   }
   .lib_head_exit {
     display: flex;
     align-items: center;
     position: absolute;
-    top: 0.76rem;
+    top: 0.35rem;
     right: 0.23rem;
     z-index: 2;
     // margin-top: -0.02rem;
@@ -717,18 +715,18 @@ export default {
     img {
       display: block;
       cursor: pointer;
-      width: 0.94rem;
-      height: 0.4rem;
+      width: 0.85rem;
+      height: 0.36rem;
       // margin: 0 0.04rem 0 0.5rem;
     }
     span {
       display: block;
-      font-size: 0.14rem;
-      font-family: SourceHanSansCN-Regular, SourceHanSansCN;
-      font-weight: 400;
-      color: #7cf2ff;
-      line-height: 0.22rem;
-      margin-right: 0.12rem;
+      // font-size: 0.14rem;
+      // font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+      // font-weight: 400;
+      // color: #7cf2ff;
+      // line-height: 0.22rem;
+      // margin-right: 0.12rem;
     }
   }
   // ul{
@@ -945,9 +943,9 @@ export default {
         // display: flex;
         // justify-content: space-between;
         // align-items: center;
-        height: 0.88rem;
+        height: 1.22rem;
         background: url(../assets/images/heart/head.png) no-repeat center center;
-        background-size: 100% 100%;
+        background-size: 19.17rem 1.22rem;
         // background: #ffffff;
         // box-shadow: 0px 3px 27px 0px rgba(66, 79, 128, 0.11);
         position: absolute;

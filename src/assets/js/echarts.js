@@ -16,5 +16,6 @@ import 'echarts/lib/component/grid'
 import 'echarts/lib/component/visualMap'
 import 'echarts/lib/component/graphic'
 import 'echarts/lib/component/markLine'
+import 'echarts/lib/component/polar';
 
 export default echarts

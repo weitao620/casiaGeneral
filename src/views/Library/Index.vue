@@ -1246,6 +1246,7 @@ export default {
             color: "#5B6C89"
           },
           formatter: function(params) {
+            console.log(params)
             var result =
               '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
               params.color.colorStops[0].color +

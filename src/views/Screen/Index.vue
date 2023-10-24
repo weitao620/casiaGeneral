@@ -13,11 +13,13 @@
             <div class="hvml_main">
               <div class="hvml_tain">
                 <div class="t_one">
-                  <img
-                    class="to_img"
-                    src="../../assets/images/heart/icon1.png"
-                    alt=""
-                  />
+                  <div class="to_img_box">
+                    <img
+                      :class="['to_img', 'to_img'+ normalRank]"
+                      src="../../assets/images/heart/icon1.png"
+                      alt=""
+                    />
+                  </div>
                   <div class="to_type i_col1">正常</div>
                   <div class="to_num">
                     <span>{{ normalNum }}</span
@@ -25,11 +27,13 @@
                   </div>
                 </div>
                 <div class="t_one">
-                  <img
-                    class="to_img"
-                    src="../../assets/images/heart/icon2.png"
-                    alt=""
-                  />
+                  <div class="to_img_box">
+                    <img
+                      :class="['to_img', 'to_img'+ mildRank]"
+                      src="../../assets/images/heart/icon2.png"
+                      alt=""
+                    />
+                  </div>
                   <div class="to_type i_col2">轻度预警</div>
                   <div class="to_num">
                     <span>{{ mildNum }}</span
@@ -37,11 +41,13 @@
                   </div>
                 </div>
                 <div class="t_one">
-                  <img
-                    class="to_img"
-                    src="../../assets/images/heart/icon3.png"
-                    alt=""
-                  />
+                  <div class="to_img_box">
+                    <img
+                      :class="['to_img', 'to_img'+ moderateRank]"
+                      src="../../assets/images/heart/icon3.png"
+                      alt=""
+                    />
+                  </div>
                   <div class="to_type i_col3">中度预警</div>
                   <div class="to_num">
                     <span>{{ moderateNum }}</span
@@ -49,11 +55,13 @@
                   </div>
                 </div>
                 <div class="t_one">
-                  <img
-                    class="to_img"
-                    src="../../assets/images/heart/icon4.png"
-                    alt=""
-                  />
+                  <div class="to_img_box">
+                    <img
+                      :class="['to_img', 'to_img'+ severeRank]"
+                      src="../../assets/images/heart/icon4.png"
+                      alt=""
+                    />
+                  </div>
                   <div class="to_type i_col4">重度预警</div>
                   <div class="to_num">
                     <span>{{ severeNum }}</span
@@ -67,7 +75,7 @@
             <div class="hvml_b_head">预警指标分布</div>
             <img
               class="hvml_b_bg"
-              src="../../assets/images/heart/hv_bg.png"
+              src="../../assets/images/heart/hv_bg2.png"
               alt=""
             />
             <div class="hvml_main">
@@ -77,31 +85,30 @@
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp0"></span>
                       抑郁
-                      <!-- &nbsp;<span class="c_thpt0">{{ pieList[0].value}}%</span> -->
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp1"></span>
                       焦虑
-                      <!-- &nbsp;<span class="c_thpt1">{{ pieList[1].value}}%</span> -->
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp2"></span>
                       强迫
-                      <!-- &nbsp;<span class="c_thpt2">{{ pieList[2].value}}%</span> -->
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp3"></span>
                       自我伤害
-                      <!-- &nbsp;<span class="c_thpt3">{{ pieList[3].value}}%</span> -->
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp4"></span>
                       敌对
-                      <!-- &nbsp;<span class="c_thpt4">{{ pieList[4].value}}%</span> -->
                     </div>
                   </div>
                 </div>
-                <div class="myChartPie" id="myChartPie" ref="myChartPie"></div>
+                <!-- <div style="height:1.04rem"></div> -->
+                <div class="myChartPie" id="myChartPie" ref="myChartPie">
+                  
+                </div>
+                <div class="chart_heart">预警指标</div>
               </div>
             </div>
           </div>
@@ -115,7 +122,7 @@
             <div class="hvml_main">
               <div class="hvm_m_ball">
                 <div class="tv_ec">
-                  <div class="tv_ec_head">
+                  <div class="tv_ec_head" style="height: 0.4rem;">
                     <div class="center_pie" style="justify-content: center;">
                       <div class="c_pie_li c_pie_liq">
                         <span class="c_pie_th c_thq1"></span>
@@ -395,44 +402,46 @@
           <div class="hvml_img">
             <div class="lib_boxz">
               <div class="lib_b_lizi"></div>
+              <div class="lib_b_lizi2"></div>
             </div>
-
             <img
-              class="img0 img1"
-              src="../../assets/images/heart/bottom1.png"
+              class="img0 img6"
+              src="../../assets/images/heart/bottom6.png"
+              alt=""
+            />
+            <img
+              class="img0 img7"
+              src="../../assets/images/heart/bottom7.png"
               alt=""
             />
 
-            <img
+            <!-- <img
               class="img0 img2"
               src="../../assets/images/heart/bottom2.png"
               alt=""
-            />
+            /> -->
 
             <img
               class="img0 img3"
               src="../../assets/images/heart/bottom3.png"
               alt=""
             />
-            <img
+            <!-- <img
               class="img0 img4"
               src="../../assets/images/heart/bottom4.png"
               alt=""
-            />
+            /> -->
 
             <div class="hvml_total">
               <div class="hvml_t_head">
                 <ul>
-                  <li>总</li>
-                  <li>体</li>
-                  <li>概</li>
-                  <li>况</li>
+                  <li></li>
                 </ul>
               </div>
               <div class="hvml_t_mian">
                 <ol>
                   <li>
-                    <div style="margin-top:1.2rem">
+                    <div style="margin-top:1.1rem">
                       <span>{{ participationNum }}人</span>
                       <p>参与测评</p>
                     </div>
@@ -442,7 +451,7 @@
                       alt=""
                     />
                   </li>
-                  <li style="margin: 0 0.5rem;">
+                  <li style="margin: 0 0.1rem;">
                     <div>
                       <span>{{ evaluationCount }}次</span>
                       <p>累计测评</p>
@@ -454,7 +463,7 @@
                     />
                   </li>
                   <li>
-                    <div style="margin-top:1.2rem">
+                    <div style="margin-top:1.1rem">
                       <span>{{ warningNum }}次</span>
                       <p>风险预警</p>
                     </div>
@@ -544,10 +553,10 @@
                           v-if="warningFactor.fshPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.fshPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
@@ -585,14 +594,14 @@
                           v-if="warningFactor.wmzyPerct !== 1"
                           class="huml_plb_c"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.wmzyPerct !== 1"
                           class="huml_plb_l"
                         ></div>
                         <div
                           v-if="warningFactor.wmzyPerct !== 1"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                       <div
                         class="huml_plb_right"
@@ -608,10 +617,10 @@
                           v-if="warningFactor.wmzyPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.wmzyPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
@@ -650,14 +659,14 @@
                           v-if="warningFactor.gjxPerct !== 1"
                           class="huml_plb_c"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.gjxPerct !== 1"
                           class="huml_plb_l"
                         ></div>
                         <div
                           v-if="warningFactor.gjxPerct !== 1"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                       <div
                         class="huml_plb_right"
@@ -673,10 +682,10 @@
                           v-if="warningFactor.gjxPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.gjxPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
@@ -712,14 +721,14 @@
                           v-if="warningFactor.zlPerct !== 1"
                           class="huml_plb_c"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.zlPerct !== 1"
                           class="huml_plb_l"
                         ></div>
                         <div
                           v-if="warningFactor.zlPerct !== 1"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                       <div
                         class="huml_plb_right"
@@ -735,10 +744,10 @@
                           v-if="warningFactor.zlPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.zlPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
@@ -774,14 +783,14 @@
                           v-if="warningFactor.byPerct !== 1"
                           class="huml_plb_c"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.byPerct !== 1"
                           class="huml_plb_l"
                         ></div>
                         <div
                           v-if="warningFactor.byPerct !== 1"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                       <div
                         class="huml_plb_right"
@@ -797,10 +806,10 @@
                           v-if="warningFactor.byPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.byPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
@@ -836,14 +845,14 @@
                           v-if="warningFactor.pzPerct === 0"
                           class="huml_plb_c"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.pzPerct === 0"
                           class="huml_plb_l"
                         ></div>
                         <div
                           v-if="warningFactor.pzPerct === 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                       <div
                         class="huml_plb_right"
@@ -859,16 +868,16 @@
                           v-if="warningFactor.pzPerct !== 0"
                           class="huml_plb_l"
                         ></div>
-                        <div
+                        <!-- <div
                           v-if="warningFactor.pzPerct !== 0"
                           class="huml_plb_t"
-                        ></div>
+                        ></div> -->
                       </div>
                     </div>
                   </el-tooltip>
                 </div>
                 <div class="huml_p_li">
-                  <div class="huml_pl_name"></div>
+                  <div class="huml_pl_name" style="width:0;"></div>
                   <div class="huml_pl_box huml_pl_cent">
                     <div>
                       0%
@@ -882,7 +891,7 @@
                     <div>
                       75%
                     </div>
-                    <div style="text-align: revert;">
+                    <div>
                       100%
                     </div>
                   </div>
@@ -958,29 +967,23 @@
               alt=""
             />
             <div class="hvml_main">
-              <div class="tv_ec" style="display: flex;align-items: center;">
-                <!-- <div class="tv_ec_head">
-                  <div class="center_pie" style="justify-content: center;">
-                    <div class="c_pie_li">
-                      <span class="c_pie_th c_ths0"></span>
-                      测评人数
-                    </div>
-                    <div class="c_pie_li">
-                      <span class="c_pie_th c_ths1"></span>
-                      预警人次
-                    </div>
-                  </div>
-                </div> -->
-                <div
-                  class="myChartPieCrl"
-                  id="myChartPieCrl"
-                  ref="myChartPieCrl"
-                ></div>
-                <div
-                  class="myChartPieSex"
-                  id="myChartPieSex"
-                  ref="myChartPieSex"
-                ></div>
+              <div class="tv_ec" style="display: flex;align-items: center;justify-content: space-between;">
+                <div class="tv_head">
+                  <div
+                    class="myChartPieCrl"
+                    id="myChartPieCrl"
+                    ref="myChartPieCrl"
+                  ></div>
+                  <div class="chart_heart1">年龄段</div>
+                </div>
+                <div class="tv_head1">
+                  <div
+                    class="myChartPieSex"
+                    id="myChartPieSex"
+                    ref="myChartPieSex"
+                  ></div>
+                  <div class="chart_heart2">性别</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1010,217 +1013,16 @@
           </div>
         </div>
       </div>
-      <!-- <div class="tv_top">
-        <div class="tv_t_left">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>异常信息统计</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_tlt_box">
-              <div class="tv_tltb_num">
-                <span>{{todayAlarmNum}}</span>
-                <span>个</span>
-              </div>
-              <div class="tv_tltb_txt">今日异常识别</div>
-              <img class="tv_tltb_img" src="../../assets/images/warn_01.png" alt="">
-            </div>
-            <div class="tv_tlt_box">
-              <div class="tv_tltb_num">
-                <span>{{alarmCount}}</span>
-                <span>个</span>
-              </div>
-              <div class="tv_tltb_txt">累计异常识别</div>
-              <img class="tv_tltb_img" src="../../assets/images/warn_02.png" alt="">
-            </div>
-          </div>
-        </div>
-        <div class="tv_t_left tv_t_center">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>识别数量统计</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_ec">
-              <div class="tv_ec_head">
-                <div class="center_pie" style="justify-content: center;">
-                  <div class="c_pie_li">
-                    <span class="c_pie_th c_ths0"></span>
-                    异常识别
-                  </div>
-                  <div class="c_pie_li">
-                    <span class="c_pie_th c_ths1"></span>
-                    工序识别
-                  </div>
-                </div>
-                <ul>
-                  <li @click="ecAct(7)" :class="[{ tv_ec_act: ecActNum == 7 }]">
-                    7天
-                  </li>
-                  <li @click="ecAct(30)" :class="[{ tv_ec_act: ecActNum == 30 }]">
-                    30天
-                  </li>
-                </ul>
-              </div>
-              <div class="myChartTrend" id="myChartTrend" ref="myChartTrend"></div>
-            </div>
-          </div>
-        </div>
-        <div class="tv_t_left tv_t_right">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>工序识别统计</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_tlt_box">
-              <div class="tv_tltb_num">
-                <span>{{todayProcessNum}}</span>
-                <span>个</span>
-              </div>
-              <div class="tv_tltb_txt">今日工序识别</div>
-              <img class="tv_tltb_img" src="../../assets/images/warn_03.png" alt="">
-            </div>
-            <div class="tv_tlt_box">
-              <div class="tv_tltb_num">
-                <span>{{processCount}}</span>
-                <span>个</span>
-              </div>
-              <div class="tv_tltb_txt">累计工序识别</div>
-              <img class="tv_tltb_img" src="../../assets/images/warn_04.png" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tv_top tv_bottom">
-        <div class="tv_t_left tv_t_center">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>最近告警记录</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_r_record">
-              <div style="padding-right: 0.04rem;">
-                <ul class="tv_rr_ul">
-                  <li class="tv_rr_li tv_rr_lis">
-                    <div class="tv_rr_txt" style="padding-left: 0.54rem;">
-                      类型
-                    </div>
-                    <div class="tv_rr_txt" style="padding-left: 0.1rem;width:28%;">
-                      设备名称
-                    </div>
-                    <div class="tv_rr_txt" style="padding-left: 0.1rem;width:34%;">
-                      时间
-                    </div>
-                    <div class="tv_rr_txt tv_rr_abs" @click="lookMore(0)">
-                      查看更多>
-                    </div>
-                  </li>
-                </ul>
-                <ul class="tv_rr_ul" style="padding: 0 0.2rem;height: 3.36rem;overflow: hidden;overflow-y: auto;">
-                  <li class="tv_rr_li tv_rr_lip" v-for="item in alarmRecords" :key="item.index">
-                    <div class="tv_rr_lipl" @click="viewImg(item.alarmId)">
-                      <img @click.stop="flagChange(item.alarmId)" :class="['tv_rrl_tip', item.alarmFlag == 1 ? '' : 'flag_gray']" src="../../assets/images/c_tip.png" alt="">
-                      <div class="tv_rr_txt" style="padding-left: 0.54rem;">
-                        {{item.alarmName}}
-                      </div>
-                      <div class="tv_rr_txt" style="padding-left: 0.1rem;width:28%;">
-                        {{item.deviceName}}
-                      </div>
-                      <div class="tv_rr_txt tv_rr_img" style="padding-left: 0.1rem;width:34%;">
-                        {{item.alarmTime}}
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tv_t_left tv_t_center">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>最近工序记录</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_r_record">
-              <div style="padding-right: 0.04rem;">
-                <ul class="tv_rr_ul">
-                  <li class="tv_rr_li tv_rr_lis">
-                    <div class="tv_rr_txt" style="padding-left: 0.54rem;">
-                      类型
-                    </div>
-                    <div class="tv_rr_txt" style="padding-left: 0.1rem;width:28%;">
-                      设备名称
-                    </div>
-                    <div class="tv_rr_txt" style="padding-left: 0.1rem;width:34%;">
-                      时间
-                    </div>
-                    <div class="tv_rr_txt tv_rr_abs" @click="lookMore(-1)">
-                      查看更多>
-                    </div>
-                  </li>
-                </ul>
-                <ul class="tv_rr_ul" style="padding: 0 0.2rem;height: 3.36rem;overflow: hidden;overflow-y: auto;">
-                  <li class="tv_rr_li tv_rr_lip" v-for="item in processRecords" :key="item.index">
-                    <div class="tv_rr_lipl">
-                      <img @click="flagChange(item.alarmId)" :class="['tv_rrl_tip', item.alarmFlag == 1 ? '' : 'flag_gray']" src="../../assets/images/c_tip.png" alt="">
-                      <div class="tv_rr_txt" style="padding-left: 0.54rem;">
-                        {{item.alarmName}}
-                      </div>
-                      <div class="tv_rr_txt" style="padding-left: 0.1rem;width:28%;">
-                        {{item.deviceName}}
-                      </div>
-                      <div class="tv_rr_txt tv_rr_img" style="padding-left: 0.1rem;width:34%;">
-                        {{item.alarmTime}}
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tv_t_left">
-          <div class="tv_tl_title">
-            <span></span>
-            <p>当前施工工序</p>
-          </div>
-          <div class="tv_tl_tain" style="margin-bottom: 0.21rem;">
-            <div class="tv_tlt_pic">
-              <img v-if="processImgData != ''" class="tv_tltp_img" :src="processImgData" alt="">
-              <div v-else class="tv_tltp_i_bg"></div>
-              
-              <div class="tv_tltp_txt">{{processName == '' ? '暂无工序' : processName}}</div>
-            </div>
-          </div>
-          <div class="tv_tl_title">
-            <span></span>
-            <p>当前告警</p>
-          </div>
-          <div class="tv_tl_tain">
-            <div class="tv_tlt_pic">
-              <img v-if="alarmImgData != ''" class="tv_tltp_img" :src="alarmImgData" alt="">
-              <div v-else class="tv_tltp_i_bg"></div>
-              <div class="tv_tltp_txt">{{alarmName == '' ? '暂无告警' : alarmName}}</div>
-            </div>
-          </div>
-        </div>
-      </div> -->
+
     </div>
   </div>
 </template>
 
 <script>
-import echarts from "@/assets/js/echarts";
-import "echarts-gl";
+import echarts from "../../assets/js/echarts";
 import { mapMutations } from "vuex";
-import { getPie3D, getParametricEquation } from "@/assets/js/chart.js";
-import highcharts from "highcharts"; // 必须引入
-import highcharts3d from "highcharts/highcharts-3d"; // 3D必须有引入
-// import { PictorialBarChart } from 'echarts/charts';
 import Url from "@/assets/js/url.js";
 import NP from "number-precision";
-highcharts3d(highcharts);
 // NP.strip(num)         // strip a number to nearest right number
 // NP.plus(num1, num2, num3, ...)   // addition, num + num2 + num3, two numbers is required at least.
 // NP.minus(num1, num2, num3, ...)  // subtraction, num1 - num2 - num3
@@ -1236,19 +1038,16 @@ highcharts3d(highcharts);
 // NP.times(0.362, 100);          // = 36.2, not 36.199999999999996
 // NP.divide(1.21, 1.1);          // = 1.1, not 1.0999999999999999
 // NP.round(0.105, 2);            // = 0.11, not 0.1
-// import InStall from "@/assets/js/jingdu.js";
 
-// echarts.use([PictorialBarChart]);
-
-const pieColor = [
-  "rgba(157, 113, 255, 1)",
-  "rgba(103, 135, 250, 1)",
-  "rgba(255, 212, 105, 1)",
-  "rgba(92, 212, 247, 1)",
-  "rgba(244, 142, 46, 1)"
-];
-const crlColor = ["#FFD469", "#9D71FF", "#7795FF", "#5CD4F7"];
-const sexColor = ["#7795FF", "#9D71FF"];
+// const pieColor = [
+//   "rgba(157, 113, 255, 1)",
+//   "rgba(103, 135, 250, 1)",
+//   "rgba(255, 212, 105, 1)",
+//   "rgba(92, 212, 247, 1)",
+//   "rgba(244, 142, 46, 1)"
+// ];
+// const crlColor = ["#FFD469", "#9D71FF", "#7795FF", "#5CD4F7"];
+// const sexColor = ["#7795FF", "#9D71FF"];
 export default {
   name: "screenindex",
   data() {
@@ -1260,6 +1059,10 @@ export default {
       mildNum: 0,
       moderateNum: 0,
       severeNum: 0,
+      normalRank: 0,
+      mildRank: 0,
+      moderateRank: 0,
+      severeRank: 0,
       gameNew: [],
       gameList: [
         {
@@ -1343,28 +1146,7 @@ export default {
       myChartTrend: null,
       myChartPie: null,
       pieOption: {},
-      pieList: [
-        {
-          name: "抑郁",
-          value: 0
-        },
-        {
-          name: "焦虑",
-          value: 0
-        },
-        {
-          name: "强迫",
-          value: 0
-        },
-        {
-          name: "自我伤害",
-          value: 0
-        },
-        {
-          name: "敌对",
-          value: 0
-        }
-      ],
+      pieList: [],
       myChartPieCrl: null,
       crlOption: {},
       crlList: [
@@ -1435,14 +1217,6 @@ export default {
         that.screenWidth = window.screenWidth;
       })();
     };
-
-    document.removeEventListener('touchstart', this.hideTip);
-    document.addEventListener('touchstart', this.hideTip);
-    // this.echartInit();
-    // 二进制转成数组
-    // 5
-
-    // let  parseInt(erStr, 2)
     // 调接口
     this.getLines("n");
     this.getInfo("n");
@@ -1465,72 +1239,7 @@ export default {
         () => {}
       );
     },
-    // viewImg(id) {
-    //   // console.log(id+'222')
-    //   let that = this;
-    //   let params = {
-    //     alarmId: id
-    //   };
-    //   console.log(params);
-    //   that.$http
-    //     .get(Url + "/ltgsAlarmSystem/tunnel/alarm/getImgData", {
-    //       params: params
-    //     })
-    //     .then(res => {
-    //       let data = res.data;
-    //       console.log(data);
-    //       if (data.code == 0) {
-    //         this.imgData =
-    //           data.data.imgData != ""
-    //             ? "data:image;base64," + data.data.imgData
-    //             : "";
-    //         this.imgFlag = true;
-    //         console.log(this.imgData);
-    //         console.log(this.imgFlag);
-    //       } else {
-    //         that.$message.error(data.msg);
-    //       }
-    //     })
-    //     .catch(res => {
-    //       console.log(res);
-    //     });
-    // },
-    // flagChange(id) {
-    //   // console.log(id+"111111")
-    //   // return
-    //   let that = this;
-    //   console.log("点小红旗，清除告警标记");
-    //   let param = {
-    //     alarmId: id
-    //   };
-    //   console.log(param);
-    //   that.$http
-    //     .put(Url + "/aimw/index/screenIndex", param)
-    //     .then(res => {
-    //       var data = res.data;
-    //       if (data.code == 0) {
-    //         let warnList = this.alarmRecords;
-    //         for (let i in warnList) {
-    //           if (warnList[i].alarmId == id) {
-    //             warnList[i].alarmFlag = 0;
-    //           }
-    //         }
-    //         let warnList1 = this.processRecords;
-    //         for (let i in warnList1) {
-    //           if (warnList1[i].alarmId == id) {
-    //             warnList1[i].alarmFlag = 0;
-    //           }
-    //         }
-    //         this.alarmRecords = warnList;
-    //         this.processRecords = warnList1;
-    //       } else {
-    //         that.$message.error(data.msg);
-    //       }
-    //     })
-    //     .catch(res => {
-    //       console.log(res);
-    //     });
-    // },
+    
     getLine(type) {
       let that = this;
       let params = {
@@ -1626,6 +1335,41 @@ export default {
             this.mildNum = info.mildNum;
             this.moderateNum = info.moderateNum;
             this.severeNum = info.severeNum;
+            let forArr = [
+              {
+                name: 'normal',
+                num: info.normalNum
+              },
+              {
+                name: 'mild',
+                num: info.mildNum
+              },
+              {
+                name: 'moderate',
+                num: info.moderateNum
+              },
+              {
+                name: 'severe',
+                num: info.severeNum
+              }
+            ]
+            forArr.sort((a, b) => {
+              return b.num - a.num;
+            });
+            for (let i in forArr) {
+              forArr[i].rank = Number(i) + 1
+            }
+            let saArr = []
+            for (let i in forArr) {
+              let val = saArr.indexOf(forArr[i].num)
+              if (val > -1) {
+                forArr[i].rank = forArr[i - 1].rank
+              } else {
+                saArr.push(forArr[i].num)
+              }
+              this[forArr[i].name + 'Num'] = forArr[i].num
+              this[forArr[i].name + 'Rank'] = forArr[i].rank
+            }
             // 受欢迎的游戏
             this.gameNew = [];
             let erStr = "";
@@ -2104,11 +1848,28 @@ export default {
             this.setMqttUpdate(false);
           } else {
             that.$message.error(data.msg);
+            this.logout()
           }
         })
         .catch(res => {
           console.log(res);
         });
+    },
+    logout() {
+      let param = {
+        passport: localStorage.getItem("passport")
+      };
+      this.$http.post(Url + "/aimw/user/logout", param).then(res => {
+        localStorage.removeItem("isLogin");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userAuth");
+        localStorage.removeItem("passport");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("mqttTopic");
+        this.$router.replace({
+          path: "/login"
+        });
+      });
     },
     nowTimeForm(time) {
       let date = new Date(time);
@@ -2137,446 +1898,7 @@ export default {
       console.log("切换告警数据统计接口");
       this.getLines("s");
     },
-    // 监听鼠标事件，实现饼图选中效果（单选），近似实现高亮（放大）效果。
-    // optionName是防止有多个图表进行定向option传递，单个图表可以不传，默认是opiton
-    bindListen(myChart, optionName) {
-      let that = this;
-      let selectedIndex = '';
-      let hoveredIndex = '';
-      console.log(myChart);
-      console.log(this[optionName]);
-      // 监听点击事件，实现选中效果（单选）
-      // myChart.on('click', function (params) {
-      //   console.log(params)
-      //   console.log(that.option)
-      //   console.log(that[optionName])
-      //   console.log(params)
-      //   // 从 option.series 中读取重新渲染扇形所需的参数，将是否选中取反。
-      //   let isSelected = !that[optionName].series[params.seriesIndex].pieStatus.selected;
-      //   let isHovered = that[optionName].series[params.seriesIndex].pieStatus.hovered;
-      //   let k = that[optionName].series[params.seriesIndex].pieStatus.k;
-      //   let startRatio = that[optionName].series[params.seriesIndex].pieData.startRatio;
-      //   let endRatio = that[optionName].series[params.seriesIndex].pieData.endRatio;
-      //   // 如果之前选中过其他扇形，将其取消选中（对 option 更新）
-      //   if (selectedIndex !== '' && selectedIndex !== params.seriesIndex) {
-      //     that[optionName].series[selectedIndex].parametricEquation = that.getParametricEquation(that[optionName].series[selectedIndex].pieData.startRatio, that[optionName].series[selectedIndex].pieData.endRatio, false, false, k, that[optionName].series[selectedIndex].pieData.value);
-      //     that[optionName].series[selectedIndex].pieStatus.selected = false;
-      //   }
-      //   // 对当前点击的扇形，执行选中/取消选中操作（对 option 更新）
-      //   that[optionName].series[params.seriesIndex].parametricEquation = that.getParametricEquation(startRatio, endRatio, isSelected, isHovered, k, that[optionName].series[params.seriesIndex].pieData.value);
-      //   that[optionName].series[params.seriesIndex].pieStatus.selected = isSelected;
-      //   // 如果本次是选中操作，记录上次选中的扇形对应的系列号 seriesIndex
-      //   // eslint-disable-next-line no-unused-expressions
-      //   selectedIndex = isSelected ? params.seriesIndex : null;
-      //   // 使用更新后的 option，渲染图表
-      //   myChart.setOption(that[optionName]);
-      // });
-      // 监听 mouseover，近似实现高亮（放大）效果
-      myChart.on("mouseover", params => {
-        // console.log(params)
-        // 准备重新渲染扇形所需的参数
-        let isSelected;
-        let isHovered;
-        let startRatio;
-        let endRatio;
-        let k;
-        // 如果触发 mouseover 的扇形当前已高亮，则不做操作
-        if (hoveredIndex === params.seriesIndex) {
-          // 否则进行高亮及必要的取消高亮操作
-        } else {
-          // 如果当前有高亮的扇形，取消其高亮状态（对 option 更新）
-          if (hoveredIndex !== "") {
-            // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 false。
-            isSelected = this[optionName].series[hoveredIndex].pieStatus
-              .selected;
-            isHovered = false;
-            startRatio = this[optionName].series[hoveredIndex].pieData
-              .startRatio;
-            endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
-            k = this[optionName].series[hoveredIndex].pieStatus.k;
-            // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-            this[optionName].series[
-              hoveredIndex
-            ].parametricEquation = getParametricEquation(
-              startRatio,
-              endRatio,
-              isSelected,
-              isHovered,
-              k,
-              this[optionName].series[hoveredIndex].pieData.value
-            );
-            this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered;
-            // 将此前记录的上次选中的扇形对应的系列号 seriesIndex 清空
-            hoveredIndex = "";
-          }
-          // 如果触发 mouseover 的扇形不是透明圆环，将其高亮（对 option 更新）
-          if (
-            params.seriesName !== "mouseoutSeries" &&
-            params.seriesName !== "pie2d" &&
-            params.seriesName !== "预警"
-          ) {
-            // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 true。
-            console.log(this[optionName].series[params.seriesIndex]);
-            isSelected = this[optionName].series[params.seriesIndex].pieStatus
-              .selected;
-            isHovered = true;
-            startRatio = this[optionName].series[params.seriesIndex].pieData
-              .startRatio;
-            endRatio = this[optionName].series[params.seriesIndex].pieData
-              .endRatio;
-            k = this[optionName].series[params.seriesIndex].pieStatus.k;
-            // 对当前点击的扇形，执行高亮操作（对 option 更新）
-            this[optionName].series[
-              params.seriesIndex
-            ].parametricEquation = getParametricEquation(
-              startRatio,
-              endRatio,
-              isSelected,
-              isHovered,
-              k,
-              this[optionName].series[params.seriesIndex].pieData.value + 2
-            );
-            this[optionName].series[
-              params.seriesIndex
-            ].pieStatus.hovered = isHovered;
-            // 记录上次高亮的扇形对应的系列号 seriesIndex
-            hoveredIndex = params.seriesIndex;
-          }
-          // 使用更新后的 option，渲染图表
-          myChart.setOption(this[optionName]);
-        }
-      });
-      // 修正取消高亮失败的 bug
-      myChart.on("globalout", () => {
-        // 准备重新渲染扇形所需的参数
-        let isSelected;
-        let isHovered;
-        let startRatio;
-        let endRatio;
-        let k;
-        if (hoveredIndex !== "") {
-          // 从 option.series 中读取重新渲染扇形所需的参数，将是否高亮设置为 true。
-          isSelected = this[optionName].series[hoveredIndex].pieStatus.selected;
-          isHovered = false;
-          k = this[optionName].series[hoveredIndex].pieStatus.k;
-          startRatio = this[optionName].series[hoveredIndex].pieData.startRatio;
-          endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
-          // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-          this[optionName].series[
-            hoveredIndex
-          ].parametricEquation = getParametricEquation(
-            startRatio,
-            endRatio,
-            isSelected,
-            isHovered,
-            k,
-            this[optionName].series[hoveredIndex].pieData.value
-          );
-          this[optionName].series[hoveredIndex].pieStatus.hovered = isHovered;
-          // 将此前记录的上次选中的扇形对应的系列号 seriesIndex 清空
-          hoveredIndex = "";
-        }
-        // 使用更新后的 option，渲染图表
-        myChart.setOption(this[optionName]);
-      });
-    },
-
-    // // 3D饼图的配置项，同echarjs的series
-    // getPie3D(pieData, internalDiameterRatio) {
-    //   let series = [];
-    //   let sumValue = 0;
-    //   let startValue = 0;
-    //   let endValue = 0;
-    //   let legendData = [];
-    //   let k =
-    //     typeof internalDiameterRatio !== "undefined"
-    //       ? (1 - internalDiameterRatio) / (1 + internalDiameterRatio)
-    //       : 1 / 3;
-
-    //   // 5个饼图参数
-    //   for (let i = 0; i < pieData.length; i++) {
-    //     sumValue += pieData[i].value;
-    //     let seriesItem = {
-    //       name:
-    //         typeof pieData[i].name === "undefined"
-    //           ? ''
-    //           : pieData[i].name,
-    //       type: "surface",
-    //       parametric: true,
-    //       // wireframe: {
-    //       //   show: false
-    //       // },
-    //       // label: {
-    //       //   // show: true,
-    //       //   // color: "#fff",
-    //       //   // fontSize: 30,
-    //       //   // position: "center",
-    //       //   formatter: function (params) {
-    //       //     console.log(params)
-    //       //     return '1123';
-    //       //   },
-    //       //   // rich: {
-    //       //   //   nameSty: {
-    //       //   //     fontSize: 14,
-    //       //   //     color: "#fff"
-    //       //   //   },
-    //       //   //   valueSty: {
-    //       //   //     fontSize: 14,
-    //       //   //     color: "#fff"
-    //       //   //   }
-    //       //   // }
-    //       //   // formatter: (item) => {
-    //       //   //   //  console.log(item)
-    //       //   //   return item.data.name + ":" + item.data.value + "";
-    //       //   // }
-    //       // },
-    //       // avoidLabelOverlap: false,
-    //       // labelLine: {
-    //       //   normal: {
-    //       //     lineStyle: {
-    //       //       color: "rgba(255, 255, 255, 0.3)"
-    //       //     },
-    //       //     smooth: 0,
-    //       //     length: 0,
-    //       //     length2: 0
-    //       //   }
-    //       // },
-    //       pieData: pieData[i],
-    //       // pieStatus: {
-    //       //   selected: false,
-    //       //   hovered: false,
-    //       //   k: k
-    //       // }
-    //     };
-    //     if (typeof pieData[i].itemStyle != "undefined") {
-    //       let itemStyle = {};
-    //       if (typeof pieData[i].itemStyle.color != "undefined") {
-    //         itemStyle.color = pieData[i].itemStyle.color
-    //       } else {
-    //         itemStyle.color = null
-    //       }
-    //       if (typeof pieData[i].itemStyle.opacity != "undefined") {
-    //         itemStyle.opacity = pieData[i].itemStyle.opacity
-    //       } else {
-    //         itemStyle.opacity = null
-    //       }
-    //       seriesItem.itemStyle = itemStyle;
-    //     }
-    //     console.log(seriesItem)
-    //     series.push(seriesItem);
-    //   }
-    //   console.log(series)
-    //   // 使用上一次遍历时，计算出的数据和 sumValue，调用 getParametricEquation 函数，
-    //   // 向每个 series-surface 传入不同的参数方程 series-surface.parametricEquation，也就是实现每一个扇形。
-    //   for (let i = 0; i < series.length; i++) {
-    //     endValue = startValue + series[i].pieData.value;
-    //     console.log(series[i]);
-    //     series[i].pieData.startRatio = startValue / sumValue;
-    //     series[i].pieData.endRatio = endValue / sumValue;
-    //     series[i].label = {
-    //       normal: {
-    //         show: true,
-    //         color: series[i].itemStyle.color,
-    //         formatter: [
-    //           '{b|{b}}',
-    //           '{c|{c}}{b|台}',
-    //           '{d|{d}%}'
-    //         ].join('\n'), // 用\n来换行
-    //         rich: {
-    //           b: {
-    //             color: '#fff',
-    //             lineHeight: 25,
-    //             align: 'left'
-    //           },
-    //           c: {
-    //             fontSize: 22,
-    //             color: '#fff',
-    //             textShadowColor: '#1c90a6',
-    //             textShadowOffsetX: 0,
-    //             textShadowOffsetY: 2,
-    //             textShadowBlur: 5
-    //           },
-    //           d: {
-    //             color: series[i].itemStyle.color,
-    //             align: 'left'
-    //           }
-    //         }
-    //       }
-    //     }
-    //     series[i].labelLine = {
-    //       normal: {
-    //         lineStyle: {
-    //           width: 1,
-    //           color: 'rgba(255,255,255,0.7)'
-    //         }
-    //       }
-    //     }
-    //     series[i].parametricEquation = this.getParametricEquation(
-    //       series[i].pieData.startRatio,
-    //       series[i].pieData.endRatio,
-    //       false,
-    //       false,
-    //       k,
-    //       series[i].pieData.value
-    //     );
-    //     startValue = endValue;
-    //     console.log(series[i].name)
-    //     legendData.push({ name: series[i].name, icon: 'circle' });
-    //   }
-    //   // 准备待返回的配置项，把准备好的 legendData、series 传入。
-    //   let option = {
-    //     tooltip: {
-    //       // trigger: 'item',
-    //       // trigger: "manual",
-    //       formatter: params => {
-    //         if (params.seriesName !== "mouseoutSeries") {
-    //           return `${
-    //             params.seriesName
-    //           }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-    //             params.color
-    //           };"></span>${
-    //             option.series[params.seriesIndex].pieData.value
-    //           }`;
-    //         }
-    //       }
-    //     },
-    //     legend: {
-    //       // show: false
-    //       data: legendData,
-    //       itemWidth: 8, // 色标图宽
-    //       itemHeight: 8, // 色标图高
-    //       // orient: "vertical", // 垂直显示
-    //       orient: "horizontal", // 横向显示
-    //       top: 5,
-    //       right: 0,
-    //       left: 0,
-    //       itemGap: 20, // 色标间隔
-    //       textStyle: {
-    //         color: "#fff",
-    //         fontSize: 14
-    //       }
-    //     },
-    //     xAxis3D: {
-    //       min: -1,
-    //       max: 1
-    //     },
-    //     yAxis3D: {
-    //       min: -1,
-    //       max: 1
-    //     },
-    //     zAxis3D: {
-    //       min: -1,
-    //       max: 1
-    //     },
-    //     grid3D: {
-    //       show: false,
-    //       boxHeight: '6',
-    //       top: "10",
-    //       left: "0",
-    //       // bottom: "0",
-    //       environment: "auto",
-    //       viewControl: {
-    //         distance: 280, // 远近
-    //         alpha: 40, // 饼图X轴旋转
-    //         beta: 0, // 饼图Y轴旋转
-    //         autoRotate: true
-    //       }
-    //     },
-    //     series: series
-    //   };
-    //   return option;
-    // },
-
-    // getParametricEquation(
-    //   startRatio,
-    //   endRatio,
-    //   isSelected,
-    //   isHovered,
-    //   k,
-    //   height
-    // ) {
-    //   // 计算
-    //   // console.log("getParametricEquation")
-    //   let midRatio = (startRatio + endRatio) / 2;
-    //   let startRadian = startRatio * Math.PI * 2;
-    //   let endRadian = endRatio * Math.PI * 2;
-    //   let midRadian = midRatio * Math.PI * 2;
-
-    //   if (startRatio === 0 && endRatio === 1) {
-    //     isSelected = false;
-    //   }
-
-    //   // 通过扇形内径/外径的值，换算出辅助参数 k（默认值 1/3）
-    //   k = typeof k !== "undefined" ? k : 1 / 3;
-
-    //   // 计算选中效果分别在 x 轴、y 轴方向上的位移（未选中，则位移均为 0）
-    //   let offsetX = isSelected ? Math.cos(midRadian) * 0.1 : 0;
-    //   let offsetY = isSelected ? Math.sin(midRadian) * 0.1 : 0;
-
-    //   // 计算高亮效果的放大比例（未高亮，则比例为 1）
-    //   let hoverRate = isHovered ? 1.05 : 1;
-
-    //   // 返回曲面参数方程
-    //   return {
-    //     u: {
-    //       min: -Math.PI,
-    //       max: Math.PI * 3,
-    //       step: Math.PI / 32
-    //     },
-
-    //     v: {
-    //       min: 0,
-    //       max: Math.PI * 2,
-    //       step: Math.PI / 20
-    //     },
-
-    //     x: function(u, v) {
-    //       if (u < startRadian) {
-    //         return (
-    //           offsetX +
-    //           Math.cos(startRadian) * (1 + Math.cos(v) * k) * hoverRate
-    //         );
-    //       }
-    //       if (u > endRadian) {
-    //         return (
-    //           offsetX +
-    //           Math.cos(endRadian) * (1 + Math.cos(v) * k) * hoverRate
-    //         );
-    //       }
-    //       return (
-    //         offsetX + Math.cos(u) * (1 + Math.cos(v) * k) * hoverRate
-    //       );
-    //     },
-
-    //     y: function(u, v) {
-    //       if (u < startRadian) {
-    //         return (
-    //           offsetY +
-    //           Math.sin(startRadian) * (1 + Math.cos(v) * k) * hoverRate
-    //         );
-    //       }
-    //       if (u > endRadian) {
-    //         return (
-    //           offsetY +
-    //           Math.sin(endRadian) * (1 + Math.cos(v) * k) * hoverRate
-    //         );
-    //       }
-    //       return (
-    //         offsetY + Math.sin(u) * (1 + Math.cos(v) * k) * hoverRate
-    //       );
-    //     },
-
-    //     z: function(u, v) {
-    //       if (u < -Math.PI * 0.5) {
-    //         return Math.sin(u);
-    //       }
-    //       if (u > Math.PI * 2.5) {
-    //         return Math.sin(u);
-    //       }
-    //       return Math.sin(v) > 0 ? 1 * height : -1;
-    //     }
-    //   };
-    // },
+    
     echartInit1() {
       let that = this;
       console.log(123);
@@ -2613,7 +1935,7 @@ export default {
             }
           },
           backgroundColor: "rgba(5, 16, 62, 1)",
-          borderColor: "rgba(138, 184, 255, 1)",
+          borderColor: "#5d95ff",
           borderWidth: nowSize(1),
           textStyle: {
             color: "#ffffff"
@@ -2625,23 +1947,25 @@ export default {
             console.log(obj[0].dataIndex);
             console.log(dList1);
             return (
-              '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">' +
+              '<div style="margin:-10px;padding:0.1rem;">' +
+              '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
               dList1[obj[0].dataIndex] +
               "</div>" +
               '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0.1rem;line-height:1">' +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: linear-gradient(270deg, #66FFFF 0%, #0077FF 100%);margin-right:0.04rem"></span>' +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: rgba(0, 84, 255, 1);margin-right:0.04rem"></span>' +
               "测评人次" +
               "：<span style='color:#ffffff'>" +
               obj[0].value +
               "</span>" +
               "</div>" +
               '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
-              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem;background: linear-gradient(180deg, #FEDB65 0%, #FFBE44 100%);margin-right:0.04rem"></span>' +
+              '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem;background: rgba(243, 141, 42, 1);margin-right:0.04rem"></span>' +
               "预警人次" +
               "：<span style='color:#ffffff'>" +
               obj[1].value +
               "</span>" +
-              "</div>"
+              "</div>" +
+              '</div>'
             );
           }
         },
@@ -2667,7 +1991,7 @@ export default {
             },
             axisLabel: {
               margin: nowSize(20),
-              color: "#B0CDFF",
+              color: "#ffffff",
               fontSize: nowSize(16),
               showMaxLabel: true
               // interval: 0
@@ -2686,15 +2010,6 @@ export default {
         ],
         yAxis: [
           {
-            // name: "(次)",
-            // nameTextStyle: {
-            //   // x轴name的样式调整
-            //   color: "#ffffff",
-            //   fontSize: nowSize(18),
-            //   padding: [0, 0, nowSize(10), -nowSize(0)] // 上右下左与原位置距离
-            // },
-            // nameGap: nowSize(20),  // x轴name与横坐标轴线的间距
-            // nameLocation: "end", // x轴name处于x轴的什么位置
             type: "value",
             // max: Number(that.detail.evaluationCount),
             // min: 10,
@@ -2727,7 +2042,7 @@ export default {
             smooth: true,
             itemStyle: {
               normal: {
-                color: "#00F2EF",
+                color: "rgba(14, 95, 255, 1)",
                 lineStyle: {
                   type: "solid",
                   width: nowSize(2)
@@ -2739,11 +2054,11 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "rgba(47,69,255,0.92)"
+                    color: "rgba(47, 69, 255, 0.92)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(28,0,255,0)"
+                    color: "rgba(28, 0, 255, 0)"
                   }
                 ])
               }
@@ -2760,26 +2075,26 @@ export default {
             smooth: true,
             itemStyle: {
               normal: {
-                color: "rgba(254, 219, 101, 1)",
+                color: "rgba(243, 141, 42, 1)",
                 lineStyle: {
                   type: "solid",
                   width: nowSize(2)
                 }
               }
             },
-            lineStyle: {
-              color: "rgba(0,194,255,1)"
-            },
+            // lineStyle: {
+            //   color: "rgba(0,194,255,1)"
+            // },
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "rgba(250,100,0,0.52)"
+                    color: "rgba(250, 100, 0, 0.52)"
                   },
                   {
                     offset: 1,
-                    color: "rgba(250,100,0,0)"
+                    color: "rgba(250, 100, 0, 0)"
                   }
                 ])
               }
@@ -2789,17 +2104,6 @@ export default {
           }
         ]
       });
-    },
-    fontChart(res) {
-      let docEl = document.documentElement;
-      let clientWidth =
-        window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
-      if (!clientWidth) return;
-      // 此处的3840 为设计稿的宽度，记得修改！
-      let fontSize = clientWidth / 1920;
-      return res * fontSize;
     },
     hideTip(e) {
       console.log(e.target.nodeName != 'CANVAS')
@@ -2846,22 +2150,15 @@ export default {
         return val * (nowClientWidth / initWidth);
       };
       // 绘制立体饼图
-      let flag = false;
-      console.log(this.warningStatistic.depressionNum)
-      console.log(this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0)
       this.pieList = [
         {
           name: "抑郁",
           value: NP.times(this.warningStatistic.depressionPerct, 100),
-          y: NP.times(this.warningStatistic.depressionPerct, 100),
-          // y: 50,
           num: this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0
         },
         {
           name: "焦虑",
           value: NP.times(this.warningStatistic.anxietyPerct, 100),
-          y: NP.times(this.warningStatistic.anxietyPerct, 100),
-          // y: 10,
           num: this.warningStatistic.anxietyNum
             ? this.warningStatistic.anxietyNum
             : 0
@@ -2869,8 +2166,6 @@ export default {
         {
           name: "强迫",
           value: NP.times(this.warningStatistic.forcePerct, 100),
-          y: NP.times(this.warningStatistic.forcePerct, 100),
-          // y: 20,
           num: this.warningStatistic.forceNum
             ? this.warningStatistic.forceNum
             : 0
@@ -2878,8 +2173,6 @@ export default {
         {
           name: "自我伤害",
           value: NP.times(this.warningStatistic.suicidePerct, 100),
-          y: NP.times(this.warningStatistic.suicidePerct, 100),
-          // y: 10,
           num: this.warningStatistic.suicideNum
             ? this.warningStatistic.suicideNum
             : 0
@@ -2887,460 +2180,380 @@ export default {
         {
           name: "敌对",
           value: NP.times(this.warningStatistic.violencePerct, 100),
-          y: NP.times(this.warningStatistic.violencePerct, 100),
-          // y: 10,
           num: this.warningStatistic.violenceNum
             ? this.warningStatistic.violenceNum
             : 0
         }
       ];
-      console.log(this.pieList)
-      // this.pieList.sort((a, b) => {
-      //   return a.y - b.y;
-      // });
-      // this.dataList = [
-      //   { name: "测试1:", y: 6.3, color: "#388D60" },
-      //   { name: "测试2:", y: 2.3, color: "#BEB84C" },
-      //   { name: "测试3:", y: 2.3, color: "#3A55B0" },
-      //   { name: "测试4:", y: 9.3, color: "#7B40A5" },
-      //   { name: "测试5:", y: 0.0, color: "#B76B3D" }
-      // ]
-      // this.option = {
-      //   chart: {
-      //     type: "pie", // 饼图
-      //     options3d: {
-      //       enabled: true, // 使用3d功能
-      //       alpha: 70, // 延y轴向内的倾斜角度
-      //       beta: 0
-      //     },
-      //     backgroundColor: "rgba(0, 0, 0, 0)", // 不显示背景色
-      //     width: 520,
-      //     height: 220 // 设置大小是为了饼图能在想要的区域中显示
-      //   },
-      //   legend: {
-      //     bottom: "0%",
-      //     itemStyle: {
-      //       // 图例文字的样式
-      //       color: "#999",
-      //       fontSize: 10
-      //     },
-      //     left: "center",
-      //     itemWidth: 100,
-      //     // doesn't perfectly work with our tricks, disable it
-      //     selectedMode: false,
-      //     data: this.dataList.map((item, index) => {
-      //       item.icon = "circle";
-      //       return item;
-      //     })
-      //   },
-      //   title: {
-      //     text: "" // 图表的标题文字
-      //   },
-      //   subtitle: {
-      //     text: "" // 副标题文字
-      //   },
-      //   plotOptions: {
-      //     pie: {
-      //       allowPointSelect: true, // 每个扇块能否选中
-      //       cursor: "pointer", // 鼠标指针
-      //       size: 150,
-      //       showInLegend: true, // 是否显示图例
-      //       depth: 35, // 饼图的厚度
-      //       dataLabels: {
-      //         enabled: true, // 是否显示饼图的线形tip
-      //         distance: 30, // 设置引导线的长度
-      //         color: "#999", // 全局设置字体颜色
-      //         style: {
-      //           textOutline: "none", // 去掉文字白边
-      //           fontSize: "12"
-      //         },
-      //         formatter: function () {
-      //           return this.point.name + this.y + "%";
-      //         }
-      //       }
-      //     }
-      //   },
-      //   credits: {
-      //     enabled: false // 禁用版权url    此处不设置
-      //   },
-      //   series: [
-      //     {
-      //       type: "pie",
-      //       name: "", // 统一的前置词,非必须
-      //       data: this.dataList,
-      //       startAngle: 0, // 调整饼图的角度   方向：顺时针
-      //       label: {
-      //         show: true,
-      //         position: "outside",
-      //         formatter: "{b}：{d}%",
-      //         normal: {
-      //           show: true,
-      //           fontSize: 14,
-      //           formatter: ["  {a|{b}：{d}%}"].join("\n"), // 用\n来换行
-      //           rich: {
-      //             a: {
-      //               left: 20,
-      //               padding: [0, -140, 0, -180] // 位置按需要调整
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
-      //   ]
-      // }
-      // this.option.series[0].data.forEach((item, index) => {
-      //   item.name = this.dataList[index].name;
-      //   item.y = this.dataList[index].y;
-      // });
-      // Highcharts.chart("myChartPie", this.option);
-
-      // // 可以用
-      // this.dataList = this.pieList;
-      // let quantity = 0; // 总数
-      // console.log(this.dataList)
-      // this.dataList.forEach(item => {
-      //   quantity += item.y;
-      // });
-      // this.dataList.forEach(item => {
-      //   item.bfb = parseInt((item.y / quantity) * 100);
-      //   item.h = item.bfb * 0.5 >= 50 ? 50 : item.bfb * 0.5;
-      //   // item.h = parseInt(0.60 * item.bfb); // 最高高度60，根据比例渲染高度
-      //   // console.log(this.dataList, "dataList----->>>");
-      // });
-      // console.log(this.dataList)
-      // // 修改3d饼图绘制过程
-      // var each = highcharts.each;
-      // var round = Math.round;
-      // var cos = Math.cos;
-      // var sin = Math.sin;
-      // var deg2rad = Math.deg2rad;
-      // highcharts.wrap(
-      //   highcharts.seriesTypes.pie.prototype,
-      //   "translate",
-      //   function(proceed) {
-      //     proceed.apply(this, [].slice.call(arguments, 1));
-      //     // Do not do this if the chart is not 3D
-      //     console.log(this.chart)
-      //     if (!this.chart.is3d()) {
-      //       return;
-      //     }
-      //     var series = this;
-      //     var chart = series.chart;
-      //     var options = chart.options;
-      //     var seriesOptions = series.options;
-      //     var depth = seriesOptions.depth || 0;
-      //     var options3d = options.chart.options3d;
-      //     var alpha = options3d.alpha;
-      //     var beta = options3d.beta;
-      //     var z = seriesOptions.stacking
-      //       ? (seriesOptions.stack || 0) * depth
-      //       : series._i * depth;
-      //     z += depth / 2;
-      //     if (seriesOptions.grouping !== false) {
-      //       z = 0;
-      //     }
-      //     each(series.data, function(point) {
-      //       var shapeArgs = point.shapeArgs;
-      //       var angle;
-      //       point.shapeType = "arc3d";
-      //       var ran = that.fontChart(point.options.h);
-      //       shapeArgs.z = z;
-      //       shapeArgs.depth = depth * 0.75 + ran;
-      //       shapeArgs.alpha = alpha;
-      //       shapeArgs.beta = beta;
-      //       shapeArgs.center = series.center;
-      //       shapeArgs.ran = ran;
-      //       angle = (shapeArgs.end + shapeArgs.start) / 2;
-      //       point.slicedTranslation = {
-      //         translateX: round(
-      //           cos(angle) * seriesOptions.slicedOffset * cos(alpha * deg2rad)
-      //         ),
-      //         translateY: round(
-      //           sin(angle) * seriesOptions.slicedOffset * cos(alpha * deg2rad)
-      //         )
-      //       };
-      //     });
-      //   }
-      // );
-      // (function(H) {
-      //   H.wrap(highcharts.SVGRenderer.prototype, "arc3dPath", function(
-      //     proceed
-      //   ) {
-      //     // Run original proceed method
-      //     var ret = proceed.apply(this, [].slice.call(arguments, 1));
-      //     ret.zTop = (ret.zOut + 0.5) / 100;
-      //     return ret;
-      //   });
-      // })(highcharts);
-      // highcharts.chart('myChartPie', {
-      //   chart: {
-      //     animation: false,
-      //     backgroundColor: "none",
-      //     type: "pie", // 饼图
-      //     margin: [0, 0, 0, 0],
-      //     options3d: {
-      //       enabled: true, // 使用3d功能
-      //       alpha: 60, // 延y轴向内的倾斜角度
-      //       beta: 0
-      //     },
-      //     events: {
-      //       load: function() {
-      //         var each = highcharts.each;
-      //         var points = this.series[0].points;
-      //         each(points, function(p, i) {
-      //           p.graphic.attr({
-      //             translateY: -p.shapeArgs.ran
-      //           });
-      //           p.graphic.side1.attr({
-      //             translateY: -p.shapeArgs.ran
-      //           });
-      //           p.graphic.side2.attr({
-      //             translateY: -p.shapeArgs.ran
-      //           });
-      //         });
-      //       }
-      //     }
-      //   },
-      //   tooltip: {
-      //     // show: false,
-      //     backgroundColor: 'rgb(5, 16, 62)',
-      //     borderColor: 'rgba(138, 184, 255, 1)',
-      //     borderWidth: nowSize(1),
-      //     textStyle: {
-      //       color: '#fff',
-      //       fontSize: 13
-      //     },
-      //     useHTML: true,
-      //     headerFormat: '<small style="color: #ffffff">{point.key}</small><table>',
-      //     pointFormat: '<tr><td ><small style="background: {point.color};width:0.08rem;height:0.08rem;border-radius:50%"></small></td>' +
-      //     '<td style="text-align: left;color: #ffffff">{point.num} {point.y}%</td></tr>',
-      //     footerFormat: '</table>'
-      //     // formatter: function() {
-      //     //   return (
-      //     //     '<span style="margin:-10px;padding:0.1rem;"><span style="display:block;color:#fff;font-size:0.2rem;font-weight:600">' + this.point.name + '</span><br style="line-height:0.2rem"/>' +
-              
-      //     //     `<span style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${this.point.color};"></span>` +
-      //     //     `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${this.point.num}次&nbsp;&nbsp;</span><span style="color:#fff;font-size:0.16rem;">占比${this.point.y}%</span></span></span>`
-      //     //   )
-      //     // }
-      //   },
-      //   legend: {
-      //     enabled: false // 关闭图例
-      //     // align: "center", // 水平方向位置
-      //     // verticalAlign: "center", // 垂直方向位置
-      //     // layout: "vertical",
-      //     // x: that.fontChart(0),
-      //     // y: that.fontChart(30),
-      //     // symbolWidth: that.fontChart(10),
-      //     // symbolHeight: that.fontChart(10),
-      //     // symbolRadius: "50%", // 修改成圆
-      //     // itemMarginBottom: that.fontChart(8),
-      //     // labelFormat: "{name}&nbsp;&nbsp;&nbsp;&nbsp;{y}",
-      //     // itemStyle: {
-      //     //   color: "#f4f4f6",
-      //     //   fontSize: that.fontChart(12)
-      //     // }
-      //   },
-      //   title: {
-      //     // enabled: false,
-      //     text: ""
-      //   },
-      //   subtitle: {
-      //     text: ""
-      //   },
-      //   plotOptions: {
-      //     pie: {
-      //       // allowPointSelect: true, // 每个扇块能否选中
-      //       // cursor: "pointer", // 鼠标指针
-      //       // size: 150,
-      //       // showInLegend: true, // 是否显示图例
-      //       // depth: 35, // 饼图的厚度
-      //       // dataLabels: {
-      //       //   enabled: true, // 是否显示饼图的线形tip
-      //       //   distance: 30, // 设置引导线的长度
-      //       //   color: "#999", // 全局设置字体颜色
-      //       //   style: {
-      //       //     textOutline: "none", // 去掉文字白边
-      //       //     fontSize: "12"
-      //       //   },
-      //       //   formatter: function () {
-      //       //     return this.point.name + this.y + "%";
-      //       //   }
-      //       // },
-      //       allowPointSelect: false, // 禁用点击
-      //       cursor: "pointer",
-      //       depth: that.fontChart(45),
-      //       showInLegend: true,
-      //       size: '85%', // 外圈直径大小
-      //       // innerSize: that.fontChart(95), // 内圈直径大小
-      //       center: ["50%", "65%"],
-      //       colors: pieColor,
-      //       dataLabels: {
-      //         enabled: true, // 是否显示饼图的线形tip
-      //         distance: that.fontChart(20),
-      //         align: "center",
-      //         position: "outside",
-      //         // format: "{point.bfb}%",
-      //         // formatter: (point, b) => {
-      //         //   console.log(point, 'ponit-->>')
-      //         //   console.log(b, 'ponit-->>')
-      //         // },
-      //         style: {
-      //           textOutline: "none",
-      //           fontSize: that.fontChart(18),
-      //           padding: -10,
-      //           style: {
-      //             fontWeight: "bold",
-      //             fontSize: "14px",
-      //             color: "#fff",
-      //             textOutline: "1px 1px transparent"
-      //           }
-      //         },
-      //         formatter: function () {
-      //           return (
-      //             '<div style="display:flex;margin-top:-0.2rem">' +
-      //             // '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; background: rgba(160, 208, 255, 1);margin-right:0.04rem"></span>' +
-      //             "<span style='color:#ffffff'>" +
-      //               this.point.name +
-      //             "：</span>" +
-      //             "<span style='color:#ffffff'>" +
-      //               this.y +
-      //             "%</span>" +
-      //             "</div>"
-      //           )
-      //         }
-      //       }
-      //     }
-      //   },
-      //   credits: {
-      //     enabled: false // 禁用版权信息
-      //   },
-      //   series: [
-      //     {
-      //       type: "pie",
-      //       name: "",
-      //       // startAngle: 0,
-      //       data: that.dataList
-      //     }
-      //   ]
-      // });
-      if (this.pieList[0].value === 0 &&
-      this.pieList[1].value === 0 &&
-      this.pieList[2].value === 0 &&
-      this.pieList[3].value === 0 &&
-      this.pieList[4].value === 0) {
-        flag = true
+      let pieNumArr = [
+        {
+          name: "抑郁",
+          value: NP.times(this.warningStatistic.depressionPerct, 100)
+        },
+        {
+          name: "焦虑",
+          value: NP.times(this.warningStatistic.anxietyPerct, 100)
+        },
+        {
+          name: "强迫",
+          value: NP.times(this.warningStatistic.forcePerct, 100)
+        },
+        {
+          name: "自我伤害",
+          value: NP.times(this.warningStatistic.suicidePerct, 100)
+        },
+        {
+          name: "敌对",
+          value: NP.times(this.warningStatistic.violencePerct, 100)
+        }
+      ]
+      let pieColorArr = [{
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(123, 106, 255, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(123, 106, 255, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(0, 84, 255, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(0, 84, 255, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(26, 166, 225, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(26, 166, 225, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(193, 193, 193, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(193, 193, 193, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(243, 141, 42, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(243, 141, 42, 1)' // 100% 处的颜色
+        }]
+      }]
+      let pieColorArr1 = [
+        'rgba(123, 106, 255, 1)', 'rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)'
+      ]
+      let richPieColor = {}
+      pieColorArr1.forEach((item, idx) => {
+        richPieColor[`color${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left',
+          color: item
+        };
+        richPieColor[`name${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left'
+        }
+      })
+      var dataPie = [];
+      for (var i = 0; i < pieNumArr.length; i++) {
+        dataPie.push({
+          value: pieNumArr[i].value,
+          name: pieNumArr[i].name
+        });
       }
-      this.pieList.forEach((item, index) => {
-        item.itemStyle = {
-          opacity: 1,
-          color: pieColor[index]
+      var seriesPieOption = [
+        {
+          name: '',
+          type: 'pie',
+          radius: ['60%', '70%'],
+          center: ['50%', '50%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          color: 'transparent',
+          itemStyle: {
+            normal: {
+              color: 'transparent',
+              label: {
+                show: true,
+                position: 'outside',
+                color: '#ffffff',
+                padding: [nowSize(0), 0, 0, nowSize(-0)],
+                formatter: function(params) {
+                  console.log(params)
+                  return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                },
+                rich: richPieColor
+              },
+              labelLine: {
+                length: nowSize(5),
+                length2: nowSize(5),
+                show: true,
+                lineStyle: {
+                  color: 'transparent'
+                }
+              }
+            }
+          },
+          data: dataPie
         }
-        item.tooltip = {
-          formatter: params => {
-            if (params.seriesName !== "mouseoutSeries") {
-              return `${
-                params.seriesName
-              }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-                params.color
-              };"></span>${
-                params.series[params.seriesIndex].pieData.value
-              }`;
+      ];
+      var numPie = 0
+      const seriesPieOption2 = pieNumArr.map((item, index) => {
+        numPie += item.value
+        const a = {
+          type: 'bar',
+          data: ['', '', '', numPie],
+          coordinateSystem: 'polar',
+          z: 9999 - index,
+          name: item.name,
+          roundCap: true,
+          color: pieColorArr1[index],
+          barGap: '-100%',
+          itemStyle: {
+            normal: {
+              shadowBlur: nowSize(2),
+              shadowColor: pieColorArr1[index]
             }
           }
         }
-        item.label = {
-          normal: {
-            // alignTo: 'edge',
-            margin: 0,
-            show: true,
-            lineHeight: nowSize(30),
-            color: pieColor[index],
-            formatter: [
-              '{b|{b}：}{d|{d}%}'
-            ].join('\n'), // 用\n来换行
-            rich: {
-              b: {
-                fontSize: nowSize(14),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
-                fontWeight: 400,
-                color: '#fff',
-                lineHeight: nowSize(28),
-                align: 'left'
-              },
-              d: {
-                fontSize: nowSize(14),
-                fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
-                fontWeight: 600,
-                lineHeight: nowSize(28),
-                color: pieColor[index],
-                align: 'left'
-              },
-              // hr: {
-              //   backgroundColor: pieColor[index],
-              //   borderRadius: nowSize(3),
-              //   width: nowSize(6),
-              //   height: nowSize(6)
-              // }
-            },
-            distanceToLabelLine: 0
-
-          }
-        }
-        item.labelLine = {
-          normal: {
-            length: nowSize(25),
-            length2: nowSize(45),
-            showAbove: true,
-            // minTurnAngle: 90,
-            minSurfaceAngle: 90,
-            lineStyle: {
-              width: nowSize(1),
-              color: pieColor[index]
-            }
-          }
-        }
+        return a
       })
       this.myChartPie = echarts.init(this.$refs.myChartPie);
-      console.log(this.pieList)
-      this.pieOption = getPie3D(this.pieList, 2, 300, 45, 20, 1, -1)
-      this.myChartPie.setOption(this.pieOption);
-      // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
-      let pieList1 = JSON.parse(JSON.stringify(this.pieList))
-      if (!flag) {
-        for (let i in pieList1) {
-          pieList1[i].itemStyle.color = "transparent"
-        }
-      }
-      this.pieOption.series.push({
-        name: '预警', // 自己根据场景修改
-        backgroundColor: 'transparent',
-        color: 'transparent',
-        type: 'pie',
-        label: {
-          opacity: 1,
-          fontSize: 13,
-          lineHeight: 20
+      this.myChartPie.setOption({
+        color: pieColorArr,
+        tooltip: {
+          trigger: "item",
+          // trigger: "axis",
+          axisPointer: {
+            type: "line",
+            lineStyle: {
+              color: "#00AAFF",
+              width: nowSize(0),
+              type: "solid"
+            }
+          },
+          backgroundColor: "rgba(5, 16, 62, 1)",
+          borderColor: "#5d95ff",
+          borderWidth: nowSize(1),
+          textStyle: {
+            color: "#ffffff"
+          },
+          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+          formatter: function(params) {
+            console.log(params)
+            let result = ''
+            if (params.seriesType == 'bar') {
+              console.log(dataPie[params.seriesIndex - 1])
+              result =
+              '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.seriesName +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                params.color + '");></span>' +
+                that.pieList[params.seriesIndex - 1].num +
+                '次<span style="margin-left:0.06rem;">占比' +
+                dataPie[params.seriesIndex - 1].value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            } else {
+              result =
+              '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.name +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                (params.name === "抑郁" ? pieColorArr1[0] : params.name === "焦虑" ? pieColorArr1[1] : params.name === "强迫" ? pieColorArr1[2] : params.name === "自我伤害" ? pieColorArr1[3] : pieColorArr1[4]) + '");></span>' +
+                that.pieList[params.dataIndex].num +
+                '次<span style="margin-left:0.06rem;">占比' +
+                params.value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            }
+            return result;
+          }
         },
-        startAngle: -60, // 起始角度，支持范围[0, 360]。
-        clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: flag ? ['0%', '60%'] : ['0%', '60%'],
-        center: ['50%', '60%'],
-        data: pieList1,
-        itemStyle: {
-          color: "transparent",
-          opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
-        }
-      })
-      this.myChartPie.setOption(this.pieOption)
-      console.log(this.myChartPie)
-      this.bindListen(this.myChartPie, 'pieOption')
-      // this.bindListen(this.myChartPieCrl, 'crlOption')
-      // let optionPie = this.getPie3D(pieList, '');
-      // this.myChartPie.setOption(optionPie);
-
+        angleAxis: {
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          min: 0,
+          max: 100,
+          boundaryGap: ['0', '100'],
+          startAngle: 90
+        },
+        radiusAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          // data: [that.sexList[0].name, that.sexList[1].name],
+          z: 10
+        },
+        polar: {
+          radius: '70%'
+        },
+        series: [...seriesPieOption, ...seriesPieOption2]
+      });
+      // let pieColorArr = [
+      //   'rgba(123, 106, 255, 1)', 'rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)'
+      // ]
+      // let richColor = {}
+      // pieColorArr.forEach((item, idx) => {
+      //   richColor[`color${idx}`] = {
+      //     fontSize: nowSize(14),
+      //     color: item
+      //   };
+      //   richColor[`name${idx}`] = {
+      //     fontSize: nowSize(14)
+      //     // color: '#fffffff'
+      //   }
+      // })
+      // this.myChartPie = echarts.init(this.$refs.myChartPie);
+      // this.myChartPie.setOption({
+      //   tooltip: {
+      //     trigger: "item",
+      //     // trigger: "axis",
+      //     axisPointer: {
+      //       type: "line",
+      //       lineStyle: {
+      //         color: "#00AAFF",
+      //         width: nowSize(0),
+      //         type: "solid"
+      //       }
+      //     },
+      //     backgroundColor: "rgba(5, 16, 62, 1)",
+      //     borderColor: "#5d95ff",
+      //     borderWidth: nowSize(1),
+      //     textStyle: {
+      //       color: "#ffffff"
+      //     },
+      //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+      //     formatter: function(params) {
+      //       console.log(params)
+      //       var result =
+      //         '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">' +
+      //           params.name +
+      //         "</div>" +
+      //         '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+      //         '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+      //         params.color + '");></span>' +
+      //         that.pieList[params.dataIndex].num +
+      //         '次<span style="margin-left:0.06rem;">占比' +
+      //         params.value +
+      //         '%</span>' +
+      //         "</div>"
+      //       return result;
+      //     }
+      //   },
+      //   color: pieColorArr,
+      //   series: [
+      //     {
+      //       name: "",
+      //       type: "pie",
+      //       radius: ["54%", "70%"],
+      //       center: ["50%", "50%"],
+      //       avoidLabelOverlap: false,
+      //       itemStyle: {
+      //         borderRadius: nowSize(6), // 圆角角度
+      //         borderColor: '#fff', // 边框颜色
+      //         borderWidth: 0 // 边框宽度
+      //       },
+      //       label: {
+      //         show: true,
+      //         position: 'outside',
+      //         color: '#fff',
+      //         // padding: [nowSize(-0), nowSize(-30), nowSize(-0), nowSize(-30)],
+      //         formatter: params => {
+      //           console.log(params)
+      //           return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+      //         },
+      //         rich: richColor
+              
+      //       },
+      //       emphasis: {
+      //         // itemStyle: {
+      //         //   shadowBlur: 10,
+      //         //   shadowOffsetX: 0,
+      //         //   shadowColor: "rgba(0, 0, 0, 0)"
+      //         // }
+      //       },
+      //       labelLine: {
+      //         show: true,
+      //         length: nowSize(5),
+      //         length2: nowSize(5),
+      //         lineStyle: {
+      //           color: 'transparent'
+      //         }
+      //       },
+      //       data: pieNumArr
+      //     }
+      //   ]
+      // });
+      
       // 绘制立体环饼图1
-      let crlFlag = false;
       this.crlList = [
         {
           name: "30岁以下",
@@ -3359,286 +2572,565 @@ export default {
           value: NP.times(this.ageGenderStatistic.aboveFiftyPerct, 100)
         }
       ];
-      if (
-        this.crlList[0].value === 0 &&
-        this.crlList[1].value === 0 &&
-        this.crlList[2].value === 0 &&
-        this.crlList[3].value === 0
-      ) {
-        crlFlag = true;
+      let crlNumArr = this.crlList
+      let crlColorArr = [{
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(0, 84, 255, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(0, 84, 255, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(26, 166, 225, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(26, 166, 225, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(193, 193, 193, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(193, 193, 193, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(243, 141, 42, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(243, 141, 42, 1)' // 100% 处的颜色
+        }]
+      }]
+      let crlColorArr1 = ['rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)']
+      let richCrlColor = {}
+      crlColorArr1.forEach((item, idx) => {
+        richCrlColor[`color${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left',
+          color: item
+        };
+        richCrlColor[`name${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left'
+        }
+      })
+      var dataCrl = [];
+      for (var c = 0; c < crlNumArr.length; c++) {
+        dataCrl.push({
+          value: crlNumArr[c].value,
+          name: crlNumArr[c].name
+        });
       }
-      this.crlList.forEach((item, index) => {
-        item.itemStyle = {
-          opacity: 1,
-          color: crlColor[index]
-        };
-        item.tooltip = {
-          formatter: params => {
-            if (params.seriesName !== "mouseoutSeries") {
-              return `${
-                params.seriesName
-              }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-                params.color
-              };"></span>${params.series[params.seriesIndex].pieData.value}`;
-            }
-          }
-        };
-        item.label = {
-          normal: {
-            show: true,
-            lineHeight: nowSize(20),
-            color: crlColor[index],
-            overflow: "none",
-            formatter: ["{b|{b}：}\n{d|{d}%}"].join("\n"), // 用\n来换行
-            rich: {
-              b: {
-                fontSize: nowSize(12),
-                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-                fontWeight: 400,
-                color: "#fff",
-                lineHeight: nowSize(14),
-                align: "left"
+      var seriesCrlOption = [
+        {
+          name: '',
+          type: 'pie',
+          radius: ['60%', '70%'],
+          center: ['50%', '50%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          color: 'transparent',
+          itemStyle: {
+            normal: {
+              color: 'transparent',
+              label: {
+                show: true,
+                position: 'outside',
+                color: '#ffffff',
+                padding: [nowSize(0), 0, 0, nowSize(-0)],
+                formatter: function(params) {
+                  console.log(params)
+                  return `{name${params.dataIndex}|${params.name}:}\n{color${params.dataIndex}|${params.value}%}`
+                },
+                rich: richCrlColor
               },
-              d: {
-                fontSize: nowSize(12),
-                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-                fontWeight: 600,
-                lineHeight: nowSize(14),
-                color: crlColor[index],
-                align: "left"
-              },
-              hr: {
-                backgroundColor: crlColor[index],
-                borderRadius: nowSize(3),
-                width: nowSize(6),
-                height: nowSize(6)
+              labelLine: {
+                length: nowSize(5),
+                length2: nowSize(5),
+                show: true,
+                lineStyle: {
+                  color: 'transparent'
+                }
               }
             }
-          }
-        };
-        item.labelLine = {
-          normal: {
-            length: nowSize(25),
-            length2: nowSize(10),
-            showAbove: true,
-            minTurnAngle: 90,
-            maxSurfaceAngle: 90,
-            lineStyle: {
-              width: nowSize(1),
-              color: crlColor[index]
+          },
+          data: dataCrl
+        }
+      ];
+      var numCrl = 0
+      const seriesCrlOption2 = crlNumArr.map((item, index) => {
+        numCrl += item.value
+        const a = {
+          type: 'bar',
+          data: ['', '', '', numCrl],
+          coordinateSystem: 'polar',
+          z: 9999 - index,
+          name: item.name,
+          roundCap: true,
+          color: crlColorArr1[index],
+          barGap: '-100%',
+          itemStyle: {
+            normal: {
+              shadowBlur: nowSize(2),
+              shadowColor: crlColorArr1[index]
             }
           }
-        };
-      });
-
+        }
+        return a
+      })
       this.myChartPieCrl = echarts.init(this.$refs.myChartPieCrl);
-      this.crlOption = getPie3D(
-        this.crlList,
-        0.75,
-        260,
-        30,
-        20,
-        1,
-        this.participationNum
-      );
-      this.myChartPieCrl.setOption(this.crlOption);
-      // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
-      let crlList1 = JSON.parse(JSON.stringify(this.crlList));
-      if (!crlFlag) {
-        for (let i in crlList1) {
-          crlList1[i].itemStyle.color = "transparent";
-        }
-      }
-      this.crlOption.series.push({
-        name: "预警", // 自己根据场景修改
-        backgroundColor: "transparent",
-        color: "transparent",
-        type: "pie",
-        label: {
-          opacity: 1,
-          fontSize: nowSize(14),
-          lineHeight: nowSize(20)
-          // overflow: 'breanAll'
+      this.myChartPieCrl.setOption({
+        color: crlColorArr,
+        tooltip: {
+          trigger: "item",
+          // trigger: "axis",
+          axisPointer: {
+            type: "line",
+            lineStyle: {
+              color: "#00AAFF",
+              width: nowSize(0),
+              type: "solid"
+            }
+          },
+          backgroundColor: "rgba(5, 16, 62, 1)",
+          borderColor: "#5d95ff",
+          borderWidth: nowSize(1),
+          textStyle: {
+            color: "#ffffff"
+          },
+          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+          formatter: function(params) {
+            console.log(params)
+            let result = ''
+            if (params.seriesType == 'bar') {
+              console.log(dataCrl[params.seriesIndex - 1])
+              result =
+              '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.seriesName +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                params.color + '");></span>' +
+                Math.round(dataCrl[params.seriesIndex - 1].value / 100 * that.participationNum) +
+                '人<span style="margin-left:0.06rem;">占比' +
+                dataCrl[params.seriesIndex - 1].value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            } else {
+              result =
+              '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.name +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                (params.name === "30岁以下" ? crlColorArr1[0] : params.name === "31-40岁" ? crlColorArr1[1] : params.name === "41-50岁" ? crlColorArr1[2] : crlColorArr1[3]) + '");></span>' +
+                Math.round(params.value / 100 * that.participationNum) +
+                '人<span style="margin-left:0.06rem;">占比' +
+                params.value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            }
+            return result;
+          }
         },
-        labelLayout: {
-          // verticalAlign: 'middle'
-          // y: '10%'
-          // rotate: -30
+        angleAxis: {
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          min: 0,
+          max: 100,
+          boundaryGap: ['0', '100'],
+          startAngle: 90
         },
-        startAngle: -60, // 起始角度，支持范围[0, 360]。
-        clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: crlFlag ? ["0%", "38%"] : ["0%", "38%"],
-        center: ["50%", "60%"],
-        data: crlList1,
-        itemStyle: {
-          color: "transparent",
-          opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
-        }
+        radiusAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          // data: [that.sexList[0].name, that.sexList[1].name],
+          z: 10
+        },
+        polar: {
+          radius: '70%'
+        },
+        series: [...seriesCrlOption, ...seriesCrlOption2]
       });
-      this.myChartPieCrl.setOption(this.crlOption);
-      this.bindListen(this.myChartPieCrl, "crlOption");
+      // let crlNumArr = this.crlList
+      // let crlColorArr = [
+      //   'rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)'
+      // ]
+      // let richcrlColor = {}
+      // crlColorArr.forEach((item, idx) => {
+      //   richcrlColor[`color${idx}`] = {
+      //     fontSize: nowSize(14),
+      //     height: nowSize(16),
+      //     align: 'left',
+      //     color: item
+      //   };
+      //   richcrlColor[`name${idx}`] = {
+      //     fontSize: nowSize(14),
+      //     height: nowSize(16),
+      //     align: 'left'
+      //     // color: '#fffffff'
+      //   }
+      // })
+      // this.myChartPieCrl = echarts.init(this.$refs.myChartPieCrl);
+      // this.myChartPieCrl.setOption({
+      //   tooltip: {
+      //     trigger: "item",
+      //     // trigger: "axis",
+      //     axisPointer: {
+      //       type: "line",
+      //       lineStyle: {
+      //         color: "#00AAFF",
+      //         width: nowSize(0),
+      //         type: "solid"
+      //       }
+      //     },
+      //     backgroundColor: "rgba(5, 16, 62, 1)",
+      //     borderColor: "#5d95ff",
+      //     borderWidth: nowSize(1),
+      //     textStyle: {
+      //       color: "#ffffff"
+      //     },
+      //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+      //     formatter: function(params) {
+      //       console.log(params)
+      //       var result =
+      //       '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">' +
+      //         params.name +
+      //       "</div>" +
+      //       '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+      //       '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+      //       params.color + '");></span>' +
+      //       Math.round(params.value / 100 * that.participationNum) +
+      //       '人<span style="margin-left:0.06rem;">占比' +
+      //       params.value +
+      //       '%</span>' +
+      //       "</div>"
+      //       return result;
+      //     }
+      //   },
+      //   color: crlColorArr,
+      //   series: [
+      //     {
+      //       name: "",
+      //       type: "pie",
+      //       radius: ["52%", "68%"],
+      //       center: ["50%", "50%"],
+      //       avoidLabelOverlap: false,
+      //       itemStyle: {
+      //         borderRadius: nowSize(6), // 圆角角度
+      //         borderColor: '#fff', // 边框颜色
+      //         borderWidth: 0 // 边框宽度
+      //       },
+      //       label: {
+      //         show: true,
+      //         position: 'outside',
+      //         color: '#fff',
+      //         // padding: [nowSize(-0), nowSize(-30), nowSize(-0), nowSize(-30)],
+      //         formatter: params => {
+      //           console.log(params)
+      //           return `{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${params.value}%}`
+      //         },
+      //         // textStyle: {
+      //         //   align: "center",
+      //         //   baseline: 'middle'
+      //         // },
+      //         rich: richcrlColor
+              
+      //       },
+      //       emphasis: {
+      //         // itemStyle: {
+      //         //   shadowBlur: 10,
+      //         //   shadowOffsetX: 0,
+      //         //   shadowColor: "rgba(0, 0, 0, 0)"
+      //         // }
+      //       },
+      //       labelLine: {
+      //         show: true,
+      //         length: nowSize(5),
+      //         length2: nowSize(5),
+      //         lineStyle: {
+      //           color: 'transparent'
+      //         }
+      //       },
+      //       data: crlNumArr
+      //     }
+      //   ]
+      // });
 
       // 绘制立体环饼图2
-      let sexFlag = false;
       this.sexList = [
         {
           name: "男性",
           value: NP.times(this.ageGenderStatistic.malePerct, 100)
-          // value: 1
         },
         {
           name: "女性",
           value: NP.times(this.ageGenderStatistic.femalePerct, 100)
-          // value: 0
         }
       ];
-      if (this.sexList[0].value === 0 && this.sexList[1].value === 0) {
-        sexFlag = true;
+      let sexNumArr = this.sexList
+      let sexColorArr = [{
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(0, 84, 255, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(0, 84, 255, 1)' // 100% 处的颜色
+        }]
+      }, {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+          offset: 0,
+          color: 'rgba(243, 141, 42, 1)' // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: 'rgba(243, 141, 42, 1)' // 100% 处的颜色
+        }]
+      }]
+      let sexColorArr1 = ['rgba(0, 84, 255, 1)', 'rgba(243, 141, 42, 1)']
+      let richSexColor = {}
+      sexColorArr1.forEach((item, idx) => {
+        richSexColor[`color${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left',
+          color: item
+        };
+        richSexColor[`name${idx}`] = {
+          fontSize: nowSize(14),
+          height: nowSize(16),
+          fontWeight: 'bold',
+          align: 'left'
+        }
+      })
+      var dataSex = [];
+      for (var s = 0; s < sexNumArr.length; s++) {
+        dataSex.push({
+          value: sexNumArr[s].value,
+          name: sexNumArr[s].name
+        });
       }
-      this.sexList.forEach((item, index) => {
-        item.itemStyle = {
-          opacity: 1,
-          color: sexColor[index]
-        };
-        item.tooltip = {
-          formatter: params => {
-            // console.log(params)
-            if (params.seriesName !== "mouseoutSeries") {
-              return `${
-                params.seriesName
-              }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
-                params.color
-              };"></span>${(params.series[params.seriesIndex].pieData.value /
-                100) *
-                this.participationNum}`;
-            }
-          }
-        };
-        item.label = {
-          normal: {
-            show: true,
-            // lineHeight: nowSize(18),
-            color: sexColor[index],
-            overflow: "none",
-            // formatter: function(obj) {
-            //   // var value = obj.value;
-            //   console.log(obj);
-            //   return (
-            //     '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">123' +
-            //     // {c} +
-            //     "</div>"
-            //   );
-            // },
-            // formatter: '{b|{b}：}{c}{hr|}  {per|{d}%}', // 用\n来换行
-            formatter: ["{b|{b}：}{d|{d}%}"].join("\n"), // 用\n来换行
-            // formatter: function(params) {
-            //   console.log(params)
-            //   // str = params.data.flag+ params.name+params.percent
-            //   // return str
-            // }
-            rich: {
-              b: {
-                fontSize: nowSize(12),
-                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-                fontWeight: 400,
-                color: "#fff",
-                lineHeight: nowSize(18),
-                align: "left"
+      var seriesSexOption = [
+        {
+          name: '',
+          type: 'pie',
+          radius: ['60%', '70%'],
+          center: ['50%', '50%'],
+          avoidLabelOverlap: false,
+          hoverAnimation: false,
+          color: 'transparent',
+          itemStyle: {
+            normal: {
+              color: 'transparent',
+              label: {
+                show: true,
+                position: 'outside',
+                color: '#ffffff',
+                padding: [nowSize(-16), 0, 0, nowSize(-0)],
+                formatter: function(params) {
+                  console.log(params)
+                  return `{color${params.dataIndex}|${Math.round(params.value / 100 * that.participationNum)}}\n{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                },
+                rich: richSexColor
               },
-              c: {
-                // width: '100%',
-                fontSize: nowSize(14),
-                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-                fontWeight: 600,
-                color: sexColor[index],
-                // color: '#fff',
-                lineHeight: nowSize(18),
-                align: "left"
-              },
-              d: {
-                fontSize: nowSize(12),
-                fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
-                fontWeight: 600,
-                color: sexColor[index],
-                padding: [0, 0, 0, -nowSize(4)],
-                lineHeight: nowSize(18),
-                align: "left"
-              },
-              hr: {
-                backgroundColor: sexColor[index],
-                borderRadius: nowSize(3),
-                width: nowSize(6),
-                height: nowSize(6)
-              },
-              // hr: {
-              //   borderColor: '#8C8D8E',
-              //   width: '120%',
-              //   borderWidth: nowSize(0),
-              //   height: 0
-              // },
-              per: {
-                color: "transparent",
-                backgroundColor: "#f00",
-                width: nowSize(6)
+              labelLine: {
+                length: nowSize(5),
+                length2: nowSize(5),
+                show: true,
+                lineStyle: {
+                  color: 'transparent'
+                }
               }
             }
-          }
-        };
-        item.labelLine = {
-          normal: {
-            length: nowSize(20),
-            length2: nowSize(10),
-            showAbove: true,
-            minTurnAngle: 90,
-            maxSurfaceAngle: 90,
-            lineStyle: {
-              width: nowSize(1),
-              color: sexColor[index]
+          },
+          data: dataSex
+        }
+      ];
+      var numSex = 0
+      const seriesSexOption2 = sexNumArr.map((item, index) => {
+        numSex += item.value
+        const a = {
+          type: 'bar',
+          data: ['', '', '', numSex],
+          coordinateSystem: 'polar',
+          z: 9999 - index,
+          name: item.name,
+          roundCap: true,
+          color: sexColorArr1[index],
+          barGap: '-100%',
+          itemStyle: {
+            normal: {
+              shadowBlur: nowSize(2),
+              shadowColor: sexColorArr1[index]
             }
           }
-        };
-      });
-
+        }
+        return a
+      })
       this.myChartPieSex = echarts.init(this.$refs.myChartPieSex);
-      this.sexOption = getPie3D(
-        this.sexList,
-        0.75,
-        260,
-        30,
-        20,
-        1,
-        this.participationNum
-      );
-      this.myChartPieSex.setOption(this.sexOption);
-      let sexList1 = JSON.parse(JSON.stringify(this.sexList));
-      if (!sexFlag) {
-        for (let i in sexList1) {
-          sexList1[i].itemStyle.color = "transparent";
-        }
-      }
+      this.myChartPieSex.setOption({
+        color: sexColorArr,
+        tooltip: {
+          trigger: "item",
+          // trigger: "axis",
+          axisPointer: {
+            type: "line",
+            lineStyle: {
+              color: "#00AAFF",
+              width: nowSize(0),
+              type: "solid"
+            }
+          },
+          backgroundColor: "rgba(5, 16, 62, 1)",
+          borderColor: "#5d95ff",
+          borderWidth: nowSize(1),
+          textStyle: {
+            color: "#ffffff"
+          },
+          extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
+          formatter: function(params) {
+            console.log(params)
+            let result = ''
+            if (params.seriesType == 'bar') {
+              console.log(dataSex[params.seriesIndex - 1])
+              result =
+              '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.seriesName +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                params.color + '");></span>' +
+                Math.round(dataSex[params.seriesIndex - 1].value / 100 * that.participationNum) +
+                '人<span style="margin-left:0.06rem;">占比' +
+                dataSex[params.seriesIndex - 1].value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            } else {
+              result =
 
-      this.sexOption.series.push({
-        name: "预警", // 自己根据场景修改
-        backgroundColor: "transparent",
-        color: "transparent",
-        type: "pie",
-        label: {
-          opacity: 1,
-          fontSize: nowSize(13),
-          lineHeight: nowSize(20)
+                '<div style="margin:-10px;padding:0.1rem;">' +
+                '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
+                  params.name +
+                "</div>" +
+                '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
+                '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
+                (params.name === "男性" ? sexColorArr1[0] : sexColorArr1[1]) + '");></span>' +
+                Math.round(params.value / 100 * that.participationNum) +
+                '人<span style="margin-left:0.06rem;">占比' +
+                params.value +
+                '%</span>' +
+                "</div>" +
+                "</div>"
+            }
+            return result;
+          }
         },
-        startAngle: -60, // 起始角度，支持范围[0, 360]。
-        clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-        radius: sexFlag ? ["0%", "38%"] : ["0%", "38%"],
-        center: ["50%", "60%"],
-        data: sexList1,
-        itemStyle: {
-          color: "transparent",
-          opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
-        }
+        angleAxis: {
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          min: 0,
+          max: 100,
+          boundaryGap: ['0', '100'],
+          startAngle: 90
+        },
+        radiusAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          // data: [that.sexList[0].name, that.sexList[1].name],
+          z: 10
+        },
+        polar: {
+          radius: '70%'
+        },
+        series: [...seriesSexOption, ...seriesSexOption2]
       });
-      this.myChartPieSex.setOption(this.sexOption);
-      this.bindListen(this.myChartPieSex, "sexOption");
     }
   }
 };
@@ -3884,7 +3376,8 @@ export default {
                 center;
               background-size: cover;
               transform: translate(0, 9.98rem);
-              animation: liziAnimation 9s linear infinite;
+              animation: liziAnimation 12s linear infinite;
+              // opacity: 1;
             }
             @keyframes liziAnimation {
               0% {
@@ -3923,6 +3416,60 @@ export default {
                 opacity: 0;
               }
             }
+            .lib_b_lizi2 {
+              width: 9.98rem;
+              height: 9.26rem;
+              // position: absolute;
+              // margin: auto;
+              // top: 0;
+              // bottom: 0rem;
+              // left: 0;
+              // right: 0rem;
+              background: url(../../assets/images/heart/bg_lizi.png) no-repeat
+                center;
+              background-size: cover;
+              transform: translate(0, 9.98rem) rotateY(180deg);
+              animation: lizisAnimation 12s 6s linear infinite;
+              margin-top: -9.26rem;
+              // opacity: 0.5;
+            }
+            @keyframes lizisAnimation {
+              0% {
+                transform: translate(0, 9.98rem) rotateY(180deg);
+                // background-position: 0 -50%;
+                opacity: 0;
+              }
+              1% {
+                transform: translate(0, 7rem) rotateY(180deg);
+                // background-position: 0 -20%;
+                opacity: 0;
+              }
+              1.05% {
+                transform: translate(0, 7rem) rotateY(180deg);
+                // background-position: 0 -20%;
+                opacity: 0.5;
+              }
+              // 50% {
+              //   transform: translate(0, -85%);
+              //   // background-position: 0 50%;
+              //   opacity: 1;
+              // }
+              99% {
+                transform: translate(0, -8rem) rotateY(180deg);
+                // background-position: 0 120%;
+                opacity: 0.5;
+              }
+              99.05% {
+                transform: translate(0, -8rem) rotateY(180deg);
+                // background-position: 0 120%;
+                opacity: 0;
+              }
+              100% {
+                transform: translate(0, 9.98rem) rotateY(180deg);
+                // background-position: 0 150%;
+                opacity: 0;
+              }
+            }
           }
 
           // @keyframes sizeAnimation {
@@ -3941,6 +3488,16 @@ export default {
             right: 0;
             width: 85%;
           }
+          .img7 {
+            width:100%;
+            display: block;
+            bottom: 0.1rem;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            transform: translate(0, 0);
+            animation: cir1 3s linear infinite;
+          }
           .img1 {
             display: block;
             bottom: 0.1rem;
@@ -3950,11 +3507,11 @@ export default {
           }
           .img3 {
             display: block;
-            bottom: -0.08rem;
+            bottom: 0.26rem;
             left: 0rem;
             right: 0;
             z-index: 2;
-            animation: opc 1.5s linear infinite;
+            animation: opc 3s linear infinite;
           }
           .img2 {
             display: block;
@@ -3977,7 +3534,29 @@ export default {
             width: 4.7rem;
             z-index: 4;
             animation: rotate 15s linear infinite;
-            opacity: 0.6;
+            opacity: 0;
+          }
+          .img6 {
+            display: block;
+            bottom: 0.14rem;
+            left: 0;
+            right: 0;
+            width: 5.91rem;
+            z-index: 3;
+            animation: opas 4s linear infinite;
+            opacity: 1;
+          }
+          @keyframes opas {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.4;
+            }
+            100% {
+              opacity: 1;
+            }
+            
           }
           @keyframes rotate {
             from {
@@ -3990,12 +3569,40 @@ export default {
           @keyframes opc {
             0% {
               opacity: 1;
+              transform: translate(0, 0);
+            }
+            25% {
+              opacity: 0;
+              transform: translate(0, 0.1rem);
             }
             50% {
+              opacity: 1;
+              transform: translate(0, 0);
+            }
+            75% {
               opacity: 0;
+              transform: translate(0, -0.1rem);
             }
             100% {
               opacity: 1;
+              transform: translate(0, 0);
+            }
+          }
+          @keyframes cir1 {
+            0% {
+              transform: translate(0, 0);
+            }
+            25% {
+              transform: translate(0, 0.1rem);
+            }
+            50% {
+              transform: translate(0, 0);
+            }
+            75% {
+              transform: translate(0, -0.1rem);
+            }
+            100% {
+              transform: translate(0, 0);
             }
           }
           @keyframes cir {
@@ -4045,7 +3652,7 @@ export default {
           }
           .hvml_total {
             position: relative;
-            top: 0.2rem;
+            top: 0.1rem;
             z-index: 6;
             .hvml_t_head {
               ul {
@@ -4061,11 +3668,11 @@ export default {
                   display: flex;
                   justify-content: center;
                   align-items: center;
-                  width: 0.62rem;
-                  height: 0.72rem;
-                  background: url("../../assets/images/heart/total.png")
+                  width: 3.12rem;
+                  height: 1.05rem;
+                  background: url("../../assets/images/heart/zongti.png")
                     no-repeat center;
-                  background-size: cover;
+                  background-size: 100%;
                 }
               }
             }
@@ -4076,6 +3683,7 @@ export default {
                 align-items: center;
                 justify-content: center;
                 padding: 0;
+                margin-top: 0.3rem;
                 li {
                   width: 1.6rem;
                   height: 1.6rem;
@@ -4104,10 +3712,10 @@ export default {
                     }
                     p {
                       width: 100%;
-                      font-size: 0.2rem;
+                      font-size: 0.18rem;
                       font-family: SourceHanSansCN-Medium, SourceHanSansCN;
                       font-weight: 500;
-                      color: #ffffff;
+                      color: RGBA(165, 177, 193, 1);
                     }
                   }
                   img {
@@ -4116,7 +3724,7 @@ export default {
                     transform: rotate(0deg);
                     animation: rotx 20s linear infinite;
                     transform-origin: center;
-                    margin-top: 1.2rem;
+                    margin-top: 1.1rem;
                   }
                   .img11 {
                     transform: rotate(360deg);
@@ -4124,7 +3732,7 @@ export default {
                     margin-top: 0rem;
                   }
                   .img22 {
-                    margin-top: 1.2rem;
+                    margin-top: 1.1rem;
                     transform: rotate(0deg);
                     animation: rotx2 15s linear infinite;
                   }
@@ -4161,22 +3769,22 @@ export default {
         .hvml_box {
           width: 100%;
           position: relative;
-          margin-bottom: 0.2rem;
+          margin-bottom: 0.17rem;
           // height: 3.07rem;
           .hvml_b_head {
             font-size: 0.2rem;
             line-height: 1;
-            font-family: SourceHanSansCN-Heavy, SourceHanSansCN;
-            font-weight: 800;
-            color: #ffffff;
+            font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+            font-weight: 500;
+            color: #FFFFFF;
             position: absolute;
             top: 0.12rem;
-            left: 1.09rem;
+            left: 1.08rem;
           }
           .hvml_b_bg {
             display: block;
-            width: 6.12rem;
-            height: 3.07rem;
+            width: 6.02rem;
+            height: 3.1rem;
           }
           .hvml_main {
             position: absolute;
@@ -4194,10 +3802,32 @@ export default {
               width: 100%;
               height: 100%;
               .t_one {
-                .to_img {
-                  width: 1.22rem;
-                  height: 1.08rem;
+                
+                .to_img_box{
+                  width: 1.13rem;
+                  height: 1.13rem;
+                  background: url("../../assets/images/heart/dizuo.png")
+                    no-repeat center bottom;
+                  background-size: 1.13rem 1.13rem;
+                  margin-bottom: -0.1rem;
+                  .to_img {
+                    width: 0.31rem;
+                    height: 0.41rem;
+                  }
+                  .to_img1{
+                    margin-top:-0.16rem
+                  }
+                  .to_img2{
+                    margin-top:-0.1rem
+                  }
+                  .to_img3{
+                    margin-top:-0.04rem
+                  }
+                  .to_img4{
+                    margin-top:0.02rem
+                  }
                 }
+                
                 .to_type {
                   font-size: 0.24rem;
                   font-family: SourceHanSansCN-Regular, SourceHanSansCN;
@@ -4205,47 +3835,53 @@ export default {
                   line-height: 0.36rem;
                 }
                 .i_col1 {
-                  color: #5af0ff;
+                  color: #62E0C9;
                 }
                 .i_col2 {
-                  color: #fedb65;
+                  color: #EDE188;
                 }
                 .i_col3 {
-                  color: #ff952e;
+                  color: #ED9A4A;
                 }
                 .i_col4 {
-                  color: #e892ff;
+                  color: #E66969;
                 }
                 .to_num {
                   font-size: 0.18rem;
                   font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                   font-weight: 400;
                   color: #ffffff;
-
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                   span {
-                    font-size: 0.26rem;
+                    font-size: 0.22rem;
                     font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-                    font-weight: 500;
-                    line-height: 0.4rem;
+                    font-weight: 400;
+                    line-height: 0.32rem;
                   }
                 }
               }
             }
             .tv_ec {
               width: 100%;
+              height: 100%;
               // margin-bottom: 0.32rem;
+              overflow: hidden;
               position: relative;
               .tv_ec_head {
                 font-size: 0.28rem;
-                line-height: 0.8rem;
+                // line-height: 0.8rem;
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
                 position: absolute;
-                top: 0.24rem;
+                top: 0.04rem;
+                height:0.5rem;
                 left: 0;
                 width: 100%;
                 z-index: 100;
+                
                 span {
                 }
                 ul {
@@ -4258,25 +3894,35 @@ export default {
                     justify-content: center;
                     // width: 0.8rem;
                     height: 0.26rem;
-                    width: 0.5rem;
+                    min-width: 0.5rem;
                     // padding: 0 0.1rem;
-                    background: rgba(44, 58, 135, 1);
-
-                    border: 0.02rem solid rgba(44, 58, 135, 1);
+                    
+                    background: rgba(2, 20, 57, 1);
+                    border: 0.02rem solid rgba(93, 149, 255, 1);
                     cursor: pointer;
                     font-size: 0.16rem;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
                     color: #ffffff;
+                    // padding: 0 0.08rem;
+                    
                     // border: 0.01rem solid #ffffff;
+                  }
+                  li:last-child {
+                    border-left: 0;
                   }
 
                   .tv_ec_act {
-                    color: #ffffff;
-                    background: rgba(37, 59, 177, 1);
-                    border: 0.02rem solid rgba(93, 149, 255, 1);
+                    // color: #ffffff;
+                    background: rgba(6, 51, 143, 1);
+                    // border: 0.02rem solid rgba(93, 149, 255, 1);
                   }
-                  // .tv_ec_act30{
+                  // .tv_ec_act2 {
+                  //   // color: #ffffff;
+                  //   background: rgba(6, 51, 143, 1);
+                  //   // border: 0.02rem solid rgba(93, 149, 255, 1);
+                  // }
+                  // // .tv_ec_act30{
                   //   border-color: #00AAFF;
                   //   color: #00AAFF;
                   // }
@@ -4297,13 +3943,14 @@ export default {
                   right: 0;
                   top: 0;
                   bottom: 0;
+                  height: 0.34rem;
                   z-index: -1;
                   .c_pie_li {
                     padding: 0 0.14rem;
                     font-size: 0.16rem;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
-                    color: #b0cdff;
+                    color: #7497DA;
                     display: flex;
                     align-items: center;
                     line-height: 0.34rem;
@@ -4315,53 +3962,25 @@ export default {
                       margin-right: 0.08rem;
                     }
                     .c_ths0 {
-                      background: linear-gradient(
-                        270deg,
-                        #66ffff 0%,
-                        #0077ff 100%
-                      );
+                      background: rgba(0, 84, 255, 1)
                     }
                     .c_ths1 {
-                      background: linear-gradient(
-                        180deg,
-                        #fedb65 0%,
-                        #ffbe44 100%
-                      );
+                      background: rgba(243, 141, 42, 1);
                     }
                     .c_thp0 {
-                      background: linear-gradient(
-                        270deg,
-                        #a181ff 0%,
-                        #7e5dff 100%
-                      );
+                      background: rgba(123, 106, 255, 1);
                     }
                     .c_thp1 {
-                      background: linear-gradient(
-                        270deg,
-                        #3c97ff 0%,
-                        #6787fa 100%
-                      );
+                      background: rgba(0, 84, 255, 1);
                     }
                     .c_thp2 {
-                      background: linear-gradient(
-                        180deg,
-                        #fedb65 0%,
-                        #ffbe44 100%
-                      );
+                      background: rgba(55, 196, 255, 1);
                     }
                     .c_thp3 {
-                      background: linear-gradient(
-                        270deg,
-                        #66ffff 0%,
-                        #54a4ff 100%
-                      );
+                      background: rgba(193, 193, 193, 1);
                     }
                     .c_thp4 {
-                      background: linear-gradient(
-                        270deg,
-                        #ff952e 0%,
-                        #e45d52 100%
-                      );
+                      background: rgba(243, 141, 42, 1);
                     }
                     .c_thpt0 {
                       color: #9d71ff;
@@ -4388,33 +4007,21 @@ export default {
                   }
                   .c_pie_liq {
                     padding: 0 0.08rem;
+                    font-size: 0.16rem;
+                    font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+                    font-weight: 400;
+                    color: #7497DA;
                     .c_thq1 {
-                      background: linear-gradient(
-                        270deg,
-                        #66ffff 0%,
-                        #54a4ff 100%
-                      );
+                      background: rgba(26, 166, 225, 1)
                     }
                     .c_thq2 {
-                      background: linear-gradient(
-                        270deg,
-                        #3c97ff 0%,
-                        #6787fa 100%
-                      );
+                      background: rgba(123, 106, 255, 1)
                     }
                     .c_thq3 {
-                      background: linear-gradient(
-                        270deg,
-                        #a181ff 0%,
-                        #7e5dff 100%
-                      );
+                      background: rgba(55, 121, 255, 1)
                     }
                     .c_thq4 {
-                      background: linear-gradient(
-                        180deg,
-                        #fedb65 0%,
-                        #ffbe44 100%
-                      );
+                      background: rgba(243, 141, 42, 1)
                     }
                   }
                 }
@@ -4426,20 +4033,82 @@ export default {
               }
               .myChartPie {
                 width: 100%;
-                height: 2.5rem;
+                height: 2.2rem;
+                margin-top: 0.38rem;
                 // background: #ffffff;
               }
+              .chart_heart{
+                position: absolute;
+                margin: auto;
+                top: 0.38rem;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                min-width: 1rem;
+                height: 0.28rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.2rem;
+                font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+                font-weight: 400;
+                color: #FFFFFF;
+              }
+              .tv_head{
+                width: 3.1rem;
+                height: 2.2rem;
+                position: relative;
+              }
+              .tv_head1{
+                width: 2.8rem;
+                height: 2.2rem;
+                position: relative;
+              }
               .myChartPieCrl {
-                margin-top: -0.28rem;
-                width: 55%;
-                height: 2.6rem;
+                margin-top: 0;
+                width: 3.1rem;
+                height: 2.2rem;
                 // background: #ffffff;
               }
               .myChartPieSex {
-                margin-top: -0.28rem;
-                width: 45%;
-                height: 2.6rem;
+                margin-top: 0;
+                width: 2.8rem;
+                height: 2.2rem;
                 // background: #ffffff;
+              }
+              .chart_heart1{
+                position: absolute;
+                margin: auto;
+                top: 0rem;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                min-width: 0.8rem;
+                height: 0.28rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.2rem;
+                font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+                font-weight: 400;
+                color: #FFFFFF;
+              }
+              .chart_heart2{
+                position: absolute;
+                margin: auto;
+                top: 0rem;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                min-width: 0.8rem;
+                height: 0.28rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.2rem;
+                font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+                font-weight: 400;
+                color: #FFFFFF;
               }
               // .myChartTrend, .myChartLine{
               //   width: 100%;
@@ -4447,6 +4116,7 @@ export default {
               //   // background: #ffffff;
               // }
             }
+            
             .hvml_m_game {
               display: flex;
               // justify-content: space-around;
@@ -4456,12 +4126,18 @@ export default {
               overflow: hidden;
               overflow-x: auto;
               li {
-                padding: 0 0.14rem;
+                padding: 0 0.1rem;
                 img {
                   display: block;
-                  width: 1.74rem;
-                  height: 1.9rem;
+                  width: 1.72rem;
+                  height: 1.88rem;
                 }
+              }
+              li:first-child {
+                padding-left: 0.2rem;
+              }
+              li:last-child {
+                padding-right: 0.2rem;
               }
             }
             .hvm_m_ball {
@@ -4668,25 +4344,25 @@ export default {
               }
 
               .level_bg1 {
-                color: rgba(92, 212, 247, 1);
+                color: rgba(26, 166, 225, 1);
                 // background: url("../../assets/images/heart/level1.png")
                 //   no-repeat center;
                 // background-size: cover;
               }
               .level_bg2 {
-                color: rgba(63, 106, 255, 1);
+                color: rgba(123, 106, 255, 1);
                 // background: url("../../assets/images/heart/level2.png")
                 //   no-repeat center;
                 // background-size: cover;
               }
               .level_bg3 {
-                color: rgba(156, 113, 255, 1);
+                color: rgba(55, 121, 255, 1);
                 // background: url("../../assets/images/heart/level3.png")
                 //   no-repeat center;
                 // background-size: cover;
               }
               .level_bg4 {
-                color: rgba(255, 212, 105, 1);
+                color: rgba(243, 141, 42, 1);
                 // background: url("../../assets/images/heart/level4.png")
                 //   no-repeat center;
                 // background-size: cover;
@@ -4696,31 +4372,35 @@ export default {
               margin-top: 0.28rem;
               .huml_p_li {
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 align-items: center;
                 height: 0.34rem;
                 .huml_pl_name {
-                  width: 1.1rem;
+                  width: 1.0rem;
                   font-size: 0.18rem;
-                  font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-                  font-weight: 500;
-                  color: #ffffff;
+                  font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+                  font-weight: 400;
+                  color: #FFFFFF;
                   text-align: right;
                 }
                 .huml_pl_box {
-                  width: 4.6rem;
+                  width: 4rem;
                   margin-right: 0.3rem;
-                  height: 0.36rem;
+                  margin-left: 0.2rem;
+                  height: 0.12rem;
                   display: flex;
                   align-items: center;
                   // background: #ffffff;
-                  padding: 0 0 0 0.3rem;
+                  padding: 0 0 0 0;
+                  border-radius: 0.06rem;
+                  // background: RGBA(4, 15, 53, 1);
+                  overflow: hidden;
                   cursor: pointer;
                   // 长方体
                   .huml_plb_left {
                     position: relative;
                     height: 0.12rem;
-                    margin-top: 0.06rem;
+                    margin-top: 0rem;
                     // background: rgba(1, 89, 255, 0.50);
                     .huml_plb_c {
                       position: absolute;
@@ -4728,8 +4408,9 @@ export default {
                       top: 0;
                       width: 100%;
                       height: 0.12rem;
-                      background: rgba(1, 89, 255, 0.6);
+                      background: linear-gradient(270deg, #3D77FD 0%, #0F307A 100%);
                       z-index: 2;
+                      border-radius: 0.06rem;
                     }
                     .huml_plb_l {
                       position: absolute;
@@ -4757,26 +4438,27 @@ export default {
                   .huml_plb_right {
                     position: relative;
                     height: 0.12rem;
-                    margin-top: 0.06rem;
+                    margin-top: 0rem;
                     .huml_plb_c {
                       position: absolute;
                       left: 0rem;
                       top: 0;
                       width: 100%;
                       height: 0.12rem;
-                      background: rgba(254, 185, 52, 0.6);
+                      background: linear-gradient(270deg, #F38D2A 0%, #5C4A3B 100%);
                       z-index: 1;
+                      // border-radius: 0.06rem;
+                      
                     }
                     .huml_plb_l {
                       position: absolute;
-                      left: -0.06rem;
+                      left: -0.11rem;
                       top: 0rem;
-                      width: 0.06rem;
+                      width: 0.12rem;
                       height: 0.12rem;
-                      transform-origin: right;
-                      transform: skew(0, 30deg);
-                      background: rgba(236, 200, 159, 0.8);
-                      z-index: 1;
+                      background: #5C4A3B;
+                      border-radius: 0.06rem 0 0 0.06rem;
+                      z-index: 0;
                     }
                     .huml_plb_t {
                       width: 100%;
@@ -4792,17 +4474,21 @@ export default {
                   }
                 }
                 .huml_pl_cent {
+                  width: 4.8rem;
                   display: flex;
                   justify-content: space-between;
-                  padding-left: 0.24rem;
+                  align-items: center;
                   margin-top: -0.14rem;
+                  margin-right: 0.24rem;
+                  margin-left: 1.1rem;
                   div {
                     width: 20%;
-                    text-align: left;
+                    text-align: center;
                     font-size: 0.16rem;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
                     color: #ffffff;
+                    line-height: 1
                   }
                 }
               }
@@ -4812,17 +4498,17 @@ export default {
                 align-items: center;
                 position: absolute;
                 margin: auto;
-                // left: 0;
-                right: 0.16rem;
+                left: 0;
+                right: 0rem;
                 top: 0;
                 // bottom: 0;
                 // z-index: -1;
                 .c_pie_li {
-                  padding: 0 0.14rem;
+                  padding: 0 0.12rem;
                   font-size: 0.16rem;
                   font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                   font-weight: 400;
-                  color: #b0cdff;
+                  color: #7497DA;
                   display: flex;
                   align-items: center;
                   line-height: 0.42rem;
@@ -4834,18 +4520,10 @@ export default {
                     margin-right: 0.08rem;
                   }
                   .c_ths0 {
-                    background: linear-gradient(
-                      270deg,
-                      #66ffff 0%,
-                      #0077ff 100%
-                    );
+                    background: rgba(0, 84, 255, 1);
                   }
                   .c_ths1 {
-                    background: linear-gradient(
-                      180deg,
-                      #fedb65 0%,
-                      #ffbe44 100%
-                    );
+                    background: rgba(243, 141, 42, 1);
                   }
                 }
               }

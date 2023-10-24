@@ -131,9 +131,12 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     console.log(5)
-    if (to.name !== 'login') {
+    if (to.name !== 'login' && to.name !== 'detailsreport') {
       console.log(6)
       next({ path: '/login' })
+    } else if (to.name !== 'login' && to.name === 'detailsreport') {
+      console.log(66)
+      next()
     } else {
       console.log(7)
       next()
