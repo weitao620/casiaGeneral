@@ -1187,7 +1187,7 @@ export default {
   },
   watch: {
     screenWidth(val) {
-      console.log(val);
+      // console.log(val);
       this.screenWidth = val;
       this.echartInit();
       this.echartInit1();
@@ -1200,8 +1200,8 @@ export default {
     "$store.state.mqttUpdate": {
       deep: true, // 深度监听设置为 true
       handler: function(newVal, oldVal) {
-        console.log("数据发生变化啦"); // 修改数据时，能看到输出结果
-        console.log("新：" + newVal, "老：" + oldVal);
+        // console.log("数据发生变化啦"); // 修改数据时，能看到输出结果
+        // console.log("新：" + newVal, "老：" + oldVal);
         if (newVal) {
           this.getLine("y");
         }
@@ -1212,14 +1212,16 @@ export default {
     let that = this;
     window.onresize = () => {
       return (() => {
-        console.log(111);
+        // console.log(111);
         window.screenWidth = document.body.clientWidth;
         that.screenWidth = window.screenWidth;
       })();
     };
     // 调接口
-    this.getLines("n");
-    this.getInfo("n");
+    // this.getLines("n");
+    // this.getInfo("n");
+    document.removeEventListener('touchstart', this.hideTip);
+    document.addEventListener('touchstart', this.hideTip);
     this.$forceUpdate();
   },
   beforeDestroy() {
@@ -1254,9 +1256,9 @@ export default {
         })
         .then(res => {
           let data = res.data;
-          console.log(data);
+          // console.log(data);
           if (data.code == 0) {
-            console.log("initWebSocket");
+            // console.log("initWebSocket");
             let info = data.data.reverse();
             for (let i in info) {
               let nowDate = info[i].date.split(" ")[0];
@@ -1290,7 +1292,7 @@ export default {
         })
         .then(res => {
           let data = res.data;
-          console.log(data);
+          // console.log(data);
           if (data.code == 0) {
             // console.log("initWebSocket");
             let info = data.data.reverse();
@@ -1300,7 +1302,7 @@ export default {
                 nowDate.split("-")[1] + "/" + nowDate.split("-")[2];
               info[i].date1 = nowDate;
             }
-            console.log(info);
+            // console.log(info);
             this.statistic = info;
             this.echartInit1();
           } else {
@@ -1324,7 +1326,7 @@ export default {
         })
         .then(res => {
           let data = res.data;
-          console.log(data);
+          // console.log(data);
           if (data.code == 0) {
             // console.log("initWebSocket");
             let info = data.data;
@@ -1378,7 +1380,7 @@ export default {
             } else {
               erStr = "11010";
             }
-            console.log(erStr);
+            // console.log(erStr);
             let erArr = erStr.split("");
             for (let i in erArr) {
               if (erArr[i] == 1) {
@@ -1392,7 +1394,7 @@ export default {
                 this.gameNew.push(this.gameList[i]);
               }
             }
-            console.log(this.gameNew);
+            // console.log(this.gameNew);
             this.warningStatistic = info.warningStatistic;
             // info.warningFactor.qxdl = 110
             // 反社会
@@ -1531,7 +1533,7 @@ export default {
             );
 
             this.warningFactor = info.warningFactor;
-            console.log(this.warningFactor);
+            // console.log(this.warningFactor);
             let yinList = [
               {
                 name: "情绪低落",
@@ -1661,7 +1663,7 @@ export default {
             yinList.sort((a, b) => {
               return b.value - a.value;
             });
-            console.log(yinList);
+            // console.log(yinList);
             for (let i in yinList) {
               if (yinList[0].value < 10) {
                 if (yinList[i].value >= 0 && yinList[i].value < 10) {
@@ -1695,7 +1697,7 @@ export default {
                   yinList[i].size = 36;
                 }
               }
-              console.log(i % 2);
+              // console.log(i % 2);
               
               // if (i == 0) {
               //   // if (yinList[i].value >= 0 && yinList[i].value < 10) {
@@ -1746,9 +1748,9 @@ export default {
               // if (i == 14) {
               //   yinList[i].size = 16;
               // }
-              console.log(yinList[i].size);
+              // console.log(yinList[i].size);
             }
-            console.log(yinList);
+            // console.log(yinList);
             let ar1 = [];
             let ar2 = [];
             let ar3 = [];
@@ -1775,7 +1777,7 @@ export default {
                 ar5.push(yinList[i]);
               }
             }
-            console.log(ar1, ar2, ar3, ar4, ar5);
+            // console.log(ar1, ar2, ar3, ar4, ar5);
             let arTal = [
               { list: ar1 },
               { list: ar2 },
@@ -1787,7 +1789,7 @@ export default {
               return b.list[0].value - a.list[0].value;
             });
             // console.log(yinList)
-            console.log(arTal);
+            // console.log(arTal);
 
             let yinArr = [];
             for (let i in arTal) {
@@ -1795,7 +1797,7 @@ export default {
                 yinArr.push(arTal[i].list[j]);
               }
             }
-            console.log(yinArr);
+            // console.log(yinArr);
             this.fiveList = yinArr;
             // 男 女
             info.ageGenderStatistic.malePerct = info.ageGenderStatistic.malePerct.toFixed(
@@ -1825,7 +1827,7 @@ export default {
             );
 
             this.ageGenderStatistic = info.ageGenderStatistic;
-            console.log(info);
+            // console.log(info);
             this.echartInit();
             // this.todayProcessNum = info.todayProcessNum;
             // this.processCount = info.processCount;
@@ -1895,13 +1897,13 @@ export default {
     },
     ecAct(num) {
       this.ecActNum = num;
-      console.log("切换告警数据统计接口");
+      // console.log("切换告警数据统计接口");
       this.getLines("s");
     },
     
     echartInit1() {
       let that = this;
-      console.log(123);
+      // console.log(123);
       // 当前视口宽度
       let nowClientWidth = document.documentElement.clientWidth;
       // 换算方法
@@ -1921,7 +1923,7 @@ export default {
       }
       // console.log(dList1)
       this.myChartTrend = echarts.init(this.$refs.myChartTrend);
-      console.log(this.myChartTrend);
+      // console.log(this.myChartTrend);
       // 绘制条形图
       this.myChartTrend.setOption({
         tooltip: {
@@ -1943,9 +1945,9 @@ export default {
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(obj) {
             // var value = obj.value;
-            console.log(obj);
-            console.log(obj[0].dataIndex);
-            console.log(dList1);
+            // console.log(obj);
+            // console.log(obj[0].dataIndex);
+            // console.log(dList1);
             return (
               '<div style="margin:-10px;padding:0.1rem;">' +
               '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
@@ -2106,7 +2108,7 @@ export default {
       });
     },
     hideTip(e) {
-      console.log(e.target.nodeName != 'CANVAS')
+      // console.log(e.target.nodeName != 'CANVAS')
       // 点击事件 是否是 Echarts图
       if (e.target.nodeName != 'CANVAS') {
         // getInstanceByDom:获取 dom 容器上的实例
@@ -2142,7 +2144,7 @@ export default {
     },
     echartInit() {
       let that = this;
-      console.log(456);
+      // console.log(456);
       // 当前视口宽度
       let nowClientWidth = document.documentElement.clientWidth;
       // 换算方法
@@ -2150,61 +2152,67 @@ export default {
         return val * (nowClientWidth / initWidth);
       };
       // 绘制立体饼图
+      // this.warningStatistic.depressionPerct = 0
+      // this.warningStatistic.anxietyPerct = 0
+      // this.warningStatistic.forcePerct = 0
+      // this.warningStatistic.suicidePerct = 0
+      // this.warningStatistic.violencePerct = 0
+      // this.warningStatistic.depressionNum = 0
+      // this.warningStatistic.anxietyNum = 0
+      // this.warningStatistic.forceNum = 0
+      // this.warningStatistic.suicideNum = 0
+      // this.warningStatistic.violenceNum = 0
+      let pieFlag = false
+      if (this.warningStatistic.depressionPerct === 0 && this.warningStatistic.anxietyPerct === 0 && this.warningStatistic.forcePerct === 0 && this.warningStatistic.suicidePerct === 0 && this.warningStatistic.violencePerct === 0) {
+        pieFlag = true
+      }
       this.pieList = [
         {
           name: "抑郁",
-          value: NP.times(this.warningStatistic.depressionPerct, 100),
-          num: this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.depressionPerct, 100),
+          num: this.warningStatistic.depressionNum
         },
         {
           name: "焦虑",
-          value: NP.times(this.warningStatistic.anxietyPerct, 100),
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.anxietyPerct, 100),
           num: this.warningStatistic.anxietyNum
-            ? this.warningStatistic.anxietyNum
-            : 0
         },
         {
           name: "强迫",
-          value: NP.times(this.warningStatistic.forcePerct, 100),
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.forcePerct, 100),
           num: this.warningStatistic.forceNum
-            ? this.warningStatistic.forceNum
-            : 0
         },
         {
           name: "自我伤害",
-          value: NP.times(this.warningStatistic.suicidePerct, 100),
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.suicidePerct, 100),
           num: this.warningStatistic.suicideNum
-            ? this.warningStatistic.suicideNum
-            : 0
         },
         {
           name: "敌对",
-          value: NP.times(this.warningStatistic.violencePerct, 100),
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.violencePerct, 100),
           num: this.warningStatistic.violenceNum
-            ? this.warningStatistic.violenceNum
-            : 0
         }
       ];
       let pieNumArr = [
         {
           name: "抑郁",
-          value: NP.times(this.warningStatistic.depressionPerct, 100)
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.depressionPerct, 100)
         },
         {
           name: "焦虑",
-          value: NP.times(this.warningStatistic.anxietyPerct, 100)
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.anxietyPerct, 100)
         },
         {
           name: "强迫",
-          value: NP.times(this.warningStatistic.forcePerct, 100)
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.forcePerct, 100)
         },
         {
           name: "自我伤害",
-          value: NP.times(this.warningStatistic.suicidePerct, 100)
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.suicidePerct, 100)
         },
         {
           name: "敌对",
-          value: NP.times(this.warningStatistic.violencePerct, 100)
+          value: pieFlag ? 20 : NP.times(this.warningStatistic.violencePerct, 100)
         }
       ]
       let pieColorArr = [{
@@ -2322,14 +2330,18 @@ export default {
                 color: '#ffffff',
                 padding: [nowSize(0), 0, 0, nowSize(-0)],
                 formatter: function(params) {
-                  console.log(params)
-                  return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                  // console.log(params)
+                  if (pieFlag) {
+                    return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${0}%}`
+                  } else {
+                    return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                  }
                 },
                 rich: richPieColor
               },
               labelLine: {
-                length: nowSize(5),
-                length2: nowSize(5),
+                length: nowSize(6),
+                length2: nowSize(6),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -2383,10 +2395,10 @@ export default {
           },
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(params) {
-            console.log(params)
+            // console.log(params)
             let result = ''
             if (params.seriesType == 'bar') {
-              console.log(dataPie[params.seriesIndex - 1])
+              // console.log(dataPie[params.seriesIndex - 1])
               result =
               '<div style="margin:-10px;padding:0.1rem;">' +
                 '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
@@ -2397,7 +2409,7 @@ export default {
                 params.color + '");></span>' +
                 that.pieList[params.seriesIndex - 1].num +
                 '次<span style="margin-left:0.06rem;">占比' +
-                dataPie[params.seriesIndex - 1].value +
+                (pieFlag ? 0 : dataPie[params.seriesIndex - 1].value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"
@@ -2412,7 +2424,7 @@ export default {
                 (params.name === "抑郁" ? pieColorArr1[0] : params.name === "焦虑" ? pieColorArr1[1] : params.name === "强迫" ? pieColorArr1[2] : params.name === "自我伤害" ? pieColorArr1[3] : pieColorArr1[4]) + '");></span>' +
                 that.pieList[params.dataIndex].num +
                 '次<span style="margin-left:0.06rem;">占比' +
-                params.value +
+                (pieFlag ? 0 : params.value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"
@@ -2457,119 +2469,32 @@ export default {
         },
         series: [...seriesPieOption, ...seriesPieOption2]
       });
-      // let pieColorArr = [
-      //   'rgba(123, 106, 255, 1)', 'rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)'
-      // ]
-      // let richColor = {}
-      // pieColorArr.forEach((item, idx) => {
-      //   richColor[`color${idx}`] = {
-      //     fontSize: nowSize(14),
-      //     color: item
-      //   };
-      //   richColor[`name${idx}`] = {
-      //     fontSize: nowSize(14)
-      //     // color: '#fffffff'
-      //   }
-      // })
-      // this.myChartPie = echarts.init(this.$refs.myChartPie);
-      // this.myChartPie.setOption({
-      //   tooltip: {
-      //     trigger: "item",
-      //     // trigger: "axis",
-      //     axisPointer: {
-      //       type: "line",
-      //       lineStyle: {
-      //         color: "#00AAFF",
-      //         width: nowSize(0),
-      //         type: "solid"
-      //       }
-      //     },
-      //     backgroundColor: "rgba(5, 16, 62, 1)",
-      //     borderColor: "#5d95ff",
-      //     borderWidth: nowSize(1),
-      //     textStyle: {
-      //       color: "#ffffff"
-      //     },
-      //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
-      //     formatter: function(params) {
-      //       console.log(params)
-      //       var result =
-      //         '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">' +
-      //           params.name +
-      //         "</div>" +
-      //         '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
-      //         '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
-      //         params.color + '");></span>' +
-      //         that.pieList[params.dataIndex].num +
-      //         '次<span style="margin-left:0.06rem;">占比' +
-      //         params.value +
-      //         '%</span>' +
-      //         "</div>"
-      //       return result;
-      //     }
-      //   },
-      //   color: pieColorArr,
-      //   series: [
-      //     {
-      //       name: "",
-      //       type: "pie",
-      //       radius: ["54%", "70%"],
-      //       center: ["50%", "50%"],
-      //       avoidLabelOverlap: false,
-      //       itemStyle: {
-      //         borderRadius: nowSize(6), // 圆角角度
-      //         borderColor: '#fff', // 边框颜色
-      //         borderWidth: 0 // 边框宽度
-      //       },
-      //       label: {
-      //         show: true,
-      //         position: 'outside',
-      //         color: '#fff',
-      //         // padding: [nowSize(-0), nowSize(-30), nowSize(-0), nowSize(-30)],
-      //         formatter: params => {
-      //           console.log(params)
-      //           return `{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
-      //         },
-      //         rich: richColor
-              
-      //       },
-      //       emphasis: {
-      //         // itemStyle: {
-      //         //   shadowBlur: 10,
-      //         //   shadowOffsetX: 0,
-      //         //   shadowColor: "rgba(0, 0, 0, 0)"
-      //         // }
-      //       },
-      //       labelLine: {
-      //         show: true,
-      //         length: nowSize(5),
-      //         length2: nowSize(5),
-      //         lineStyle: {
-      //           color: 'transparent'
-      //         }
-      //       },
-      //       data: pieNumArr
-      //     }
-      //   ]
-      // });
-      
       // 绘制立体环饼图1
+      // this.ageGenderStatistic.belowThirtyPerct = 0
+      // this.ageGenderStatistic.thirtyToFortyPerct = 0
+      // this.ageGenderStatistic.fortyToFiftyPerct = 0
+      // this.ageGenderStatistic.aboveFiftyPerct = 0
+
+      let crlFlag = false
+      if (this.ageGenderStatistic.belowThirtyPerct === 0 && this.ageGenderStatistic.thirtyToFortyPerct === 0 && this.ageGenderStatistic.fortyToFiftyPerct === 0 && this.ageGenderStatistic.aboveFiftyPerct === 0) {
+        crlFlag = true
+      }
       this.crlList = [
         {
           name: "30岁以下",
-          value: NP.times(this.ageGenderStatistic.belowThirtyPerct, 100)
+          value: crlFlag ? 25 : NP.times(this.ageGenderStatistic.belowThirtyPerct, 100)
         },
         {
           name: "31-40岁",
-          value: NP.times(this.ageGenderStatistic.thirtyToFortyPerct, 100)
+          value: crlFlag ? 25 : NP.times(this.ageGenderStatistic.thirtyToFortyPerct, 100)
         },
         {
           name: "41-50岁",
-          value: NP.times(this.ageGenderStatistic.fortyToFiftyPerct, 100)
+          value: crlFlag ? 25 : NP.times(this.ageGenderStatistic.fortyToFiftyPerct, 100)
         },
         {
           name: "51岁以上",
-          value: NP.times(this.ageGenderStatistic.aboveFiftyPerct, 100)
+          value: crlFlag ? 25 : NP.times(this.ageGenderStatistic.aboveFiftyPerct, 100)
         }
       ];
       let crlNumArr = this.crlList
@@ -2672,14 +2597,18 @@ export default {
                 color: '#ffffff',
                 padding: [nowSize(0), 0, 0, nowSize(-0)],
                 formatter: function(params) {
-                  console.log(params)
-                  return `{name${params.dataIndex}|${params.name}:}\n{color${params.dataIndex}|${params.value}%}`
+                  // console.log(params)
+                  if (crlFlag) {
+                    return `{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${0}%}`
+                  } else {
+                    return `{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${params.value}%}`
+                  }
                 },
                 rich: richCrlColor
               },
               labelLine: {
-                length: nowSize(5),
-                length2: nowSize(5),
+                length: crlFlag ? nowSize(1) : nowSize(5),
+                length2: crlFlag ? nowSize(1) : nowSize(5),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -2733,10 +2662,10 @@ export default {
           },
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(params) {
-            console.log(params)
+            // console.log(params)
             let result = ''
             if (params.seriesType == 'bar') {
-              console.log(dataCrl[params.seriesIndex - 1])
+              // console.log(dataCrl[params.seriesIndex - 1])
               result =
               '<div style="margin:-10px;padding:0.1rem;">' +
                 '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
@@ -2745,9 +2674,9 @@ export default {
                 '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
                 '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
                 params.color + '");></span>' +
-                Math.round(dataCrl[params.seriesIndex - 1].value / 100 * that.participationNum) +
+                (crlFlag ? 0 : Math.round(dataCrl[params.seriesIndex - 1].value / 100 * that.participationNum)) +
                 '人<span style="margin-left:0.06rem;">占比' +
-                dataCrl[params.seriesIndex - 1].value +
+                (crlFlag ? 0 : dataCrl[params.seriesIndex - 1].value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"
@@ -2760,9 +2689,9 @@ export default {
                 '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
                 '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
                 (params.name === "30岁以下" ? crlColorArr1[0] : params.name === "31-40岁" ? crlColorArr1[1] : params.name === "41-50岁" ? crlColorArr1[2] : crlColorArr1[3]) + '");></span>' +
-                Math.round(params.value / 100 * that.participationNum) +
+                (crlFlag ? 0 : Math.round(params.value / 100 * that.participationNum)) +
                 '人<span style="margin-left:0.06rem;">占比' +
-                params.value +
+                (crlFlag ? 0 : params.value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"
@@ -2807,122 +2736,24 @@ export default {
         },
         series: [...seriesCrlOption, ...seriesCrlOption2]
       });
-      // let crlNumArr = this.crlList
-      // let crlColorArr = [
-      //   'rgba(0, 84, 255, 1)', 'rgba(26, 166, 225, 1)', 'rgba(193, 193, 193, 1)', 'rgba(243, 141, 42, 1)'
-      // ]
-      // let richcrlColor = {}
-      // crlColorArr.forEach((item, idx) => {
-      //   richcrlColor[`color${idx}`] = {
-      //     fontSize: nowSize(14),
-      //     height: nowSize(16),
-      //     align: 'left',
-      //     color: item
-      //   };
-      //   richcrlColor[`name${idx}`] = {
-      //     fontSize: nowSize(14),
-      //     height: nowSize(16),
-      //     align: 'left'
-      //     // color: '#fffffff'
-      //   }
-      // })
-      // this.myChartPieCrl = echarts.init(this.$refs.myChartPieCrl);
-      // this.myChartPieCrl.setOption({
-      //   tooltip: {
-      //     trigger: "item",
-      //     // trigger: "axis",
-      //     axisPointer: {
-      //       type: "line",
-      //       lineStyle: {
-      //         color: "#00AAFF",
-      //         width: nowSize(0),
-      //         type: "solid"
-      //       }
-      //     },
-      //     backgroundColor: "rgba(5, 16, 62, 1)",
-      //     borderColor: "#5d95ff",
-      //     borderWidth: nowSize(1),
-      //     textStyle: {
-      //       color: "#ffffff"
-      //     },
-      //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
-      //     formatter: function(params) {
-      //       console.log(params)
-      //       var result =
-      //       '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">' +
-      //         params.name +
-      //       "</div>" +
-      //       '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
-      //       '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
-      //       params.color + '");></span>' +
-      //       Math.round(params.value / 100 * that.participationNum) +
-      //       '人<span style="margin-left:0.06rem;">占比' +
-      //       params.value +
-      //       '%</span>' +
-      //       "</div>"
-      //       return result;
-      //     }
-      //   },
-      //   color: crlColorArr,
-      //   series: [
-      //     {
-      //       name: "",
-      //       type: "pie",
-      //       radius: ["52%", "68%"],
-      //       center: ["50%", "50%"],
-      //       avoidLabelOverlap: false,
-      //       itemStyle: {
-      //         borderRadius: nowSize(6), // 圆角角度
-      //         borderColor: '#fff', // 边框颜色
-      //         borderWidth: 0 // 边框宽度
-      //       },
-      //       label: {
-      //         show: true,
-      //         position: 'outside',
-      //         color: '#fff',
-      //         // padding: [nowSize(-0), nowSize(-30), nowSize(-0), nowSize(-30)],
-      //         formatter: params => {
-      //           console.log(params)
-      //           return `{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${params.value}%}`
-      //         },
-      //         // textStyle: {
-      //         //   align: "center",
-      //         //   baseline: 'middle'
-      //         // },
-      //         rich: richcrlColor
-              
-      //       },
-      //       emphasis: {
-      //         // itemStyle: {
-      //         //   shadowBlur: 10,
-      //         //   shadowOffsetX: 0,
-      //         //   shadowColor: "rgba(0, 0, 0, 0)"
-      //         // }
-      //       },
-      //       labelLine: {
-      //         show: true,
-      //         length: nowSize(5),
-      //         length2: nowSize(5),
-      //         lineStyle: {
-      //           color: 'transparent'
-      //         }
-      //       },
-      //       data: crlNumArr
-      //     }
-      //   ]
-      // });
-
       // 绘制立体环饼图2
+      // this.ageGenderStatistic.malePerct = 0
+      // this.ageGenderStatistic.femalePerct = 0
+      let sexFlag = false
+      if (this.ageGenderStatistic.malePerct === 0 && this.ageGenderStatistic.femalePerct === 0) {
+        sexFlag = true
+      }
       this.sexList = [
         {
           name: "男性",
-          value: NP.times(this.ageGenderStatistic.malePerct, 100)
+          value: sexFlag ? 50 : NP.times(this.ageGenderStatistic.malePerct, 100)
         },
         {
           name: "女性",
-          value: NP.times(this.ageGenderStatistic.femalePerct, 100)
+          value: sexFlag ? 50 : NP.times(this.ageGenderStatistic.femalePerct, 100)
         }
       ];
+      
       let sexNumArr = this.sexList
       let sexColorArr = [{
         type: 'linear',
@@ -2995,14 +2826,18 @@ export default {
                 color: '#ffffff',
                 padding: [nowSize(-16), 0, 0, nowSize(-0)],
                 formatter: function(params) {
-                  console.log(params)
-                  return `{color${params.dataIndex}|${Math.round(params.value / 100 * that.participationNum)}}\n{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                  // console.log(params)
+                  if (sexFlag) {
+                    return `{color${params.dataIndex}|${0}}\n{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${0}%}`
+                  } else {
+                    return `{color${params.dataIndex}|${Math.round(params.value / 100 * that.participationNum)}}\n{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
+                  }
                 },
                 rich: richSexColor
               },
               labelLine: {
-                length: nowSize(5),
-                length2: nowSize(5),
+                length: sexFlag ? nowSize(1) : nowSize(5),
+                length2: sexFlag ? nowSize(1) : nowSize(5),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -3056,10 +2891,10 @@ export default {
           },
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(params) {
-            console.log(params)
+            // console.log(params)
             let result = ''
             if (params.seriesType == 'bar') {
-              console.log(dataSex[params.seriesIndex - 1])
+              // console.log(dataSex[params.seriesIndex - 1])
               result =
               '<div style="margin:-10px;padding:0.1rem;">' +
                 '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem;line-height:1.5">' +
@@ -3068,9 +2903,9 @@ export default {
                 '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
                 '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
                 params.color + '");></span>' +
-                Math.round(dataSex[params.seriesIndex - 1].value / 100 * that.participationNum) +
+                (sexFlag ? 0 : Math.round(dataSex[params.seriesIndex - 1].value / 100 * that.participationNum)) +
                 '人<span style="margin-left:0.06rem;">占比' +
-                dataSex[params.seriesIndex - 1].value +
+                  (sexFlag ? 0 : dataSex[params.seriesIndex - 1].value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"
@@ -3084,9 +2919,9 @@ export default {
                 '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
                 '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
                 (params.name === "男性" ? sexColorArr1[0] : sexColorArr1[1]) + '");></span>' +
-                Math.round(params.value / 100 * that.participationNum) +
+                (sexFlag ? 0 : Math.round(params.value / 100 * that.participationNum)) +
                 '人<span style="margin-left:0.06rem;">占比' +
-                params.value +
+                  (sexFlag ? 0 : params.value) +
                 '%</span>' +
                 "</div>" +
                 "</div>"

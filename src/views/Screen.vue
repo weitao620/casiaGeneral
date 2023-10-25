@@ -93,13 +93,10 @@ export default {
     // this.getCode();
   },
   created() {
-    if (localStorage.getItem("mqttTopic") && localStorage.getItem("mqttTopic") != 'undefined') {
-      this.sceneId = localStorage.getItem("mqttTopic");
-      this.initMqtt(this.sceneId);
-    } else {
-      console.log("缺少mqttTopic")
-    }
-    console.log(this.sceneId);
+    this.loginInfo()
+    // setTimeout(() => {
+    //   this.setMqttUpdate(true);
+    // }, 10000);
   },
   destroyed() {
     console.log("销毁");
@@ -124,21 +121,52 @@ export default {
       "setSysType",
       "setMqttUpdate"
     ]),
-    logout() {
+    loginInfo() {
+      let that = this;
       let param = {
-        passport: localStorage.getItem("passport")
-      };
-      this.$http.post(Url + "/aimw/user/logout", param).then(res => {
-        localStorage.removeItem("isLogin");
-        localStorage.removeItem("userInfo");
-        localStorage.removeItem("userAuth");
-        localStorage.removeItem("passport");
-        localStorage.removeItem("userType");
-        localStorage.removeItem("mqttTopic");
-        this.$router.replace({
-          path: "/login"
+        passport: "jiankong",
+        password: "cd70228f6a3f7337"
+      }
+      that.$http
+        .post(Url + "/aimw/user/login", param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            // let obja = {
+            //   menuAuthID: []
+            // }
+            localStorage.setItem('mqttTopic', data.data.mqttTopic)
+            if (localStorage.getItem("mqttTopic") && localStorage.getItem("mqttTopic") != 'undefined') {
+              this.sceneId = localStorage.getItem("mqttTopic");
+              this.initMqtt(this.sceneId);
+            } else {
+              console.log("缺少mqttTopic")
+            }
+            console.log(this.sceneId);
+          } else {
+            that.errorMsg = data.msg;
+          }
+        })
+        .catch(res => {
+          console.log(res);
         });
-      });
+    },
+    logout() {
+      window.opener.close()
+      // let param = {
+      //   passport: localStorage.getItem("passport")
+      // };
+      // this.$http.post(Url + "/aimw/user/logout", param).then(res => {
+      //   localStorage.removeItem("isLogin");
+      //   localStorage.removeItem("userInfo");
+      //   localStorage.removeItem("userAuth");
+      //   localStorage.removeItem("passport");
+      //   localStorage.removeItem("userType");
+      //   localStorage.removeItem("mqttTopic");
+      //   this.$router.replace({
+      //     path: "/login"
+      //   });
+      // });
     },
     /**
      * 浏览器判断是否全屏

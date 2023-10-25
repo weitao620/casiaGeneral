@@ -131,11 +131,14 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     console.log(5)
-    if (to.name !== 'login' && to.name !== 'detailsreport') {
+    if (to.name !== 'login' && to.name !== 'detailsreport' && to.name !== 'screenindex') {
       console.log(6)
       next({ path: '/login' })
-    } else if (to.name !== 'login' && to.name === 'detailsreport') {
+    } else if (to.name !== 'login' && to.name === 'detailsreport' && to.name !== 'screenindex') {
       console.log(66)
+      next()
+    } else if (to.name !== 'login' && to.name !== 'detailsreport' && to.name === 'screenindex') {
+      console.log(88)
       next()
     } else {
       console.log(7)
