@@ -95,6 +95,9 @@ router.beforeEach((to, from, next) => {
   var passport = localStorage.getItem('passport');
   var open = localStorage.getItem('openReport');
   var userType = localStorage.getItem('userType');
+  // if (to.name === 'screenindex') {
+  //   next()
+  // } else {
   if (isLogin) {
     console.log(to)
 
@@ -140,6 +143,8 @@ router.beforeEach((to, from, next) => {
       next()
     }
   }
+  // }
+  
 })
 router.afterEach(() => {
   window.scrollTo(0, 0);

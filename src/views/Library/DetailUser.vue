@@ -711,8 +711,9 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
+      console.log(this.oldPassword)
       if (this.formAddUser.password === this.oldPassword) {
-        this.formAddUser.password = ''
+        // this.formAddUser.password = ''
       } else {
         // console.log(this.formAddUser.passport + '' + this.formAddUser.password)
         let passMd5 = md5(this.formAddUser.passport + '' + this.formAddUser.password).substring(8, 24)

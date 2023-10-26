@@ -985,8 +985,8 @@
             </div>
           </div>
           <div class="hvml_box">
-            <div class="hvml_b_head" style="left: 0.93rem;">
-              舒缓游戏使用排行
+            <div class="hvml_b_head" style="left: 1.05rem;">
+              功能区使用排行
             </div>
             <img
               class="hvml_b_bg"
@@ -1626,7 +1626,9 @@ export default {
             this.mildNum = info.mildNum;
             this.moderateNum = info.moderateNum;
             this.severeNum = info.severeNum;
+            // info.popularGame = 1
             // 受欢迎的游戏
+            let gameArr = [0, 0, 0, 0, 0];
             this.gameNew = [];
             let erStr = "";
             if (info.popularGame !== 0) {
@@ -1636,7 +1638,12 @@ export default {
               erStr = "11100";
             }
             console.log(erStr);
-            let erArr = erStr.split("");
+            let erArrs = erStr.split("").reverse();
+            console.log(erArrs)
+            for (let i in erArrs) {
+              gameArr[i] = erArrs[i]
+            }
+            let erArr = gameArr.reverse()
             console.log(erArr)
             for (let i in erArr) {
               if (erArr[i] == 1) {
@@ -1651,6 +1658,7 @@ export default {
               }
             }
             console.log(this.gameNew);
+            console.log(this.gameNew)
             this.warningStatistic = info.warningStatistic;
             // info.warningFactor.qxdl = 110
             // 反社会

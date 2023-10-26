@@ -97,6 +97,14 @@ export default {
       this.setUserName(user);
     }
     this.auth()
+    // console.log(this.$root._route.name)
+    // console.log(this.$root._route.name)
+    // if (this.$root._route.name === 'screenindex') {
+    //   console.log('不获取权限')
+    // } else {
+    //   this.auth()
+    // }
+    
   },
   computed: {
     ...mapGetters(["getUserName"])

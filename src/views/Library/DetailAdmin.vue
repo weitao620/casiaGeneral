@@ -428,6 +428,7 @@ export default {
       } else {
         this.singleBtn1 = false
       }
+      this.oldPassword = detail.password
       if (detail.passport == detail.phone) {
         this.singleBtn2 = 1
       } else {
@@ -571,8 +572,10 @@ export default {
       }
 
       this.formAddAdmin.ifSendSms = ifSendSms
+      console.log(this.oldPassword)
+      console.log(this.formAddAdmin.password)
       if (this.formAddAdmin.password === this.oldPassword) {
-        this.formAddAdmin.password = ''
+        // this.formAddAdmin.password = ''
       } else {
         // if (this.formAddAdmin.password != localStorage.getItem('passGMd5')) {
         // console.log(this.formAddAdmin.password)
