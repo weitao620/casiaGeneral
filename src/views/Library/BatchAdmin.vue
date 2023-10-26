@@ -494,7 +494,6 @@ export default {
         let genstr = "";
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
-
         let passMd5 = md5(passwordStr).substring(8, 24)
         let vObj = {
           passport: this.visibleList[i].passport,

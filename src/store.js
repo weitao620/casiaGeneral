@@ -11,7 +11,9 @@ export default new Vuex.Store({
     isToken: false,
     collapseFlag: false,
     somePdfFlag: false,
-    gradesFlag: false
+    gradesFlag: false,
+    mqttUpdate: false,
+    sysType: 1
   },
   mutations: {
     setUserName(state, data) {
@@ -34,6 +36,12 @@ export default new Vuex.Store({
     },
     setCollapseFlag(state, data) {
       state.collapseFlag = data;
+    },
+    setSysType(state, data) {
+      state.sysType = data;
+    },
+    setMqttUpdate(state, data) {
+      state.mqttUpdate = data;
     }
   },
   getters: {
@@ -57,6 +65,12 @@ export default new Vuex.Store({
     },
     getCollapseFlag(state) {
       return state.collapseFlag;
+    },
+    getSysType(state) {
+      return state.sysType;
+    },
+    getMqttUpdate(state) {
+      return state.mqttUpdate;
     }
   },
   actions: {

@@ -18,7 +18,7 @@ module.exports = {
         // target: "http://10.0.6.31:7126/",
         target: "https://ipathy.net/aimwhs/",
         // target: "http://10.0.6.31:6120/",
-        // target: "http://36.110.172.216:11300",
+        // target: "http://36.110.172.216:11300", // 北航
         // target: "http://8.134.56.37:5120/",
         // target: 'https://ipathy.net',
         // 如果要代理 websockets

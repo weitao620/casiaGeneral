@@ -268,6 +268,7 @@ export default {
       },
       headIcons: '',
       oldPassport: '',
+      oldPassword: '',
       fid40101: {
         enable: 1,
         fieldId: 40101,
@@ -437,7 +438,7 @@ export default {
       } else {
         this.singleBtn = false
       }
-      localStorage.setItem('passMd5', detail.password)
+      // localStorage.setItem('passGMd5', detail.password)
       if (this.fid40101.enable == 1) {
         this.formAddAdmin.passport = this.oldPassport
         this.formAddAdmin.newPassport = detail.passport
@@ -568,14 +569,20 @@ export default {
       if (this.formAddAdmin.password == '') {
         this.formAddAdmin.password = this.formAddAdmin.newPassport.substring(this.formAddAdmin.newPassport.length - 6, this.formAddAdmin.newPassport.length)
       }
-      if (this.formAddAdmin.password != localStorage.getItem('passMd5')) {
-        console.log(this.formAddAdmin.password)
+
+      this.formAddAdmin.ifSendSms = ifSendSms
+      if (this.formAddAdmin.password === this.oldPassword) {
+        this.formAddAdmin.password = ''
+      } else {
+        // if (this.formAddAdmin.password != localStorage.getItem('passGMd5')) {
+        // console.log(this.formAddAdmin.password)
         let passMd5 = md5(this.formAddAdmin.password).substring(8, 24)
         this.formAddAdmin.password = passMd5
+        // }
       }
-      this.formAddAdmin.ifSendSms = ifSendSms
+      
       console.log(this.formAddAdmin)
-      // return false
+      // return
       that.$http
         .put(Url + "/aimw/manager/updateUserInfo", this.formAddAdmin)
         .then(res => {

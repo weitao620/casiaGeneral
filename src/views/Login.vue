@@ -98,9 +98,9 @@ export default {
 
   },
   created() {
-    let loginData = JSON.parse(localStorage.getItem("loginData"));
-    if (loginData) {
-      this.ruleForm = loginData;
+    let loginDatas = JSON.parse(localStorage.getItem("loginDatas"));
+    if (loginDatas) {
+      this.ruleForm = loginDatas;
     }
   },
   methods: {
@@ -119,21 +119,43 @@ export default {
     },
     subLogin() {
       let that = this;
-      let passMd5 = md5(that.ruleForm.password).substring(8, 24)
-      let param = {
-        passport: that.ruleForm.usercount,
-        // password: that.ruleForm.password
-        password: passMd5
-      };
-      console.log(param)
-      // return false
+      
+      //       let passMd5 = md5(that.ruleForm.password).substring(8, 24)
+      //       let param = {
+      //         passport: that.ruleForm.usercount,
+      //         // password: that.ruleForm.password
+      //         password: passMd5
+      //       };
+      //       console.log(param)
+      //       // return false
+      
+      let param = {}
+      // console.log(JSON.parse(localStorage.getItem("loginDatas")).password)
+      // console.log(that.ruleForm.password)
+      if (localStorage.getItem("loginDatas") && JSON.parse(localStorage.getItem("loginDatas")).password === that.ruleForm.password) {
+        param = {
+          passport: that.ruleForm.usercount,
+          password: that.ruleForm.password
+        };
+      } else {
+        let passMd5 = md5(that.ruleForm.password).substring(8, 24)
+        param = {
+          passport: that.ruleForm.usercount,
+          password: passMd5
+        };
+      }
+      // >>>>>>> 0b93df571ef882ebd3088e9eb30805e1abf5e367
       localStorage.setItem('passport', that.ruleForm.usercount)
+      console.log(param)
+      // return
       if (that.ruleForm.usercount == 'admins') {
         localStorage.setItem("isLogin", true);
         if (that.ruleForm.remember) {
-          localStorage.setItem("loginData", JSON.stringify(that.ruleForm));
+          param.remember = that.ruleForm.remember
+          param.usercount = that.ruleForm.usercount
+          localStorage.setItem("loginDatas", JSON.stringify(param));
         } else {
-          localStorage.removeItem("loginData");
+          localStorage.removeItem("loginDatas");
         }
         that.setUserName("系统管理员");
         that.$router.replace({
@@ -162,13 +184,18 @@ export default {
                   data.data.userAuth = JSON.stringify(nOb)
                 }
               }
+              localStorage.setItem('mqttTopic', data.data.mqttTopic)
+              localStorage.setItem('passGMd5', param.password)
               localStorage.setItem("userAuth", data.data.userAuth);
               localStorage.setItem("userType", 1);
+              console.log(data.data.algTypes)
               localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
               if (that.ruleForm.remember) {
-                localStorage.setItem("loginData", JSON.stringify(that.ruleForm));
+                param.remember = that.ruleForm.remember
+                param.usercount = that.ruleForm.usercount
+                localStorage.setItem("loginDatas", JSON.stringify(param));
               } else {
-                localStorage.removeItem("loginData");
+                localStorage.removeItem("loginDatas");
               }
               that.getUserInfo();
             } else {
@@ -200,9 +227,18 @@ export default {
             localStorage.setItem("userInfo", JSON.stringify(data.data));
             sessionStorage.setItem("userName", data.data.name);
             that.setUserName(data.data.name);
-            that.$router.replace({
-              path: "/library/index"
-            });
+            console.log(that.ruleForm.usercount)
+            if (that.ruleForm.usercount === 'jiankong') {
+              console.log('跳转到大屏')
+              that.$router.replace({
+                path: "/screen/index"
+              });
+            } else {
+              console.log('跳转到正常后台')
+              that.$router.replace({
+                path: "/library/index"
+              });
+            }
           }
         })
         .catch(res => {
@@ -295,7 +331,7 @@ export default {
       }
       .error_msg {
         position: absolute;
-        top: -0.17rem;
+        top: -0.2rem;
         line-height: 1;
         left: 0;
         color: #FE5FB8 !important;

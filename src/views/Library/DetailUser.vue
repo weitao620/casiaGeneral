@@ -232,6 +232,7 @@ export default {
       emailFlag: false,
       jobFlag: false,
       remarkFlag: false,
+      oldPassword: '',
       // 表单
       formAddUser: {
         passport: "", // 登录账号
@@ -445,7 +446,8 @@ export default {
             } else {
               this.singleBtn = 1
             }
-            localStorage.setItem('passMd5', data.data.password)
+            // localStorage.setItem('passMd5', data.data.password)
+            this.oldPassword = data.data.password
             if (data.data.department == 0) {
               data.data.department = ''
             }
@@ -709,15 +711,13 @@ export default {
       if (this.formAddUser.password == '') {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
-      if (this.formAddUser.password != localStorage.getItem('passMd5')) {
-        console.log(this.formAddUser.passport + '' + this.formAddUser.password)
+      if (this.formAddUser.password === this.oldPassword) {
+        this.formAddUser.password = ''
+      } else {
+        // console.log(this.formAddUser.passport + '' + this.formAddUser.password)
         let passMd5 = md5(this.formAddUser.passport + '' + this.formAddUser.password).substring(8, 24)
         this.formAddUser.password = passMd5
       }
-      
-      console.log(this.formAddUser)
-      
-      // return
       let birth = ''
       if (String(this.formAddUser.birth).indexOf('-') == -1) {
         birth = this.formTimes(this.formAddUser.birth)
