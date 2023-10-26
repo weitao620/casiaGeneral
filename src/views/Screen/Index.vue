@@ -1626,16 +1626,24 @@ export default {
             this.mildNum = info.mildNum;
             this.moderateNum = info.moderateNum;
             this.severeNum = info.severeNum;
+            // info.popularGame = 1
             // 受欢迎的游戏
+            let gameArr = [0, 0, 0, 0, 0];
             this.gameNew = [];
             let erStr = "";
             if (info.popularGame !== 0) {
               erStr = info.popularGame.toString(2);
             } else {
-              erStr = "11010";
+              erStr = "11100";
             }
             console.log(erStr);
-            let erArr = erStr.split("");
+            let erArrs = erStr.split("").reverse();
+            console.log(erArrs)
+            for (let i in erArrs) {
+              gameArr[i] = erArrs[i]
+            }
+            let erArr = gameArr.reverse()
+            console.log(erArr)
             for (let i in erArr) {
               if (erArr[i] == 1) {
                 this.gameList[i].flag = true;
@@ -1649,6 +1657,7 @@ export default {
               }
             }
             console.log(this.gameNew);
+            console.log(this.gameNew)
             this.warningStatistic = info.warningStatistic;
             // info.warningFactor.qxdl = 110
             // 反社会
