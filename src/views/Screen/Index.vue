@@ -3502,7 +3502,7 @@ export default {
         };
         item.tooltip = {
           formatter: params => {
-            // console.log(params)
+            console.log(params)
             if (params.seriesName !== "mouseoutSeries") {
               return `${
                 params.seriesName
@@ -3520,39 +3520,24 @@ export default {
             // lineHeight: nowSize(18),
             color: sexColor[index],
             overflow: "none",
-            // formatter: function(obj) {
-            //   // var value = obj.value;
-            //   console.log(obj);
-            //   return (
-            //     '<div style="font-weight: 600; font-size: 0.2rem;padding-bottom: 0px;margin-bottom: 0.08rem">123' +
-            //     // {c} +
-            //     "</div>"
-            //   );
-            // },
-            // formatter: '{b|{b}：}{c}{hr|}  {per|{d}%}', // 用\n来换行
-            formatter: ["{b|{b}：}{d|{d}%}"].join("\n"), // 用\n来换行
-            // formatter: function(params) {
-            //   console.log(params)
-            //   // str = params.data.flag+ params.name+params.percent
-            //   // return str
-            // }
+            formatter: `{c|${this.sexList[index].value / 100 * that.participationNum}}\n{b|{b}：}{d|{d}%}`, // 用\n来换行
             rich: {
               b: {
                 fontSize: nowSize(12),
                 fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 400,
                 color: "#fff",
-                lineHeight: nowSize(18),
+                lineHeight: nowSize(14),
                 align: "left"
               },
               c: {
                 // width: '100%',
-                fontSize: nowSize(14),
+                fontSize: nowSize(12),
                 fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 600,
                 color: sexColor[index],
                 // color: '#fff',
-                lineHeight: nowSize(18),
+                lineHeight: nowSize(14),
                 align: "left"
               },
               d: {
@@ -3560,26 +3545,9 @@ export default {
                 fontFamily: "SourceHanSansCN-Regular, SourceHanSansCN",
                 fontWeight: 600,
                 color: sexColor[index],
-                padding: [0, 0, 0, -nowSize(4)],
-                lineHeight: nowSize(18),
+                // padding: [0, 0, 0, -nowSize(4)],
+                lineHeight: nowSize(14),
                 align: "left"
-              },
-              hr: {
-                backgroundColor: sexColor[index],
-                borderRadius: nowSize(3),
-                width: nowSize(6),
-                height: nowSize(6)
-              },
-              // hr: {
-              //   borderColor: '#8C8D8E',
-              //   width: '120%',
-              //   borderWidth: nowSize(0),
-              //   height: 0
-              // },
-              per: {
-                color: "transparent",
-                backgroundColor: "#f00",
-                width: nowSize(6)
               }
             }
           }
