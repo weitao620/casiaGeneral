@@ -152,7 +152,16 @@ export default {
         });
     },
     logout() {
-      window.opener.close()
+      if (localStorage.getItem('passport') && localStorage.getItem('passport') === 'jiankong') {
+        localStorage.removeItem("isLogin");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userAuth");
+        localStorage.removeItem("passport");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("mqttTopic");
+      }
+      window.open("about:blank", "_self")
+      window.close();
       // let param = {
       //   passport: localStorage.getItem("passport")
       // };

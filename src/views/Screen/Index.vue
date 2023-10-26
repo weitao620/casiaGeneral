@@ -1171,11 +1171,11 @@ export default {
       sexOption: {},
       sexList: [
         {
-          name: "男性",
+          name: "男",
           value: 0
         },
         {
-          name: "女性",
+          name: "女",
           value: 0
         }
       ],
@@ -2152,7 +2152,7 @@ export default {
         return val * (nowClientWidth / initWidth);
       };
       // 绘制立体饼图
-      // this.warningStatistic.depressionPerct = 0
+      // this.warningStatistic.depressionPerct = 1
       // this.warningStatistic.anxietyPerct = 0
       // this.warningStatistic.forcePerct = 0
       // this.warningStatistic.suicidePerct = 0
@@ -2293,14 +2293,14 @@ export default {
       pieColorArr1.forEach((item, idx) => {
         richPieColor[`color${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left',
           color: item
         };
         richPieColor[`name${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left'
         }
@@ -2316,7 +2316,7 @@ export default {
         {
           name: '',
           type: 'pie',
-          radius: ['60%', '70%'],
+          radius: ['54%', '64%'],
           center: ['50%', '50%'],
           avoidLabelOverlap: false,
           hoverAnimation: false,
@@ -2340,8 +2340,8 @@ export default {
                 rich: richPieColor
               },
               labelLine: {
-                length: nowSize(6),
-                length2: nowSize(6),
+                length: nowSize(10),
+                length2: nowSize(4),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -2465,15 +2465,15 @@ export default {
           z: 10
         },
         polar: {
-          radius: '70%'
+          radius: '64%'
         },
         series: [...seriesPieOption, ...seriesPieOption2]
       });
       // 绘制立体环饼图1
       // this.ageGenderStatistic.belowThirtyPerct = 0
       // this.ageGenderStatistic.thirtyToFortyPerct = 0
-      // this.ageGenderStatistic.fortyToFiftyPerct = 0
-      // this.ageGenderStatistic.aboveFiftyPerct = 0
+      // this.ageGenderStatistic.fortyToFiftyPerct = 0.5
+      // this.ageGenderStatistic.aboveFiftyPerct = 0.5
 
       let crlFlag = false
       if (this.ageGenderStatistic.belowThirtyPerct === 0 && this.ageGenderStatistic.thirtyToFortyPerct === 0 && this.ageGenderStatistic.fortyToFiftyPerct === 0 && this.ageGenderStatistic.aboveFiftyPerct === 0) {
@@ -2560,14 +2560,14 @@ export default {
       crlColorArr1.forEach((item, idx) => {
         richCrlColor[`color${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left',
           color: item
         };
         richCrlColor[`name${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left'
         }
@@ -2583,7 +2583,7 @@ export default {
         {
           name: '',
           type: 'pie',
-          radius: ['60%', '70%'],
+          radius: ['54%', '64%'],
           center: ['50%', '50%'],
           avoidLabelOverlap: false,
           hoverAnimation: false,
@@ -2595,7 +2595,7 @@ export default {
                 show: true,
                 position: 'outside',
                 color: '#ffffff',
-                padding: [nowSize(0), 0, 0, nowSize(-0)],
+                padding: [nowSize(-10), 0, 0, nowSize(-0)],
                 formatter: function(params) {
                   // console.log(params)
                   if (crlFlag) {
@@ -2607,8 +2607,10 @@ export default {
                 rich: richCrlColor
               },
               labelLine: {
-                length: crlFlag ? nowSize(1) : nowSize(5),
-                length2: crlFlag ? nowSize(1) : nowSize(5),
+                // length: crlFlag ? nowSize(2) : nowSize(6),
+                // length2: crlFlag ? nowSize(2) : nowSize(6),
+                length: nowSize(8),
+                length2: nowSize(4),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -2732,7 +2734,7 @@ export default {
           z: 10
         },
         polar: {
-          radius: '70%'
+          radius: '64%'
         },
         series: [...seriesCrlOption, ...seriesCrlOption2]
       });
@@ -2745,11 +2747,11 @@ export default {
       }
       this.sexList = [
         {
-          name: "男性",
+          name: "男",
           value: sexFlag ? 50 : NP.times(this.ageGenderStatistic.malePerct, 100)
         },
         {
-          name: "女性",
+          name: "女",
           value: sexFlag ? 50 : NP.times(this.ageGenderStatistic.femalePerct, 100)
         }
       ];
@@ -2789,14 +2791,14 @@ export default {
       sexColorArr1.forEach((item, idx) => {
         richSexColor[`color${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left',
           color: item
         };
         richSexColor[`name${idx}`] = {
           fontSize: nowSize(14),
-          height: nowSize(16),
+          height: nowSize(15),
           fontWeight: 'bold',
           align: 'left'
         }
@@ -2812,7 +2814,7 @@ export default {
         {
           name: '',
           type: 'pie',
-          radius: ['60%', '70%'],
+          radius: ['54%', '64%'],
           center: ['50%', '50%'],
           avoidLabelOverlap: false,
           hoverAnimation: false,
@@ -2824,11 +2826,11 @@ export default {
                 show: true,
                 position: 'outside',
                 color: '#ffffff',
-                padding: [nowSize(-16), 0, 0, nowSize(-0)],
+                padding: [nowSize(-4), 0, 0, nowSize(-0)],
                 formatter: function(params) {
                   // console.log(params)
                   if (sexFlag) {
-                    return `{color${params.dataIndex}|${0}}\n{name${params.dataIndex}|${params.name}：}\n{color${params.dataIndex}|${0}%}`
+                    return `{color${params.dataIndex}|${0}}\n{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${0}%}`
                   } else {
                     return `{color${params.dataIndex}|${Math.round(params.value / 100 * that.participationNum)}}\n{name${params.dataIndex}|${params.name}：}{color${params.dataIndex}|${params.value}%}`
                   }
@@ -2836,8 +2838,10 @@ export default {
                 rich: richSexColor
               },
               labelLine: {
-                length: sexFlag ? nowSize(1) : nowSize(5),
-                length2: sexFlag ? nowSize(1) : nowSize(5),
+                // length: sexFlag ? nowSize(1) : nowSize(6),
+                // length2: sexFlag ? nowSize(1) : nowSize(6),
+                length: nowSize(10),
+                length2: nowSize(4),
                 show: true,
                 lineStyle: {
                   color: 'transparent'
@@ -2918,7 +2922,7 @@ export default {
                 "</div>" +
                 '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:0rem;line-height:1">' +
                 '<span style="display:inline-block;width:0.08rem;height:0.08rem;border-radius:0.04rem; margin-right:0.04rem;background:' +
-                (params.name === "男性" ? sexColorArr1[0] : sexColorArr1[1]) + '");></span>' +
+                (params.name === "男" ? sexColorArr1[0] : sexColorArr1[1]) + '");></span>' +
                 (sexFlag ? 0 : Math.round(params.value / 100 * that.participationNum)) +
                 '人<span style="margin-left:0.06rem;">占比' +
                   (sexFlag ? 0 : params.value) +
@@ -2962,7 +2966,7 @@ export default {
           z: 10
         },
         polar: {
-          radius: '70%'
+          radius: '64%'
         },
         series: [...seriesSexOption, ...seriesSexOption2]
       });

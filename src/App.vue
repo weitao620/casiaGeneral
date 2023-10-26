@@ -105,6 +105,8 @@ export default {
       this.setUserName(user);
     }
     this.auth()
+    console.log(window.location.href)
+    
   },
   computed: {
     ...mapGetters(["getUserName"])

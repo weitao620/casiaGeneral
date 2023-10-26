@@ -89,62 +89,74 @@ axios.interceptors.response.use(
 )
 
 router.beforeEach((to, from, next) => {
+  console.log(from)
   console.log(to)
   var isLogin = localStorage.getItem('isLogin');
   var passport = localStorage.getItem('passport');
   var open = localStorage.getItem('openReport');
   var userType = localStorage.getItem('userType');
-  if (isLogin) {
-    console.log(to)
-
-    if (to.name == 'login') {
-      console.log(1)
-      // if (userType == 2) {
-      //   next()
-      //   console.log(2)
-      // } else {
-      if (localStorage.getItem('passport') === 'jiankong') {
-        console.log(441)
-        next({ path: '/screen' })
-      } else {
-        console.log(3)
-        next({ path: '/library' })
-      }
-      // }
-    } else if (to.path.indexOf('library') !== -1 && localStorage.getItem('passport') === 'jiankong') {
-      console.log(442)
-      next({ path: '/screen' })
-    } else if (to.path.indexOf('screen') !== -1 && localStorage.getItem('passport') !== 'jiankong') {
-      console.log(442)
-      next({ path: '/library' })
-    } else {
-      console.log(41)
-      // console.log(localStorage.getItem('passport'))
-      // console.log(localStorage.getItem('passport') === 'jiankong')
-      // console.log(4)
-      // if (localStorage.getItem('passport') === 'jiankong') {
-      //   console.log(442)
-      //   next({ path: '/screen' })
-      // } else {
-      next()
-      // }
-    }
+  console.log(window.location.href)
+  if (to.name === 'screenindex') {
+    console.log('~~~~~~2111')
+    next()
+  } else if (to.name === 'detailsreport') {
+    console.log('~~~~~~3333111')
+    next()
   } else {
-    console.log(5)
-    if (to.name !== 'login' && to.name !== 'detailsreport' && to.name !== 'screenindex') {
-      console.log(6)
-      next({ path: '/login' })
-    } else if (to.name !== 'login' && to.name === 'detailsreport' && to.name !== 'screenindex') {
-      console.log(66)
-      next()
-    } else if (to.name !== 'login' && to.name !== 'detailsreport' && to.name === 'screenindex') {
-      console.log(88)
-      next()
+    if (isLogin) {
+      console.log(to)
+      if (to.name == 'login') {
+        console.log(1)
+        // if (userType == 2) {
+        //   next()
+        //   console.log(2)
+        // } else {
+        if (localStorage.getItem('passport') === 'jiankong') {
+          console.log(441)
+          next({ path: '/screen' })
+        } else {
+          console.log(3)
+          next({ path: '/library' })
+        }
+        // }
+      } else if (to.path.indexOf('library') !== -1 && localStorage.getItem('passport') === 'jiankong') {
+        console.log(442)
+        next({ path: '/screen' })
+      } else if (to.path.indexOf('screen') !== -1 && localStorage.getItem('passport') !== 'jiankong') {
+        console.log(442)
+        next({ path: '/library' })
+      } else {
+        console.log(41)
+        // console.log(localStorage.getItem('passport'))
+        // console.log(localStorage.getItem('passport') === 'jiankong')
+        // console.log(4)
+        // if (localStorage.getItem('passport') === 'jiankong') {
+        //   console.log(442)
+        //   next({ path: '/screen' })
+        // } else {
+        next()
+        // }
+      }
     } else {
-      console.log(7)
-      next()
+      console.log(5)
+      if (to.name !== 'login' && to.name !== 'detailsreport' && to.name !== 'screenindex') {
+        console.log(6)
+        next({ path: '/login' })
+      } else if (to.name !== 'login' && to.name === 'detailsreport' && to.name !== 'screenindex') {
+        console.log(66)
+        next()
+      } else if (to.name !== 'login' && to.name !== 'detailsreport' && to.name === 'screenindex') {
+        console.log(88)
+        next()
+      } else {
+        console.log(7)
+        next()
+      }
     }
   }
+  
+  
+  
 })
 router.afterEach(() => {
   window.scrollTo(0, 0);
