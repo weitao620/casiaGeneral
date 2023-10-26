@@ -1444,8 +1444,8 @@ export default {
 
     // let  parseInt(erStr, 2)
     // 调接口
-    this.getLines("n");
-    this.getInfo("n");
+    // this.getLines("n");
+    // this.getInfo("n");
     this.$forceUpdate();
   },
   beforeDestroy() {
