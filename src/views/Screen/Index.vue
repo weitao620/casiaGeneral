@@ -1373,6 +1373,7 @@ export default {
               this[forArr[i].name + 'Rank'] = forArr[i].rank
             }
             // 受欢迎的游戏
+            let gameArr = [0, 0, 0, 0, 0];
             this.gameNew = [];
             let erStr = "";
             if (info.popularGame !== 0) {
@@ -1380,8 +1381,14 @@ export default {
             } else {
               erStr = "11010";
             }
-            // console.log(erStr);
-            let erArr = erStr.split("");
+            console.log(erStr);
+            let erArrs = erStr.split("").reverse();
+            console.log(erArrs)
+            for (let i in erArrs) {
+              gameArr[i] = erArrs[i]
+            }
+            let erArr = gameArr.reverse()
+            console.log(erArr)
             for (let i in erArr) {
               if (erArr[i] == 1) {
                 this.gameList[i].flag = true;
