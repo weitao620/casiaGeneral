@@ -666,13 +666,14 @@ export default {
       console.log(this.formAddUser.passport + '' + this.formAddUser.password)
       let passMd5 = md5(this.formAddUser.passport + '' + this.formAddUser.password).substring(8, 24)
       this.formAddUser.password = passMd5
-      console.log(this.formAddUser)
-      // return
       let birth = ''
+      console.log(this.formAddUser)
+      console.log(String(this.formAddUser.birth).indexOf('-'))
       if (this.formAddUser.birth != '') {
-        console.log(new Date(this.formAddUser.birth))
-        birth = this.formTimes(new Date(this.formAddUser.birth))
-        this.formAddUser.birth = birth
+        if (String(this.formAddUser.birth).indexOf('-') == -1) {
+          birth = this.formTimes(new Date(this.formAddUser.birth))
+          this.formAddUser.birth = birth
+        }
       }
       that.$http
         .post(Url + "/aimw/user/addUser", this.formAddUser)
