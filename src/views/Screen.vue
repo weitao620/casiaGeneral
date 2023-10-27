@@ -288,7 +288,7 @@ export default {
         cleanSession: false,
         keepAlive: 60,
         clientId:
-          "AIMW-G_" +
+          "AIMW-HS_" +
           Math.random()
             .toString(16)
             .substring(2, 10),

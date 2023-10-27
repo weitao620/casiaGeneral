@@ -1379,7 +1379,7 @@ export default {
             if (info.popularGame !== 0) {
               erStr = info.popularGame.toString(2);
             } else {
-              erStr = "11010";
+              erStr = "11100";
             }
             console.log(erStr);
             let erArrs = erStr.split("").reverse();

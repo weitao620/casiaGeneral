@@ -134,10 +134,11 @@ export default {
           password: passMd5
         };
       }
-      localStorage.setItem('passport', that.ruleForm.usercount)
+      
       console.log(param)
       // return
-      if (that.ruleForm.usercount == 'admins') {
+      if (that.ruleForm.usercount === 'admins') {
+        localStorage.setItem('passport', that.ruleForm.usercount)
         localStorage.setItem("isLogin", true);
         if (that.ruleForm.remember) {
           param.remember = that.ruleForm.remember
@@ -151,46 +152,56 @@ export default {
           path: "/library"
         });
       } else {
-        that.$http
-          .post(Url + "/aimw/user/login", param)
-          .then(res => {
-            var data = res.data;
-            if (data.code == 0) {
-              let obja = {
-                menuAuthID: []
-              }
-              if (data.data.userAuth == '') {
-                data.data.userAuth = JSON.stringify(obja)
-              } else {
-                if (JSON.parse(data.data.userAuth).menuAuthID) {
-
-                } else {
-                  let nOb = JSON.parse(data.data.userAuth)
-                  nOb.menuAuthID = []
-                  data.data.userAuth = JSON.stringify(nOb)
+        console.log(localStorage.getItem('isLogin'))
+        if (localStorage.getItem('isLogin')) {
+          console.log(333)
+          // return
+          location.reload()
+        } else {
+          console.log(2222)
+          localStorage.setItem('passport', that.ruleForm.usercount)
+          // return
+          that.$http
+            .post(Url + "/aimw/user/login", param)
+            .then(res => {
+              var data = res.data;
+              if (data.code == 0) {
+                let obja = {
+                  menuAuthID: []
                 }
-              }
-              localStorage.setItem('mqttTopic', data.data.mqttTopic)
-              localStorage.setItem('passGMd5', param.password)
-              localStorage.setItem("userAuth", data.data.userAuth);
-              localStorage.setItem("userType", 1);
-              console.log(data.data.algTypes)
-              localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
-              if (that.ruleForm.remember) {
-                param.remember = that.ruleForm.remember
-                param.usercount = that.ruleForm.usercount
-                localStorage.setItem("loginDatas", JSON.stringify(param));
+                if (data.data.userAuth == '') {
+                  data.data.userAuth = JSON.stringify(obja)
+                } else {
+                  if (JSON.parse(data.data.userAuth).menuAuthID) {
+
+                  } else {
+                    let nOb = JSON.parse(data.data.userAuth)
+                    nOb.menuAuthID = []
+                    data.data.userAuth = JSON.stringify(nOb)
+                  }
+                }
+                localStorage.setItem('mqttTopic', data.data.mqttTopic)
+                localStorage.setItem('passGMd5', param.password)
+                localStorage.setItem("userAuth", data.data.userAuth);
+                localStorage.setItem("userType", 1);
+                console.log(data.data.algTypes)
+                localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+                if (that.ruleForm.remember) {
+                  param.remember = that.ruleForm.remember
+                  param.usercount = that.ruleForm.usercount
+                  localStorage.setItem("loginDatas", JSON.stringify(param));
+                } else {
+                  localStorage.removeItem("loginDatas");
+                }
+                that.getUserInfo();
               } else {
-                localStorage.removeItem("loginDatas");
+                that.errorMsg = data.msg;
               }
-              that.getUserInfo();
-            } else {
-              that.errorMsg = data.msg;
-            }
-          })
-          .catch(res => {
-            console.log(res);
-          });
+            })
+            .catch(res => {
+              console.log(res);
+            });
+        }
       }
     },
     getUserInfo() {

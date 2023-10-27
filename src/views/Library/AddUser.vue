@@ -658,12 +658,20 @@ export default {
       }
       let passMd5 = md5('AIMW-G' + this.formAddUser.password).substring(8, 24)
       this.formAddUser.password = passMd5
-      console.log(this.formAddUser)
+      
       let birth = ''
+
+      console.log(this.formAddUser)
+      console.log(String(this.formAddUser.birth).indexOf('-'))
       if (this.formAddUser.birth != '') {
-        birth = this.formTimes(this.formAddUser.birth)
-        this.formAddUser.birth = birth
+        if (String(this.formAddUser.birth).indexOf('-') == -1) {
+          birth = this.formTimes(this.formAddUser.birth)
+          this.formAddUser.birth = birth
+        }
+        // birth = this.formTimes(this.formAddUser.birth)
+        // this.formAddUser.birth = birth
       }
+      
       that.$http
         .post(Url + "/aimw/user/addUser", this.formAddUser)
         .then(res => {
