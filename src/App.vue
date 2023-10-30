@@ -104,7 +104,6 @@ export default {
     // } else {
     //   this.auth()
     // }
-    
   },
   computed: {
     ...mapGetters(["getUserName"])

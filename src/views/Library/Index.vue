@@ -537,7 +537,6 @@ export default {
               // 是否显示人格
               this.personalityFlag = data.data.algTypes.personality
             }
-            
             //
             // this.depressionFlag = 1
             // this.anxietyFlag = 1
@@ -830,7 +829,6 @@ export default {
             listA3.push(list[i].mildWarningNum ? list[i].mildWarningNum : 0);
             listA4.push(list[i].moderateWarningNum ? list[i].moderateWarningNum : 0);
             listA5.push(list[i].severeWarningNum ? list[i].severeWarningNum : 0);
-            
             // listA3.push(list[i].warningNUM);
           }
           that.listT1 = listA1;
@@ -1284,7 +1282,7 @@ export default {
                 rich: {
                   hr: {
                     color: "#51A7FF",
-                    padding: [0, 0,  nowSize(6), 0]
+                    padding: [0, 0, nowSize(6), 0]
                   }
                 }
               }

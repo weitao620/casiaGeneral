@@ -522,7 +522,6 @@ export default {
         this.formAddAdmin.password = passMd5
         // }
       }
-      
       console.log(this.formAddAdmin)
       // return
       that.$http

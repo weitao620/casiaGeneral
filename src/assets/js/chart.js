@@ -65,7 +65,7 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
     series.push(seriesItem)
   }
   console.log(series)
-//  return
+  // return
   // 使用上一次遍历时，计算出的数据和 sumValue，调用 getParametricEquation 函数，
   // 向每个 series-surface 传入不同的参数方程 series-surface.parametricEquation，也就是实现每一个扇形。
   legendData = []
@@ -183,8 +183,7 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
             }
           } else {
             // const bfb1 = ((option.series[params.seriesIndex].pieData.endRatio - option.series[params.seriesIndex].pieData.startRatio) * 100).toFixed(nums)
-            
-          console.log(option.series)
+            console.log(option.series)
             // let bfbNum1 = 0
             console.log(pieNum)
             if (pieNum == -1) {
@@ -253,7 +252,6 @@ const getPie3D = (pieData, internalDiameterRatio, distance, alpha, pieHeight, op
   console.log()
   return option
 }
- 
 /**
  * 生成扇形的曲面参数方程，用于 series-surface.parametricEquation
  */
@@ -325,12 +323,10 @@ const getParametricEquation = (startRatio, endRatio, isSelected, isHovered, k, h
     }
   }
 }
- 
 /**
  * 获取3d丙图的最高扇区的高度
  */
 const getHeight3D = (series, height, pieNum) => {
-
   console.log(series)
   // return
   console.log(height)
@@ -340,7 +336,6 @@ const getHeight3D = (series, height, pieNum) => {
   })
   // console.log(series)
   // console.log(series[0].pieData.value)
-  
   // console.log((height * 20) / series[0].pieData.value)
   // console.log(pieNum == '')
   let max = ''
@@ -354,7 +349,6 @@ const getHeight3D = (series, height, pieNum) => {
   console.log(max)
   return max
 }
- 
 /**
  * 格式化浮点数
  */
@@ -376,5 +370,4 @@ const fomatFloat = (num, n) => {
   }
   return s
 }
- 
 export { getPie3D, getParametricEquation }

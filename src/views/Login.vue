@@ -134,7 +134,6 @@ export default {
           password: passMd5
         };
       }
-      
       console.log(param)
       // return
       if (that.ruleForm.usercount === 'admins') {

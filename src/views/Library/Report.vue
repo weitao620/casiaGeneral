@@ -2718,7 +2718,6 @@ export default {
       background: linear-gradient(261deg, #8fb1d7, #b8d5f5);
       box-shadow: 0px 2px 10px 0px rgba(171, 196, 227, 0.45);
     }
-    
     // 搜索项
     .el-form--inline {
       .el-form-item {
@@ -2791,7 +2790,6 @@ export default {
           }
         }
       }
-      
     }
   }
   // 表格

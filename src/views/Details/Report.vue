@@ -1063,7 +1063,6 @@
                 <img src="../../assets/images/report/per_i3.png" alt="" />
                 <span class="wdrjstr_txt wd_col4">重度预警</span>
               </div>
-              
             </div>
           </div>
           <div class="dtmsb_tar">
@@ -1698,7 +1697,6 @@ export default {
     },
     recordSub() {
       let that = this;
-      
       let param = {
         reportId: that.reportId,
         note: that.assessment
@@ -1923,7 +1921,6 @@ export default {
                   data.data.selfDiscription.length
                 );
             }
-            
             if (data.data.depressionWarning.indexOf("正常") != -1) {
               data.data.depressionWarning =
                 data.data.depressionWarning.substring(
@@ -3908,7 +3905,6 @@ export default {
                     // fontWeight: "bold",
                     padding: [3, -12]
                   }
-                  
                 }
               }
             }
@@ -4635,7 +4631,6 @@ export default {
           }
         }
         .dtmcl_du1 {
-          
           margin-bottom: 0.12rem;
           img {
             width: 0.22rem;
@@ -5750,7 +5745,6 @@ export default {
                   height: 0.06rem;
                   margin-right: 0.1rem;
                   margin-top: 0.16rem;
-                  
                 }
               }
             }

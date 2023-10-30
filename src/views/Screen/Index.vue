@@ -226,7 +226,6 @@
                     <div class="level_txt">预期</div>
                   </div>
                 </el-tooltip>
-                
                 <el-tooltip effect="light" placement="top">
                   <div slot="content">
                     <div class="top_title">预警因子</div>
@@ -1189,7 +1188,6 @@
             <div class="tv_tlt_pic">
               <img v-if="processImgData != ''" class="tv_tltp_img" :src="processImgData" alt="">
               <div v-else class="tv_tltp_i_bg"></div>
-              
               <div class="tv_tltp_txt">{{processName == '' ? '暂无工序' : processName}}</div>
             </div>
           </div>
@@ -1897,7 +1895,6 @@ export default {
                 value: info.warningFactor.csjl
                 // value: 55
               },
-
               {
                 name: "冲动性",
                 frame: "cdx",
@@ -1961,7 +1958,6 @@ export default {
                 }
               }
               console.log(i % 2);
-              
               // if (i == 0) {
               //   // if (yinList[i].value >= 0 && yinList[i].value < 10) {
               //   //   yinList[i].size = 20;
@@ -2204,9 +2200,7 @@ export default {
             endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
             k = this[optionName].series[hoveredIndex].pieStatus.k;
             // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-            this[optionName].series[
-              hoveredIndex
-            ].parametricEquation = getParametricEquation(
+            this[optionName].series[hoveredIndex].parametricEquation = getParametricEquation(
               startRatio,
               endRatio,
               isSelected,
@@ -2235,9 +2229,7 @@ export default {
               .endRatio;
             k = this[optionName].series[params.seriesIndex].pieStatus.k;
             // 对当前点击的扇形，执行高亮操作（对 option 更新）
-            this[optionName].series[
-              params.seriesIndex
-            ].parametricEquation = getParametricEquation(
+            this[optionName].series[params.seriesIndex].parametricEquation = getParametricEquation(
               startRatio,
               endRatio,
               isSelected,
@@ -2245,9 +2237,7 @@ export default {
               k,
               this[optionName].series[params.seriesIndex].pieData.value + 2
             );
-            this[optionName].series[
-              params.seriesIndex
-            ].pieStatus.hovered = isHovered;
+            this[optionName].series[params.seriesIndex].pieStatus.hovered = isHovered;
             // 记录上次高亮的扇形对应的系列号 seriesIndex
             hoveredIndex = params.seriesIndex;
           }
@@ -2271,9 +2261,7 @@ export default {
           startRatio = this[optionName].series[hoveredIndex].pieData.startRatio;
           endRatio = this[optionName].series[hoveredIndex].pieData.endRatio;
           // 对当前点击的扇形，执行取消高亮操作（对 option 更新）
-          this[optionName].series[
-            hoveredIndex
-          ].parametricEquation = getParametricEquation(
+          this[optionName].series[hoveredIndex].parametricEquation = getParametricEquation(
             startRatio,
             endRatio,
             isSelected,
@@ -3127,7 +3115,6 @@ export default {
       //     // formatter: function() {
       //     //   return (
       //     //     '<span style="margin:-10px;padding:0.1rem;"><span style="display:block;color:#fff;font-size:0.2rem;font-weight:600">' + this.point.name + '</span><br style="line-height:0.2rem"/>' +
-              
       //     //     `<span style="display:flex;align-items:center;justify-content: center;"><span style="display:inline-block;margin-right:0.04rem;border-radius:0.08rem;width:0.08rem;height:0.08rem;background-color:${this.point.color};"></span>` +
       //     //     `<span style="color:#fff;font-size:0.16rem;margin-right:0.1rem">${this.point.num}次&nbsp;&nbsp;</span><span style="color:#fff;font-size:0.16rem;">占比${this.point.y}%</span></span></span>`
       //     //   )
@@ -3284,7 +3271,7 @@ export default {
                 lineHeight: nowSize(28),
                 color: pieColor[index],
                 align: 'left'
-              },
+              }
               // hr: {
               //   backgroundColor: pieColor[index],
               //   borderRadius: nowSize(3),
