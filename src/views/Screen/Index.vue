@@ -3518,9 +3518,9 @@ export default {
                 params.seriesName
               }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                 params.color
-              };"></span>${(params.series[params.seriesIndex].pieData.value /
+              };"></span>${Math.round((params.series[params.seriesIndex].pieData.value /
                 100) *
-                this.participationNum}`;
+                this.participationNum)}`;
             }
           }
         };
@@ -3530,7 +3530,7 @@ export default {
             // lineHeight: nowSize(18),
             color: sexColor[index],
             overflow: "none",
-            formatter: `{c|${this.sexList[index].value / 100 * that.participationNum}}\n{b|{b}：}{d|{d}%}`, // 用\n来换行
+            formatter: `{c|${Math.round(this.sexList[index].value / 100 * that.participationNum)}}\n{b|{b}：}{d|{d}%}`, // 用\n来换行
             rich: {
               b: {
                 fontSize: nowSize(12),
