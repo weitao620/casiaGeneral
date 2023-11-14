@@ -204,7 +204,7 @@
               <el-table-column type="index" label="序号" :index="indexMethod"> </el-table-column>
               <el-table-column prop="name" label="姓名"> </el-table-column>
               <el-table-column prop="passport" label="登录账号"> </el-table-column>
-              <el-table-column prop="passport" label="添加时间"> </el-table-column>
+              <el-table-column prop="addRoleTime" label="添加时间"> </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button
