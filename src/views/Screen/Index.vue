@@ -96,11 +96,11 @@
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp3"></span>
-                      自我伤害
+                      PTSD
                     </div>
                     <div class="c_pie_li">
                       <span class="c_pie_th c_thp4"></span>
-                      敌对
+                      心理韧性
                     </div>
                   </div>
                 </div>
@@ -1621,7 +1621,7 @@ export default {
                 name: "人际孤独",
                 frame: "rjgd",
                 type: "4",
-                typeName: "自我伤害",
+                typeName: "PTSD",
                 value: info.warningFactor.rjgd
                 // value: 600
               },
@@ -1629,7 +1629,7 @@ export default {
                 name: "抑郁程度",
                 frame: "yycd",
                 type: "4",
-                typeName: "自我伤害",
+                typeName: "PTSD",
                 value: info.warningFactor.yycd
                 // value: 88
               },
@@ -1637,7 +1637,7 @@ export default {
                 name: "创伤经历",
                 frame: "csjl",
                 type: "4",
-                typeName: "自我伤害",
+                typeName: "PTSD",
                 value: info.warningFactor.csjl
                 // value: 55
               },
@@ -1646,7 +1646,7 @@ export default {
                 name: "冲动性",
                 frame: "cdx",
                 type: "5",
-                typeName: "敌对",
+                typeName: "心理韧性",
                 value: info.warningFactor.cdx
                 // value: 333
               },
@@ -1654,7 +1654,7 @@ export default {
                 name: "无规则感",
                 frame: "wgzg",
                 type: "5",
-                typeName: "敌对",
+                typeName: "心理韧性",
                 value: info.warningFactor.wgzg
                 // value: 23
               },
@@ -1662,7 +1662,7 @@ export default {
                 name: "敌意",
                 frame: "dy",
                 type: "5",
-                typeName: "敌对",
+                typeName: "心理韧性",
                 value: info.warningFactor.dy
                 // value: 12
               }
@@ -2190,12 +2190,12 @@ export default {
           num: this.warningStatistic.forceNum
         },
         {
-          name: "自我伤害",
+          name: "PTSD",
           value: pieFlag ? 20 : NP.times(this.warningStatistic.suicidePerct, 100),
           num: this.warningStatistic.suicideNum
         },
         {
-          name: "敌对",
+          name: "心理韧性",
           value: pieFlag ? 20 : NP.times(this.warningStatistic.violencePerct, 100),
           num: this.warningStatistic.violenceNum
         }
@@ -2214,11 +2214,11 @@ export default {
           value: pieFlag ? 20 : NP.times(this.warningStatistic.forcePerct, 100)
         },
         {
-          name: "自我伤害",
+          name: "PTSD",
           value: pieFlag ? 20 : NP.times(this.warningStatistic.suicidePerct, 100)
         },
         {
-          name: "敌对",
+          name: "心理韧性",
           value: pieFlag ? 20 : NP.times(this.warningStatistic.violencePerct, 100)
         }
       ]

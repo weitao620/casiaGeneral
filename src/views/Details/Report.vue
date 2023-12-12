@@ -39,7 +39,7 @@
           @click="trendTab(2)"
         >
           <img src="../../assets/images/report/part2.png" alt="" />
-          <span>心理健康水平<br>分析</span>
+          <span>维度分析</span>
         </div>
         <div
           v-show="suicideFlag == 1 || violenceFlag == 1"
@@ -47,16 +47,16 @@
           @click="trendTab(3)"
         >
           <img src="../../assets/images/report/renshenwx1.png" alt="" />
-          <span>人身危险性<br>分析</span>
+          <span>指导建议</span>
         </div>
-        <div
+        <!-- <div
           v-show="personalityFlag == 1"
           :class="['r_t_tab', { r_t_tab_act2: topAct == 5 }]"
           @click="trendTab(5)"
         >
           <img src="../../assets/images/report/rengejd1.png" alt="" />
           <span>&nbsp;附录一<br>人格解读</span>
-        </div>
+        </div> -->
       </div>
     </div>
     <div
@@ -116,26 +116,36 @@
     </div>
     <div class="dt_top_bg">
       <div class="dttb_tips">
-        <img src="../../assets/images/report/tip_index.png" alt="" />
-        <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
+        <div>
+          <img src="../../assets/images/report/tip_index.png" alt="" />
+          <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
+        </div>
+        
       </div>
       <div class="dttb_txt">
         <h1>导读</h1>
         <p>
-          沙盘游戏，也被称为箱庭疗法，是指来访者在治疗师的陪伴下，从玩具架上自由挑选沙具，在盛有细沙的特制箱子里进行自我表现的一种心理疗法。沙盘游戏的有效性已经得到国内外临床实践的广泛验证，对于丰富个体的情感体验、促进自我成长及人格完善具有显著的作用。
+          “AI 心世界” ：是一款人工智能和心理沙盘相结合的特色产品，以 “沙” 为元素，通过有趣的玩 “沙” 方式认识你自己，创建属于每个人内心真正的 “一沙一世界” 。AI心世界以人工智能技术为核心，深度结合心理箱庭（沙盘）及投射测评模型实现智能心理测评。
+        </p>
+        <p style="font-size: 0.22rem">
+          报告内容说明
         </p>
         <p>
-          我们基于投射、沙盘游戏理论，运用人工智能、三维仿真等多项技术研发了AI心世界，实现了实物沙盘的电子化与智能化。
+          本报告包含导读、作品解读、本次概况、附录等内容。从心理健康水平方面对受测者当前心理进行立体评估，阅读报告前需要了解以下说明：
         </p>
         <p>
-          AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。
+          1、心理健康会受到环境和遗传等多重影响，每个人都或多或少存在这样或那样的困扰。
+        </p>
+        <p>
+          2、本报告的一切描述均基于受测者当次箱庭游戏，报告结果仅供参考，其结果不成为受测者选拔或诊断依据。
         </p>
       </div>
-      <img src="../../assets/images/report/teacherRbg.png" alt="" />
+      <img src="../../assets/images/gongan/bg.png" alt="" />
+      <img class="sir_bg" src="../../assets/images/gongan/sir.png" alt="">
       <div class="dt_person" ref="parts0">
         <div class="dtp_photo">
-          <img v-if="String(details.gender) == '1'"  src="../../assets/images/report/human.png" alt="" />
-          <img v-if="String(details.gender) == '0'" style="width: 1.3rem;height:1.3rem;margin-top:0.09rem" src="../../assets/images/report/huwoman.png" alt="" />
+          <img v-if="String(details.gender) == '1'"  src="../../assets/images/gongan/nan.png" alt="" />
+          <img v-if="String(details.gender) == '0'"  src="../../assets/images/gongan/nv.png" alt="" />
         </div>
         <div class="dtp_main">
           <ul>
@@ -148,16 +158,16 @@
               <span class="dt_blod">姓名：</span>
               <span>{{ details.name }}</span>
             </li>
-            <li style="width:3.8rem">
+            <li style="width:3.2rem">
               <img
                 class="dt_per2"
-                src="../../assets/images/report/person2.png"
+                src="../../assets/images/report/person9.png"
                 alt=""
               />
               <span class="dt_blod">登陆账号：</span>
               <span>{{ details.passport }}</span>
             </li>
-            <li style="width:3.2rem">
+            <!-- <li style="width:3.2rem">
               <img
                 class="dt_per3"
                 src="../../assets/images/report/person3.png"
@@ -165,11 +175,11 @@
               />
               <span class="dt_blod">手机号：</span>
               <span>{{ details.phone }}</span>
-            </li>
+            </li> -->
             <li style="width:3.2rem">
               <img
-                class="dt_per4"
-                src="../../assets/images/report/person4.png"
+                class="dt_per3"
+                src="../../assets/images/report/person3.png"
                 alt=""
               />
               <span class="dt_blod">出生日期：</span>
@@ -177,14 +187,14 @@
             </li>
           <!-- </ul>
           <ul> -->
-            <li style="width:3.8rem">
+            <li style="width:3.2rem">
               <img
                 class="dt_per4"
                 style="margin-left: 0.02rem;"
                 src="../../assets/images/report/person6.png"
                 alt=""
               />
-              <span class="dt_blod">所属部门：</span>
+              <span class="dt_blod">所属单位：</span>
               <span>{{ details.departmentName }}</span>
             </li>
             <li style="width:3.2rem">
@@ -209,8 +219,8 @@
         </div>
       </div>
     </div>
-    <div class="dt_mains" v-show="!reviewFlag">
-      <div class="dtm_title" ref="parts4">
+    <div class="dt_mains" ref="parts4" v-show="!reviewFlag">
+      <div class="dtm_title">
         作品解读
       </div>
       <div class="dtm_contain">
@@ -227,7 +237,7 @@
             <img :src="'data:image;base64,' + birdViewImg" alt="" />
           </div>
           <div class="dtmcl_pic" v-else>
-            <img src="../../assets/images/report/t001.png" alt="" />
+            <img src="../../assets/images/gongan/t001.png" alt="" />
           </div>
         </div>
         <div class="dtmc_right1">
@@ -240,803 +250,782 @@
             <span>箱庭解析</span>
           </div>
           <div class="dtmcr_bts1">
-            <p>
+            <p v-if="details.themeDiscription && details.themeDiscription != ''">
+              <img src="../../assets/images/report/icon1.png" alt="" />
+              <span v-html="details.themeDiscription"></span>
+            </p>
+            <p v-if="details.selfDiscription && details.selfDiscription != ''">
               <img src="../../assets/images/report/icon1.png" alt="" />
               <span v-html="details.selfDiscription"></span>
             </p>
-            <p>
+            <p v-if="details.satisfyArea && details.satisfyArea != ''">
               <img src="../../assets/images/report/icon1.png" alt="" />
               <span v-html="details.satisfyArea"></span>
             </p>
           </div>
         </div>
       </div>
-      <div class="dtm_title" ref="parts1">
-        本次概况
-      </div>
-      <div class="dtm_contain">
-        <div class="dtmc_left">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/total1.png" alt="" />
-            <span>总体评估概况</span>
-          </div>
-          <div class="dtmcl_chart">
-            <div id="myChart" class="my_chart" ref="myChart"></div>
-            <div class="c_o_my_txt" v-show="myTxtFlag">
-              {{ details.warningNum }}项
+      <div ref="parts1">
+        <div class="dtm_title">
+          本次概况
+        </div>
+        <div class="dtm_contain">
+          <div class="dtmc_left">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/total1.png" alt="" />
+              <span>总体评估概况</span>
             </div>
-            <div class="c_o_my_num c_red" v-show="myTxtFlag">
-              预警
-            </div>
-          </div>
-          <div class="dtmcl_sys">
-            <div class="dtmcl_du dtmcl_du1">
-              <img v-if="details.warning == 0" src="../../assets/images/report/per_i0.png" alt="" />
-              <img v-if="details.warning == 1" src="../../assets/images/report/per_i1.png" alt="" />
-              <img v-if="details.warning == 2" src="../../assets/images/report/per_i2.png" alt="" />
-              <img v-if="details.warning == 3" src="../../assets/images/report/per_i3.png" alt="" />
-              <span>总体评估：</span>
-              <div class="wdrjst_res" v-if="details.warning == 0">
-                <span class="wdrjstr_txt wd_col1">正常</span>
+            <div class="dtmcl_chart">
+              <div id="myChart" class="my_chart" ref="myChart"></div>
+              <div class="c_o_my_txt" v-show="myTxtFlag">
+                {{ details.warningNum }}项
               </div>
-              <div class="wdrjst_res" v-if="details.warning == 1">
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 2">
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 3">
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
+              <div class="c_o_my_num c_red" v-show="myTxtFlag">
+                预警
               </div>
             </div>
-            <div v-if="details.reportWarningInfo">
-              <div
-                style="padding: 0 0.24rem;color:#5b6c89;font-size:0.18rem"
-                v-if="details.warningList.length == 0"
-              >
-                该受测者心理健康水平良好。
+            <div class="dtmcl_sys">
+              <div class="dtmcl_du dtmcl_du1">
+                <img v-if="details.warning == 0" src="../../assets/images/report/per_i0.png" alt="" />
+                <img v-if="details.warning == 1" src="../../assets/images/report/per_i1.png" alt="" />
+                <img v-if="details.warning == 2" src="../../assets/images/report/per_i2.png" alt="" />
+                <img v-if="details.warning == 3" src="../../assets/images/report/per_i3.png" alt="" />
+                <span>总体评估：</span>
+                <div class="wdrjst_res" v-if="details.warning == 0">
+                  <span class="wdrjstr_txt wd_col1">正常</span>
+                </div>
+                <div class="wdrjst_res" v-if="details.warning == 1">
+                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="details.warning == 2">
+                  <span class="wdrjstr_txt wd_col3">中度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="details.warning == 3">
+                  <span class="wdrjstr_txt wd_col4">重度预警</span>
+                </div>
               </div>
-              <div v-else>
+              <div v-if="details.reportWarningInfo">
                 <div
+                  style="padding: 0 0.24rem;color:#5b6c89;font-size:0.18rem"
+                  v-if="details.warningList.length == 0"
+                >
+                  该受测者心理健康水平良好。
+                </div>
+                <div v-else>
+                  <div
 
-                  v-for="(item, index) in details.warningList"
-                  :key="item.id"
-                >
-                  <div class="dtmcl_du dtmcl_du2" v-if="item.old != '正常' && item.flag == 1">
-                    <img
-                      :src="
-                        require('../../assets/images/report/icons' +
-                          index +
-                          '.png')
-                      "
-                      alt=""
-                    />
-                    <span v-html="item.new"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="dtmc_right">
-          <div class="dtmcl_tle">
-            <span>指标</span>
-            <span>本次结果</span>
-            <span>上次结果</span>
-            <span>个人平均参测结果</span>
-          </div>
-          <div class="dtmcl_box">
-            <ul class="dtmcr_ul" v-if="depressionFlag == 1">
-              <li>抑郁</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.depressionLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.depressionLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.depressionLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.depressionScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.depressionLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.depressionLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.depressionLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.depressionLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.depressionScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.depressionLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.depressionLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.depressionLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.depressionLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.depressionScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="anxietyFlag == 1">
-              <li>焦虑</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.anxietyScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.anxietyLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.anxietyScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.anxietyLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.anxietyScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="forcedFlag == 1">
-              <li>强迫</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.forcedLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.forcedLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.forcedLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.forcedScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.forcedLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.forcedLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.forcedLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.forcedLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.forcedScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.forcedLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.forcedLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.forcedLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.forcedLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.forcedScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="suicideFlag == 1">
-              <li>自我伤害</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.suicideLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.suicideLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.suicideLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.suicideScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.suicideLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.suicideLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.suicideLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.suicideLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.suicideScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.suicideLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.suicideLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.suicideLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.suicideLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.suicideScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="violenceFlag == 1">
-              <li>敌对</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.violenceLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.violenceLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.violenceLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.violenceScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.violenceLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.violenceLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.violenceLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.violenceLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.violenceScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.violenceLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.violenceLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.violenceLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.violenceLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.violenceScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="dtm_title dtm_title2" ref="parts2">
-        心理健康水平分析
-      </div>
-      <div class="dtm_sys">
-        <el-carousel :interval="40000" arrow="always" type="card" height="7rem">
-          <el-carousel-item :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title">
-            <div class="dtms_box">
-              <div class="dtmsb_tle" :style="{ background: item.bg }">
-                <h3>{{ item.title }}</h3>
-                <div class="dtt_res">
-                  <span style="font-size:0.18rem;margin-top:0.48rem"
-                    >评估结果</span
+                    v-for="(item, index) in details.warningList"
+                    :key="item.id"
                   >
-                  <div class="dtt_img">
-                    <img
-                      src="../../assets/images/report/grade_line.png"
-                      alt=""
-                    />
-                    <img
-                      class="dttr_btn"
-                      :style="{ left: item.gradep }"
-                      src="../../assets/images/report/grade_btn.png"
-                      alt=""
-                    />
-                    <span class="dttr_lv" :style="{ left: item.gradep }">{{
-                      item.level
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dtmsb_tar">
-                <div style="position:relative">
-                  <div class="top_top" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                    <div class="demsb_tool">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[0].score)
-                        }}</span>
-                      </div>
+                    <div class="dtmcl_du dtmcl_du2" v-if="(item.old != '正常' && item.old != '风险正常') && item.flag == 1">
+                      <img
+                        :src="
+                          require('../../assets/images/report/icons' +
+                            index +
+                            '.png')
+                        "
+                        alt=""
+                      />
+                      <span v-html="item.new"></span>
                     </div>
                   </div>
-                  <div class="bottom_left" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                    <div class="demsb_tool" style="margin-left:1.6rem">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[2].score)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bottom_right" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                    <div class="demsb_tool1">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[1].score)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="index == 0" id="myChartPies1" class="myChartPies1" ref="myChartPies1"></div>
-                  <div v-if="index == 1" id="myChartPies2" class="myChartPies2" ref="myChartPies2"></div>
-                  <div v-if="index == 2" id="myChartPies3" class="myChartPies3" ref="myChartPies3"></div>
                 </div>
-                <!-- <ul class="dtmsb_ulc">
-                  <li>
-                    <img src="../../assets/images/report/fwLine.png" alt="" />
-                  </li>
-                </ul> -->
-              </div>
-              <div class="dtmcr_bts">
-                <!-- :style="{ color: item.txtColor }" -->
-                <div class="db_img">
-                  <img
-                    src="../../assets/images/report/sys1.png"
-                    alt=""
-                  />
-                  <!-- <img
-                    v-if="item.imgType == 1"
-                    src="../../assets/images/report/sys1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 2"
-                    src="../../assets/images/report/sys2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 3"
-                    src="../../assets/images/report/sys3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 4"
-                    src="../../assets/images/report/sys4.png"
-                    alt=""
-                  /> -->
-                  测评结果分析
-                </div>
-                <p v-for="(items, keps) in item.list" :key="keps">
-                  <img
-                    src="../../assets/images/report/icon0.png"
-                    alt=""
-                  />
-                  <!-- <img
-                    v-if="item.imgType == 1"
-                    src="../../assets/images/report/icon0.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 2"
-                    src="../../assets/images/report/icon1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 3"
-                    src="../../assets/images/report/icon6.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 4"
-                    src="../../assets/images/report/icon7.png"
-                    alt=""
-                  /> -->
-                  {{ items }}
-                </p>
               </div>
             </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="guide_box">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/guide_i.png"
-              style="width:0.3rem;height:0.29rem"
-              alt=""
-            />
-            <span>指导建议</span>
           </div>
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
+          <div class="dtmc_right">
+            <div class="dtmcl_tle">
+              <span>指标</span>
+              <span>本次结果</span>
+              <span>上次结果</span>
+              <span>个人平均参测结果</span>
+            </div>
+            <div class="dtmcl_box">
+              <ul class="dtmcr_ul" v-if="depressionFlag == 1">
+                <li>抑郁</li>
+                <li v-if="details.reportWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.reportWarningInfo.depressionLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.depressionLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.depressionLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.depressionLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    :class="[
+                      { dr_sp0: details.reportWarningInfo.depressionLevel == 0 },
+                      { dr_sp1: details.reportWarningInfo.depressionLevel == 1 },
+                      { dr_sp2: details.reportWarningInfo.depressionLevel == 2 },
+                      { dr_sp3: details.reportWarningInfo.depressionLevel == 3 }
+                    ]"
+                    >{{ details.reportWarningInfo.depressionScore }}</span
+                  >
+                </li>
+                <li v-if="details.lastWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.lastWarningInfo.depressionLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.depressionLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.depressionLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.depressionLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.lastWarningInfo.depressionLevel != -1"
+                    :class="[
+                      { dr_sp0: details.lastWarningInfo.depressionLevel == 0 },
+                      { dr_sp1: details.lastWarningInfo.depressionLevel == 1 },
+                      { dr_sp2: details.lastWarningInfo.depressionLevel == 2 },
+                      { dr_sp3: details.lastWarningInfo.depressionLevel == 3 }
+                    ]"
+                    >{{ details.lastWarningInfo.depressionScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+                <li v-if="details.warningAvgInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.warningAvgInfo.depressionLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.depressionLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.depressionLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.depressionLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.warningAvgInfo.depressionLevel != -1"
+                    :class="[
+                      { dr_sp0: details.warningAvgInfo.depressionLevel == 0 },
+                      { dr_sp1: details.warningAvgInfo.depressionLevel == 1 },
+                      { dr_sp2: details.warningAvgInfo.depressionLevel == 2 },
+                      { dr_sp3: details.warningAvgInfo.depressionLevel == 3 }
+                    ]"
+                    >{{ details.warningAvgInfo.depressionScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+              </ul>
+              <ul class="dtmcr_ul" v-if="anxietyFlag == 1">
+                <li>焦虑</li>
+                <li v-if="details.reportWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.reportWarningInfo.anxietyLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.anxietyLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.anxietyLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.anxietyLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    :class="[
+                      { dr_sp0: details.reportWarningInfo.anxietyLevel == 0 },
+                      { dr_sp1: details.reportWarningInfo.anxietyLevel == 1 },
+                      { dr_sp2: details.reportWarningInfo.anxietyLevel == 2 },
+                      { dr_sp3: details.reportWarningInfo.anxietyLevel == 3 }
+                    ]"
+                    >{{ details.reportWarningInfo.anxietyScore }}</span
+                  >
+                </li>
+                <li v-if="details.lastWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.lastWarningInfo.anxietyLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.anxietyLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.anxietyLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.anxietyLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.lastWarningInfo.anxietyLevel != -1"
+                    :class="[
+                      { dr_sp0: details.lastWarningInfo.anxietyLevel == 0 },
+                      { dr_sp1: details.lastWarningInfo.anxietyLevel == 1 },
+                      { dr_sp2: details.lastWarningInfo.anxietyLevel == 2 },
+                      { dr_sp3: details.lastWarningInfo.anxietyLevel == 3 }
+                    ]"
+                    >{{ details.lastWarningInfo.anxietyScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+                <li v-if="details.warningAvgInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.warningAvgInfo.anxietyLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.anxietyLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.anxietyLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.anxietyLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.warningAvgInfo.anxietyLevel != -1"
+                    :class="[
+                      { dr_sp0: details.warningAvgInfo.anxietyLevel == 0 },
+                      { dr_sp1: details.warningAvgInfo.anxietyLevel == 1 },
+                      { dr_sp2: details.warningAvgInfo.anxietyLevel == 2 },
+                      { dr_sp3: details.warningAvgInfo.anxietyLevel == 3 }
+                    ]"
+                    >{{ details.warningAvgInfo.anxietyScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+              </ul>
+              <ul class="dtmcr_ul" v-if="forcedFlag == 1">
+                <li>强迫</li>
+                <li v-if="details.reportWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.reportWarningInfo.forcedLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.forcedLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.forcedLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.forcedLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    :class="[
+                      { dr_sp0: details.reportWarningInfo.forcedLevel == 0 },
+                      { dr_sp1: details.reportWarningInfo.forcedLevel == 1 },
+                      { dr_sp2: details.reportWarningInfo.forcedLevel == 2 },
+                      { dr_sp3: details.reportWarningInfo.forcedLevel == 3 }
+                    ]"
+                    >{{ details.reportWarningInfo.forcedScore }}</span
+                  >
+                </li>
+                <li v-if="details.lastWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.lastWarningInfo.forcedLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.forcedLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.forcedLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.forcedLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.lastWarningInfo.forcedLevel != -1"
+                    :class="[
+                      { dr_sp0: details.lastWarningInfo.forcedLevel == 0 },
+                      { dr_sp1: details.lastWarningInfo.forcedLevel == 1 },
+                      { dr_sp2: details.lastWarningInfo.forcedLevel == 2 },
+                      { dr_sp3: details.lastWarningInfo.forcedLevel == 3 }
+                    ]"
+                    >{{ details.lastWarningInfo.forcedScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+                <li v-if="details.warningAvgInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.warningAvgInfo.forcedLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.forcedLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.forcedLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.forcedLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.warningAvgInfo.forcedLevel != -1"
+                    :class="[
+                      { dr_sp0: details.warningAvgInfo.forcedLevel == 0 },
+                      { dr_sp1: details.warningAvgInfo.forcedLevel == 1 },
+                      { dr_sp2: details.warningAvgInfo.forcedLevel == 2 },
+                      { dr_sp3: details.warningAvgInfo.forcedLevel == 3 }
+                    ]"
+                    >{{ details.warningAvgInfo.forcedScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+              </ul>
+              <ul class="dtmcr_ul" v-if="suicideFlag == 1">
+                <li>PTSD</li>
+                <li v-if="details.reportWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.reportWarningInfo.suicideLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.suicideLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.suicideLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.suicideLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    :class="[
+                      { dr_sp0: details.reportWarningInfo.suicideLevel == 0 },
+                      { dr_sp1: details.reportWarningInfo.suicideLevel == 1 },
+                      { dr_sp2: details.reportWarningInfo.suicideLevel == 2 },
+                      { dr_sp3: details.reportWarningInfo.suicideLevel == 3 }
+                    ]"
+                    >{{ details.reportWarningInfo.suicideScore }}</span
+                  >
+                </li>
+                <li v-if="details.lastWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.lastWarningInfo.suicideLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.suicideLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.suicideLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.suicideLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.lastWarningInfo.suicideLevel != -1"
+                    :class="[
+                      { dr_sp0: details.lastWarningInfo.suicideLevel == 0 },
+                      { dr_sp1: details.lastWarningInfo.suicideLevel == 1 },
+                      { dr_sp2: details.lastWarningInfo.suicideLevel == 2 },
+                      { dr_sp3: details.lastWarningInfo.suicideLevel == 3 }
+                    ]"
+                    >{{ details.lastWarningInfo.suicideScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+                <li v-if="details.warningAvgInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.warningAvgInfo.suicideLevel == 0"
+                      src="../../assets/images/report/sys_btn1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.suicideLevel == 1"
+                      src="../../assets/images/report/sys_btn2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.suicideLevel == 2"
+                      src="../../assets/images/report/sys_btn3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.suicideLevel == 3"
+                      src="../../assets/images/report/sys_btn4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.warningAvgInfo.suicideLevel != -1"
+                    :class="[
+                      { dr_sp0: details.warningAvgInfo.suicideLevel == 0 },
+                      { dr_sp1: details.warningAvgInfo.suicideLevel == 1 },
+                      { dr_sp2: details.warningAvgInfo.suicideLevel == 2 },
+                      { dr_sp3: details.warningAvgInfo.suicideLevel == 3 }
+                    ]"
+                    >{{ details.warningAvgInfo.suicideScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+              </ul>
+              <ul class="dtmcr_ul" v-if="violenceFlag == 1">
+                <li>心理韧性</li>
+                <li v-if="details.reportWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.reportWarningInfo.violenceLevel == 0"
+                      src="../../assets/images/report/heart_lv1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.violenceLevel == 1"
+                      src="../../assets/images/report/heart_lv2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.violenceLevel == 2"
+                      src="../../assets/images/report/heart_lv3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.reportWarningInfo.violenceLevel == 3"
+                      src="../../assets/images/report/heart_lv4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    :class="[
+                      { dr_sv0: details.reportWarningInfo.violenceLevel == 0 },
+                      { dr_sv1: details.reportWarningInfo.violenceLevel == 1 },
+                      { dr_sv2: details.reportWarningInfo.violenceLevel == 2 },
+                      { dr_sv3: details.reportWarningInfo.violenceLevel == 3 }
+                    ]"
+                    >{{ details.reportWarningInfo.violenceScore }}</span
+                  >
+                </li>
+                <li v-if="details.lastWarningInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.lastWarningInfo.violenceLevel == 0"
+                      src="../../assets/images/report/heart_lv1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.violenceLevel == 1"
+                      src="../../assets/images/report/heart_lv2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.violenceLevel == 2"
+                      src="../../assets/images/report/heart_lv3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.lastWarningInfo.violenceLevel == 3"
+                      src="../../assets/images/report/heart_lv4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.lastWarningInfo.violenceLevel != -1"
+                    :class="[
+                      { dr_sv0: details.lastWarningInfo.violenceLevel == 0 },
+                      { dr_sv1: details.lastWarningInfo.violenceLevel == 1 },
+                      { dr_sv2: details.lastWarningInfo.violenceLevel == 2 },
+                      { dr_sv3: details.lastWarningInfo.violenceLevel == 3 }
+                    ]"
+                    >{{ details.lastWarningInfo.violenceScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+                <li v-if="details.warningAvgInfo">
+                  <div class="dr_li11">
+                    <img
+                      v-if="details.warningAvgInfo.violenceLevel == 0"
+                      src="../../assets/images/report/heart_lv1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.violenceLevel == 1"
+                      src="../../assets/images/report/heart_lv2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.violenceLevel == 2"
+                      src="../../assets/images/report/heart_lv3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="details.warningAvgInfo.violenceLevel == 3"
+                      src="../../assets/images/report/heart_lv4.png"
+                      alt=""
+                    />
+                  </div>
+                  <span
+                    v-if="details.warningAvgInfo.violenceLevel != -1"
+                    :class="[
+                      { dr_sv0: details.warningAvgInfo.violenceLevel == 0 },
+                      { dr_sv1: details.warningAvgInfo.violenceLevel == 1 },
+                      { dr_sv2: details.warningAvgInfo.violenceLevel == 2 },
+                      { dr_sv3: details.warningAvgInfo.violenceLevel == 3 }
+                    ]"
+                    >{{ details.warningAvgInfo.violenceScore }}</span
+                  >
+                  <span v-else>/</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="dtm_title dtm_title2" :style="{height: suicideFlag == 1 || violenceFlag == 1 ? 'auto' : '0',margin: suicideFlag == 1 || violenceFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts3">
-        人身危险性分析
+      
+      <div ref="parts2">
+        <div class="dtm_title dtm_title2">
+          维度分析
+        </div>
+        <div class="dtm_sys">
+          <el-carousel :interval="40000" arrow="always" type="card" height="7rem">
+            <el-carousel-item :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title">
+              <div class="dtms_box">
+                <div class="dtmsb_tle" :style="{ background: item.bg }">
+                  <h3>{{ item.title }}</h3>
+                  <div class="dtt_res">
+                    <span style="font-size:0.18rem;margin-top:0.48rem"
+                      >评估结果</span
+                    >
+                    <div class="dtt_img">
+                      <img
+                        src="../../assets/images/report/grade_line.png"
+                        alt=""
+                      />
+                      <img
+                        class="dttr_btn"
+                        :style="{ left: item.gradep }"
+                        src="../../assets/images/report/grade_btn.png"
+                        alt=""
+                      />
+                      <span class="dttr_lv" :style="{ left: item.gradep }">{{
+                        item.level
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dtmsb_tar">
+                  <div style="position:relative">
+                    <div class="top_top" v-if="item.subDim">
+                      <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                      <div class="demsb_tool">
+                        <div class="demsb_score">
+                          本次得分：<span>{{
+                            parseInt(item.subDim[0].score)
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bottom_left" v-if="item.subDim">
+                      <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                      <div class="demsb_tool" style="margin-left:1.6rem">
+                        <div class="demsb_score">
+                          本次得分：<span>{{
+                            parseInt(item.subDim[2].score)
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bottom_right" v-if="item.subDim">
+                      <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                      <div class="demsb_tool1">
+                        <div class="demsb_score">
+                          本次得分：<span>{{
+                            parseInt(item.subDim[1].score)
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="index == 0" id="myChartPies1" class="myChartPies1" ref="myChartPies1"></div>
+                    <div v-if="index == 1" id="myChartPies2" class="myChartPies2" ref="myChartPies2"></div>
+                    <div v-if="index == 2" id="myChartPies3" class="myChartPies3" ref="myChartPies3"></div>
+                  </div>
+                  <!-- <ul class="dtmsb_ulc">
+                    <li>
+                      <img src="../../assets/images/report/fwLine.png" alt="" />
+                    </li>
+                  </ul> -->
+                </div>
+                <div class="dtmcr_bts">
+                  <!-- :style="{ color: item.txtColor }" -->
+                  <div class="db_img">
+                    <img
+                      src="../../assets/images/report/sys1.png"
+                      alt=""
+                    />
+                    <!-- <img
+                      v-if="item.imgType == 1"
+                      src="../../assets/images/report/sys1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 2"
+                      src="../../assets/images/report/sys2.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 3"
+                      src="../../assets/images/report/sys3.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 4"
+                      src="../../assets/images/report/sys4.png"
+                      alt=""
+                    /> -->
+                    测评结果分析
+                  </div>
+                  <p v-for="(items, keps) in item.list" :key="keps">
+                    <img
+                      src="../../assets/images/report/icon0.png"
+                      alt=""
+                    />
+                    <!-- <img
+                      v-if="item.imgType == 1"
+                      src="../../assets/images/report/icon0.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 2"
+                      src="../../assets/images/report/icon1.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 3"
+                      src="../../assets/images/report/icon6.png"
+                      alt=""
+                    />
+                    <img
+                      v-if="item.imgType == 4"
+                      src="../../assets/images/report/icon7.png"
+                      alt=""
+                    /> -->
+                    {{ items }}
+                  </p>
+                </div>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
       </div>
+      
+      <!-- <div class="dtm_title dtm_title2" :style="{height: suicideFlag == 1 || violenceFlag == 1 ? 'auto' : '0',margin: suicideFlag == 1 || violenceFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts3">
+        人身危险性分析
+      </div> -->
       <div class="wdrj_box" v-show="suicideFlag == 1 || violenceFlag == 1">
         <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList2" :key="item.title">
           <div class="wdrj_title">
             <img
-              v-if="item.title == '敌对'"
+              v-if="item.title == '心理韧性'"
               src="../../assets/images/report/f_icon1.png"
               alt=""
               style="width: 0.32rem;height: 0.28rem"
             />
             <img
-              v-if="item.title == '自我伤害'"
+              v-if="item.title == 'PTSD'"
               src="../../assets/images/report/f_icon2.png"
               alt=""
               style="width: 0.32rem;height: 0.32rem"
@@ -1048,22 +1037,29 @@
               <img src="../../assets/images/report/jy_001.png" alt="" />
               <span>评估结果</span>
               <div class="wdrjst_res" v-if="item.levelNum == 0">
-                <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">正常</span>
+                <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i0.png" alt="" />
+                <img v-else src="../../assets/images/report/per_is0.png" alt="" />
+                <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col1">正常</span>
+                <span v-else class="wdrjstr_txt wd_cols1">较低</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 1">
-                <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
+                <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i1.png" alt="" />
+                <img v-else src="../../assets/images/report/per_is1.png" alt="" />
+                <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col2">轻度预警</span>
+                <span v-else class="wdrjstr_txt wd_cols2">中等</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 2">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
+                <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i2.png" alt="" />
+                <img v-else src="../../assets/images/report/per_is2.png" alt="" />
+                <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col3">中度预警</span>
+                <span v-else class="wdrjstr_txt wd_cols3">较高</span>
               </div>
               <div class="wdrjst_res" v-if="item.levelNum == 3">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
+                <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i3.png" alt="" />
+                <img v-else src="../../assets/images/report/per_is3.png" alt="" />
+                <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col4">重度预警</span>
+                <span v-else class="wdrjstr_txt wd_cols4">极高</span>
               </div>
-              
             </div>
           </div>
           <div class="dtmsb_tar">
@@ -1098,10 +1094,10 @@
                   </div>
                 </div>
               </div>
-              <div v-if="item.title == '敌对' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '敌对' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
-              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
+              <div v-if="item.title == '心理韧性' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
+              <div v-if="item.title == '心理韧性' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
+              <div v-if="item.title == 'PTSD' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
+              <div v-if="item.title == 'PTSD' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
             </div>
             <!-- <ul class="dtmsb_ulc">
               <li>
@@ -1122,7 +1118,7 @@
               </li>
             </ul>
           </div>
-          <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+          <!-- <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
             <div class="wdrjs_title">
               <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
             </div>
@@ -1134,10 +1130,80 @@
                 </p>
               </li>
             </ul>
+          </div> -->
+        </div>
+      </div>
+      <div class="guide_box" ref="parts3">
+        <div class="gb_main">
+          <div class="dtmcl_tle">
+            <img
+              src="../../assets/images/report/guide_i.png"
+              style="width:0.3rem;height:0.29rem"
+              alt=""
+            />
+            <span>指导建议</span>
+          </div>
+          <div class="gb_contain">
+            <div v-for="(item, index) in details.suggestion" :key="index">
+              <p v-if="!Array.isArray(item)">
+                <img src="../../assets/images/report/icon0.png" alt="" /><span
+                  v-html="item"
+                ></span>
+              </p>
+              
+              <div v-if="Array.isArray(item)">
+                <div v-for="(itemt, indext) in item" :key="indext">
+                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                      <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                        {{ itemp }}
+                      </div>
+                      <ul v-if="Array.isArray(itemp)">
+                        <li v-for="(items, indexs) in itemp" :key="indexs">
+                          <span>{{ indexs + 1 }}</span>
+                          <p>
+                            {{ items }}
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    
+                    <div v-if="indext == 0">
+                      <div v-for="(itemp, indexp) in item" :key="indexp">
+                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span>{{ indexs + 1 }}</span>
+                            <p>
+                              {{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li >
+                            <span>1</span>
+                            <p>
+                              {{ itemp }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                <!--  -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="dtm_title dtm_title3" :style="{height: personalityFlag == 1 ? 'auto' : '0',margin: personalityFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts5">
+      <!-- <div class="dtm_title dtm_title3" :style="{height: personalityFlag == 1 ? 'auto' : '0',margin: personalityFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts5">
         附录一：人格解读
       </div>
       <div class="wdrj_box" v-show="personalityFlag == 1">
@@ -1222,7 +1288,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="dtm_title dtm_title1" style=" height: auto;margin: 0 auto 0.62rem">
         补充说明
       </div>
@@ -1242,8 +1308,8 @@
       </div>
     </div>
 
-    <div class="dt_mains2" v-show="reviewFlag">
-      <div class="dtm_title" ref="parts11">
+    <div class="dt_mains2" ref="parts11" v-show="reviewFlag">
+      <div class="dtm_title">
         图片回顾
       </div>
       <div class="dtm_img_sys">
@@ -1261,119 +1327,128 @@
           </el-carousel-item>
         </el-carousel>
       </div>
-      <div class="dtm_title" ref="parts12">
-        作品信息统计
-      </div>
-      <div class="dtm_xls" v-if="reviewData.workInfo">
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品名称</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.workName }}</div>
-          <div class="dtmxl_head">自我像</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.representSand }}</div>
+      <div ref="parts12">
+        <div class="dtm_title">
+          作品信息统计
         </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">最重要的沙具</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.importantSand }}</div>
-          <div class="dtmxl_head">制作次数</div>
-          <div class="dtmxl_body">
-            第<span>{{ reviewData.workInfo.time }}</span
-            >次
+        <div class="dtm_xls" v-if="reviewData.workInfo">
+          <div class="dtmx_li">
+            <div class="dtmxl_head">作品名称</div>
+            <div class="dtmxl_body">{{ reviewData.workInfo.workName }}</div>
+            <div class="dtmxl_head">自我像</div>
+            <div class="dtmxl_body">{{ reviewData.workInfo.representSand }}</div>
           </div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">满意程度</div>
-          <div class="dtmxl_body">
-            <span>{{ reviewData.workInfo.satisfaction }}</span
-            >分
+          <div class="dtmx_li">
+            <div class="dtmxl_head">最重要的沙具</div>
+            <div class="dtmxl_body">{{ reviewData.workInfo.importantSand }}</div>
+            <div class="dtmxl_head">制作次数</div>
+            <div class="dtmxl_body">
+              第<span>{{ reviewData.workInfo.time }}</span
+              >次
+            </div>
           </div>
-          <div class="dtmxl_head">制作用时</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.operationTime }}</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品场景</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.scene }}</div>
-          <div class="dtmxl_head">沙具删除比例</div>
-          <div class="dtmxl_body">
-            <span>{{ reviewData.workInfo.deleteScale }}</span
-            >%
+          <div class="dtmx_li">
+            <div class="dtmxl_head">满意程度</div>
+            <div class="dtmxl_body">
+              <span>{{ reviewData.workInfo.satisfaction }}</span
+              >分
+            </div>
+            <div class="dtmxl_head">制作用时</div>
+            <div class="dtmxl_body">{{ reviewData.workInfo.operationTime }}</div>
           </div>
-        </div>
+          <div class="dtmx_li">
+            <div class="dtmxl_head">作品场景</div>
+            <div class="dtmxl_body">{{ reviewData.workInfo.scene }}</div>
+            <div class="dtmxl_head">沙具删除比例</div>
+            <div class="dtmxl_body">
+              <span>{{ reviewData.workInfo.deleteScale }}</span
+              >%
+            </div>
+          </div>
 
-        <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
-          <div class="dtmxl_head">主题统计</div>
-          <div class="dtmxl_body">
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">创伤主题</div>
-              <div class="dtmxl_dd">
-                {{ reviewData.workInfo.themeInfo.traumaTheme }}
+          <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
+            <div class="dtmxl_head">主题统计</div>
+            <div class="dtmxl_body">
+              <div class="dtmxl_dl">
+                <div class="dtmxl_dt">创伤主题</div>
+                <div class="dtmxl_dd">
+                  {{ reviewData.workInfo.themeInfo.traumaTheme }}
+                </div>
+                <div class="dtmxl_dds">
+                  <span>{{ reviewData.workInfo.themeInfo.traumaNum }}</span
+                  >个
+                </div>
               </div>
-              <div class="dtmxl_dds">
-                <span>{{ reviewData.workInfo.themeInfo.traumaNum }}</span
-                >个
-              </div>
-            </div>
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">治愈主题</div>
-              <div class="dtmxl_dd">
-                {{
-                  reviewData.workInfo.themeInfo.cureTheme != ""
-                    ? reviewData.workInfo.themeInfo.cureTheme
-                    : "/"
-                }}
-              </div>
-              <div class="dtmxl_dds">
-                <span>{{ reviewData.workInfo.themeInfo.cureNum }}</span
-                >个
+              <div class="dtmxl_dl">
+                <div class="dtmxl_dt">治愈主题</div>
+                <div class="dtmxl_dd">
+                  {{
+                    reviewData.workInfo.themeInfo.cureTheme != ""
+                      ? reviewData.workInfo.themeInfo.cureTheme
+                      : "/"
+                  }}
+                </div>
+                <div class="dtmxl_dds">
+                  <span>{{ reviewData.workInfo.themeInfo.cureNum }}</span
+                  >个
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="dtm_title" ref="parts13">
-        沙具统计
-      </div>
-      <div class="dtmt_tle">
-        <img src="../../assets/images/report/dot.png" alt="" />
-        <span>沙具使用数量分布</span>
-        <img src="../../assets/images/report/dot.png" alt="" />
-      </div>
-      <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div>
-      <div class="dtmt_tle" style="margin:0.4rem auto 0.1rem">
-        <img src="../../assets/images/report/dot.png" alt="" />
-        <span>沙具使用时长占比</span>
-        <img src="../../assets/images/report/dot.png" alt="" />
-      </div>
-      <div class="myChartRose" ref="myChartRose" id="myChartRose"></div>
-      <div class="dtm_title" style="margin-top:0.2rem;" ref="parts14">
-        附录
-      </div>
-      <template>
-        <el-table border :data="actionInfo">
-          <el-table-column prop="action_idx" label="操作序号"> </el-table-column>
-          <el-table-column prop="action_time" label="操作时间"> </el-table-column>
-          <el-table-column prop="bodies_name" label="沙具名称"> </el-table-column>
-          <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
-          <el-table-column prop="action_content" label="操作内容">
-            <template slot-scope="scope">
-              <span style="color:#006cff">{{scope.row.action_content}}</span>
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
-      <div class="table_page">
-        <div class="page_total">
-          共 <span>{{ total }}</span> 条 , 第
-          <span>{{ currentPage }}/{{ pageNum }}</span> 页
+      
+      <div ref="parts13">
+        <div class="dtm_title">
+          沙具统计
         </div>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-size="limit"
-          layout="prev, pager, next"
-          :total="total"
-        >
-        </el-pagination>
+        <div class="dtmt_tle">
+          <img src="../../assets/images/report/dot.png" alt="" />
+          <span>沙具使用数量分布</span>
+          <img src="../../assets/images/report/dot.png" alt="" />
+        </div>
+        <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div>
+        <div class="dtmt_tle" style="margin:0.4rem auto 0.1rem">
+          <img src="../../assets/images/report/dot.png" alt="" />
+          <span>沙具使用时长占比</span>
+          <img src="../../assets/images/report/dot.png" alt="" />
+        </div>
+        <div class="myChartRose" ref="myChartRose" id="myChartRose"></div>
       </div>
+      
+      <div ref="parts14">
+        <div class="dtm_title" style="margin-top:0.2rem;">
+          附录
+        </div>
+        <template>
+          <el-table border :data="actionInfo">
+            <el-table-column prop="action_idx" label="操作序号"> </el-table-column>
+            <el-table-column prop="action_time" label="操作时间"> </el-table-column>
+            <el-table-column prop="bodies_name" label="沙具名称"> </el-table-column>
+            <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
+            <el-table-column prop="action_content" label="操作内容">
+              <template slot-scope="scope">
+                <span style="color:#006cff">{{scope.row.action_content}}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+        <div class="table_page">
+          <div class="page_total">
+            共 <span>{{ total }}</span> 条 , 第
+            <span>{{ currentPage }}/{{ pageNum }}</span> 页
+          </div>
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="limit"
+            layout="prev, pager, next"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
+      </div>
+      
     </div>
     <div style="height:0;width:100%;overflow:hidden">
       <personReport
@@ -1401,7 +1476,7 @@
       <img
         class="dtmcl_click"
         v-else
-        src="../../assets/images/report/t001.png"
+        src="../../assets/images/gongan/t001.png"
         alt=""
       />
     </el-dialog>
@@ -1480,19 +1555,19 @@ export default {
       imgList: [
         {
           name: "鸟瞰图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "西侧俯身45度视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "东侧俯身45度视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "操作者视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         }
       ],
       sandUseNumInfoName: [],
@@ -1629,9 +1704,9 @@ export default {
     //         this.anxietyFlag = data.data.algTypes.anxiety
     //         // 是否显示强迫
     //         this.forcedFlag = data.data.algTypes.forced
-    //         // 是否显示自我伤害
+    //         // 是否显示PTSD
     //         this.suicideFlag = data.data.algTypes.suicide
-    //         // 是否显示敌对
+    //         // 是否显示心理韧性
     //         this.violenceFlag = data.data.algTypes.violence
     //         // 是否显示人格
     //         this.personalityFlag = data.data.algTypes.personality
@@ -1661,7 +1736,7 @@ export default {
         this.myChartPies1.resize();
         this.myChartPies2.resize();
         this.myChartPies3.resize();
-        this.myChartLd1.resize();
+        // this.myChartLd1.resize();
         this.myChartLd2.resize();
         this.myChartLd3.resize();
         this.myChartRose.resize();
@@ -1906,25 +1981,84 @@ export default {
             } else {
               data.data.confidenceLevel = "不可信";
             }
-
-            if (data.data.selfDiscription.indexOf("“") != -1) {
-              data.data.selfDiscription =
-                data.data.selfDiscription.substring(
-                  0,
-                  data.data.selfDiscription.indexOf("“") + 1
-                ) +
-                '<span style="color:#00C0FF">' +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("“") + 1,
-                  data.data.selfDiscription.indexOf("”")
-                ) +
-                "</span>" +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("”"),
-                  data.data.selfDiscription.length
-                );
+            // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
+            data.data.themeDiscription = '空洞主题释义：' + data.data.themeDiscription
+            if (data.data.themeDiscription && data.data.themeDiscription != '') {
+              if (data.data.themeDiscription.indexOf("：")) {
+                data.data.themeDiscription =
+                  '<span style="color:#006CFF">' +
+                  data.data.themeDiscription.substring(
+                    0,
+                    data.data.themeDiscription.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.themeDiscription.substring(
+                    data.data.themeDiscription.indexOf("：") + 1,
+                    data.data.themeDiscription.length
+                  );
+              }
             }
-            
+            // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
+            data.data.selfDiscription = '作品主题描述：' + data.data.selfDiscription
+            if (data.data.selfDiscription && data.data.selfDiscription != '') {
+              if (data.data.selfDiscription.indexOf("：")) {
+                if (data.data.selfDiscription.indexOf("（") != -1) {
+                  data.data.selfDiscription =
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("：") + 1,
+                      data.data.selfDiscription.indexOf("（") + 1
+                    ) +
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("（") + 1,
+                      data.data.selfDiscription.indexOf("）")
+                    ) +
+                    "</span>" +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("）"),
+                      data.data.selfDiscription.length
+                    );
+                } else {
+                  data.data.selfDiscription =
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                  data.data.selfDiscription.substring(
+                    data.data.selfDiscription.indexOf("：") + 1,
+                    data.data.selfDiscription.length
+                  );
+                }
+                  
+              }
+            }
+            // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
+            data.data.satisfyArea = '主题象征意义：' + data.data.satisfyArea
+            if (data.data.satisfyArea && data.data.satisfyArea != '') {
+              if (data.data.satisfyArea.indexOf("：")) {
+                data.data.satisfyArea =
+                  '<span style="color:#006CFF">' +
+                  data.data.satisfyArea.substring(
+                    0,
+                    data.data.satisfyArea.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.satisfyArea.substring(
+                    data.data.satisfyArea.indexOf("：") + 1,
+                    data.data.satisfyArea.length
+                  );
+              }
+            }
+            // data.data.reportWarningInfo.suicideResult = '轻度风险'
+            // data.data.suicideWarning = 'PTSD轻度风险'
             if (data.data.depressionWarning.indexOf("正常") != -1) {
               data.data.depressionWarning =
                 data.data.depressionWarning.substring(
@@ -2268,6 +2402,7 @@ export default {
                   data.data.violenceWarning.length
                 );
             }
+            
             let oldWarning = [
               {
                 id: 3,
@@ -2293,23 +2428,25 @@ export default {
               {
                 id: 6,
                 old: data.data.reportWarningInfo.suicideResult,
+                // old: '风险正常，接近轻度风险',
                 score: data.data.reportWarningInfo.suicideScore,
                 new: data.data.suicideWarning,
+                // new: 'PTSD风险正常，接近轻度风险',
                 flag: this.suicideFlag
-              },
-              {
-                id: 7,
-                old: data.data.reportWarningInfo.violenceResult,
-                score: data.data.reportWarningInfo.violenceScore,
-                new: data.data.violenceWarning,
-                flag: this.violenceFlag
               }
+              // {
+              //   id: 7,
+              //   old: data.data.reportWarningInfo.violenceResult,
+              //   score: data.data.reportWarningInfo.violenceScore,
+              //   new: data.data.violenceWarning,
+              //   flag: this.violenceFlag
+              // }
             ];
             data.data.warningList = [];
             data.data.whatWarn = [];
             data.data.warnLen = [];
             for (let i in oldWarning) {
-              if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+              if ((oldWarning[i].old != "正常" && oldWarning[i].old != "风险正常") && oldWarning[i].flag == 1) {
                 data.data.warningList.push(oldWarning[i]);
               }
               if (oldWarning[i].score > 2 && oldWarning[i].flag == 1) {
@@ -2320,23 +2457,59 @@ export default {
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
-            console.log(data.data.suggestion)
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            // data.data.suggestion = "该受测者<span class=\"color-blue\">轻度焦虑，接近中度焦虑，易激惹、惶恐不安指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。&&针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。|||该受测者<span class=\"color-blue\">轻度抑郁，情绪低落指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。|||该受测者<span class=\"color-blue\">强迫水平正常，但强迫行为指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。"
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              // for (let i in data.data.suggestion) {
+              //   if (data.data.suggestion[i].indexOf("&&") != -1) {
+
+              //   }
+              // }
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("$$") != -1) {
+                    data.data.suggestion[i] = data.data.suggestion[i].split("$$");
+                    for (let k in data.data.suggestion[i]) {
+                      if (data.data.suggestion[i][k].indexOf("@@") != -1) {
+                        data.data.suggestion[i][k] = data.data.suggestion[i][k].split("@@");
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            
+            console.log(data.data.suggestion)
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            }
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
+            }
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
-            data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
-            for (let i in data.data.suggestionPersonality) {
-              if (i > 0) {
-                data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+            if (data.data.suggestionPersonality && data.data.suggestionPersonality != '') {
+              data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
+              for (let i in data.data.suggestionPersonality) {
+                if (i > 0) {
+                  data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+                }
               }
             }
+            
             let warningInfo = data.data.reportWarningInfo;
             let depressionColorStr = "";
             let depressionLevelStr = "";
@@ -2564,7 +2737,7 @@ export default {
             data.data.sysList = this.sysList;
             let sysList02 = [
               {
-                title: "自我伤害",
+                title: "PTSD",
                 grade: warningInfo.suicideScore,
                 gradep:
                   Number(warningInfo.suicideScore) * 0.44 +
@@ -2584,7 +2757,7 @@ export default {
                 flag: this.suicideFlag
               },
               {
-                title: "敌对",
+                title: "心理韧性",
                 grade: warningInfo.violenceScore,
                 gradep:
                   Number(warningInfo.violenceScore) * 0.44 +
@@ -2717,13 +2890,13 @@ export default {
         data.reportWarningInfo.suicideLevelTxt = "重度";
       }
       if (data.reportWarningInfo.violenceLevel == 0) {
-        data.reportWarningInfo.violenceLevelTxt = "正常";
+        data.reportWarningInfo.violenceLevelTxt = "较低";
       } else if (data.reportWarningInfo.violenceLevel == 1) {
-        data.reportWarningInfo.violenceLevelTxt = "轻度";
+        data.reportWarningInfo.violenceLevelTxt = "中等";
       } else if (data.reportWarningInfo.violenceLevel == 2) {
-        data.reportWarningInfo.violenceLevelTxt = "中度";
+        data.reportWarningInfo.violenceLevelTxt = "较高";
       } else if (data.reportWarningInfo.violenceLevel == 3) {
-        data.reportWarningInfo.violenceLevelTxt = "重度";
+        data.reportWarningInfo.violenceLevelTxt = "极高";
       }
       // 上次
       if (data.lastWarningInfo.depressionLevel == 0) {
@@ -2763,13 +2936,13 @@ export default {
         data.lastWarningInfo.suicideLevelTxt = "重度";
       }
       if (data.lastWarningInfo.violenceLevel == 0) {
-        data.lastWarningInfo.violenceLevelTxt = "正常";
+        data.lastWarningInfo.violenceLevelTxt = "较低";
       } else if (data.lastWarningInfo.violenceLevel == 1) {
-        data.lastWarningInfo.violenceLevelTxt = "轻度";
+        data.lastWarningInfo.violenceLevelTxt = "中等";
       } else if (data.lastWarningInfo.violenceLevel == 2) {
-        data.lastWarningInfo.violenceLevelTxt = "中度";
+        data.lastWarningInfo.violenceLevelTxt = "较高";
       } else if (data.lastWarningInfo.violenceLevel == 3) {
-        data.lastWarningInfo.violenceLevelTxt = "重度";
+        data.lastWarningInfo.violenceLevelTxt = "极高";
       }
       // 平均
       if (data.warningAvgInfo.depressionLevel == 0) {
@@ -2809,13 +2982,13 @@ export default {
         data.warningAvgInfo.suicideLevelTxt = "重度";
       }
       if (data.warningAvgInfo.violenceLevel == 0) {
-        data.warningAvgInfo.violenceLevelTxt = "正常";
+        data.warningAvgInfo.violenceLevelTxt = "较低";
       } else if (data.warningAvgInfo.violenceLevel == 1) {
-        data.warningAvgInfo.violenceLevelTxt = "轻度";
+        data.warningAvgInfo.violenceLevelTxt = "中等";
       } else if (data.warningAvgInfo.violenceLevel == 2) {
-        data.warningAvgInfo.violenceLevelTxt = "中度";
+        data.warningAvgInfo.violenceLevelTxt = "较高";
       } else if (data.warningAvgInfo.violenceLevel == 3) {
-        data.warningAvgInfo.violenceLevelTxt = "重度";
+        data.warningAvgInfo.violenceLevelTxt = "极高";
       }
       return data;
     },
@@ -2828,7 +3001,7 @@ export default {
         this.part1 = this.$refs.parts1.offsetTop;
         this.part2 = this.$refs.parts2.offsetTop;
         this.part3 = this.$refs.parts3.offsetTop;
-        this.part5 = this.$refs.parts5.offsetTop;
+        // this.part5 = this.$refs.parts5.offsetTop;
 
         this.parta1 = this.$refs.parts11.offsetTop;
         this.parta2 = this.$refs.parts12.offsetTop;
@@ -2851,9 +3024,9 @@ export default {
       if (type == 3) {
         window.scrollTo(0, this.part3 - 40);
       }
-      if (type == 5) {
-        window.scrollTo(0, this.part5 - 40);
-      }
+      // if (type == 5) {
+      //   window.scrollTo(0, this.part5 - 40);
+      // }
     },
     trendTabs(type) {
       this.topAct = type;
@@ -3519,131 +3692,131 @@ export default {
             }
           ]
         });
-        this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
-        this.myChartLd1.setOption({
-          grid: {
-            bottom: 40,
-            left: 20,
-            top: 40,
-            right: 60
-          },
-          radar: {
-            indicator: [
-              { name: this.details.personalitySubDim[0].name, max: 100 },
-              { name: this.details.personalitySubDim[5].name, max: 100 },
-              { name: this.details.personalitySubDim[4].name, max: 100 },
-              { name: this.details.personalitySubDim[3].name, max: 100 },
-              { name: this.details.personalitySubDim[2].name, max: 100 },
-              { name: this.details.personalitySubDim[1].name, max: 100 }
-            ],
-            center: ["50%", "50%"],
-            radius: "70%",
-            startAngle: 90,
-            splitNumber: 5,
-            name: {
-              formatter: "{value}",
-              textStyle: {
-                color: "#354B70",
-                fontSize: 12,
-                padding: [-10, -10]
-              }
-            },
-            splitArea: {
-              areaStyle: {
-                color: [
-                  "rgba(255, 255, 255, 1)",
-                  "rgba(151, 205, 255, 0.14)"
-                ].reverse()
-              }
-            },
-            axisLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            }
-          },
-          series: [
-            {
-              name: "人格解读",
-              type: "radar",
-              data: [
-                {
-                  value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
-                  name: "Actual Spending",
-                  symbol: "circle",
-                  symbolSize: 1,
-                  color: "rgba(0, 150, 255, 1)",
-                  itemStyle: {
-                    normal: {
-                      borderColor: "rgba(0, 150, 255, 1)"
-                    }
-                  }
-                }
-              ],
-              label: {
-                show: true,
-                fontSize: 12,
-                textStyle: {
-                  fontSize: 12,
-                  color: "#354B70"
-                },
-                formatter: function(params) {
-                  return params.value;
-                }
-              },
-              areaStyle: {
-                opacity: 0.4,
-                color: {
-                  type: "linear",
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "rgba(0, 150, 255, 1)"
-                    },
-                    {
-                      areaStyle: {
-                        opacity: 0.4,
-                        color: {
-                          type: "linear",
-                          x: 0,
-                          y: 0,
-                          x2: 0,
-                          y2: 1,
-                          colorStops: [
-                            {
-                              offset: 0,
-                              color: "rgba(0, 150, 255, 1)"
-                            },
-                            {
-                              offset: 1,
-                              color: "rgba(41, 101, 255, 1)"
-                            }
-                          ],
-                          globalCoord: false
-                        }
-                      },
-                      offset: 1,
-                      color: "rgba(41, 101, 255, 1)"
-                    }
-                  ],
-                  globalCoord: false
-                }
-              },
-              lineStyle: {
-                width: 0
-              }
-            }
-          ]
-        });
+        // this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
+        // this.myChartLd1.setOption({
+        //   grid: {
+        //     bottom: 40,
+        //     left: 20,
+        //     top: 40,
+        //     right: 60
+        //   },
+        //   radar: {
+        //     indicator: [
+        //       { name: this.details.personalitySubDim[0].name, max: 100 },
+        //       { name: this.details.personalitySubDim[5].name, max: 100 },
+        //       { name: this.details.personalitySubDim[4].name, max: 100 },
+        //       { name: this.details.personalitySubDim[3].name, max: 100 },
+        //       { name: this.details.personalitySubDim[2].name, max: 100 },
+        //       { name: this.details.personalitySubDim[1].name, max: 100 }
+        //     ],
+        //     center: ["50%", "50%"],
+        //     radius: "70%",
+        //     startAngle: 90,
+        //     splitNumber: 5,
+        //     name: {
+        //       formatter: "{value}",
+        //       textStyle: {
+        //         color: "#354B70",
+        //         fontSize: 12,
+        //         padding: [-10, -10]
+        //       }
+        //     },
+        //     splitArea: {
+        //       areaStyle: {
+        //         color: [
+        //           "rgba(255, 255, 255, 1)",
+        //           "rgba(151, 205, 255, 0.14)"
+        //         ].reverse()
+        //       }
+        //     },
+        //     axisLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     },
+        //     splitLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     }
+        //   },
+        //   series: [
+        //     {
+        //       name: "人格解读",
+        //       type: "radar",
+        //       data: [
+        //         {
+        //           value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
+        //           name: "Actual Spending",
+        //           symbol: "circle",
+        //           symbolSize: 1,
+        //           color: "rgba(0, 150, 255, 1)",
+        //           itemStyle: {
+        //             normal: {
+        //               borderColor: "rgba(0, 150, 255, 1)"
+        //             }
+        //           }
+        //         }
+        //       ],
+        //       label: {
+        //         show: true,
+        //         fontSize: 12,
+        //         textStyle: {
+        //           fontSize: 12,
+        //           color: "#354B70"
+        //         },
+        //         formatter: function(params) {
+        //           return params.value;
+        //         }
+        //       },
+        //       areaStyle: {
+        //         opacity: 0.4,
+        //         color: {
+        //           type: "linear",
+        //           x: 0,
+        //           y: 0,
+        //           x2: 0,
+        //           y2: 1,
+        //           colorStops: [
+        //             {
+        //               offset: 0,
+        //               color: "rgba(0, 150, 255, 1)"
+        //             },
+        //             {
+        //               areaStyle: {
+        //                 opacity: 0.4,
+        //                 color: {
+        //                   type: "linear",
+        //                   x: 0,
+        //                   y: 0,
+        //                   x2: 0,
+        //                   y2: 1,
+        //                   colorStops: [
+        //                     {
+        //                       offset: 0,
+        //                       color: "rgba(0, 150, 255, 1)"
+        //                     },
+        //                     {
+        //                       offset: 1,
+        //                       color: "rgba(41, 101, 255, 1)"
+        //                     }
+        //                   ],
+        //                   globalCoord: false
+        //                 }
+        //               },
+        //               offset: 1,
+        //               color: "rgba(41, 101, 255, 1)"
+        //             }
+        //           ],
+        //           globalCoord: false
+        //         }
+        //       },
+        //       lineStyle: {
+        //         width: 0
+        //       }
+        //     }
+        //   ]
+        // });
         this.myChartLd3 = echarts.init(document.getElementById("myChartLd3"));
         this.myChartLd3.setOption({
           tooltip: {
@@ -4332,17 +4505,28 @@ export default {
     .dttb_tips {
       position: absolute;
       margin: auto;
+      width: 12rem;
       top: 0.25rem;
-      left: 50%;
-      margin-left: 0;
-      padding: 0 0.21rem;
+      left: 0;
+      right: 0;
+      // margin-left: 0;
       height: 0.42rem;
       display: flex;
       align-items: center;
-      background: rgba(255, 227, 251, 0.12);
-      border: 0.01rem solid #ffe7f7;
-      box-shadow: 0px 0.13rem 0.43rem 0px rgba(238, 93, 87, 0.1);
-      border-radius: 0.02rem;
+      justify-content: flex-end;
+      // background: rgba(255, 227, 251, 0.12);
+      // box-shadow: 0px 0.13rem 0.43rem 0px rgba(238, 93, 87, 0.1);
+      
+      div{
+        min-width: 4.06rem;
+        height: 0.42rem;
+        background: rgba(220,185,79,0.8);
+        border-radius: 0.02rem;
+        border: 0rem solid #ffe7f7;
+        display: flex;
+        align-items: center;
+        padding: 0 0.16rem;
+      }
       img {
         margin: 0 0.05rem 0 0;
         width: 0.19rem;
@@ -4352,38 +4536,48 @@ export default {
         font-size: 0.18rem;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        color: #fff7f6;
+        color: #FFF7F6;
       }
     }
     .dttb_txt {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: rgba(255, 255, 255, 0.9);
-      width: 8.97rem;
+      width: 9.11rem;
       text-align: left;
       position: absolute;
       margin: auto;
-      top: 0.8rem;
-      bottom: 0;
-      right: 0;
-      left: 0;
+      top: 0.89rem;
+      // bottom: 0;
+      // right: 0;
+      left: 5.89rem;
       h1 {
         font-size: 0.36rem;
         line-height: 1;
         margin: 0;
         padding: 0;
         margin-bottom: 0.28rem;
+        margin-top: 0.04rem;
       }
       p {
-        text-indent: 0.2rem;
+        font-family: SourceHanSansCN-Medium;
+        text-indent: 0rem;
         font-size: 0.2rem;
         line-height: 0.32rem;
-        margin-bottom: 0.18rem;
+        font-weight: 600;
+        // margin-bottom: 0.18rem;
       }
     }
     img {
       width: 100%;
       height: 100%;
+    }
+    .sir_bg{
+      position: absolute;
+      top: 0.96rem;
+      left: 3.79rem;
+      width: 1.70rem;
+      height: 3.49rem;
     }
     .dt_person {
       position: absolute;
@@ -4399,10 +4593,10 @@ export default {
       display: flex;
       align-items: center;
       .dtp_photo {
-        width: 1.48rem;
-        height: 1.48rem;
-        margin-left: 0.2rem;
-        margin-right: 0.1rem;
+        width: 0.84rem;
+        height: 0.84rem;
+        margin-left: 0.57rem;
+        margin-right: 0.26rem;
         img {
           width: 100%;
           height: 100%;
@@ -4414,7 +4608,7 @@ export default {
           display: flex;
           flex-wrap: wrap;
           li {
-            padding: 0.1rem 0;
+            padding: 0.16rem 0;
             text-align: left;
             display: flex;
             align-items: center;
@@ -4539,6 +4733,8 @@ export default {
         border-radius: 0.04rem;
         background: #ffffff;
         overflow: hidden;
+        position: relative;
+        min-height: 3rem;
         .dtmcl_tle {
           display: flex;
           align-items: center;
@@ -4560,13 +4756,18 @@ export default {
           }
         }
         .dtmcl_pic {
-          width: 3.58rem;
-          height: 2.01rem;
-          margin: 0.2rem auto 0.2rem;
-          position: relative;
+          width: 100%;
+          // height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          margin: auto;
+          top: 0.6rem;
+          bottom: 0;
           img {
-            width: 100%;
-            height: 100%;
+            width: 3.58rem;
+            height: 2.01rem;
             border-radius: 0.04rem;
           }
           .dtmcl_click {
@@ -4644,7 +4845,8 @@ export default {
             margin-right: 0.06rem;
           }
           span{
-            font-size:0.2rem
+            font-size:0.2rem;
+            display: block
           }
         }
         .dtmcl_sys {
@@ -4684,7 +4886,9 @@ export default {
           left: 0;
           right: 0;
           min-height: 4rem;
-          padding-bottom: 0.2rem;
+          padding-bottom: 0.3rem;
+
+          padding-top: 0.2rem;
           .dtmcr_ul {
             width: 100%;
           }
@@ -4731,6 +4935,9 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 0.18rem;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
             .dr_sp0 {
               color: #00e805;
             }
@@ -4742,6 +4949,18 @@ export default {
             }
             .dr_sp3 {
               color: #fe2727;
+            }
+            .dr_sv0 {
+              color: #ff69a1;
+            }
+            .dr_sv1 {
+              color: #e96dfb;
+            }
+            .dr_sv2 {
+              color: #4d7aff;
+            }
+            .dr_sv3 {
+              color: #22c8ff;
             }
             .dr_li11 {
               img {
@@ -4881,11 +5100,11 @@ export default {
           }
         }
         .dtmcr_bts1 {
-          padding: 0.36rem 0.36rem 0;
+          padding: 0.2rem 0.36rem 0;
           margin-bottom: 0.2rem;
           p {
             text-align: left;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.12rem;
             color: #5b6c89;
             display: flex;
             align-items: flex-start;
@@ -4908,6 +5127,7 @@ export default {
     }
     .dtm_sys {
       height: 7rem;
+      margin-bottom: 0.8rem;
       .el-carousel__container {
         min-height: 6.8rem;
         padding-bottom: 0.2rem;
@@ -5269,7 +5489,7 @@ export default {
             font-size: 0.16rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            line-height: 0.24rem;
+            line-height: 0.26rem;
             margin-bottom: 0.04rem;
             color: #354b70;
             display: flex;
@@ -5323,7 +5543,7 @@ export default {
           text-align: left;
           padding: 0.2rem 0.25rem;
           p {
-            padding: 0.16rem 0;
+            padding: 0.1rem 0 0;
             font-size: 0.16rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
@@ -5340,14 +5560,18 @@ export default {
           ul {
             li {
               display: flex;
+              align-items: center;
               line-height: 0.36rem;
               span {
-                margin-top: 0.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                // margin-top: 0.1rem;
                 margin-right: 0.1rem;
                 text-align: center;
-                line-height: 0.16rem;
-                width: 0.16rem;
-                height: 0.16rem;
+                line-height: 0.18rem;
+                width: 0.18rem;
+                height: 0.18rem;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
                 font-size: 0.12rem;
@@ -5373,7 +5597,7 @@ export default {
         background: #ffffff;
         box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
         border-radius: 0.04rem;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.65rem;
         .wdrj_title {
           display: flex;
           align-items: center;
@@ -5605,9 +5829,9 @@ export default {
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354B70;
-              line-height: 0.4rem;
+              line-height: 0.26rem;
               span {
-                margin-top: 0.12rem;
+                margin-top: 0.05rem;
                 margin-right: 0.1rem;
                 text-align: center;
                 line-height: 0.16rem;
@@ -5625,7 +5849,8 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 color: #354B70;
-                line-height: 0.4rem;
+                line-height: 0.26rem;
+                flex: 1
               }
               img{
                 width: 0.16rem;

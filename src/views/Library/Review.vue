@@ -52,6 +52,9 @@
               </template>
             </el-table-column>
             <el-table-column prop="tipsName" label="类型">
+              <template slot-scope="scope">
+                <span v-html="scope.row.tipsName"></span>
+              </template>
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
@@ -200,8 +203,8 @@
                 <li v-if="anxietyFlag == 1"><span class="r_cir1"></span>焦虑</li>
                 <li v-if="depressionFlag == 1"><span class="r_cir2"></span>抑郁</li>
                 <li v-if="forcedFlag == 1"><span class="r_cir3"></span>强迫</li>
-                <li v-if="suicideFlag == 1"><span class="r_cir4"></span>自我伤害</li>
-                <li v-if="violenceFlag == 1"><span class="r_cir5"></span>敌对</li>
+                <li v-if="suicideFlag == 1"><span class="r_cir4"></span>PTSD</li>
+                <li v-if="violenceFlag == 1"><span class="r_cir5"></span>心理韧性</li>
                 <li><span class="r_line1"></span>预警线</li>
               </ul>
             </div>
@@ -259,7 +262,7 @@
                     ]"
                     @click="sbTab(5)"
                   >
-                    自我伤害
+                    PTSD
                   </li>
                   <li
                     v-if="violenceFlag == 1"
@@ -270,7 +273,7 @@
                     ]"
                     @click="sbTab(6)"
                   >
-                    敌对
+                    心理韧性
                   </li>
                 </ul>
               </div>
@@ -345,7 +348,7 @@
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 5">
                 <div class="c_titless">
                   <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
-                  自我伤害
+                  PTSD
                 </div>
               </div>
               <div
@@ -359,7 +362,7 @@
                   <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
-                  <li><span class="r_line2"></span>自我伤害水平</li>
+                  <li><span class="r_line2"></span>PTSD水平</li>
                 </ul>
               </div>
             </div>
@@ -367,7 +370,7 @@
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 6">
                 <div class="c_titless">
                   <img style="width:0.32rem" src="../../assets/images/report/f_icon1.png" alt="" />
-                  敌对
+                  心理韧性
                 </div>
               </div>
               <div
@@ -381,7 +384,7 @@
                   <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
-                  <li><span class="r_line2"></span>敌对水平</li>
+                  <li><span class="r_line2"></span>心理韧性水平</li>
                 </ul>
               </div>
             </div>
@@ -478,9 +481,9 @@ export default {
       this.anxietyFlag = algTypes.anxiety
       // 是否显示强迫
       this.forcedFlag = algTypes.forced
-      // 是否显示自我伤害
+      // 是否显示PTSD
       this.suicideFlag = algTypes.suicide
-      // 是否显示敌对
+      // 是否显示心理韧性
       this.violenceFlag = algTypes.violence
       // 是否显示人格
       this.personalityFlag = algTypes.personality
@@ -563,19 +566,24 @@ export default {
             if (data.data) {
               for (let i in data.data) {
                 let tipsNames = "/";
+                let tipsNames0 = "";
                 let tipsArr = [];
+                // data.data[i].depressionScore.score = 1
+                // data.data[i].anxietyScore.score = 1
+                // data.data[i].forcedScore.score = 1
+                // data.data[i].suicideScore.score = 
+                if (this.depressionFlag == 1) {
+                  if (
+                    data.data[i].depressionScore.score > 2
+                  ) {
+                    tipsArr.push("抑郁");
+                  }
+                }
                 if (this.anxietyFlag == 1) {
                   if (
                     data.data[i].anxietyScore.score > 2
                   ) {
                     tipsArr.push("焦虑");
-                  }
-                }
-                if (this.personalityFlag == 1) {
-                  if (
-                    data.data[i].depressionScore.score > 2
-                  ) {
-                    tipsArr.push("抑郁");
                   }
                 }
                 if (this.forcedFlag == 1) {
@@ -585,22 +593,34 @@ export default {
                     tipsArr.push("强迫");
                   }
                 }
+                
+                // if (this.violenceFlag == 1) {
+                //   if (
+                //     data.data[i].violenceScore.score > 2
+                //   ) {
+                //     tipsArr.push("心理韧性");
+                //   }
+                // }
+                if (tipsArr.length > 0) {
+                  tipsNames0 = tipsArr.join("、") + "水平高";
+                }
+                let tipsNames1 = ''
+                let tipsArr1 = [];
                 if (this.suicideFlag == 1) {
                   if (
                     data.data[i].suicideScore.score > 2
                   ) {
-                    tipsArr.push("自我伤害");
+                    tipsArr1.push("PTSD");
                   }
                 }
-                if (this.violenceFlag == 1) {
-                  if (
-                    data.data[i].violenceScore.score > 2
-                  ) {
-                    tipsArr.push("敌对");
-                  }
+                if (tipsArr1.length > 0) {
+                  tipsNames1 = tipsArr1.join("、") + "有风险";
                 }
-                if (tipsArr.length > 0) {
-                  tipsNames = tipsArr.join("、") + "水平高";
+                if (tipsNames0 == '' && tipsNames1 == '') {
+                  tipsNames = '/'
+                } else {
+                  let brs =  (tipsNames0 != '' && tipsNames1 != '') ? '<br>' : ''
+                  tipsNames = tipsNames0 + brs + tipsNames1
                 }
                 data.data[i].dateCount = data.data[i].date.split(' ')[0] + " 第" + data.data[i].evaNum + "次";
                 data.data[i].evaTime = that.toHHmmss(data.data[i].evaTime * 1000);
@@ -747,7 +767,7 @@ export default {
       }
       if (this.suicideFlag == 1) {
         serseArr.push({
-          name: "自我伤害",
+          name: "PTSD",
           type: "bar",
           // barWidth: 16,
           barMaxWidth: 16,
@@ -762,7 +782,7 @@ export default {
       }
       if (this.violenceFlag == 1) {
         serseArr.push({
-          name: "敌对",
+          name: "心理韧性",
           type: "bar",
           // barWidth: 16,
           barMaxWidth: 16,
@@ -1406,7 +1426,7 @@ export default {
             data: qArr
           },
           {
-            name: "自我伤害水平",
+            name: "PTSD水平",
             type: "line",
             yAxisIndex: 1,
             itemStyle: {
@@ -1551,7 +1571,7 @@ export default {
             data: qArr
           },
           {
-            name: "敌对水平",
+            name: "心理韧性水平",
             type: "line",
             yAxisIndex: 1,
             itemStyle: {

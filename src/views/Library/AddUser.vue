@@ -214,7 +214,7 @@ export default {
       newRight1: false,
       newRight2: false,
       newRight3: false,
-      // 所属部门
+      // 所属单位
       frameTree: [], // 树结构
       treeLabel: "",
       frameFlag: false,
@@ -242,8 +242,8 @@ export default {
         phone: "", // 手机号
         birth: "", // 出生日期
         email: "", // 邮箱地址
-        department: "", // 所属部门ID
-        departmentName: "", // 所属部门名称
+        department: "", // 所属单位ID
+        departmentName: "", // 所属单位名称
         jobNumber: "", // 工号
         remark: "", // 备注
         headIcon: "" // 头像
@@ -323,7 +323,7 @@ export default {
       fid30207: {
         enable: 1,
         fieldId: 30207,
-        fieldName: "所属部门",
+        fieldName: "所属单位",
         fieldType: "筛选框",
         ifDelete: 0,
         ifEnable: 0,
@@ -504,8 +504,8 @@ export default {
         this.newPassFlag = true;
       }
     },
-    // 所属部门
-    // 获取所属部门树结构
+    // 所属单位
+    // 获取所属单位树结构
     addChange() {
       let that = this;
       var param = {

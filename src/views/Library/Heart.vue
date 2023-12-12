@@ -176,7 +176,7 @@ export default {
       fid30207: {
         enable: 1,
         fieldId: 30207,
-        fieldName: "所属部门",
+        fieldName: "所属单位",
         fieldType: "筛选框",
         ifDelete: 0,
         ifEnable: 0,

@@ -2,11 +2,11 @@
   <div class="table-class" ref="sprintReportPerson">
     <div class="table-style group_01">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <img class="gp_01_bg" src="../../assets/images/model/t_bg.png" alt="" />
+      <img class="gp_01_bg" src="../../assets/images/gongan/banner.png" alt="" />
       <div class="gp_01_box">
         <div class="gp_01_photo">
-          <img src="../../assets/images/mo_man.png" v-if="gender == 1" alt="">
-          <img src="../../assets/images/mo_woman.png" v-else alt="">
+          <img src="../../assets/images/model/nan.png" v-if="gender == 1" alt="">
+          <img src="../../assets/images/model/nv.png" v-else alt="">
         </div>
         <div class="gp_01_msg">
           <ul>
@@ -22,13 +22,13 @@
             <li>
               <img
                 class="dt_per2"
-                src="../../assets/images/report/person2.png"
+                src="../../assets/images/report/person9.png"
                 alt=""
               />
               <span class="dt_blod">登陆账号：</span>
               <span>{{details.passport}}</span>
             </li>
-            <li>
+            <!-- <li>
               <img
                 class="dt_per3"
                 src="../../assets/images/report/person3.png"
@@ -36,15 +36,24 @@
               />
               <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
               <span>{{details.phone}}</span>
-            </li>
+            </li> -->
             <li>
               <img
                 class="dt_per4"
-                src="../../assets/images/report/person4.png"
+                src="../../assets/images/report/person3.png"
                 alt=""
               />
               <span class="dt_blod">出生日期：</span>
               <span>{{details.birth}}</span>
+            </li>
+            <li>
+              <img
+                class="dt_per6"
+                src="../../assets/images/report/person6.png"
+                alt=""
+              />
+              <span class="dt_blod">所属单位：</span>
+              <span>{{details.departmentName}}</span>
             </li>
             <li>
               <img
@@ -55,15 +64,7 @@
               <span class="dt_blod">测评次数：</span>
               <span>第{{ details.evaluationTime }}次</span>
             </li>
-            <li>
-              <img
-                class="dt_per6"
-                src="../../assets/images/report/person6.png"
-                alt=""
-              />
-              <span class="dt_blod">所属部门：</span>
-              <span>{{details.departmentName}}</span>
-            </li>
+            
             <li style="width:400px">
               <img
                 class="dt_per8"
@@ -85,12 +86,24 @@
         <span class="gp2_t_eng">Reading Guide</span>
       </div>
       <div class="gp2_box">
-        <p>沙盘游戏，也被称为箱庭疗法，是指来访者在治疗师的陪伴下，从玩具架上自由挑选沙具，在盛有细沙的特制箱子里进行自我表现的一种心理疗法。沙盘游戏的有效性已经得到国内外临床实践的广泛验证，对于丰富个体的情感体验、促进自我成长及人格完善具有显著的作用。</p>
-        <p>我们基于投射、沙盘游戏理论，运用人工智能、三维仿真等多项技术研发了AI心世界，实现了实物沙盘的电子化与智能化。</p>
-        <p>AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。</p>
+        <p>
+          “AI 心世界” ：是一款人工智能和心理沙盘相结合的特色产品，以 “沙” 为元素，通过有趣的玩 “沙” 方式认识你自己，创建属于每个人内心真正的 “一沙一世界” 。AI心世界以人工智能技术为核心，深度结合心理箱庭（沙盘）及投射测评模型实现智能心理测评。
+        </p>
+        <p style="font-weight: 900;margin-top: 20px;">
+          报告内容说明
+        </p>
+        <p>
+          本报告包含导读、作品解读、本次概况、附录等内容。从心理健康水平方面对受测者当前心理进行立体评估，阅读报告前需要了解以下说明：
+        </p>
+        <p>
+          1、心理健康会受到环境和遗传等多重影响，每个人都或多或少存在这样或那样的困扰。
+        </p>
+        <p>
+          2、本报告的一切描述均基于受测者当次箱庭游戏，报告结果仅供参考，其结果不成为受测者选拔或诊断依据。
+        </p>
         <div class="gp2b_tips">
           <img src="../../assets/images/model/m_002.png" alt="">
-          <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
+          <span>报告结果仅供参考，其结果不成为受测者选拔或诊断依据。</span>
         </div>
       </div>
       <div class="gp2_top">
@@ -99,6 +112,7 @@
         <span class="gp2_t_eng">Interpretation Of Works</span>
       </div>
       <div class="gp2_box">
+        <p v-html="details.themeDiscription"></p>
         <p v-html="details.selfDiscription"></p>
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
@@ -162,7 +176,7 @@
             <div v-for="(item,index) in details.warningList" :key="item.id">
               <div
                 class="dtmcl_du dtmcl_du2"
-                v-if="item.old != '正常' && item.flag == 1"
+                v-if="(item.old != '正常' && item.old != '风险正常') && item.flag == 1"
               >
                 <img :src="require('../../assets/images/report/icons'+index+'.png')" alt="" />
                 <span v-html="item.new"></span>
@@ -189,8 +203,8 @@
                 <span v-if="details.depressionFlag == 1">抑郁</span>
                 <span v-if="details.anxietyFlag == 1">焦虑</span>
                 <span v-if="details.forcedFlag == 1">强迫</span>
-                <span v-if="details.suicideFlag == 1">自我伤害</span>
-                <span v-if="details.violenceFlag == 1">敌对</span>
+                <span v-if="details.suicideFlag == 1">PTSD</span>
+                <span v-if="details.violenceFlag == 1">心理韧性</span>
               </div>
               <div v-if="details.reportWarningInfo">
                 <span v-if="details.depressionFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.depressionLevel == 0 }, { wran_col1: details.reportWarningInfo.depressionLevel == 1 }, { wran_col2: details.reportWarningInfo.depressionLevel == 2 }, { wran_col3: details.reportWarningInfo.depressionLevel == 3 }]">
@@ -209,7 +223,7 @@
                   <label>{{ details.reportWarningInfo.suicideLevelTxt }}</label>
                   <label>{{ details.reportWarningInfo.suicideScore }}</label>
                 </span>
-                <span v-if="details.violenceFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.violenceLevel == 0 }, { wran_col1: details.reportWarningInfo.violenceLevel == 1 }, { wran_col2: details.reportWarningInfo.violenceLevel == 2 }, { wran_col3: details.reportWarningInfo.violenceLevel == 3 }]">
+                <span v-if="details.violenceFlag == 1" :class="[ 'gp_w_ll', { wran_cols0: details.reportWarningInfo.violenceLevel == 0 }, { wran_cols1: details.reportWarningInfo.violenceLevel == 1 }, { wran_cols2: details.reportWarningInfo.violenceLevel == 2 }, { wran_cols3: details.reportWarningInfo.violenceLevel == 3 }]">
                   <label>{{ details.reportWarningInfo.violenceLevelTxt }}</label>
                   <label>{{ details.reportWarningInfo.violenceScore }}</label>
                 </span>
@@ -247,7 +261,7 @@
                   <label>/</label>
                   <label>/</label>
                 </span>
-                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.violenceLevel == 0 }, { wran_col1: details.lastWarningInfo.violenceLevel == 1 }, { wran_col2: details.lastWarningInfo.violenceLevel == 2 }, { wran_col3: details.lastWarningInfo.violenceLevel == 3 }]">
+                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_cols0: details.lastWarningInfo.violenceLevel == 0 }, { wran_cols1: details.lastWarningInfo.violenceLevel == 1 }, { wran_cols2: details.lastWarningInfo.violenceLevel == 2 }, { wran_cols3: details.lastWarningInfo.violenceLevel == 3 }]">
                   <label>{{ details.lastWarningInfo.violenceLevelTxt }}</label>
                   <label>{{ details.lastWarningInfo.violenceScore }}</label>
                 </span>
@@ -289,7 +303,7 @@
                   <label>/</label>
                   <label>/</label>
                 </span>
-                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.violenceLevel == 0 }, { wran_col1: details.warningAvgInfo.violenceLevel == 1 }, { wran_col2: details.warningAvgInfo.violenceLevel == 2 }, { wran_col3: details.warningAvgInfo.violenceLevel == 3 }]">
+                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_cols0: details.warningAvgInfo.violenceLevel == 0 }, { wran_cols1: details.warningAvgInfo.violenceLevel == 1 }, { wran_cols2: details.warningAvgInfo.violenceLevel == 2 }, { wran_cols3: details.warningAvgInfo.violenceLevel == 3 }]">
                   <label>{{ details.warningAvgInfo.violenceLevelTxt }}</label>
                   <label>{{ details.warningAvgInfo.violenceScore }}</label>
                 </span>
@@ -653,7 +667,107 @@
           </div>
         </div>
       </div>
-      <div class="gp2_top gp3_top">
+      <div class="gp3_box gp3_box1" style="margin-top:80px;margin-bottom:40px;" v-if="details.sysList2">
+        <div class="wdrjs_li wdrj_main" :style="{display:(item.flag == 1 && index === 0) ? 'block' : 'none'}" v-for="(item, index) in details.sysList2" :key="item.title">
+          <div v-if="index === 0">
+            <div class="wdrj_title">
+              <img
+                v-if="item.title == '心理韧性'"
+                src="../../assets/images/report/f_icon1.png"
+                alt=""
+                style="width: 32px;height: 28px"
+              />
+              <img
+                v-if="item.title == 'PTSD'"
+                src="../../assets/images/report/f_icon2.png"
+                alt=""
+                style="width: 33px;height: 33px"
+              />
+              <span>{{item.title}}</span>
+            </div>
+            <div class="wdrj_suger wdrj_suger1">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />
+                <span>评估结果</span>
+                <div class="wdrjst_res" v-if="item.levelNum == 0">
+                  <img src="../../assets/images/report/per_i0.png" alt="" />
+                  <span class="wdrjstr_txt wd_col1">正常</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 1">
+                  <img src="../../assets/images/report/per_i1.png" alt="" />
+                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 2">
+                  <img src="../../assets/images/report/per_i2.png" alt="" />
+                  <span class="wdrjstr_txt wd_col3">中度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 3">
+                  <img src="../../assets/images/report/per_i3.png" alt="" />
+                  <span class="wdrjstr_txt wd_col4">高度预警</span>
+                </div>
+              </div>
+            </div>
+            <div class="dtmsb_tar">
+              <div style="position:relative">
+                <div class="top_top" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                  <div class="demsb_tool">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[0].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom_left" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                  <div class="demsb_tool" style="margin-left:290px">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[2].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom_right" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                  <div class="demsb_tool1">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[1].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="item.title == '心理韧性' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+                <div v-if="item.title == '心理韧性' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+                <div v-if="item.title == 'PTSD' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+                <div v-if="item.title == 'PTSD' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+              </div>
+              <!-- <ul class="dtmsb_ulc">
+                <li>
+                  <img src="../../assets/images/report/fwLine.png" alt="" />
+                </li>
+              </ul> -->
+            </div>
+            <div class="wdrj_suger">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+              </div>
+              <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <!-- <div class="gp2_top gp3_top">
         <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
         <span class="gp2_t_txt">指导建议</span>
         <span class="gp2_t_eng">Guidance Recommendations</span>
@@ -684,111 +798,121 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top">
+      <!-- <div class="gp2_top gp3_top">
         <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
         <span class="gp2_t_txt">人身危险性分析</span>
         <span class="gp2_t_eng">Personal risk analysis</span>
-      </div>
-      <div class="gp3_box gp3_box1" style="margin-bottom:40px;" v-if="details.sysList2">
-        <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in details.sysList2" :key="item.title">
-          <div class="wdrj_title">
-            <img
-              v-if="item.title == '敌对'"
-              src="../../assets/images/report/f_icon1.png"
-              alt=""
-              style="width: 32px;height: 28px"
-            />
-            <img
-              v-if="item.title == '自我伤害'"
-              src="../../assets/images/report/f_icon2.png"
-              alt=""
-              style="width: 33px;height: 33px"
-            />
-            <span>{{item.title}}</span>
-          </div>
-          <div class="wdrj_suger wdrj_suger1">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />
-              <span>评估结果</span>
-              <div class="wdrjst_res" v-if="item.levelNum == 0">
-                <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">正常</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 1">
-                <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 2">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 3">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">高度预警</span>
-              </div>
+      </div> -->
+      <div class="gp3_box gp3_box1" style="margin-top:80px;margin-bottom:40px;" v-if="details.sysList2">
+        <div class="wdrjs_li wdrj_main" :style="{display:(item.flag == 1 && index === 1) ? 'block' : 'none'}" v-for="(item, index) in details.sysList2" :key="item.title">
+          <div v-if="index === 1">
+            <div class="wdrj_title">
+              <img
+                v-if="item.title == '心理韧性'"
+                src="../../assets/images/report/f_icon1.png"
+                alt=""
+                style="width: 32px;height: 28px"
+              />
+              <img
+                v-if="item.title == 'PTSD'"
+                src="../../assets/images/report/f_icon2.png"
+                alt=""
+                style="width: 33px;height: 33px"
+              />
+              <span>{{item.title}}</span>
             </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative">
-              <div class="top_top" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[0].score)
-                    }}</span>
-                  </div>
+            <div class="wdrj_suger wdrj_suger1">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />
+                <span>评估结果</span>
+                <div class="wdrjst_res" v-if="item.levelNum == 0">
+                  <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i0.png" alt="" />
+                  <img v-else src="../../assets/images/report/per_is0.png" alt="" />
+                  <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col1">正常</span>
+                  <span v-else class="wdrjstr_txt wd_cols1">较低</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 1">
+                  <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i1.png" alt="" />
+                  <img v-else src="../../assets/images/report/per_is1.png" alt="" />
+                  <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col2">轻度预警</span>
+                  <span v-else class="wdrjstr_txt wd_cols2">中等</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 2">
+                  <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i2.png" alt="" />
+                  <img v-else src="../../assets/images/report/per_is2.png" alt="" />
+                  <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col3">中度预警</span>
+                  <span v-else class="wdrjstr_txt wd_cols3">较高</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 3">
+                  <img v-if="item.title != '心理韧性'" src="../../assets/images/report/per_i3.png" alt="" />
+                  <img v-else src="../../assets/images/report/per_is3.png" alt="" />
+                  <span v-if="item.title != '心理韧性'" class="wdrjstr_txt wd_col4">重度预警</span>
+                  <span v-else class="wdrjstr_txt wd_cols4">极高</span>
                 </div>
               </div>
-              <div class="bottom_left" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                <div class="demsb_tool" style="margin-left:290px">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[2].score)
-                    }}</span>
+            </div>
+            <div class="dtmsb_tar">
+              <div style="position:relative">
+                <div class="top_top" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                  <div class="demsb_tool">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[0].score)
+                      }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="bottom_right" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[1].score)
-                    }}</span>
+                <div class="bottom_left" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                  <div class="demsb_tool" style="margin-left:290px">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[2].score)
+                      }}</span>
+                    </div>
                   </div>
                 </div>
+                <div class="bottom_right" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                  <div class="demsb_tool1">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[1].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="item.title == '心理韧性' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+                <div v-if="item.title == '心理韧性' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+                <div v-if="item.title == 'PTSD' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
+                <div v-if="item.title == 'PTSD' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
               </div>
-              <div v-if="item.title == '敌对' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-              <div v-if="item.title == '敌对' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
+              <!-- <ul class="dtmsb_ulc">
+                <li>
+                  <img src="../../assets/images/report/fwLine.png" alt="" />
+                </li>
+              </ul> -->
             </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="wdrj_suger">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+            <div class="wdrj_suger">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+              </div>
+              <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
             </div>
-            <ul class="wdrjs_uls">
-              <li v-for="(items, indexs) in item.sysDim" :key="indexs">
-                <span>{{ indexs + 1 }}</span>
-                <p>
-                  {{ items }}
-                </p>
-              </li>
-            </ul>
           </div>
-          <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
+          <!-- <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
             <div class="wdrjs_title">
               <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
             </div>
@@ -800,11 +924,83 @@
                 </p>
               </li>
             </ul>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="table-style  group_02 group_03 group_04">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <div class="gp2_top gp3_top" style="padding-top:40px">
+        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
+        <span class="gp2_t_txt">指导建议</span>
+        <span class="gp2_t_eng">Guidance Recommendations</span>
+      </div>
+      <div class="guide_box">
+        <div class="gb_main">
+          <div class="dtmcl_tle">
+            <img src="../../assets/images/report/guide_i.png" alt="" />
+            <span>指导建议</span>
+          </div>
+          <div class="gb_contain">
+            <div v-for="(item, index) in details.suggestion" :key="index">
+              <p v-if="!Array.isArray(item)">
+                <img src="../../assets/images/report/icon0.png" alt="" /><span
+                  v-html="item"
+                ></span>
+              </p>
+              <div v-if="Array.isArray(item)">
+                <div v-for="(itemt, indext) in item" :key="indext">
+                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                      <div class="color-blue" style="padding:  0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                        {{ itemp }}
+                      </div>
+                      <ul v-if="Array.isArray(itemp)">
+                        <li v-for="(items, indexs) in itemp" :key="indexs">
+                          <span>{{ indexs + 1 }}</span>
+                          <p>
+                            {{ items }}
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    
+                    <div v-if="indext == 0">
+                      <div v-for="(itemp, indexp) in item" :key="indexp">
+                        <div class="color-blue" style="padding:  0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span>{{ indexs + 1 }}</span>
+                            <p>
+                              {{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li >
+                            <span>1</span>
+                            <p>
+                              {{ itemp }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1">
+    <!-- <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top" style="padding:30px 0">
         <img style="width:128px;height:116px;" src="../../assets/images/model/rengejd.png" alt="" />
@@ -846,7 +1042,6 @@
               <div class="wdrjst_res wdrjst_res1" v-if="index < 2">
                 <img src="../../assets/images/report/per_i3.png" alt="" />
                 <span>{{item.name}}：</span>
-                <!-- <span class="wdrjstr_txt wd_col4">高风险</span> -->
               </div>
               <div class="wdrjst_del wdrjst_del2" v-if="index < 2">
                 <div>
@@ -899,8 +1094,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2.length > 1">
+    </div> -->
+    <!-- <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2.length > 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp3_box gp3_box1" style="margin-bottom:40px;margin-top:40px">
         <div class="wdrjs_li wdrj_main" style="height:1600px">
@@ -962,8 +1157,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2 && details.personalitySubDim2.length == 6">
+    </div> -->
+    <!-- <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2 && details.personalitySubDim2.length == 6">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp3_box gp3_box1" style="margin-bottom:40px;margin-top:40px">
         <div class="wdrjs_li wdrj_main" style="height:1600px">
@@ -993,7 +1188,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="table-style group_02 group_03 group_04 group_05">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
@@ -1236,7 +1431,7 @@ export default {
       spinner: "el-icon-loading",
       background: "rgba(0, 0, 0, 0.7)"
     });
-    this.gender = localStorage.getItem('expGender')
+    this.gender = this.row.gender
     this.details = this.row
     this.reviewData = this.rowr
     this.sandInfo = this.rows
@@ -1264,7 +1459,7 @@ export default {
     downloadSprintTestReport() {
       this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
-        // this.setPersonFlag(false)
+        this.setPersonFlag(false)
       })
     },
     initEchart() {
@@ -2084,131 +2279,131 @@ export default {
             }
           ]
         });
-        this.myChartLd11 = echarts.init(document.getElementById("myChartLd11"));
-        this.myChartLd11.setOption({
-          grid: {
-            bottom: 30,
-            left: 20,
-            top: 40,
-            right: 60
-          },
-          radar: {
-            indicator: [
-              { name: this.details.personalitySubDim[0].name, max: 100 },
-              { name: this.details.personalitySubDim[5].name, max: 100 },
-              { name: this.details.personalitySubDim[4].name, max: 100 },
-              { name: this.details.personalitySubDim[3].name, max: 100 },
-              { name: this.details.personalitySubDim[2].name, max: 100 },
-              { name: this.details.personalitySubDim[1].name, max: 100 }
-            ],
-            center: ["50%", "50%"],
-            radius: "70%",
-            startAngle: -30,
-            splitNumber: 5,
-            name: {
-              formatter: "{value}",
-              textStyle: {
-                color: "#354B70",
-                fontSize: 14
-              }
-            },
-            splitArea: {
-              areaStyle: {
-                color: [
-                  "rgba(255, 255, 255, 1)",
-                  "rgba(151, 205, 255, 0.14)"
-                ].reverse()
-              }
-            },
-            axisLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            }
-          },
-          animation: false,
-          series: [
-            {
-              name: "人格解读",
-              type: "radar",
-              data: [
-                {
-                  value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
-                  name: "Actual Spending",
-                  symbol: "circle",
-                  symbolSize: 1,
-                  color: "rgba(0, 150, 255, 1)",
-                  itemStyle: {
-                    normal: {
-                      borderColor: "rgba(0, 150, 255, 1)"
-                    }
-                  }
-                }
-              ],
-              label: {
-                show: true,
-                fontSize: 14,
-                textStyle: {
-                  fontSize: 14,
-                  color: "#354B70"
-                },
-                formatter: function(params) {
-                  return params.value;
-                }
-              },
-              areaStyle: {
-                opacity: 0.4,
-                color: {
-                  type: "linear",
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "rgba(0, 150, 255, 1)"
-                    },
-                    {
-                      areaStyle: {
-                        opacity: 0.4,
-                        color: {
-                          type: "linear",
-                          x: 0,
-                          y: 0,
-                          x2: 0,
-                          y2: 1,
-                          colorStops: [
-                            {
-                              offset: 0,
-                              color: "rgba(0, 150, 255, 1)"
-                            },
-                            {
-                              offset: 1,
-                              color: "rgba(41, 101, 255, 1)"
-                            }
-                          ],
-                          globalCoord: false
-                        }
-                      },
-                      offset: 1,
-                      color: "rgba(41, 101, 255, 1)"
-                    }
-                  ],
-                  globalCoord: false
-                }
-              },
-              lineStyle: {
-                width: 0
-              }
-            }
-          ]
-        });
+        // this.myChartLd11 = echarts.init(document.getElementById("myChartLd11"));
+        // this.myChartLd11.setOption({
+        //   grid: {
+        //     bottom: 30,
+        //     left: 20,
+        //     top: 40,
+        //     right: 60
+        //   },
+        //   radar: {
+        //     indicator: [
+        //       { name: this.details.personalitySubDim[0].name, max: 100 },
+        //       { name: this.details.personalitySubDim[5].name, max: 100 },
+        //       { name: this.details.personalitySubDim[4].name, max: 100 },
+        //       { name: this.details.personalitySubDim[3].name, max: 100 },
+        //       { name: this.details.personalitySubDim[2].name, max: 100 },
+        //       { name: this.details.personalitySubDim[1].name, max: 100 }
+        //     ],
+        //     center: ["50%", "50%"],
+        //     radius: "70%",
+        //     startAngle: -30,
+        //     splitNumber: 5,
+        //     name: {
+        //       formatter: "{value}",
+        //       textStyle: {
+        //         color: "#354B70",
+        //         fontSize: 14
+        //       }
+        //     },
+        //     splitArea: {
+        //       areaStyle: {
+        //         color: [
+        //           "rgba(255, 255, 255, 1)",
+        //           "rgba(151, 205, 255, 0.14)"
+        //         ].reverse()
+        //       }
+        //     },
+        //     axisLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     },
+        //     splitLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     }
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "人格解读",
+        //       type: "radar",
+        //       data: [
+        //         {
+        //           value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
+        //           name: "Actual Spending",
+        //           symbol: "circle",
+        //           symbolSize: 1,
+        //           color: "rgba(0, 150, 255, 1)",
+        //           itemStyle: {
+        //             normal: {
+        //               borderColor: "rgba(0, 150, 255, 1)"
+        //             }
+        //           }
+        //         }
+        //       ],
+        //       label: {
+        //         show: true,
+        //         fontSize: 14,
+        //         textStyle: {
+        //           fontSize: 14,
+        //           color: "#354B70"
+        //         },
+        //         formatter: function(params) {
+        //           return params.value;
+        //         }
+        //       },
+        //       areaStyle: {
+        //         opacity: 0.4,
+        //         color: {
+        //           type: "linear",
+        //           x: 0,
+        //           y: 0,
+        //           x2: 0,
+        //           y2: 1,
+        //           colorStops: [
+        //             {
+        //               offset: 0,
+        //               color: "rgba(0, 150, 255, 1)"
+        //             },
+        //             {
+        //               areaStyle: {
+        //                 opacity: 0.4,
+        //                 color: {
+        //                   type: "linear",
+        //                   x: 0,
+        //                   y: 0,
+        //                   x2: 0,
+        //                   y2: 1,
+        //                   colorStops: [
+        //                     {
+        //                       offset: 0,
+        //                       color: "rgba(0, 150, 255, 1)"
+        //                     },
+        //                     {
+        //                       offset: 1,
+        //                       color: "rgba(41, 101, 255, 1)"
+        //                     }
+        //                   ],
+        //                   globalCoord: false
+        //                 }
+        //               },
+        //               offset: 1,
+        //               color: "rgba(41, 101, 255, 1)"
+        //             }
+        //           ],
+        //           globalCoord: false
+        //         }
+        //       },
+        //       lineStyle: {
+        //         width: 0
+        //       }
+        //     }
+        //   ]
+        // });
         this.myChartLd33 = echarts.init(document.getElementById("myChartLd33"));
         this.myChartLd33.setOption({
           tooltip: {
@@ -2615,13 +2810,14 @@ export default {
     border-radius: 10px;
     display: flex;
     padding: 20px;
+    padding-left: 40px;
     align-items: center;
     .gp_01_photo{
-      margin-right: 21px;
-      width: 106px;
-      height: 106px;
-      box-shadow: 0px 2px 16px 0px rgba(73, 149, 229, 0.27);
-      border-radius: 50%;
+      margin-right: 30px;
+      width: 84px;
+      height: 84px;
+      // box-shadow: 0px 2px 16px 0px rgba(73, 149, 229, 0.27);
+      // border-radius: 50%;
       img{
         width: 100%;
         height: 100%;
@@ -2766,6 +2962,7 @@ export default {
         font-weight: 400;
         color: #5b6c89;
         line-height: 1;
+        line-height: 25px;
       }
       .dtmcl_tx {
         color: #00c0ff;
@@ -2777,6 +2974,7 @@ export default {
         width: 20px;
         height: 20px;
         margin-right: 6px;
+        margin-top:2px;
       }
     }
   }
@@ -2793,9 +2991,9 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #394B6D;
-      line-height: 36px;
+      line-height: 32px;
       text-indent: 40px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
     .gp2b_tips{
       display: flex;
@@ -2998,6 +3196,18 @@ export default {
           }
           .wran_col3{
             color: #fe2727 !important;
+          }
+          .wran_cols0{
+            color: #ff69a1 !important;
+          }
+          .wran_cols1{
+            color: #e96dfb !important;
+          }
+          .wran_cols2{
+            color: #4d7aff !important;
+          }
+          .wran_cols3{
+            color: #22c8ff !important;
           }
         }
         li:last-child{
@@ -3585,9 +3795,9 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354B70;
-            line-height: 36px;
+            line-height: 32px;
             span {
-                margin-top: 10px;
+                margin-top: 8px;
                 margin-right: 10px;
                 text-align: center;
                 line-height: 16px;
@@ -3601,11 +3811,12 @@ export default {
                 color: #ffffff;
             }
             p {
+              flex: 1;
               font-size: 16px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354B70;
-              line-height: 36px;
+              line-height: 32px;
             }
             img{
               width: 16px;
@@ -3774,9 +3985,9 @@ export default {
           ul {
             li {
               display: flex;
-              line-height: 36px;
+              line-height: 32px;
               span {
-                margin-top: 10px;
+                margin-top: 8px;
                 margin-right: 10px;
                 text-align: center;
                 line-height: 16px;
@@ -3862,9 +4073,9 @@ export default {
         ul {
           li {
             display: flex;
-            line-height: 36px;
+            line-height: 32px;
             span {
-              margin-top: 10px;
+              margin-top: 8px;
               margin-right: 10px;
               text-align: center;
               line-height: 16px;

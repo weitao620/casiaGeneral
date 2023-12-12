@@ -507,19 +507,19 @@ export default {
       imgList: [
         {
           name: "鸟瞰图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "西侧俯身45度视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "东侧俯身45度视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         },
         {
           name: "操作者视图",
-          img: require("../../assets/images/report/t001.png")
+          img: require("../../assets/images/gongan/t001.png")
         }
       ],
       sandUseNumInfoName: [],
@@ -545,7 +545,7 @@ export default {
       fid30207: {
         enable: 1,
         fieldId: 30207,
-        fieldName: "所属部门",
+        fieldName: "所属单位",
         fieldType: "筛选框",
         ifDelete: 0,
         ifEnable: 0,
@@ -1123,30 +1123,89 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
+            data.data.birth = data.data.birth.split(" ")[0];
             if (data.data.confidenceLevel == 1) {
               data.data.confidenceLevel = "可信";
             } else {
               data.data.confidenceLevel = "不可信";
             }
-
-            if (data.data.selfDiscription.indexOf("“") != -1) {
-              data.data.selfDiscription =
-                data.data.selfDiscription.substring(
-                  0,
-                  data.data.selfDiscription.indexOf("“") + 1
-                ) +
-                '<span style="color:#00C0FF">' +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("“") + 1,
-                  data.data.selfDiscription.indexOf("”")
-                ) +
-                "</span>" +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("”"),
-                  data.data.selfDiscription.length
-                );
+            // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
+            data.data.themeDiscription = '空洞主题释义：' + data.data.themeDiscription
+            if (data.data.themeDiscription && data.data.themeDiscription != '') {
+              if (data.data.themeDiscription.indexOf("：")) {
+                data.data.themeDiscription =
+                  '<span style="color:#006CFF">' +
+                  data.data.themeDiscription.substring(
+                    0,
+                    data.data.themeDiscription.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.themeDiscription.substring(
+                    data.data.themeDiscription.indexOf("：") + 1,
+                    data.data.themeDiscription.length
+                  );
+              }
             }
-
+            // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
+            data.data.selfDiscription = '作品主题描述：' + data.data.selfDiscription
+            if (data.data.selfDiscription && data.data.selfDiscription != '') {
+              if (data.data.selfDiscription.indexOf("：")) {
+                if (data.data.selfDiscription.indexOf("（") != -1) {
+                  data.data.selfDiscription =
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("：") + 1,
+                      data.data.selfDiscription.indexOf("（") + 1
+                    ) +
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("（") + 1,
+                      data.data.selfDiscription.indexOf("）")
+                    ) +
+                    "</span>" +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("）"),
+                      data.data.selfDiscription.length
+                    );
+                } else {
+                  data.data.selfDiscription =
+                    '<span style="color:#006CFF">' +
+                    data.data.selfDiscription.substring(
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                  data.data.selfDiscription.substring(
+                    data.data.selfDiscription.indexOf("：") + 1,
+                    data.data.selfDiscription.length
+                  );
+                }
+              }
+            }
+            // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
+            data.data.satisfyArea = '主题象征意义：' + data.data.satisfyArea
+            if (data.data.satisfyArea && data.data.satisfyArea != '') {
+              if (data.data.satisfyArea.indexOf("：")) {
+                data.data.satisfyArea =
+                  '<span style="color:#006CFF">' +
+                  data.data.satisfyArea.substring(
+                    0,
+                    data.data.satisfyArea.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.satisfyArea.substring(
+                    data.data.satisfyArea.indexOf("：") + 1,
+                    data.data.satisfyArea.length
+                  );
+              }
+            }
+            // data.data.reportWarningInfo.suicideResult = '轻度风险'
+            // data.data.suicideWarning = 'PTSD轻度风险'
             if (data.data.depressionWarning.indexOf("正常") != -1) {
               data.data.depressionWarning =
                 data.data.depressionWarning.substring(
@@ -1490,6 +1549,7 @@ export default {
                   data.data.violenceWarning.length
                 );
             }
+            
             let oldWarning = [
               {
                 id: 3,
@@ -1515,55 +1575,529 @@ export default {
               {
                 id: 6,
                 old: data.data.reportWarningInfo.suicideResult,
+                // old: '风险正常，接近轻度风险',
                 score: data.data.reportWarningInfo.suicideScore,
                 new: data.data.suicideWarning,
+                // new: 'PTSD风险正常，接近轻度风险',
                 flag: this.suicideFlag
-              },
-              {
-                id: 7,
-                old: data.data.reportWarningInfo.violenceResult,
-                score: data.data.reportWarningInfo.violenceScore,
-                new: data.data.violenceWarning,
-                flag: this.violenceFlag
               }
+              // {
+              //   id: 7,
+              //   old: data.data.reportWarningInfo.violenceResult,
+              //   score: data.data.reportWarningInfo.violenceScore,
+              //   new: data.data.violenceWarning,
+              //   flag: this.violenceFlag
+              // }
             ];
             data.data.warningList = [];
             data.data.whatWarn = [];
             data.data.warnLen = [];
             for (let i in oldWarning) {
-              if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+              if ((oldWarning[i].old != "正常" && oldWarning[i].old != "风险正常") && oldWarning[i].flag == 1) {
                 data.data.warningList.push(oldWarning[i]);
               }
               if (oldWarning[i].score > 2 && oldWarning[i].flag == 1) {
                 data.data.whatWarn.push(oldWarning[i]);
               }
               if (oldWarning[i].flag == 1) {
-                data.data.warnLen.push(oldWarning[i]);
+                data.data.warnLen.push(oldWarning[i])
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            // data.data.suggestion = "该受测者<span class=\"color-blue\">轻度焦虑，接近中度焦虑，易激惹、惶恐不安指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。&&针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。|||该受测者<span class=\"color-blue\">轻度抑郁，情绪低落指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。@@可以建议定期进行冥想、正念训练等，从而缓解相应症状。|||该受测者<span class=\"color-blue\">强迫水平正常，但强迫行为指标存在异常</span>，建议如下：|||针对情绪低落：$$建议受测者学习情绪管理技巧，如情绪日记的书写，这可以帮助他们更好地识别、理解和表达自己的情绪。"
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              // for (let i in data.data.suggestion) {
+              //   if (data.data.suggestion[i].indexOf("&&") != -1) {
+
+              //   }
+              // }
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("$$") != -1) {
+                    data.data.suggestion[i] = data.data.suggestion[i].split("$$");
+                    for (let k in data.data.suggestion[i]) {
+                      if (data.data.suggestion[i][k].indexOf("@@") != -1) {
+                        data.data.suggestion[i][k] = data.data.suggestion[i][k].split("@@");
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split(
-              "@@"
-            );
-            data.data.suggestionViolence = data.data.suggestionViolence.split(
-              "@@"
-            );
+            
+            console.log(data.data.suggestion)
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            }
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
+            }
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
-            data.data.suggestionPersonality = data.data.suggestionPersonality.split(
-              "|||"
-            );
-            for (let i in data.data.suggestionPersonality) {
-              if (i > 0) {
-                data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+            if (data.data.suggestionPersonality && data.data.suggestionPersonality != '') {
+              data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
+              for (let i in data.data.suggestionPersonality) {
+                if (i > 0) {
+                  data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+                }
               }
             }
+            // if (data.code == 0) {
+            //   if (data.data.confidenceLevel == 1) {
+            //     data.data.confidenceLevel = "可信";
+            //   } else {
+            //     data.data.confidenceLevel = "不可信";
+            //   }
+
+            //   if (data.data.selfDiscription.indexOf("“") != -1) {
+            //     data.data.selfDiscription =
+            //       data.data.selfDiscription.substring(
+            //         0,
+            //         data.data.selfDiscription.indexOf("“") + 1
+            //       ) +
+            //       '<span style="color:#00C0FF">' +
+            //       data.data.selfDiscription.substring(
+            //         data.data.selfDiscription.indexOf("“") + 1,
+            //         data.data.selfDiscription.indexOf("”")
+            //       ) +
+            //       "</span>" +
+            //       data.data.selfDiscription.substring(
+            //         data.data.selfDiscription.indexOf("”"),
+            //         data.data.selfDiscription.length
+            //       );
+            //   }
+
+            //   if (data.data.depressionWarning.indexOf("正常") != -1) {
+            //     data.data.depressionWarning =
+            //       data.data.depressionWarning.substring(
+            //         0,
+            //         data.data.depressionWarning.indexOf("正常")
+            //       ) +
+            //       '<span style="color:#00e805">' +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("正常"),
+            //         data.data.depressionWarning.indexOf("正常") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("正常") + 2,
+            //         data.data.depressionWarning.length
+            //       );
+            //   }
+            //   if (data.data.depressionWarning.indexOf("轻度") != -1) {
+            //     data.data.depressionWarning =
+            //       data.data.depressionWarning.substring(
+            //         0,
+            //         data.data.depressionWarning.indexOf("轻度")
+            //       ) +
+            //       '<span style="color:#ffe400">' +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("轻度"),
+            //         data.data.depressionWarning.indexOf("轻度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("轻度") + 2,
+            //         data.data.depressionWarning.length
+            //       );
+            //   }
+            //   if (data.data.depressionWarning.indexOf("中度") != -1) {
+            //     data.data.depressionWarning =
+            //       data.data.depressionWarning.substring(
+            //         0,
+            //         data.data.depressionWarning.indexOf("中度")
+            //       ) +
+            //       '<span style="color:#fc9b2f">' +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("中度"),
+            //         data.data.depressionWarning.indexOf("中度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("中度") + 2,
+            //         data.data.depressionWarning.length
+            //       );
+            //   }
+            //   if (data.data.depressionWarning.indexOf("重度") != -1) {
+            //     data.data.depressionWarning =
+            //       data.data.depressionWarning.substring(
+            //         0,
+            //         data.data.depressionWarning.indexOf("重度")
+            //       ) +
+            //       '<span style="color:#fe2727">' +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("重度"),
+            //         data.data.depressionWarning.indexOf("重度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.depressionWarning.substring(
+            //         data.data.depressionWarning.indexOf("重度") + 2,
+            //         data.data.depressionWarning.length
+            //       );
+            //   }
+            //   if (data.data.anxietyWarning.indexOf("正常") != -1) {
+            //     data.data.anxietyWarning =
+            //       data.data.anxietyWarning.substring(
+            //         0,
+            //         data.data.anxietyWarning.indexOf("正常")
+            //       ) +
+            //       '<span style="color:#00e805">' +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("正常"),
+            //         data.data.anxietyWarning.indexOf("正常") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("正常") + 2,
+            //         data.data.anxietyWarning.length
+            //       );
+            //   }
+            //   if (data.data.anxietyWarning.indexOf("轻度") != -1) {
+            //     data.data.anxietyWarning =
+            //       data.data.anxietyWarning.substring(
+            //         0,
+            //         data.data.anxietyWarning.indexOf("轻度")
+            //       ) +
+            //       '<span style="color:#ffe400">' +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("轻度"),
+            //         data.data.anxietyWarning.indexOf("轻度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("轻度") + 2,
+            //         data.data.anxietyWarning.length
+            //       );
+            //   }
+            //   if (data.data.anxietyWarning.indexOf("中度") != -1) {
+            //     data.data.anxietyWarning =
+            //       data.data.anxietyWarning.substring(
+            //         0,
+            //         data.data.anxietyWarning.indexOf("中度")
+            //       ) +
+            //       '<span style="color:#fc9b2f">' +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("中度"),
+            //         data.data.anxietyWarning.indexOf("中度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("中度") + 2,
+            //         data.data.anxietyWarning.length
+            //       );
+            //   }
+            //   if (data.data.anxietyWarning.indexOf("重度") != -1) {
+            //     data.data.anxietyWarning =
+            //       data.data.anxietyWarning.substring(
+            //         0,
+            //         data.data.anxietyWarning.indexOf("重度")
+            //       ) +
+            //       '<span style="color:#fe2727">' +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("重度"),
+            //         data.data.anxietyWarning.indexOf("重度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.anxietyWarning.substring(
+            //         data.data.anxietyWarning.indexOf("重度") + 2,
+            //         data.data.anxietyWarning.length
+            //       );
+            //   }
+
+            //   if (data.data.forcedWarning.indexOf("正常") != -1) {
+            //     data.data.forcedWarning =
+            //       data.data.forcedWarning.substring(
+            //         0,
+            //         data.data.forcedWarning.indexOf("正常")
+            //       ) +
+            //       '<span style="color:#00e805">' +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("正常"),
+            //         data.data.forcedWarning.indexOf("正常") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("正常") + 2,
+            //         data.data.forcedWarning.length
+            //       );
+            //   }
+            //   if (data.data.forcedWarning.indexOf("轻度") != -1) {
+            //     data.data.forcedWarning =
+            //       data.data.forcedWarning.substring(
+            //         0,
+            //         data.data.forcedWarning.indexOf("轻度")
+            //       ) +
+            //       '<span style="color:#ffe400">' +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("轻度"),
+            //         data.data.forcedWarning.indexOf("轻度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("轻度") + 2,
+            //         data.data.forcedWarning.length
+            //       );
+            //   }
+            //   if (data.data.forcedWarning.indexOf("中度") != -1) {
+            //     data.data.forcedWarning =
+            //       data.data.forcedWarning.substring(
+            //         0,
+            //         data.data.forcedWarning.indexOf("中度")
+            //       ) +
+            //       '<span style="color:#fc9b2f">' +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("中度"),
+            //         data.data.forcedWarning.indexOf("中度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("中度") + 2,
+            //         data.data.forcedWarning.length
+            //       );
+            //   }
+            //   if (data.data.forcedWarning.indexOf("重度") != -1) {
+            //     data.data.forcedWarning =
+            //       data.data.forcedWarning.substring(
+            //         0,
+            //         data.data.forcedWarning.indexOf("重度")
+            //       ) +
+            //       '<span style="color:#fe2727">' +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("重度"),
+            //         data.data.forcedWarning.indexOf("重度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.forcedWarning.substring(
+            //         data.data.forcedWarning.indexOf("重度") + 2,
+            //         data.data.forcedWarning.length
+            //       );
+            //   }
+
+            //   if (data.data.suicideWarning.indexOf("正常") != -1) {
+            //     data.data.suicideWarning =
+            //       data.data.suicideWarning.substring(
+            //         0,
+            //         data.data.suicideWarning.indexOf("正常")
+            //       ) +
+            //       '<span style="color:#00e805">' +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("正常"),
+            //         data.data.suicideWarning.indexOf("正常") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("正常") + 2,
+            //         data.data.suicideWarning.length
+            //       );
+            //   }
+            //   if (data.data.suicideWarning.indexOf("轻度") != -1) {
+            //     data.data.suicideWarning =
+            //       data.data.suicideWarning.substring(
+            //         0,
+            //         data.data.suicideWarning.indexOf("轻度")
+            //       ) +
+            //       '<span style="color:#ffe400">' +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("轻度"),
+            //         data.data.suicideWarning.indexOf("轻度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("轻度") + 2,
+            //         data.data.suicideWarning.length
+            //       );
+            //   }
+            //   if (data.data.suicideWarning.indexOf("中度") != -1) {
+            //     data.data.suicideWarning =
+            //       data.data.suicideWarning.substring(
+            //         0,
+            //         data.data.suicideWarning.indexOf("中度")
+            //       ) +
+            //       '<span style="color:#fc9b2f">' +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("中度"),
+            //         data.data.suicideWarning.indexOf("中度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("中度") + 2,
+            //         data.data.suicideWarning.length
+            //       );
+            //   }
+            //   if (data.data.suicideWarning.indexOf("重度") != -1) {
+            //     data.data.suicideWarning =
+            //       data.data.suicideWarning.substring(
+            //         0,
+            //         data.data.suicideWarning.indexOf("重度")
+            //       ) +
+            //       '<span style="color:#fe2727">' +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("重度"),
+            //         data.data.suicideWarning.indexOf("重度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.suicideWarning.substring(
+            //         data.data.suicideWarning.indexOf("重度") + 2,
+            //         data.data.suicideWarning.length
+            //       );
+            //   }
+
+            //   if (data.data.violenceWarning.indexOf("正常") != -1) {
+            //     data.data.violenceWarning =
+            //       data.data.violenceWarning.substring(
+            //         0,
+            //         data.data.violenceWarning.indexOf("正常")
+            //       ) +
+            //       '<span style="color:#00e805">' +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("正常"),
+            //         data.data.violenceWarning.indexOf("正常") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("正常") + 2,
+            //         data.data.violenceWarning.length
+            //       );
+            //   }
+            //   if (data.data.violenceWarning.indexOf("轻度") != -1) {
+            //     data.data.violenceWarning =
+            //       data.data.violenceWarning.substring(
+            //         0,
+            //         data.data.violenceWarning.indexOf("轻度")
+            //       ) +
+            //       '<span style="color:#ffe400">' +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("轻度"),
+            //         data.data.violenceWarning.indexOf("轻度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("轻度") + 2,
+            //         data.data.violenceWarning.length
+            //       );
+            //   }
+            //   if (data.data.violenceWarning.indexOf("中度") != -1) {
+            //     data.data.violenceWarning =
+            //       data.data.violenceWarning.substring(
+            //         0,
+            //         data.data.violenceWarning.indexOf("中度")
+            //       ) +
+            //       '<span style="color:#fc9b2f">' +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("中度"),
+            //         data.data.violenceWarning.indexOf("中度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("中度") + 2,
+            //         data.data.violenceWarning.length
+            //       );
+            //   }
+            //   if (data.data.violenceWarning.indexOf("重度") != -1) {
+            //     data.data.violenceWarning =
+            //       data.data.violenceWarning.substring(
+            //         0,
+            //         data.data.violenceWarning.indexOf("重度")
+            //       ) +
+            //       '<span style="color:#fe2727">' +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("重度"),
+            //         data.data.violenceWarning.indexOf("重度") + 2
+            //       ) +
+            //       "</span>" +
+            //       data.data.violenceWarning.substring(
+            //         data.data.violenceWarning.indexOf("重度") + 2,
+            //         data.data.violenceWarning.length
+            //       );
+            //   }
+            //   let oldWarning = [
+            //     {
+            //       id: 3,
+            //       old: data.data.reportWarningInfo.depressionResult,
+            //       score: data.data.reportWarningInfo.depressionScore,
+            //       new: data.data.depressionWarning,
+            //       flag: this.depressionFlag
+            //     },
+            //     {
+            //       id: 4,
+            //       old: data.data.reportWarningInfo.anxietyResult,
+            //       score: data.data.reportWarningInfo.anxietyScore,
+            //       new: data.data.anxietyWarning,
+            //       flag: this.anxietyFlag
+            //     },
+            //     {
+            //       id: 5,
+            //       old: data.data.reportWarningInfo.forcedResult,
+            //       score: data.data.reportWarningInfo.forcedScore,
+            //       new: data.data.forcedWarning,
+            //       flag: this.forcedFlag
+            //     },
+            //     {
+            //       id: 6,
+            //       old: data.data.reportWarningInfo.suicideResult,
+            //       score: data.data.reportWarningInfo.suicideScore,
+            //       new: data.data.suicideWarning,
+            //       flag: this.suicideFlag
+            //     },
+            //     {
+            //       id: 7,
+            //       old: data.data.reportWarningInfo.violenceResult,
+            //       score: data.data.reportWarningInfo.violenceScore,
+            //       new: data.data.violenceWarning,
+            //       flag: this.violenceFlag
+            //     }
+            //   ];
+            //   data.data.warningList = [];
+            //   data.data.whatWarn = [];
+            //   data.data.warnLen = [];
+            //   for (let i in oldWarning) {
+            //     if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+            //       data.data.warningList.push(oldWarning[i]);
+            //     }
+            //     if (oldWarning[i].score > 2 && oldWarning[i].flag == 1) {
+            //       data.data.whatWarn.push(oldWarning[i]);
+            //     }
+            //     if (oldWarning[i].flag == 1) {
+            //       data.data.warnLen.push(oldWarning[i]);
+            //     }
+            //   }
+            //   data.data.warningNum = data.data.whatWarn.length;
+            //   data.data.suggestion = data.data.suggestion.split("|||");
+            //   for (let i in data.data.suggestion) {
+            //     if (data.data.suggestion[i].indexOf("针对") != -1) {
+            //       data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            //     }
+            //   }
+            //   data.data.suggestionSuicide = data.data.suggestionSuicide.split(
+            //     "@@"
+            //   );
+            //   data.data.suggestionViolence = data.data.suggestionViolence.split(
+            //     "@@"
+            //   );
+            //   data.data.suicideDim = data.data.suicideDim.split("@@");
+            //   data.data.violenceDim = data.data.violenceDim.split("@@");
+            //   data.data.suggestionPersonality = data.data.suggestionPersonality.split(
+            //     "|||"
+            //   );
+            //   for (let i in data.data.suggestionPersonality) {
+            //     if (i > 0) {
+            //       data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
+            //     }
+            //   }
 
             let warningInfo = data.data.reportWarningInfo;
             let depressionColorStr = "";
@@ -1792,7 +2326,7 @@ export default {
             data.data.sysList = this.sysList;
             let sysList02 = [
               {
-                title: "自我伤害",
+                title: "PTSD",
                 grade: warningInfo.suicideScore,
                 gradep:
                   Number(warningInfo.suicideScore) * 0.44 +
@@ -1812,7 +2346,7 @@ export default {
                 flag: this.suicideFlag
               },
               {
-                title: "敌对",
+                title: "心理韧性",
                 grade: warningInfo.violenceScore,
                 gradep:
                   Number(warningInfo.violenceScore) * 0.44 +
@@ -1924,13 +2458,13 @@ export default {
         data.reportWarningInfo.suicideLevelTxt = "重度";
       }
       if (data.reportWarningInfo.violenceLevel == 0) {
-        data.reportWarningInfo.violenceLevelTxt = "正常";
+        data.reportWarningInfo.violenceLevelTxt = "较低";
       } else if (data.reportWarningInfo.violenceLevel == 1) {
-        data.reportWarningInfo.violenceLevelTxt = "轻度";
+        data.reportWarningInfo.violenceLevelTxt = "中等";
       } else if (data.reportWarningInfo.violenceLevel == 2) {
-        data.reportWarningInfo.violenceLevelTxt = "中度";
+        data.reportWarningInfo.violenceLevelTxt = "较高";
       } else if (data.reportWarningInfo.violenceLevel == 3) {
-        data.reportWarningInfo.violenceLevelTxt = "重度";
+        data.reportWarningInfo.violenceLevelTxt = "极高";
       }
       // 上次
       if (data.lastWarningInfo.depressionLevel == 0) {
@@ -1970,13 +2504,13 @@ export default {
         data.lastWarningInfo.suicideLevelTxt = "重度";
       }
       if (data.lastWarningInfo.violenceLevel == 0) {
-        data.lastWarningInfo.violenceLevelTxt = "正常";
+        data.lastWarningInfo.violenceLevelTxt = "较低";
       } else if (data.lastWarningInfo.violenceLevel == 1) {
-        data.lastWarningInfo.violenceLevelTxt = "轻度";
+        data.lastWarningInfo.violenceLevelTxt = "中等";
       } else if (data.lastWarningInfo.violenceLevel == 2) {
-        data.lastWarningInfo.violenceLevelTxt = "中度";
+        data.lastWarningInfo.violenceLevelTxt = "较高";
       } else if (data.lastWarningInfo.violenceLevel == 3) {
-        data.lastWarningInfo.violenceLevelTxt = "重度";
+        data.lastWarningInfo.violenceLevelTxt = "极高";
       }
       // 平均
       if (data.warningAvgInfo.depressionLevel == 0) {
@@ -2016,13 +2550,13 @@ export default {
         data.warningAvgInfo.suicideLevelTxt = "重度";
       }
       if (data.warningAvgInfo.violenceLevel == 0) {
-        data.warningAvgInfo.violenceLevelTxt = "正常";
+        data.warningAvgInfo.violenceLevelTxt = "较低";
       } else if (data.warningAvgInfo.violenceLevel == 1) {
-        data.warningAvgInfo.violenceLevelTxt = "轻度";
+        data.warningAvgInfo.violenceLevelTxt = "中等";
       } else if (data.warningAvgInfo.violenceLevel == 2) {
-        data.warningAvgInfo.violenceLevelTxt = "中度";
+        data.warningAvgInfo.violenceLevelTxt = "较高";
       } else if (data.warningAvgInfo.violenceLevel == 3) {
-        data.warningAvgInfo.violenceLevelTxt = "重度";
+        data.warningAvgInfo.violenceLevelTxt = "极高";
       }
       return data;
     },
@@ -2046,9 +2580,9 @@ export default {
               this.anxietyFlag = data.data.algTypes.anxiety
               // 是否显示强迫
               this.forcedFlag = data.data.algTypes.forced
-              // 是否显示自我伤害
+              // 是否显示PTSD
               this.suicideFlag = data.data.algTypes.suicide
-              // 是否显示敌对
+              // 是否显示心理韧性
               this.violenceFlag = data.data.algTypes.violence
               // 是否显示人格
               this.personalityFlag = data.data.algTypes.personality

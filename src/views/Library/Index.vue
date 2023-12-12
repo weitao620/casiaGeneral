@@ -103,12 +103,12 @@
               </div>
               <div class="c_pie_li" v-if="suicideFlag == 1">
                 <span class="c_pie_th c_th3"></span>
-                自我伤害
+                PTSD
               </div>
-              <div class="c_pie_li" v-if="violenceFlag == 1">
+              <!-- <div class="c_pie_li" v-if="violenceFlag == 1">
                 <span class="c_pie_th c_th4"></span>
-                敌对
-              </div>
+                心理韧性
+              </div> -->
             </div>
             <div class="c_o_my_txt" v-show="myTxtFlag">累计预警频次</div>
             <div class="c_o_my_num" v-show="myTxtFlag">
@@ -234,18 +234,18 @@
                 </div>
                 <div class="c_pie_li" v-if="suicideFlag == 1">
                   <span class="c_pie_th c_th3"></span>
-                  自我伤害
+                  PTSD
                   <span class="c_pie_td clo3">{{
                     parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
                   }}</span>
                 </div>
-                <div class="c_pie_li" v-if="violenceFlag == 1">
+                <!-- <div class="c_pie_li" v-if="violenceFlag == 1">
                   <span class="c_pie_th c_th4"></span>
-                  敌对
+                  心理韧性
                   <span class="c_pie_td clo4">{{
                     parseInt(detail.warningStatistics.violencePerct * 100) + "%"
                   }}</span>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="center_f" style="flex:1">
@@ -334,7 +334,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="departmentName" v-if="tabFlag == 0" label="所属部门">
+              <el-table-column prop="departmentName" v-if="tabFlag == 0" label="所属单位">
               </el-table-column>
               <el-table-column prop="passport" v-if="tabFlag == 0" label="登录账号">
               </el-table-column>
@@ -530,12 +530,12 @@ export default {
               this.anxietyFlag = data.data.algTypes.anxiety
               // 是否显示强迫
               this.forcedFlag = data.data.algTypes.forced
-              // 是否显示自我伤害
+              // 是否显示PTSD
               this.suicideFlag = data.data.algTypes.suicide
-              // 是否显示敌对
-              this.violenceFlag = data.data.algTypes.violence
-              // 是否显示人格
-              this.personalityFlag = data.data.algTypes.personality
+              // // 是否显示心理韧性
+              // this.violenceFlag = data.data.algTypes.violence
+              // // 是否显示人格
+              // this.personalityFlag = data.data.algTypes.personality
             }
             
             //
@@ -631,7 +631,7 @@ export default {
                     if (this.suicideFlag == 1) {
                       chartArr.push({
                         value: that.detail.warningStatistics.suicideNum,
-                        name: "自我伤害",
+                        name: "PTSD",
                         itemStyle: {
                           normal: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -648,26 +648,26 @@ export default {
                         }
                       })
                     }
-                    if (this.violenceFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.violenceNum,
-                        name: "敌对",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#FFE792"
-                              },
-                              {
-                                offset: 1,
-                                color: "#FFC90C"
-                              }
-                            ])
-                          }
-                        }
-                      })
-                    }
+                    // if (this.violenceFlag == 1) {
+                    //   chartArr.push({
+                    //     value: that.detail.warningStatistics.violenceNum,
+                    //     name: "心理韧性",
+                    //     itemStyle: {
+                    //       normal: {
+                    //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    //           {
+                    //             offset: 0,
+                    //             color: "#FFE792"
+                    //           },
+                    //           {
+                    //             offset: 1,
+                    //             color: "#FFC90C"
+                    //           }
+                    //         ])
+                    //       }
+                    //     }
+                    //   })
+                    // }
                     this.chart1List = chartArr
                     let piePrect = []
                     let pieName = []
@@ -695,17 +695,17 @@ export default {
                     if (this.suicideFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.suicidePerct)
                       pieName.push({
-                        name: "自我伤害",
+                        name: "PTSD",
                         max: 1
                       })
                     }
-                    if (this.violenceFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.violencePerct)
-                      pieName.push({
-                        name: "敌对",
-                        max: 1
-                      })
-                    }
+                    // if (this.violenceFlag == 1) {
+                    //   piePrect.push(that.detail.warningStatistics.violencePerct)
+                    //   pieName.push({
+                    //     name: "心理韧性",
+                    //     max: 1
+                    //   })
+                    // }
                     this.piePrect = piePrect
                     this.pieName = pieName
                     this.draw();
@@ -1347,18 +1347,18 @@ export default {
             }
             if (that.suicideFlag == 1) {
               html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #00D8FF, #46F7CB);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "自我伤害" +
+              "PTSD" +
               "：<span style='color:#04DAFC'>" +
               (parseInt(value[3] * 100) + "%") +
               "</span><br>"
             }
-            if (that.violenceFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFE792, #FFC90C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "敌对" +
-              "：<span style='color:#FFB300'>" +
-              (parseInt(value[4] * 100) + "%") +
-              "</span><br>"
-            }
+            // if (that.violenceFlag == 1) {
+            //   html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFE792, #FFC90C);border-radius: 50%;margin-right:0.04rem"></span>' +
+            //   "心理韧性" +
+            //   "：<span style='color:#FFB300'>" +
+            //   (parseInt(value[4] * 100) + "%") +
+            //   "</span><br>"
+            // }
             return html;
           }
         },
@@ -1367,7 +1367,7 @@ export default {
             indicator: that.pieName,
             center: ["50%", "50%"],
             radius: "65%",
-            startAngle: 90,
+            startAngle: 135,
             splitNumber: 4,
             shape: "circle",
             name: {
