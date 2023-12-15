@@ -1982,7 +1982,7 @@ export default {
               data.data.confidenceLevel = "不可信";
             }
             // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
-            data.data.themeDiscription = data.data.themeDiscription
+            // data.data.themeDiscription = data.data.themeDiscription
             if (data.data.themeDiscription && data.data.themeDiscription != '') {
               if (data.data.themeDiscription.indexOf("：")) {
                 data.data.themeDiscription =
@@ -2036,8 +2036,7 @@ export default {
                     data.data.selfDiscription.indexOf("：") + 1,
                     data.data.selfDiscription.length
                   );
-                }
-                  
+                }  
               }
             }
             // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
