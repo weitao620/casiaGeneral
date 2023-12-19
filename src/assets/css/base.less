@@ -1381,3 +1381,37 @@ col[name="gutter"] {
 .person_box .el-input__prefix{
   left: 0.05rem !important;
 }
+.tt_txt .item_tips{
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 0.16rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #354b70;
+  line-height: 0.22rem;
+}
+.el-tooltip__popper.is-light{
+
+  font-size: 0.16rem;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #354b70;
+  line-height: 0.22rem;
+  background: #F7FCFF !important;
+  border: 0.01rem solid #BDE2FF !important;
+  box-shadow: 0px 0.05rem 0.05rem 0px rgba(189, 226, 1255, 0.1) !important;
+}
+.el-tooltip__popper.is-light[x-placement^=top] .popper__arrow{
+  border-top-color: #BDE2FF !important;
+}
+.el-tooltip__popper.is-light[x-placement^=top] .popper__arrow::after,.el-tooltip__popper[x-placement^=right] .popper__arrow::after{
+  border-top-color: #BDE2FF !important;
+}
+.el-tooltip__popper[x-placement^=right] .popper__arrow{
+  border-right-color: #BDE2FF !important;
+}
+.el-tooltip__popper[x-placement^=right] .popper__arrow::after{
+  border-right-color: #BDE2FF !important;
+  opacity: 0;
+}
