@@ -722,7 +722,7 @@
                   <div v-for="(itemt, indext) in item" :key="indext">
                     <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                       <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
                           {{ itemp }}
                         </div>
                         <ul v-if="Array.isArray(itemp)">
@@ -746,7 +746,7 @@
                     <div v-else>
                       <div v-if="indext == 0">
                         <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
@@ -801,7 +801,7 @@
                   <div v-for="(itemt, indext) in item" :key="indext">
                     <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                       <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
                           {{ itemp }}
                         </div>
                         <ul v-if="Array.isArray(itemp)">
@@ -825,7 +825,7 @@
                     <div v-else>
                       <div v-if="indext == 0">
                         <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
@@ -1000,7 +1000,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1024,7 +1024,7 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
@@ -1201,7 +1201,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1225,7 +1225,7 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0px 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
