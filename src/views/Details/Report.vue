@@ -1998,64 +1998,67 @@ export default {
                   );
               }
             }
-            // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
-            data.data.selfDiscription = '作品描述：' + data.data.selfDiscription
-            if (data.data.selfDiscription && data.data.selfDiscription != '') {
-              if (data.data.selfDiscription.indexOf("：")) {
-                if (data.data.selfDiscription.indexOf("（") != -1) {
-                  data.data.selfDiscription =
-                    '<span style="color:#006CFF">' +
-                    data.data.selfDiscription.substring(
-                      0,
-                      data.data.selfDiscription.indexOf("：") + 1
-                    ) +
-                    "</span>" +
+            if (data.data.themeDiscription && data.data.themeDiscription != '') {
+              // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
+              data.data.selfDiscription = '作品描述：' + data.data.selfDiscription
+              if (data.data.selfDiscription && data.data.selfDiscription != '') {
+                if (data.data.selfDiscription.indexOf("：")) {
+                  if (data.data.selfDiscription.indexOf("（") != -1) {
+                    data.data.selfDiscription =
+                      '<span style="color:#006CFF">' +
+                      data.data.selfDiscription.substring(
+                        0,
+                        data.data.selfDiscription.indexOf("：") + 1
+                      ) +
+                      "</span>" +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("：") + 1,
+                        data.data.selfDiscription.indexOf("（") + 1
+                      ) +
+                      '<span style="color:#006CFF">' +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("（") + 1,
+                        data.data.selfDiscription.indexOf("）")
+                      ) +
+                      "</span>" +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("）"),
+                        data.data.selfDiscription.length
+                      );
+                  } else {
+                    data.data.selfDiscription =
+                      '<span style="color:#006CFF">' +
+                      data.data.selfDiscription.substring(
+                        0,
+                        data.data.selfDiscription.indexOf("：") + 1
+                      ) +
+                      "</span>" +
                     data.data.selfDiscription.substring(
                       data.data.selfDiscription.indexOf("：") + 1,
-                      data.data.selfDiscription.indexOf("（") + 1
-                    ) +
-                    '<span style="color:#006CFF">' +
-                    data.data.selfDiscription.substring(
-                      data.data.selfDiscription.indexOf("（") + 1,
-                      data.data.selfDiscription.indexOf("）")
-                    ) +
-                    "</span>" +
-                    data.data.selfDiscription.substring(
-                      data.data.selfDiscription.indexOf("）"),
                       data.data.selfDiscription.length
                     );
-                } else {
-                  data.data.selfDiscription =
+                  }  
+                }
+              }
+              // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
+              data.data.satisfyArea = '象征意义：' + data.data.satisfyArea
+              if (data.data.satisfyArea && data.data.satisfyArea != '') {
+                if (data.data.satisfyArea.indexOf("：")) {
+                  data.data.satisfyArea =
                     '<span style="color:#006CFF">' +
-                    data.data.selfDiscription.substring(
+                    data.data.satisfyArea.substring(
                       0,
-                      data.data.selfDiscription.indexOf("：") + 1
+                      data.data.satisfyArea.indexOf("：") + 1
                     ) +
                     "</span>" +
-                  data.data.selfDiscription.substring(
-                    data.data.selfDiscription.indexOf("：") + 1,
-                    data.data.selfDiscription.length
-                  );
-                }  
+                    data.data.satisfyArea.substring(
+                      data.data.satisfyArea.indexOf("：") + 1,
+                      data.data.satisfyArea.length
+                    );
+                }
               }
             }
-            // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
-            data.data.satisfyArea = '象征意义：' + data.data.satisfyArea
-            if (data.data.satisfyArea && data.data.satisfyArea != '') {
-              if (data.data.satisfyArea.indexOf("：")) {
-                data.data.satisfyArea =
-                  '<span style="color:#006CFF">' +
-                  data.data.satisfyArea.substring(
-                    0,
-                    data.data.satisfyArea.indexOf("：") + 1
-                  ) +
-                  "</span>" +
-                  data.data.satisfyArea.substring(
-                    data.data.satisfyArea.indexOf("：") + 1,
-                    data.data.satisfyArea.length
-                  );
-              }
-            }
+            
             // data.data.reportWarningInfo.suicideResult = '轻度风险'
             // data.data.suicideWarning = 'PTSD轻度风险'
             if (data.data.depressionWarning.indexOf("正常") != -1) {
