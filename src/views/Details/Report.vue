@@ -1026,6 +1026,23 @@
             />
             <span>指导建议</span>
           </div>
+          <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+            <p v-if="!Array.isArray(item)">
+              <img src="../../assets/images/report/icon0.png" alt="" /><span
+                v-html="item"
+              ></span>
+            </p>
+            <div v-if="Array.isArray(item)">
+              <ul>
+                <li v-for="(items, indexs) in item" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div> -->
           <div class="gb_contain">
             <div v-for="(item, index) in details.suggestion" :key="index">
               <p v-if="!Array.isArray(item)">
@@ -1034,15 +1051,58 @@
                 ></span>
               </p>
               <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
+                <div v-for="(itemt, indext) in item" :key="indext">
+                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                      <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                        {{ itemp }}
+                      </div>
+                      <ul v-if="Array.isArray(itemp)">
+                        <li v-for="(items, indexs) in itemp" :key="indexs">
+                          <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                          <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                          <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                          <p v-if="!Array.isArray(items)">
+                            {{ items }}
+                          </p>
+                          <div style="padding-left:0.26rem;" v-if="Array.isArray(items)">
+                            <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
+                              <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                              <p>{{itemf}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div v-if="indext == 0">
+                      <div v-for="(itemp, indexp) in item" :key="indexp">
+                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
+                            <p>
+                              {{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li >
+                            <!-- <span>1</span> -->
+                            <p>
+                              {{ itemp }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -1165,14 +1225,96 @@
             <div class="wdrjs_title">
               <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
             </div>
-            <ul class="wdrjs_uls">
+            <div class="gb_contain">
+              <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+                <p v-if="!Array.isArray(item)">
+                  <img src="../../assets/images/report/icon0.png" alt="" /><span
+                    v-html="item"
+                  ></span>
+                </p>
+                <div v-if="Array.isArray(item)">
+                  <ul>
+                    <li v-for="(items, indexs) in item" :key="indexs">
+                      <span>{{ indexs + 1 }}</span>
+                      <p>
+                        {{ items }}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+              <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                <p style="margin-left: -0.12rem" v-if="!Array.isArray(items)">
+                  <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
+                  <span
+                    v-html="items"
+                  ></span>
+                </p>
+                <div style="margin-left: 0.1rem;margin-bottom: 0.1rem;" v-if="Array.isArray(items)">
+                  <div v-for="(itemt, indext) in items" :key="indext">
+                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp)">
+                          <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
+                            <p v-if="!Array.isArray(itemv)">
+                              {{ itemv }}
+                            </p>
+                            <div style="padding-left:0.26rem;" v-if="Array.isArray(itemv)">
+                              <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
+                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                <p>{{itemf}}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <div v-if="indext == 0">
+                        <div v-for="(itemp, indexp) in items" :key="indexp">
+                          <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                              <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                              <p>
+                                {{ itemv }}
+                              </p>
+                            </li>
+                          </ul>
+                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li >
+                              <p>
+                                {{ itemp }}
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- <ul class="wdrjs_uls" >
               <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
                 <span>{{ indexs + 1 }}</span>
-                <p>
+                <p v-if="!Array.isArray(item)">
                   {{ items }}
                 </p>
+                <div v-if="Array.isArray(item)">
+                  {{ items }}
+                </div>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>
@@ -2355,15 +2497,243 @@ export default {
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
+
+            // data.data.suggestionSuicide = data.data.suggestion;
+            // data.data.suggestionViolence = data.data.suggestion;
             console.log(data.data.suggestion)
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            // if (data.data.suggestion && data.data.suggestion != '') {
+            //   data.data.suggestion = data.data.suggestion.split("|||");
+            //   console.log(data.data.suggestion)
+            //   for (let i in data.data.suggestion) {
+            //     console.log(data.data.suggestion[i])
+            //     if (data.data.suggestion[i].indexOf("&&") != -1) {
+            //       data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+            //       for (let j in data.data.suggestion[i]) {
+            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+            //           for (let k in data.data.suggestion[i][j]) {
+            //             console.log(data.data.suggestion[i][j][k])
+            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+            //               for (let m in data.data.suggestion[i][j][k]) {
+            //                 console.log(data.data.suggestion[i][j][k][m])
+            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     } else {
+            //       if (data.data.suggestion[i].indexOf("$$") != -1) {
+            //         data.data.suggestion[i] = data.data.suggestion[i].split("$$");
+            //         for (let k in data.data.suggestion[i]) {
+            //           if (data.data.suggestion[i][k].indexOf("@@") != -1) {
+            //             data.data.suggestion[i][k] = data.data.suggestion[i][k].split("@@");
+            //             for (let m in data.data.suggestion[i][k]) {
+            //               if (data.data.suggestion[i][k][m].indexOf("##") != -1) {
+            //                 data.data.suggestion[i][k][m] = data.data.suggestion[i][k][m].split("##");
+            //               }
+            //             }
+            //           }
+            //         }
+            //       } else {
+            //         if (data.data.suggestion[i].indexOf("@@") != -1) {
+            //           data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            //           for (let m in data.data.suggestion[i]) {
+            //             if (data.data.suggestion[i][m].indexOf("##") != -1) {
+            //               data.data.suggestion[i][m] = data.data.suggestion[i][m].split("##");
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("span") == -1) {
+                    data.data.suggestion[i] = [data.data.suggestion[i]]
+                  }
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestion[i]) {
+                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
+                          for (let m in data.data.suggestion[i][j]) {
+                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
+              console.log(data.data.suggestionSuicide)
+              for (let i in data.data.suggestionSuicide) {
+                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
+                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
+                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
+                  }
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionSuicide[i]) {
+                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j]) {
+                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            console.log(data.data.suggestionSuicide)
+
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+              for (let i in data.data.suggestionViolence) {
+                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+                  }
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      console.log(data.data.suggestionViolence[i])
+                      for (let j in data.data.suggestionViolence[i]) {
+                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+                          console.log(data.data.suggestionViolence[i][j])
+                          for (let m in data.data.suggestionViolence[i][j]) {
+                            console.log(data.data.suggestionViolence[i][j][m])
+                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            // console.log(data.data.suggestionSuicide)
+            console.log(data.data.suggestionViolence)
+
+
+            // data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
             data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
@@ -5421,7 +5791,7 @@ export default {
           text-align: left;
           padding: 0.2rem 0.25rem;
           p {
-            padding: 0.16rem 0;
+            padding: 0.16rem 0 0.06rem;
             font-size: 0.16rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
@@ -5440,8 +5810,8 @@ export default {
               display: flex;
               line-height: 0.36rem;
               span {
-                margin-top: 0.1rem;
-                margin-right: 0.1rem;
+                margin-top: 0.09rem;
+                margin-right: 0.08rem;
                 text-align: center;
                 line-height: 0.16rem;
                 width: 0.16rem;
@@ -5452,6 +5822,10 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
+                border: 0.01rem solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
               }
               p {
                 padding: 0;
@@ -5727,6 +6101,7 @@ export default {
                 font-weight: 400;
                 color: #354B70;
                 line-height: 0.4rem;
+                flex: 1
               }
               img{
                 width: 0.16rem;
@@ -5875,7 +6250,7 @@ export default {
             text-align: left;
             padding: 0.10rem 0.25rem;
             p {
-              padding: 0.06rem 0 0.16rem;
+              padding: 0.06rem 0 0.06rem;
               font-size: 0.16rem;
               font-family: Source Han Sans CN;
               font-weight: 400;
@@ -5894,8 +6269,8 @@ export default {
                 display: flex;
                 line-height: 0.36rem;
                 span {
-                  margin-top: 0.1rem;
-                  margin-right: 0.1rem;
+                  margin-top: 0.09rem;
+                  margin-right: 0.08rem;
                   text-align: center;
                   line-height: 0.16rem;
                   width: 0.16rem;
@@ -5906,6 +6281,10 @@ export default {
                   font-family: Source Han Sans CN;
                   font-weight: bold;
                   color: #ffffff;
+                  border: 0.01rem solid #00c6ff;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                 }
                 p {
                   padding: 0;

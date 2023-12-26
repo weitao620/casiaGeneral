@@ -663,18 +663,49 @@
           </div>
         </div>
       </div>
-      <div class="gp2_top gp3_top">
-        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
-        <span class="gp2_t_txt">指导建议</span>
-        <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div>
-      <div class="guide_box">
-        <div class="gb_main">
+      <div class="guide_box" v-if="details.suggestion && details.suggestion.length == 1">
+        <div class="gb_main" style="margin-top:40px">
           <div class="dtmcl_tle">
             <img src="../../assets/images/report/guide_i.png" alt="" />
             <span>指导建议</span>
           </div>
           <div class="gb_contain">
+            <div v-for="(item, index) in details.suggestion" :key="index">
+              <p v-if="!Array.isArray(item)">
+                <img src="../../assets/images/report/icon0.png" alt="" /><span
+                  v-html="item"
+                ></span>
+              </p>
+              <div v-if="Array.isArray(item)">
+                <ul>
+                  <li v-for="(items, indexs) in item" :key="indexs">
+                    <!-- <span>{{ indexs + 1 }}</span> -->
+                    <p>
+                      {{ items }}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 1">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <!-- <div class="gp2_top gp3_top">
+        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
+        <span class="gp2_t_txt">指导建议</span>
+        <span class="gp2_t_eng">Guidance Recommendations</span>
+      </div> -->
+      <div class="guide_box" style="margin-top:40px">
+        <div class="gb_main">
+          <div class="dtmcl_tle">
+            <img src="../../assets/images/report/guide_i.png" alt="" />
+            <span>指导建议</span>
+          </div>
+          <!-- <div class="gb_contain">
             <div v-for="(item, index) in details.suggestion" :key="index">
               <p v-if="!Array.isArray(item)">
                 <img src="../../assets/images/report/icon0.png" alt="" /><span
@@ -692,6 +723,148 @@
                 </ul>
               </div>
             </div>
+          </div> -->
+          <div class="gb_contain">
+            <div v-for="(item, index) in details.suggestion" :key="index">
+              <div v-if="index < 4">
+                <p v-if="!Array.isArray(item)">
+                  <img src="../../assets/images/report/icon0.png" alt="" /><span
+                    v-html="item"
+                  ></span>
+                </p>
+                <div v-if="Array.isArray(item)">
+                  <div v-for="(itemt, indext) in item" :key="indext">
+                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                        <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp)">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                            <p v-if="!Array.isArray(items)">
+                              {{ items }}
+                            </p>
+                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
+                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                <p>{{itemf}}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <div v-if="indext == 0">
+                        <div v-for="(itemp, indexp) in item" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
+                              <p>
+                                {{ items }}
+                              </p>
+                            </li>
+                          </ul>
+                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li >
+                              <!-- <span>1</span> -->
+                              <p>
+                                {{ itemp }}
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 4">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <!-- <div class="gp2_top gp3_top">
+        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
+        <span class="gp2_t_txt">指导建议</span>
+        <span class="gp2_t_eng">Guidance Recommendations</span>
+      </div> -->
+      <div class="guide_box" style="margin-top:40px">
+        <div class="gb_main">
+          <div class="dtmcl_tle">
+            <img src="../../assets/images/report/guide_i.png" alt="" />
+            <span>指导建议</span>
+          </div>
+          <div class="gb_contain">
+            <div v-for="(item, index) in details.suggestion" :key="index">
+              <div v-if="index > 3">
+                <p v-if="!Array.isArray(item)">
+                  <img src="../../assets/images/report/icon0.png" alt="" /><span
+                    v-html="item"
+                  ></span>
+                </p>
+                <div v-if="Array.isArray(item)">
+                  <div v-for="(itemt, indext) in item" :key="indext">
+                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                        <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp)">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                            <p v-if="!Array.isArray(items)">
+                              {{ items }}
+                            </p>
+                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
+                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                <p>{{itemf}}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <div v-if="indext == 0">
+                        <div v-for="(itemp, indexp) in item" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
+                              <p>
+                                {{ items }}
+                              </p>
+                            </li>
+                          </ul>
+                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li >
+                              <!-- <span>1</span> -->
+                              <p>
+                                {{ itemp }}
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -704,113 +877,397 @@
         <span class="gp2_t_eng">Personal risk analysis</span>
       </div>
       <div class="gp3_box gp3_box1" style="margin-bottom:40px;" v-if="details.sysList2">
-        <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in details.sysList2" :key="item.title">
-          <div class="wdrj_title">
-            <img
-              v-if="item.title == '敌对'"
-              src="../../assets/images/report/f_icon1.png"
-              alt=""
-              style="width: 32px;height: 28px"
-            />
-            <img
-              v-if="item.title == '自我伤害'"
-              src="../../assets/images/report/f_icon2.png"
-              alt=""
-              style="width: 33px;height: 33px"
-            />
-            <span>{{item.title}}</span>
-          </div>
-          <div class="wdrj_suger wdrj_suger1">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />
-              <span>评估结果</span>
-              <div class="wdrjst_res" v-if="item.levelNum == 0">
-                <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">正常</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 1">
-                <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 2">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 3">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
-              </div>
+        <div v-for="(item, index) in details.sysList2" :key="item.title">
+          <div v-if="index == 0" class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}">
+          
+            <div class="wdrj_title">
+              <img
+                v-if="item.title == '敌对'"
+                src="../../assets/images/report/f_icon1.png"
+                alt=""
+                style="width: 32px;height: 28px"
+              />
+              <img
+                v-if="item.title == '自我伤害'"
+                src="../../assets/images/report/f_icon2.png"
+                alt=""
+                style="width: 33px;height: 33px"
+              />
+              <span>{{item.title}}</span>
             </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative">
-              <div class="top_top" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[0].score)
-                    }}</span>
-                  </div>
+            <div class="wdrj_suger wdrj_suger1">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />
+                <span>评估结果</span>
+                <div class="wdrjst_res" v-if="item.levelNum == 0">
+                  <img src="../../assets/images/report/per_i0.png" alt="" />
+                  <span class="wdrjstr_txt wd_col1">正常</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 1">
+                  <img src="../../assets/images/report/per_i1.png" alt="" />
+                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 2">
+                  <img src="../../assets/images/report/per_i2.png" alt="" />
+                  <span class="wdrjstr_txt wd_col3">中度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 3">
+                  <img src="../../assets/images/report/per_i3.png" alt="" />
+                  <span class="wdrjstr_txt wd_col4">高度预警</span>
                 </div>
               </div>
-              <div class="bottom_left" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                <div class="demsb_tool" style="margin-left:290px">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[2].score)
-                    }}</span>
+            </div>
+            <div class="dtmsb_tar">
+              <div style="position:relative">
+                <div class="top_top" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                  <div class="demsb_tool">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[0].score)
+                      }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="bottom_right" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[1].score)
-                    }}</span>
+                <div class="bottom_left" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                  <div class="demsb_tool" style="margin-left:290px">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[2].score)
+                      }}</span>
+                    </div>
                   </div>
                 </div>
+                <div class="bottom_right" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                  <div class="demsb_tool1">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[1].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="item.title == '敌对' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
+                <div v-if="item.title == '敌对' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
+                <div v-if="item.title == '自我伤害' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
+                <div v-if="item.title == '自我伤害' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
               </div>
-              <div v-if="item.title == '敌对' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
-              <div v-if="item.title == '敌对' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
-              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
-              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
+              <!-- <ul class="dtmsb_ulc">
+                <li>
+                  <img src="../../assets/images/report/fwLine.png" alt="" />
+                </li>
+              </ul> -->
             </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="wdrj_suger">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+            <div class="wdrj_suger">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+              </div>
+              <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
             </div>
-            <ul class="wdrjs_uls">
-              <li v-for="(items, indexs) in item.sysDim" :key="indexs">
-                <span>{{ indexs + 1 }}</span>
-                <p>
-                  {{ items }}
-                </p>
-              </li>
-            </ul>
-          </div>
-          <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
+            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
+              </div>
+              <!-- <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul> -->
+              <div class="gb_contain">
+                <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <ul>
+                      <li v-for="(items, indexs) in item" :key="indexs">
+                        <span>{{ indexs + 1 }}</span>
+                        <p>
+                          {{ items }}
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+                <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                  <p style="margin-left: -10px" v-if="!Array.isArray(items)">
+                    <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
+                    <span
+                      v-html="items"
+                    ></span>
+                  </p>
+                  <div style="margin-left: 0px;margin-bottom: 0px" v-if="Array.isArray(items)">
+                    <div v-for="(itemt, indext) in items" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
+                              <p v-if="!Array.isArray(itemv)">
+                                {{ itemv }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
+                                <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in items" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <p>
+                                  {{ itemv }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
-            <ul class="wdrjs_uls">
-              <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                <span>{{ indexs + 1 }}</span>
-                <p>
-                  {{ items }}
-                </p>
-              </li>
-            </ul>
           </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <div class="gp2_top gp3_top">
+        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
+        <span class="gp2_t_txt">人身危险性分析</span>
+        <span class="gp2_t_eng">Personal risk analysis</span>
+      </div>
+      <div class="gp3_box gp3_box1" style="margin-top:40px;margin-bottom:40px;" v-if="details.sysList2">
+        <div v-for="(item, index) in details.sysList2" :key="item.title">
+          <div v-if="index == 1" class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}">
+          
+            <div class="wdrj_title">
+              <img
+                v-if="item.title == '敌对'"
+                src="../../assets/images/report/f_icon1.png"
+                alt=""
+                style="width: 32px;height: 28px"
+              />
+              <img
+                v-if="item.title == '自我伤害'"
+                src="../../assets/images/report/f_icon2.png"
+                alt=""
+                style="width: 33px;height: 33px"
+              />
+              <span>{{item.title}}</span>
+            </div>
+            <div class="wdrj_suger wdrj_suger1">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />
+                <span>评估结果</span>
+                <div class="wdrjst_res" v-if="item.levelNum == 0">
+                  <img src="../../assets/images/report/per_i0.png" alt="" />
+                  <span class="wdrjstr_txt wd_col1">正常</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 1">
+                  <img src="../../assets/images/report/per_i1.png" alt="" />
+                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 2">
+                  <img src="../../assets/images/report/per_i2.png" alt="" />
+                  <span class="wdrjstr_txt wd_col3">中度预警</span>
+                </div>
+                <div class="wdrjst_res" v-if="item.levelNum == 3">
+                  <img src="../../assets/images/report/per_i3.png" alt="" />
+                  <span class="wdrjstr_txt wd_col4">高度预警</span>
+                </div>
+              </div>
+            </div>
+            <div class="dtmsb_tar">
+              <div style="position:relative">
+                <div class="top_top" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                  <div class="demsb_tool">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[0].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom_left" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                  <div class="demsb_tool" style="margin-left:290px">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[2].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom_right" v-if="item.subDim">
+                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                  <div class="demsb_tool1">
+                    <div class="demsb_score">
+                      本次得分：<span>{{
+                        parseInt(item.subDim[1].score)
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="item.title == '敌对' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
+                <div v-if="item.title == '敌对' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
+                <div v-if="item.title == '自我伤害' && index == 0" id="myChartLds22" class="myChartLd11" ref="myChartLds22" style="height:246px"></div>
+                <div v-if="item.title == '自我伤害' && index == 1" id="myChartLds33" class="myChartLd11" ref="myChartLds33" style="height:246px"></div>
+              </div>
+              <!-- <ul class="dtmsb_ulc">
+                <li>
+                  <img src="../../assets/images/report/fwLine.png" alt="" />
+                </li>
+              </ul> -->
+            </div>
+            <div class="wdrj_suger">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
+              </div>
+              <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
+              <div class="wdrjs_title">
+                <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
+              </div>
+              <!-- <ul class="wdrjs_uls">
+                <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul> -->
+              <div class="gb_contain">
+                <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <ul>
+                      <li v-for="(items, indexs) in item" :key="indexs">
+                        <span>{{ indexs + 1 }}</span>
+                        <p>
+                          {{ items }}
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+                <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                  <p style="margin-left: -10px" v-if="!Array.isArray(items)">
+                    <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
+                    <span
+                      v-html="items"
+                    ></span>
+                  </p>
+                  <div style="margin-left: 0;margin-bottom: 0;" v-if="Array.isArray(items)">
+                    <div v-for="(itemt, indext) in items" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
+                              <p v-if="!Array.isArray(itemv)">
+                                {{ itemv }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
+                                <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in items" :key="indexp">
+                            <div class="color-blue" style="padding: 0px 0 4px" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <p>
+                                  {{ itemv }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -1895,14 +2352,192 @@ export default {
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            // data.data.suggestion = data.data.suggestion.split("|||");
+            // for (let i in data.data.suggestion) {
+            //   if (data.data.suggestion[i].indexOf("针对") != -1) {
+            //     data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            //   }
+            // }
+            // data.data.suggestionSuicide = data.data.suggestion;
+            // data.data.suggestionViolence = data.data.suggestion;
+            console.log(data.data.suggestion)
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("span") == -1) {
+                    data.data.suggestion[i] = [data.data.suggestion[i]]
+                  }
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestion[i]) {
+                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
+                          for (let m in data.data.suggestion[i][j]) {
+                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
+              console.log(data.data.suggestionSuicide)
+              for (let i in data.data.suggestionSuicide) {
+                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
+                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
+                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
+                  }
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionSuicide[i]) {
+                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j]) {
+                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            console.log(data.data.suggestionSuicide)
+
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+              for (let i in data.data.suggestionViolence) {
+                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+                  }
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionViolence[i]) {
+                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j]) {
+                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            // console.log(data.data.suggestionSuicide)
+            console.log(data.data.suggestionViolence)
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
             data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
@@ -4842,7 +5477,7 @@ export default {
           text-align: left;
           padding: 10px 25px;
           p {
-            padding: 6px 0 16px;
+            padding: 6px 0 6px;
             font-size: 16px;
             font-family: Source Han Sans CN;
             font-weight: 400;
@@ -4859,12 +5494,12 @@ export default {
           ul {
             li {
               display: flex;
-              line-height: 36px;
+              line-height: 26px;
               span {
-                margin-top: 10px;
+                margin-top: 4px;
                 margin-right: 10px;
                 text-align: center;
-                line-height: 16px;
+                line-height: 12px;
                 width: 16px;
                 height: 16px;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
@@ -4873,6 +5508,10 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
+                border: 1px solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
               }
               p {
                 padding: 0;
@@ -4930,7 +5569,7 @@ export default {
         text-align: left;
         padding: 20px 25px;
         p {
-          padding: 16px 0;
+          padding: 6px 0 6px;
           font-size: 16px;
           font-family: Source Han Sans CN;
           font-weight: 400;
@@ -4947,20 +5586,24 @@ export default {
         ul {
           li {
             display: flex;
-            line-height: 36px;
+            line-height: 26px;
             span {
-              margin-top: 10px;
-              margin-right: 10px;
-              text-align: center;
-              line-height: 16px;
-              width: 16px;
-              height: 16px;
-              background: linear-gradient(177deg, #1becff, #00c6ff);
-              border-radius: 50%;
-              font-size:12px;
-              font-family: Source Han Sans CN;
-              font-weight: bold;
-              color: #ffffff;
+              margin-top: 4px;
+                margin-right: 10px;
+                text-align: center;
+                line-height: 12px;
+                width: 16px;
+                height: 16px;
+                background: linear-gradient(177deg, #1becff, #00c6ff);
+                border-radius: 50%;
+                font-size: 12px;
+                font-family: Source Han Sans CN;
+                font-weight: bold;
+                color: #ffffff;
+                border: 1px solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             p {
               padding: 0;
