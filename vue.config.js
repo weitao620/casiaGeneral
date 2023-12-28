@@ -17,6 +17,7 @@ module.exports = {
         // target: "http://36.110.172.217:16666/",
         // target: "http://10.0.6.31:7126/",
         target: "https://ipathy.net/aimwhs/",
+        // target: " http://36.110.172.217:28894/",
         // target: "http://10.0.6.31:6120/",
         // target: "http://36.110.172.216:11300", // 北航
         // target: "http://8.134.56.37:5120/",

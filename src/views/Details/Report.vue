@@ -892,7 +892,12 @@
               <div class="dtmsb_tar">
                 <div style="position:relative">
                   <div class="top_top" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                    <span class="tt_txt">
+                      <el-tooltip class="item_tips" effect="light" placement="top">
+                        <div slot="content" v-html="item.subDim[0].tips"></div>
+                        <el-button>{{ item.subDim[0].name }}</el-button>
+                      </el-tooltip>
+                    </span>
                     <div class="demsb_tool">
                       <div class="demsb_score">
                         本次得分：<span>{{
@@ -902,7 +907,12 @@
                     </div>
                   </div>
                   <div class="bottom_left" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                    <span class="tt_txt">
+                      <el-tooltip class="item_tips" effect="light" placement="top">
+                        <div slot="content" v-html="item.subDim[2].tips"></div>
+                        <el-button>{{ item.subDim[2].name }}</el-button>
+                      </el-tooltip>
+                    </span>
                     <div class="demsb_tool" style="margin-left:1.6rem">
                       <div class="demsb_score">
                         本次得分：<span>{{
@@ -912,7 +922,12 @@
                     </div>
                   </div>
                   <div class="bottom_right" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                    <span class="tt_txt">
+                      <el-tooltip class="item_tips" effect="light" placement="top">
+                        <div slot="content" v-html="item.subDim[1].tips"></div>
+                        <el-button>{{ item.subDim[1].name }}</el-button>
+                      </el-tooltip>
+                    </span>
                     <div class="demsb_tool1">
                       <div class="demsb_score">
                         本次得分：<span>{{
@@ -1002,6 +1017,23 @@
             />
             <span>指导建议</span>
           </div>
+          <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+            <p v-if="!Array.isArray(item)">
+              <img src="../../assets/images/report/icon0.png" alt="" /><span
+                v-html="item"
+              ></span>
+            </p>
+            <div v-if="Array.isArray(item)">
+              <ul>
+                <li v-for="(items, indexs) in item" :key="indexs">
+                  <span>{{ indexs + 1 }}</span>
+                  <p>
+                    {{ items }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div> -->
           <div class="gb_contain">
             <div v-for="(item, index) in details.suggestion" :key="index">
               <p v-if="!Array.isArray(item)">
@@ -1010,15 +1042,58 @@
                 ></span>
               </p>
               <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
+                <div v-for="(itemt, indext) in item" :key="indext">
+                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                      <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                        {{ itemp }}
+                      </div>
+                      <ul v-if="Array.isArray(itemp)">
+                        <li v-for="(items, indexs) in itemp" :key="indexs">
+                          <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                          <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                          <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                          <p v-if="!Array.isArray(items)">
+                            {{ items }}
+                          </p>
+                          <div style="padding-left:0.26rem;" v-if="Array.isArray(items)">
+                            <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
+                              <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                              <p>{{itemf}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div v-if="indext == 0">
+                      <div v-for="(itemp, indexp) in item" :key="indexp">
+                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                            <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
+                            <p>
+                              {{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                          <li >
+                            <!-- <span>1</span> -->
+                            <p>
+                              {{ itemp }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -1069,7 +1144,12 @@
           <div class="dtmsb_tar">
             <div style="position:relative" id="perViolenceEchart">
               <div class="top_top" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[0].name }}</span>
+                <span class="tt_txt">
+                  <el-tooltip class="item_tips" effect="light" placement="top">
+                    <div slot="content" v-html="item.subDim[0].tips"></div>
+                    <el-button>{{ item.subDim[0].name }}</el-button>
+                  </el-tooltip>
+                </span>
                 <div class="demsb_tool">
                   <div class="demsb_score">
                     本次得分：<span>{{
@@ -1079,7 +1159,12 @@
                 </div>
               </div>
               <div class="bottom_left" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[2].name }}</span>
+                <span class="tt_txt">
+                  <el-tooltip class="item_tips" effect="light" placement="top">
+                    <div slot="content" v-html="item.subDim[2].tips"></div>
+                    <el-button>{{ item.subDim[2].name }}</el-button>
+                  </el-tooltip>
+                </span>
                 <div class="demsb_tool" style="margin-left:2.9rem">
                   <div class="demsb_score">
                     本次得分：<span>{{
@@ -1089,7 +1174,12 @@
                 </div>
               </div>
               <div class="bottom_right" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[1].name }}</span>
+                <span class="tt_txt">
+                  <el-tooltip class="item_tips" effect="light" placement="top">
+                    <div slot="content" v-html="item.subDim[1].tips"></div>
+                    <el-button>{{ item.subDim[1].name }}</el-button>
+                  </el-tooltip>
+                </span>
                 <div class="demsb_tool1">
                   <div class="demsb_score">
                     本次得分：<span>{{
@@ -1126,14 +1216,96 @@
             <div class="wdrjs_title">
               <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
             </div>
-            <ul class="wdrjs_uls">
+            <div class="gb_contain">
+              <!-- <div v-for="(item, index) in details.suggestion" :key="index">
+                <p v-if="!Array.isArray(item)">
+                  <img src="../../assets/images/report/icon0.png" alt="" /><span
+                    v-html="item"
+                  ></span>
+                </p>
+                <div v-if="Array.isArray(item)">
+                  <ul>
+                    <li v-for="(items, indexs) in item" :key="indexs">
+                      <span>{{ indexs + 1 }}</span>
+                      <p>
+                        {{ items }}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+              <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                <p style="margin-left: -0.12rem" v-if="!Array.isArray(items)">
+                  <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
+                  <span
+                    v-html="items"
+                  ></span>
+                </p>
+                <div style="margin-left: 0.1rem;margin-bottom: 0.1rem;" v-if="Array.isArray(items)">
+                  <div v-for="(itemt, indext) in items" :key="indext">
+                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                          {{ itemp }}
+                        </div>
+                        <ul v-if="Array.isArray(itemp)">
+                          <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
+                            <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
+                            <p v-if="!Array.isArray(itemv)">
+                              {{ itemv }}
+                            </p>
+                            <div style="padding-left:0.26rem;" v-if="Array.isArray(itemv)">
+                              <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
+                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                <p>{{itemf}}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <div v-if="indext == 0">
+                        <div v-for="(itemp, indexp) in items" :key="indexp">
+                          <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                              <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                              <p>
+                                {{ itemv }}
+                              </p>
+                            </li>
+                          </ul>
+                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                            <li >
+                              <p>
+                                {{ itemp }}
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- <ul class="wdrjs_uls" >
               <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
                 <span>{{ indexs + 1 }}</span>
-                <p>
+                <p v-if="!Array.isArray(item)">
                   {{ items }}
                 </p>
+                <div v-if="Array.isArray(item)">
+                  {{ items }}
+                </div>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>
@@ -1145,6 +1317,19 @@
           <div class="wdrj_title">
             <img src="../../assets/images/report/f_icon6.png" alt="" />
             人格解读
+            <el-tooltip
+                class="item"
+                effect="light"
+                placement="right-start"
+              >
+                <div slot="content" v-html="personCont"></div>
+                <img
+                  class="c_o_tip c_o_tip1"
+                  style="width:0.24rem;height:0.24rem;margin-left:0.1rem"
+                  src="../../assets/images/what_icon.jpg"
+                  alt=""
+                />
+              </el-tooltip>
           </div>
           <div class="dtmsb_tar" style="margin: -0.2rem auto 0;height: 4.4rem;">
             <div style="position:relative">
@@ -1459,7 +1644,7 @@ export default {
   },
   data() {
     return {
-
+      personCont: '<span style="font-weight:600;">反社会：</span>主要特征是行为具有一定攻击性；行为受偶然动机驱使，无法从经历中吸取教训等。<br><span style="font-weight:600;">攻击性：</span>可以体现为对他人有意挑衅、侵犯或对事物有意损毁、破坏等心理倾向和行为。<br><span style="font-weight:600;">偏执：</span>以无端猜忌为主要特征，经常处于紧张或者是戒备的状态，一般还会伴有固执、敏感多疑、好妒等症状。<br><span style="font-weight:600;">边缘：</span>特点是情绪不稳定，会因生活小事而愤怒，遇事常冲动，缺乏理性思考，故而经常与人发生摩擦。<br><span style="font-weight:600;">自恋：</span>基本特征是对自我价值感的夸大，但实际中他们稍不如意就又会产生自我无价值感。<br><span style="font-weight:600;">完美主义：</span>核心特征是强行设置不符合实际的高标准，自我评价过于依赖成就，恐惧失败、过度自我批评。',
       assessment: '',
       assessmentFlag: false,
       birdViewImg: '',
@@ -1596,45 +1781,27 @@ export default {
     let that = this;
     this.reportId = this.$route.params.userID;
     let param = {
-      passport: JSON.parse(localStorage.getItem('userInfo')).passport
-      // password: JSON.parse(localStorage.getItem('userInfo')).password
+      passport: JSON.parse(localStorage.getItem('userInfo')).passport,
+      password: JSON.parse(localStorage.getItem('userInfo')).password
     }
     this.$http
-      .get(Url + "/aimw/user/getAuthInfo", { params: param })
+      .post(Url + "/aimw/user/login", param)
       .then(res => {
         var data = res.data;
         if (data.code == 0) {
-          let obja = {
-            menuAuthID: []
-          };
-          if (data.data.userAuth == "") {
-            data.data.userAuth = JSON.stringify(obja);
-          } else {
-            if (JSON.parse(data.data.userAuth).menuAuthID) {
-
-            } else {
-              let nOb = JSON.parse(data.data.userAuth);
-              nOb.menuAuthID = [];
-              data.data.userAuth = JSON.stringify(nOb);
-            }
-          }
-          localStorage.setItem("userAuth", data.data.userAuth);
-          localStorage.setItem("userType", 1);
           localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
-          if (data.data.algTypes) {
-            // 是否显示抑郁
-            this.depressionFlag = data.data.algTypes.depression
-            // 是否显示焦虑
-            this.anxietyFlag = data.data.algTypes.anxiety
-            // 是否显示强迫
-            this.forcedFlag = data.data.algTypes.forced
-            // 是否显示自我伤害
-            this.suicideFlag = data.data.algTypes.suicide
-            // 是否显示敌对
-            this.violenceFlag = data.data.algTypes.violence
-            // 是否显示人格
-            this.personalityFlag = data.data.algTypes.personality
-          }
+          // 是否显示抑郁
+          this.depressionFlag = data.data.algTypes.depression
+          // 是否显示焦虑
+          this.anxietyFlag = data.data.algTypes.anxiety
+          // 是否显示强迫
+          this.forcedFlag = data.data.algTypes.forced
+          // 是否显示自我伤害
+          this.suicideFlag = data.data.algTypes.suicide
+          // 是否显示敌对
+          this.violenceFlag = data.data.algTypes.violence
+          // 是否显示人格
+          this.personalityFlag = data.data.algTypes.personality
           //
           // this.depressionFlag = 1
           // this.anxietyFlag = 1
@@ -2321,15 +2488,243 @@ export default {
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
+
+            // data.data.suggestionSuicide = data.data.suggestion;
+            // data.data.suggestionViolence = data.data.suggestion;
             console.log(data.data.suggestion)
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            // if (data.data.suggestion && data.data.suggestion != '') {
+            //   data.data.suggestion = data.data.suggestion.split("|||");
+            //   console.log(data.data.suggestion)
+            //   for (let i in data.data.suggestion) {
+            //     console.log(data.data.suggestion[i])
+            //     if (data.data.suggestion[i].indexOf("&&") != -1) {
+            //       data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+            //       for (let j in data.data.suggestion[i]) {
+            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+            //           for (let k in data.data.suggestion[i][j]) {
+            //             console.log(data.data.suggestion[i][j][k])
+            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+            //               for (let m in data.data.suggestion[i][j][k]) {
+            //                 console.log(data.data.suggestion[i][j][k][m])
+            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     } else {
+            //       if (data.data.suggestion[i].indexOf("$$") != -1) {
+            //         data.data.suggestion[i] = data.data.suggestion[i].split("$$");
+            //         for (let k in data.data.suggestion[i]) {
+            //           if (data.data.suggestion[i][k].indexOf("@@") != -1) {
+            //             data.data.suggestion[i][k] = data.data.suggestion[i][k].split("@@");
+            //             for (let m in data.data.suggestion[i][k]) {
+            //               if (data.data.suggestion[i][k][m].indexOf("##") != -1) {
+            //                 data.data.suggestion[i][k][m] = data.data.suggestion[i][k][m].split("##");
+            //               }
+            //             }
+            //           }
+            //         }
+            //       } else {
+            //         if (data.data.suggestion[i].indexOf("@@") != -1) {
+            //           data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            //           for (let m in data.data.suggestion[i]) {
+            //             if (data.data.suggestion[i][m].indexOf("##") != -1) {
+            //               data.data.suggestion[i][m] = data.data.suggestion[i][m].split("##");
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("span") == -1) {
+                    data.data.suggestion[i] = [data.data.suggestion[i]]
+                  }
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestion[i]) {
+                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
+                          for (let m in data.data.suggestion[i][j]) {
+                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
+              console.log(data.data.suggestionSuicide)
+              for (let i in data.data.suggestionSuicide) {
+                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
+                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
+                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
+                  }
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionSuicide[i]) {
+                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j]) {
+                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            console.log(data.data.suggestionSuicide)
+
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+              for (let i in data.data.suggestionViolence) {
+                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+                  }
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      console.log(data.data.suggestionViolence[i])
+                      for (let j in data.data.suggestionViolence[i]) {
+                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+                          console.log(data.data.suggestionViolence[i][j])
+                          for (let m in data.data.suggestionViolence[i][j]) {
+                            console.log(data.data.suggestionViolence[i][j][m])
+                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            // console.log(data.data.suggestionSuicide)
+            console.log(data.data.suggestionViolence)
+
+
+            // data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
             data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
@@ -2504,6 +2899,61 @@ export default {
               }
               forArr.push(str);
             }
+            for (let i in data.data.depressionSubDim) {
+              if (data.data.depressionSubDim[i].name == '情绪低落') {
+                data.data.depressionSubDim[i].tips = '持续的沮丧和悲伤情绪，通常伴随着对日常活动<br>的兴趣和愉悦感的丧失。'
+              }
+              if (data.data.depressionSubDim[i].name == '思维迟缓') {
+                data.data.depressionSubDim[i].tips = '认知功能受到影响，可能表现为难以集中注意力和<br>做出决策。'
+              }
+              if (data.data.depressionSubDim[i].name == '精力缺乏') {
+                data.data.depressionSubDim[i].tips = '常常感到疲惫不堪，即使休息过也难以恢复活力，<br>缺乏足够的精力来完成日常任务。'
+              }
+            }
+            for (let i in data.data.anxietySubDim) {
+              if (data.data.anxietySubDim[i].name == '消极预期') {
+                data.data.anxietySubDim[i].tips = '对未来可能发生负面事件的过度担忧，即使这些<br>担忧在逻辑上并无根据。'
+              }
+              if (data.data.anxietySubDim[i].name == '易激惹') {
+                data.data.anxietySubDim[i].tips = '通常会因小事而感到愤怒或不耐烦，情绪可能会<br>波动较大。'
+              }
+              if (data.data.anxietySubDim[i].name == '惶恐不安') {
+                data.data.anxietySubDim[i].tips = '内心持续感到不安，对周围环境缺乏安全感，可能<br>会在没有特定原因的情况下出现。'
+              }
+            }
+            for (let i in data.data.forcedSubDim) {
+              if (data.data.forcedSubDim[i].name == '强迫行为') {
+                data.data.forcedSubDim[i].tips = '采取特定的、反复的行为或仪式，如洗涤、检查、<br>计数、安排物品等。'
+              }
+              if (data.data.forcedSubDim[i].name == '强迫思维') {
+                data.data.forcedSubDim[i].tips = '反复出现并引起明显痛苦或焦虑的思维、冲动或<br>图像，且但难以控制。'
+              }
+              if (data.data.forcedSubDim[i].name == '对抗强迫') {
+                data.data.forcedSubDim[i].tips = '试图抵抗强迫思维和行为，然而这可能会导致更多<br>的焦虑和不安。'
+              }
+            }
+            for (let i in data.data.suicideSubDim) {
+              if (data.data.suicideSubDim[i].name == '人际孤独') {
+                data.data.suicideSubDim[i].tips = '感到无法与他人建立亲密的社交关系，从而导致<br>疏远和孤立感。'
+              }
+              if (data.data.suicideSubDim[i].name == '抑郁程度') {
+                data.data.suicideSubDim[i].tips = '随着抑郁情绪的加重，个体可能会试图通过伤害<br>自己来应对内心的痛苦。'
+              }
+              if (data.data.suicideSubDim[i].name == '创伤经历') {
+                data.data.suicideSubDim[i].tips = '创伤经历/事件可能导致严重的心理痛苦，从而<br>增加自我伤害行为的风险。'
+              }
+            }
+            for (let i in data.data.violenceSubDim) {
+              if (data.data.violenceSubDim[i].name == '冲动性') {
+                data.data.violenceSubDim[i].tips = '可能因愤怒或不满而做出冲动和不明智的决策、反应。'
+              }
+              if (data.data.violenceSubDim[i].name == '无规则感') {
+                data.data.violenceSubDim[i].tips = '行为通常难以预测，不遵循常规规则和社会期望，<br>可能导致混乱和冲突。'
+              }
+              if (data.data.violenceSubDim[i].name == '敌意') {
+                data.data.violenceSubDim[i].tips = '对他人持怀疑、敌意和敌对态度，可能导致人际<br>关系的恶化。'
+              }
+            }
             let sysList0 = [
               {
                 title: "抑郁",
@@ -2520,6 +2970,7 @@ export default {
                 imgType: depressionImgStr,
                 list: depArr,
                 subDim: data.data.depressionSubDim,
+                tips: data.data.depressionTips,
                 flag: this.depressionFlag
               },
               {
@@ -2537,6 +2988,7 @@ export default {
                 imgType: anxietyImgStr,
                 list: anxArr,
                 subDim: data.data.anxietySubDim,
+                tips: data.data.anxietyTips,
                 flag: this.anxietyFlag
               },
               {
@@ -2554,6 +3006,7 @@ export default {
                 imgType: forcedImgStr,
                 list: forArr,
                 subDim: data.data.forcedSubDim,
+                tips: data.data.forcedTips,
                 flag: this.forcedFlag
               }
             ];
@@ -2582,6 +3035,7 @@ export default {
                 levelNum: warningInfo.suicideLevel,
                 suggestDim: data.data.suggestionSuicide,
                 sysDim: data.data.suicideDim,
+                tips: data.data.suicidedTips,
                 flag: this.suicideFlag
               },
               {
@@ -2602,6 +3056,7 @@ export default {
                 levelNum: warningInfo.violenceLevel,
                 suggestDim: data.data.suggestionViolence,
                 sysDim: data.data.violenceDim,
+                tips: data.data.violenceTips,
                 flag: this.violenceFlag
               }
             ];
@@ -5051,6 +5506,7 @@ export default {
             left: 0;
             right: 0;
             top: 0;
+            z-index: 10;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -5067,6 +5523,7 @@ export default {
             right: 0;
             bottom: 0.02rem;
             margin-left: 2.4rem;
+            z-index: 10;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -5082,6 +5539,7 @@ export default {
             left: 0;
             right: 0.4rem;
             bottom: 0.02rem;
+            z-index: 10;
             margin-right: 2.4rem;
             .tt_txt {
               font-size: 0.16rem;
@@ -5324,7 +5782,7 @@ export default {
           text-align: left;
           padding: 0.2rem 0.25rem;
           p {
-            padding: 0.16rem 0;
+            padding: 0.16rem 0 0.06rem;
             font-size: 0.16rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
@@ -5343,8 +5801,8 @@ export default {
               display: flex;
               line-height: 0.36rem;
               span {
-                margin-top: 0.1rem;
-                margin-right: 0.1rem;
+                margin-top: 0.09rem;
+                margin-right: 0.08rem;
                 text-align: center;
                 line-height: 0.16rem;
                 width: 0.16rem;
@@ -5355,6 +5813,10 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
+                border: 0.01rem solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
               }
               p {
                 padding: 0;
@@ -5400,6 +5862,7 @@ export default {
             left: 0;
             right: 0;
             top: 0;
+            z-index: 10;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -5415,6 +5878,7 @@ export default {
             left: 0.4rem;
             right: 0;
             bottom: 0.02rem;
+            z-index: 10;
             margin-left: 2.8rem;
             .tt_txt {
               font-size: 0.16rem;
@@ -5431,6 +5895,7 @@ export default {
             left: 0;
             right: 0.75rem;
             bottom: 0.02rem;
+            z-index: 10;
             margin-right: 2.4rem;
             .tt_txt {
               font-size: 0.16rem;
@@ -5627,6 +6092,7 @@ export default {
                 font-weight: 400;
                 color: #354B70;
                 line-height: 0.4rem;
+                flex: 1
               }
               img{
                 width: 0.16rem;
@@ -5775,7 +6241,7 @@ export default {
             text-align: left;
             padding: 0.10rem 0.25rem;
             p {
-              padding: 0.06rem 0 0.16rem;
+              padding: 0.06rem 0 0.06rem;
               font-size: 0.16rem;
               font-family: Source Han Sans CN;
               font-weight: 400;
@@ -5794,8 +6260,8 @@ export default {
                 display: flex;
                 line-height: 0.36rem;
                 span {
-                  margin-top: 0.1rem;
-                  margin-right: 0.1rem;
+                  margin-top: 0.09rem;
+                  margin-right: 0.08rem;
                   text-align: center;
                   line-height: 0.16rem;
                   width: 0.16rem;
@@ -5806,6 +6272,10 @@ export default {
                   font-family: Source Han Sans CN;
                   font-weight: bold;
                   color: #ffffff;
+                  border: 0.01rem solid #00c6ff;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                 }
                 p {
                   padding: 0;
