@@ -46,7 +46,7 @@
             ></el-input>
           </el-form-item>
           
-          <el-form-item  prop="name" class="sf_name">
+          <el-form-item  prop="jobNumber" class="sf_name">
             <label slot="label">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
             <el-input
               v-model="formSearch.jobNumber"
@@ -240,7 +240,7 @@
                     alt=""
                   />
                   <img v-else src="../../assets/images/woman.png" alt="" />
-                  <div>{{ scope.row.gender == 1 ? "男" : "女" }}</div>
+                  <div>{{scope.row.gender == 1 ? "男" : "女" }}</div>
                 </div>
               </template>
             </el-table-column>
@@ -2706,7 +2706,9 @@ export default {
       this.getList(1);
     },
     resetForm(formName) {
+      // console.log(this.$refs[formName])
       this.$refs[formName].resetFields();
+      // console.log(this.formSearch)
       this.getList(1);
     },
     resetFormYou(formName) {

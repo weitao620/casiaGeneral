@@ -1173,6 +1173,7 @@ export default {
     // 列表重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      // console.log(this.formSearch)
       this.getList(1);
     },
     // table 复选框
