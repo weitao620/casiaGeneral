@@ -32,6 +32,7 @@
             <el-tree
               v-if="reloadTree"
               :data="treeData"
+              :indent="12"
               default-expand-all
               :default-expanded-keys="expandsList"
               :default-checked-keys="checksList"
@@ -172,6 +173,7 @@
               <el-tree
                 ref="addTree0"
                 :data="treeData2"
+                :indent="12"
                 @node-click="handleNodeClick"
                 :default-expand-all="true"
                 :expand-on-click-node="false"
@@ -1282,7 +1284,7 @@ export default {
             white-space: nowrap;
             outline: 0;
             display: table;
-            padding: 0 0.05rem;
+            padding: 0 0.01rem;
           }
           .el-tree-node__content {
             height: 0.36rem;
@@ -1291,6 +1293,12 @@ export default {
               height: 7px !important;
             }
           }
+          .el-tree-node__content>.el-tree-node__expand-icon{
+            padding: 0.04rem;
+          }
+          // .el-tree-node .el-tree-node__content{
+          //   padding-left: 0.18rem !important;
+          // }
         }
         .mar00 {
           margin: 0 0;

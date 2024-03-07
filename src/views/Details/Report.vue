@@ -125,23 +125,24 @@
       <div class="dttb_txt">
         <h1>导读</h1>
         <p>
-          “AI 心世界” ：是一款人工智能和心理沙盘相结合的特色产品，以 “沙” 为元素，通过有趣的玩 “沙” 方式认识你自己，创建属于每个人内心真正的 “一沙一世界” 。AI心世界以人工智能技术为核心，深度结合心理箱庭（沙盘）及投射测评模型实现智能心理测评。
+          “AI 心世界” 是一款以人工智能技术为核心，深度结合心理箱庭（沙盘）及投射测评模型的智能心理测评平台。“AI 心世界”依托 “沙” 为主要元素，让你能够以与 “沙” 和玩具互动的方式创建属于自己内心真正的 “一沙一世界”，帮助你更深地认识自己。
         </p>
-        <p style="font-size: 0.22rem">
-          报告内容说明
+        <p style="font-size: 0.22rem;font-weight: 600;padding: 0.06rem 0">
+          【报告内容说明】
         </p>
         <p>
-          本报告包含导读、作品解读、本次概况、附录等内容。从心理健康水平方面对受测者当前心理进行立体评估，阅读报告前需要了解以下说明：
+          本报告包含导读、作品解读、维度分析、附录等内容。从心理健康水平方面对受测者当前心理进行立体评估，阅读报告前需要了解以下说明：
         </p>
         <p>
           1、心理健康会受到环境和遗传等多重影响，每个人都或多或少存在这样或那样的困扰。
         </p>
         <p>
-          2、本报告的一切描述均基于受测者当次箱庭游戏，报告结果仅供参考，其结果不成为受测者选拔或诊断依据。
+          2、本报告一切描述基于受测者当次箱庭游戏，报告结果仅供参考，且不构成受测者选拔或诊断依据。
         </p>
       </div>
       <img src="../../assets/images/gongan/bg.png" alt="" />
       <img class="sir_bg" src="../../assets/images/gongan/sir.png" alt="">
+      <img class="hui_bg" src="../../assets/images/gongan/jinghui.png" alt="">
       <div class="dt_person" ref="parts0">
         <div class="dtp_photo">
           <img v-if="String(details.gender) == '1'"  src="../../assets/images/gongan/nan.png" alt="" />
@@ -4581,6 +4582,13 @@ export default {
       width: 1.70rem;
       height: 3.49rem;
     }
+    .hui_bg{
+      position: absolute;
+      top: 0.42rem;
+      right: 2.39rem;
+      width: 0.86rem;
+      height: 0.89rem;
+    }
     .dt_person {
       position: absolute;
       margin: auto;
@@ -5562,7 +5570,7 @@ export default {
           ul {
             li {
               display: flex;
-              align-items: center;
+              align-items: flex-start;
               line-height: 0.36rem;
               span {
                 display: flex;
@@ -5580,6 +5588,7 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
+                margin-top: 0.09rem;
               }
               p {
                 padding: 0;
