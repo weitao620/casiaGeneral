@@ -1,6 +1,6 @@
 <template>
   <div class="table-class" ref="sprintSomePdf">
-    <div class="table-style group_01">
+    <div class="table-style group_01" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <img class="gp_01_bg" src="../../assets/images/gongan/banner.png" alt="" />
       <div class="gp_01_box">
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div class="table-style group_02">
+    <div class="table-style group_02" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding-top:96px;">
         <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
@@ -117,7 +117,7 @@
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
     </div>
-    <div class="table-style group_02">
+    <div class="table-style group_02" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding-top:96px;">
         <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" />
@@ -317,7 +317,7 @@
         </div>
       </div>
     </div>
-    <div class="table-style group_02 group_03">
+    <div class="table-style group_02 group_03" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
         <img style="width:132px;height:132px;" src="../../assets/images/model/m_007.png" alt="" />
@@ -551,7 +551,7 @@
         </div>
       </div>
     </div>
-    <div class="table-style  group_02 group_03 group_04">
+    <div class="table-style  group_02 group_03 group_04" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '80px auto 0'}">
         <div class="dtms_box" v-if="details.sysList">
@@ -799,7 +799,7 @@
         </div>
       </div> -->
     </div>
-    <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
+    <div class="table-style group_02 group_03" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <!-- <div class="gp2_top gp3_top">
         <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
@@ -927,7 +927,7 @@
         </div>
       </div>
     </div>
-    <div class="table-style  group_02 group_03 group_04">
+    <div class="table-style  group_02 group_03 group_04" style="display: none;">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top" style="padding-top:40px">
         <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
@@ -1006,14 +1006,14 @@
         <span class="gp2_t_txt">附录</span>
         <span class="gp2_t_eng">Appendix</span>
       </div>
-      <div class="gp5_img_tle" v-if="details.note != ''">
+      <!-- <div class="gp5_img_tle" v-if="details.note != ''">
         <img src="../../assets/images/model/m_011.png" alt="">
         <span>补充说明</span>
         <img src="../../assets/images/model/m_011.png" alt="">
       </div>
       <div class="wm_text1" v-if="details.note != ''">
         <div class="wm_note" v-html="details.note"></div>
-      </div>
+      </div> -->
       <div class="gp5_img_tle">
         <img src="../../assets/images/model/m_011.png" alt="">
         <span>图片回顾</span>
