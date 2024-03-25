@@ -179,6 +179,31 @@ export default {
                     data.data.userAuth = JSON.stringify(nOb)
                   }
                 }
+                // data.data.userType = 1
+                data.data.userType = String(data.data.userType)
+                // data.data.version = 1
+                data.data.version = String(data.data.version)
+                console.log(data.data)
+                // version：通用版=0、机构版=1
+                if (String(data.data.version)) {
+                  if (data.data.version == 1) {
+                    console.log('机构版隐藏游客')
+                  } else if (data.data.version == 0) {
+                    console.log('通用版')
+                  }
+                  localStorage.setItem('version', data.data.version)
+                }
+                // userType：超管=0、普通管理员=1
+                console.log(data.data.userType)
+                if (data.data.userType) {
+                  if (data.data.userType == 1) {
+                    console.log('普通管理员')
+                  } else if (data.data.userType == 0) {
+                    console.log('超管')
+                  }
+                  localStorage.setItem('adminType', data.data.userType)
+                }
+                localStorage.setItem('roleId', data.data.roleId)
                 localStorage.setItem('mqttTopic', data.data.mqttTopic)
                 localStorage.setItem('passGMd5', param.password)
                 localStorage.setItem("userAuth", data.data.userAuth);

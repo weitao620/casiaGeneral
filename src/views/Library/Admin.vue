@@ -28,7 +28,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="角色:" prop="roleId">
-          <el-select @change="roleChange" v-model="formSearch.roleId" placeholder="全部">
+          <el-select :disabled="roleFlag" @change="roleChange" v-model="formSearch.roleId" placeholder="全部">
             <el-option label="全部" value=""></el-option>
             <el-option
               v-for="item in roleList"
@@ -145,24 +145,24 @@
               <el-button v-if="power7" @click="toDetail(scope.row)" type="text" size="small"
                 >编辑</el-button
               >
-              <el-button v-if="power8 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' )" type="text" size="small" @click="onesStop(scope.row)"
+              <el-button v-if="power8 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' && scope.row.passport != ptAdmin )" type="text" size="small" @click="onesStop(scope.row)"
                 >{{ scope.row.accountState ? "停用" : "启用" }}</el-button
               >
-              <el-button v-if="power8 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong')" type="text" disabled size="small"
+              <el-button v-if="power8 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong' || scope.row.passport == ptAdmin)" type="text" disabled size="small"
                 >停用</el-button
               >
               <el-button
                 type="text"
                 size="small"
                 @click="singleDelete(scope.row)"
-                v-if="power9 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' )"
+                v-if="power9 && (scope.row.passport != 'administrator' && scope.row.passport != 'jiankong' && scope.row.passport != ptAdmin )"
                 >删除</el-button
               >
               <el-button
                 type="text"
                 size="small"
                 disabled
-                v-if="power9 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong')"
+                v-if="power9 && (scope.row.passport == 'administrator' || scope.row.passport == 'jiankong' || scope.row.passport == ptAdmin)"
                 >删除</el-button
               >
             </template>
@@ -278,6 +278,7 @@ export default {
       power8: false,
       power9: false,
 
+      roleFlag: true,
       passInit: false,
       passInitAfter: false,
       tabActive: 1,
@@ -355,7 +356,9 @@ export default {
         ifModify: 1,
         ifRequired: 1,
         required: 0
-      }
+      },
+      ptAdminFlag: false,
+      ptAdmin: ''
     };
   },
   created() {
@@ -364,12 +367,36 @@ export default {
   mounted() {
     this.fieldData()
     this.powerData()
-    this.getList(1);
-    this.getRoles()
+    this.ptAdmin = localStorage.getItem('passport')
+    if (localStorage.getItem('adminType')) {
+      if (localStorage.getItem('adminType') == 1) {
+        this.getRoles2()
+        this.ptAdminFlag = true
+      } else {
+        this.getRoles()
+        this.roleFlag = false
+        this.getList(1);
+      }
+    } else {
+      this.roleFlag = false
+      this.getRoles()
+      this.getList(1);
+    }
   },
   methods: {
     checkSelectable(row) {
-      return row.passport != 'administrator' || row.passport != 'jiankong'
+      console.log(row)
+      let tableFlag = true
+      if (row.passport == 'administrator') {
+        tableFlag = false
+      }
+      if (row.passport == 'jiankong') {
+        tableFlag = false
+      }
+      if (row.passport == this.ptAdmin) {
+        tableFlag = false
+      }
+      return tableFlag
     },
     fieldData () {
       let that = this;
@@ -416,6 +443,33 @@ export default {
           if (data.code == 0) {
             if (data) {
               this.roleList = data.data.results
+            }
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    // 获取角色列表
+    getRoles2() {
+      let that = this;
+      this.$http
+        .get(Url + "/aimw/role/listRolesInfo")
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            if (data) {
+              this.roleList = data.data.results
+              console.log(this.roleList)
+              for (let i in this.roleList) {
+                if (this.roleList[i].roleID == localStorage.getItem('roleId')) {
+                  this.formSearch.roleId = this.roleList[i].roleID
+                }
+              }
+              this.roleFlag = true
+              this.getList(1)
             }
           } else {
             that.$message.error(data.msg);
@@ -892,6 +946,7 @@ export default {
               that.total = 0;
               that.pageNum = 1
             }
+            
           } else {
             that.$message.error(res.data.msg);
           }

@@ -273,7 +273,7 @@
           <div class="center_o_title">
             最新评估
           </div>
-          <div class="b_o_tab">
+          <div class="b_o_tab" v-if="trainFlag">
             <div class="tab_box">
               <div
                 :class="['tab_btns tab_btns_l', { tab_act: tabFlag == 0 }]"
@@ -289,6 +289,14 @@
               </div>
             </div>
             <div class="b_o_more" @click="toReport">
+              查看更多&gt;
+            </div>
+          </div>
+          <div class="b_o_tab" v-else>
+            <div class="tab_box_t">
+              <div class="tab_btns_t"></div>
+            </div>
+            <div class="b_o_more b_o_more_t" @click="toReport">
               查看更多&gt;
             </div>
           </div>
@@ -475,7 +483,8 @@ export default {
       chart1List: [],
       piePrect: [],
       pieName: [],
-      screenWidth: document.body.clientWidth
+      screenWidth: document.body.clientWidth,
+      trainFlag: true
     };
   },
   created() {
@@ -490,6 +499,11 @@ export default {
       })()
     }
     this.auth();
+    if (localStorage.getItem('version')) {
+      if (localStorage.getItem('version') == 1) {
+        this.trainFlag = false
+      }
+    }
   },
   methods: {
     perctInfo (data) {
@@ -2328,10 +2342,22 @@ export default {
             .tab_btns_c {
               border-right: 0.01rem solid #87b9db;
             }
+            
             .tab_act {
               color: #ffffff;
               background: linear-gradient(90deg, #0075ff 0%, #00c2ff 100%);
             }
+          }
+          .tab_box_t{
+            margin: 0.0rem 0 0.1rem;
+            .tab_btns_t{
+              width: 0.8rem;
+              height: 0.32rem;
+            }
+            
+          }
+          .b_o_more_t{
+            margin-bottom: 0.1rem;
           }
         }
         margin: 0.2rem 0;

@@ -476,8 +476,17 @@ export default {
       }
       let passMd5 = md5('AIMW-G' + this.formAddAdmin.password).substring(8, 24)
       this.formAddAdmin.password = passMd5
+      let paramp = this.formAddAdmin
+      paramp.roleId = ''
+      if (localStorage.getItem('adminType')) {
+        if (localStorage.getItem('adminType') == 1) {
+          paramp.roleId = localStorage.getItem('roleId')
+        }
+      }
+      console.log(paramp)
+      // return
       that.$http
-        .post(Url + "/aimw/manager/addManager", this.formAddAdmin)
+        .post(Url + "/aimw/manager/addManager", paramp)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {

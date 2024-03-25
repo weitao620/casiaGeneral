@@ -283,6 +283,7 @@ export default {
         });
     },
     clickLoad() {
+      console.log(1)
       this.$refs.refFilet.dispatchEvent(new MouseEvent("click"));
     },
     fileLoad(e) {
@@ -466,6 +467,7 @@ export default {
       this.visibleList = useList;
       this.unVisibleList = unUseList;
       this.stepsAct = 2;
+      console.log(useList)
     },
     generateUUID() {
       var d = new Date().getTime();
@@ -492,16 +494,24 @@ export default {
         let passportInt = String(this.visibleList[i].passport);
         let passwordStr = passportInt.substring(passportInt.length - 6);
         let passMd5 = md5('AIMW-G' + passwordStr).substring(8, 24)
+        let roleId = ''
+        if (localStorage.getItem('adminType')) {
+          if (localStorage.getItem('adminType') == 1) {
+            roleId = localStorage.getItem('roleId')
+          }
+        }
         let vObj = {
           passport: this.visibleList[i].passport,
           password: passMd5,
           name: this.visibleList[i].name,
-          roleId: this.visibleList[i].roleId,
-          roleName: this.visibleList[i].roleName,
+          roleId: roleId,
+          // roleName: this.visibleList[i].roleName,
           phone: this.visibleList[i].phone
         };
         visArr.push(vObj);
       }
+      console.log(visArr)
+      // return
       this.$http
         .post(Url + "/aimw/addManagers/importData", visArr)
         .then(res => {

@@ -9,7 +9,7 @@
           <el-breadcrumb-item>评估报告</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="tab_box">
+      <div class="tab_box" v-if="trainFlag">
         <div
           :class="['tab_btns tab_btns_l', { tab_act: tabActive == 0 }]"
           @click="tabChange(0)"
@@ -553,7 +553,8 @@ export default {
         ifRequired: 1,
         required: 0
       },
-      wordList: []
+      wordList: [],
+      trainFlag: true
     };
   },
   computed: {
@@ -592,6 +593,11 @@ export default {
     this.fieldData();
     this.auth();
     this.addChange2();
+    if (localStorage.getItem('version')) {
+      if (localStorage.getItem('version') == 1) {
+        this.trainFlag = false
+      }
+    }
   },
   methods: {
     ...mapMutations([

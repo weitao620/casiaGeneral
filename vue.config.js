@@ -15,7 +15,6 @@ module.exports = {
         // target: 'http://10.0.6.89:6120',
         // target: "http://172.18.40.12",
         // target: "http://36.110.172.217:6140/", // 通用
-        
         target: "http://36.110.172.217:16666/", // 通用
         // target: "http://36.110.172.216:11600/",
 
@@ -75,4 +74,11 @@ module.exports = {
       patterns: []
     }
   }
+  // build: {
+  //   terserOptions: {
+  //     compress: {
+  //       drop_console: true // 关闭所有的 console.log 打印
+  //     }
+  //   }
+  // }
 }

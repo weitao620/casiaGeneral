@@ -445,7 +445,9 @@ export default {
       teacherIds: [],
       teacherData: [],
       teacherNew: [],
-      checkmList: []
+      checkmList: [],
+      cancelFlag: false,
+      cancelName: ''
     };
   },
   created() {
@@ -760,9 +762,13 @@ export default {
       }
       if (row.inheritRoleID != "") {
         that.roleForm.copy = true;
+        that.cancelFlag = true
       } else {
         that.roleForm.copy = false;
+        that.cancelFlag = false
       }
+
+      that.cancelName = row.inheritRoleID
       that.roleForm.roleID = row.roleID;
       that.roleForm.name = row.roleName;
       that.roleForm.roleAuthNotice = row.roleAuthNotice;
@@ -782,7 +788,46 @@ export default {
       }
       var param = {};
       var path = "";
+      let cancel = 0
+      if (this.cancelFlag) {
+        console.log(22)
+        // 原状态勾选
+        if (this.roleForm.copy) {
+          if (this.roleForm.inheritRoleID == this.cancelName) {
+            cancel = 0
+          } else {
+            cancel = 1
+          }
+        } else {
+          cancel = 2
+        }
+      } else {
+        console.log(2)
+        // 原状态未勾选
+        if (this.roleForm.copy) {
+          cancel = 1
+        } else {
+          cancel = 0
+        }
+      }
+      // if (this.roleForm.copy) {
+      //   param = {
+      //     roleName: this.roleForm.name,
+      //     roleAuthNotice: this.roleForm.roleAuthNotice,
+      //     inheritRoleID: this.roleForm.inheritRoleID
+      //   };
+      // } else {
+      //   param = {
+      //     roleName: this.roleForm.name,
+      //     roleAuthNotice: this.roleForm.roleAuthNotice,
+      //     inheritRoleID: ""
+      //   };
+      // }
       if (this.roleForm.copy) {
+        if (this.roleForm.inheritRoleID == '') {
+          this.$message.warning('请选选择要复制角色权限')
+          return false
+        }
         param = {
           roleName: this.roleForm.name,
           roleAuthNotice: this.roleForm.roleAuthNotice,
@@ -797,6 +842,8 @@ export default {
       }
       param.status = that.roleForm.status;
       param.roleID = that.roleForm.roleID;
+      param.cancel = cancel;
+      console.log(param)
       that.$http
         .put(Url + "/aimw/role/updateRoleInfo", param)
         .then(res => {

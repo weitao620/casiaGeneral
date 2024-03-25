@@ -911,8 +911,10 @@ export default {
             console.log(res);
           });
       } else {
+        console.log(1)
         let cancel = 0
         if (this.cancelFlag) {
+          console.log(22)
           // 原状态勾选
           if (this.roleForm.copy) {
             if (this.roleForm.inheritRoleID == this.cancelName) {
@@ -924,6 +926,7 @@ export default {
             cancel = 2
           }
         } else {
+          console.log(2)
           // 原状态未勾选
           if (this.roleForm.copy) {
             cancel = 1
