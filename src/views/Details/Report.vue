@@ -151,7 +151,7 @@
             <li style="width:3.8rem">
               <img
                 class="dt_per2"
-                src="../../assets/images/report/person2.png"
+                src="../../assets/images/report/person9.png"
                 alt=""
               />
               <span class="dt_blod">登陆账号：</span>
@@ -160,7 +160,7 @@
             <li style="width:3.2rem">
               <img
                 class="dt_per3"
-                src="../../assets/images/report/person3.png"
+                src="../../assets/images/report/person10.png"
                 alt=""
               />
               <span class="dt_blod">手机号：</span>
@@ -4421,12 +4421,12 @@ export default {
               height: 0.17rem;
             }
             img.dt_per2 {
-              width: 0.19rem;
-              height: 0.16rem;
+              width: 0.17rem;
+              height: 0.17rem;
             }
             img.dt_per3 {
-              width: 0.15rem;
-              height: 0.16rem;
+              width: 0.14rem;
+              height: 0.20rem;
             }
             img.dt_per4 {
               width: 0.17rem;

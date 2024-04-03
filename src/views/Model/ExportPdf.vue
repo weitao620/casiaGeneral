@@ -22,7 +22,7 @@
             <li>
               <img
                 class="dt_per2"
-                src="../../assets/images/report/person2.png"
+                src="../../assets/images/report/person9.png"
                 alt=""
               />
               <span class="dt_blod">登陆账号：</span>
@@ -31,7 +31,7 @@
             <li>
               <img
                 class="dt_per3"
-                src="../../assets/images/report/person3.png"
+                src="../../assets/images/report/person10.png"
                 alt=""
               />
               <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
@@ -3739,14 +3739,14 @@ export default {
             margin-right: 10px;
           }
           .dt_per2{
-            width: 21px;
-            height: 21px;
-            margin-right: 8px;
+            width: 17px;
+            height: 17px;
+            margin-right: 11px;
           }
           .dt_per3{
-            width: 20px;
-            height: 16px;
-            margin-right: 9px;
+            width: 14px;
+            height: 20px;
+            margin-right: 13px;
           }
           .dt_per4{
             width: 20px;
