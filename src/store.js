@@ -13,7 +13,8 @@ export default new Vuex.Store({
     somePdfFlag: false,
     gradesFlag: false,
     mqttUpdate: false,
-    sysType: 1
+    sysType: 1,
+    partsFlag: false
   },
   mutations: {
     setUserName(state, data) {
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     },
     setMqttUpdate(state, data) {
       state.mqttUpdate = data;
+    },
+    setPartsFlag(state, data) {
+      state.partsFlag = data;
     }
   },
   getters: {
@@ -71,6 +75,9 @@ export default new Vuex.Store({
     },
     getMqttUpdate(state) {
       return state.mqttUpdate;
+    },
+    getPartsFlag(state) {
+      return state.partsFlag;
     }
   },
   actions: {

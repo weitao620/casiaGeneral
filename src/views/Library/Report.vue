@@ -156,19 +156,19 @@
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出
+              批量导出个人报告
             </el-button>
           </div>
-          <!-- <div class="el_one" v-if="tabActive == 0 && power14">
+          <div class="el_two" v-if="tabActive == 0">
             <el-button
-              class="el_btn_one"
-              @click="someReport('all')"
+              class="el_btn_two"
+              @click="partReport"
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出记录
+              导出团体报告
             </el-button>
-          </div> -->
+          </div>
           <div class="el_two" v-if="tabActive == 0 && power15">
             <el-button
               class="el_btn_two"
@@ -413,13 +413,86 @@
     <!-- <div style="height:0;width:100%;overflow:hidden">
       <wordFile :wList="wordList"></wordFile>
     </div> -->
+    <!-- 导出团体报告 -->
+    <el-dialog
+      class="fix_pass fix_pass3"
+      :close-on-click-modal="false"
+      title="导出团体报告"
+      :visible.sync="dialogPartFrame"
+    >
+      <el-form ref="partsForm" :model="partsForm">
+        
+        <!-- <el-form-item required :label="fid30302.fieldName + ':'">
+          <el-select v-model="department" :placeholder="'请选择' + fid30207.fieldName" style="width:100%">
+            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+          </el-select>
+          <div class="tip_left" v-show="frameFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择{{fid30302.fieldName}}
+            </div>
+          </div>
+        </el-form-item> -->
+        <el-form-item required class="time_data" label="测评时间段:">
+          <el-date-picker
+            v-model="partsForm.time"
+            type="daterange"
+            range-separator="~"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="timeChange"
+          >
+          </el-date-picker>
+          <div class="tip_left" v-show="pTimeFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择测评时间段
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item required label="选择团队:">
+          <el-select v-model="partsForm.organization" @change="orgChange" placeholder="请选择团队" style="width:100%">
+            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+          </el-select>
+          <div class="tip_left" v-show="organizationFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择团队
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item required label="统计方式:" class="tjfs">
+          <el-radio-group v-model="partsForm.type" @change="pTypeChange">
+            <el-radio :label="1">按最近一次测评结果统计</el-radio>
+            <el-radio :label="2">按预管程度最高结果统计</el-radio>
+          </el-radio-group>
+          <!-- <div class="tip_left" v-show="pTypeFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请输入修改原因
+            </div>
+          </div> -->
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="partsSub">下 载</el-button>
+        <el-button @click="dialogPartFrame = false">取 消</el-button>
+      </div>
+    </el-dialog>
+    <div style="height:0;width:100%;overflow:hidden">
+      <partReport
+        :gList="partList"
+      ></partReport>
+    </div>
   </div>
 </template>
 
 <script>
 // import wordFile from "../Details/WordFile.vue";
+
 import personReport from "../Model/ModelReport.vue";
 import someReport from "../Model/ExportPdf.vue";
+import partReport from "../Model/PartReport.vue";
 import { mapGetters, mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
 import docxtemplater from "docxtemplater";
@@ -432,11 +505,25 @@ export default {
   name: "report",
   components: {
     personReport,
-    someReport
+    someReport,
+    partReport
     // wordFile
   },
   data() {
     return {
+      partList: {},
+      pTimeFlag: false,
+      organizationFlag: false,
+      pTypeFlag: false,
+      partsForm: {
+        time: '',
+        organization: '',
+        type: 1
+      },
+      organizationName: '',
+      department: '',
+      departmentName: '',
+      dialogPartFrame: false,
       schoolOrg1: [],
       checkAll: false,
       isIndeterminate: false,
@@ -604,7 +691,8 @@ export default {
       "setGroupFlag",
       "setGradesFlag",
       "setPersonFlag",
-      "setSomePdfFlag"
+      "setSomePdfFlag",
+      "setPartsFlag"
     ]),
     renderContent(h, { node, data, store }) {
       if (data.Mark == 1) {
@@ -744,6 +832,9 @@ export default {
         .catch(res => {
           console.log(res);
         });
+    },
+    pTypeChange(val) {
+      console.log(val)
     },
     asideChange(val) {
       if (val == 2) {
@@ -2383,6 +2474,150 @@ export default {
         num = "0" + num;
       }
       return num;
+    },
+    partReport() {
+      console.log('导出团体报告')
+      let that = this;
+      this.addChange3();
+      this.pTimeFlag = this.pTypeFlag = this.organizationFlag = false;
+      this.partsForm = {
+        time: '',
+        organization: '',
+        type: 1
+      }
+      this.dialogPartFrame = true
+      
+      // this.pdfList = []
+      // var checkArr = [];
+      // checkArr = [{
+      //   reportId: that.reportId,
+      //   gender: that.details.gender
+      // }]
+      // console.log(checkArr);
+      // this.pdfList = checkArr
+      // this.setSomePdfFlag(true);
+
+      // let that = this;
+
+      //   console.log(that.checkList)
+      //   if (this.checkList.length == 0) {
+      //     this.$message({
+      //       type: "warning",
+      //       message: "没有选择要下载的报告!"
+      //     });
+      //     return false;
+      //   }
+      //   this.pdfList = []
+      //   var checkArr = [];
+      //   for (let i in this.checkList) {
+      //     checkArr.push({
+      //       reportId: this.checkList[i].reportId,
+      //       gender: this.checkList[i].gender
+      //     });
+      //   }
+      //   console.log(checkArr);
+      //   this.pdfList = checkArr
+      //   this.setSomePdfFlag(true);
+    },
+    addChange3() {
+      let that = this;
+      this.addChangeFlag = true;
+      var param = {
+        passport: localStorage.getItem("passport")
+      };
+      this.$http
+        .get(Url + "/aimw/organization/listOrgTreeInfo", {
+          params: param
+        })
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            if (data) {
+              this.addChangeFlag = true;
+              let schoolOrg = JSON.parse(data.data).organization;
+              this.studyList = []
+              this.recursiveFunction2(schoolOrg)
+              this.studyList.sort((a, b) => {
+                return Number(a.Pid) - Number(b.Pid);
+              });
+              this.treeData = schoolOrg;
+              // this.getList(that.currentPage)
+            }
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    timeChange(val) {
+      console.log(val)
+      this.pTimeFlag = false
+    },
+    orgChange(val) {
+      console.log(val)
+      for (let i in this.studyList) {
+        if (this.studyList[i].Pid == val) {
+          this.organizationName = this.studyList[i].Name
+        }
+      }
+      this.organizationFlag = false
+    },
+    // 下载报告
+    partsSub() {
+      var that = this;
+      console.log(this.partsForm)
+      this.pTimeFlag = this.pTypeFlag = this.organizationFlag = false;
+      if (that.partsForm.time == '') {
+        this.pTimeFlag = true;
+        return false;
+      }
+      if (that.partsForm.organization == '') {
+        this.organizationFlag = true;
+        return false;
+      }
+      let star = "";
+      let end = "";
+      if (that.partsForm.time != "" && that.partsForm.time) {
+        star =
+          that.formTimes(that.partsForm.time[0]).replace(/-/g, "") +
+          "000000";
+        end =
+          that.formTimes(that.partsForm.time[1]).replace(/-/g, "") +
+          "235959";
+      }
+      
+      let param = {
+        organization: this.partsForm.organization,
+        organizationName: this.organizationName,
+        startDate: star,
+        endDate: end,
+        type: that.partsForm.type == 2 ? Number(1) : Number(0)
+      };
+      console.log(param)
+      this.partList = param
+      this.setPartsFlag(true);
+      return
+      
+      if (this.department == "") {
+        this.frameFlag = true;
+        return false;
+      }
+      if (this.partsForm.reason == "") {
+        this.reasonFlag = true;
+        return false;
+      }
+      let checkArr = []
+      for (let i in this.checkList) {
+        checkArr.push({ passport: this.checkList[i].passport });
+      }
+      for (let i in this.studyList) {
+        if (this.studyList[i].Pid == this.department) {
+          this.departmentName = this.studyList[i].Name
+        }
+      }
+      
     },
     // // 批量导出
     someExport() {

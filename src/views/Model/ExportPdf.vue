@@ -4368,12 +4368,12 @@ export default {
           .dt_per2{
             width: 17px;
             height: 17px;
-            margin-right: 8px;
+            margin-right: 11px;
           }
           .dt_per3{
             width: 14px;
             height: 20px;
-            margin-right: 9px;
+            margin-right: 13px;
           }
           .dt_per4{
             width: 20px;
