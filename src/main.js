@@ -43,7 +43,7 @@ axios.interceptors.request.use(
       });
       setTimeout(() => {
         load.close();
-      }, 10000)
+      }, 30000)
     }
     return res;
   },
