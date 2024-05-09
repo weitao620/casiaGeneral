@@ -867,6 +867,7 @@ export default {
         color: ["#0075FF", "#6671FF", "#D674FF", "#FE5FB8"],
         tooltip: {
           trigger: "axis",
+          confine: true,
           axisPointer: {
             type: "line"
           },
@@ -1835,14 +1836,19 @@ export default {
               line-height: 1;
               margin-right: 0.24rem;
               .per_msg_t {
-                padding-bottom: 0.3rem;
-                font-size: 0.2rem;
+                padding-bottom: 0.24rem;
+                font-size: 0.18rem;
                 color: #354b70;
+                max-width:1.1rem;
               }
               .per_msg_b {
                 min-height: 0.18rem;
-                font-size: 0.18rem;
+                font-size: 0.16rem;
                 color: #7786ac;
+                max-width:1.1rem;
+              }
+              .montserrat{
+                max-width: unset
               }
             }
             .per_center {

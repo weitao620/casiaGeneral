@@ -14,7 +14,8 @@ export default new Vuex.Store({
     gradesFlag: false,
     mqttUpdate: false,
     sysType: 1,
-    partsFlag: false
+    partsFlag: false,
+    oneTotalFlag: false
   },
   mutations: {
     setUserName(state, data) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     setPartsFlag(state, data) {
       state.partsFlag = data;
+    },
+    setOneTotalFlag(state, data) {
+      state.oneTotalFlag = data;
     }
   },
   getters: {
@@ -78,6 +82,9 @@ export default new Vuex.Store({
     },
     getPartsFlag(state) {
       return state.partsFlag;
+    },
+    getOneTotalFlag(state) {
+      return state.OneTotalFlag;
     }
   },
   actions: {

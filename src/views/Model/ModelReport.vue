@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="table-style group_02">
+    <!-- <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding-top:96px;">
         <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
@@ -102,10 +102,19 @@
         <p v-html="details.selfDiscription"></p>
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
-    </div>
+    </div> -->
     <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding-top:96px;">
+      <div class="gp2_top" style="padding: 30px 0">
+        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
+        <span class="gp2_t_txt">作品解读</span>
+        <span class="gp2_t_eng">Interpretation Of Works</span>
+      </div>
+      <div class="gp2_box">
+        <p v-html="details.selfDiscription"></p>
+        <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
+      </div>
+      <div class="gp2_top" style="padding: 30px 0">
         <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" />
         <span class="gp2_t_txt">本次概况</span>
         <span class="gp2_t_eng">This Overview</span>
@@ -170,7 +179,7 @@
             </div>
           </div>
         </div>
-        <div class="gp2_li" style="margin-top:30px">
+        <div class="gp2_li" style="margin-top:20px">
           <div class="gp2l_head">
             <img style="width:35px;height:31px;" src="../../assets/images/model/m_006.png" alt="" />
             <span>数据对比</span>
@@ -1603,6 +1612,23 @@
         </ul>
       </div>
     </div>
+    <div class="table-style group_02" style="background:#ffffff">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <div class="gp2_top" style="padding-top:96px;">
+        <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
+        <span class="gp2_t_txt">关于“AI心世界”</span>
+        <span class="gp2_t_eng">About AI Mental World</span>
+      </div>
+      <div class="gp2_box">
+        <p>沙盘游戏，也被称为箱庭疗法，是指来访者在治疗师的陪伴下，从玩具架上自由挑选沙具，在盛有细沙的特制箱子里进行自我表现的一种心理疗法。沙盘游戏的有效性已经得到国内外临床实践的广泛验证，对于丰富个体的情感体验、促进自我成长及人格完善具有显著的作用。</p>
+        <p>我们基于投射、沙盘游戏理论，运用人工智能、三维仿真等多项技术研发了AI心世界，实现了实物沙盘的电子化与智能化。</p>
+        <p>AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。</p>
+        <div class="gp2b_tips">
+          <img src="../../assets/images/model/m_002.png" alt="">
+          <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -1720,7 +1746,7 @@ export default {
     downloadSprintTestReport() {
       this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
       this.$nextTick(() => {
-        // this.setPersonFlag(false)
+        this.setPersonFlag(false)
       })
     },
     initEchart() {
@@ -3206,7 +3232,7 @@ export default {
     text-align: left;
     margin-left: 78px;
     margin-top: 16px;
-    margin-bottom: 26px;
+    margin-bottom: 0;
     .dtmcl_du {
       display: flex;
       align-items: center;
@@ -3278,7 +3304,7 @@ export default {
     padding: 20px 23px 30px;
     .myChartBox{
       position: relative;
-      margin: 20px auto 40px;
+      margin: 20px auto 0px;
       .myChartTips{
         position: absolute;
         top: 76px;
@@ -3326,7 +3352,7 @@ export default {
       }
     }
     .gp2_li {
-      margin-bottom: 38px;
+      margin-bottom: 16px;
       .gp2l_head {
         display: flex;
         align-items: center;

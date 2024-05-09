@@ -17,6 +17,18 @@
       <div class="search_title center_o_title">
         历史箱庭评估信息
       </div>
+      <div class="el_btn_box">
+        <div class="el_one">
+          <el-button
+            class="el_btn_one"
+            @click="aoneTotalReport"
+            type="primary"
+          >
+            <i class="iconfont icon-icon-"></i>
+            导出个人综合报告
+          </el-button>
+        </div>
+      </div>
       <div class="tables_box">
         <template>
           <el-table
@@ -389,18 +401,74 @@
         </div>
       </div>
     </div>
+    <!-- 导出个人综合报告 -->
+    <el-dialog
+      class="fix_pass fix_pass3"
+      :close-on-click-modal="false"
+      title="导出个人综合报告"
+      :visible.sync="dialogOneTotalFrame"
+    >
+      <el-form ref="partsForm" :model="partsForm">
+        
+        <!-- <el-form-item required :label="fid30302.fieldName + ':'">
+          <el-select v-model="department" :placeholder="'请选择' + fid30207.fieldName" style="width:100%">
+            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+          </el-select>
+          <div class="tip_left" v-show="frameFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择{{fid30302.fieldName}}
+            </div>
+          </div>
+        </el-form-item> -->
+        <el-form-item class="time_data" label="测评时间段:" style="margin-bottom: 0.1rem;">
+          <el-date-picker
+            v-model="partsForm.time"
+            type="daterange"
+            range-separator="~"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="timeChange"
+          >
+          </el-date-picker>
+          <div class="tip_left" v-show="pTimeFlag">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择测评时间段
+            </div>
+          </div>
+        </el-form-item>
+        <div class="p_time_tip">默认为导出全部测评数据</div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="partsSub">下 载</el-button>
+        <el-button @click="dialogOneTotalFrame = false">取 消</el-button>
+      </div>
+    </el-dialog>
+    <div style="height:0;width:100%;overflow:hidden">
+      <OneTotalReport
+        :gList="partList"
+      ></OneTotalReport>
+    </div>
   </div>
 </template>
 
 <script>
+
+import OneTotalReport from "../Model/OneTotalReport.vue";
 import echarts from "../../assets/js/echarts";
 import Url from "@/assets/js/url.js";
+import { mapGetters, mapMutations } from "vuex";
 let reviewDada = [];
 var fuluList = [];
 export default {
   name: "report",
+  components: {
+    OneTotalReport
+  },
   data() {
     return {
+      partList: {},
       power1: false,
       sbAct: 1,
       trendAct: 1,
@@ -438,7 +506,12 @@ export default {
       forcedFlag: 1,
       suicideFlag: 0,
       violenceFlag: 0,
-      personalityFlag: 0
+      personalityFlag: 0,
+      dialogOneTotalFrame: false,
+      pTimeFlag: false,
+      partsForm: {
+        time: ''
+      },
     };
   },
   created() {
@@ -460,6 +533,68 @@ export default {
     });
   },
   methods: {
+    ...mapMutations([
+      "setOneTotalFlag"
+    ]),
+    timeChange(val) {
+      console.log(val)
+      this.pTimeFlag = false
+    },
+    aoneTotalReport() {
+      console.log('导出团体报告')
+      let that = this;
+      this.pTimeFlag = false;
+      this.partsForm = {
+        time: ''
+      }
+      this.dialogOneTotalFrame = true
+    },
+    formTimes(date) {
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      var d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      var h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      var minute = date.getMinutes();
+      minute = minute < 10 ? "0" + minute : minute;
+      var second = date.getSeconds();
+      second = second < 10 ? "0" + second : second;
+      return y + "-" + m + "-" + d;
+    },
+    // 下载报告
+    partsSub() {
+      var that = this;
+      console.log(this.partsForm)
+      // this.pTimeFlag = false;
+      // if (that.partsForm.time == '') {
+      //   this.pTimeFlag = true;
+      //   return false;
+      // }
+      let star = "";
+      let end = "";
+      if (that.partsForm.time != "" && that.partsForm.time) {
+        star =
+          that.formTimes(that.partsForm.time[0]).replace(/-/g, "") +
+          "000000";
+        end =
+          that.formTimes(that.partsForm.time[1]).replace(/-/g, "") +
+          "235959";
+      }
+      
+      let param = {
+        passport: that.passport,
+        startDate: star,
+        endDate: end
+      };
+      console.log(param)
+      // return
+      this.partList = param
+
+      this.setOneTotalFlag(true);
+      this.dialogOneTotalFrame = false
+    },
     pagination(pageNo, pageSize, array) {
       var offset = (pageNo - 1) * pageSize;
       return offset + pageSize >= array.length
@@ -1721,6 +1856,57 @@ export default {
     box-shadow: 0px 4px 40px 0px rgba(47, 65, 110, 0.08);
     border-radius: 0.04rem;
     padding: 0.2rem 0.24rem;
+    .el_btn_box{
+      width: 100%;
+      display:flex;
+      justify-content: flex-end;
+      .el_one,
+      .el_two {
+        margin-right: 0.18rem;
+        // width: 1.16rem;
+        // height: 0.36rem;
+        padding: 1px;
+        background: linear-gradient(263deg, #00c2ff, #0075ff);
+        border-radius: 0.04rem;
+        overflow: hidden;
+        box-shadow: 0px 3px 18px 0px rgba(62, 150, 253, 0.19);
+        .el_btn_one,
+        .el_btn_two {
+          border: 0;
+          font-size: 0.16rem;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #ffffff;
+          background: linear-gradient(263deg, #00c2ff, #0075ff);
+          border-radius: 0.04rem;
+          padding: 0.08rem 0.1rem;
+          width: 100%;
+          height: 100%;
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+              width: 0.14rem;
+              height: 0.14rem;
+              margin-right: 0.02rem;
+            }
+          }
+        }
+        .el_btn_two {
+          background: #ffffff;
+          border-image: linear-gradient(45deg, #0075ff, #00c2ff) 1 1;
+          box-shadow: 0px 3px 18px 0px rgba(62, 150, 253, 0.19);
+          border-radius: 0.03rem;
+          color: #006cff;
+          img {
+            width: 0.18rem;
+            height: 0.16rem;
+          }
+        }
+      }
+    }
+    
     .search_form {
       margin-top: 0.24rem;
     }
@@ -1773,7 +1959,7 @@ export default {
   }
   // 表格
   .tables_box {
-    margin-top: 0.3rem;
+    margin-top: 0.2rem;
     // 性别样式
     .sex_li {
       display: flex;

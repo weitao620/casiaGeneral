@@ -116,7 +116,7 @@
                         :label="item2.Pid"
                         :style="{'border-bottom': item1.list.length > 6 &&index2 <6 ? '0.01rem dashed #00c2ff' : 0}"
                       >
-                        <el-checkbox class="list_thr" :pid="item2.Pid" :label="item2.Pid">{{
+                        <el-checkbox class="list_thr" :pid="item2.Pid" :label="item2.Pid" v-if="item2.Pid != 20112">{{
                           item2.Name
                         }}</el-checkbox>
                       </div>

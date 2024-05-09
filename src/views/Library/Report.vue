@@ -159,10 +159,10 @@
               批量导出个人报告
             </el-button>
           </div>
-          <div class="el_two" v-if="tabActive == 0">
+          <div class="el_two" v-if="tabActive == 0 && power26">
             <el-button
               class="el_btn_two"
-              @click="partReport"
+              @click="apartsReport"
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
@@ -464,7 +464,7 @@
         <el-form-item required label="统计方式:" class="tjfs">
           <el-radio-group v-model="partsForm.type" @change="pTypeChange">
             <el-radio :label="1">按最近一次测评结果统计</el-radio>
-            <el-radio :label="2">按预管程度最高结果统计</el-radio>
+            <el-radio :label="2">按预警程度最高结果统计</el-radio>
           </el-radio-group>
           <!-- <div class="tip_left" v-show="pTypeFlag">
             <div class="tip_msg">
@@ -480,9 +480,9 @@
       </div>
     </el-dialog>
     <div style="height:0;width:100%;overflow:hidden">
-      <partReport
+      <PartsReport
         :gList="partList"
-      ></partReport>
+      ></PartsReport>
     </div>
   </div>
 </template>
@@ -490,9 +490,9 @@
 <script>
 // import wordFile from "../Details/WordFile.vue";
 
+import PartsReport from "../Model/PartsReport.vue";
 import personReport from "../Model/ModelReport.vue";
 import someReport from "../Model/ExportPdf.vue";
-import partReport from "../Model/PartReport.vue";
 import { mapGetters, mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
 import docxtemplater from "docxtemplater";
@@ -506,7 +506,7 @@ export default {
   components: {
     personReport,
     someReport,
-    partReport
+    PartsReport
     // wordFile
   },
   data() {
@@ -536,6 +536,7 @@ export default {
       power13: false,
       power14: false,
       power15: false,
+      power26: false,
       power16: false,
       power2: false,
       power21: false,
@@ -659,6 +660,7 @@ export default {
   watch: {
     bindmodel: {
       handler: function(newVal) {
+        console.log(newVal)
         this.part1 = newVal.part1;
         this.part2 = newVal.part2;
         this.part3 = newVal.part3;
@@ -863,6 +865,7 @@ export default {
       this.power13 = power.includes(20103); // 用户-删除
       this.power14 = power.includes(20104); // 用户-批量导出
       this.power15 = power.includes(20105); // 用户-批量删除
+      this.power26 = power.includes(20111); // 用户-导出团体报告
       this.power21 = power.includes(20106); // 游客-查看
       this.power22 = power.includes(20107); // 游客-导出
       this.power23 = power.includes(20108); // 游客-删除
@@ -1639,23 +1642,187 @@ export default {
               }
             }
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
-            for (let i in data.data.suggestion) {
-              if (data.data.suggestion[i].indexOf("针对") != -1) {
-                data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            console.log(data.data.suggestion)
+            if (data.data.suggestion && data.data.suggestion != '') {
+              data.data.suggestion = data.data.suggestion.split("|||");
+              console.log(data.data.suggestion)
+              for (let i in data.data.suggestion) {
+                if (data.data.suggestion[i].indexOf("&&") != -1) {
+                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestion[i].indexOf("span") == -1) {
+                    data.data.suggestion[i] = [data.data.suggestion[i]]
+                  }
+                  for (let j in data.data.suggestion[i]) {
+                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+                      for (let k in data.data.suggestion[i][j]) {
+                        console.log(data.data.suggestion[i][j][k])
+                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+                          for (let m in data.data.suggestion[i][j][k]) {
+                            console.log(data.data.suggestion[i][j][k][m])
+                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestion[i]) {
+                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
+                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
+                          for (let m in data.data.suggestion[i][j]) {
+                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split(
-              "@@"
-            );
-            data.data.suggestionViolence = data.data.suggestionViolence.split(
-              "@@"
-            );
+            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
+              console.log(data.data.suggestionSuicide)
+              for (let i in data.data.suggestionSuicide) {
+                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
+                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
+                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
+                  }
+                  for (let j in data.data.suggestionSuicide[i]) {
+                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+                      for (let k in data.data.suggestionSuicide[i][j]) {
+                        console.log(data.data.suggestionSuicide[i][j][k])
+                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j][k]) {
+                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionSuicide[i]) {
+                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
+                          for (let m in data.data.suggestionSuicide[i][j]) {
+                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            console.log(data.data.suggestionSuicide)
+
+            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+              for (let i in data.data.suggestionViolence) {
+                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+                  }
+                  for (let j in data.data.suggestionViolence[i]) {
+                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+                      for (let k in data.data.suggestionViolence[i][j]) {
+                        console.log(data.data.suggestionViolence[i][j][k])
+                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j][k]) {
+                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      for (let j in data.data.suggestionViolence[i]) {
+                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+                          for (let m in data.data.suggestionViolence[i][j]) {
+                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            // console.log(data.data.suggestionSuicide)
+            console.log(data.data.suggestionViolence)
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
-            data.data.suggestionPersonality = data.data.suggestionPersonality.split(
-              "|||"
-            );
+            data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
             for (let i in data.data.suggestionPersonality) {
               if (i > 0) {
                 data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
@@ -2475,7 +2642,7 @@ export default {
       }
       return num;
     },
-    partReport() {
+    apartsReport() {
       console.log('导出团体报告')
       let that = this;
       this.addChange3();
@@ -2598,6 +2765,7 @@ export default {
       console.log(param)
       this.partList = param
       this.setPartsFlag(true);
+      this.dialogPartFrame = false
       return
       
       if (this.department == "") {
