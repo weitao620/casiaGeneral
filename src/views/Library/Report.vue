@@ -45,7 +45,7 @@
               placeholder="请输入姓名"
             ></el-input>
           </el-form-item>
-          <el-form-item label="登陆账号:" prop="passport">
+          <el-form-item label="登录账号:" prop="passport">
             <el-input
               v-model="formSearch.passport"
               placeholder="请输入账号"

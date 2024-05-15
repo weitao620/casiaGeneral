@@ -17,7 +17,7 @@
       <div class="search_title center_o_title">
         历史箱庭评估信息
       </div>
-      <div class="el_btn_box">
+      <div class="el_btn_box" v-if="power2">
         <div class="el_one">
           <el-button
             class="el_btn_one"
@@ -470,6 +470,7 @@ export default {
     return {
       partList: {},
       power1: false,
+      power2: false,
       sbAct: 1,
       trendAct: 1,
       tabActive: 1,
@@ -628,6 +629,7 @@ export default {
       // this.personalityFlag = 0
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
       this.power1 = power.includes(30103); // 心理档案--查看
+      this.power2 = power.includes(30104); // 心理档案--个人综合
     },
     isService(val) {
       let routeData = this.$router.resolve({

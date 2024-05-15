@@ -1086,6 +1086,74 @@ export default {
             this.reloadTree = false;
             setTimeout(() => {
               this.reloadTree = true;
+              this.onSubmit2()
+            }, 100);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    getList2() {
+      let that = this;
+      that.$http
+        .get(Url + "/aimw/role/listAuthInfo", {
+          params: {
+            roleID: this.powerDetail.roleID
+          }
+        })
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            localStorage.setItem("powerDetailNew", data.data)
+            let detail = JSON.parse(data.data)
+            this.menuAuth = []
+            fuclist = []
+            this.checkList = []
+            this.menuAuth = detail.menuAuth.function;
+            for (let i in that.menuAuth) {
+              if (that.menuAuth[i].Mark == 1) {
+                that.checkList.push(that.menuAuth[i].Pid);
+                let check1 = that.menuAuth[i].list;
+                for (let j in check1) {
+                  if (check1[j].Mark == 1) {
+                    that.checkList.push(check1[j].Pid);
+                    let check2 = check1[j].list;
+                    for (let k in check2) {
+                      if (check2[k].Mark == 1) {
+                        that.checkList.push(check2[k].Pid);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            for (let i in that.menuAuth) {
+              fuclist.push(that.menuAuth[i].Pid);
+              let check1 = that.menuAuth[i].list;
+              for (let j in check1) {
+                fuclist.push(check1[j].Pid);
+                let check2 = check1[j].list;
+                for (let k in check2) {
+                  fuclist.push(check2[k].Pid);
+                }
+              }
+            }
+            justList = that.checkList;
+            if (justList.length == fuclist.length) {
+              this.checkAll = true
+            } else {
+              this.checkAll = false
+            }
+            this.organizationAuth = []
+            this.organizationAuth = detail.organizationAuth.organization;
+            that.studyList = []
+            that.classList = []
+            this.recursiveFunction2(this.organizationAuth)
+            this.treeData = that.organizationAuth
+            this.reloadTree = false;
+            setTimeout(() => {
+              this.reloadTree = true;
             }, 100);
           }
         })
@@ -1288,6 +1356,40 @@ export default {
               type: "success",
               message: "更新成功!"
             });
+          } else {
+            this.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    onSubmit2() {
+      let that = this;
+      for (let i in that.checkList) {
+        if (that.checkList[i] == 30100) {
+          that.checkList.splice(i, 1);
+        }
+      }
+      let studyArr = []
+      for (let i in that.studyList) {
+        studyArr.push(that.studyList[i].Pid)
+      }
+      let powerIds = {
+        menuAuthID: that.checkList,
+        organizationAuthID: studyArr
+      }
+      var role = {
+        roleID: that.powerDetail.roleID,
+        roleAuthID: JSON.stringify(powerIds)
+      };
+      let param = role;
+      that.$http
+        .put(Url + "/aimw/role/updateAuthInfo", param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            this.getList2();
           } else {
             this.$message.error(data.msg);
           }

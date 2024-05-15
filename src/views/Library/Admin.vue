@@ -250,7 +250,7 @@
                 <span></span>
               </div>
             </div>
-            <span>默认密码: 登陆账号后6位</span>
+            <span>默认密码: 登录账号后6位</span>
           </div>
         </el-form-item>
       </el-form>

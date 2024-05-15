@@ -63,7 +63,7 @@ axios.interceptors.response.use(
       }
     }
     if (res.data.code == 2) {
-      router.replace({ path: "/login" });
+      router.push({ path: "/login" });
       localStorage.removeItem("isLogin");
       localStorage.removeItem("userInfo");
       localStorage.removeItem("userAuth");
@@ -75,7 +75,7 @@ axios.interceptors.response.use(
       Element.MessageBox.alert(res.data.msg, '提示', {
         confirmButtonText: '确定',
         callback: () => {
-          router.replace({ path: "/login" });
+          router.push({ path: "/login" });
         }
       });
       return;

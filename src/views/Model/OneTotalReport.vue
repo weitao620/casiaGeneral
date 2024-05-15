@@ -12,23 +12,23 @@
         </div>
         <div class="g1_top2">
           <div>
-            姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<span>{{name}}</span>
+            <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span><span>{{name}}</span>
           </div>
 
           <div>
-            测评次数：<span>{{evaluationTime}}次</span>
+            <span>测评次数：</span><span>{{evaluationTime}}次</span>
           </div>
           <div>
-            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span>{{gender}}</span>
+            <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span>{{gender == 1 ? '男' : '女'}}</span>
           </div>
           <div>
-            测评时间：<span>{{startDate + ' - ' + endDate}}</span>
+            <span>测评时间：</span><span>{{startDate + ' - ' + endDate}}</span>
           </div>
           <div>
-            出生日期：<span>{{birth}}</span>
+            <span>出生日期：</span><span>{{birth}}</span>
           </div>
           <div>
-            所属单位：<span>{{organizationName}}</span>
+            <span>所属单位：</span><span>{{organizationName}}</span>
           </div>
         </div>
       </div>
@@ -219,21 +219,40 @@
             “AI 心世界”是一款人工智能和心理箱庭（沙盘）相结合的特色产品，以“沙”为元素，通过有趣的玩“沙”方式认识自己，创建属于每个人内心真正的“一沙一世界”。AI心世界以人工智能技术为核心，深度结合心理箱庭（沙盘）及投射测评模型实现智能心理测评。
           </div>
         </div>
-        <div class="gp_title">
-          <div class="gp_head">AI心世界作品记录</div>
-          <div class="gp_txt">
-            1.小于5个
-            2.等于6个
-            3.大于6个
+        <div class="gp_title" style="padding: 30px 40px 10px;">
+          <div class="gp_head" style="margin-bottom: 30px;">AI心世界作品记录</div>
+          <div class="gp_bird_box">
+            <div v-for="(item, index) in reportList" :key="index">
+              <div class="gp_bird" v-if="index < 6">
+                <img :src="'data:image;base64,' + item.birdView" alt="">
+                <div>{{item.name}}-{{ item.datetime }}</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="gp_title">
-          <div class="gp_head">作品信息统计</div>
-          <div class="gp_txt">
-            1.小于5个
-            2.等于6个
-            3.大于6个
-            4.自己的条数分页
+        <div class="gp_title" v-if="rPage < 2">
+          <div class="gp_head" style="margin-bottom: 30px;margin-top: -10px;">作品信息统计</div>
+          <div class="gp_exl">
+            <div class="gp_con gp_con1">
+              <div>序号</div>
+              <div>测评时间</div>
+              <div>作品名称</div>
+              <div>自我像</div>
+              <div>最重要的沙具</div>
+              <div>满意程度</div>
+              <div>制作用时</div>
+              <div>作品场景</div>
+            </div>
+            <div class="gp_con"  v-for="(item, index) in reportAllList" :key="index">
+              <div>{{ item.id }}</div>
+              <div>{{ item.datetime }}</div>
+              <div>{{ item.name }}</div>
+              <div>{{ item.selfImage }}</div>
+              <div>{{ item.importantBodies }}</div>
+              <div>{{ item.satisfaction }}</div>
+              <div>{{ item.duringTime }}</div>
+              <div>{{ item.scence }}</div>
+            </div>
           </div>
         </div>
         <!-- <div v-for="(item, index) in ecList" :key="index">
@@ -242,6 +261,88 @@
             <div class="myChartZhu" :ref="'myChartZhu'+ index" :id="'myChartZhu' + index" v-if="index < 5"></div>
           </div>
         </div> -->
+      </div>
+    </div>
+    <div class="table-style group_01" v-if="rPage > 1 && rPage < 5">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp_title" style="padding: 30px 40px 10px;" v-if="rPage > 2 && rPage < 5">
+          <div class="gp_bird_box">
+            <div v-for="(item, index) in reportList" :key="index">
+              <div class="gp_bird" v-if="index > 5">
+                <img :src="'data:image;base64,' + item.birdView" alt="">
+                <div>{{item.name}}-{{ item.datetime }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gp_title" v-if="rPage < 5">
+          <div class="gp_head" style="margin-bottom: 30px;margin-top: 10px;">作品信息统计</div>
+          <div class="gp_exl">
+            <div class="gp_con gp_con1">
+              <div>序号</div>
+              <div>测评时间</div>
+              <div>作品名称</div>
+              <div>自我像</div>
+              <div>最重要的沙具</div>
+              <div>满意程度</div>
+              <div>制作用时</div>
+              <div>作品场景</div>
+            </div>
+            <div style="width: 100%;" v-for="(item, index) in reportAllList" :key="index">
+              <div class="gp_con" v-if="index < 10">
+                <div>{{ item.id }}</div>
+                <div>{{ item.datetime }}</div>
+                <div>{{ item.name }}</div>
+                <div>{{ item.selfImage }}</div>
+                <div>{{ item.importantBodies }}</div>
+                <div>{{ item.satisfaction }}</div>
+                <div>{{ item.duringTime }}</div>
+                <div>{{ item.scence }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-for="(item, index) in repoertPage" :key="index">
+      <div class="table-style group_01">
+        <div class="table-border">
+          <div class="gp_all_tips">
+            <img src="../../assets/images/part/tipss.png" alt="" />
+            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+          </div>
+          <div class="gp_title">
+            <div style="height: 60px;"></div>
+            <div class="gp_exl">
+              <div class="gp_con gp_con1">
+                <div>序号</div>
+                <div>测评时间</div>
+                <div>作品名称</div>
+                <div>自我像</div>
+                <div>最重要的沙具</div>
+                <div>满意程度</div>
+                <div>制作用时</div>
+                <div>作品场景</div>
+              </div>
+              <div style="width: 100%;" v-for="(iteml, indexl) in item.list" :key="indexl">
+                <div class="gp_con">
+                  <div>{{ iteml.id }}</div>
+                  <div>{{ iteml.datetime }}</div>
+                  <div>{{ iteml.name }}</div>
+                  <div>{{ iteml.selfImage }}</div>
+                  <div>{{ iteml.importantBodies }}</div>
+                  <div>{{ iteml.satisfaction }}</div>
+                  <div>{{ iteml.duringTime }}</div>
+                  <div>{{ iteml.scence }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="table-style group_01">
@@ -428,6 +529,9 @@ export default {
   name: "ExportPdf",
   data() {
     return {
+      reportList: [],
+      reportAllList: [],
+      rPage: 0,
       schoolName: "",
       phaseList: [],
       time: "",
@@ -915,7 +1019,7 @@ export default {
     },
     // 自适应宽高
     changeSize () {
-      this.statusChart.resize()
+      // this.statusChart.resize()
     },
     getInfo() {
       let that = this;
@@ -3105,6 +3209,7 @@ export default {
             type: "line",
             symbol: "none",
             smooth: true,
+            animation: false,
             itemStyle: {
               normal: {
                 color: datas.color2,
@@ -3392,7 +3497,7 @@ export default {
           
           this.time = this.startDate + ' —— ' + this.endDate;
           this.birth = selectedData[i].birth;
-          this.organizationName = selectedData[i].organizationName;
+          this.organizationName = selectedData[i].departmentName;
 
           // 总体风险情况 在该测评时间段内，受测者共完成**次测评，其中有**次测评结果为有风险，**次为无风险。
           var rstr = '';
@@ -3424,6 +3529,8 @@ export default {
           let forInfo = []
           let suiInfo = []
           let vioInfo = []
+          let list10 = []
+          let listAll = []
           for (let i in reportInfo) {
             depInfo.push({
               x: reportInfo[i].datetime,
@@ -3445,7 +3552,47 @@ export default {
               x: reportInfo[i].datetime,
               y: reportInfo[i].violenceScore
             })
+            reportInfo[i].id = Number(i) + 1
+            reportInfo[i].datetime = reportInfo[i].datetime.replace(/-/g, '/')
+            reportInfo[i].duringTime = this.toHHmmss(
+              Number(reportInfo[i].duringTime) * 1000
+            );
+            // if (i < 22) {
+            listAll.push(reportInfo[i])
+            // }
+            if (i < 10) {
+              list10.push(reportInfo[i])
+            }
           }
+          this.reportList = list10
+          this.reportAllList = listAll
+          console.log(listAll)
+          let listPage = listAll.slice(10, listAll.length)
+          console.log(listPage)
+          let pageList = []
+          for (let j = 0; j < listPage.length; j += 22) {
+            // 每次循环中取出原数组的五个元素，并存入新数组
+            pageList.push({
+              list: listPage.slice(j, j + 22)
+            });
+          }
+          console.log("------------------------------")
+          console.log(pageList)
+          this.repoertPage = pageList
+          console.log(listAll.length)
+          let rPage = 0
+          if (listAll.length > 0 && listAll.length < 5) {
+            rPage = 1
+          } else if (listAll.length > 4 && listAll.length < 7) {
+            rPage = 2
+          } else if (listAll.length > 6 && listAll.length < 11) {
+            rPage = 3
+          } else if (listAll.length > 10) {
+            rPage = 4
+          }
+          this.rPage = rPage
+
+          console.log(this.reportList)
           let wdArr = [
             {
               name: '抑郁',
@@ -4032,7 +4179,7 @@ export default {
           console.log(htmlToZip)
           const p = await htmlToZip.getPdfs(
             this.$refs.sprintSchoolPdf,
-            selectedData[i].organizationName
+            selectedData[i].name
           );
           promises.push(p);
         }
@@ -4045,7 +4192,7 @@ export default {
               const { PDF, name } = pdfs[i];
               // 如果只是导出一个pdf，则导出pdf格式
               if (pdfs.length === 1) {
-                PDF.save(`${name}-${new Date().getTime()}.pdf`);
+                PDF.save(`${name}的个人综合报告-${new Date().getTime()}.pdf`);
                 setTimeout(() => {
                   this.loading.close();
                 }, 1000);
@@ -4072,6 +4219,28 @@ export default {
         // this.loading.setText('正在请求数据')
         throw new Error(e);
       }
+    },
+    toHHmmss(data) {
+      var s;
+      var hours = parseInt((data % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = parseInt((data % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.round((data % (1000 * 60)) / 1000);
+      if (hours < 1) {
+        s =
+        (minutes < 10 ? "0" + minutes : minutes) +
+        "分" +
+        (seconds < 10 ? "0" + seconds : seconds) +
+        "秒"
+      } else {
+        s =
+          (hours < 10 ? "0" + hours : hours) +
+          "时" +
+          (minutes < 10 ? "0" + minutes : minutes) +
+          "分" +
+          (seconds < 10 ? "0" + seconds : seconds) +
+          "秒"
+      }
+      return s;
     },
     formTimes(date) {
       var y = date.getFullYear();
@@ -4263,11 +4432,18 @@ export default {
         margin: 16px auto;
         width: 520px;
         text-align: left;
-        // display: flex;
-        span{
+        display: flex;
+        span:nth-child(1){
+          width: 144px;
           // width: 100% !important;
-          display: inline-block;
+          // display: inline-block;
         }
+        span:nth-child(2){
+          flex: 1
+          // width: 100% !important;
+          // display: inline-block;
+        }
+
       }
       div:nth-child(2n+1) {
         width: 320px;
@@ -4341,6 +4517,35 @@ export default {
         line-height: 52px;
         text-align: left;
       }
+      .gp_bird_box{
+        display: flex;
+        flex-wrap: wrap;
+        .gp_bird{
+          width: 420px;
+          height: auto;
+          margin: 0px 35px 0px;
+          img{
+            display: block;
+            width: 420px;
+            height: auto;
+          }
+          div{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+            line-height: 32px;
+            height: 64px;
+            margin: 15px 0;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+      
       .gp_txt{
         font-family: SourceHanSansCN-Regular, SourceHanSansCN;
         font-weight: 400;
@@ -4352,31 +4557,63 @@ export default {
       }
       .gp_exl{
         width: 100%;
-        border: 1px solid #333E75;
+        border: 1px solid #A6ACCC;
         border-bottom: 0;
         border-right: 0;
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 10px;
         .gp_con {
-          width: 50%;
-          border: 1px solid #333E75;
+          width: 100%;
+          border: 1px solid #A6ACCC;
           border-top: 0;
           border-left: 0;
-          height: 70px;
+          height: 60px;
+          display: flex;
           div{
-            font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+            font-family: PingFangSC, PingFang SC;
             font-weight: 400;
-            font-size: 24px;
-            height: 100%;
+            font-size: 16px;
             color: #333E75;
+            height: 100%;
             line-height: 1.2;
             display: flex;
-            text-align: left;
-            text-indent: 24px;
+            justify-content: center;
             align-items: center;
+            border-right: 1px solid #A6ACCC;
+            padding: 0 5px;
           }
-          
+          div:nth-child(1) {
+            width: 60px;
+          }
+          div:nth-child(2) {
+            width: 180px;
+          }
+          div:nth-child(3) {
+            width: 100px;
+          }
+          div:nth-child(4) {
+            width: 100px;
+          }
+          div:nth-child(5) {
+            width: 120px;
+          }
+          div:nth-child(6) {
+            width: 100px;
+          }
+          div:nth-child(7) {
+            width: 100px;
+          }
+          div:nth-child(8) {
+            flex: 1;
+            border: 0;
+            overflow: hidden;
+          }
+        }
+        .gp_con1{
+          div{
+            font-weight: 600;
+          }
         }
       }
       .gp_head1{

@@ -154,7 +154,7 @@
                 src="../../assets/images/report/person9.png"
                 alt=""
               />
-              <span class="dt_blod">登陆账号：</span>
+              <span class="dt_blod">登录账号：</span>
               <span>{{ details.passport }}</span>
             </li>
             <li style="width:3.2rem">
