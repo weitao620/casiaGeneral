@@ -30,7 +30,7 @@
                 <div class="per_msg_b">{{ detail.roleName }}</div>
               </div>
               <div class="per_msg">
-                <div class="per_msg_t">上次登陆时间</div>
+                <div class="per_msg_t">上次登录时间</div>
                 <div class="per_msg_b montserrat">
                   {{ detail.lastLoginTime }}
                 </div>
