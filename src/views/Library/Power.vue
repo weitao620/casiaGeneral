@@ -1206,7 +1206,10 @@ export default {
       let power = [];
       let list = JSON.parse(localStorage.getItem("powerDetailNew")).menuAuth.function;
       let org = justList;
+      console.log(org)
+      console.log(value)
       if (org.length > value.length) {
+        console.log(0)
         setTimeout(() => {
           justList = power;
           let check = that.checkList;
@@ -1231,28 +1234,10 @@ export default {
           }
           var checkNew = [];
           for (let i in list) {
-            if (list[i].Marks == 1) {
-              checkNew.push(list[i].Pid);
-              let check1 = list[i].list;
-              for (let j in check1) {
-                if (check1[j].Marks == 1) {
-                  checkNew.push(check1[j].Pid);
-                  let check2 = check1[j].list;
-                  for (let k in check2) {
-                    if (check2[k].Marks == 1) {
-                      checkNew.push(check2[k].Pid);
-                    }
-                  }
-                }
-                if (!check1[j].Marks) {
-                  let check2 = check1[j].list;
-                  for (let k in check2) {
-                    that.$delete(check2[k], "Marks");
-                  }
-                }
-              }
-            }
+            console.log(list[i])
             if (!list[i].Marks) {
+              console.log(2222)
+              console.log(list[i])
               let check1 = list[i].list;
               for (let j in check1) {
                 if (check1[j].Marks) {
@@ -1268,9 +1253,39 @@ export default {
                 }
               }
             }
+            if (list[i].Marks == 1) {
+              console.log(1111)
+              console.log(list[i])
+              checkNew.push(list[i].Pid);
+              let check1 = list[i].list;
+              for (let j in check1) {
+                console.log(check1[j])
+                if (check1[j].Marks == 1 || (check1[j].Name == '' && check1[j].Mark == 1)) {
+                  console.log(1)
+                  if (check1[j].Pid != 0) {
+                    checkNew.push(check1[j].Pid);
+                  }
+                  
+                  let check2 = check1[j].list;
+                  for (let k in check2) {
+                    if (check2[k].Marks == 1) {
+                      checkNew.push(check2[k].Pid);
+                    }
+                  }
+                }
+                if (!check1[j].Marks) {
+                  console.log(2)
+                  let check2 = check1[j].list;
+                  for (let k in check2) {
+                    that.$delete(check2[k], "Marks");
+                  }
+                }
+              }
+            }
           }
           justList = checkNew
           that.checkList = checkNew;
+          console.log(checkNew)
           if (justList.length == fuclist.length) {
             this.checkAll = true
           } else {
@@ -1346,6 +1361,8 @@ export default {
         roleAuthID: JSON.stringify(powerIds)
       };
       let param = role;
+      console.log(param)
+      // return
       that.$http
         .put(Url + "/aimw/role/updateAuthInfo", param)
         .then(res => {
