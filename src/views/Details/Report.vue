@@ -1663,6 +1663,9 @@ export default {
       },
       details: {},
       reportId: "",
+      reportId0: "",
+      token: '',
+      token0: '',
       part4: "",
       part0: "",
       part1: "",
@@ -1735,8 +1738,18 @@ export default {
   mounted() {
     let that = this;
     this.reportId = this.$route.params.userID;
+    console.log(this.reportId)
+    this.token = this.$route.params.token;
+    console.log(this.token)
+    // let href = window.location.href
+    // let hrefStr = href.match(/details\/report\/(\S*)/)[1];
+    // console.log(hrefStr)
+    // this.reportId0 = hrefStr.split('/')[0]
+    // this.token0 = hrefStr.split('/')[1]
+    // console.log(this.reportId0)
     let param = {
-      passport: JSON.parse(localStorage.getItem('userInfo')).passport
+      passport: JSON.parse(localStorage.getItem('userInfo')).passport,
+      token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
     this.$http
@@ -1840,7 +1853,8 @@ export default {
       let that = this;
       let param = {
         reportId: that.reportId,
-        note: that.assessment
+        note: that.assessment,
+        token: that.token
       }
       console.log(param)
       // return
@@ -1913,7 +1927,8 @@ export default {
     getfourImg(birdView) {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: that.token
       };
       this.$http
         .get(Url + "/aimw/report/reportReviewImgs", {
@@ -1961,7 +1976,8 @@ export default {
         background: "rgba(0, 0, 0, 0.7)"
       });
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: that.token
       };
       this.$http
         .get(Url + "/aimw/report/appendix", {
@@ -2975,7 +2991,8 @@ export default {
     getBird() {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: that.token
       };
       this.$http
         .get(Url + "/aimw/report/reportBirdView", {

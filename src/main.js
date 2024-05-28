@@ -56,11 +56,15 @@ axios.interceptors.response.use(
     if (res.config.url.indexOf("/index/screenTrend") != -1 && res.config.params && res.config.params.type == 'n') {
       console.log('什么' + res.config.url)
     } else {
+      // if (res.config.url.indexOf("/user/addUser") != -1) {
+      //   console.log("不关闭load")
+      // } else {
       if (load) {
         console.log('load')
         load.close();
         console.log('request管2222' + res.config.url)
       }
+      // }
     }
     if (res.data.code == 2) {
       router.push({ path: "/login" });

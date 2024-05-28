@@ -104,9 +104,9 @@
               >
                 <el-option
                   v-for="item in areaData"
-                  :key="item"
-                  :label="item"
-                  :value="item"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.name"
                 ></el-option>
               </el-select>
             </section>
@@ -334,23 +334,25 @@ export default {
       } else {
         this.selectCityDisabled = false;
       }
+      console.log(value)
       this.cityData = [];
       this.areaData = [];
       this.formSchool.city = "";
       this.formSchool.district = "";
       this.provinceData.map(e => {
         if (value == e.name) {
-          this.cityData = e.city;
+          this.cityData = e.children;
           return false;
         }
       });
     },
     // 选择市
     chooseCity(value) {
+      console.log(value)
       this.formSchool.district = "";
       this.cityData.map(e => {
         if (value == e.name) {
-          this.areaData = e.area;
+          this.areaData = e.children;
           return false;
         }
       });
@@ -373,8 +375,10 @@ export default {
             if (this.fid10103.enable == 1) {
               let areaArr = data.region.split("-");
               that.formSchool.region = areaArr[0];
+              console.log(areaArr[0])
               that.chooseProvince(areaArr[0]);
               that.formSchool.city = areaArr[1];
+              console.log(areaArr[1])
               that.chooseCity(areaArr[1]);
               that.formSchool.district = areaArr[2];
             }

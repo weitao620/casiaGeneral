@@ -47,7 +47,7 @@ export default new Router({
       children: [
         // 报告
         {
-          path: '/details/report/:userID',
+          path: '/details/report/:userID/:token?',
           name: 'detailsreport',
           component: () => import('./views/Details/Report.vue')
         }
