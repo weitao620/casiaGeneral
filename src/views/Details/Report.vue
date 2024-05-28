@@ -1739,8 +1739,8 @@ export default {
     let that = this;
     this.reportId = this.$route.params.userID;
     console.log(this.reportId)
-    // this.token = this.$route.params.token;
-    // console.log(this.token)
+    this.token = this.$route.params.token;
+    console.log(this.token)
     // let href = window.location.href
     // let hrefStr = href.match(/details\/report\/(\S*)/)[1];
     // console.log(hrefStr)
@@ -1748,12 +1748,12 @@ export default {
     // this.token0 = hrefStr.split('/')[1]
     // console.log(this.reportId0)
     let param = {
-      passport: JSON.parse(localStorage.getItem('userInfo')).passport
-      // token: this.token
+      passport: JSON.parse(localStorage.getItem('userInfo')).passport,
+      token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
     this.$http
-      .get(Url + "/aimw/user/getAuthInfo", { params: param })
+      .get(Url + "/aimw/zkyx/user/getAuthInfo", { params: param })
       .then(res => {
         var data = res.data;
         if (data.code == 0) {
@@ -1853,12 +1853,13 @@ export default {
       let that = this;
       let param = {
         reportId: that.reportId,
-        note: that.assessment
+        note: that.assessment,
+        token: this.token
       }
       console.log(param)
       // return
       this.$http
-        .put(Url + "/aimw/report/updateNote", param)
+        .put(Url + "/aimw/zkyx/report/updateNote", param)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
@@ -1926,10 +1927,11 @@ export default {
     getfourImg(birdView) {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: this.token
       };
       this.$http
-        .get(Url + "/aimw/report/reportReviewImgs", {
+        .get(Url + "/aimw/zkyx/report/reportReviewImgs", {
           params: param
         })
         .then(res => {
@@ -1974,10 +1976,11 @@ export default {
         background: "rgba(0, 0, 0, 0.7)"
       });
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: this.token
       };
       this.$http
-        .get(Url + "/aimw/report/appendix", {
+        .get(Url + "/aimw/zkyx/report/appendix", {
           params: param
         })
         .then(res => {
@@ -2009,7 +2012,7 @@ export default {
           console.log(res);
         });
       this.$http
-        .get(Url + "/aimw/report/reportReview", {
+        .get(Url + "/aimw/zkyx/report/reportReview", {
           params: param
         })
         .then(res => {
@@ -2045,7 +2048,7 @@ export default {
           console.log(res);
         });
       this.$http
-        .get(Url + "/aimw/report/reportInfo", {
+        .get(Url + "/aimw/zkyx/report/reportInfo", {
           params: param
         })
         .then(res => {
@@ -2988,10 +2991,11 @@ export default {
     getBird() {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        token: this.token
       };
       this.$http
-        .get(Url + "/aimw/report/reportBirdView", {
+        .get(Url + "/aimw/zkyx/report/reportBirdView", {
           params: param
         })
         .then(res => {
