@@ -155,10 +155,6 @@
               </div>
             </div>
           </el-form-item>
-          <div class="person_msg">
-            <img src="../../assets/images/personMsg.png" alt="" />
-            辅助信息
-          </div>
           <el-form-item v-if="fid30208.enable == 1" :required="fid30208.required == 1" :label="fid30208.fieldName + '：'">
             <el-input
               v-model="formAddUser.jobNumber"
@@ -171,6 +167,60 @@
                 {{fid30208.fieldName}}不能为空
               </div>
             </div>
+          </el-form-item>
+          <div class="person_msg" v-if="perMarkFlag">
+            <img src="../../assets/images/personMsg.png" alt="" />
+            个人信息
+          </div>
+          <el-form-item label="教育程度：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.education" placeholder="请选择教育程度">
+              <el-option v-for="item in educationList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="养育方式：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.rearingStyle" placeholder="请选择养育方式">
+              <el-option v-for="item in rearingStyleList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="既往心理病史：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.mentalDisease" placeholder="请选择既往心理病史">
+              <el-option v-for="item in mentalDiseaseList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="既往重大疾病史（身体）：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.seriousDisease" placeholder="请选择既往重大疾病史（身体）">
+              <el-option v-for="item in seriousDiseaseList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="家族史：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.familyMentalDisease" placeholder="请选择家族史">
+              <el-option v-for="item in familyMentalDiseaseList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+            <div style="font-size: 0.14rem;font-family: Source Han Sans CN;font-weight: 400;color: #7786ac;">（较大范围的家族成员,不仅限于祖孙等直系亲属患病情况）</div>
+          </el-form-item>
+          <div class="person_msg">
+            <img src="../../assets/images/personPass.png" alt="" />
+            辅助信息
+          </div>
+          <el-form-item label="父母关系状态：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.parentStatus" placeholder="请选择父母关系状态">
+              <el-option v-for="item in parentStatusList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="人际关系状态：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.relationship" placeholder="请选择人际关系状态">
+              <el-option v-for="item in relationshipList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="当前生活压力源：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.lifePressure" placeholder="请选择当前生活压力源">
+              <el-option v-for="item in lifePressureList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="自我认知水平：" v-if="perMarkFlag">
+            <el-select v-model="formAddPerson.selfCognitionLevel" placeholder="请选择自我认知水平">
+              <el-option v-for="item in selfCognitionLevelList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item v-if="fid30209.enable == 1" :required="fid30209.required == 1" :label="fid30209.fieldName + '：'">
             <el-input
@@ -209,6 +259,190 @@ export default {
   name: "person",
   data() {
     return {
+      perMarkFlag: false,
+      formAddPerson: {
+        education: '',
+        rearingStyle: '',
+        mentalDisease: '',
+        seriousDisease: '',
+        familyMentalDisease: '',
+        parentStatus: '',
+        relationship: '',
+        lifePressure: '',
+        selfCognitionLevel: ''
+      },
+      // 小学、初中、高中、本科、硕士及以上
+      educationList: [
+        {
+          id: 1,
+          name: '小学'
+        },
+        {
+          id: 2,
+          name: '初中'
+        },
+        {
+          id: 3,
+          name: '高中'
+        },
+        {
+          id: 4,
+          name: '本科'
+        },
+        {
+          id: 5,
+          name: '硕士及以上'
+        }
+      ],
+      // 双亲、单亲、隔代（爷爷奶奶、姥姥姥爷等）
+      rearingStyleList: [
+        {
+          id: 1,
+          name: '双亲'
+        },
+        {
+          id: 2,
+          name: '单亲'
+        },
+        {
+          id: 3,
+          name: '隔代（爷爷奶奶、姥姥姥爷等）'
+        }
+      ],
+      // 无、抑郁症、焦虑症、强迫症、双相情感障碍、其他
+      mentalDiseaseList: [
+        {
+          id: 1,
+          name: '无'
+        },
+        {
+          id: 2,
+          name: '抑郁症'
+        },
+        {
+          id: 3,
+          name: '焦虑症'
+        },
+        {
+          id: 4,
+          name: '强迫症'
+        },
+        {
+          id: 5,
+          name: '双相情感障碍'
+        },
+        {
+          id: 6,
+          name: '其他'
+        }
+      ],
+      // 有、无
+      seriousDiseaseList: [
+        {
+          id: 1,
+          name: '有'
+        },
+        {
+          id: 2,
+          name: '无'
+        }
+      ],
+      // 无、抑郁症、焦虑症、强迫症、双相情感障碍、其他
+      familyMentalDiseaseList: [
+        {
+          id: 1,
+          name: '无'
+        },
+        {
+          id: 2,
+          name: '抑郁症'
+        },
+        {
+          id: 3,
+          name: '焦虑症'
+        },
+        {
+          id: 4,
+          name: '强迫症'
+        },
+        {
+          id: 5,
+          name: '双相情感障碍'
+        },
+        {
+          id: 6,
+          name: '其他'
+        }
+      ],
+      // 良好、一般、糟糕
+      parentStatusList: [
+        {
+          id: 1,
+          name: '良好'
+        },
+        {
+          id: 2,
+          name: '一般'
+        },
+        {
+          id: 3,
+          name: '糟糕'
+        }
+      ],
+      // 良好、一般、糟糕
+      relationshipList: [
+        {
+          id: 1,
+          name: '良好'
+        },
+        {
+          id: 2,
+          name: '一般'
+        },
+        {
+          id: 3,
+          name: '糟糕'
+        }
+      ],
+      // 工作学业压力、人际关系问题、财务压力、健康问题、其他
+      lifePressureList: [
+        {
+          id: 1,
+          name: '工作学业压力'
+        },
+        {
+          id: 2,
+          name: '人际关系问题'
+        },
+        {
+          id: 3,
+          name: '财务压力'
+        },
+        {
+          id: 4,
+          name: '健康问题'
+        },
+        {
+          id: 5,
+          name: '其他'
+        }
+      ],
+      // 可能存在心理健康问题、不确定、没有心理健康问题
+      selfCognitionLevelList: [
+        {
+          id: 1,
+          name: '可能存在心理健康问题'
+        },
+        {
+          id: 2,
+          name: '不确定'
+        },
+        {
+          id: 3,
+          name: '没有心理健康问题'
+        }
+      ],
+
       singleBtn: 1,
       newPassFlag: false,
       newRight1: false,
@@ -669,8 +903,36 @@ export default {
         // birth = this.formTimes(this.formAddUser.birth)
         // this.formAddUser.birth = birth
       }
+      let remarks = {
+        remarkInfo: that.formAddUser.remark,
+        education: that.formAddPerson.education == '' ? 0 : that.formAddPerson.education,
+        rearingStyle: that.formAddPerson.rearingStyle == '' ? 0 : that.formAddPerson.rearingStyle,
+        mentalDisease: that.formAddPerson.mentalDisease == '' ? 0 : that.formAddPerson.mentalDisease,
+        seriousDisease: that.formAddPerson.seriousDisease == '' ? 0 : that.formAddPerson.seriousDisease,
+        familyMentalDisease: that.formAddPerson.familyMentalDisease == '' ? 0 : that.formAddPerson.familyMentalDisease,
+        parentStatus: that.formAddPerson.parentStatus == '' ? 0 : that.formAddPerson.parentStatus,
+        relationship: that.formAddPerson.relationship == '' ? 0 : that.formAddPerson.relationship,
+        lifePressure: that.formAddPerson.lifePressure == '' ? 0 : that.formAddPerson.lifePressure,
+        selfCognitionLevel: that.formAddPerson.selfCognitionLevel == '' ? 0 : that.formAddPerson.selfCognitionLevel
+      }
+      let params = {
+        passport: this.formAddUser.passport, // 登录账号
+        password: this.formAddUser.password, // 登录密码
+        name: this.formAddUser.name, // 用户姓名
+        gender: this.formAddUser.gender, // 性别
+        phone: this.formAddUser.phone, // 手机号
+        birth: this.formAddUser.birth, // 出生日期
+        email: this.formAddUser.email, // 邮箱地址
+        department: this.formAddUser.department, // 所属部门ID
+        departmentName: this.formAddUser.departmentName, // 所属部门名称
+        jobNumber: this.formAddUser.jobNumber, // 工号
+        headIcon: this.formAddUser.headIcon, // 头像
+        remark: remarks // 备注
+      }
+      console.log(params)
+      // return 
       that.$http
-        .post(Url + "/aimw/user/addUser", this.formAddUser)
+        .post(Url + "/aimw/user/addUser", params)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
@@ -686,6 +948,39 @@ export default {
           console.log(res);
         });
     },
+    // addPersonSub() {
+    //   let that = this;
+    //   let params = {
+    //     education: that.formAddPerson.education == '' ? 0 : that.formAddPerson.education,
+    //     rearingStyle: that.formAddPerson.rearingStyle == '' ? 0 : that.formAddPerson.rearingStyle,
+    //     mentalDisease: that.formAddPerson.mentalDisease == '' ? 0 : that.formAddPerson.mentalDisease,
+    //     seriousDisease: that.formAddPerson.seriousDisease == '' ? 0 : that.formAddPerson.seriousDisease,
+    //     familyMentalDisease: that.formAddPerson.familyMentalDisease == '' ? 0 : that.formAddPerson.familyMentalDisease,
+    //     parentStatus: that.formAddPerson.parentStatus == '' ? 0 : that.formAddPerson.parentStatus,
+    //     relationship: that.formAddPerson.relationship == '' ? 0 : that.formAddPerson.relationship,
+    //     lifePressure: that.formAddPerson.lifePressure == '' ? 0 : that.formAddPerson.lifePressure,
+    //     selfCognitionLevel: that.formAddPerson.selfCognitionLevel == '' ? 0 : that.formAddPerson.selfCognitionLevel
+    //   }
+    //   console.log(params)
+    //   this.$message.success('新增成功！');
+    //   return
+    //   that.$http
+    //     .post(Url + "/aimw/user/addUser", params)
+    //     .then(res => {
+    //       var data = res.data;
+    //       if (data.code == 0) {
+    //         this.$router.push({
+    //           path: "/library/user"
+    //         });
+    //         this.$message.success('新增成功！');
+    //       } else {
+    //         this.$message.error(data.msg);
+    //       }
+    //     })
+    //     .catch(res => {
+    //       console.log(res);
+    //     });
+    // },
     formTimes(date) {
       var y = date.getFullYear();
       var m = date.getMonth() + 1;
@@ -725,7 +1020,7 @@ export default {
     .person_box {
       width: 12.6rem;
       margin: 0 auto;
-      padding-left: 3.3rem;
+      padding-left: 3.8rem;
       position: relative;
       // 左边头像
       .s_logo {
@@ -880,7 +1175,11 @@ export default {
         height: 0.36rem;
         width: 3.5rem;
       }
+      .el-form-item{
+        margin-left: -0.8rem;
+      }
       .el-form-item__label {
+        width: 2rem !important;
         font-size: 0.16rem;
         line-height: 0.36rem;
         font-family: Source Han Sans CN;
@@ -933,7 +1232,7 @@ export default {
     }
   }
   .sub_center {
-    width: 4.9rem;
+    width: 6.6rem;
     display: flex;
     justify-content: center;
     .el-form-item__content {

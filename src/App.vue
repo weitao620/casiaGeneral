@@ -96,9 +96,11 @@ export default {
     if (user) {
       this.setUserName(user);
     }
-    this.auth()
-    // console.log(this.$root._route.name)
-    // console.log(this.$root._route.name)
+    if (window.location.href.indexOf('details/report/') != -1) {
+      console.log('不获取权限')
+    } else {
+      this.auth()
+    }
     // if (this.$root._route.name === 'screenindex') {
     //   console.log('不获取权限')
     // } else {

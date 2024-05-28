@@ -856,7 +856,7 @@ export default {
             this.powerDetail.roleName = param.roleName
             this.powerDetail.status = param.status
             localStorage.setItem('powerDetail', JSON.stringify(this.powerDetail))
-            this.getList();
+            this.getList2();
             this.$message.success('更新成功！');
           } else {
             this.$message.error(data.msg);
@@ -891,7 +891,7 @@ export default {
             this.dialogAddRole = false;
             this.powerDetail.status = param.status
             localStorage.setItem('powerDetail', JSON.stringify(this.powerDetail))
-            this.getList();
+            this.getList2();
             this.$message.success(param.status == 1 ? '已启用！' : '已停用！');
           } else {
             this.$message.error(data.msg);
@@ -1368,7 +1368,7 @@ export default {
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
-            this.getList();
+            this.getList2();
             this.$message({
               type: "success",
               message: "更新成功!"

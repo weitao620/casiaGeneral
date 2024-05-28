@@ -142,7 +142,7 @@
             </div>
           </el-form-item>
           <div class="person_msg">
-            <img src="../../assets/images/personMsg.png" alt="" />
+            <img src="../../assets/images/personPass.png" alt="" />
             辅助信息
           </div>
           <el-form-item v-if="fid40107.enable == 1" :required="fid40107.required == 1" :label="fid40107.fieldName + '：'">
