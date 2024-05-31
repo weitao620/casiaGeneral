@@ -184,12 +184,14 @@ export default {
                 // data.data.version = 1
                 data.data.version = String(data.data.version)
                 console.log(data.data)
-                // version：通用版=0、机构版=1
+                // version：通用版=0、机构版=1、报告免登录版=2
                 if (String(data.data.version)) {
                   if (data.data.version == 1) {
                     console.log('机构版隐藏游客')
                   } else if (data.data.version == 0) {
                     console.log('通用版')
+                  } else if (data.data.version == 2) {
+                    console.log('报告免登录版')
                   }
                   localStorage.setItem('version', data.data.version)
                 }

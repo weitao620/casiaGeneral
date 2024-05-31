@@ -1699,7 +1699,8 @@ export default {
       forcedFlag: 1,
       suicideFlag: 0,
       violenceFlag: 0,
-      personalityFlag: 0
+      personalityFlag: 0,
+      tokenFlag: false
     };
   },
   computed: {
@@ -1737,10 +1738,23 @@ export default {
   },
   mounted() {
     let that = this;
+    if (localStorage.getItem('version')) {
+      if (localStorage.getItem('version') == 2) {
+        this.tokenFlag = true
+      }
+    }
     this.reportId = this.$route.params.userID;
     console.log(this.reportId)
-    // this.token = this.$route.params.token;
-    // console.log(this.token)
+    this.token = this.$route.params.token;
+    // console.log(String(this.token) === 'undefined')
+    // console.log(String(this.token) == 'undefined')
+    if (typeof this.token === 'undefined') {
+      console.log("不免登录")
+      this.tokenFlag = false
+    } else {
+      console.log("免登录")
+      this.tokenFlag = true
+    }
     // let href = window.location.href
     // let hrefStr = href.match(/details\/report\/(\S*)/)[1];
     // console.log(hrefStr)
@@ -1752,8 +1766,12 @@ export default {
       // token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
+    if (this.tokenFlag) {
+      param.token = this.token
+    }
+    let postStr = this.tokenFlag ? '/aimw/zkyx/user/getAuthInfo' : '/aimw/user/getAuthInfo'
     this.$http
-      .get(Url + "/aimw/user/getAuthInfo", { params: param })
+      .get(Url + postStr, { params: param })
       .then(res => {
         var data = res.data;
         if (data.code == 0) {
@@ -1857,8 +1875,12 @@ export default {
       }
       console.log(param)
       // return
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr1 = this.tokenFlag ? '/aimw/zkyx/report/updateNote' : '/aimw/report/updateNote'
       this.$http
-        .put(Url + "/aimw/report/updateNote", param)
+        .put(Url + postStr1, param)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
@@ -1928,8 +1950,12 @@ export default {
       var param = {
         reportId: that.reportId
       };
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr2 = this.tokenFlag ? '/aimw/zkyx/report/reportReviewImgs' : '/aimw/report/reportReviewImgs'
       this.$http
-        .get(Url + "/aimw/report/reportReviewImgs", {
+        .get(Url + postStr2, {
           params: param
         })
         .then(res => {
@@ -1976,8 +2002,12 @@ export default {
       var param = {
         reportId: that.reportId
       };
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr3 = this.tokenFlag ? '/aimw/zkyx/report/appendix' : '/aimw/report/appendix'
       this.$http
-        .get(Url + "/aimw/report/appendix", {
+        .get(Url + postStr3, {
           params: param
         })
         .then(res => {
@@ -2008,8 +2038,9 @@ export default {
         .catch(res => {
           console.log(res);
         });
+      let postStr4 = this.tokenFlag ? '/aimw/zkyx/report/reportReview' : '/aimw/report/reportReview'
       this.$http
-        .get(Url + "/aimw/report/reportReview", {
+        .get(Url + postStr4, {
           params: param
         })
         .then(res => {
@@ -2044,8 +2075,9 @@ export default {
         .catch(res => {
           console.log(res);
         });
+      let postStr5 = this.tokenFlag ? '/aimw/zkyx/report/reportInfo' : '/aimw/report/reportInfo'
       this.$http
-        .get(Url + "/aimw/report/reportInfo", {
+        .get(Url + postStr5, {
           params: param
         })
         .then(res => {
@@ -2990,8 +3022,12 @@ export default {
       var param = {
         reportId: that.reportId
       };
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr6 = this.tokenFlag ? '/aimw/zkyx/report/reportBirdView' : '/aimw/report/reportBirdView'
       this.$http
-        .get(Url + "/aimw/report/reportBirdView", {
+        .get(Url + postStr6, {
           params: param
         })
         .then(res => {
