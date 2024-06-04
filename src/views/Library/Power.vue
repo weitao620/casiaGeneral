@@ -116,7 +116,7 @@
                         :label="item2.Pid"
                         :style="{'border-bottom': item1.list.length > 6 &&index2 <6 ? '0.01rem dashed #00c2ff' : 0}"
                       >
-                        <el-checkbox class="list_thr" :pid="item2.Pid" :label="item2.Pid">{{
+                        <el-checkbox class="list_thr" :pid="item2.Pid" :label="item2.Pid" v-if="item2.Pid != 20112">{{
                           item2.Name
                         }}</el-checkbox>
                       </div>
@@ -204,7 +204,7 @@
               <el-table-column type="index" label="序号" :index="indexMethod"> </el-table-column>
               <el-table-column prop="name" label="姓名"> </el-table-column>
               <el-table-column prop="passport" label="登录账号"> </el-table-column>
-              <el-table-column prop="passport" label="添加时间"> </el-table-column>
+              <el-table-column prop="addRoleTime" label="添加时间"> </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button
@@ -445,7 +445,9 @@ export default {
       teacherIds: [],
       teacherData: [],
       teacherNew: [],
-      checkmList: []
+      checkmList: [],
+      cancelFlag: false,
+      cancelName: ''
     };
   },
   created() {
@@ -760,9 +762,13 @@ export default {
       }
       if (row.inheritRoleID != "") {
         that.roleForm.copy = true;
+        that.cancelFlag = true
       } else {
         that.roleForm.copy = false;
+        that.cancelFlag = false
       }
+
+      that.cancelName = row.inheritRoleID
       that.roleForm.roleID = row.roleID;
       that.roleForm.name = row.roleName;
       that.roleForm.roleAuthNotice = row.roleAuthNotice;
@@ -782,7 +788,46 @@ export default {
       }
       var param = {};
       var path = "";
+      let cancel = 0
+      if (this.cancelFlag) {
+        console.log(22)
+        // 原状态勾选
+        if (this.roleForm.copy) {
+          if (this.roleForm.inheritRoleID == this.cancelName) {
+            cancel = 0
+          } else {
+            cancel = 1
+          }
+        } else {
+          cancel = 2
+        }
+      } else {
+        console.log(2)
+        // 原状态未勾选
+        if (this.roleForm.copy) {
+          cancel = 1
+        } else {
+          cancel = 0
+        }
+      }
+      // if (this.roleForm.copy) {
+      //   param = {
+      //     roleName: this.roleForm.name,
+      //     roleAuthNotice: this.roleForm.roleAuthNotice,
+      //     inheritRoleID: this.roleForm.inheritRoleID
+      //   };
+      // } else {
+      //   param = {
+      //     roleName: this.roleForm.name,
+      //     roleAuthNotice: this.roleForm.roleAuthNotice,
+      //     inheritRoleID: ""
+      //   };
+      // }
       if (this.roleForm.copy) {
+        if (this.roleForm.inheritRoleID == '') {
+          this.$message.warning('请选选择要复制角色权限')
+          return false
+        }
         param = {
           roleName: this.roleForm.name,
           roleAuthNotice: this.roleForm.roleAuthNotice,
@@ -797,6 +842,8 @@ export default {
       }
       param.status = that.roleForm.status;
       param.roleID = that.roleForm.roleID;
+      param.cancel = cancel;
+      console.log(param)
       that.$http
         .put(Url + "/aimw/role/updateRoleInfo", param)
         .then(res => {
@@ -809,7 +856,7 @@ export default {
             this.powerDetail.roleName = param.roleName
             this.powerDetail.status = param.status
             localStorage.setItem('powerDetail', JSON.stringify(this.powerDetail))
-            this.getList();
+            this.getList2();
             this.$message.success('更新成功！');
           } else {
             this.$message.error(data.msg);
@@ -844,7 +891,7 @@ export default {
             this.dialogAddRole = false;
             this.powerDetail.status = param.status
             localStorage.setItem('powerDetail', JSON.stringify(this.powerDetail))
-            this.getList();
+            this.getList2();
             this.$message.success(param.status == 1 ? '已启用！' : '已停用！');
           } else {
             this.$message.error(data.msg);
@@ -1039,6 +1086,74 @@ export default {
             this.reloadTree = false;
             setTimeout(() => {
               this.reloadTree = true;
+              this.onSubmit2()
+            }, 100);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    getList2() {
+      let that = this;
+      that.$http
+        .get(Url + "/aimw/role/listAuthInfo", {
+          params: {
+            roleID: this.powerDetail.roleID
+          }
+        })
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            localStorage.setItem("powerDetailNew", data.data)
+            let detail = JSON.parse(data.data)
+            this.menuAuth = []
+            fuclist = []
+            this.checkList = []
+            this.menuAuth = detail.menuAuth.function;
+            for (let i in that.menuAuth) {
+              if (that.menuAuth[i].Mark == 1) {
+                that.checkList.push(that.menuAuth[i].Pid);
+                let check1 = that.menuAuth[i].list;
+                for (let j in check1) {
+                  if (check1[j].Mark == 1) {
+                    that.checkList.push(check1[j].Pid);
+                    let check2 = check1[j].list;
+                    for (let k in check2) {
+                      if (check2[k].Mark == 1) {
+                        that.checkList.push(check2[k].Pid);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            for (let i in that.menuAuth) {
+              fuclist.push(that.menuAuth[i].Pid);
+              let check1 = that.menuAuth[i].list;
+              for (let j in check1) {
+                fuclist.push(check1[j].Pid);
+                let check2 = check1[j].list;
+                for (let k in check2) {
+                  fuclist.push(check2[k].Pid);
+                }
+              }
+            }
+            justList = that.checkList;
+            if (justList.length == fuclist.length) {
+              this.checkAll = true
+            } else {
+              this.checkAll = false
+            }
+            this.organizationAuth = []
+            this.organizationAuth = detail.organizationAuth.organization;
+            that.studyList = []
+            that.classList = []
+            this.recursiveFunction2(this.organizationAuth)
+            this.treeData = that.organizationAuth
+            this.reloadTree = false;
+            setTimeout(() => {
+              this.reloadTree = true;
             }, 100);
           }
         })
@@ -1091,7 +1206,10 @@ export default {
       let power = [];
       let list = JSON.parse(localStorage.getItem("powerDetailNew")).menuAuth.function;
       let org = justList;
+      console.log(org)
+      console.log(value)
       if (org.length > value.length) {
+        console.log(0)
         setTimeout(() => {
           justList = power;
           let check = that.checkList;
@@ -1116,28 +1234,10 @@ export default {
           }
           var checkNew = [];
           for (let i in list) {
-            if (list[i].Marks == 1) {
-              checkNew.push(list[i].Pid);
-              let check1 = list[i].list;
-              for (let j in check1) {
-                if (check1[j].Marks == 1) {
-                  checkNew.push(check1[j].Pid);
-                  let check2 = check1[j].list;
-                  for (let k in check2) {
-                    if (check2[k].Marks == 1) {
-                      checkNew.push(check2[k].Pid);
-                    }
-                  }
-                }
-                if (!check1[j].Marks) {
-                  let check2 = check1[j].list;
-                  for (let k in check2) {
-                    that.$delete(check2[k], "Marks");
-                  }
-                }
-              }
-            }
+            console.log(list[i])
             if (!list[i].Marks) {
+              console.log(2222)
+              console.log(list[i])
               let check1 = list[i].list;
               for (let j in check1) {
                 if (check1[j].Marks) {
@@ -1153,9 +1253,39 @@ export default {
                 }
               }
             }
+            if (list[i].Marks == 1) {
+              console.log(1111)
+              console.log(list[i])
+              checkNew.push(list[i].Pid);
+              let check1 = list[i].list;
+              for (let j in check1) {
+                console.log(check1[j])
+                if (check1[j].Marks == 1 || (check1[j].Name == '' && check1[j].Mark == 1)) {
+                  console.log(1)
+                  if (check1[j].Pid != 0) {
+                    checkNew.push(check1[j].Pid);
+                  }
+                  
+                  let check2 = check1[j].list;
+                  for (let k in check2) {
+                    if (check2[k].Marks == 1) {
+                      checkNew.push(check2[k].Pid);
+                    }
+                  }
+                }
+                if (!check1[j].Marks) {
+                  console.log(2)
+                  let check2 = check1[j].list;
+                  for (let k in check2) {
+                    that.$delete(check2[k], "Marks");
+                  }
+                }
+              }
+            }
           }
           justList = checkNew
           that.checkList = checkNew;
+          console.log(checkNew)
           if (justList.length == fuclist.length) {
             this.checkAll = true
           } else {
@@ -1231,16 +1361,52 @@ export default {
         roleAuthID: JSON.stringify(powerIds)
       };
       let param = role;
+      console.log(param)
+      // return
       that.$http
         .put(Url + "/aimw/role/updateAuthInfo", param)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
-            this.getList();
+            this.getList2();
             this.$message({
               type: "success",
               message: "更新成功!"
             });
+          } else {
+            this.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    onSubmit2() {
+      let that = this;
+      for (let i in that.checkList) {
+        if (that.checkList[i] == 30100) {
+          that.checkList.splice(i, 1);
+        }
+      }
+      let studyArr = []
+      for (let i in that.studyList) {
+        studyArr.push(that.studyList[i].Pid)
+      }
+      let powerIds = {
+        menuAuthID: that.checkList,
+        organizationAuthID: studyArr
+      }
+      var role = {
+        roleID: that.powerDetail.roleID,
+        roleAuthID: JSON.stringify(powerIds)
+      };
+      let param = role;
+      that.$http
+        .put(Url + "/aimw/role/updateAuthInfo", param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            this.getList2();
           } else {
             this.$message.error(data.msg);
           }

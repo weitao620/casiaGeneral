@@ -84,6 +84,60 @@
         </div>
       </div>
     </div>
+
+    <!-- <div class="search_form_box">
+      <div class="search_title center_o_title">
+        心理放松记录
+      </div>
+      <div class="tables_box">
+        <template>
+          <el-table
+            border
+            :data="tableData"
+            style="width: 100%"
+            @sort-change="sortChange"
+          >
+            <el-table-column prop="date" label="放松时间"> </el-table-column>
+            <el-table-column prop="evaNum" label="放松项目">
+            </el-table-column>
+            <el-table-column prop="evaTime" label="放松时长"> </el-table-column>
+            <el-table-column prop="evaTime" label="上次测评时间"> </el-table-column>
+            <el-table-column prop="warning" label="评估结果">
+              <template slot-scope="scope">
+                <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
+                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                </div>
+                <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
+                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                </div>
+                <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
+                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                </div>
+                <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
+                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="tipsName" label="放松推荐">
+            </el-table-column>
+          </el-table>
+        </template>
+        <div class="table_page">
+          <div class="page_total">
+            共 <span>{{ total }}</span> 条 , 第
+            <span>{{ currentPage }}/{{ pageNum }}</span> 页
+          </div>
+          <el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="limit"
+            layout="prev, pager, next"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
+      </div>
+    </div> -->
     <div class="search_form_box trand_box">
       <div class="search_title center_o_title">
         变化趋势分析
