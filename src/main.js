@@ -98,6 +98,10 @@ router.beforeEach((to, from, next) => {
   var passport = localStorage.getItem('passport');
   var open = localStorage.getItem('openReport');
   var userType = localStorage.getItem('userType');
+  if (to.name === 'detailsreport') {
+    next()
+    return false
+  }
   // if (to.name === 'screenindex') {
   //   next()
   // } else {

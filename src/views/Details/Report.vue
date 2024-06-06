@@ -1761,15 +1761,36 @@ export default {
     // this.reportId0 = hrefStr.split('/')[0]
     // this.token0 = hrefStr.split('/')[1]
     // console.log(this.reportId0)
+    console.log(!localStorage.getItem('isLogin'))
+    console.log(!(typeof this.token === 'undefined'))
+    if (!localStorage.getItem('isLogin')) {
+      if (typeof this.token === 'undefined') {
+        console.log("不免登录")
+        localStorage.removeItem("isLogin");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("userAuth");
+        localStorage.removeItem("passport");
+        localStorage.removeItem("userType");
+        this.$router.replace({
+          path: "/login"
+        });
+        return false
+      } else {
+        console.log("免登录")
+        this.tokenFlag = true
+      }
+    }
     let param = {
-      passport: JSON.parse(localStorage.getItem('userInfo')).passport
+      // passport: JSON.parse(localStorage.getItem('userInfo')).passport
       // token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
     if (this.tokenFlag) {
       param.token = this.token
+    } else {
+      param.passport = JSON.parse(localStorage.getItem('userInfo')).passport
     }
-    let postStr = this.tokenFlag ? '/aimw/zkyx/user/getAuthInfo' : '/aimw/user/getAuthInfo'
+    let postStr = this.tokenFlag ? '/aimw/zkyx/report/getDimInfo' : '/aimw/user/getAuthInfo'
     this.$http
       .get(Url + postStr, { params: param })
       .then(res => {
