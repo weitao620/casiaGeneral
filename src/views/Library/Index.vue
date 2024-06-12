@@ -1433,7 +1433,7 @@ export default {
                 value: that.piePrect,
                 name: "分析",
                 symbol: "circle",
-                symbolSize: 3,
+                symbolSize: 0,
                 itemStyle: {
                   normal: {
                     borderColor: "#4BC8FF",
