@@ -452,7 +452,7 @@
         </el-form-item>
         <el-form-item required label="选择团队:">
           <el-select v-model="partsForm.organization" @change="orgChange" placeholder="请选择团队" style="width:100%">
-            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+            <el-option v-for="item in studyList1" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
           <div class="tip_left" v-show="organizationFlag">
             <div class="tip_msg">
@@ -630,6 +630,7 @@ export default {
       violenceFlag: 0,
       personalityFlag: 0,
       studyList: [],
+      studyList1: [],
       fid30207: {
         enable: 1,
         fieldId: 30207,
@@ -751,6 +752,7 @@ export default {
             if (data) {
               this.addChangeFlag = true;
               let schoolOrg = JSON.parse(data.data).organization;
+              console.log(schoolOrg)
               this.studyList = [];
               this.recursiveFunction2(schoolOrg);
               this.studyList.sort((a, b) => {
@@ -770,11 +772,15 @@ export default {
     getStr2(data) {
       let that = this;
       data.forEach(function(row) {
+        console.log(row)
         if (row.list) {
+          console.log(1)
           that.getStr2(row.list);
         }
         if (row.Mark == 1) {
-          that.studyList.push({ Name: row.Name, Pid: row.Pid });
+          console.log(2)
+          that.studyList.push({ Name: row.Name, Pid: row.Pid, list: row.list });
+          
         }
       });
     },
@@ -2652,6 +2658,14 @@ export default {
         organization: '',
         type: 1
       }
+      that.studyList1 = []
+      for (let i in this.studyList) {
+        if (this.studyList[i].list) {
+          console.log(3)
+          that.studyList1.push({ Name: this.studyList[i].Name, Pid: this.studyList[i].Pid });
+        }
+      }
+      
       this.dialogPartFrame = true
       
       // this.pdfList = []
