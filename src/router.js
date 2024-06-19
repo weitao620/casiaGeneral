@@ -39,6 +39,39 @@ export default new Router({
         }
       ]
     },
+    // 运维
+    {
+      path: '/operation',
+      name: 'operation',
+      redirect: '/operation/index',
+      component: () => import('./views/Operation.vue'),
+      children: [
+        // 主页--主页
+        {
+          path: '/operation/index',
+          name: 'operationindex',
+          component: () => import('./views/Operation/Index.vue')
+        },
+        // 主页--详情
+        {
+          path: '/operation/orgsdetail',
+          name: 'operationorgsdetail',
+          component: () => import('./views/Operation/OrgsDetail.vue')
+        },
+        // 主页--新增
+        {
+          path: '/operation/addorgs',
+          name: 'operationaddorgs',
+          component: () => import('./views/Operation/AddOrgs.vue')
+        },
+        // 主页--批量
+        {
+          path: '/operation/batchorgs',
+          name: 'operationbatchorgs',
+          component: () => import('./views/Operation/BatchOrgs.vue')
+        }
+      ]
+    },
     {
       path: '/details',
       name: 'details',

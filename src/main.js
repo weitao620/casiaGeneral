@@ -30,6 +30,16 @@ var load = null;
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use(
   res => {
+    console.log(res)
+    console.log(res.url.indexOf("/user/login"))
+    console.log(res.url.indexOf("/aimw/getAllOrgsInfo"))
+    if (res.url.indexOf("/user/login") === -1) {
+      console.log(localStorage.getItem('totalToken'))
+      res.headers['Authorization'] = localStorage.getItem('totalToken');
+      console.log("加鉴权")
+    } else {
+      console.log("不需要鉴权")
+    }
     if (res.url.indexOf("/report/exportGroupReport") != -1 || res.url.indexOf("/user/getUserProfile") != -1 || res.url.indexOf("/index/listLatestReportsUserIcon") != -1 || res.url.indexOf("/report/reportReviewImgs") != -1 || res.url.indexOf("/report/reportBirdView") != -1 || res.url.indexOf("/report/appendix") != -1 || res.url.indexOf("/report/reportReview") != -1 || res.url.indexOf("/report/reportInfo") != -1 || res.url.indexOf("report/consultationInfo") != -1 || (res.params && res.params.type == 'y')) {
       console.log('不需要')
       console.log(res.url)
@@ -69,10 +79,12 @@ axios.interceptors.response.use(
     if (res.data.code == 2) {
       router.push({ path: "/login" });
       localStorage.removeItem("isLogin");
+      localStorage.removeItem("allOrgs");
       localStorage.removeItem("userInfo");
       localStorage.removeItem("userAuth");
       localStorage.removeItem("passport");
       localStorage.removeItem("userType");
+      localStorage.removeItem("totalToken");
       return;
     }
     if (res.data.code == 90000) {
@@ -117,6 +129,9 @@ router.beforeEach((to, from, next) => {
       if (localStorage.getItem('passport') === 'jiankong') {
         console.log(441)
         next({ path: '/screen' })
+      } else if (localStorage.getItem('passport') === 'OpsAdmin') {
+        console.log(441)
+        next({ path: '/operation' })
       } else {
         console.log(3)
         next({ path: '/library' })
@@ -125,7 +140,10 @@ router.beforeEach((to, from, next) => {
     } else if (to.path.indexOf('library') !== -1 && localStorage.getItem('passport') === 'jiankong') {
       console.log(442)
       next({ path: '/screen' })
-    } else if (to.path.indexOf('screen') !== -1 && localStorage.getItem('passport') !== 'jiankong') {
+    } else if (to.path.indexOf('library') !== -1 && localStorage.getItem('passport') === 'OpsAdmin') {
+      console.log(442)
+      next({ path: '/operation' })
+    } else if (to.path.indexOf('screen') !== -1 && to.path.indexOf('operation') !== -1 && localStorage.getItem('passport') !== 'jiankong' && localStorage.getItem('passport') !== 'OpsAdmin') {
       console.log(442)
       next({ path: '/library' })
     } else {

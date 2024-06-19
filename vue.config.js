@@ -17,7 +17,8 @@ module.exports = {
         // target: "http://36.110.172.217:6222/", // 通用
         // target: "http://36.110.172.217:16666/", // 通用
         // target: "https://ipathy.net/aimwmb/",
-        target: "http://36.110.172.216:11800/",
+        // target: "http://36.110.172.216:11800/",
+        target: "http://36.110.172.216:6124/",
 
         // target: "http://10.0.6.31:6120/",
         // target: "http://36.110.172.216:11300", // 北航
