@@ -6,11 +6,10 @@
           <img src="../../assets/images/index_top.png" alt="" />
         </div>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/library/user' }"
-            >用户管理</el-breadcrumb-item
+          <el-breadcrumb-item :to="{ path: '/operation/index' }"
+            >主页</el-breadcrumb-item
           >
-          <el-breadcrumb-item>导入</el-breadcrumb-item>
+          <el-breadcrumb-item>批量新增机构</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -34,10 +33,61 @@
         </div>
       </div>
       <div class="steps_chose" v-if="stepsAct == 1">
-        <div>{{fid30207.fieldName}}：</div>
-        <el-select v-model="department" :placeholder="'请选择' + fid30207.fieldName">
-            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
-          </el-select>
+        <el-form
+          label-position="right"
+          class="person_contain"
+          :model="formAddOrgs"
+        >
+          <el-form-item required label="地区：">
+            <section class="address-select-list">
+              <el-select
+                class="adress-select"
+                v-model="formAddOrgs.regionId"
+                placeholder="请选择省"
+                @change="chooseProvince"
+              >
+                <el-option
+                  v-for="item in provinceData"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.code"
+                ></el-option>
+              </el-select>
+              <el-select
+                class="adress-select"
+                v-model="formAddOrgs.cityId"
+                placeholder="请选择市"
+                @change="chooseCity"
+              >
+                <el-option
+                  v-for="item in cityData"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.code"
+                ></el-option>
+              </el-select>
+              <el-select
+                class="adress-select"
+                v-model="formAddOrgs.districtId"
+                placeholder="请选择区"
+                @change="chooseDistrict"
+              >
+                <el-option
+                  v-for="item in areaData"
+                  :key="item.name"
+                  :label="item.name"
+                  :value="item.code"
+                ></el-option>
+              </el-select>
+            </section>
+            <div class="tip_left" v-show="areaFlag">
+              <div class="tip_msg" style="width:1.44rem">
+                <img src="../../assets/images/x.png" alt="" />
+                请选择省/市/区
+              </div>
+            </div>
+          </el-form-item>
+        </el-form>
       </div>
       <div class="steps_list">
         <div class="steps_li" v-if="stepsAct == 1">
@@ -142,37 +192,29 @@
             <el-table-column
               prop="name"
               :render-header="renderHeader"
-              label="姓名"
+              label="机构名称"
             >
             </el-table-column>
             <el-table-column
-              prop="passport"
+              prop="nameAbb"
               :render-header="renderHeader"
-              label="登录账号"
+              label="ID"
             >
             </el-table-column>
             <el-table-column
-              prop="gender"
-              :render-header="renderHeader"
-              label="性别"
+              prop="website"
+              label="机构网址"
             >
             </el-table-column>
             <el-table-column
-              prop="departmentName"
+              prop="area"
               :render-header="renderHeader"
-              :label="fid30207.fieldName"
+              label="地区"
             >
             </el-table-column>
-            <el-table-column
-              prop="birth"
-              :render-header="renderHeader"
-               :label="fid30210.fieldName"
-            >
-            </el-table-column>
-            <el-table-column prop="phone" :label="fid30205.fieldName"> </el-table-column>
-            <el-table-column prop="mark" label="错误提示">
+            <el-table-column prop="marks" label="错误提示">
               <template slot-scope="scope">
-                <div class="sex_li" v-for="item in scope.row.mark" :key="item">
+                <div class="sex_li" v-for="item in scope.row.marks" :key="item">
                   <div style="color:#FE5FB8">{{ item }}</div>
                 </div>
               </template>
@@ -186,11 +228,26 @@
 
 <script>
 import Url from "@/assets/js/url.js";
+import areaJson from "@/assets/js/area.json";
 import md5 from 'js-md5';
 export default {
-  name: "batchuser",
+  name: "operationbatchorgs",
   data() {
     return {
+      areaFlag: false,
+      provinceData: "",
+      cityData: "",
+      areaData: "",
+      // 表单
+      formAddOrgs: {
+        region: "", // 省
+        regionId: "", // 省id
+        city: "", // 市
+        cityId: "", // 市id
+        district: "", // 区
+        districtId: "" // 区id
+      },
+
       defaultProps: {
         children: "list",
         label: "Name"
@@ -246,11 +303,61 @@ export default {
     };
   },
   mounted() {
-    this.fieldData()
+    this.initAddressFrom(areaJson);
+    // this.fieldData()
     this.downloadTpl();
-    this.addChange();
+    // this.addChange();
   },
   methods: {
+    // 初始化表单信息
+    initAddressFrom(data) {
+      this.provinceData = data;
+    },
+    // 选择省
+    chooseProvince(value) {
+      this.areaFlag = false
+      console.log(value)
+      this.cityData = [];
+      this.areaData = [];
+      this.formAddOrgs.city = "";
+      this.formAddOrgs.cityId = "";
+      this.formAddOrgs.district = "";
+      this.formAddOrgs.districtId = "";
+      this.provinceData.map(e => {
+        if (value == e.code) {
+          this.formAddOrgs.region = e.name;
+          this.formAddOrgs.regionId = e.code;
+          this.cityData = e.children;
+          return false;
+        }
+      });
+    },
+    // 选择市
+    chooseCity(value) {
+      this.areaFlag = false
+      console.log(value)
+      this.formAddOrgs.district = "";
+      this.formAddOrgs.districtId = "";
+      this.cityData.map(e => {
+        if (value == e.code) {
+          this.formAddOrgs.city = e.name;
+          this.formAddOrgs.cityId = e.code;
+          this.areaData = e.children;
+          return false;
+        }
+      });
+    },
+    // 选择区
+    chooseDistrict(value) {
+      this.areaFlag = false
+      this.areaData.map(e => {
+        if (value == e.code) {
+          this.formAddOrgs.district = e.name;
+          this.formAddOrgs.districtId = e.code;
+          return false;
+        }
+      });
+    },
     fieldData () {
       let that = this;
       var param = {
@@ -396,11 +503,9 @@ export default {
           outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
           console.log(outdata)
           let str = [
-            "用户账号导入数据",
+            "机构信息导入数据",
             "__EMPTY",
-            "__EMPTY_1",
-            "__EMPTY_2",
-            "__EMPTY_3"
+            "__EMPTY_1"
           ];
           let listNew = [];
           outdata.map(item => {
@@ -408,10 +513,8 @@ export default {
             if (obj.__rowNum__ > 2) {
               var objs = {
                 name: "",
-                passport: "",
-                gender: "",
-                birth: "",
-                phone: "",
+                nameAbb: "",
+                website: "",
                 row: obj.__rowNum__ + 1
               };
               for (let key in obj) {
@@ -419,67 +522,39 @@ export default {
                   objs.name = obj[key];
                 }
                 if (key == str[1]) {
-                  objs.gender = obj[key];
+                  objs.nameAbb = obj[key];
                 }
                 if (key == str[2]) {
-                  objs.birth = String(obj[key])
-                  // objs.birth = that.formatDate(obj[key], '/');
-                }
-                if (key == str[3]) {
-                  objs.phone = obj[key];
-                }
-                if (key == str[4]) {
-                  objs.passport = String(obj[key]).replace(/\s+/g, '');
+                  objs.website = obj[key]
                 }
               }
               if (
                 objs.name == "" &&
-                objs.gender == "" &&
-                objs.birth == "" &&
-                objs.passport == "" &&
-                objs.phone == ""
+                objs.nameAbb == "" &&
+                objs.website == ""
               ) {
               } else {
                 listNew.push(objs);
               }
             }
-            var regp = /^1[3456789]\d{9}$/;
-            var regzh = /^[A-Za-z0-9]{6,20}$/;
-            var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            // var regp = /^1[3456789]\d{9}$/;
+            // var regzh = /^[A-Za-z0-9]{6,20}$/;
+            // var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            let len = listNew.length
             for (let i in listNew) {
-              listNew[i].mark = [];
+              listNew[i].marks = [];
               if (listNew[i].name == "") {
-                listNew[i].mark.push("姓名为必填项！");
+                listNew[i].marks.push("机构名称为必填项！");
               }
-              if (listNew[i].gender == "") {
-                listNew[i].mark.push("性别为必填项！");
+              if (listNew[i].nameAbb == "") {
+                listNew[i].marks.push("机构ID为必填项！");
               }
-              if (
-                listNew[i].birth == "") {
-                listNew[i].mark.push(
-                  "出生日期为必填项！"
-                );
-              }
-              if (
-                listNew[i].birth != "" &&
-                (listNew[i].birth.indexOf("年") == -1 ||
-                  listNew[i].birth.indexOf("月") == -1 ||
-                  listNew[i].birth.indexOf("日") == -1)
-              ) {
-                listNew[i].mark.push(
-                  "出生日期格式有误(例:2000年01月01日)"
-                );
-              }
-              if (listNew[i].passport == "") {
-                listNew[i].mark.push("登录账号为必填项！");
-              } else if (
-                listNew[i].passport != "" &&
-                !regzh.test(listNew[i].passport)
-              ) {
-                listNew[i].mark.push("登录账号不得少于6位！");
-              }
-              if (listNew[i].phone != "" && !regp.test(listNew[i].phone)) {
-                listNew[i].mark.push(that.fid30205.fieldName + "格式有误！");
+              for (let j = 0; j < len; j++) {
+                if (listNew[i].nameAbb === listNew[j].nameAbb && listNew[i].nameAbb != '' && i != j) {
+                  if (listNew[i].marks.indexOf('机构ID重复！') === -1) {
+                    listNew[i].marks.push("机构ID重复！");
+                  }
+                }
               }
             }
           });
@@ -514,9 +589,10 @@ export default {
     downloadTpl() {
       let that = this;
       that.$http
-        .get(Url + "/aimw/addUsers/downloadTpl")
+        .get(Url + "/aimw/ops/downloadTpl")
         .then(res => {
           var data = res.data;
+          console.log(data)
           if (data.code == 0) {
             that.tplUrl = "data:image;base64," + data.data.fileData;
             that.fileName = data.data.fileName;
@@ -530,6 +606,11 @@ export default {
       this.downloadFileByBase64(this.tplUrl, this.fileName);
     },
     dataURLtoBlob(dataurl) {
+      console.log(dataurl)
+      if (dataurl != '') {
+        this.$message.error("下载模版异常，请联系管理员");
+        return false
+      }
       var arr = dataurl.split(",");
       var mime = arr[0].match(/:(.*?);/)[1];
       var bstr = atob(arr[1]);
@@ -540,7 +621,7 @@ export default {
       }
       return new Blob([u8arr], { type: mime });
     },
-    downloadFile(url, name = "用户导入模板") {
+    downloadFile(url, name) {
       var a = document.createElement("a");
       a.setAttribute("href", url);
       a.setAttribute("download", name);
@@ -572,26 +653,32 @@ export default {
     },
     goSubmit1() {
       let that = this;
-      if (this.department == "") {
-        this.$message.error("请选择" + this.fid30207.fieldName + "！");
+      if (this.formAddOrgs.region == "" || this.formAddOrgs.city == "" || this.formAddOrgs.district == "") {
+        this.$message.error("请选择省/市/区");
         return false;
       }
       if (this.exlName == "") {
         this.$message.error("请先上传填好的文件！");
         return false;
       }
-      for (let i in this.studyList) {
-        if (this.studyList[i].Pid == this.department) {
-          this.departmentName = this.studyList[i].Name
-        }
-      }
+      // for (let i in this.studyList) {
+      //   if (this.studyList[i].Pid == this.department) {
+      //     this.departmentName = this.studyList[i].Name
+      //   }
+      // }
       this.uuids = this.generateUUID();
       let useList = [];
       let unUseList = [];
+      console.log(that.exlJson)
       for (let i in that.exlJson) {
-        that.exlJson[i].department = that.department
-        that.exlJson[i].departmentName = that.departmentName
-        if (that.exlJson[i].mark.length == 0) {
+        that.exlJson[i].location = this.formAddOrgs.region + '/' + this.formAddOrgs.city + '/' + this.formAddOrgs.district
+        that.exlJson[i].province = this.formAddOrgs.region
+        that.exlJson[i].provinceId = this.formAddOrgs.regionId
+        that.exlJson[i].city = this.formAddOrgs.city
+        that.exlJson[i].cityId = this.formAddOrgs.cityId
+        that.exlJson[i].district = this.formAddOrgs.district
+        that.exlJson[i].districtId = this.formAddOrgs.districtId
+        if (that.exlJson[i].marks.length == 0) {
           useList.push(that.exlJson[i]);
         } else {
           unUseList.push(that.exlJson[i]);
@@ -599,6 +686,8 @@ export default {
       }
       this.visibleList = useList;
       this.unVisibleList = unUseList;
+      console.log(useList)
+      console.log(unUseList)
       this.stepsAct = 2;
     },
     generateUUID() {
@@ -622,39 +711,44 @@ export default {
       };
       let visArr = [];
       for (let i in this.visibleList) {
-        let genstr = "";
-        if (this.visibleList[i].gender == "男") {
-          genstr = 1;
-        } else if (this.visibleList[i].gender == "女") {
-          genstr = 0;
-        }
-        let passportInt = String(this.visibleList[i].passport);
-        let passwordStr = passportInt.substring(passportInt.length - 6);
-        let passMd5 = md5('AIMW-G' + passwordStr).substring(8, 24)
-        let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
-        let birthArr = birthStr.split(',')
-        for (let i in birthArr) {
-          if (birthArr[i] < 13) {
-            if (birthArr[i] < 10 && birthArr[i].indexOf('0') == -1) {
-              birthArr[i] = "0" + birthArr[i]
-            }
-          }
-        }
-        let birth = birthArr.join("")
+        // let genstr = "";
+        // if (this.visibleList[i].gender == "男") {
+        //   genstr = 1;
+        // } else if (this.visibleList[i].gender == "女") {
+        //   genstr = 0;
+        // }
+        // let passportInt = String(this.visibleList[i].passport);
+        // let passwordStr = passportInt.substring(passportInt.length - 6);
+        // let passMd5 = md5('AIMW-G' + passwordStr).substring(8, 24)
+        // let birthStr = this.visibleList[i].birth.replace("年", ",").replace("月", ",").replace("日", "")
+        // let birthArr = birthStr.split(',')
+        // for (let i in birthArr) {
+        //   if (birthArr[i] < 13) {
+        //     if (birthArr[i] < 10 && birthArr[i].indexOf('0') == -1) {
+        //       birthArr[i] = "0" + birthArr[i]
+        //     }
+        //   }
+        // }
+        // let birth = birthArr.join("")
         let vObj = {
-          passport: this.visibleList[i].passport,
-          password: passMd5,
+          // passport: this.visibleList[i].passport,
+          // password: passMd5,
           name: this.visibleList[i].name,
-          birth: birth,
-          department: this.visibleList[i].department,
-          departmentName: this.visibleList[i].departmentName,
-          gender: genstr,
-          phone: this.visibleList[i].phone
+          nameAbb: this.visibleList[i].nameAbb,
+          province: this.visibleList[i].province,
+          provinceId: this.visibleList[i].provinceId,
+          city: this.visibleList[i].city,
+          cityId: this.visibleList[i].cityId,
+          district: this.visibleList[i].district,
+          districtId: this.visibleList[i].districtId,
+          location: this.visibleList[i].location,
+          website: this.visibleList[i].website,
+          mark: ''
         };
         visArr.push(vObj);
       }
       this.$http
-        .post(Url + "/aimw/addUsers/importData", visArr)
+        .post(Url + "/aimw/ops/importData", visArr)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
@@ -814,30 +908,89 @@ export default {
       align-items: center;
       width: 8.9rem;
       margin: 0.32rem auto 0;
-      div{
-        font-size: 0.18rem;
-        font-family: Source Han Sans CN;
-        font-weight: 400;
-        color: #7786AC;
-        line-height: 0.40rem;
+      // div{
+      //   font-size: 0.18rem;
+      //   font-family: Source Han Sans CN;
+      //   font-weight: 400;
+      //   color: #7786AC;
+      //   line-height: 0.40rem;
+      // }
+      // .el-select{
+      //   width: 3rem;
+      // }
+      // .el-select .el-input .el-input__inner {
+      //   color: #7786ac;
+      //   height: 0.40rem;
+      //   font-size: 0.18rem;
+      //   line-height: 0.40rem;
+      //   padding: 0 0.15rem;
+      // }
+      // button,
+      // span:not([class*="suffix"]) {
+      //   display: inline-block;
+      //   font-size: 0.14rem;
+      //   min-width: 0.28rem;
+      //   height: 0.28rem;
+      //   line-height: 0.28rem;
+      // }
+      .person_contain {
+        .el-form-item{
+          margin: 0
+        }
+        .address-select-list {
+          display: flex;
+          .el-select {
+            width: 100%;
+            margin-right: 0.1rem;
+          }
+          .el-select:last-child {
+            margin-right: 0;
+          }
+          .el-input__suffix {
+            right: 0.05rem;
+          }
+          .el-select__caret {
+            font-size: 0.14rem;
+          }
+          .el-input__icon {
+            width: 0.25rem;
+            line-height: 0.36rem;
+          }
+        }
+        .type-select-list {
+          .el-select {
+            width: 100%;
+          }
+        }
+        .el-radio {
+          line-height: 0.24rem;
+          display: flex;
+          align-items: center;
+        }
+        .el-radio__label {
+          font-size: 0.16rem;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #7786ac;
+          padding-left: 0.06rem;
+        }
+        .el-radio__inner {
+          width: 0.2rem;
+          height: 0.2rem;
+        }
+        .el-radio__inner::after {
+          width: 0.08rem;
+          height: 0.08rem;
+        }
+        .el-textarea__inner {
+          font-size: 0.16rem;
+        }
       }
-      .el-select{
-        width: 3rem;
-      }
-      .el-select .el-input .el-input__inner {
-        color: #7786ac;
-        height: 0.40rem;
-        font-size: 0.18rem;
-        line-height: 0.40rem;
-        padding: 0 0.15rem;
-      }
-      button,
-      span:not([class*="suffix"]) {
-        display: inline-block;
-        font-size: 0.14rem;
-        min-width: 0.28rem;
-        height: 0.28rem;
-        line-height: 0.28rem;
+      .adress-select{
+        .el-input{
+          height: 0.36rem;
+          width: 1.1rem;
+        }
       }
     }
     .steps_list {

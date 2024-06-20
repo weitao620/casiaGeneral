@@ -37,12 +37,22 @@
           <el-menu-item index="index" class="dan_li">
             <img
               style="width:0.2rem;height:auto"
-              v-if="$route.name == 'index' || $route.name == 'person'"
+              v-if="$route.name == 'index'"
               src="../assets/images/tabs/nav_on.png"
               alt=""
             />
             <img style="width:0.2rem;height:auto" v-else src="../assets/images/tabs/nav_off.png" alt="" />
             <span slot="title">主页</span>
+          </el-menu-item>
+          <el-menu-item index="person" class="dan_li">
+            <img
+              style="width:0.2rem;height:auto"
+              v-if="$route.name == 'person'"
+              src="../assets/images/tabs/system_on.png"
+              alt=""
+            />
+            <img style="width:0.2rem;height:auto" v-else src="../assets/images/tabs/system_off.png" alt="" />
+            <span slot="title">修改密码</span>
           </el-menu-item>
           <!-- <el-menu-item index="report" class="dan_li" v-if="power2">
             <img
@@ -191,7 +201,7 @@
           />
           <el-dropdown trigger="click" @command="headCommand">
             <span class="el-dropdown-link">
-              <span class="lib_user">{{ getUserName }}</span
+              <span class="lib_user">运维管理员</span
               ><i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -314,7 +324,7 @@ export default {
     };
   },
   created() {
-    // this.getPath(); 不需要了
+    this.getPath(); 
     // this.powerData(); 不需要了
     // this.getSchoolInfo() 不需要了
   },
@@ -355,8 +365,15 @@ export default {
       // } else if (this.$route.name == "expword") {
       //   this.activeUrl = "report";
       // } else {
-      //   this.activeUrl = this.$route.name;
+      // this.activeUrl = this.$route.name;
       // }
+      if (this.$route.name == "operationindex" || this.$route.name == "operationaddorgs" || this.$route.name == "operationbatchorgs" || this.$route.name == "operationorgsdetail") {
+        this.activeUrl = "index";
+      } else if (this.$route.name == "operationperson") {
+        this.activeUrl = "person";
+      } else {
+        this.activeUrl = this.$route.name;
+      }
     },
     getSchoolInfo() {
       let that = this;
@@ -379,7 +396,7 @@ export default {
     headCommand(command) {
       if (command == "person") {
         this.toPerson();
-        this.activeUrl = this.$route.name;
+        this.activeUrl = "person";
       }
       if (command == "logout") {
         this.logout();
@@ -387,14 +404,14 @@ export default {
     },
     toPerson() {
       this.$router.push({
-        name: "person"
+        name: "operationperson"
       });
     },
     logout() {
       let param = {
         passport: localStorage.getItem("passport")
       };
-      this.$http.post(Url + "/aimw/user/logout", param).then(res => {
+      this.$http.post(Url + "/aimw/ops/logout", param).then(res => {
         localStorage.removeItem("isLogin");
         localStorage.removeItem("totalToken");
         localStorage.removeItem("userInfo");
@@ -418,11 +435,12 @@ export default {
 
     },
     handleSelect(e, key) {
+      console.log(e)
       var data = {};
       this.activePath = e;
-      if (e == "person") {
-        e = "index";
-      }
+      // if (e == "person") {
+      //   e = "basic";
+      // }
       if (e == "review") {
         e = "heart";
       }
@@ -430,7 +448,7 @@ export default {
         e = "user";
       }
       this.activeUrl = e;
-      this.$router.push({ path: "/library/" + e });
+      this.$router.push({ path: "/operation/" + e });
     }
   },
   computed: {

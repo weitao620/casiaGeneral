@@ -64,11 +64,11 @@ export default new Router({
           name: 'operationaddorgs',
           component: () => import('./views/Operation/AddOrgs.vue')
         },
-        // 主页--批量
+        // person--个人中心
         {
-          path: '/operation/batchorgs',
-          name: 'operationbatchorgs',
-          component: () => import('./views/Operation/BatchOrgs.vue')
+          path: '/operation/person',
+          name: 'operationperson',
+          component: () => import('./views/Operation/Person.vue')
         }
       ]
     },

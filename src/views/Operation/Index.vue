@@ -50,47 +50,47 @@
           ></el-input>
         </el-form-item>
         <el-form-item class="address_box"  label="地区：">
-            <section class="address-select-list">
-              <el-select
-                class="adress-select"
-                v-model="formSearch.region"
-                placeholder="请选择省"
-                @change="chooseProvince"
-              >
-                <el-option
-                  v-for="item in provinceData"
-                  :key="item.name"
-                  :label="item.name"
-                  :value="item.code"
-                ></el-option>
-              </el-select>
-              <el-select
-                class="adress-select"
-                v-model="formSearch.city"
-                placeholder="请选择市"
-                @change="chooseCity"
-              >
-                <el-option
-                  v-for="item in cityData"
-                  :key="item.name"
-                  :label="item.name"
-                  :value="item.code"
-                ></el-option>
-              </el-select>
-              <el-select
-                class="adress-select"
-                v-model="formSearch.district"
-                placeholder="请选择区"
-              >
-                <el-option
-                  v-for="item in areaData"
-                  :key="item.name"
-                  :label="item.name"
-                  :value="item.code"
-                ></el-option>
-              </el-select>
-            </section>
-          </el-form-item>
+          <section class="address-select-list">
+            <el-select
+              class="adress-select"
+              v-model="formSearch.region"
+              placeholder="请选择省"
+              @change="chooseProvince"
+            >
+              <el-option
+                v-for="item in provinceData"
+                :key="item.name"
+                :label="item.name"
+                :value="item.code"
+              ></el-option>
+            </el-select>
+            <el-select
+              class="adress-select"
+              v-model="formSearch.city"
+              placeholder="请选择市"
+              @change="chooseCity"
+            >
+              <el-option
+                v-for="item in cityData"
+                :key="item.name"
+                :label="item.name"
+                :value="item.code"
+              ></el-option>
+            </el-select>
+            <el-select
+              class="adress-select"
+              v-model="formSearch.district"
+              placeholder="请选择区"
+            >
+              <el-option
+                v-for="item in areaData"
+                :key="item.name"
+                :label="item.name"
+                :value="item.code"
+              ></el-option>
+            </el-select>
+          </section>
+        </el-form-item>
         <el-form-item class="time_data" label="创建日期:" prop="time">
           <el-date-picker
             v-model="formSearch.time"
@@ -536,32 +536,27 @@ export default {
     this.initAddressFrom(areaJson);
   },
   methods: {
-    statusChange() {
-      let row = JSON.parse(localStorage.getItem("powerDetail"))
-      var that = this;
-      var param = {};
-      var path = "/aimw/role/updateRoleInfo";
-      param = {
-        roleID: row.roleID,
-        roleName: row.roleName,
-        roleAuthNotice: row.roleAuthNotice,
-        inheritRoleID: row.inheritRoleID,
-        cancel: 0
+    statusChange(row) {
+      console.log(row)
+      let that = this;
+      let param = {
+        nameAbb: row.nameAbb,
+        status: row.status
       };
-      if (row.status == 1) {
+      console.log(row.status)
+      console.log(row.status == 1)
+      if (!row.status) {
         param.status = 0;
       } else {
         param.status = 1;
       }
+      console.log(param)
       that.$http
-        .put(Url + path, param)
+        .put(Url + "/aimw/ops/UpdateOrgStatus", param)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
-            this.dialogAddRole = false;
-            this.powerDetail.status = param.status
-            localStorage.setItem('powerDetail', JSON.stringify(this.powerDetail))
-            this.getList2();
+            // this.getList(this.currentPage);
             this.$message.success(param.status == 1 ? '已启用！' : '已停用！');
           } else {
             this.$message.error(data.msg);
@@ -1205,10 +1200,10 @@ export default {
     },
     // 编辑用户
     toDetail(data) {
-      localStorage.setItem("teachDetail", JSON.stringify(data));
+      console.log(data)
+      localStorage.setItem("orgsDetail", JSON.stringify(data));
       this.$router.push({
-        name: "operationorgsdetail",
-        params: { userID: data.passport }
+        name: "operationorgsdetail"
       });
     },
     // 新增用户
@@ -1246,9 +1241,9 @@ export default {
         name: that.formSearch.name,
         startTime: star,
         endTime: end,
-        region: that.formSearch.region,
-        city: that.formSearch.city,
-        district: that.formSearch.district
+        provinceId: that.formSearch.region,
+        cityId: that.formSearch.city,
+        districtId: that.formSearch.district
       };
       console.log(param)
       // return

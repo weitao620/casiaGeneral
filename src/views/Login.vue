@@ -71,13 +71,13 @@ export default {
   inject: ["reload"],
   name: "login",
   data() {
-    var allOrgsName = (rule, value, callback) => {
-      console.log(value)
-      if (value == "" || value == undefined) {
-        return callback(new Error("机构ID不能为空"));
-      }
-      callback();
-    };
+    // var allOrgsName = (rule, value, callback) => {
+    //   console.log(value)
+    //   if (value == "" || value == undefined) {
+    //     return callback(new Error("机构ID不能为空"));
+    //   }
+    //   callback();
+    // };
     var checkName = (rule, value, callback) => {
       if (value == "") {
         return callback(new Error("账号不能为空"));
@@ -106,7 +106,7 @@ export default {
         remember: false
       },
       rules: {
-        allOrgsAbb: [{ validator: allOrgsName, trigger: "change" }],
+        // allOrgsAbb: [{ validator: allOrgsName, trigger: "change" }],
         password: [{ validator: validatePass, trigger: "blur" }],
         usercount: [{ validator: checkName, trigger: "blur" }]
       },
@@ -156,6 +156,11 @@ export default {
           passport: that.ruleForm.usercount,
           password: passMd5
         };
+      }
+      
+      if (that.ruleForm.usercount != 'OpsAdmin') {
+        that.errorMsg = "机构ID不能为空！";
+        return false
       }
       param.orgId = that.ruleForm.allOrgsAbb
       console.log(param)
