@@ -283,16 +283,27 @@ export default {
       //   }
       //   return false;
       // }
+      if (this.newPassFlag) {
+        this.newPassFlag = true
+        return false;
+      }
+      if (!this.newPassFlag) {
+        if (this.formPerson.twoPass != this.formPerson.newPass) {
+          this.twoPassFlag = true;
+          return false;
+        }
+      }
+      console.log(that.formPerson.oldPass)
       let param = {
         passport: that.formPerson.passport,
         phone: that.formPerson.phone,
         email: that.formPerson.email,
-        password: md5('AIMW-G' + that.formPerson.oldPass).substring(8, 24),
+        password: that.formPerson.oldPass == '' ? '' : md5('AIMW-G' + that.formPerson.oldPass).substring(8, 24),
         newPassword: that.formPerson.newPass == '' ? '' : md5('AIMW-G' + that.formPerson.newPass).substring(8, 24)
       };
       console.log(333)
       console.log(param)
-      // return
+      return
       that.$http
         .put(Url + "/aimw/user/updateUserProfile", param)
         .then(res => {
