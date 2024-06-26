@@ -25,6 +25,10 @@ Vue.prototype.JQ = $
 
 Vue.use(Element);
 
+// 禁用所有console方法
+if (process.env.NODE_ENV === 'production') {
+  console.log = console.warn = console.error = () => {};
+}
 var kkload = new Vue();
 var load = null;
 axios.defaults.withCredentials = true;

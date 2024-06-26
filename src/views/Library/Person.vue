@@ -303,7 +303,7 @@ export default {
       };
       console.log(333)
       console.log(param)
-      return
+      // return
       that.$http
         .put(Url + "/aimw/user/updateUserProfile", param)
         .then(res => {
