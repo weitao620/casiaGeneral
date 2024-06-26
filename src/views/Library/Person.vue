@@ -81,6 +81,7 @@
               <el-input
                 type="password"
                 @change="oldChange"
+                @blur="oldBlur"
                 v-model="formPerson.oldPass"
                 placeholder="请输入原密码"
               ></el-input>
@@ -283,6 +284,14 @@ export default {
       //   }
       //   return false;
       // }
+      if (that.formPerson.oldPass == '') {
+        that.oldPassFlag = true;
+        return false;
+      }
+      if (that.formPerson.newPass == '') {
+        that.newPassFlag = true;
+        return false;
+      }
       if (this.newPassFlag) {
         this.newPassFlag = true
         return false;
@@ -332,6 +341,9 @@ export default {
         .catch(res => {
           console.log(res);
         });
+    },
+    oldBlur() {
+      this.oldPassFlag = false
     },
     twoChange(val) {
       if (!this.newPassFlag) {
