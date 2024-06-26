@@ -552,7 +552,7 @@ export default {
       }
       console.log(param)
       that.$http
-        .put(Url + "/aimw/ops/UpdateOrgStatus", param)
+        .put(Url + "/aimw/ops/updateOrgStatus", param)
         .then(res => {
           var data = res.data;
           if (data.code == 0) {

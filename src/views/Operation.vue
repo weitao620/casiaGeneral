@@ -207,7 +207,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="person">
                 <i class="iconfont icon-wode" style="font-size:0.18rem"></i>
-                个人中心
+                修改密码
               </el-dropdown-item>
               <el-dropdown-item command="logout">
                 <i class="el-icon-switch-button" style="font-size:0.18rem"></i>

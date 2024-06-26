@@ -45,6 +45,7 @@
               <el-input
                 type="password"
                 @change="oldChange"
+                @blur="oldBlur"
                 v-model="formPerson.oldPass"
                 placeholder="请输入原密码"
               ></el-input>
@@ -53,7 +54,7 @@
                 <div class="tip_msg">
                   <img v-if="oldRight" src="../../assets/images/ok.png" alt="" />
                   <img v-else src="../../assets/images/x.png" alt="" />
-                  {{ oldRight ? "密码校验成功" : "输入密码有误" }}
+                  {{ oldRight ? "密码校验成功" : "请输入正确的原密码" }}
                 </div>
               </div>
             </el-form-item>
@@ -217,6 +218,7 @@ export default {
       let that = this;
       var regp = /^1[3456789]\d{9}$/;
       var rege = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+      this.oldPassFlag = this.newPassFlag = this.twoPassFlag = false
       // if (this.formPerson.passport == "") {
       //   this.passportFlag = true;
       //   return false;
@@ -269,24 +271,38 @@ export default {
       //   // }
       //   return false;
       // }
-      console.log(that.formPerson.newPass)
-      console.log(that.formPerson.oldPass)
-      if (that.formPerson.newPass == that.formPerson.oldPass && that.formPerson.newPass != '') {
-        that.$message.warning('新密码与旧密码一致，无需修改');
-        return false
+      if (that.formPerson.oldPass == '') {
+        that.oldPassFlag = true;
+        return false;
       }
-      
-      console.log(111)
+      if (that.formPerson.newPass == '') {
+        that.newPassFlag = true;
+        return false;
+      }
+      if (this.newPassFlag) {
+        this.newPassFlag = true
+        return false;
+      }
+      if (!this.newPassFlag) {
+        if (this.formPerson.twoPass != this.formPerson.newPass) {
+          this.twoPassFlag = true;
+          return false;
+        }
+      }
+      // if (that.formPerson.newPass == that.formPerson.oldPass && that.formPerson.newPass != '') {
+      //   that.$message.warning('新密码与旧密码一致，无需修改');
+      //   return false
+      // }
       let param = {
         passport: that.formPerson.passport,
         // phone: that.formPerson.phone,
         // email: that.formPerson.email,
-        password: md5('AIMW-G' + that.formPerson.oldPass).substring(8, 24),
+        password: that.formPerson.oldPass == '' ? '' : md5('AIMW-G' + that.formPerson.oldPass).substring(8, 24),
         newPassword: that.formPerson.newPass == '' ? '' : md5('AIMW-G' + that.formPerson.newPass).substring(8, 24)
       };
       console.log(333)
       console.log(param)
-      return
+      // return
       that.$http
         .put(Url + "/aimw/ops/updateManagerPwd", param)
         .then(res => {
@@ -403,6 +419,9 @@ export default {
       //   this.oldPassFlag = true;
       //   this.oldRight = false;
       // }
+    },
+    oldBlur() {
+      this.oldPassFlag = false
     },
     userChange(val) {
       if (val != "") {

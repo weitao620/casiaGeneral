@@ -199,7 +199,7 @@ export default {
       districtId: "", // 区id
       address: orgsDetail.location, // 详细地址
       website: orgsDetail.website, // 机构网址
-      remark: orgsDetail.remark // 备注
+      remark: orgsDetail.mark // 备注
     }
     this.initAddress(region, city, district)
     console.log(this.formAddOrgs)

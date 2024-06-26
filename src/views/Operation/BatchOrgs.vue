@@ -160,11 +160,24 @@
         </div>
       </div>
       <div class="steps_success" v-if="stepsAct == 3">
-        <img src="../../assets/images/success_bg.png" alt="" />
-        <h3>批量导入完成</h3>
-        <p>
-          成功导入数据：<span>{{ visibleList.length }}</span>
+        <img style="width: 1.08rem;height: 1.08rem;margin-bottom: 0.2rem;" v-if="successlen == 0" src="../../assets/images/wrong_bg.png" alt="" />
+        <img v-else src="../../assets/images/success_bg.png" alt="" />
+        <h3 v-if="successlen == 0">批量导入失败</h3>
+        <p v-if="successlen == 0" style="color: rgb(254, 95, 184);">
+          机构导入失败，请查看下方列表，修改后重新导入！
+        </p>
+        <h3 v-if="successlen == visibleList.length">批量导入完成</h3>
+        <p v-if="successlen == visibleList.length">
+          成功导入数据：<span>{{ successlen }}</span>
           条，默认密码：<span>登录账号后6位</span>
+        </p>
+        <h3 v-if="successlen < visibleList.length && successlen > 0">批量导入完成</h3>
+        <p style="margin:0.22rem 0 0;" v-if="successlen < visibleList.length && successlen > 0">
+          成功导入数据：<span>{{ successlen }}</span>
+          条，默认密码：<span>登录账号后6位</span>
+        </p>
+        <p style="margin: 0.12rem 0px 0.22rem;color: rgb(254, 95, 184);" v-if="successlen < visibleList.length && successlen > 0">
+          部分机构导入失败，请查看下方列表，修改后重新导入！
         </p>
       </div>
       <div class="steps_btn" v-if="stepsAct == 1">
@@ -180,7 +193,9 @@
         >
       </div>
       <div class="steps_btn" v-if="stepsAct == 3">
-        <el-button type="primary" @click="goBack">完成</el-button>
+        <el-button type="primary" v-if="successlen == 0" @click="backSubmit1">重新上传</el-button>
+        <el-button type="primary" v-else @click="goBack">完成</el-button>
+        
       </div>
       <div class="tables_box" v-if="stepsAct == 2">
         <div class="search_title center_o_title">
@@ -207,7 +222,7 @@
             >
             </el-table-column>
             <el-table-column
-              prop="area"
+              prop="location"
               :render-header="renderHeader"
               label="地区"
             >
@@ -216,6 +231,41 @@
               <template slot-scope="scope">
                 <div class="sex_li" v-for="item in scope.row.marks" :key="item">
                   <div style="color:#FE5FB8">{{ item }}</div>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </div>
+
+      <div class="tables_box" v-if="stepsAct == 3 && successlen < visibleList.length">
+        <div class="search_title center_o_title">
+          导入失败的机构列表
+        </div>
+        <template>
+          <el-table class="el_table_e" border :data="unList" style="width: 100%">
+            <!-- <el-table-column prop="row" label="行数"></el-table-column> -->
+            <el-table-column
+              prop="name"
+              :render-header="renderHeader"
+              label="机构名称"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="nameAbb"
+              :render-header="renderHeader"
+              label="ID"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="website"
+              label="机构网址"
+            >
+            </el-table-column>
+            <el-table-column prop="errMsg" label="错误提示">
+              <template slot-scope="scope">
+                <div class="sex_li">
+                  <div style="color:#FE5FB8">{{ scope.row.errMsg }}</div>
                 </div>
               </template>
             </el-table-column>
@@ -234,6 +284,7 @@ export default {
   name: "operationbatchorgs",
   data() {
     return {
+      successlen: '',
       areaFlag: false,
       provinceData: "",
       cityData: "",
@@ -671,7 +722,8 @@ export default {
       let unUseList = [];
       console.log(that.exlJson)
       for (let i in that.exlJson) {
-        that.exlJson[i].location = this.formAddOrgs.region + '/' + this.formAddOrgs.city + '/' + this.formAddOrgs.district
+        // that.exlJson[i].location = this.formAddOrgs.region + '/' + this.formAddOrgs.city + '/' + this.formAddOrgs.district
+        that.exlJson[i].location = ''
         that.exlJson[i].province = this.formAddOrgs.region
         that.exlJson[i].provinceId = this.formAddOrgs.regionId
         that.exlJson[i].city = this.formAddOrgs.city
@@ -753,8 +805,25 @@ export default {
           var data = res.data;
           if (data.code == 0) {
             this.stepsAct = 3;
+            this.successlen = this.visibleList.length
           } else {
-            this.$message.error(data.msg);
+            if (data.data && data.data.length > 0) {
+              this.stepsAct = 3;
+              this.unList = data.data
+              this.successlen = this.visibleList.length - this.unList.length
+            } else {
+              this.$message.error(data.msg);
+            }
+            
+            // if (data.data && data.data.length > 0) {
+            //   for (let i in data.data) {
+            //     this.$message({
+            //       type: "error",
+            //       duration: 5000,
+            //       message: data.data[i].nameAbb + '机构ID重复！'
+            //     });
+            //   }
+            // }
           }
         })
         .catch(res => {
@@ -1271,6 +1340,29 @@ export default {
             rgba(253, 186, 133, 1) 0%,
             rgba(255, 126, 117, 1) 100%
           );
+        }
+      }
+      .el_table_e{
+        .el-table__header,
+        .el-table__body {
+          // col:nth-child(1) {
+          //   width: 1.2rem;
+          // }
+          // col:nth-child(2) {
+          //   width: 1.2rem;
+          // }
+          col:nth-child(4) {
+            width: 1.2rem;
+          }
+          // col:nth-child(6) {
+          //   width: 1.4rem;
+          // }
+          // col:nth-child(8) {
+          //   width: 1.8rem;
+          // }
+          col:nth-child(5) {
+            width: 0;
+          }
         }
       }
     }

@@ -158,10 +158,10 @@ export default {
         };
       }
       
-      if (that.ruleForm.usercount != 'OpsAdmin') {
-        that.errorMsg = "机构ID不能为空！";
-        return false
-      }
+      // if (that.ruleForm.usercount != 'OpsAdmin') {
+      //   that.errorMsg = "机构ID不能为空！";
+      //   return false
+      // }
       param.orgId = that.ruleForm.allOrgsAbb
       console.log(param)
       // return
@@ -264,46 +264,56 @@ export default {
       }
     },
     getUserInfo() {
-      let that = this;
-      // that.$http
-      //   .get(Url + "/aimw/user/getUserProfile", {
-      //     params: { passport: that.ruleForm.usercount }
-      //   })
-      //   .then(res => {
-      //     var data = res.data;
-      //     if (data.code == 0) {
-      //       if (data.data.accountState == 2) {
-      //         this.$alert(<span style='text-align:center;padding: 0.2rem 0.05rem;color: #333333 !important;font-size: 0.2rem; '>该账号处于禁用状态，请联系管理员！</span>, '提示', {
-      //           confirmButtonText: '确定',
-      //           callback: action => {}
-      //         });
-      //         return false
-      //       }
-            localStorage.setItem("isLogin", true);
-            // localStorage.setItem("userInfo", JSON.stringify(data.data));
-            // sessionStorage.setItem("userName", data.data.name);
-            // that.setUserName(data.data.name);
-            if (that.ruleForm.usercount === 'jiankong') {
-              console.log('跳转到大屏')
-              that.$router.replace({
-                path: "/screen/index"
-              });
-            } else if (that.ruleForm.usercount === 'OpsAdmin') {
-              console.log('跳转到运维')
-              that.$router.replace({
-                path: "/operation/index"
-              });
-            } else {
-              console.log('跳转到正常后台')
-              that.$router.replace({
-                path: "/library/index"
-              });
+      let that = this
+      if (that.ruleForm.usercount === 'OpsAdmin') {
+        localStorage.setItem("isLogin", true);
+        console.log('跳转到运维')
+        that.$router.replace({
+          path: "/operation/index"
+        });
+      } else {
+        console.log('跳转到后台')
+        that.$http
+          .get(Url + "/aimw/user/getUserProfile", {
+            params: { passport: that.ruleForm.usercount }
+          })
+          .then(res => {
+            var data = res.data;
+            console.log(data)
+            if (data.code == 0) {
+              if (data.data.accountState == 2) {
+                this.$alert(<span style='text-align:center;padding: 0.2rem 0.05rem;color: #333333 !important;font-size: 0.2rem; '>该账号处于禁用状态，请联系管理员！</span>, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {}
+                });
+                return false
+              }
+              localStorage.setItem("isLogin", true);
+              localStorage.setItem("userInfo", JSON.stringify(data.data));
+              sessionStorage.setItem("userName", data.data.name);
+              that.setUserName(data.data.name);
+              if (that.ruleForm.usercount === 'jiankong') {
+                console.log('跳转到大屏')
+                that.$router.replace({
+                  path: "/screen/index"
+                });
+              } else if (that.ruleForm.usercount === 'OpsAdmin') {
+                console.log('跳转到运维')
+                that.$router.replace({
+                  path: "/operation/index"
+                });
+              } else {
+                console.log('跳转到正常后台')
+                that.$router.replace({
+                  path: "/library/index"
+                });
+              }
             }
-          // }
-        // })
-        // .catch(res => {
-        //   console.log(res);
-        // });
+          })
+          .catch(res => {
+            console.log(res);
+          });
+      }
     },
     getAllOrgs() {
       let that = this;
