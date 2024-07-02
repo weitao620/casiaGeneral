@@ -451,8 +451,9 @@
           </div>
         </el-form-item>
         <el-form-item required label="选择团队:">
+          <!-- studyList1 -->
           <el-select v-model="partsForm.organization" @change="orgChange" placeholder="请选择团队" style="width:100%">
-            <el-option v-for="item in studyList1" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
           <div class="tip_left" v-show="organizationFlag">
             <div class="tip_msg">
