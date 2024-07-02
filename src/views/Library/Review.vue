@@ -46,25 +46,28 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
-                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
+                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
+                  <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="tipsName" label="类型">
-            </el-table-column>
+            <!-- <el-table-column prop="tipsName" label="类型">
+            </el-table-column> -->
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <span v-if="!power1">暂无权限</span>
@@ -209,11 +212,13 @@
             <div class="myChartZhe1" id="myChartZhe1" ref="myChartZhe1"></div>
             <div class="rtr_ul">
               <ul>
-                <li v-if="anxietyFlag == 1"><span class="r_cir1"></span>焦虑</li>
-                <li v-if="depressionFlag == 1"><span class="r_cir2"></span>抑郁</li>
+                <li v-if="depressionFlag == 1"><span class="r_cir1"></span>抑郁</li>
+                <li v-if="anxietyFlag == 1"><span class="r_cir2"></span>焦虑</li>
                 <li v-if="forcedFlag == 1"><span class="r_cir3"></span>强迫</li>
-                <li v-if="suicideFlag == 1"><span class="r_cir4"></span>自我伤害</li>
+                <li v-if="violenceFlag == 1"><span class="r_cir4"></span>PTSD</li>
                 <li v-if="violenceFlag == 1"><span class="r_cir5"></span>敌对</li>
+                <li v-if="suicideFlag == 1"><span class="r_cir6"></span>自我伤害</li>
+                <li v-if="suicideFlag == 1"><span class="r_cir7"></span>自闭</li>
                 <li><span class="r_line1"></span>预警线</li>
               </ul>
             </div>
@@ -263,15 +268,15 @@
                     强迫
                   </li>
                   <li
-                    v-if="suicideFlag == 1"
+                    v-if="violenceFlag == 1"
                     :class="[
                       'rsb_yab',
                       { sb_tab10: sbAct == 4 },
                       { sb_tab1: sbAct == 5 }
                     ]"
-                    @click="sbTab(5)"
+                    @click="sbTab(6)"
                   >
-                    自我伤害
+                    PTSD
                   </li>
                   <li
                     v-if="violenceFlag == 1"
@@ -284,6 +289,29 @@
                   >
                     敌对
                   </li>
+                  <li
+                    v-if="suicideFlag == 1"
+                    :class="[
+                      'rsb_yab',
+                      { sb_tab10: sbAct == 6 },
+                      { sb_tab1: sbAct == 7 }
+                    ]"
+                    @click="sbTab(5)"
+                  >
+                    自我伤害
+                  </li>
+                  <li
+                    v-if="suicideFlag == 1"
+                    :class="[
+                      'rsb_yab',
+                      { sb_tab10: sbAct == 7 },
+                      { sb_tab1: sbAct == 8 }
+                    ]"
+                    @click="sbTab(5)"
+                  >
+                    自闭
+                  </li>
+                  
                 </ul>
               </div>
             </div>
@@ -353,25 +381,25 @@
                 </ul>
               </div>
             </div>
-            <div v-show="suicideFlag == 1">
+            <div v-show="violenceFlag == 1">
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 5">
                 <div class="c_titless">
-                  <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
-                  自我伤害
+                  <img style="width:0.32rem" src="../../assets/images/report/f_icon1.png" alt="" />
+                  PTSD
                 </div>
               </div>
               <div
                 class="myChartZhe4"
                 v-show="sbAct == 1 || sbAct == 5"
-                id="myChartZhe5"
-                ref="myChartZhe5"
+                id="myChartZhe6"
+                ref="myChartZhe6"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 5">
                 <ul v-if="chartData.length > 0">
-                  <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
-                  <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
-                  <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
-                  <li><span class="r_line2"></span>自我伤害水平</li>
+                  <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
+                  <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
+                  <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
+                  <li><span class="r_line2"></span>PTSD水平</li>
                 </ul>
               </div>
             </div>
@@ -397,6 +425,51 @@
                 </ul>
               </div>
             </div>
+            <div v-show="suicideFlag == 1">
+              <div class="com_titles" v-show="sbAct == 1 || sbAct == 7">
+                <div class="c_titless">
+                  <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
+                  自我伤害
+                </div>
+              </div>
+              <div
+                class="myChartZhe4"
+                v-show="sbAct == 1 || sbAct == 7"
+                id="myChartZhe5"
+                ref="myChartZhe5"
+              ></div>
+              <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 7">
+                <ul v-if="chartData.length > 0">
+                  <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
+                  <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
+                  <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
+                  <li><span class="r_line2"></span>自我伤害水平</li>
+                </ul>
+              </div>
+            </div>
+            <div v-show="suicideFlag == 1">
+              <div class="com_titles" v-show="sbAct == 1 || sbAct == 8">
+                <div class="c_titless">
+                  <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
+                  自闭
+                </div>
+              </div>
+              <div
+                class="myChartZhe4"
+                v-show="sbAct == 1 || sbAct == 8"
+                id="myChartZhe5"
+                ref="myChartZhe5"
+              ></div>
+              <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 8">
+                <ul v-if="chartData.length > 0">
+                  <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
+                  <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
+                  <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
+                  <li><span class="r_line2"></span>自闭水平</li>
+                </ul>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -699,49 +772,49 @@ export default {
           if (data.code == 0) {
             if (data.data) {
               for (let i in data.data) {
-                let tipsNames = "/";
-                let tipsArr = [];
-                if (this.anxietyFlag == 1) {
-                  if (
-                    data.data[i].anxietyScore.score > 2
-                  ) {
-                    tipsArr.push("焦虑");
-                  }
-                }
-                if (this.personalityFlag == 1) {
-                  if (
-                    data.data[i].depressionScore.score > 2
-                  ) {
-                    tipsArr.push("抑郁");
-                  }
-                }
-                if (this.forcedFlag == 1) {
-                  if (
-                    data.data[i].forcedScore.score > 2
-                  ) {
-                    tipsArr.push("强迫");
-                  }
-                }
-                if (this.suicideFlag == 1) {
-                  if (
-                    data.data[i].suicideScore.score > 2
-                  ) {
-                    tipsArr.push("自我伤害");
-                  }
-                }
-                if (this.violenceFlag == 1) {
-                  if (
-                    data.data[i].violenceScore.score > 2
-                  ) {
-                    tipsArr.push("敌对");
-                  }
-                }
-                if (tipsArr.length > 0) {
-                  tipsNames = tipsArr.join("、") + "水平高";
-                }
+                // let tipsNames = "/";
+                // let tipsArr = [];
+                // if (this.anxietyFlag == 1) {
+                //   if (
+                //     data.data[i].anxietyScore.score > 2
+                //   ) {
+                //     tipsArr.push("焦虑");
+                //   }
+                // }
+                // if (this.personalityFlag == 1) {
+                //   if (
+                //     data.data[i].depressionScore.score > 2
+                //   ) {
+                //     tipsArr.push("抑郁");
+                //   }
+                // }
+                // if (this.forcedFlag == 1) {
+                //   if (
+                //     data.data[i].forcedScore.score > 2
+                //   ) {
+                //     tipsArr.push("强迫");
+                //   }
+                // }
+                // if (this.suicideFlag == 1) {
+                //   if (
+                //     data.data[i].suicideScore.score > 2
+                //   ) {
+                //     tipsArr.push("自我伤害");
+                //   }
+                // }
+                // if (this.violenceFlag == 1) {
+                //   if (
+                //     data.data[i].violenceScore.score > 2
+                //   ) {
+                //     tipsArr.push("敌对");
+                //   }
+                // }
+                // if (tipsArr.length > 0) {
+                //   tipsNames = tipsArr.join("、") + "水平高";
+                // }
                 data.data[i].dateCount = data.data[i].date.split(' ')[0] + " 第" + data.data[i].evaNum + "次";
                 data.data[i].evaTime = that.toHHmmss(data.data[i].evaTime * 1000);
-                data.data[i].tipsName = tipsNames;
+                // data.data[i].tipsName = tipsNames;
               }
               let sArr = data.data;
               for (let i in data.data) {
@@ -832,39 +905,47 @@ export default {
         yArr.push(that.chartData[i].depressionScore.score);
         jArr.push(that.chartData[i].anxietyScore.score);
         qArr.push(that.chartData[i].forcedScore.score);
-        zArr.push(that.chartData[i].suicideScore.score);
         bArr.push(that.chartData[i].violenceScore.score);
+        bArr.push(that.chartData[i].violenceScore.score);
+        zArr.push(that.chartData[i].suicideScore.score);
+        zArr.push(that.chartData[i].suicideScore.score);
         lArr.push(that.chartData[i].forcedScore.thre);
       }
       let serseArr = []
-      if (this.anxietyFlag == 1) {
-        serseArr.push({
-          name: "焦虑",
-          type: "bar",
-          // barWidth: 16,
-          barMaxWidth: 16,
-          itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#0075ff" },
-              { offset: 1, color: "#00c2ff" }
-            ])
-          },
-          data: jArr
-        })
-      }
       if (this.depressionFlag == 1) {
         serseArr.push({
           name: "抑郁",
           type: "bar",
           // barWidth: 16,
-          barMaxWidth: 16,
+          barMaxWidth: 14,
           itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#FE5FB8" },
-              { offset: 1, color: "#ff83df" }
-            ])
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
+              ])
+            }
           },
           data: yArr
+        })
+      }
+      if (this.anxietyFlag == 1) {
+        serseArr.push({
+          name: "焦虑",
+          type: "bar",
+          // barWidth: 16,
+          barMaxWidth: 14,
+          itemStyle: {
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
+              ])
+            }
+          },
+          data: jArr
         })
       }
       if (this.forcedFlag == 1) {
@@ -872,29 +953,35 @@ export default {
           name: "强迫",
           type: "bar",
           // barWidth: 16,
-          barMaxWidth: 16,
+          barMaxWidth: 14,
           itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#c4c8ff" },
-              { offset: 1, color: "#7279ff" }
-            ])
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
+              ])
+            }
           },
           data: qArr
         })
       }
-      if (this.suicideFlag == 1) {
+      if (this.violenceFlag == 1) {
         serseArr.push({
-          name: "自我伤害",
+          name: "PTSD",
           type: "bar",
           // barWidth: 16,
-          barMaxWidth: 16,
+          barMaxWidth: 14,
           itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#00D8FF" },
-              { offset: 1, color: "#46F7CB" }
-            ])
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#FFA3A3" },
+                { offset: 1, color: "#FFA3A3" }
+              ])
+            }
           },
-          data: zArr
+          data: bArr
         })
       }
       if (this.violenceFlag == 1) {
@@ -902,14 +989,53 @@ export default {
           name: "敌对",
           type: "bar",
           // barWidth: 16,
-          barMaxWidth: 16,
+          barMaxWidth: 14,
           itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: "#FFE792" },
-              { offset: 1, color: "#FFC90C" }
-            ])
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#FFD29D" },
+                { offset: 1, color: "#FFD29D" }
+              ])
+            }
           },
           data: bArr
+        })
+      }
+      if (this.suicideFlag == 1) {
+        serseArr.push({
+          name: "自我伤害",
+          type: "bar",
+          // barWidth: 16,
+          barMaxWidth: 14,
+          itemStyle: {
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#BDF5B8" },
+                { offset: 1, color: "#BDF5B8" }
+              ])
+            }
+          },
+          data: zArr
+        })
+      }
+      if (this.suicideFlag == 1) {
+        serseArr.push({
+          name: "自闭",
+          type: "bar",
+          // barWidth: 16,
+          barMaxWidth: 14,
+          itemStyle: {
+            normal: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#fff5b3" },
+                { offset: 1, color: "#fff5b3" }
+              ])
+            }
+          },
+          data: zArr
         })
       }
       let markLine = {
@@ -2061,6 +2187,11 @@ export default {
           background: transparent !important;
         }
       }
+      .primary_r0{
+        .el-button--primary.is-plain{
+          color: #7786AC
+        }
+      }
       // .primary_r0{
       //   color:#006cff !important;
       //   background: rgba(0, 108, 255, 0.1) !important;
@@ -2420,19 +2551,25 @@ export default {
                   border-radius: 50%;
                 }
                 span.r_cir1 {
-                  background: linear-gradient(0deg, #0075ff, #00c2ff);
+                  background: #8ACBFF;
                 }
                 span.r_cir2 {
-                  background: linear-gradient(0deg, #FE5FB8, #ff83df);
+                  background: #FFB0DB;
                 }
                 span.r_cir3 {
-                  background: linear-gradient(0deg, #c4c8ff, #7279ff);
+                  background: #B5B8FF;
                 }
                 span.r_cir4 {
-                  background: linear-gradient(0deg, #00D8FF, #46F7CB);
+                  background: #FFA3A3;
                 }
                 span.r_cir5 {
-                  background: linear-gradient(0deg, #FFE792, #FFC90C);
+                  background: #FFD29D;
+                }
+                span.r_cir6 {
+                  background: #BDF5B8;
+                }
+                span.r_cir7 {
+                  background: #fff5b3;
                 }
                 span.r_line1 {
                   width: 0.12rem;

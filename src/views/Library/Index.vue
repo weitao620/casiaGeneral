@@ -73,11 +73,11 @@
           </div>
           <div class="center_o">
             <div class="center_o_title">
-              预警频次统计
+              风险频次统计
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="频次：即所有用户在游戏操作中出现的报警的次数，每出现一种记为一次。"
+                content="频次：即所有用户在游戏操作中出现的风险的次数，每出现一种记为一次。"
                 placement="right"
               >
                 <img
@@ -89,28 +89,50 @@
             </div>
             <div id="myChart" ref="myChart"></div>
             <div class="center_pie">
-              <div class="c_pie_li" v-if="anxietyFlag == 1">
-                <span class="c_pie_th c_th0"></span>
-                焦虑
-              </div>
               <div class="c_pie_li" v-if="depressionFlag == 1">
-                <span class="c_pie_th c_th1"></span>
-                抑郁
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th0"></span>
+                  抑郁
+                </div>
+              </div>
+              <div class="c_pie_li" v-if="anxietyFlag == 1">
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th1"></span>
+                  焦虑
+                </div>
               </div>
               <div class="c_pie_li" v-if="forcedFlag == 1">
-                <span class="c_pie_th c_th2"></span>
-                强迫
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th2"></span>
+                  强迫
+                </div>
               </div>
               <div class="c_pie_li" v-if="suicideFlag == 1">
-                <span class="c_pie_th c_th3"></span>
-                自我伤害
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th3"></span>
+                  PTSD
+                </div>
               </div>
               <div class="c_pie_li" v-if="violenceFlag == 1">
-                <span class="c_pie_th c_th4"></span>
-                敌对
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th4"></span>
+                  敌对
+                </div>
               </div>
+              <div class="c_pie_li" v-if="violenceFlag == 1">
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th5"></span>
+                  自我伤害
+                </div>
+              </div>
+              <!-- <div class="c_pie_li" v-if="violenceFlag == 1">
+                <div class="c_th_txt">
+                  <span class="c_pie_th c_th6"></span>
+                  自闭
+                </div>
+              </div> -->
             </div>
-            <div class="c_o_my_txt" v-show="myTxtFlag">累计预警频次</div>
+            <div class="c_o_my_txt" v-show="myTxtFlag">累计风险频次</div>
             <div class="c_o_my_num" v-show="myTxtFlag">
               {{ detail.warningStatistics.allWarningNum }}
             </div>
@@ -139,7 +161,7 @@
             <div class="total_f">
               <div class="total_txt">
                 <div class="t_txt1">{{ detail.warningNum }}<span>次</span></div>
-                <div class="t_txt2">风险预警</div>
+                <div class="t_txt2">风险次数</div>
               </div>
               <img src="../../assets/images/car3.png" alt="" />
             </div>
@@ -179,26 +201,26 @@
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths1"></span>
-                轻度预警
+                <img class="c_p_l_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="" />
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths2"></span>
-                中度预警
+                <img class="c_p_l_img" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="" />
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths3"></span>
-                重度预警
+                <img class="c_p_l_img" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="" />
               </div>
             </div>
           </div>
           <div class="right_tow">
             <div class="center_t" style="flex:1">
               <div class="center_o_title">
-                预警类型分布
+                风险类型分布
                 <el-tooltip
                   class="item"
                   effect="dark"
-                  content="百分比计算方式：出现某项预警类型的人数/用户总人数=结果"
+                  content="百分比计算方式：出现某项风险类型的人数/用户总人数=结果"
                   placement="right"
                 >
                   <img
@@ -210,47 +232,88 @@
               </div>
               <div id="myChartPie" ref="myChartPie"></div>
               <div class="center_pie" v-if="detail.warningStatistics">
-                <div class="c_pie_li" v-if="anxietyFlag == 1">
-                  <span class="c_pie_th c_th0"></span>
-                  焦虑
-                  <span class="c_pie_td clo0">{{
-                    parseInt(detail.warningStatistics.anxietyPerct * 100) + "%"
-                  }}</span>
-                </div>
                 <div class="c_pie_li" v-if="depressionFlag == 1">
-                  <span class="c_pie_th c_th1"></span>
-                  抑郁
-                  <span class="c_pie_td clo1">{{
-                    parseInt(detail.warningStatistics.depressionPerct * 100) +
-                      "%"
-                  }}</span>
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th0"></span>
+                    抑郁
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp0">{{
+                      parseInt(detail.warningStatistics.depressionPerct * 100) + "%"
+                    }}</span>
+                  </div>
+                </div>
+                <div class="c_pie_li" v-if="anxietyFlag == 1">
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th1"></span>
+                    焦虑
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp1">{{
+                      parseInt(detail.warningStatistics.anxietyPerct * 100) + "%"
+                    }}</span>
+                  </div>
                 </div>
                 <div class="c_pie_li" v-if="forcedFlag == 1">
-                  <span class="c_pie_th c_th2"></span>
-                  强迫
-                  <span class="c_pie_td clo2">{{
-                    parseInt(detail.warningStatistics.forcePerct * 100) + "%"
-                  }}</span>
-                </div>
-                <div class="c_pie_li" v-if="suicideFlag == 1">
-                  <span class="c_pie_th c_th3"></span>
-                  自我伤害
-                  <span class="c_pie_td clo3">{{
-                    parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
-                  }}</span>
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th2"></span>
+                    强迫
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp2">{{
+                      parseInt(detail.warningStatistics.forcePerct * 100) + "%"
+                    }}</span>
+                  </div>
                 </div>
                 <div class="c_pie_li" v-if="violenceFlag == 1">
-                  <span class="c_pie_th c_th4"></span>
-                  敌对
-                  <span class="c_pie_td clo4">{{
-                    parseInt(detail.warningStatistics.violencePerct * 100) + "%"
-                  }}</span>
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th3"></span>
+                    PTSD
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp3">{{
+                      parseInt(detail.warningStatistics.violencePerct * 100) + "%"
+                    }}</span>
+                  </div>
                 </div>
+                <div class="c_pie_li" v-if="violenceFlag == 1">
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th4"></span>
+                    敌对
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp4">{{
+                      parseInt(detail.warningStatistics.violencePerct * 100) + "%"
+                    }}</span>
+                  </div>
+                </div>
+                <div class="c_pie_li" v-if="suicideFlag == 1">
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th5"></span>
+                    自我伤害
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp5">{{
+                      parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
+                    }}</span>
+                  </div>
+                </div>
+                <!-- <div class="c_pie_li" v-if="suicideFlag == 1">
+                  <div class="c_th_txt">
+                    <span class="c_pie_th c_th6"></span>
+                    自闭
+                  </div>
+                  <div class="c_th_p">
+                    <span class="c_pie_td c_thp6">{{
+                      parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
+                    }}</span>
+                  </div>
+                </div> -->
               </div>
             </div>
             <div class="center_f" style="flex:1">
               <div class="center_o_title">
-                预警指标分析
+                风险指标分析
               </div>
               <div id="myChartZero" ref="myChartZero"></div>
               <div class="center_pie">
@@ -357,19 +420,22 @@
               <el-table-column prop="warning" label="评估结果">
                 <template slot-scope="scope">
                   <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                    <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
-                    <!-- <el-button type="primary" plain size="small">正常</el-button> -->
+                    <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
+                    <el-button type="primary" plain size="small">正常</el-button>
                   </div>
                   <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                    <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                    <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                    <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                    <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                    <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                    <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                    <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                    <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                    <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                   </div>
                   <!-- <div class="primary_r" v-if="scope.row.warning == 1">
@@ -581,26 +647,6 @@ export default {
                       (startAngle - endAngle) * (1 - value) + endAngle;
                     this.getUserInfo();
                     let chartArr = []
-                    if (this.anxietyFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.anxietyNum,
-                        name: "焦虑",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#00C2FF"
-                              },
-                              {
-                                offset: 1,
-                                color: "#0075FF"
-                              }
-                            ])
-                          }
-                        }
-                      })
-                    }
                     if (this.depressionFlag == 1) {
                       chartArr.push({
                         value: that.detail.warningStatistics.depressionNum,
@@ -610,11 +656,31 @@ export default {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                               {
                                 offset: 0,
-                                color: "#FC4FB0"
+                                color: "#8ACBFF"
                               },
                               {
                                 offset: 1,
-                                color: "#FF9CE5"
+                                color: "#8ACBFF"
+                              }
+                            ])
+                          }
+                        }
+                      })
+                    }
+                    if (this.anxietyFlag == 1) {
+                      chartArr.push({
+                        value: that.detail.warningStatistics.anxietyNum,
+                        name: "焦虑",
+                        itemStyle: {
+                          normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                              {
+                                offset: 0,
+                                color: "#FFB0DB"
+                              },
+                              {
+                                offset: 1,
+                                color: "#FFB0DB"
                               }
                             ])
                           }
@@ -630,11 +696,51 @@ export default {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                               {
                                 offset: 0,
-                                color: "#7279FF"
+                                color: "#B5B8FF"
                               },
                               {
                                 offset: 1,
-                                color: "#C4C8FF"
+                                color: "#B5B8FF"
+                              }
+                            ])
+                          }
+                        }
+                      })
+                    }
+                    // if (this.ptspFlag == 1) {
+                    chartArr.push({
+                      value: that.detail.warningStatistics.ptsdNum,
+                      name: "PTSD",
+                      itemStyle: {
+                        normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                              offset: 0,
+                              color: "#FFA3A3"
+                            },
+                            {
+                              offset: 1,
+                              color: "#FFA3A3"
+                            }
+                          ])
+                        }
+                      }
+                    })
+                    // }
+                    if (this.violenceFlag == 1) {
+                      chartArr.push({
+                        value: that.detail.warningStatistics.violenceNum,
+                        name: "敌对",
+                        itemStyle: {
+                          normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                              {
+                                offset: 0,
+                                color: "#FFD29D"
+                              },
+                              {
+                                offset: 1,
+                                color: "#FFD29D"
                               }
                             ])
                           }
@@ -650,47 +756,41 @@ export default {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                               {
                                 offset: 0,
-                                color: "#46F7CB"
+                                color: "#BDF5B8"
                               },
                               {
                                 offset: 1,
-                                color: "#00D8FF"
+                                color: "#BDF5B8"
                               }
                             ])
                           }
                         }
                       })
                     }
-                    if (this.violenceFlag == 1) {
-                      chartArr.push({
-                        value: that.detail.warningStatistics.violenceNum,
-                        name: "敌对",
-                        itemStyle: {
-                          normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                              {
-                                offset: 0,
-                                color: "#FFE792"
-                              },
-                              {
-                                offset: 1,
-                                color: "#FFC90C"
-                              }
-                            ])
-                          }
-                        }
-                      })
-                    }
+                    // if (this.zibiFlag == 1) {
+                    // chartArr.push({
+                    //   value: that.detail.warningStatistics.suicideNum,
+                    //   name: "自闭",
+                    //   itemStyle: {
+                    //     normal: {
+                    //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    //         {
+                    //           offset: 0,
+                    //           color: "#fff5b3"
+                    //         },
+                    //         {
+                    //           offset: 1,
+                    //           color: "#fff5b3"
+                    //         }
+                    //       ])
+                    //     }
+                    //   }
+                    // })
+                    // }
+                    
                     this.chart1List = chartArr
                     let piePrect = []
                     let pieName = []
-                    if (this.anxietyFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.anxietyPerct)
-                      pieName.push({
-                        name: "焦虑",
-                        max: 1
-                      })
-                    }
                     if (this.depressionFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.depressionPerct)
                       pieName.push({
@@ -698,6 +798,14 @@ export default {
                         max: 1
                       })
                     }
+                    if (this.anxietyFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.anxietyPerct)
+                      pieName.push({
+                        name: "焦虑",
+                        max: 1
+                      })
+                    }
+                    
                     if (this.forcedFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.forcePerct)
                       pieName.push({
@@ -708,7 +816,7 @@ export default {
                     if (this.suicideFlag == 1) {
                       piePrect.push(that.detail.warningStatistics.suicidePerct)
                       pieName.push({
-                        name: "自我伤害",
+                        name: "PTSD",
                         max: 1
                       })
                     }
@@ -719,6 +827,20 @@ export default {
                         max: 1
                       })
                     }
+                    if (this.suicideFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.suicidePerct)
+                      pieName.push({
+                        name: "自我伤害",
+                        max: 1
+                      })
+                    }
+                    // if (this.suicideFlag == 1) {
+                    //   piePrect.push(that.detail.warningStatistics.suicidePerct)
+                    //   pieName.push({
+                    //     name: "自闭",
+                    //     max: 1
+                    //   })
+                    // }
                     this.piePrect = piePrect
                     this.pieName = pieName
                     this.draw();
@@ -877,28 +999,39 @@ export default {
           },
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(obj) {
+            let di = require('../../assets/images/news/di.png')
+            let zhong = require('../../assets/images/news/zhong.png')
+            let gao = require('../../assets/images/news/gao.png')
             return (
-              '<div style="border-bottom: 1px solid rgba(255,255,255,.3);font-weight: 600; font-size: 14px;padding-bottom: 0px;margin-bottom: 7px">' +
+              '<div style="border-bottom: 1px solid rgba(255,255,255,.3);color:#354B70;font-weight: 600; font-size: 0.16rem;padding-bottom: 0px;margin-bottom: 0.02rem">' +
               obj[0].name +
               "</div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #8ACBFF;border-radius: 50%;margin-right:0.04rem"></span>' +
+              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
               "测评人数" +
-              "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
+              "：<span style='color:#519AFE;font-weight: 600;'>" +
+              // "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
               obj[0].value +
               "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "轻度预警" +
-              "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
+              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<img style="width:0.19rem;height:0.19rem" src="' + di + '" alt="" />' +
+              "：<span style='color:#7C82FF;font-weight: 600;'>" +
+              // "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
               obj[1].value +
               "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "中度预警" +
-              "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
+              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<img style="width:0.40rem;height:0.19rem" src="' + zhong + '" alt="" />' +
+              "：<span style='color:#FFBB79;font-weight: 600;'>" +
+              // "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
               obj[2].value +
               "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "重度预警" +
-              "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
+              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
+              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
+              '<img style="width:0.61rem;height:0.19rem" src="' + gao + '" alt="" />' +
+              "：<span style='color:#FF8481;font-weight: 600;'>" +
+              // "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
               obj[3].value +
               "</span></div>"
             );
@@ -949,104 +1082,116 @@ export default {
             name: "测评人数",
             type: "line",
             smooth: true,
+            symbol: 'none',
             itemStyle: {
-              color: "rgba(0,194,255,1)"
+              color: "#8ACBFF"
             },
             lineStyle: {
-              color: "rgba(0,194,255,1)"
+              // color: "rgba(0,194,255,1)"
+              color: "#8ACBFF"
             },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(0,194,255,0.04)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(0,194,255,0)"
-                  }
-                ])
-              }
-            },
+            // areaStyle: {
+            //   normal: {
+            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            //       {
+            //         offset: 0,
+            //         color: "rgba(0,194,255,0.04)"
+            //       },
+            //       {
+            //         offset: 1,
+            //         color: "rgba(0,194,255,0)"
+            //       }
+            //     ])
+            //   }
+            // },
             data: datas1
           },
           {
-            name: "轻度预警",
+            name: "轻度",
             type: "line",
             smooth: true,
+            symbol: 'none',
             itemStyle: {
-              color: "rgba(255, 210, 0, 1)"
+              // color: "rgba(255, 210, 0, 1)"
+              color: "#B5B8FF"
             },
             lineStyle: {
-              color: "rgba(255, 210, 0, 1)"
+              // color: "rgba(255, 210, 0, 1)"
+              color: "#B5B8FF"
             },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(255, 210, 0, 0.04)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(255, 210, 0, 0)"
-                  }
-                ])
-              }
-            },
+            // areaStyle: {
+            //   normal: {
+            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            //       {
+            //         offset: 0,
+            //         color: "rgba(255, 210, 0, 0.04)"
+            //       },
+            //       {
+            //         offset: 1,
+            //         color: "rgba(255, 210, 0, 0)"
+            //       }
+            //     ])
+            //   }
+            // },
             data: datas2
           },
           {
-            name: "中度预警",
+            name: "中度",
             type: "line",
             smooth: true,
+            symbol: 'none',
             itemStyle: {
+              // color: "rgba(252, 155, 47, 1)"
               color: "rgba(252, 155, 47, 1)"
             },
             lineStyle: {
+              // color: "rgba(252, 155, 47, 1)"
               color: "rgba(252, 155, 47, 1)"
             },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(252, 155, 47, 0.04)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(252, 155, 47, 0)"
-                  }
-                ])
-              }
-            },
+            // areaStyle: {
+            //   normal: {
+            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            //       {
+            //         offset: 0,
+            //         color: "rgba(252, 155, 47, 0.04)"
+            //       },
+            //       {
+            //         offset: 1,
+            //         color: "rgba(252, 155, 47, 0)"
+            //       }
+            //     ])
+            //   }
+            // },
             data: datas3
           },
           {
-            name: "重度预警",
+            name: "重度",
             type: "line",
             smooth: true,
+            symbol: 'none',
             itemStyle: {
-              color: "rgba(254, 39, 39, 1)"
+              // color: "rgba(254, 39, 39, 1)"
+              color: "#FFD29D"
+              
             },
             lineStyle: {
-              color: "rgba(254, 39, 39, 1)"
+              // color: "rgba(254, 39, 39, 1)"
+              color: "#FFD29D"
             },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(254, 39, 39, 0.04)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(254, 39, 39, 0)"
-                  }
-                ])
-              }
-            },
+            // areaStyle: {
+            //   normal: {
+            //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            //       {
+            //         offset: 0,
+            //         color: "rgba(254, 39, 39, 0.04)"
+            //       },
+            //       {
+            //         offset: 1,
+            //         color: "rgba(254, 39, 39, 0)"
+            //       }
+            //     ])
+            //   }
+            // },
             data: datas4
           }
         ]
@@ -1241,7 +1386,7 @@ export default {
         ]
       });
 
-      // 预警频次统计
+      // 风险频次统计
       this.myChart = echarts.init(this.$refs.myChart);
       this.myChart.setOption({
         tooltip: {
@@ -1255,21 +1400,24 @@ export default {
           },
           backgroundColor: "#ffffff",
           borderWidth: 0,
+          padding: [nowSize(4), nowSize(8), nowSize(4), nowSize(8)],
           textStyle: {
-            color: "#5B6C89"
+            color: "#5B6C89",
+            padding: 0
           },
           formatter: function(params) {
+            let colc = ['#519AFE', '#FF89CB', '#7C82FF', '#FF8481', '#FFBB79', '#8DE684', '#f7de3b']
             var result =
-              '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
+              '<span style="display:inline-block;margin-right:0.04rem;border-radius:0.1rem;width:0.1rem;height:0.1rem;background: linear-gradient(174deg, ' +
               params.color.colorStops[0].color +
               "," +
               params.color.colorStops[1].color +
               '");></span>' +
-              '<span style="color:#7786AC">' +
+              '<span style="color:#7786AC;font-size:0.14rem">' +
               params.name +
               "</span>" +
-              ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:' +
-              params.color.colorStops[1].color +
+              ':<span style="display:inline-block;font-weight:blod;margin-left:0.05rem;font-size:0.14rem;color:' +
+               colc[params.dataIndex] +
               '">' +
               params.value +
               "</span>";
@@ -1293,7 +1441,7 @@ export default {
                   fontSize: nowSize(14)
                 },
                 color: "#5B6C89",
-                formatter: "累计预警频次\n{hr|{c}次}",
+                formatter: "累计风险频次\n{hr|{c}次}",
                 rich: {
                   hr: {
                     color: "#51A7FF",
@@ -1317,7 +1465,7 @@ export default {
         ]
       });
 
-      // 预警类型分布
+      // 风险类型分布
       this.myChartPie = echarts.init(this.$refs.myChartPie);
       this.myChartPie.setOption({
         tooltip: {
@@ -1333,44 +1481,58 @@ export default {
           formatter: function(obj) {
             var value = obj.value;
             let html = ''
-            html += '<div style="border-bottom: 1px solid rgba(255,255,255,.3);font-weight: 600; font-size: 14px;padding-bottom: 0px;margin-bottom: 7px">' +
+            html += '<div style="border-bottom: 1px solid rgba(255,255,255,.3);font-weight: 600; font-size: 0.18rem;padding-bottom: 0px;margin-bottom: 0.07rem">' +
               obj.seriesName +
               "</div>"
-            if (that.anxietyFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(0deg, #0075FF 0%, #00C2FF 100%);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "焦虑" +
-              "：<span style='color:#006cff'>" +
-              (parseInt(value[0] * 100) + "%") +
-              "</span><br>"
-            }
             if (that.depressionFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(-90deg, #FE5FB8, #ff83df);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "抑郁" +
-              "：<span style='color:#FF55B6'>" +
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #8ACBFF;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>抑郁：</span>" +
+              "<span style='font-size:0.14rem;color:#519AFE'>" +
+              (parseInt(value[0] * 100) + "%") +
+              "</span></div>"
+            }
+            if (that.anxietyFlag == 1) {
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #FFB0DB;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>焦虑：</span>" +
+              "<span style='font-size:0.14rem;color:#FF89CB'>" +
               (parseInt(value[1] * 100) + "%") +
-              "</span><br>"
+              "</span></div>"
             }
             if (that.forcedFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #c4c8ff, #7279ff);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "强迫" +
-              "：<span style='color:#7279ff'>" +
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>强迫：</span>" +
+              "<span style='font-size:0.14rem;color:#7C82FF'>" +
               (parseInt(value[2] * 100) + "%") +
-              "</span><br>"
-            }
-            if (that.suicideFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #00D8FF, #46F7CB);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "自我伤害" +
-              "：<span style='color:#04DAFC'>" +
-              (parseInt(value[3] * 100) + "%") +
-              "</span><br>"
+              "</span></div>"
             }
             if (that.violenceFlag == 1) {
-              html += '<span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFE792, #FFC90C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "敌对" +
-              "：<span style='color:#FFB300'>" +
-              (parseInt(value[4] * 100) + "%") +
-              "</span><br>"
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>PTSD：</span>" +
+              "<span style='font-size:0.14rem;color:#FF8481'>" +
+              (parseInt(value[3] * 100) + "%") +
+              "</span></div>"
             }
+            if (that.violenceFlag == 1) {
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>敌对：</span>" +
+              "<span style='font-size:0.14rem;color:#FFBB79'>" +
+              (parseInt(value[4] * 100) + "%") +
+              "</span></div>"
+            }
+            if (that.suicideFlag == 1) {
+              html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #BDF5B8;border-radius: 50%;margin-right:0.04rem"></span>' +
+              "<span style='font-size:0.14rem;'>自我伤害：</span>" +
+              "<span style='font-size:0.14rem;color:#8DE684'>" +
+              (parseInt(value[5] * 100) + "%") +
+              "</span></div>"
+            }
+            // if (that.suicideFlag == 1) {
+            //   html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background:#fff5b3;border-radius: 50%;margin-right:0.04rem"></span>' +
+            //    "<span style='font-size:0.14rem;'>自闭：</span>" +
+            //   "<span style='font-size:0.14rem;color:#f7de3b'>" +
+            //   (parseInt(value[6] * 100) + "%") +
+            //   "</span></div>"
+            // }
             return html;
           }
         },
@@ -1419,7 +1581,7 @@ export default {
         },
         series: [
           {
-            name: "预警类型分布",
+            name: "风险类型分布",
             type: "radar",
             color: ["rgba(0,117,255,0.1)"],
             emphasis: {
@@ -1451,11 +1613,11 @@ export default {
                     colorStops: [
                       {
                         offset: 0,
-                        color: "#4BC8FF"
+                        color: "rgba(0, 117, 255, 0.5)"
                       },
                       {
                         offset: 1,
-                        color: "#1661FF"
+                        color: "rgba(0, 194, 255, 0.5)"
                       }
                     ],
                     globalCoord: false
@@ -1470,7 +1632,7 @@ export default {
         ]
       });
 
-      // 预警指标分析
+      // 风险指标分析
       this.myChartZero = echarts.init(this.$refs.myChartZero);
       this.myChartZero.setOption({
         grid: {
@@ -1556,19 +1718,19 @@ export default {
             type: "bar",
             stack: "total",
             barWidth: nowSize(20),
-            label: {
-              show: true,
-              color: "#ffffff",
-              formatter: '{c}%'
-            },
+            // label: {
+            //   show: true,
+            //   color: "#ffffff",
+            //   formatter: '{c}%'
+            // },
             color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
               {
                 offset: 0,
-                color: "rgba(0,192,255,0.64)"
+                color: "#8ACBFF"
               },
               {
                 offset: 1,
-                color: "rgba(5,157,255,0.64)"
+                color: "#8ACBFF"
               }
             ]),
             data: ["女", that.detail.warningMale]
@@ -1577,19 +1739,19 @@ export default {
             name: "女",
             type: "bar",
             stack: "total",
-            label: {
-              show: true,
-              color: "#ffffff",
-              formatter: '{c}%'
-            },
+            // label: {
+            //   show: true,
+            //   color: "#ffffff",
+            //   formatter: '{c}%'
+            // },
             color: new echarts.graphic.LinearGradient(1, 0.5, 0, 0.5, [
               {
                 offset: 0,
-                color: "rgba(255,131,223,0.64)"
+                color: "#FFB0DB"
               },
               {
                 offset: 1,
-                color: "rgba(254,95,184,0.64)"
+                color: "#FFB0DB"
               }
             ]),
             data: [that.detail.warningFemale, "男"]
@@ -1636,6 +1798,11 @@ export default {
   #myChartZero {
     width: 100%;
     height: 2.54rem;
+    z-index: 1;
+  }
+
+  #myChartPie {
+    height: 2.34rem;
   }
   .index_main {
     .index_main_top {
@@ -1673,6 +1840,7 @@ export default {
               color: #354b70;
               display: flex;
               align-items: center;
+              flex-wrap: wrap;
               .c_pie_th {
                 display: inline-block;
                 width: 0.08rem;
@@ -1680,20 +1848,72 @@ export default {
                 margin-right: 0.04rem;
                 border-radius: 50%;
               }
+              .c_th_txt {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                font-size: 0.14rem;
+              }
+              .c_th_p {
+                padding-left: 0.12rem;
+              }
+              .c_thp0 {
+                color: #519AFE;
+              }
+              .c_thp1 {
+                color: #FF89CB;
+              }
+              .c_thp2 {
+                color: #7C82FF;
+              }
+              .c_thp3 {
+                color: #FF8481;
+              }
+              .c_thp4 {
+                color: #FFBB79;
+              }
+              .c_thp5 {
+                color: #8DE684;
+              }
+              .c_thp6 {
+                color: #f7de3b;
+              }
+
+              // .c_th0 {
+              //   background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
+              // }
+              // .c_th1 {
+              //   background: linear-gradient(-90deg, #FE5FB8, #ff83df);
+              // }
+              // .c_th2 {
+              //   background: linear-gradient(90deg, #c4c8ff, #7279ff);
+              // }
+              // .c_th3 {
+              //   background: linear-gradient(-90deg, #00D8FF, #46F7CB);
+              // }
+              // .c_th4 {
+              //   background: linear-gradient(90deg, #FFE792, #FFC90C);
+              // }
               .c_th0 {
-                background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
+                background: #8ACBFF;
               }
               .c_th1 {
-                background: linear-gradient(-90deg, #FE5FB8, #ff83df);
+                background: #FFB0DB;
               }
               .c_th2 {
-                background: linear-gradient(90deg, #c4c8ff, #7279ff);
+                background: #B5B8FF;
               }
               .c_th3 {
-                background: linear-gradient(-90deg, #00D8FF, #46F7CB);
+                background: #FFA3A3;
               }
               .c_th4 {
-                background: linear-gradient(90deg, #FFE792, #FFC90C);
+                background: #FFD29D;
+              }
+              .c_th5 {
+                background: #BDF5B8;
+              }
+              .c_th6 {
+                background: #fff5b3;
               }
               .c_pie_td {
                 display: inline-block;
@@ -1712,10 +1932,11 @@ export default {
             line-height: 0.28rem;
             font-size: 0.18rem;
             margin: auto;
-            top: 0;
+            top: -0.2rem;
             left: 0;
             right: 0;
             bottom: 0;
+            z-index: 0;
           }
           .c_o_my_num {
             position: absolute;
@@ -1726,8 +1947,8 @@ export default {
             font-size: 0.2rem;
             font-weight: 500;
             margin: auto;
-            top: 0.56rem;
-            color: #006cff;
+            top: 0.36rem;
+            color: #509AFF;
             left: 0;
             right: 0;
             bottom: 0;
@@ -1983,7 +2204,7 @@ export default {
               margin: auto;
               left: 0;
               right: 0;
-              bottom: 0.28rem;
+              bottom: 0.07rem;
               z-index: 11;
               .c_pie_li {
                 padding: 0;
@@ -1991,8 +2212,9 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 color: #354b70;
-                display: flex;
-                align-items: center;
+                // display: flex;
+                // align-items: center;
+                // flex-wrap: wrap;
                 .c_pie_th {
                   display: inline-block;
                   width: 0.08rem;
@@ -2000,21 +2222,57 @@ export default {
                   margin-right: 0.04rem;
                   border-radius: 50%;
                 }
+                .c_th_txt {
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  font-size: 0.14rem;
+                }
+                .c_th_p {
+                  padding-left: 0.08rem;
+                }
+                .c_thp0 {
+                  color: #519AFE;
+                }
+                .c_thp1 {
+                  color: #FF89CB;
+                }
+                .c_thp2 {
+                  color: #7C82FF;
+                }
+                .c_thp3 {
+                  color: #FF8481;
+                }
+                .c_thp4 {
+                  color: #FFBB79;
+                }
+                .c_thp5 {
+                  color: #8DE684;
+                }
+                .c_thp6 {
+                  color: #f7de3b;
+                }
                 .c_th0 {
-                  background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
+                  background: #8ACBFF;
                 }
                 .c_th1 {
-                  background: linear-gradient(-90deg, #FE5FB8, #ff83df);
+                  background: #FFB0DB;
                 }
                 .c_th2 {
-                  background: linear-gradient(90deg, #c4c8ff, #7279ff);
+                  background: #B5B8FF;
                 }
                 .c_th3 {
-                background: linear-gradient(-90deg, #00D8FF, #46F7CB);
-              }
-              .c_th4 {
-                background: linear-gradient(90deg, #FFE792, #FFC90C);
-              }
+                  background: #FFA3A3;
+                }
+                .c_th4 {
+                  background: #FFD29D;
+                }
+                .c_th5 {
+                  background: #BDF5B8;
+                }
+                .c_th6 {
+                  background: #fff5b3;
+                }
                 .c_pie_td {
                   display: inline-block;
                   font-size: 0.14rem;
@@ -2054,20 +2312,26 @@ export default {
                   border-radius: 50%;
                 }
                 .c_th0 {
-                  background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
+                  background: #8ACBFF;
                 }
                 .c_th1 {
-                  background: linear-gradient(-90deg, #FE5FB8, #ff83df);
+                  background: #FFB0DB;
                 }
-                .c_th2 {
-                  background: linear-gradient(90deg, #c4c8ff, #7279ff);
-                }
-                .c_th3 {
-                  background: linear-gradient(-90deg, #FFE792, #FFC90C);
-                }
-                .c_th4 {
-                  background: linear-gradient(90deg, #00D8FF, #46F7CB);
-                }
+                // .c_th0 {
+                //   background: linear-gradient(0deg, #0075ff 0%, #00c2ff 100%);
+                // }
+                // .c_th1 {
+                //   background: linear-gradient(-90deg, #FE5FB8, #ff83df);
+                // }
+                // .c_th2 {
+                //   background: linear-gradient(90deg, #c4c8ff, #7279ff);
+                // }
+                // .c_th3 {
+                //   background: linear-gradient(-90deg, #FFE792, #FFC90C);
+                // }
+                // .c_th4 {
+                //   background: linear-gradient(90deg, #00D8FF, #46F7CB);
+                // }
                 .c_pie_td {
                   display: inline-block;
                   font-size: 0.14rem;
@@ -2194,17 +2458,29 @@ export default {
               .c_th4 {
                 background: linear-gradient(90deg, #00D8FF, #46F7CB);
               }
+              // .c_ths0{
+              //   background: linear-gradient(268deg, #0075ff, #00c2ff);
+              // }
+              // .c_ths1{
+              //   background: linear-gradient(90deg, #FEF569, #FFD800);
+              // }
+              // .c_ths2{
+              //   background: linear-gradient(90deg, #FFCE9F, #FF849C);
+              // }
+              // .c_ths3{
+              //   background: linear-gradient(74deg, #FFAB96, #FF0F47);
+              // }
               .c_ths0{
-                background: linear-gradient(268deg, #0075ff, #00c2ff);
+                background: #8ACBFF;
               }
               .c_ths1{
-                background: linear-gradient(90deg, #FEF569, #FFD800);
+                background: #B5B8FF;
               }
               .c_ths2{
-                background: linear-gradient(90deg, #FFCE9F, #FF849C);
+                background: #FFD29D;
               }
               .c_ths3{
-                background: linear-gradient(74deg, #FFAB96, #FF0F47);
+                background: #FFA3A3;
               }
               .c_pie_td {
                 display: inline-block;
@@ -2212,6 +2488,10 @@ export default {
                 font-family: Montserrat-Regular;
                 font-weight: 400;
                 margin-left: 0.04rem;
+              }
+              .c_p_l_img {
+                width:0.19rem;
+                height:0.19rem;
               }
             }
           }
@@ -2259,7 +2539,7 @@ export default {
       }
     }
     .center_o_title {
-      font-size: 0.2rem;
+      font-size: 0.18rem;
       line-height: 1;
       padding: 0.2rem 0 0;
       color: #354b70;
@@ -2293,7 +2573,7 @@ export default {
       content: "";
       position: absolute;
       left: 0;
-      top: 0.22rem;
+      top: 0.21rem;
       width: 0.14rem;
       height: 0.14rem;
       background-image: url(../../assets/images/ti.png);
@@ -2525,6 +2805,11 @@ export default {
           .el-button--danger.is-plain:hover {
             // color: #ff8854;
             background: transparent !important;
+          }
+        }
+        .primary_r0{
+          .el-button--primary.is-plain{
+            color: #7786AC
           }
         }
         // .primary_r0{

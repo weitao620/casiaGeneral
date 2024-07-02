@@ -79,10 +79,22 @@
             <el-select v-model="formSearch.warning" placeholder="全部">
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
-              <el-option label="轻度预警" :value="1"></el-option>
-              <el-option label="中度预警" :value="2"></el-option>
-              <el-option label="重度预警" :value="3"></el-option>
+              <el-option label="" :value="1">
+                <img style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+              </el-option>
+              <el-option label="" :value="2">
+                <img style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+              </el-option>
+              <el-option label="" :value="3">
+                <img style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+              </el-option>
             </el-select>
+            <!-- 选中后的列表 -->
+            <div class="img-option img-selected" v-if="formSearch.warning > 0 && formSearch.warning < 4">
+              <img v-if="formSearch.warning == 1" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+              <img v-if="formSearch.warning == 2" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+              <img v-if="formSearch.warning == 3" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -127,10 +139,22 @@
             <el-select v-model="formSearchYou.warning" placeholder="全部">
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
-              <el-option label="轻度预警" :value="1"></el-option>
-              <el-option label="中度预警" :value="2"></el-option>
-              <el-option label="重度预警" :value="3"></el-option>
+              <el-option label="" :value="1">
+                <img style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+              </el-option>
+              <el-option label="" :value="2">
+                <img style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+              </el-option>
+              <el-option label="" :value="3">
+                <img style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+              </el-option>
             </el-select>
+            <!-- 选中后的列表 -->
+            <div class="img-option img-selected" v-if="formSearchYou.warning > 0 && formSearchYou.warning < 4">
+              <img v-if="formSearchYou.warning == 1" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+              <img v-if="formSearchYou.warning == 2" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+              <img v-if="formSearchYou.warning == 3" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+            </div>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmitYou">查询</el-button>
@@ -250,19 +274,22 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
-                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
+                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
+                  <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
@@ -328,19 +355,22 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <img class="primary_g_img" src="../../assets/images/index0.png" alt="">
-                  <!-- <el-button type="primary" plain size="small">正常</el-button> -->
+                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
+                  <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" src="../../assets/images/index1.png" alt="">
+                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" src="../../assets/images/index2.png" alt="">
+                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" src="../../assets/images/index3.png" alt="">
+                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
@@ -451,8 +481,9 @@
           </div>
         </el-form-item>
         <el-form-item required label="选择团队:">
+          <!-- studyList1 -->
           <el-select v-model="partsForm.organization" @change="orgChange" placeholder="请选择团队" style="width:100%">
-            <el-option v-for="item in studyList1" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+            <el-option v-for="item in studyList" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
           </el-select>
           <div class="tip_left" v-show="organizationFlag">
             <div class="tip_msg">
@@ -779,8 +810,7 @@ export default {
         }
         if (row.Mark == 1) {
           console.log(2)
-          that.studyList.push({ Name: row.Name, Pid: row.Pid, list: row.list });
-          
+          that.studyList.push({ Name: row.Name, Pid: row.Pid, list: row.list })
         }
       });
     },
@@ -3154,6 +3184,7 @@ export default {
           width: 2.1rem;
           line-height: 0.36rem;
           font-size: 0.16rem;
+          position: relative;
           .el-input {
             font-size: 0.16rem;
             .el-input__icon {
@@ -3170,6 +3201,18 @@ export default {
           }
           .el-select {
             width: 100%;
+          }
+          .img-option{
+            position: absolute;
+            margin: auto;
+            left: 0.12rem;
+            top: 0.01rem;
+            background: #ffffff;
+            width: auto;
+            height: 0.34rem;
+            bottom: 0.01rem;
+            display: flex;
+            align-items: center;
           }
         }
       }
@@ -3404,6 +3447,11 @@ export default {
         .el-button--danger.is-plain:hover {
           // color: #ff8854;
           background: transparent !important;
+        }
+      }
+      .primary_r0{
+        .el-button--primary.is-plain{
+          color: #7786AC
         }
       }
       // .primary_r0{
