@@ -218,7 +218,7 @@
                 <li v-if="violenceFlag == 1"><span class="r_cir4"></span>PTSD</li>
                 <li v-if="violenceFlag == 1"><span class="r_cir5"></span>敌对</li>
                 <li v-if="suicideFlag == 1"><span class="r_cir6"></span>自我伤害</li>
-                <li v-if="suicideFlag == 1"><span class="r_cir7"></span>自闭</li>
+                <!-- <li v-if="suicideFlag == 1"><span class="r_cir7"></span>自闭</li> -->
                 <li><span class="r_line1"></span>预警线</li>
               </ul>
             </div>
@@ -274,7 +274,7 @@
                       { sb_tab10: sbAct == 4 },
                       { sb_tab1: sbAct == 5 }
                     ]"
-                    @click="sbTab(6)"
+                    @click="sbTab(5)"
                   >
                     PTSD
                   </li>
@@ -296,21 +296,21 @@
                       { sb_tab10: sbAct == 6 },
                       { sb_tab1: sbAct == 7 }
                     ]"
-                    @click="sbTab(5)"
+                    @click="sbTab(7)"
                   >
                     自我伤害
                   </li>
-                  <li
+                  <!-- <li
                     v-if="suicideFlag == 1"
                     :class="[
                       'rsb_yab',
                       { sb_tab10: sbAct == 7 },
                       { sb_tab1: sbAct == 8 }
                     ]"
-                    @click="sbTab(5)"
+                    @click="sbTab(8)"
                   >
                     自闭
-                  </li>
+                  </li> -->
                   
                 </ul>
               </div>
@@ -391,8 +391,8 @@
               <div
                 class="myChartZhe4"
                 v-show="sbAct == 1 || sbAct == 5"
-                id="myChartZhe6"
-                ref="myChartZhe6"
+                id="myChartZhe5"
+                ref="myChartZhe5"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 5">
                 <ul v-if="chartData.length > 0">
@@ -435,8 +435,8 @@
               <div
                 class="myChartZhe4"
                 v-show="sbAct == 1 || sbAct == 7"
-                id="myChartZhe5"
-                ref="myChartZhe5"
+                id="myChartZhe7"
+                ref="myChartZhe7"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 7">
                 <ul v-if="chartData.length > 0">
@@ -447,7 +447,7 @@
                 </ul>
               </div>
             </div>
-            <div v-show="suicideFlag == 1">
+            <!-- <div v-show="suicideFlag == 1">
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 8">
                 <div class="c_titless">
                   <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
@@ -457,8 +457,8 @@
               <div
                 class="myChartZhe4"
                 v-show="sbAct == 1 || sbAct == 8"
-                id="myChartZhe5"
-                ref="myChartZhe5"
+                id="myChartZhe8"
+                ref="myChartZhe8"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 8">
                 <ul v-if="chartData.length > 0">
@@ -468,7 +468,7 @@
                   <li><span class="r_line2"></span>自闭水平</li>
                 </ul>
               </div>
-            </div>
+            </div> -->
             
           </div>
         </div>
@@ -571,6 +571,8 @@ export default {
       myChartZhe4: "",
       myChartZhe5: "",
       myChartZhe6: "",
+      myChartZhe7: "",
+      // myChartZhe8: "",
       passport: "",
       chartData: [],
       starData: [],
@@ -603,6 +605,8 @@ export default {
         this.myChartZhe4.resize();
         this.myChartZhe5.resize();
         this.myChartZhe6.resize();
+        this.myChartZhe7.resize();
+        // this.myChartZhe8.resize();
       }, 100);
     });
   },
@@ -835,6 +839,8 @@ export default {
               this.myChartZhe4s();
               this.myChartZhe5s();
               this.myChartZhe6s();
+              this.myChartZhe7s();
+              // this.myChartZhe8s();
             } else {
               that.tableData = [];
               that.total = 0;
@@ -890,6 +896,8 @@ export default {
       this.myChartZhe4s();
       this.myChartZhe5s();
       this.myChartZhe6s();
+      this.myChartZhe7s();
+      // this.myChartZhe8s();
     },
     myChartZhe1s() {
       let that = this;
@@ -1020,24 +1028,24 @@ export default {
           data: zArr
         })
       }
-      if (this.suicideFlag == 1) {
-        serseArr.push({
-          name: "自闭",
-          type: "bar",
-          // barWidth: 16,
-          barMaxWidth: 14,
-          itemStyle: {
-            normal: {
-              barBorderRadius: [7, 7, 0, 0],
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#fff5b3" },
-                { offset: 1, color: "#fff5b3" }
-              ])
-            }
-          },
-          data: zArr
-        })
-      }
+      // if (this.suicideFlag == 1) {
+      //   serseArr.push({
+      //     name: "自闭",
+      //     type: "bar",
+      //     // barWidth: 16,
+      //     barMaxWidth: 14,
+      //     itemStyle: {
+      //       normal: {
+      //         barBorderRadius: [7, 7, 0, 0],
+      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //           { offset: 0, color: "#fff5b3" },
+      //           { offset: 1, color: "#fff5b3" }
+      //         ])
+      //       }
+      //     },
+      //     data: zArr
+      //   })
+      // }
       let markLine = {
         symbol: "none",
         lineStyle: {
@@ -1112,6 +1120,7 @@ export default {
       let jArr = [];
       let qArr = [];
       let lArr = [];
+      console.log(that.chartData)
       for (let i in that.chartData) {
         xArr.push(that.chartData[i].dateCount);
         yArr.push(that.chartData[i].depressionSubScore[0].score);
@@ -1173,11 +1182,12 @@ export default {
             name: that.chartData[0].depressionSubScore[0].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#00c2ff" },
-                { offset: 1, color: "#0075ff" }
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
               ])
             },
             data: yArr,
@@ -1211,11 +1221,12 @@ export default {
             name: that.chartData[0].depressionSubScore[1].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#c4c8ff" },
-                { offset: 1, color: "#7279ff" }
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
               ])
             },
             data: jArr
@@ -1224,11 +1235,12 @@ export default {
             name: that.chartData[0].depressionSubScore[2].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#FE5FB8" }
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
               ])
             },
             data: qArr
@@ -1318,11 +1330,12 @@ export default {
             name: that.chartData[0].anxietySubScore[0].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#00c2ff" },
-                { offset: 1, color: "#0075ff" }
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
               ])
             },
             data: yArr,
@@ -1356,11 +1369,12 @@ export default {
             name: that.chartData[0].anxietySubScore[1].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#c4c8ff" },
-                { offset: 1, color: "#7279ff" }
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
               ])
             },
             data: jArr
@@ -1369,11 +1383,12 @@ export default {
             name: that.chartData[0].anxietySubScore[2].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#FE5FB8" }
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
               ])
             },
             data: qArr
@@ -1463,11 +1478,12 @@ export default {
             name: that.chartData[0].forcedSubScore[0].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#00c2ff" },
-                { offset: 1, color: "#0075ff" }
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
               ])
             },
             data: yArr,
@@ -1501,11 +1517,12 @@ export default {
             name: that.chartData[0].forcedSubScore[1].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#c4c8ff" },
-                { offset: 1, color: "#7279ff" }
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
               ])
             },
             data: jArr
@@ -1514,11 +1531,12 @@ export default {
             name: that.chartData[0].forcedSubScore[2].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#FE5FB8" }
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
               ])
             },
             data: qArr
@@ -1608,11 +1626,12 @@ export default {
             name: that.chartData[0].suicideSubScore[0].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#00c2ff" },
-                { offset: 1, color: "#0075ff" }
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
               ])
             },
             data: yArr,
@@ -1646,11 +1665,12 @@ export default {
             name: that.chartData[0].suicideSubScore[1].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#c4c8ff" },
-                { offset: 1, color: "#7279ff" }
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
               ])
             },
             data: jArr
@@ -1659,17 +1679,18 @@ export default {
             name: that.chartData[0].suicideSubScore[2].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#FE5FB8" }
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
               ])
             },
             data: qArr
           },
           {
-            name: "自我伤害水平",
+            name: "PTSD水平",
             type: "line",
             yAxisIndex: 1,
             itemStyle: {
@@ -1753,11 +1774,12 @@ export default {
             name: that.chartData[0].violenceSubScore[0].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#00c2ff" },
-                { offset: 1, color: "#0075ff" }
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
               ])
             },
             data: yArr,
@@ -1791,11 +1813,12 @@ export default {
             name: that.chartData[0].violenceSubScore[1].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#c4c8ff" },
-                { offset: 1, color: "#7279ff" }
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
               ])
             },
             data: jArr
@@ -1804,11 +1827,12 @@ export default {
             name: that.chartData[0].violenceSubScore[2].name,
             type: "bar",
             // barWidth: 16,
-            barMaxWidth: 16,
+            barMaxWidth: 14,
             itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: "#ff83df" },
-                { offset: 1, color: "#FE5FB8" }
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
               ])
             },
             data: qArr
@@ -1830,6 +1854,302 @@ export default {
         ]
       });
     },
+    myChartZhe7s() {
+      let that = this;
+      let xArr = [];
+      let yArr = [];
+      let jArr = [];
+      let qArr = [];
+      let lArr = [];
+      for (let i in that.chartData) {
+        xArr.push(that.chartData[i].dateCount);
+        yArr.push(that.chartData[i].suicideSubScore[0].score);
+        jArr.push(that.chartData[i].suicideSubScore[1].score);
+        qArr.push(that.chartData[i].suicideSubScore[2].score);
+        lArr.push(that.chartData[i].suicideScore.score);
+      }
+      this.myChartZhe7 = echarts.init(this.$refs.myChartZhe7);
+      this.myChartZhe7.setOption({
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "line",
+            crossStyle: {
+              color: "#999"
+            }
+          }
+        },
+        grid: {
+          left: "0",
+          top: "30",
+          right: "60",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: xArr,
+            axisPointer: {
+              type: "shadow"
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            name: "",
+            min: 0,
+            max: 10,
+            interval: 2,
+            axisLabel: {
+              formatter: "{value}"
+            }
+          },
+          {
+            type: "value",
+            name: "",
+            min: 0,
+            max: 10,
+            interval: 2,
+            axisLabel: {
+              formatter: ""
+            }
+          }
+        ],
+        series: [
+          {
+            name: that.chartData[0].suicideSubScore[0].name,
+            type: "bar",
+            // barWidth: 16,
+            barMaxWidth: 14,
+            itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#8ACBFF" },
+                { offset: 1, color: "#8ACBFF" }
+              ])
+            },
+            data: yArr,
+            markLine: {
+              symbol: "none",
+              lineStyle: {
+                normal: {
+                  color: "#006cff"
+                }
+              },
+              data: [
+                {
+                  yAxis: lArr[0],
+                  name: "",
+                  lineStyle: {
+                    type: "solid",
+                    color: lArr.length == 1 ? "#ffbf0a" : "transparent",
+                    width: 1
+                  },
+                  label: {
+                    position: "end",
+                    fontSize: 12,
+                    formatter: "",
+                    color: "#FF77C3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            name: that.chartData[0].suicideSubScore[1].name,
+            type: "bar",
+            // barWidth: 16,
+            barMaxWidth: 14,
+            itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#B5B8FF" },
+                { offset: 1, color: "#B5B8FF" }
+              ])
+            },
+            data: jArr
+          },
+          {
+            name: that.chartData[0].suicideSubScore[2].name,
+            type: "bar",
+            // barWidth: 16,
+            barMaxWidth: 14,
+            itemStyle: {
+              barBorderRadius: [7, 7, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#FFB0DB" },
+                { offset: 1, color: "#FFB0DB" }
+              ])
+            },
+            data: qArr
+          },
+          {
+            name: "自我伤害水平",
+            type: "line",
+            yAxisIndex: 1,
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: "#FFC90C" },
+                { offset: 0.33, color: "#FFA87E" },
+                { offset: 0.66, color: "#FFDE6B" },
+                { offset: 1, color: "#FFC600" }
+              ])
+            },
+            data: lArr
+          }
+        ]
+      });
+    },
+    // myChartZhe8s() {
+    //   let that = this;
+    //   let xArr = [];
+    //   let yArr = [];
+    //   let jArr = [];
+    //   let qArr = [];
+    //   let lArr = [];
+    //   for (let i in that.chartData) {
+    //     xArr.push(that.chartData[i].dateCount);
+    //     yArr.push(that.chartData[i].violenceSubScore[0].score);
+    //     jArr.push(that.chartData[i].violenceSubScore[1].score);
+    //     qArr.push(that.chartData[i].violenceSubScore[2].score);
+    //     lArr.push(that.chartData[i].violenceScore.score);
+    //   }
+    //   this.myChartZhe8 = echarts.init(this.$refs.myChartZhe8);
+    //   this.myChartZhe8.setOption({
+    //     tooltip: {
+    //       trigger: "axis",
+    //       axisPointer: {
+    //         type: "line",
+    //         crossStyle: {
+    //           color: "#999"
+    //         }
+    //       }
+    //     },
+    //     grid: {
+    //       left: "0",
+    //       top: "30",
+    //       right: "60",
+    //       bottom: "3%",
+    //       containLabel: true
+    //     },
+    //     xAxis: [
+    //       {
+    //         type: "category",
+    //         data: xArr,
+    //         axisPointer: {
+    //           type: "shadow"
+    //         }
+    //       }
+    //     ],
+    //     yAxis: [
+    //       {
+    //         type: "value",
+    //         name: "",
+    //         min: 0,
+    //         max: 10,
+    //         interval: 2,
+    //         axisLabel: {
+    //           formatter: "{value}"
+    //         }
+    //       },
+    //       {
+    //         type: "value",
+    //         name: "",
+    //         min: 0,
+    //         max: 10,
+    //         interval: 2,
+    //         axisLabel: {
+    //           formatter: ""
+    //         }
+    //       }
+    //     ],
+    //     series: [
+    //       {
+    //         name: that.chartData[0].violenceSubScore[0].name,
+    //         type: "bar",
+    //         // barWidth: 16,
+    //         barMaxWidth: 14,
+    //         itemStyle: {
+    //           barBorderRadius: [7, 7, 0, 0],
+    //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //             { offset: 0, color: "#8ACBFF" },
+    //             { offset: 1, color: "#8ACBFF" }
+    //           ])
+    //         },
+    //         data: yArr,
+    //         markLine: {
+    //           symbol: "none",
+    //           lineStyle: {
+    //             normal: {
+    //               color: "#006cff"
+    //             }
+    //           },
+    //           data: [
+    //             {
+    //               yAxis: lArr[0],
+    //               name: "",
+    //               lineStyle: {
+    //                 type: "solid",
+    //                 color: lArr.length == 1 ? "#ffbf0a" : "transparent",
+    //                 width: 1
+    //               },
+    //               label: {
+    //                 position: "end",
+    //                 fontSize: 12,
+    //                 formatter: "",
+    //                 color: "#FF77C3"
+    //               }
+    //             }
+    //           ]
+    //         }
+    //       },
+    //       {
+    //         name: that.chartData[0].violenceSubScore[1].name,
+    //         type: "bar",
+    //         // barWidth: 16,
+    //         barMaxWidth: 14,
+    //         itemStyle: {
+    //           barBorderRadius: [7, 7, 0, 0],
+    //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //             { offset: 0, color: "#B5B8FF" },
+    //             { offset: 1, color: "#B5B8FF" }
+    //           ])
+    //         },
+    //         data: jArr
+    //       },
+    //       {
+    //         name: that.chartData[0].violenceSubScore[2].name,
+    //         type: "bar",
+    //         // barWidth: 16,
+    //         barMaxWidth: 14,
+    //         itemStyle: {
+    //           barBorderRadius: [7, 7, 0, 0],
+    //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //             { offset: 0, color: "#FFB0DB" },
+    //             { offset: 1, color: "#FFB0DB" }
+    //           ])
+    //         },
+    //         data: qArr
+    //       },
+    //       {
+    //         name: "自闭水平",
+    //         type: "line",
+    //         yAxisIndex: 1,
+    //         itemStyle: {
+    //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //             { offset: 0, color: "#FFC90C" },
+    //             { offset: 0.33, color: "#FFA87E" },
+    //             { offset: 0.66, color: "#FFDE6B" },
+    //             { offset: 1, color: "#FFC600" }
+    //           ])
+    //         },
+    //         data: lArr
+    //       }
+    //     ]
+    //   });
+    // },
     tabChange(type) {
       let that = this;
       this.tabActive = type;
@@ -1874,6 +2194,8 @@ export default {
       this.myChartZhe4s();
       this.myChartZhe5s();
       this.myChartZhe6s();
+      this.myChartZhe7s();
+      // this.myChartZhe8s();
     },
     sortChange(e) {
 
@@ -1897,6 +2219,8 @@ export default {
       this.myChartZhe4s();
       this.myChartZhe5s();
       this.myChartZhe6s();
+      this.myChartZhe7s();
+      // this.myChartZhe8s();
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

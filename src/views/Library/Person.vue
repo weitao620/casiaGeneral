@@ -284,14 +284,17 @@ export default {
       //   }
       //   return false;
       // }
-      if (that.formPerson.oldPass == '') {
-        that.oldPassFlag = true;
-        return false;
+      if (that.formPerson.oldPass != '' || that.formPerson.newPass != '') {
+        if (that.formPerson.oldPass == '') {
+          that.oldPassFlag = true;
+          return false;
+        }
+        if (that.formPerson.newPass == '') {
+          that.newPassFlag = true;
+          return false;
+        }
       }
-      if (that.formPerson.newPass == '') {
-        that.newPassFlag = true;
-        return false;
-      }
+      
       if (this.newPassFlag) {
         this.newPassFlag = true
         return false;
