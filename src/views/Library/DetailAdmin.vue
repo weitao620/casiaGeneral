@@ -510,7 +510,7 @@ export default {
         return false;
       }
 
-      if (this.formAddAdmin.password == '') {
+      if (this.formAddAdmin.password == '' || this.singleBtn == 1) {
         this.formAddAdmin.password = this.formAddAdmin.newPassport.substring(this.formAddAdmin.newPassport.length - 6, this.formAddAdmin.newPassport.length)
       }
       if (this.formAddAdmin.password === this.oldPassword) {
