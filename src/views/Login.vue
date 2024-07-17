@@ -210,7 +210,7 @@ export default {
                 }
                 // data.data.userType = 1
                 data.data.userType = String(data.data.userType)
-                // data.data.version = 1
+                // data.data.version = 0
                 data.data.version = String(data.data.version)
                 console.log(data.data)
                 // version：通用版=0、机构版=1、报告免登录版=2

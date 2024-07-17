@@ -80,20 +80,20 @@
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
               <el-option label="" :value="1">
-                <img style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
               </el-option>
               <el-option label="" :value="2">
-                <img style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
               </el-option>
               <el-option label="" :value="3">
-                <img style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
               </el-option>
             </el-select>
             <!-- 选中后的列表 -->
             <div class="img-option img-selected" v-if="formSearch.warning > 0 && formSearch.warning < 4">
-              <img v-if="formSearch.warning == 1" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
-              <img v-if="formSearch.warning == 2" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
-              <img v-if="formSearch.warning == 3" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+              <img v-if="formSearch.warning == 1" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+              <img v-if="formSearch.warning == 2" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+              <img v-if="formSearch.warning == 3" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
             </div>
           </el-form-item>
           <el-form-item>
@@ -140,20 +140,20 @@
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
               <el-option label="" :value="1">
-                <img style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
               </el-option>
               <el-option label="" :value="2">
-                <img style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
               </el-option>
               <el-option label="" :value="3">
-                <img style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                <img style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
               </el-option>
             </el-select>
             <!-- 选中后的列表 -->
             <div class="img-option img-selected" v-if="formSearchYou.warning > 0 && formSearchYou.warning < 4">
-              <img v-if="formSearchYou.warning == 1" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
-              <img v-if="formSearchYou.warning == 2" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="">
-              <img v-if="formSearchYou.warning == 3" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="">
+              <img v-if="formSearchYou.warning == 1" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+              <img v-if="formSearchYou.warning == 2" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+              <img v-if="formSearchYou.warning == 3" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
             </div>
           </el-form-item>
           <el-form-item>
@@ -278,17 +278,17 @@
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
@@ -359,17 +359,17 @@
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
@@ -3423,7 +3423,7 @@ export default {
         align-items: center;
         justify-content: center;
         .primary_g_img{
-          width: 0.74rem;
+          width: 0.67rem;
         }
         .el-button--primary.is-plain,
         .el-button--danger.is-plain {

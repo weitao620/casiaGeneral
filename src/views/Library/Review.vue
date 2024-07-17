@@ -50,17 +50,17 @@
                   <el-button type="primary" plain size="small">正常</el-button>
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
                   <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
@@ -329,7 +329,7 @@
                 ref="myChartZhe2"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 2">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].depressionSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].depressionSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].depressionSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].depressionSubScore[2].name}}</li>
@@ -351,7 +351,7 @@
                 ref="myChartZhe3"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 3">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].anxietySubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].anxietySubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].anxietySubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].anxietySubScore[2].name}}</li>
@@ -373,7 +373,7 @@
                 ref="myChartZhe4"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 4">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].forcedSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].forcedSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].forcedSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].forcedSubScore[2].name}}</li>
@@ -395,7 +395,7 @@
                 ref="myChartZhe5"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 5">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].violenceSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
@@ -417,7 +417,7 @@
                 ref="myChartZhe6"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 6">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].violenceSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
@@ -439,7 +439,7 @@
                 ref="myChartZhe7"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 7">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].suicideSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
@@ -461,7 +461,7 @@
                 ref="myChartZhe8"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 8">
-                <ul v-if="chartData.length > 0">
+                <ul v-if="chartData.length > 0 && chartData[0].suicideSubScore">
                   <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
                   <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
                   <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
@@ -685,6 +685,7 @@ export default {
     },
     powerData() {
       let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      console.log(algTypes)
       // 是否显示抑郁
       this.depressionFlag = algTypes.depression
       // 是否显示焦虑
@@ -705,6 +706,7 @@ export default {
       // this.violenceFlag = 1
       // this.personalityFlag = 0
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
+      console.log(algTypes)
       this.power1 = power.includes(30103); // 心理档案--查看
       this.power2 = power.includes(30104); // 心理档案--个人综合
     },
@@ -828,6 +830,7 @@ export default {
               console.log(fuluList)
               that.total = fuluList.length;
               that.tableData = this.pagination(1, this.limit, fuluList);
+              console.log(that.tableData)
               that.pageNum = fuluList.length == 0 ? 1 : Math.ceil(fuluList.length / that.limit);
               reviewDada = data.data;
               that.chartData = data.data.slice(0, 3);

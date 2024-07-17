@@ -75,6 +75,7 @@
                   type="file"
                   id="files"
                   ref="refFilet"
+                  accept=".xlsx"
                   style="display: none !important"
                   v-on:change="fileLoad"
                 />

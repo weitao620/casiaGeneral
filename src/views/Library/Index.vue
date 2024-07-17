@@ -201,15 +201,15 @@
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths1"></span>
-                <img class="c_p_l_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="" />
+                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="" />
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths2"></span>
-                <img class="c_p_l_img" style="width:0.40rem;" src="../../assets/images/news/zhong.png" alt="" />
+                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="" />
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths3"></span>
-                <img class="c_p_l_img" style="width:0.61rem;" src="../../assets/images/news/gao.png" alt="" />
+                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="" />
               </div>
             </div>
           </div>
@@ -424,17 +424,17 @@
                     <el-button type="primary" plain size="small">正常</el-button>
                   </div>
                   <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                    <img class="primary_g_img" style="width:0.19rem;" src="../../assets/images/news/di.png" alt="">
+                    <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
                     <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                    <img class="primary_g_img" style="width: 0.4rem;" src="../../assets/images/news/zhong.png" alt="">
+                    <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
                     <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                    <img class="primary_g_img" style="width: 0.61rem;" src="../../assets/images/news/gao.png" alt="">
+                    <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
                     <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
                     <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                   </div>
@@ -1015,21 +1015,21 @@ export default {
               "</span></div>" +
               '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
               // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.19rem;height:0.19rem" src="' + di + '" alt="" />' +
+              '<img style="width:0.67rem;height:0.22rem" src="' + di + '" alt="" />' +
               "：<span style='color:#7C82FF;font-weight: 600;'>" +
               // "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
               obj[1].value +
               "</span></div>" +
               '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
               // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.40rem;height:0.19rem" src="' + zhong + '" alt="" />' +
+              '<img style="width:0.67rem;height:0.22rem" src="' + zhong + '" alt="" />' +
               "：<span style='color:#FFBB79;font-weight: 600;'>" +
               // "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
               obj[2].value +
               "</span></div>" +
               '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
               // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.61rem;height:0.19rem" src="' + gao + '" alt="" />' +
+              '<img style="width:0.67rem;height:0.22rem" src="' + gao + '" alt="" />' +
               "：<span style='color:#FF8481;font-weight: 600;'>" +
               // "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
               obj[3].value +
@@ -2490,8 +2490,8 @@ export default {
                 margin-left: 0.04rem;
               }
               .c_p_l_img {
-                width:0.19rem;
-                height:0.19rem;
+                width:0.67rem;
+                height:0.22rem;
               }
             }
           }
@@ -2781,7 +2781,7 @@ export default {
           align-items: center;
           justify-content: center;
           .primary_g_img{
-            width: 0.74rem;
+            width: 0.67rem;
           }
           .el-button--primary.is-plain,
           .el-button--danger.is-plain {

@@ -39,7 +39,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态:" prop="status">
-          <el-select v-model="formSearch.status" multiple multiple-limit="2" placeholder="全部">
+          <el-select v-model="formSearch.status" placeholder="全部">
             <el-option label="全部" value=""></el-option>
             <el-option label="在用" value="1"></el-option>
             <el-option label="停用" value="0"></el-option>

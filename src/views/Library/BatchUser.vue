@@ -81,6 +81,7 @@
                   type="file"
                   id="files"
                   ref="refFilet"
+                  accept=".xlsx"
                   style="display: none !important"
                   v-on:change="fileLoad"
                 />
@@ -360,8 +361,11 @@ export default {
       this.$refs.refFilet.dispatchEvent(new MouseEvent("click"));
     },
     fileLoad(e) {
+      // console.log(e)
       let that = this;
       const selectedFile = this.$refs.refFilet.files[0];
+      // console.log(selectedFile)
+      // if (selectedFile.name)
       var name = selectedFile.name;
       var size = selectedFile.size;
       this.exlName = name;
