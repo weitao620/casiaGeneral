@@ -990,7 +990,7 @@ export default {
         this.remarkFlag = true;
         return false;
       }
-      if (this.formAddUser.password == '') {
+      if (this.formAddUser.password == '' || this.singleBtn == 1) {
         this.formAddUser.password = this.formAddUser.passport.substring(this.formAddUser.passport.length - 6, this.formAddUser.passport.length)
       }
       if (this.formAddUser.password === this.oldPassword) {
