@@ -260,12 +260,16 @@
                   <span>箱庭解析</span>
                 </div> -->
                 <div class="dtmcr_bts1">
-                  <p>
-                    <img src="../../assets/images/report/icon1.png" alt="" />
+                  <p v-if="details.themeDiscription && details.themeDiscription != ''">
+                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
+                    <span v-html="details.themeDiscription"></span>
+                  </p>
+                  <p v-if="details.selfDiscription && details.selfDiscription != ''">
+                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
                     <span v-html="details.selfDiscription"></span>
                   </p>
-                  <p>
-                    <img src="../../assets/images/report/icon1.png" alt="" />
+                  <p v-if="details.satisfyArea && details.satisfyArea != ''">
+                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
                     <span v-html="details.satisfyArea"></span>
                   </p>
                 </div>
@@ -2279,6 +2283,84 @@ export default {
               data.data.confidenceLevel = "可信";
             } else {
               data.data.confidenceLevel = "不可信";
+            }
+
+            // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
+            // data.data.themeDiscription = data.data.themeDiscription
+            if (data.data.themeDiscription && data.data.themeDiscription != '') {
+              if (data.data.themeDiscription.indexOf("：")) {
+                data.data.themeDiscription =
+                  '<span style="color:#333E75;font-weight:500">' +
+                  data.data.themeDiscription.substring(
+                    0,
+                    data.data.themeDiscription.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.themeDiscription.substring(
+                    data.data.themeDiscription.indexOf("：") + 1,
+                    data.data.themeDiscription.length
+                  );
+              }
+            }
+            // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
+            if (data.data.selfDiscription && data.data.selfDiscription != '') {
+              // data.data.selfDiscription = '作品描述：' + data.data.selfDiscription
+              if (data.data.selfDiscription && data.data.selfDiscription != '') {
+                if (data.data.selfDiscription.indexOf("：")) {
+                  if (data.data.selfDiscription.indexOf("（") != -1) {
+                    data.data.selfDiscription =
+                      '<span style="color:#333E75;font-weight:500">' +
+                      data.data.selfDiscription.substring(
+                        0,
+                        data.data.selfDiscription.indexOf("：") + 1
+                      ) +
+                      "</span>" +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("：") + 1,
+                        data.data.selfDiscription.indexOf("（") + 1
+                      ) +
+                      '<span style="color:#333E75">' +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("（") + 1,
+                        data.data.selfDiscription.indexOf("）")
+                      ) +
+                      "</span>" +
+                      data.data.selfDiscription.substring(
+                        data.data.selfDiscription.indexOf("）"),
+                        data.data.selfDiscription.length
+                      );
+                  } else {
+                    data.data.selfDiscription =
+                      '<span style="color:#333E75;font-weight:500">' +
+                      data.data.selfDiscription.substring(
+                        0,
+                        data.data.selfDiscription.indexOf("：") + 1
+                      ) +
+                      "</span>" +
+                    data.data.selfDiscription.substring(
+                      data.data.selfDiscription.indexOf("：") + 1,
+                      data.data.selfDiscription.length
+                    );
+                  }
+                }
+              }
+              // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
+              // data.data.satisfyArea = '象征意义：' + data.data.satisfyArea
+              if (data.data.satisfyArea && data.data.satisfyArea != '') {
+                if (data.data.satisfyArea.indexOf("：")) {
+                  data.data.satisfyArea =
+                    '<span style="color:#333E75;font-weight:500">' +
+                    data.data.satisfyArea.substring(
+                      0,
+                      data.data.satisfyArea.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                    data.data.satisfyArea.substring(
+                      data.data.satisfyArea.indexOf("：") + 1,
+                      data.data.satisfyArea.length
+                    );
+                }
+              }
             }
 
             if (data.data.selfDiscription.indexOf("“") != -1) {
@@ -5196,8 +5278,8 @@ export default {
                 // margin-bottom: 0.2rem;
                 p {
                   text-align: left;
-                  margin-bottom: 0.2rem;
-                  color: #5b6c89;
+                  margin-bottom: 0.14rem;
+                  // color: #5b6c89;
                   display: flex;
                   align-items: flex-start;
                   img {
@@ -5208,9 +5290,10 @@ export default {
                   }
                   span {
                     text-align: left;
-                    font-size: 0.16rem;
-                    font-family: Source Han Sans CN;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
                     font-weight: 400;
+                    font-size: 0.16rem;
+                    color: #333E75;
                     line-height: 0.24rem;
                   }
                 }
