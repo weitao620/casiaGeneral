@@ -658,7 +658,7 @@ export default {
     },
     dataURLtoBlob(dataurl) {
       console.log(dataurl)
-      if (dataurl != '') {
+      if (dataurl == '') {
         this.$message.error("下载模版异常，请联系管理员");
         return false
       }
