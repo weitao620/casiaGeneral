@@ -472,7 +472,6 @@ export default {
         return false;
       }
       if (this.formAddAdmin.password == '' || this.singleBtn == 1) {
-        console.log(2)
         this.formAddAdmin.password = this.formAddAdmin.passport.substring(this.formAddAdmin.passport.length - 6, this.formAddAdmin.passport.length)
       }
       let passMd5 = md5('AIMW-G' + this.formAddAdmin.password).substring(8, 24)
