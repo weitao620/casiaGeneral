@@ -360,6 +360,16 @@ export default {
     clickLoad() {
       this.$refs.refFilet.dispatchEvent(new MouseEvent("click"));
     },
+    formatDates(numb) {
+      console.log(numb)
+      const time = new Date((numb - 1) * 24 * 3600000 + 1)
+      time.setYear(time.getFullYear() - 70)
+      const year = time.getFullYear() + ''
+      const month = time.getMonth() + 1 + ''
+      const date = time.getDate() - 1 + ''
+      console.log(year)
+      return year + '年' + (month < 10 ? '0' + month : month) + '月' + (date < 10 ? '0' + date : date) + '日'
+    },
     fileLoad(e) {
       let that = this;
       const selectedFile = this.$refs.refFilet.files[0];
@@ -460,6 +470,21 @@ export default {
                 listNew[i].mark.push(
                   "出生日期为必填项！"
                 );
+              }
+              if (listNew[i].birth != "") {
+                if (listNew[i].birth.indexOf("年") == -1 || listNew[i].birth.indexOf("月") == -1 || listNew[i].birth.indexOf("日") == -1) {
+                  if (String(listNew[i].birth).length == 8) {
+                    listNew[i].birth = String(listNew[i].birth).substring(0, 4) + '年' + String(listNew[i].birth).substring(4, 6) + "月" + String(listNew[i].birth).substring(6, 8) + "日"
+                  } else if (String(listNew[i].birth).indexOf("/") != -1) {
+                    listNew[i].birth = String(listNew[i].birth).split('/')[0] + '年' + String(listNew[i].birth).split('/')[1] + "月" + String(listNew[i].birth).split('/')[2] + "日"
+                  } else if (String(listNew[i].birth).indexOf("-") != -1) {
+                    listNew[i].birth = String(listNew[i].birth).split('-')[0] + '年' + String(listNew[i].birth).split('-')[1] + "月" + String(listNew[i].birth).split('-')[2] + "日"
+                  } else if (String(listNew[i].birth).length > 0 && String(listNew[i].birth).length < 6) {
+                    listNew[i].birth = that.formatDates(Number(listNew[i].birth))
+                  }
+                } else {
+                  // console.log("不需要转换")
+                }
               }
               if (
                 listNew[i].birth != "" &&
