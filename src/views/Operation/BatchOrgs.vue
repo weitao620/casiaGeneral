@@ -977,31 +977,39 @@ export default {
       align-items: center;
       width: 8.9rem;
       margin: 0.32rem auto 0;
-      // div{
+      // .el-select .el-input .el-input__inner{
+      //   color: #7786ac;
+      //   height: 0.4rem;
       //   font-size: 0.18rem;
-      //   font-family: Source Han Sans CN;
-      //   font-weight: 400;
-      //   color: #7786AC;
-      //   line-height: 0.40rem;
+      //   line-height: 0.4rem;
+      //   padding: 0 0.3rem 0 0.15rem;
       // }
+      div, .el-form-item__label{
+        font-size: 0.18rem;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: #7786AC;
+        line-height: 0.40rem;
+        padding: 0;
+      }
       // .el-select{
       //   width: 3rem;
       // }
-      // .el-select .el-input .el-input__inner {
-      //   color: #7786ac;
-      //   height: 0.40rem;
-      //   font-size: 0.18rem;
-      //   line-height: 0.40rem;
-      //   padding: 0 0.15rem;
-      // }
-      // button,
-      // span:not([class*="suffix"]) {
-      //   display: inline-block;
-      //   font-size: 0.14rem;
-      //   min-width: 0.28rem;
-      //   height: 0.28rem;
-      //   line-height: 0.28rem;
-      // }
+      .el-select .el-input .el-input__inner {
+        color: #7786ac;
+        height: 0.40rem;
+        font-size: 0.18rem;
+        line-height: 0.40rem;
+        padding: 0 0.3rem 0 0.15rem !important;
+      }
+      button,
+      span:not([class*="suffix"]) {
+        display: inline-block;
+        font-size: 0.14rem;
+        min-width: 0.28rem;
+        height: 0.28rem;
+        line-height: 0.28rem;
+      }
       .person_contain {
         .el-form-item{
           margin: 0

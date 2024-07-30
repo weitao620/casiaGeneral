@@ -1,70 +1,95 @@
 <template>
   <div class="detail_report_wrap">
-    <img class="drw_bg" src="../../assets/images/news/zc_bg.png" alt="">
-    <!-- <img class="drw_bg" src="../../assets/images/news/yc_bg.png" alt=""> -->
+    <img class="drw_bg" v-if='details.warningNum > 0' src="../../assets/images/news/yc_bg.png" alt="">
+    <img class="drw_bg" v-else src="../../assets/images/news/zc_bg.png" alt="">
     
     <div class="top_back" @click="topBacks" v-show="scrollYs > part0">
       <img src="../../assets/images/report/to_top.png" alt="" />
     </div>
+    <!-- scrollYs > part0 &&  -->
     <div
-      :class="['r_futi', { r_futi_fix: scrollYs > part0 }]"
-      v-show="scrollYs > part0 && !reviewFlag"
+      class="r_futi r_futi_fix"
+      v-show="!reviewFlag"
     >
       <div
-        class="r_t_tab"
-        style="margin-bottom:0.12rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
+        class="r_t_tab r_t_tab_t"
         @click="toReview"
       >
-        <img src="../../assets/images/report/part0.png" alt="" />
         <span>查看箱庭作品</span>
+        <img src="../../assets/images/news/jiantou.png" alt="" />
       </div>
-      <div style="box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);">
+      <div class="r_ff_box">
         <div
           :class="[
             'r_t_tab',
-            { r_t_tab_act1: topAct == 4 },
-            { r_t_b0: topAct == 1 }
+            { r_t_tab_act1: topAct == 1 }
           ]"
-          @click="trendTab(4)"
-        >
-          <img src="../../assets/images/report/part8.png" alt="" />
-          <span>作品解读</span>
-        </div>
-        <div
-          :class="['r_t_tab', { r_t_tab_act2: topAct == 1 }]"
           @click="trendTab(1)"
         >
-          <img src="../../assets/images/report/part1.png" alt="" />
-          <span>本次概况</span>
+          <div>
+            <img src="../../assets/images/news/zuopinjiedu.png" alt="" />
+            <span>作品解读</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 1"></div>
         </div>
         <div
-          :class="['r_t_tab', { r_t_tab_act2: topAct == 2 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 2 }]"
           @click="trendTab(2)"
         >
-          <img src="../../assets/images/report/part2.png" alt="" />
-          <span>心理健康水平<br>分析</span>
+          <div>
+            <img style="width: 0.52rem;height:0.45rem;" src="../../assets/images/news/bencigaik.png" alt="" />
+            <span>本次概况</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 2"></div>
         </div>
         <div
-          v-show="suicideFlag == 1 || violenceFlag == 1"
-          :class="['r_t_tab', { r_t_tab_act2: topAct == 3 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 3 }]"
           @click="trendTab(3)"
         >
-          <img src="../../assets/images/report/renshenwx1.png" alt="" />
-          <span>人身危险性<br>分析</span>
+          <div>
+            <img style="width: 0.53rem;height:0.49rem;" src="../../assets/images/news/xlweidu.png" alt="" />
+            <span>心理健康维度分析</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 3"></div>
         </div>
         <div
-          v-show="personalityFlag == 1"
-          :class="['r_t_tab', { r_t_tab_act2: topAct == 5 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 }]"
+          @click="trendTab(4)"
+        >
+          <div>
+            <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="" />
+            <span>积极心理品质分析</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 4"></div>
+        </div>
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 5 }]"
           @click="trendTab(5)"
         >
-          <img src="../../assets/images/report/rengejd1.png" alt="" />
-          <span>&nbsp;附录一<br>人格解读</span>
+          
+          <div>
+            <img style="width: 0.43rem;height:0.52rem;" src="../../assets/images/news/rengefenxi.png" alt=""/>
+            <span>人格分析</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 5"></div>
+        </div>
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 6 }]"
+          @click="trendTab(6)"
+        >
+          <div>
+            <img style="width: 0.54rem;height:0.44rem;" src="../../assets/images/news/beizhu.png" alt="" />
+            <span>备注</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 6"></div>
         </div>
       </div>
     </div>
+    <!-- scrollYs > part0 &&  -->
+    <!-- :class="['r_futi', { r_futi_fix: scrollYs > part0 }]" -->
     <div
-      :class="['r_futi', { r_futi_fix: scrollYs > part0 }]"
-      v-show="scrollYs > part0 && reviewFlag"
+      class="r_futi r_futi_fix"
+      v-show="reviewFlag"
     >
       <div
         class="r_t_tab"
@@ -133,9 +158,9 @@
         </div>
       </div>
 
-      <div class="drwc_box">
+      <div class="drwc_box" ref="parts0">
         <div class="drwc_b_person">
-          <div class="dt_person_wt" ref="parts0">
+          <div class="dt_person_wt">
             <div class="dtp_main">
               <ul>
                 <li style="width: 4rem;padding-bottom:0.3rem;">
@@ -225,1337 +250,618 @@
           <img class="drwx_b_l" style="width:0.19rem;" src="../../assets/images/news/xiazai.png" alt="">
         </div>
       </div>
-
-      <div class="drwc_box" v-show="!reviewFlag">
-        <div class="drwc_common">
-          <div class="drwc_bw_head" ref="parts4">
-            <img src="../../assets/images/news/zuopinjiedu.png" alt="">
-            <span>作品解读</span>
-          </div>
-          <div class="drwc_b_work">
-            <div class="dtm_contain">
-              <div class="dtmc_left">
-                <!-- <div class="dtmcl_tle">
-                  <img
-                    src="../../assets/images/report/total2.png"
-                    style="width:0.35rem;height:0.34rem"
-                    alt=""
-                  />
-                  <span>箱庭鸟瞰图</span>
-                </div> -->
-                <div class="dtmcl_pic" v-if="birdViewImg !=''" @click="birdView">
-                  <img :src="'data:image;base64,' + birdViewImg" alt="" />
-                </div>
-                <div class="dtmcl_pic" v-else>
-                  <img src="../../assets/images/report/t001.png" alt="" />
-                </div>
-              </div>
-              <div class="dtmc_right1">
-                <!-- <div class="dtmcl_tle">
-                  <img
-                    src="../../assets/images/report/total3.png"
-                    style="width:0.28rem;height:0.30rem"
-                    alt=""
-                  />
-                  <span>箱庭解析</span>
-                </div> -->
-                <div class="dtmcr_bts1">
-                  <p v-if="details.themeDiscription && details.themeDiscription != ''">
-                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
-                    <span v-html="details.themeDiscription"></span>
-                  </p>
-                  <p v-if="details.selfDiscription && details.selfDiscription != ''">
-                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
-                    <span v-html="details.selfDiscription"></span>
-                  </p>
-                  <p v-if="details.satisfyArea && details.satisfyArea != ''">
-                    <!-- <img src="../../assets/images/report/icon1.png" alt="" /> -->
-                    <span v-html="details.satisfyArea"></span>
-                  </p>
-                </div>
-              </div>
+      <div v-show="!reviewFlag">
+        <div class="drwc_box" ref="parts1">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img src="../../assets/images/news/zuopinjiedu.png" alt="">
+              <span>作品解读</span>
             </div>
-          </div>
-        </div>
-        
-      </div>
-
-    </div>
-    
-    <!-- <div class="dt_header">
-      <div class="dt_h_box">
-        <span>数据更新时间：{{ details.reportTime }}</span>
-        <div v-if="part44"  class="dt_download" @click="personExport">
-          下载报告
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="dt_top_bg">
-      <div class="dttb_tips">
-        <img src="../../assets/images/report/tip_index.png" alt="" />
-        <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
-      </div>
-      <div class="dttb_txt">
-        <h1>导读</h1>
-        <p>
-          沙盘游戏，也被称为箱庭疗法，是指来访者在治疗师的陪伴下，从玩具架上自由挑选沙具，在盛有细沙的特制箱子里进行自我表现的一种心理疗法。沙盘游戏的有效性已经得到国内外临床实践的广泛验证，对于丰富个体的情感体验、促进自我成长及人格完善具有显著的作用。
-        </p>
-        <p>
-          我们基于投射、沙盘游戏理论，运用人工智能、三维仿真等多项技术研发了AI心世界，实现了实物沙盘的电子化与智能化。
-        </p>
-        <p>
-          AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。
-        </p>
-      </div>
-      <img src="../../assets/images/report/teacherRbg.png" alt="" />
-      <div class="dt_person" ref="parts0">
-        <div class="dtp_photo">
-          <img v-if="String(details.gender) == '1'"  src="../../assets/images/report/human.png" alt="" />
-          <img v-if="String(details.gender) == '0'" style="width: 1.3rem;height:1.3rem;margin-top:0.09rem" src="../../assets/images/report/huwoman.png" alt="" />
-        </div>
-        <div class="dtp_main">
-          <ul>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per1"
-                src="../../assets/images/report/person1.png"
-                alt=""
-              />
-              <span class="dt_blod">姓名：</span>
-              <span>{{ details.name }}</span>
-            </li>
-            <li style="width:3.8rem">
-              <img
-                class="dt_per2"
-                src="../../assets/images/report/person9.png"
-                alt=""
-              />
-              <span class="dt_blod">登录账号：</span>
-              <span>{{ details.passport }}</span>
-            </li>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per3"
-                src="../../assets/images/report/person10.png"
-                alt=""
-              />
-              <span class="dt_blod">手机号：</span>
-              <span>{{ details.phone }}</span>
-            </li>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per4"
-                src="../../assets/images/report/person4.png"
-                alt=""
-              />
-              <span class="dt_blod">出生日期：</span>
-              <span>{{ details.birth }}</span>
-            </li>
-            <li style="width:3.8rem">
-              <img
-                class="dt_per4"
-                style="margin-left: 0.02rem;"
-                src="../../assets/images/report/person6.png"
-                alt=""
-              />
-              <span class="dt_blod">所属部门：</span>
-              <span>{{ details.departmentName }}</span>
-            </li>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per7"
-                src="../../assets/images/report/person7.png"
-                alt=""
-              />
-              <span class="dt_blod">测评次数：</span>
-              <span>第{{ details.evaluationTime }}次</span>
-            </li>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per8"
-                src="../../assets/images/report/person8.png"
-                alt=""
-              />
-              <span class="dt_blod">测评时间：</span>
-              <span>{{ details.datetime }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div> -->
-    <div class="dt_mains" v-show="!reviewFlag">
-      <div class="dtm_title" ref="parts4">
-        作品解读
-      </div>
-      <div class="dtm_contain">
-        <div class="dtmc_left">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/total2.png"
-              style="width:0.35rem;height:0.34rem"
-              alt=""
-            />
-            <span>箱庭鸟瞰图</span>
-          </div>
-          <div class="dtmcl_pic" v-if="birdViewImg !=''" @click="birdView">
-            <img :src="'data:image;base64,' + birdViewImg" alt="" />
-          </div>
-          <div class="dtmcl_pic" v-else>
-            <img src="../../assets/images/report/t001.png" alt="" />
-          </div>
-        </div>
-        <div class="dtmc_right1">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/total3.png"
-              style="width:0.28rem;height:0.30rem"
-              alt=""
-            />
-            <span>箱庭解析</span>
-          </div>
-          <div class="dtmcr_bts1">
-            <p>
-              <img src="../../assets/images/report/icon1.png" alt="" />
-              <span v-html="details.selfDiscription"></span>
-            </p>
-            <p>
-              <img src="../../assets/images/report/icon1.png" alt="" />
-              <span v-html="details.satisfyArea"></span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="dtm_title" ref="parts1">
-        本次概况
-      </div>
-      <div class="dtm_contain">
-        <div class="dtmc_left">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/total1.png" alt="" />
-            <span>总体评估概况</span>
-          </div>
-          <div class="dtmcl_chart">
-            <div id="myChart" class="my_chart" ref="myChart"></div>
-            <div class="c_o_my_txt" v-show="myTxtFlag">
-              {{ details.warningNum }}项
-            </div>
-            <div class="c_o_my_num c_red" v-show="myTxtFlag">
-              预警
-            </div>
-          </div>
-          <div class="dtmcl_sys">
-            <div class="dtmcl_du dtmcl_du1">
-              <img v-if="details.warning == 0" src="../../assets/images/report/per_i0.png" alt="" />
-              <img v-if="details.warning == 1" src="../../assets/images/report/per_i1.png" alt="" />
-              <img v-if="details.warning == 2" src="../../assets/images/report/per_i2.png" alt="" />
-              <img v-if="details.warning == 3" src="../../assets/images/report/per_i3.png" alt="" />
-              <span>总体评估：</span>
-              <div class="wdrjst_res" v-if="details.warning == 0">
-                <span class="wdrjstr_txt wd_col1">正常</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 1">
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 2">
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 3">
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
-              </div>
-            </div>
-            <div v-if="details.reportWarningInfo">
-              <div
-                style="padding: 0 0.24rem;color:#5b6c89;font-size:0.18rem"
-                v-if="details.warningList.length == 0"
-              >
-                该受测者心理健康水平良好。
-              </div>
-              <div v-else>
-                <div
-
-                  v-for="(item, index) in details.warningList"
-                  :key="item.id"
-                >
-                  <div class="dtmcl_du dtmcl_du2" v-if="item.old != '正常' && item.flag == 1">
-                    <img
-                      :src="
-                        require('../../assets/images/report/icons' +
-                          index +
-                          '.png')
-                      "
-                      alt=""
-                    />
-                    <span v-html="item.new"></span>
+            <div class="drwc_b_work">
+              <div class="dtm_contain">
+                <div class="dtmc_left" style="width: auto;">
+                  <div class="dtmcl_pic" v-if="birdViewImg !=''" @click="birdView">
+                    <img :src="'data:image;base64,' + birdViewImg" alt="" />
+                  </div>
+                  <div class="dtmcl_pic" v-else>
+                    <img src="../../assets/images/report/t001.png" alt="" />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="dtmc_right">
-          <div class="dtmcl_tle">
-            <span>指标</span>
-            <span>本次结果</span>
-            <span>上次结果</span>
-            <span>个人平均参测结果</span>
-          </div>
-          <div class="dtmcl_box">
-            <ul class="dtmcr_ul" v-if="depressionFlag == 1">
-              <li>抑郁</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.depressionLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.depressionLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.depressionLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.depressionScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.depressionLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.depressionLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.depressionLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.depressionLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.depressionScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.depressionLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.depressionLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.depressionLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.depressionLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.depressionLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.depressionLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.depressionScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="anxietyFlag == 1">
-              <li>焦虑</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.anxietyScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.anxietyLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.anxietyScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.anxietyLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.anxietyLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.anxietyLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.anxietyLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.anxietyLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.anxietyLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.anxietyScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="forcedFlag == 1">
-              <li>强迫</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.forcedLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.forcedLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.forcedLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.forcedScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.forcedLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.forcedLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.forcedLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.forcedLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.forcedScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.forcedLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.forcedLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.forcedLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.forcedLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.forcedLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.forcedLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.forcedScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="suicideFlag == 1">
-              <li>自我伤害</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.suicideLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.suicideLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.suicideLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.suicideScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.suicideLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.suicideLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.suicideLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.suicideLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.suicideScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.suicideLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.suicideLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.suicideLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.suicideLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.suicideLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.suicideLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.suicideScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-            <ul class="dtmcr_ul" v-if="violenceFlag == 1">
-              <li>敌对</li>
-              <li v-if="details.reportWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.reportWarningInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  :class="[
-                    { dr_sp0: details.reportWarningInfo.violenceLevel == 0 },
-                    { dr_sp1: details.reportWarningInfo.violenceLevel == 1 },
-                    { dr_sp2: details.reportWarningInfo.violenceLevel == 2 },
-                    { dr_sp3: details.reportWarningInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.reportWarningInfo.violenceScore }}</span
-                >
-              </li>
-              <li v-if="details.lastWarningInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.lastWarningInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.lastWarningInfo.violenceLevel != -1"
-                  :class="[
-                    { dr_sp0: details.lastWarningInfo.violenceLevel == 0 },
-                    { dr_sp1: details.lastWarningInfo.violenceLevel == 1 },
-                    { dr_sp2: details.lastWarningInfo.violenceLevel == 2 },
-                    { dr_sp3: details.lastWarningInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.lastWarningInfo.violenceScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-              <li v-if="details.warningAvgInfo">
-                <div class="dr_li11">
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 0"
-                    src="../../assets/images/report/sys_btn1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 1"
-                    src="../../assets/images/report/sys_btn2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 2"
-                    src="../../assets/images/report/sys_btn3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="details.warningAvgInfo.violenceLevel == 3"
-                    src="../../assets/images/report/sys_btn4.png"
-                    alt=""
-                  />
-                </div>
-                <span
-                  v-if="details.warningAvgInfo.violenceLevel != -1"
-                  :class="[
-                    { dr_sp0: details.warningAvgInfo.violenceLevel == 0 },
-                    { dr_sp1: details.warningAvgInfo.violenceLevel == 1 },
-                    { dr_sp2: details.warningAvgInfo.violenceLevel == 2 },
-                    { dr_sp3: details.warningAvgInfo.violenceLevel == 3 }
-                  ]"
-                  >{{ details.warningAvgInfo.violenceScore }}</span
-                >
-                <span v-else>/</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="dtm_title dtm_title2" ref="parts2">
-        心理健康水平分析
-      </div>
-      <div class="dtm_sys">
-        <el-carousel :interval="40000" arrow="always" type="card" height="7rem">
-          <el-carousel-item :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title">
-            <div class="dtms_box">
-              <div class="dtmsb_tle" :style="{ background: item.bg }">
-                <h3>{{ item.title }}</h3>
-                <div class="dtt_res">
-                  <span style="font-size:0.18rem;margin-top:0.48rem"
-                    >评估结果</span
-                  >
-                  <div class="dtt_img">
-                    <img
-                      src="../../assets/images/report/grade_line.png"
-                      alt=""
-                    />
-                    <img
-                      class="dttr_btn"
-                      :style="{ left: item.gradep }"
-                      src="../../assets/images/report/grade_btn.png"
-                      alt=""
-                    />
-                    <span class="dttr_lv" :style="{ left: item.gradep }">{{
-                      item.level
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="dtmsb_tar">
-                <div style="position:relative">
-                  <div class="top_top" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                    <div class="demsb_tool">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[0].score)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bottom_left" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                    <div class="demsb_tool" style="margin-left:1.6rem">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[2].score)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bottom_right" v-if="item.subDim">
-                    <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                    <div class="demsb_tool1">
-                      <div class="demsb_score">
-                        本次得分：<span>{{
-                          parseInt(item.subDim[1].score)
-                        }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="index == 0" id="myChartPies1" class="myChartPies1" ref="myChartPies1"></div>
-                  <div v-if="index == 1" id="myChartPies2" class="myChartPies2" ref="myChartPies2"></div>
-                  <div v-if="index == 2" id="myChartPies3" class="myChartPies3" ref="myChartPies3"></div>
-                </div>
-                <!-- <ul class="dtmsb_ulc">
-                  <li>
-                    <img src="../../assets/images/report/fwLine.png" alt="" />
-                  </li>
-                </ul> -->
-              </div>
-              <div class="dtmcr_bts">
-                <!-- :style="{ color: item.txtColor }" -->
-                <div class="db_img">
-                  <img
-                    src="../../assets/images/report/sys1.png"
-                    alt=""
-                  />
-                  <!-- <img
-                    v-if="item.imgType == 1"
-                    src="../../assets/images/report/sys1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 2"
-                    src="../../assets/images/report/sys2.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 3"
-                    src="../../assets/images/report/sys3.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 4"
-                    src="../../assets/images/report/sys4.png"
-                    alt=""
-                  /> -->
-                  测评结果分析
-                </div>
-                <p v-for="(items, keps) in item.list" :key="keps">
-                  <img
-                    src="../../assets/images/report/icon0.png"
-                    alt=""
-                  />
-                  <!-- <img
-                    v-if="item.imgType == 1"
-                    src="../../assets/images/report/icon0.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 2"
-                    src="../../assets/images/report/icon1.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 3"
-                    src="../../assets/images/report/icon6.png"
-                    alt=""
-                  />
-                  <img
-                    v-if="item.imgType == 4"
-                    src="../../assets/images/report/icon7.png"
-                    alt=""
-                  /> -->
-                  {{ items }}
-                </p>
-              </div>
-            </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="guide_box">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/guide_i.png"
-              style="width:0.3rem;height:0.29rem"
-              alt=""
-            />
-            <span>指导建议</span>
-          </div>
-          <!-- <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
+                <div class="dtmc_right1">
+                  <div class="dtmcr_bts1">
+                    <p v-if="details.themeDiscription && details.themeDiscription != ''">
+                      <span v-html="details.themeDiscription"></span>
                     </p>
-                  </li>
-                </ul>
+                    <p v-if="details.selfDiscription && details.selfDiscription != ''">
+                      <span v-html="details.selfDiscription"></span>
+                    </p>
+                    <p v-if="details.satisfyArea && details.satisfyArea != ''">
+                      <span v-html="details.satisfyArea"></span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div> -->
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <div v-for="(itemt, indext) in item" :key="indext">
-                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                      <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
-                        {{ itemp }}
+          </div>
+        </div>
+
+        <div class="drwc_box" ref="parts2">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.52rem;height:0.45rem;" src="../../assets/images/news/bencigaik.png" alt="">
+              <span>本次概况</span>
+            </div>
+            <div class="drwc_b_work">
+              <div class="dtm_contain">
+                <div class="dtmc_left" style="margin-top: -0.4rem;margin-right: 0">
+                  <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length > 0">
+                    <div id="myChart" class="my_chart" ref="myChart"></div>
+                  </div>
+                  <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length == 0">
+                    <div class="dtmcl_c_nor">正常</div>
+                  </div>
+                  <div class="dtmcl_sys">
+                    <div class="dtmcl_du3">
+                      <span>数据解读</span>
+                    </div>
+                    <div class="dtmcl_sbox">
+                      <div class="dtmcl_sb_t">风险评估：</div>
+                      <div class="dtmcl_sb_c" v-if="details.reportWarningInfo">
+                        <ul v-if="details.warningList.length > 0">
+                          <li v-for="item in details.warningList" :key="item.id">
+                            <span>{{item.name}}风险</span>
+                            <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
+                            <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
+                            <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
+                          </li>
+                        </ul>
+                        <div v-else>
+                          正常
+                        </div>
                       </div>
-                      <ul v-if="Array.isArray(itemp)">
-                        <li v-for="(items, indexs) in itemp" :key="indexs">
-                          <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                          <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                          <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                          <p v-if="!Array.isArray(items)">
-                            {{ items }}
-                          </p>
-                          <div style="padding-left:0.26rem;" v-if="Array.isArray(items)">
-                            <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                              <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                              <p>{{itemf}}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
                     </div>
                   </div>
-                  <div v-else>
-                    <div v-if="indext == 0">
-                      <div v-for="(itemp, indexp) in item" :key="indexp">
-                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                          {{ itemp }}
+                </div>
+                <div class="dtmc_right">
+                  <div class="dtmc_r_biao">
+                    <ul>
+                      <li>
+                        <div>指标</div>
+                        <div>本次结果</div>
+                        <div>上次结果</div>
+                      </li>
+                      <li v-for="item in details.rangeList" :key="item.id">
+                        <div>{{item.name}}</div>
+                        <div>
+                          <span v-if="item.level == -1">/</span>
+                          <span v-if="item.level == 0">正常</span>
+                          <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
+                          <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
+                          <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
                         </div>
-                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
+                        <div>
+                          <span v-if="item.lastLevel == -1">/</span>
+                          <span v-if="item.lastLevel == 0">正常</span>
+                          <img v-if="item.lastLevel == 1" src="../../assets/images/news/di.png" alt="">
+                          <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhong.png" alt="">
+                          <img v-if="item.lastLevel == 3" src="../../assets/images/news/gao.png" alt="">
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="drwc_box" ref="parts3">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.53rem;height:0.49rem;" src="../../assets/images/news/xlweidu.png" alt="">
+              <span>心理健康维度分析</span>
+            </div>
+            <div class="drwc_b_tab">
+              <div class="drwc_bt_left">
+                <div class="drwc_btl" v-if='details.rangeList'>
+                  <ul>
+                    <li :class="[{ btl_act: item.id == btlActNum}]" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="item in sysList" :key="item.id" @click="btlChange(item.id)">
+                      {{ item.title }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="drwc_bt_right">
+                <div class="drwc_btr">
+                  <div class="wdrj_box">
+                    <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == btlActNum ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.id">
+                      <div class="wdrj_title">
+                        <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
+                        <span v-if="item.levelNum == 0">正常</span>
+                        <img v-if="item.levelNum == 1" src="../../assets/images/news/di.png" alt="">
+                        <img v-if="item.levelNum == 2" src="../../assets/images/news/zhong.png" alt="">
+                        <img v-if="item.levelNum == 3" src="../../assets/images/news/gao.png" alt="">
+                      </div>
+                      <div class="dtmsb_tar">
+                        <div style="position:relative" id="perViolenceEchart">
+                          <div class="top_top" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[0].name }}
+                              <!-- <div class="demsb_tool">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[0].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <div class="bottom_left" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[2].name }}
+                              <!-- <div class="demsb_tool">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[2].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <div class="bottom_right" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[1].name }}
+                              <!-- <div class="demsb_tool1">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[1].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <!-- 抑郁 -->
+                          <div v-if="index == 0" id="myChartLd2" class="myChartLd0" ref="myChartLd2" style="height:2.66rem"></div>
+                          <!-- 焦虑 -->
+                          <div v-if="index == 1" id="myChartLd3" class="myChartLd0" ref="myChartLd3" style="height:2.66rem"></div>
+                          <!-- 强迫 -->
+                          <div v-if="index == 2" id="myChartLd4" class="myChartLd0" ref="myChartLd4" style="height:2.66rem"></div>
+                          <!-- PTSD -->
+                          <div v-if="index == 3" id="myChartLd5" class="myChartLd0" ref="myChartLd5" style="height:2.66rem"></div>
+                          <!-- 敌对 -->
+                          <div v-if="index == 4" id="myChartLd6" class="myChartLd0" ref="myChartLd6" style="height:2.66rem"></div>
+                          <!-- 自我伤害 -->
+                          <div v-if="index == 5" id="myChartLd7" class="myChartLd0" ref="myChartLd7" style="height:2.66rem"></div>
+                          <!-- 自闭 -->
+                          <div v-if="index == 6" id="myChartLd8" class="myChartLd0" ref="myChartLd8" style="height:2.66rem"></div>
+                        </div>
+                      </div>
+                      <div class="wdrj_suger" style="margin-top:0rem">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />测评结果分析
+                        </div>
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                            <p>
+                              {{ indexs + 1 }}.{{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />指导建议
+                        </div>
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                              {{ items }}
+                            </p>
+                            <div v-if="Array.isArray(items)">
+                              <p v-for="(itemu, indexu) in items" :key="indexu">{{ indexu + 1 }}.{{ itemu }}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="drwc_box" ref="parts4">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="">
+              <span>积极心理品质分析</span>
+            </div>
+            <div class="drwc_b_tab drwc_b_tab1">
+              <div class="drwc_bt_left drwc_bt_top">
+                <div class="drwc_btl" v-if='details.jjList'>
+                  <ul>
+                    <li :class="[{ btl_act: item.id == jjActNum}]" :style="{'display':item.flag == 1 ? 'block' : 'none', 'border-left' : index == 0 && item.id == jjActNum ? '0' : '0.01rem solid rgba(203, 206, 224, 1)' }" v-for="(item, index) in jjList" :key="item.id" @click="jjChange(item.id)">
+                      {{ item.title }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="drwc_bt_right drwc_bt_bottom">
+                <div class="drwc_btr">
+                  <div class="wdrj_box">
+                    <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == jjActNum ? 'block' : 'none'}" v-for="(item, index) in jjList" :key="item.id">
+                      <div class="wdrj_title">
+                        <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
+                        <img v-if="item.levelNum == 0" style="width: 0.2rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                        <img v-if="item.levelNum == 1" style="width: 0.42rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                        <img v-if="item.levelNum == 2" style="width: 0.64rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                        <img v-if="item.levelNum == 3" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
+                      </div>
+                      <div class="dtmsb_tar" style="height: auto;">
+                        <div style="position:relative" id="perViolenceEchart">
+                          <img class="dengpao" v-if="item.levelNum == 0" src="../../assets/images/news/jiaodis.png" alt="">
+                          <img class="dengpao" v-if="item.levelNum == 1" src="../../assets/images/news/zhongdengs.png" alt="">
+                          <img class="dengpao" v-if="item.levelNum == 2" src="../../assets/images/news/jiaogaos.png" alt="">
+                          <img class="dengpao" v-if="item.levelNum == 3" src="../../assets/images/news/jigaos.png" alt="">
+                          
+                        </div>
+                      </div>
+                      <div class="wdrj_suger" style="margin-top:0rem">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />测评结果分析
+                        </div>
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                            <p>
+                              {{ indexs + 1 }}.{{ items }}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />指导建议
+                        </div>
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                              {{ items }}
+                            </p>
+                            <div v-if="Array.isArray(items)">
+                              <p v-for="(itemu, indexu) in items" :key="indexu">{{ indexu + 1 }}.{{ itemu }}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="drwc_box" ref="parts5">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.43rem;height:0.52rem;" src="../../assets/images/news/rengefenxi.png" alt="">
+              <span>人格分析</span>
+            </div>
+            <div class="drwc_b_tab drwc_b_tab1">
+              <div class="drwc_bt_left drwc_bt_top">
+                <div class="drwc_btl" v-if='details.rgList'>
+                  <ul>
+                    <li :class="[{ btl_act: item.id == rgActNum}]" :style="{'display':item.flag == 1 ? 'block' : 'none', 'border-left' : index == 0 && item.id == rgActNum ? '0' : '0.01rem solid rgba(203, 206, 224, 1)' }" v-for="(item, index) in rgList" :key="item.id" @click="rgChange(item.id)">
+                      {{ item.title }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="drwc_bt_right drwc_bt_bottom">
+                <div class="drwc_btr">
+                  <div class="wdrj_box">
+                    <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == rgActNum ? 'block' : 'none'}" v-for="(item, index) in rgList" :key="item.id">
+                      <div class="wdrj_title">
+                        <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
+                        <span v-if="item.grade < 2 && item.grade > -1">低</span>
+                        <span v-if="item.grade < 4 && item.grade > 1">偏低</span>
+                        <span v-if="item.grade < 6 && item.grade > 3">中等</span>
+                        <span v-if="item.grade < 8 && item.grade > 5">偏高</span>
+                        <span v-if="item.grade < 10 && item.grade > 7">高</span>
+                      </div>
+                      <div class="wdrj_line">
+                        <div class="wdrj_l_left">低</div>
+                        <div class="wdrj_l_center">
+                          <div class="wdrj_lc_txt">
+                            <span>0分</span>
+                            <span>{{item.title}}</span>
+                            <span>9分</span>
+                          </div>
+                          <img
+                            class="dttr_btn"
+                            :style="{ left: item.gradep }"
+                            src="../../assets/images/news/grade_btn.png"
+                            alt=""
+                          />
+                          <span class="dttr_score" :style="{ left: item.gradep }">
+                            {{item.grade}}分，
+                            <span v-if="item.grade < 2 && item.grade > -1">低</span>
+                            <span v-if="item.grade < 4 && item.grade > 1">偏低</span>
+                            <span v-if="item.grade < 6 && item.grade > 3">中等</span>
+                            <span v-if="item.grade < 8 && item.grade > 5">偏高</span>
+                            <span v-if="item.grade < 10 && item.grade > 7">高</span>
+                          <i></i>
+                          </span>
+                        </div>
+                        <div class="wdrj_l_right">高</div>
+                      </div>
+                      <div class="dtmsb_tar">
+                        <div style="position:relative" id="perViolenceEchart">
+                          <div class="top_top" style="top:0.2rem" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[0].name }}
+                              <!-- <div class="demsb_tool" style="left: 2.3rem;">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[0].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <div class="bottom_left" style="left: 3.3rem;bottom: 0.42rem;" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[2].name }}
+                              <!-- <div class="demsb_tool" style="left: 2.3rem;">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[2].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <div class="bottom_right" style="left: 0.82rem;bottom: 0.42rem;" v-if="item.subDim">
+                            <span class="tt_txt">
+                              {{ item.subDim[1].name }}
+                              <!-- <div class="demsb_tool1" style="right: 2.3rem;">
+                                <div class="demsb_score">
+                                  本次得分：<span>{{
+                                    parseInt(item.subDim[1].score)
+                                  }}</span>
+                                </div>
+                              </div> -->
+                            </span>
+                          </div>
+                          <!-- 抑郁 -->
+                          <div v-if="index == 0" id="myChartRg2" class="myChartLd0" ref="myChartRg2" style="height:2.66rem"></div>
+                          <!-- 焦虑 -->
+                          <div v-if="index == 1" id="myChartRg3" class="myChartLd0" ref="myChartRg3" style="height:2.66rem"></div>
+                          <!-- 强迫 -->
+                          <div v-if="index == 2" id="myChartRg4" class="myChartLd0" ref="myChartRg4" style="height:2.66rem"></div>
+                          <!-- PTSD -->
+                          <div v-if="index == 3" id="myChartRg5" class="myChartLd0" ref="myChartRg5" style="height:2.66rem"></div>
+                          <!-- 敌对 -->
+                          <div v-if="index == 4" id="myChartRg6" class="myChartLd0" ref="myChartRg6" style="height:2.66rem"></div>
+                        </div>
+                      </div>
+                      <div class="wdrj_suger" style="margin-top:0rem">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />测评结果分析
+                        </div>
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.sysDim" :key="indexs">
                             <p>
                               {{ items }}
                             </p>
                           </li>
                         </ul>
-                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                          <li >
-                            <!-- <span>1</span> -->
-                            <p>
-                              {{ itemp }}
-                            </p>
-                          </li>
-                        </ul>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="dtm_title dtm_title2" :style="{height: suicideFlag == 1 || violenceFlag == 1 ? 'auto' : '0',margin: suicideFlag == 1 || violenceFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts3">
-        人身危险性分析
-      </div>
-      <div class="wdrj_box" v-show="suicideFlag == 1 || violenceFlag == 1">
-        <div class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList2" :key="item.title">
-          <div class="wdrj_title">
-            <img
-              v-if="item.title == '敌对'"
-              src="../../assets/images/report/f_icon1.png"
-              alt=""
-              style="width: 0.32rem;height: 0.28rem"
-            />
-            <img
-              v-if="item.title == '自我伤害'"
-              src="../../assets/images/report/f_icon2.png"
-              alt=""
-              style="width: 0.32rem;height: 0.32rem"
-            />
-            <span>{{item.title}}</span>
-          </div>
-          <div class="wdrj_suger wdrj_suger1">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />
-              <span>评估结果</span>
-              <div class="wdrjst_res" v-if="item.levelNum == 0">
-                <img src="../../assets/images/report/per_i0.png" alt="" />
-                <span class="wdrjstr_txt wd_col1">正常</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 1">
-                <img src="../../assets/images/report/per_i1.png" alt="" />
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 2">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="item.levelNum == 3">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
-              </div>
-            </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative" id="perViolenceEchart">
-              <div class="top_top" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[0].score)
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="bottom_left" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                <div class="demsb_tool" style="margin-left:2.9rem">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[2].score)
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="bottom_right" v-if="item.subDim">
-                <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">
-                    本次得分：<span>{{
-                      parseInt(item.subDim[1].score)
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-              <div v-if="item.title == '敌对' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '敌对' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
-              <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd2" class="myChartLd1" ref="myChartLd2" style="height:2.66rem"></div>
-              <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd3" class="myChartLd1" ref="myChartLd3" style="height:2.66rem"></div>
-            </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="wdrj_suger" style="margin-top:0.3rem">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
-            </div>
-            <ul class="wdrjs_uls">
-              <li v-for="(items, indexs) in item.sysDim" :key="indexs">
-                <span>{{ indexs + 1 }}</span>
-                <p>
-                  {{ items }}
-                </p>
-              </li>
-            </ul>
-          </div>
-          <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
-            </div>
-            <!-- <ul class="wdrjs_uls">
-              <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                <span>{{ indexs + 1 }}</span>
-                <p>
-                  {{ items }}
-                </p>
-              </li>
-            </ul> -->
-            <div class="gb_contain">
-              <!-- <div v-for="(item, index) in details.suggestion" :key="index">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <ul>
-                    <li v-for="(items, indexs) in item" :key="indexs">
-                      <span>{{ indexs + 1 }}</span>
-                      <p>
-                        {{ items }}
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div> -->
-              <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                <p style="margin-left: -0.12rem" v-if="!Array.isArray(items)">
-                  <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
-                  <span
-                    v-html="items"
-                  ></span>
-                </p>
-                <div style="margin-left: 0.1rem;margin-bottom: 0.1rem;" v-if="Array.isArray(items)">
-                  <div v-for="(itemt, indext) in items" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
+                      <!-- <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+                        <div class="wdrjs_title">
+                          <img src="../../assets/images/news/dot.png" alt="" />指导建议
                         </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
-                            <p v-if="!Array.isArray(itemv)">
-                              {{ itemv }}
+                        <ul class="wdrjs_uls">
+                          <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                              {{ items }}
                             </p>
-                            <div style="padding-left:0.26rem;" v-if="Array.isArray(itemv)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
+                            <div v-if="Array.isArray(items)">
+                              <p v-for="(itemu, indexu) in items" :key="indexu">{{ indexu + 1 }}.{{ itemu }}</p>
                             </div>
                           </li>
                         </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in items" :key="indexp">
-                          <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
-                              <p>
-                                {{ itemv }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="drwc_box" ref="parts6">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.54rem;height:0.44rem;" src="../../assets/images/news/beizhu.png" alt="">
+              <span>备注</span>
+            </div>
+            <div class="wdrj_box">
+              <div class="wdrj_main">
+                <div class="wdrj_title" >
+                  <img src="../../assets/images/news/dot.png" alt="" />
+                  补充说明
+                </div>
+                <div class="wm_text">
+                  <el-input v-if="!assessmentFlag" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment" @input="noteChange" maxlength="300" show-word-limit></el-input>
+                  <el-input v-else  disabled :autosize="{ minRows: 3}" type="textarea" v-model="assessment"></el-input>
+                  <el-button type="primary" v-if="!assessmentFlag" @click="recordSub">提交</el-button>
+                  <el-button type="primary primary1" v-if="assessmentFlag" @click="assessmentFlag = !assessmentFlag">编辑</el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="reviewFlag">
+        <div class="drwc_box drwc_boxr" ref="partr1">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img src="../../assets/images/news/tphg.png" alt="">
+              <span>图片回顾</span>
+            </div>
+            <div class="dtm_img_sys">
+              <el-carousel
+                :interval="40000"
+                arrow="always"
+                type="card"
+                height="2.68rem"
+              >
+                <el-carousel-item v-for="item in imgList" :key="item.name">
+                  <div class="dtm_img_box">
+                    <img class="dtmi_img" :src="item.img" alt="" />
+                    <div class="dtmi_txt">{{ item.name }}</div>
+                  </div>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+          </div>
+        </div>
+        <div class="drwc_box drwc_boxr" ref="partr2">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img src="../../assets/images/news/zpxxtj.png" alt="">
+              <span>作品信息统计</span>
+            </div>
+            <div class="dtm_xls" v-if="reviewData.workInfo">
+              <div class="dtmx_li">
+                <div class="dtmxl_head">作品名称</div>
+                <div class="dtmxl_body">{{ reviewData.workInfo.workName }}</div>
+                <div class="dtmxl_head">自我像</div>
+                <div class="dtmxl_body">{{ reviewData.workInfo.representSand }}</div>
+              </div>
+              <div class="dtmx_li">
+                <div class="dtmxl_head">最重要的沙具</div>
+                <div class="dtmxl_body">{{ reviewData.workInfo.importantSand }}</div>
+                <div class="dtmxl_head">制作次数</div>
+                <div class="dtmxl_body">
+                  第<span>{{ reviewData.workInfo.time }}</span
+                  >次
+                </div>
+              </div>
+              <div class="dtmx_li">
+                <div class="dtmxl_head">满意程度</div>
+                <div class="dtmxl_body">
+                  <span>{{ reviewData.workInfo.satisfaction }}</span
+                  >分
+                </div>
+                <div class="dtmxl_head">制作用时</div>
+                <div class="dtmxl_body">{{ reviewData.workInfo.operationTime }}</div>
+              </div>
+              <div class="dtmx_li">
+                <div class="dtmxl_head">作品场景</div>
+                <div class="dtmxl_body">{{ reviewData.workInfo.scene }}</div>
+                <div class="dtmxl_head">沙具删除比例</div>
+                <div class="dtmxl_body">
+                  <span>{{ reviewData.workInfo.deleteScale }}</span
+                  >%
+                </div>
+              </div>
+              <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
+                <div class="dtmxl_head">主题统计</div>
+                <div class="dtmxl_body">
+                  <div class="dtmxl_dl">
+                    <div class="dtmxl_dt">创伤主题</div>
+                    <div class="dtmxl_dd">
+                      {{ reviewData.workInfo.themeInfo.traumaTheme }}
+                    </div>
+                    <div class="dtmxl_dds">
+                      <span>{{ reviewData.workInfo.themeInfo.traumaNum }}</span
+                      >个
+                    </div>
+                  </div>
+                  <div class="dtmxl_dl">
+                    <div class="dtmxl_dt">治愈主题</div>
+                    <div class="dtmxl_dd">
+                      {{
+                        reviewData.workInfo.themeInfo.cureTheme != ""
+                          ? reviewData.workInfo.themeInfo.cureTheme
+                          : "/"
+                      }}
+                    </div>
+                    <div class="dtmxl_dds">
+                      <span>{{ reviewData.workInfo.themeInfo.cureNum }}</span
+                      >个
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div class="drwc_box drwc_boxr" ref="partr3">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img src="../../assets/images/news/sjsy.png" alt="">
+              <span>沙具使用情况统计</span>
+            </div>
+            <div>
+              <div class="dtmt_tle" style="margin-bottom:0.2rem;">
+                <img src="../../assets/images/news/dot.png" alt="" />
+                <span>沙具使用数量分布</span>
               </div>
+              <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div>
+            </div>
+            <div style="margin-top:0.4rem;">
+              <div class="dtmt_tle">
+                <img src="../../assets/images/news/dot.png" alt="" />
+                <span>沙具使用时长占比</span>
+              </div>
+              <div class="myChartRose" ref="myChartRose" id="myChartRose" style="margin-top: -0.3rem;margin-bottom: 0.2rem;"></div>
+
             </div>
           </div>
         </div>
-      </div>
-      <div class="dtm_title dtm_title3" :style="{height: personalityFlag == 1 ? 'auto' : '0',margin: personalityFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts5">
-        附录一：人格解读
-      </div>
-      <div class="wdrj_box" v-show="personalityFlag == 1">
-        <div class="wdrj_main">
-          <div class="wdrj_title">
-            <img src="../../assets/images/report/f_icon6.png" alt="" />
-            人格解读
-          </div>
-          <div class="dtmsb_tar" style="margin: -0.2rem auto 0;height: 4.4rem;">
-            <div style="position:relative">
-              <div id="myChartLd1" class="myChartLd1" ref="myChartLd1"></div>
+
+        <div class="drwc_box drwc_boxr" ref="partr4">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img src="../../assets/images/news/syjlb.png" alt="">
+              <span>沙具使用记录表</span>
             </div>
-            <ul class="dtmsb_ulc" style="bottom:-0.2rem">
-              <li>
-                <span></span>
-                <span>本次得分</span>
-              </li>
-            </ul>
-          </div>
-          <div class="wdrj_suger">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />评估结果
-            </div>
-            <div class="wdrjs_tips" v-if="details.personalityDim">
-              <img src="../../assets/images/report/ai_res.png" alt="" />
-              <p style="padding: 0.1rem 0.08rem;line-height: 0.28rem">
-                {{details.personalityDim}}
-              </p>
-            </div>
-            <div v-for="item in details.personalitySubDim2" :key="item.name">
-              <div class="wdrjst_res wdrjst_res1">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span>{{item.name}}：</span>
+            <template>
+              <el-table class='dtm_table' :data="actionInfo">
+                <el-table-column prop="action_idx" label="操作序号"> </el-table-column>
+                <el-table-column prop="action_time" label="操作时间"> </el-table-column>
+                <el-table-column prop="bodies_name" label="沙具名称"> </el-table-column>
+                <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
+                <el-table-column prop="action_content" label="操作内容">
+                  <template slot-scope="scope">
+                    <span style="color:#006cff">{{scope.row.action_content}}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+            <div class="table_page">
+              <div class="page_total">
+                共 <span>{{ total }}</span> 条 , 第
+                <span>{{ currentPage }}/{{ pageNum }}</span> 页
               </div>
-              <div class="wdrjst_del wdrjst_del2">
-                <div style="">
-                  <img src="../../assets/images/report/jt_h.png" alt="" />释义
-                </div>
-                <div class="pd24">
-                  {{item.analysis[0]}}
-                </div>
-                <div>
-                  <img
-                    src="../../assets/images/report/jt_h.png"
-                    alt=""
-                  />具体表现
-                </div>
-                <div class="pd24">这类群体可能会有如下表现：</div>
-                <ul class="pd24">
-                  <li v-for="(itema, indexa) in item.analysis[1]" :key="indexa">
-                    <img
-                      src="../../assets/images/report/jt_h_d.png"
-                      alt=""
-                    />{{itema}}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="wdrj_suger" v-if="details.suggestionPersonality != ''">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
-            </div>
-            <div class="gb_contain">
-              <div v-for="(item, index) in details.suggestionPersonality" :key="index">
-                <p v-if="!Array.isArray(item)">
-                  <span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <ul>
-                    <li v-for="(items, indexs) in item" :key="indexs">
-                      <span>{{ indexs + 1 }}</span>
-                      <p>
-                        {{ items }}
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <el-pagination
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-size="limit"
+                layout="prev, pager, next"
+                :total="total"
+              >
+              </el-pagination>
             </div>
           </div>
         </div>
-      </div>
-      <div class="dtm_title dtm_title1" style=" height: auto;margin: 0 auto 0.62rem">
-        补充说明
-      </div>
-      <div class="wdrj_box">
-        <div class="wdrj_main">
-          <!-- <div class="wdrj_title" >
-            <img src="../../assets/images/report/f_icon6.png" alt="" />
-            补充说明
-          </div> -->
-          <div class="wm_text">
-            <el-input v-if="!assessmentFlag" placeholder="请填写" :autosize="{ minRows: 5}" type="textarea" v-model="assessment" @input="noteChange" maxlength="300" show-word-limit></el-input>
-            <el-input v-else  disabled :autosize="{ minRows: 5}" type="textarea" v-model="assessment"></el-input>
-            <el-button type="primary" v-if="!assessmentFlag" @click="recordSub">提交</el-button>
-            <el-button type="primary primary1" v-if="assessmentFlag" @click="assessmentFlag = !assessmentFlag">编辑</el-button>
-          </div>
-        </div>
+
       </div>
     </div>
-
+    <!-- 删除以下内容 -->
     <div class="dt_mains2" v-show="reviewFlag">
       <div class="dtm_title" ref="parts11">
         图片回顾
@@ -1565,7 +871,7 @@
           :interval="40000"
           arrow="always"
           type="card"
-          height="4.08rem"
+          height="2.68rem"
         >
           <el-carousel-item v-for="item in imgList" :key="item.name">
             <div class="dtm_img_box">
@@ -1651,18 +957,18 @@
         <span>沙具使用数量分布</span>
         <img src="../../assets/images/report/dot.png" alt="" />
       </div>
-      <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div>
+      <!-- <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div> -->
       <div class="dtmt_tle" style="margin:0.4rem auto 0.1rem">
         <img src="../../assets/images/report/dot.png" alt="" />
         <span>沙具使用时长占比</span>
         <img src="../../assets/images/report/dot.png" alt="" />
       </div>
-      <div class="myChartRose" ref="myChartRose" id="myChartRose"></div>
+      <!-- <div class="myChartRose" ref="myChartRose" id="myChartRose"></div> -->
       <div class="dtm_title" style="margin-top:0.2rem;" ref="parts14">
         附录
       </div>
       <template>
-        <el-table border :data="actionInfo">
+        <el-table class='dtm_table' border :data="actionInfo">
           <el-table-column prop="action_idx" label="操作序号"> </el-table-column>
           <el-table-column prop="action_time" label="操作时间"> </el-table-column>
           <el-table-column prop="bodies_name" label="沙具名称"> </el-table-column>
@@ -1774,6 +1080,9 @@ export default {
   data() {
     return {
 
+      btlActNum: 3,
+      jjActNum: 1,
+      rgActNum: 1,
       assessment: '',
       assessmentFlag: false,
       birdViewImg: '',
@@ -1840,34 +1149,44 @@ export default {
       reportId0: "",
       token: '',
       token0: '',
-      part4: "",
       part0: "",
       part1: "",
       part2: "",
       part3: "",
+      part4: "",
       part5: "",
+      part6: "",
       parta1: "",
       parta2: "",
       parta3: "",
       parta4: "",
       scrollYs: 0,
-      topAct: 1,
+      topAct: 0,
       topBack: false,
+      // myChartScore: "",
       myChart: "",
-      myChartPies1: "",
-      myChartPies2: "",
-      myChartPies3: "",
-      myChartPies4: "",
-      myChartPies5: "",
-      myChartLd1: "",
+      // myChartLd1: "",
       myChartLd2: "",
       myChartLd3: "",
+      myChartLd4: "",
+      myChartLd5: "",
+      myChartLd6: "",
+      myChartLd7: "",
+      myChartLd8: "",
+
+      myChartRg2: "",
+      myChartRg3: "",
+      myChartRg4: "",
+      myChartRg5: "",
+      myChartRg6: "",
       myChartRose: "",
       myChartZhu: "",
       myTxtFlag: false,
       warningList: [],
       sysList: [],
       sysList2: [],
+      jjList: [],
+      rgList: [],
       depressionFlag: 1,
       anxietyFlag: 1,
       forcedFlag: 1,
@@ -2022,13 +1341,23 @@ export default {
         setTimeout(() => {
           this.myTxtFlag = true;
         }, 500);
+        
+        // this.myChartScore.resize();
         this.myChart.resize();
-        this.myChartPies1.resize();
-        this.myChartPies2.resize();
-        this.myChartPies3.resize();
-        this.myChartLd1.resize();
+        // this.myChartLd1.resize();
         this.myChartLd2.resize();
         this.myChartLd3.resize();
+        this.myChartLd4.resize();
+        this.myChartLd5.resize();
+        this.myChartLd6.resize();
+        this.myChartLd7.resize();
+        this.myChartLd8.resize();
+        this.myChartRg2.resize();
+        this.myChartRg3.resize();
+        this.myChartRg4.resize();
+        this.myChartRg5.resize();
+        this.myChartRg6.resize();
+        
         this.myChartRose.resize();
         this.myChartZhu.resize();
       }, 100);
@@ -2039,6 +1368,15 @@ export default {
   },
   methods: {
     ...mapMutations(["setPersonFlag"]),
+    btlChange(id) {
+      this.btlActNum = id
+    },
+    jjChange(id) {
+      this.jjActNum = id
+    },
+    rgChange(id) {
+      this.rgActNum = id
+    },
     noteChange(val) {
       console.log(val)
 
@@ -2726,45 +2064,92 @@ export default {
             let oldWarning = [
               {
                 id: 3,
+                name: '抑郁',
                 old: data.data.reportWarningInfo.depressionResult,
                 score: data.data.reportWarningInfo.depressionScore,
+                lastScore: data.data.lastWarningInfo.depressionScore,
+                level: data.data.reportWarningInfo.depressionLevel,
+                lastLevel: data.data.lastWarningInfo.depressionLevel,
                 new: data.data.depressionWarning,
                 flag: this.depressionFlag
               },
               {
                 id: 4,
+                name: '焦虑',
                 old: data.data.reportWarningInfo.anxietyResult,
                 score: data.data.reportWarningInfo.anxietyScore,
+                lastScore: data.data.lastWarningInfo.anxietyScore,
+                level: data.data.reportWarningInfo.anxietyLevel,
+                lastLevel: data.data.lastWarningInfo.anxietyLevel,
                 new: data.data.anxietyWarning,
                 flag: this.anxietyFlag
               },
               {
                 id: 5,
+                name: '强迫',
                 old: data.data.reportWarningInfo.forcedResult,
                 score: data.data.reportWarningInfo.forcedScore,
+                lastScore: data.data.lastWarningInfo.forcedScore,
+                level: data.data.reportWarningInfo.forcedLevel,
+                lastLevel: data.data.lastWarningInfo.forcedLevel,
                 new: data.data.forcedWarning,
                 flag: this.forcedFlag
               },
               {
                 id: 6,
-                old: data.data.reportWarningInfo.suicideResult,
-                score: data.data.reportWarningInfo.suicideScore,
-                new: data.data.suicideWarning,
-                flag: this.suicideFlag
+                name: 'PTSD',
+                old: data.data.reportWarningInfo.violenceResult,
+                score: data.data.reportWarningInfo.violenceScore,
+                lastScore: data.data.lastWarningInfo.violenceScore,
+                level: data.data.reportWarningInfo.violenceLevel,
+                lastLevel: data.data.lastWarningInfo.violenceLevel,
+                new: data.data.violenceWarning,
+                flag: this.violenceFlag
               },
               {
                 id: 7,
+                name: '敌对',
                 old: data.data.reportWarningInfo.violenceResult,
                 score: data.data.reportWarningInfo.violenceScore,
+                lastScore: data.data.lastWarningInfo.violenceScore,
+                level: data.data.reportWarningInfo.violenceLevel,
+                lastLevel: data.data.lastWarningInfo.violenceLevel,
                 new: data.data.violenceWarning,
                 flag: this.violenceFlag
+              },
+              {
+                id: 8,
+                name: '自我伤害',
+                old: data.data.reportWarningInfo.suicideResult,
+                score: data.data.reportWarningInfo.suicideScore,
+                lastScore: data.data.lastWarningInfo.suicideScore,
+                level: data.data.reportWarningInfo.suicideLevel,
+                lastLevel: data.data.lastWarningInfo.suicideLevel,
+                new: data.data.suicideWarning,
+                flag: this.suicideFlag
               }
+              // ,
+              // {
+              //   id: 9,
+              //   name: '自闭',
+              //   old: data.data.reportWarningInfo.suicideResult,
+              //   score: data.data.reportWarningInfo.suicideScore,
+              //   lastScore: data.data.lastWarningInfo.suicideScore,
+              //   level: data.data.reportWarningInfo.suicideLevel,
+              //   lastLevel: data.data.lastWarningInfo.suicideLevel,
+              //   new: data.data.suicideWarning,
+              //   flag: this.suicideFlag
+              // }
             ];
             data.data.warningList = [];
+            
             data.data.whatWarn = [];
             data.data.warnLen = [];
             for (let i in oldWarning) {
-              if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+              // if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+              //   data.data.warningList.push(oldWarning[i]);
+              // }
+              if (oldWarning[i].level > 0 && oldWarning[i].flag == 1) {
                 data.data.warningList.push(oldWarning[i]);
               }
               if (oldWarning[i].score > 2 && oldWarning[i].flag == 1) {
@@ -2774,198 +2159,217 @@ export default {
                 data.data.warnLen.push(oldWarning[i])
               }
             }
+            data.data.rangeList = data.data.warnLen;
             data.data.warningNum = data.data.whatWarn.length;
-            // data.data.suggestion = data.data.suggestion.split("|||");
-            // console.log(data.data.suggestion)
-            // for (let i in data.data.suggestion) {
-            //   if (data.data.suggestion[i].indexOf("针对") != -1) {
-            //     data.data.suggestion[i] = data.data.suggestion[i].split("@@");
+            data.data.suggestion = data.data.suggestion.split("|||");
+            console.log(data.data.suggestion)
+            data.data.suggestionDepression = '该受测者情绪低落、消极预期指标异常，建议如下：|||针对情绪低落：|||该受测者在人际关系存在一定程度的敌意，具体表现为有时容易固执己见，看待事物较为片面、喜欢钻牛角尖，不愿意接受其他人的观点。@@将武力攻击视为一种正当的手段来解决问题，而不是通过和平、协商和妥协来达成共识。|||针对消极预期：|||该受测者在人际关系存在一定程度的敌意，具体表现为有时容易固执己见，看待事物较为片面、喜欢钻牛角尖，不愿意接受其他人的观点。将武力攻击视为一种正当的手段来解决问题，而不是通过和平、协商和妥协来达成共识。'
+            data.data.suggestionDepression = data.data.suggestionDepression.split("|||")
+            console.log(data.data.suggestionDepression)
+            for (let i in data.data.suggestionDepression) {
+              if (!(data.data.suggestionDepression[i].indexOf("如下：") != -1 || data.data.suggestionDepression[i].indexOf("针对") != -1)) {
+                console.log(i)
+                data.data.suggestionDepression[i] = data.data.suggestionDepression[i].split("@@")
+              }
+            }
+            console.log(data.data.suggestionDepression)
+            // data.data.suggestionDepression = data.data.suggestionDepression.split("@@");
+            data.data.suggestionAnxiety = data.data.suggestionSuicide.split("@@");
+            data.data.suggestionForced = data.data.suggestionSuicide.split("@@");
+            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
+            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            // for (let i in data.data.suggestionSuicide) {
+            //   if (data.data.suggestionSuicide[i].indexOf("针对") != -1) {
+            //     data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("@@");
             //   }
             // }
-            // data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            // data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
-            console.log(data.data.suggestion)
+            // // data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
+            // // data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
+            // console.log(data.data.suggestion)
             
-            if (data.data.suggestion && data.data.suggestion != '') {
-              data.data.suggestion = data.data.suggestion.split("|||");
-              console.log(data.data.suggestion)
-              for (let i in data.data.suggestion) {
-                if (data.data.suggestion[i].indexOf("&&") != -1) {
-                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
-                  for (let j in data.data.suggestion[i]) {
-                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-                      for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
-                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-                          for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
-                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestion[i].indexOf("span") == -1) {
-                    data.data.suggestion[i] = [data.data.suggestion[i]]
-                  }
-                  for (let j in data.data.suggestion[i]) {
-                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-                      for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
-                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-                          for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
-                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      for (let j in data.data.suggestion[i]) {
-                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
-                          for (let m in data.data.suggestion[i][j]) {
-                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
-              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-              console.log(data.data.suggestionSuicide)
-              for (let i in data.data.suggestionSuicide) {
-                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
-                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
-                  for (let j in data.data.suggestionSuicide[i]) {
-                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-                      for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
-                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
-                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
-                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
-                  }
-                  for (let j in data.data.suggestionSuicide[i]) {
-                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-                      for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
-                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
-                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      for (let j in data.data.suggestionSuicide[i]) {
-                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j]) {
-                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            console.log(data.data.suggestionSuicide)
+            // if (data.data.suggestion && data.data.suggestion != '') {
+            //   data.data.suggestion = data.data.suggestion.split("|||");
+            //   console.log(data.data.suggestion)
+            //   for (let i in data.data.suggestion) {
+            //     if (data.data.suggestion[i].indexOf("&&") != -1) {
+            //       data.data.suggestion[i] = data.data.suggestion[i].split("&&")
+            //       for (let j in data.data.suggestion[i]) {
+            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+            //           for (let k in data.data.suggestion[i][j]) {
+            //             console.log(data.data.suggestion[i][j][k])
+            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+            //               for (let m in data.data.suggestion[i][j][k]) {
+            //                 console.log(data.data.suggestion[i][j][k][m])
+            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     } else {
+            //       if (data.data.suggestion[i].indexOf("span") == -1) {
+            //         data.data.suggestion[i] = [data.data.suggestion[i]]
+            //       }
+            //       for (let j in data.data.suggestion[i]) {
+            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
+            //           for (let k in data.data.suggestion[i][j]) {
+            //             console.log(data.data.suggestion[i][j][k])
+            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
+            //               for (let m in data.data.suggestion[i][j][k]) {
+            //                 console.log(data.data.suggestion[i][j][k][m])
+            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         } else {
+            //           for (let j in data.data.suggestion[i]) {
+            //             if (data.data.suggestion[i][j].indexOf("@@") != -1) {
+            //               data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
+            //               for (let m in data.data.suggestion[i][j]) {
+            //                 if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
+            //                   data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+            // if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
+            //   data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
+            //   console.log(data.data.suggestionSuicide)
+            //   for (let i in data.data.suggestionSuicide) {
+            //     if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
+            //       data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
+            //       for (let j in data.data.suggestionSuicide[i]) {
+            //         if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+            //           for (let k in data.data.suggestionSuicide[i][j]) {
+            //             console.log(data.data.suggestionSuicide[i][j][k])
+            //             if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+            //               for (let m in data.data.suggestionSuicide[i][j][k]) {
+            //                 console.log(data.data.suggestionSuicide[i][j][k][m])
+            //                 if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     } else {
+            //       if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
+            //         data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
+            //       }
+            //       for (let j in data.data.suggestionSuicide[i]) {
+            //         if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
+            //           for (let k in data.data.suggestionSuicide[i][j]) {
+            //             console.log(data.data.suggestionSuicide[i][j][k])
+            //             if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
+            //               for (let m in data.data.suggestionSuicide[i][j][k]) {
+            //                 console.log(data.data.suggestionSuicide[i][j][k][m])
+            //                 if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         } else {
+            //           for (let j in data.data.suggestionSuicide[i]) {
+            //             if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
+            //               data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
+            //               for (let m in data.data.suggestionSuicide[i][j]) {
+            //                 if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
+            //                   data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+            // console.log(data.data.suggestionSuicide)
 
-            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
-              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
-              for (let i in data.data.suggestionViolence) {
-                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
-                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
-                  for (let j in data.data.suggestionViolence[i]) {
-                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-                      for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
-                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-                          for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
-                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
-                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
-                  }
-                  for (let j in data.data.suggestionViolence[i]) {
-                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-                      for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
-                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-                          for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
-                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      console.log(data.data.suggestionViolence[i])
-                      for (let j in data.data.suggestionViolence[i]) {
-                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
-                          console.log(data.data.suggestionViolence[i][j])
-                          for (let m in data.data.suggestionViolence[i][j]) {
-                            console.log(data.data.suggestionViolence[i][j][m])
-                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            // if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+            //   data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+            //   for (let i in data.data.suggestionViolence) {
+            //     if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+            //       data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+            //       for (let j in data.data.suggestionViolence[i]) {
+            //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+            //           for (let k in data.data.suggestionViolence[i][j]) {
+            //             console.log(data.data.suggestionViolence[i][j][k])
+            //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+            //               for (let m in data.data.suggestionViolence[i][j][k]) {
+            //                 console.log(data.data.suggestionViolence[i][j][k][m])
+            //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     } else {
+            //       if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+            //         data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+            //       }
+            //       for (let j in data.data.suggestionViolence[i]) {
+            //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+            //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+            //           for (let k in data.data.suggestionViolence[i][j]) {
+            //             console.log(data.data.suggestionViolence[i][j][k])
+            //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+            //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+            //               for (let m in data.data.suggestionViolence[i][j][k]) {
+            //                 console.log(data.data.suggestionViolence[i][j][k][m])
+            //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+            //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         } else {
+            //           console.log(data.data.suggestionViolence[i])
+            //           for (let j in data.data.suggestionViolence[i]) {
+            //             if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+            //               data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+            //               console.log(data.data.suggestionViolence[i][j])
+            //               for (let m in data.data.suggestionViolence[i][j]) {
+            //                 console.log(data.data.suggestionViolence[i][j][m])
+            //                 if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+            //                   data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+            //                 }
+            //               }
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
             // console.log(data.data.suggestionSuicide)
             console.log(data.data.suggestionViolence)
+            data.data.depressionDim = data.data.depressionDim.split("@@");
+            data.data.anxietyDim = data.data.anxietyDim.split("@@");
+            data.data.forcedDim = data.data.forcedDim.split("@@");
             data.data.suicideDim = data.data.suicideDim.split("@@");
             data.data.violenceDim = data.data.violenceDim.split("@@");
             data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
@@ -3101,47 +2505,104 @@ export default {
                 "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
               violenceImgStr = "4";
             }
-            if (data.data.depressionDim) {
-              data.data.depressionDim = data.data.depressionDim.split("@@");
-            }
-            let depArr = [];
-            for (let i in data.data.depressionDim) {
-              let str = "";
-              if (data.data.depressionDim[i].indexOf(".") != -1) {
-                str = data.data.depressionDim[i].split(".")[1];
-              } else {
-                str = data.data.depressionDim[i];
-              }
-              depArr.push(str);
-            }
-            if (data.data.anxietyDim) {
-              data.data.anxietyDim = data.data.anxietyDim.split("@@");
-            }
-            let anxArr = [];
-            for (let i in data.data.anxietyDim) {
-              let str = "";
-              if (data.data.anxietyDim[i].indexOf(".") != -1) {
-                str = data.data.anxietyDim[i].split(".")[1];
-              } else {
-                str = data.data.anxietyDim[i];
-              }
-              anxArr.push(str);
-            }
-            if (data.data.forcedDim) {
-              data.data.forcedDim = data.data.forcedDim.split("@@");
-            }
-            let forArr = [];
-            for (let i in data.data.forcedDim) {
-              let str = "";
-              if (data.data.forcedDim[i].indexOf(".") != -1) {
-                str = data.data.forcedDim[i].split(".")[1];
-              } else {
-                str = data.data.forcedDim[i];
-              }
-              forArr.push(str);
-            }
+            // if (data.data.depressionDim) {
+            //   data.data.depressionDim = data.data.depressionDim.split("@@");
+            // }
+            // let depArr = [];
+            // for (let i in data.data.depressionDim) {
+            //   let str = "";
+            //   if (data.data.depressionDim[i].indexOf(".") != -1) {
+            //     str = data.data.depressionDim[i].split(".")[1];
+            //   } else {
+            //     str = data.data.depressionDim[i];
+            //   }
+            //   depArr.push(str);
+            // }
+            // if (data.data.anxietyDim) {
+            //   data.data.anxietyDim = data.data.anxietyDim.split("@@");
+            // }
+            // let anxArr = [];
+            // for (let i in data.data.anxietyDim) {
+            //   let str = "";
+            //   if (data.data.anxietyDim[i].indexOf(".") != -1) {
+            //     str = data.data.anxietyDim[i].split(".")[1];
+            //   } else {
+            //     str = data.data.anxietyDim[i];
+            //   }
+            //   anxArr.push(str);
+            // }
+            // if (data.data.forcedDim) {
+            //   data.data.forcedDim = data.data.forcedDim.split("@@");
+            // }
+            // let forArr = [];
+            // for (let i in data.data.forcedDim) {
+            //   let str = "";
+            //   if (data.data.forcedDim[i].indexOf(".") != -1) {
+            //     str = data.data.forcedDim[i].split(".")[1];
+            //   } else {
+            //     str = data.data.forcedDim[i];
+            //   }
+            //   forArr.push(str);
+            // }
+
+
+            // let sysList0 = [
+            //   {
+            //     title: "抑郁",
+            //     grade: warningInfo.depressionScore,
+            //     gradep:
+            //       Number(warningInfo.depressionScore) * 0.44 +
+            //       Number(warningInfo.depressionScore) * 0.01 +
+            //       0.24 +
+            //       "rem",
+            //     gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
+            //     level: warningInfo.depressionResult,
+            //     txtColor: depressionColorStr,
+            //     bg: depressionBgStr,
+            //     imgType: depressionImgStr,
+            //     list: depArr,
+            //     subDim: data.data.depressionSubDim,
+            //     flag: this.depressionFlag
+            //   },
+            //   {
+            //     title: "焦虑",
+            //     grade: warningInfo.anxietyScore,
+            //     gradep:
+            //       Number(warningInfo.anxietyScore) * 0.44 +
+            //       Number(warningInfo.anxietyScore) * 0.01 +
+            //       0.24 +
+            //       "rem",
+            //     gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
+            //     level: warningInfo.anxietyResult,
+            //     txtColor: anxietyColorStr,
+            //     bg: anxietyBgStr,
+            //     imgType: anxietyImgStr,
+            //     list: anxArr,
+            //     subDim: data.data.anxietySubDim,
+            //     flag: this.anxietyFlag
+            //   },
+            //   {
+            //     title: "强迫",
+            //     grade: warningInfo.forcedScore,
+            //     gradep:
+            //       Number(warningInfo.forcedScore) * 0.44 +
+            //       Number(warningInfo.forcedScore) * 0.01 +
+            //       0.24 +
+            //       "rem",
+            //     gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
+            //     level: warningInfo.forcedResult,
+            //     txtColor: forcedColorStr,
+            //     bg: forcedBgStr,
+            //     imgType: forcedImgStr,
+            //     list: forArr,
+            //     subDim: data.data.forcedSubDim,
+            //     flag: this.forcedFlag
+            //   }
+            // ];
+            
             let sysList0 = [
               {
+                id: 3,
                 title: "抑郁",
                 grade: warningInfo.depressionScore,
                 gradep:
@@ -3151,14 +2612,18 @@ export default {
                   "rem",
                 gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
                 level: warningInfo.depressionResult,
+                levelNum: warningInfo.violenceLevel,
                 txtColor: depressionColorStr,
                 bg: depressionBgStr,
                 imgType: depressionImgStr,
-                list: depArr,
+                // list: depArr,
                 subDim: data.data.depressionSubDim,
+                suggestDim: data.data.suggestionDepression,
+                sysDim: data.data.depressionDim,
                 flag: this.depressionFlag
               },
               {
+                id: 4,
                 title: "焦虑",
                 grade: warningInfo.anxietyScore,
                 gradep:
@@ -3168,14 +2633,18 @@ export default {
                   "rem",
                 gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
                 level: warningInfo.anxietyResult,
+                levelNum: warningInfo.violenceLevel,
                 txtColor: anxietyColorStr,
                 bg: anxietyBgStr,
                 imgType: anxietyImgStr,
-                list: anxArr,
+                // list: anxArr,
                 subDim: data.data.anxietySubDim,
+                suggestDim: data.data.suggestionAnxiety,
+                sysDim: data.data.anxietyDim,
                 flag: this.anxietyFlag
               },
               {
+                id: 5,
                 title: "强迫",
                 grade: warningInfo.forcedScore,
                 gradep:
@@ -3185,42 +2654,39 @@ export default {
                   "rem",
                 gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
                 level: warningInfo.forcedResult,
+                levelNum: warningInfo.violenceLevel,
                 txtColor: forcedColorStr,
                 bg: forcedBgStr,
                 imgType: forcedImgStr,
-                list: forArr,
+                // list: forArr,
                 subDim: data.data.forcedSubDim,
+                suggestDim: data.data.suggestionForced,
+                sysDim: data.data.forcedDim,
                 flag: this.forcedFlag
-              }
-            ];
-            this.sysList = sysList0.sort(function(n, m) {
-              if (m.grade < n.grade) return -1;
-              else if (m.grade > n.grade) return 1;
-              else return 0;
-            });
-            data.data.sysList = this.sysList;
-            let sysList02 = [
-              {
-                title: "自我伤害",
-                grade: warningInfo.suicideScore,
-                gradep:
-                  Number(warningInfo.suicideScore) * 0.44 +
-                  Number(warningInfo.suicideScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
-                level: warningInfo.suicideResult,
-                txtColor: suicideColorStr,
-                bg: suicideBgStr,
-                imgType: suicideImgStr,
-                list: forArr,
-                subDim: data.data.suicideSubDim,
-                levelNum: warningInfo.suicideLevel,
-                suggestDim: data.data.suggestionSuicide,
-                sysDim: data.data.suicideDim,
-                flag: this.suicideFlag
               },
               {
+                id: 6,
+                title: "PTSD",
+                grade: warningInfo.violenceScore,
+                gradep:
+                  Number(warningInfo.violenceScore) * 0.44 +
+                  Number(warningInfo.violenceScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
+                level: warningInfo.violenceResult,
+                txtColor: violenceColorStr,
+                bg: violenceBgStr,
+                imgType: violenceImgStr,
+                // list: forArr,
+                subDim: data.data.violenceSubDim,
+                levelNum: warningInfo.violenceLevel,
+                suggestDim: data.data.suggestionViolence,
+                sysDim: data.data.violenceDim,
+                flag: this.violenceFlag
+              },
+              {
+                id: 7,
                 title: "敌对",
                 grade: warningInfo.violenceScore,
                 gradep:
@@ -3233,16 +2699,265 @@ export default {
                 txtColor: violenceColorStr,
                 bg: violenceBgStr,
                 imgType: violenceImgStr,
-                list: forArr,
+                // list: forArr,
                 subDim: data.data.violenceSubDim,
                 levelNum: warningInfo.violenceLevel,
                 suggestDim: data.data.suggestionViolence,
                 sysDim: data.data.violenceDim,
                 flag: this.violenceFlag
+              },
+              {
+                id: 8,
+                title: "自我伤害",
+                grade: warningInfo.suicideScore,
+                gradep:
+                  Number(warningInfo.suicideScore) * 0.44 +
+                  Number(warningInfo.suicideScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
+                level: warningInfo.suicideResult,
+                txtColor: suicideColorStr,
+                bg: suicideBgStr,
+                imgType: suicideImgStr,
+                // list: forArr,
+                subDim: data.data.suicideSubDim,
+                levelNum: warningInfo.suicideLevel,
+                suggestDim: data.data.suggestionSuicide,
+                sysDim: data.data.suicideDim,
+                flag: this.suicideFlag
+              },
+              {
+                id: 9,
+                title: "自闭",
+                grade: warningInfo.suicideScore,
+                gradep:
+                  Number(warningInfo.suicideScore) * 0.44 +
+                  Number(warningInfo.suicideScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
+                level: warningInfo.suicideResult,
+                txtColor: suicideColorStr,
+                bg: suicideBgStr,
+                imgType: suicideImgStr,
+                // list: forArr,
+                subDim: data.data.suicideSubDim,
+                levelNum: warningInfo.suicideLevel,
+                suggestDim: data.data.suggestionSuicide,
+                sysDim: data.data.suicideDim,
+                flag: this.suicideFlag
               }
             ];
-            this.sysList2 = sysList02
-            data.data.sysList2 = this.sysList2;
+            // this.sysList = sysList0.sort(function(n, m) {
+            //   if (m.grade < n.grade) return -1;
+            //   else if (m.grade > n.grade) return 1;
+            //   else return 0;
+            // });
+            this.sysList = sysList0
+            data.data.sysList = this.sysList;
+
+            let jjList0 = [
+              {
+                id: 1,
+                title: "心理韧性",
+                grade: warningInfo.depressionScore,
+                gradep:
+                  Number(warningInfo.depressionScore) * 0.44 +
+                  Number(warningInfo.depressionScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
+                level: warningInfo.depressionResult,
+                levelNum: 0,
+                txtColor: depressionColorStr,
+                bg: depressionBgStr,
+                imgType: depressionImgStr,
+                // list: depArr,
+                subDim: data.data.depressionSubDim,
+                suggestDim: data.data.suggestionDepression,
+                sysDim: data.data.depressionDim,
+                flag: this.depressionFlag
+              },
+              {
+                id: 2,
+                title: "积极自我",
+                grade: warningInfo.anxietyScore,
+                gradep:
+                  Number(warningInfo.anxietyScore) * 0.44 +
+                  Number(warningInfo.anxietyScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
+                level: warningInfo.anxietyResult,
+                levelNum: 1,
+                txtColor: anxietyColorStr,
+                bg: anxietyBgStr,
+                imgType: anxietyImgStr,
+                // list: anxArr,
+                subDim: data.data.anxietySubDim,
+                suggestDim: data.data.suggestionAnxiety,
+                sysDim: data.data.anxietyDim,
+                flag: this.anxietyFlag
+              },
+              {
+                id: 3,
+                title: "积极情绪",
+                grade: warningInfo.forcedScore,
+                gradep:
+                  Number(warningInfo.forcedScore) * 0.44 +
+                  Number(warningInfo.forcedScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
+                level: warningInfo.forcedResult,
+                levelNum: 2,
+                txtColor: forcedColorStr,
+                bg: forcedBgStr,
+                imgType: forcedImgStr,
+                // list: forArr,
+                subDim: data.data.forcedSubDim,
+                suggestDim: data.data.suggestionForced,
+                sysDim: data.data.forcedDim,
+                flag: this.forcedFlag
+              },
+              {
+                id: 4,
+                title: "积极成就",
+                grade: warningInfo.violenceScore,
+                gradep:
+                  Number(warningInfo.violenceScore) * 0.44 +
+                  Number(warningInfo.violenceScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
+                level: warningInfo.violenceResult,
+                levelNum: 3,
+                txtColor: violenceColorStr,
+                bg: violenceBgStr,
+                imgType: violenceImgStr,
+                // list: forArr,
+                subDim: data.data.violenceSubDim,
+                suggestDim: data.data.suggestionViolence,
+                sysDim: data.data.violenceDim,
+                flag: this.violenceFlag
+              },
+              {
+                id: 5,
+                title: "积极关系",
+                grade: warningInfo.violenceScore,
+                gradep:
+                  Number(warningInfo.violenceScore) * 0.44 +
+                  Number(warningInfo.violenceScore) * 0.01 +
+                  0.24 +
+                  "rem",
+                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
+                level: warningInfo.violenceResult,
+                txtColor: violenceColorStr,
+                bg: violenceBgStr,
+                imgType: violenceImgStr,
+                // list: forArr,
+                subDim: data.data.violenceSubDim,
+                levelNum: 2,
+                suggestDim: data.data.suggestionViolence,
+                sysDim: data.data.violenceDim,
+                flag: this.violenceFlag
+              }
+            ];
+            this.jjList = jjList0
+            data.data.jjList = this.jjList;
+
+            let rgList0 = [
+              {
+                id: 1,
+                title: "外向性",
+                grade: 1,
+                gradep: Number(1) * 0.8 + "rem",
+                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
+                level: warningInfo.depressionResult,
+                levelNum: 1,
+                txtColor: depressionColorStr,
+                bg: depressionBgStr,
+                imgType: depressionImgStr,
+                // list: depArr,
+                subDim: data.data.depressionSubDim,
+                suggestDim: data.data.suggestionDepression,
+                sysDim: data.data.depressionDim,
+                flag: this.depressionFlag
+              },
+              {
+                id: 2,
+                title: "尽责性",
+                grade: 3,
+                gradep: Number(3) * 0.8 + "rem",
+                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
+                level: warningInfo.anxietyResult,
+                levelNum: 1,
+                txtColor: anxietyColorStr,
+                bg: anxietyBgStr,
+                imgType: anxietyImgStr,
+                // list: anxArr,
+                subDim: data.data.anxietySubDim,
+                suggestDim: data.data.suggestionAnxiety,
+                sysDim: data.data.anxietyDim,
+                flag: this.anxietyFlag
+              },
+              {
+                id: 3,
+                title: "神经质",
+                grade: 5,
+                gradep: Number(5) * 0.8 + "rem",
+                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
+                level: warningInfo.forcedResult,
+                levelNum: 2,
+                txtColor: forcedColorStr,
+                bg: forcedBgStr,
+                imgType: forcedImgStr,
+                // list: forArr,
+                subDim: data.data.forcedSubDim,
+                suggestDim: data.data.suggestionForced,
+                sysDim: data.data.forcedDim,
+                flag: this.forcedFlag
+              },
+              {
+                id: 4,
+                title: "宜人性",
+                grade: 7,
+                gradep: Number(7) * 0.8 + "rem",
+                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
+                level: warningInfo.violenceResult,
+                levelNum: 3,
+                txtColor: violenceColorStr,
+                bg: violenceBgStr,
+                imgType: violenceImgStr,
+                // list: forArr,
+                subDim: data.data.violenceSubDim,
+                suggestDim: data.data.suggestionViolence,
+                sysDim: data.data.violenceDim,
+                flag: this.violenceFlag
+              },
+              {
+                id: 5,
+                title: "开放性",
+                grade: 9,
+                gradep: Number(9) * 0.8 + "rem",
+                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
+                level: warningInfo.violenceResult,
+                txtColor: violenceColorStr,
+                bg: violenceBgStr,
+                imgType: violenceImgStr,
+                // list: forArr,
+                subDim: data.data.violenceSubDim,
+                levelNum: 2,
+                suggestDim: data.data.suggestionViolence,
+                sysDim: data.data.violenceDim,
+                flag: this.violenceFlag
+              }
+            ];
+            this.rgList = rgList0
+            data.data.rgList = this.rgList;
+            // this.sysList2 = sysList02
+            // data.data.sysList2 = this.sysList2;
             data.data.depressionFlag = this.depressionFlag
             data.data.anxietyFlag = this.anxietyFlag
             data.data.forcedFlag = this.forcedFlag
@@ -3462,14 +3177,16 @@ export default {
     },
     topBacks() {
       window.scrollTo(0, 0);
+      this.topAct = 0;
       setTimeout(() => {
         // 左边扶梯效果
         this.part0 = this.$refs.parts0.offsetTop;
-        this.part4 = this.$refs.parts4.offsetTop;
         this.part1 = this.$refs.parts1.offsetTop;
         this.part2 = this.$refs.parts2.offsetTop;
         this.part3 = this.$refs.parts3.offsetTop;
+        this.part4 = this.$refs.parts4.offsetTop;
         this.part5 = this.$refs.parts5.offsetTop;
+        this.part6 = this.$refs.parts6.offsetTop;
 
         this.parta1 = this.$refs.parts11.offsetTop;
         this.parta2 = this.$refs.parts12.offsetTop;
@@ -3480,20 +3197,23 @@ export default {
     },
     trendTab(type) {
       this.topAct = type;
-      if (type == 4) {
-        window.scrollTo(0, this.part4 - 40);
-      }
       if (type == 1) {
-        window.scrollTo(0, this.part1 - 40);
+        window.scrollTo(0, this.part1 - 20);
       }
       if (type == 2) {
-        window.scrollTo(0, this.part2 - 40);
+        window.scrollTo(0, this.part2 - 20);
       }
       if (type == 3) {
-        window.scrollTo(0, this.part3 - 40);
+        window.scrollTo(0, this.part3 - 20);
+      }
+      if (type == 4) {
+        window.scrollTo(0, this.part4 - 20);
       }
       if (type == 5) {
-        window.scrollTo(0, this.part5 - 40);
+        window.scrollTo(0, this.part5 - 20);
+      }
+      if (type == 6) {
+        window.scrollTo(0, this.part6 - 20);
       }
     },
     trendTabs(type) {
@@ -3516,9 +3236,10 @@ export default {
     },
     handleScroll() {
       this.scrollYs = window.pageYOffset;
+      console.log(this.scrollYs)
       if (this.reviewFlag) {
         if (this.scrollYs < this.part0) {
-          this.topAct = 1;
+          this.topAct = 0;
         }
         if (this.part0 < this.scrollYs && this.scrollYs < this.parta1) {
           this.topAct = 1;
@@ -3533,31 +3254,43 @@ export default {
           this.topAct = 4;
         }
       } else {
+        console.log(this.part0)
+        console.log(this.scrollYs)
         if (this.scrollYs < this.part0) {
-          this.topAct = 4;
+          this.topAct = 0;
         }
-        if (this.part0 < this.scrollYs && this.scrollYs < this.part4) {
-          this.topAct = 4;
-        }
-        if (this.part4 < this.scrollYs && this.scrollYs < this.part1) {
+        if (this.part0 < this.scrollYs && this.scrollYs < this.part1) {
           this.topAct = 1;
         }
         if (this.part1 < this.scrollYs && this.scrollYs < this.part2) {
           this.topAct = 2;
         }
         if (this.part2 < this.scrollYs && this.scrollYs < this.part3) {
-          if (this.suicideFlag == 1 || this.violenceFlag == 1) {
-            this.topAct = 3;
-          } else {
-            this.topAct = 5;
-          }
+          this.topAct = 3;
         }
-        if (this.part3 < this.scrollYs && this.scrollYs < this.part5) {
-          if (this.personalityFlag == 1) {
-            this.topAct = 5;
-          } else {
-            this.topAct = 3;
-          }
+        if (this.part3 < this.scrollYs && this.scrollYs < this.part4) {
+          this.topAct = 4;
+          // if (this.suicideFlag == 1 || this.violenceFlag == 1) {
+          //   this.topAct = 3;
+          // } else {
+          //   this.topAct = 5;
+          // }
+        }
+        if (this.part4 < this.scrollYs && this.scrollYs < this.part5) {
+          this.topAct = 5;
+          // if (this.personalityFlag == 1) {
+          //   this.topAct = 5;
+          // } else {
+          //   this.topAct = 3;
+          // }
+        }
+        if (this.part5 < this.scrollYs && this.scrollYs < this.part6) {
+          this.topAct = 6;
+          // if (this.personalityFlag == 1) {
+          //   this.topAct = 5;
+          // } else {
+          //   this.topAct = 3;
+          // }
         }
       }
     },
@@ -3567,69 +3300,98 @@ export default {
     },
     myChartInit() {
       let that = this;
-      // 总体评估概况
+      // 当前视口宽度
+      let nowClientWidth = document.documentElement.clientWidth;
+      // 换算方法
+      let nowSize = function (val, initWidth = 1920) {
+        return val * (nowClientWidth / initWidth);
+      };
+      // 本次概况左侧环形图
       this.myChart = echarts.init(this.$refs.myChart);
+      let warningNum = this.details.warningNum ? this.details.warningNum : 0
       this.myChart.setOption({
-        tooltip: {
-          trigger: "item",
-          axisPointer: {
-            type: "shadow",
-            shadowStyle: {
-              width: "35px",
-              color: "rgba(72, 117, 174, 0.25)"
-            }
-          },
-          backgroundColor: "#ffffff",
-          borderWidth: 0,
+        title: {
+          text: warningNum + '项',
+          subtext: '风险',
           textStyle: {
-            color: "#5B6C89"
+            color: '#333E75',
+            fontSize: nowSize(40),
+            fontWeight: 500
           },
-          formatter: function(params) {
-            var result =
-              '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
-              params.color.colorStops[0].color +
-              "," +
-              params.color.colorStops[1].color +
-              '");></span>' +
-              '<span style="color:#7786AC">' +
-              params.name +
-              "</span>" +
-              ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:#7786AC">' +
-              params.value +
-              "</span>";
-            return result;
+          subtextStyle: {
+            color: '#FF748A',
+            fontSize: nowSize(25),
+            fontWeight: 500
+          },
+          itemGap: nowSize(15), // 主副标题距离
+          left: 'center',
+          top: nowSize(65)
+        },
+        angleAxis: {
+          max: 6, // 满分
+          clockwise: false, // 逆时针
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
           }
+        },
+        radiusAxis: {
+          type: 'category',
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        polar: {
+          center: ['50%', '50%'],
+          radius: nowSize(190) // 图形大小
         },
         series: [
           {
-            name: "",
-            type: "pie",
-            radius: ["60%", "80%"],
-            avoidLabelOverlap: false,
+            type: 'bar',
+            // animation: false,
+            // avoidLabelOverlap: false,
             label: {
-              normal: {
-                show: false,
-                position: "center"
+              position: 'center',
+              show: false,
+              formatter: function() {
+                let str = '{a|' + warningNum + '}' + '\n\n' + '{b|有风险}'
+                return str
               },
-              emphasis: {
-                show: false,
-                textStyle: {
-                  fontSize: "14"
+              rich: {
+                a: {
+                  color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
+                  fontSize: nowSize(40),
+                  fontWeight: '500'
                 },
-                color: "#5B6C89",
-                formatter: "累计需关注频次\n{hr|{c}次}",
-                rich: {
-                  hr: {
-                    color: "#51A7FF",
-                    padding: [0, 0, 6, 0]
-                  }
+                b: {
+                  color: 'rgba(117, 122, 144, 1)',
+                  fontSize: nowSize(24)
                 }
               }
             },
             emphasis: {
               label: {
                 show: true,
-                fontSize: "30",
+                fontSize: nowSize(30),
                 fontWeight: "bold"
               }
             },
@@ -3638,31 +3400,437 @@ export default {
             },
             data: [
               {
-                value: that.details.warningNum,
-                name: "预警",
+                name: '风险',
+                value: warningNum,
                 itemStyle: {
-                  normal: transColor[0]
-                }
-              },
-              {
-                value: Number(this.details.warnLen.length) - that.details.warningNum,
-                name: "正常",
-                itemStyle: {
-                  normal: transColor[2]
+                  normal: {
+                    barBorderRadius: [nowSize(2), nowSize(2), 0, 0],
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: 'rgba(255, 116, 138, 0.72)'
+                      },
+                      {
+                        offset: 1,
+                        color: 'rgba(251, 113, 113, 0.72)'
+                      }
+                    ])
+                  }
                 }
               }
-            ]
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: nowSize(20),
+            barGap: '-100%', // 两环重叠
+            z: 2
+          },
+          {
+            // 灰色环
+            type: 'bar',
+            animation: false,
+            data: [
+              {
+                value: 100,
+                itemStyle: {
+                  color: 'rgba(242, 245, 252, 1)'
+                }
+              }
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: nowSize(20),
+            barGap: '-100%', // 两环重叠
+            z: 1
           }
         ]
+        // tooltip: {
+        //   trigger: "item",
+        //   axisPointer: {
+        //     type: "shadow",
+        //     shadowStyle: {
+        //       width: nowSize(35) + "px",
+        //       color: "rgba(72, 117, 174, 0.25)"
+        //     }
+        //   },
+        //   backgroundColor: "#ffffff",
+        //   borderWidth: 0,
+        //   textStyle: {
+        //     color: "#5B6C89"
+        //   },
+        //   formatter: function(params) {
+        //     console.log(params)
+        //     var result =
+        //       '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
+        //       params.color.colorStops[0].color +
+        //       "," +
+        //       params.color.colorStops[1].color +
+        //       '");></span>' +
+        //       '<span style="color:#7786AC">' +
+        //       params.name +
+        //       "</span>" +
+        //       ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:#7786AC">' +
+        //       params.value +
+        //       "</span>";
+        //     return result;
+        //   }
+        // },
+        // series: [
+        //   {
+        //     name: "",
+        //     type: "pie",
+        //     radius: ["70%", "85%"],
+        //     avoidLabelOverlap: false,
+        //     label: {
+        //       normal: {
+        //         show: false,
+        //         position: "center"
+        //       },
+        //       emphasis: {
+        //         show: false,
+        //         textStyle: {
+        //           fontSize: nowSize(14)
+        //         },
+        //         color: "#5B6C89",
+        //         formatter: "累计需关注频次\n{hr|{c}次}",
+        //         rich: {
+        //           hr: {
+        //             color: "#51A7FF",
+        //             padding: [0, 0, nowSize(6), 0]
+        //           }
+        //         }
+        //       }
+        //     },
+        //     emphasis: {
+        //       label: {
+        //         show: true,
+        //         fontSize: nowSize(30),
+        //         fontWeight: "bold"
+        //       }
+        //     },
+        //     labelLine: {
+        //       show: false
+        //     },
+        //     data: [
+        //       {
+        //         value: that.details.warningNum,
+        //         name: "预警",
+        //         itemStyle: {
+        //           normal: {
+        //             barBorderRadius: nowSize(30),
+        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //               {
+        //                 offset: 0,
+        //                 color: "rgba(255, 116, 138, 1)"
+        //               },
+        //               {
+        //                 offset: 1,
+        //                 color: "rgba(251, 113, 113, 1)"
+        //               }
+        //             ])
+        //           }
+        //         },
+        //         roundCap: true // 圆角
+        //       },
+        //       {
+        //         value: Number(this.details.warnLen.length) - that.details.warningNum,
+        //         name: "正常",
+        //         itemStyle: {
+        //           normal: {
+        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //               {
+        //                 offset: 0,
+        //                 color: "rgba(242, 245, 252, 0.72)"
+        //               },
+        //               {
+        //                 offset: 1,
+        //                 color: "rgba(242, 245, 252, 0.72)"
+        //               }
+        //             ])
+        //           }
+        //         }
+        //       }
+        //     ]
+        //   }
+        // ]
       });
+      // // 本次概况右侧柱状图
+      // let xArr = [];
+      // let yArr1 = [];
+      // let yArr2 = [];
+      // for (let i in this.details.rangeList) {
+      //   if (this.details.rangeList[i].flag == 1) {
+      //     xArr.push(this.details.rangeList[i].name)
+      //     yArr1.push(this.details.rangeList[i].score)
+      //     yArr2.push(this.details.rangeList[i].lastScore)
+      //   }
+      // }
+      // console.log(xArr)
+      // console.log(yArr1)
+      // console.log(yArr2)
+      // let serseArr = []
+      // if (this.details.reportWarningInfo) {
+      //   serseArr.push({
+      //     name: "本次结果",
+      //     type: "bar",
+      //     // barWidth: 16,
+      //     barMaxWidth: nowSize(14),
+      //     itemStyle: {
+      //       normal: {
+      //         barBorderRadius: [nowSize(7), nowSize(7), 0, 0],
+      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //           { offset: 0, color: "#8ACBFF" },
+      //           { offset: 1, color: "#8ACBFF" }
+      //         ])
+      //       }
+      //     },
+      //     data: yArr1
+      //   })
+      // }
+      // if (this.anxietyFlag == 1) {
+      //   serseArr.push({
+      //     name: "上次结果",
+      //     type: "bar",
+      //     // barWidth: 16,
+      //     barMaxWidth: nowSize(14),
+      //     itemStyle: {
+      //       normal: {
+      //         barBorderRadius: [nowSize(7), nowSize(7), 0, 0],
+      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //           { offset: 0, color: "#FFB0DB" },
+      //           { offset: 1, color: "#FFB0DB" }
+      //         ])
+      //       }
+      //     },
+      //     data: yArr2
+      //   })
+      // }
+      // // let markLine = {
+      // //   symbol: "none",
+      // //   lineStyle: {
+      // //     normal: {
+      // //       color: "#006cff"
+      // //     }
+      // //   },
+      // //   data: [
+      // //     {
+      // //       yAxis: 3,
+      // //       name: "",
+      // //       lineStyle: {
+      // //         type: "dashed",
+      // //         color: "#FF77C3",
+      // //         width: nowSize(1)
+      // //       },
+      // //       label: {
+      // //         position: "end",
+      // //         fontSize: nowSize(12),
+      // //         formatter: "",
+      // //         color: "#FF77C3"
+      // //       }
+      // //     }
+      // //   ]
+      // // }
+      // // serseArr[0].markLine = markLine
+      // this.myChartScore = echarts.init(this.$refs.myChartScore);
+      // this.myChartScore.setOption({
+      //   tooltip: {
+      //     trigger: "axis",
+      //     axisPointer: {
+      //       type: "line",
+      //       crossStyle: {
+      //         color: "rgba(217, 225, 255, 1)"
+      //       }
+      //     }
+      //   },
+      //   grid: {
+      //     left: nowSize(10),
+      //     top: nowSize(20),
+      //     right: nowSize(10),
+      //     bottom: nowSize(16),
+      //     containLabel: true
+      //   },
+      //   xAxis: [
+      //     {
+      //       type: "category",
+      //       data: xArr,
+      //       axisLine: {
+      //         show: false
+      //       },
+      //       axisTick: {
+      //         show: false
+      //       },
+      //       // x轴文字配置
+      //       axisLabel: {
+      //         // show: false
+      //         fontSize: nowSize(14),
+      //         color: "rgba(42, 52, 135, 1)"
+      //       },
+      //       axisPointer: {
+      //         type: "shadow"
+      //       }
+      //     }
+      //   ],
+      //   yAxis: {
+      //     type: "value",
+      //     name: "",
+      //     min: 0,
+      //     max: 9,
+      //     interval: 1,
+      //     axisLabel: {
+      //       fontSize: nowSize(14),
+      //       color: "rgba(42, 52, 135, 1)",
+      //       formatter: "{value}"
+      //     },
+      //     splitArea: {
+      //       show: true, // 是否显示分隔区域
+      //       interval: '0', // 坐标轴刻度标签的显示间隔，在类目轴中有效.0显示所有
+      //       areaStyle: {
+      //         color: ['rgba(255, 255, 255, 0.30)', 'rgba(255, 255, 255, 0.30)', 'rgba(202, 231, 254, 0.30)','rgba(202, 231, 254, 0.30)','rgba(202, 231, 254, 0.30)', 'rgba(255, 243, 227, 0.30)', 'rgba(255, 243, 227, 0.30)','rgba(255, 243, 227, 0.30)', 'rgba(252, 234, 244, 0.30)'], // 分隔区域颜色。分隔区域会按数组中颜色的顺序依次循环设置颜色。默认是一个深浅的间隔色
+      //         opacity: 1 // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
+      //       }
+      //     },
+      //     splitLine: {
+      //       show: true,
+      //       lineStyle: {
+      //         type: 'dashed',
+      //         color: 'rgba(217, 225, 255, 1)'
+      //       }
+      //     },
+      //     minInterval: 1
+      //   },
+      //   series: serseArr
+      // });
       setTimeout(() => {
-        this.myChartPies1 = echarts.init(
-          document.getElementById("myChartPies1")
-        );
-        this.myChartPies1.setOption({
+        // this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
+        // this.myChartLd1.setOption({
+        //   grid: {
+        //     bottom: 40,
+        //     left: 20,
+        //     top: 40,
+        //     right: 60
+        //   },
+        //   radar: {
+        //     indicator: [
+        //       { name: this.details.personalitySubDim[0].name, max: 100 },
+        //       { name: this.details.personalitySubDim[5].name, max: 100 },
+        //       { name: this.details.personalitySubDim[4].name, max: 100 },
+        //       { name: this.details.personalitySubDim[3].name, max: 100 },
+        //       { name: this.details.personalitySubDim[2].name, max: 100 },
+        //       { name: this.details.personalitySubDim[1].name, max: 100 }
+        //     ],
+        //     center: ["50%", "50%"],
+        //     radius: "70%",
+        //     startAngle: 90,
+        //     splitNumber: 5,
+        //     name: {
+        //       formatter: "{value}",
+        //       textStyle: {
+        //         color: "#354B70",
+        //         fontSize: 12,
+        //         padding: [-10, -10]
+        //       }
+        //     },
+        //     splitArea: {
+        //       areaStyle: {
+        //         color: [
+        //           "rgba(255, 255, 255, 1)",
+        //           "rgba(151, 205, 255, 0.14)"
+        //         ].reverse()
+        //       }
+        //     },
+        //     axisLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     },
+        //     splitLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     }
+        //   },
+        //   series: [
+        //     {
+        //       name: "人格解读",
+        //       type: "radar",
+        //       data: [
+        //         {
+        //           value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
+        //           name: "Actual Spending",
+        //           symbol: "circle",
+        //           symbolSize: 1,
+        //           color: "rgba(0, 150, 255, 1)",
+        //           itemStyle: {
+        //             normal: {
+        //               borderColor: "rgba(0, 150, 255, 1)"
+        //             }
+        //           }
+        //         }
+        //       ],
+        //       label: {
+        //         show: true,
+        //         fontSize: 12,
+        //         textStyle: {
+        //           fontSize: 12,
+        //           color: "#354B70"
+        //         },
+        //         formatter: function(params) {
+        //           return params.value;
+        //         }
+        //       },
+        //       areaStyle: {
+        //         opacity: 0.4,
+        //         color: {
+        //           type: "linear",
+        //           x: 0,
+        //           y: 0,
+        //           x2: 0,
+        //           y2: 1,
+        //           colorStops: [
+        //             {
+        //               offset: 0,
+        //               color: "rgba(0, 150, 255, 1)"
+        //             },
+        //             {
+        //               areaStyle: {
+        //                 opacity: 0.4,
+        //                 color: {
+        //                   type: "linear",
+        //                   x: 0,
+        //                   y: 0,
+        //                   x2: 0,
+        //                   y2: 1,
+        //                   colorStops: [
+        //                     {
+        //                       offset: 0,
+        //                       color: "rgba(0, 150, 255, 1)"
+        //                     },
+        //                     {
+        //                       offset: 1,
+        //                       color: "rgba(41, 101, 255, 1)"
+        //                     }
+        //                   ],
+        //                   globalCoord: false
+        //                 }
+        //               },
+        //               offset: 1,
+        //               color: "rgba(41, 101, 255, 1)"
+        //             }
+        //           ],
+        //           globalCoord: false
+        //         }
+        //       },
+        //       lineStyle: {
+        //         width: 0
+        //       }
+        //     }
+        //   ]
+        // });
+        this.myChartLd2 = echarts.init(document.getElementById("myChartLd2"));
+        this.myChartLd2.setOption({
           tooltip: {
             show: false,
-            padding: 10,
+            padding: nowSize(10),
             axisPointer: {
               type: "shadow"
             },
@@ -3678,7 +3846,7 @@ export default {
                 {
                   name: that.sysList[0].subDim[0].name,
                   max: 3,
-                  axisLabel: { show: true }
+                  axisLabel: { show: false }
                 },
                 {
                   name: that.sysList[0].subDim[1].name,
@@ -3703,9 +3871,9 @@ export default {
               splitArea: {
                 areaStyle: {
                   color: [
-                    "rgba(251, 109, 183, 0.14)",
-                    "rgba(155, 160, 255, 0.14)",
-                    "rgba(5, 157, 255, 0.14)"
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
                   ].reverse()
                 }
               },
@@ -3714,45 +3882,46 @@ export default {
               },
               splitLine: {
                 lineStyle: {
+                  type: "dashed",
                   color: [
-                    "rgba(155, 160, 255, 1)",
-                    "rgba(5, 157, 255, 1)",
-                    "rgba(251, 109, 183, 1)"
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
                   ].reverse()
                 }
               },
               axisLabel: {
                 show: true,
                 color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
+                fontSize: nowSize(20),
+                height: nowSize(32),
                 formatter: function(value, index) {
                   return "{yxStyle" + index + "|" + index + "}";
                 },
                 rich: {
                   yxStyle0: {
                     color: "#00C0FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   }
                 }
               }
@@ -3778,10 +3947,10 @@ export default {
             {
               name: "",
               type: "radar",
-              color: ["rgba(0,117,255,0.4)"],
+              color: ["rgba(0,117,255,0.1)"],
               emphasis: {
                 lineStyle: {
-                  width: 2,
+                  width: nowSize(2),
                   color: "rgba(0, 117, 255, 0.6)"
                 }
               },
@@ -3794,7 +3963,16 @@ export default {
                   ],
                   name: "本次得分",
                   symbol: "circle",
-                  symbolSize: 4,
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
                   areaStyle: {
                     opacity: 1,
                     color: {
@@ -3806,31 +3984,32 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: "rgba(27, 236, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         },
                         {
                           offset: 1,
-                          color: "rgba(0, 198, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         }
                       ],
                       globalCoord: false
                     }
                   },
                   lineStyle: {
-                    width: 1
+                    width: nowSize(1),
+                    color: '#58B5FF'
                   }
                 }
               ]
             }
           ]
         });
-        this.myChartPies2 = echarts.init(
-          document.getElementById("myChartPies2")
+        this.myChartLd3 = echarts.init(
+          document.getElementById("myChartLd3")
         );
-        this.myChartPies2.setOption({
+        this.myChartLd3.setOption({
           tooltip: {
             show: false,
-            padding: 10,
+            padding: nowSize(10),
             axisPointer: {
               type: "shadow"
             },
@@ -3846,7 +4025,7 @@ export default {
                 {
                   name: that.sysList[1].subDim[0].name,
                   max: 3,
-                  axisLabel: { show: true }
+                  axisLabel: { show: false }
                 },
                 {
                   name: that.sysList[1].subDim[1].name,
@@ -3871,9 +4050,9 @@ export default {
               splitArea: {
                 areaStyle: {
                   color: [
-                    "rgba(251, 109, 183, 0.14)",
-                    "rgba(155, 160, 255, 0.14)",
-                    "rgba(5, 157, 255, 0.14)"
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
                   ].reverse()
                 }
               },
@@ -3882,45 +4061,46 @@ export default {
               },
               splitLine: {
                 lineStyle: {
+                  type: "dashed",
                   color: [
-                    "rgba(155, 160, 255, 1)",
-                    "rgba(5, 157, 255, 1)",
-                    "rgba(251, 109, 183, 1)"
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
                   ].reverse()
                 }
               },
               axisLabel: {
                 show: true,
                 color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
+                fontSize: nowSize(20),
+                height: nowSize(32),
                 formatter: function(value, index) {
                   return "{yxStyle" + index + "|" + index + "}";
                 },
                 rich: {
                   yxStyle0: {
                     color: "#00C0FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   }
                 }
               }
@@ -3946,10 +4126,10 @@ export default {
             {
               name: "",
               type: "radar",
-              color: ["rgba(0,117,255,0.4)"],
+              color: ["rgba(0,117,255,0.1)"],
               emphasis: {
                 lineStyle: {
-                  width: 2,
+                  width: nowSize(2),
                   color: "rgba(0, 117, 255, 0.6)"
                 }
               },
@@ -3962,7 +4142,16 @@ export default {
                   ],
                   name: "本次得分",
                   symbol: "circle",
-                  symbolSize: 4,
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
                   areaStyle: {
                     opacity: 1,
                     color: {
@@ -3974,31 +4163,32 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: "rgba(27, 236, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         },
                         {
                           offset: 1,
-                          color: "rgba(0, 198, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         }
                       ],
                       globalCoord: false
                     }
                   },
                   lineStyle: {
-                    width: 1
+                    width: nowSize(1),
+                    color: '#58B5FF'
                   }
                 }
               ]
             }
           ]
         });
-        this.myChartPies3 = echarts.init(
-          document.getElementById("myChartPies3")
+        this.myChartLd4 = echarts.init(
+          document.getElementById("myChartLd4")
         );
-        this.myChartPies3.setOption({
+        this.myChartLd4.setOption({
           tooltip: {
             show: false,
-            padding: 10,
+            padding: nowSize(10),
             axisPointer: {
               type: "shadow"
             },
@@ -4014,7 +4204,7 @@ export default {
                 {
                   name: that.sysList[2].subDim[0].name,
                   max: 3,
-                  axisLabel: { show: true }
+                  axisLabel: { show: false }
                 },
                 {
                   name: that.sysList[2].subDim[1].name,
@@ -4039,9 +4229,9 @@ export default {
               splitArea: {
                 areaStyle: {
                   color: [
-                    "rgba(251, 109, 183, 0.14)",
-                    "rgba(155, 160, 255, 0.14)",
-                    "rgba(5, 157, 255, 0.14)"
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
                   ].reverse()
                 }
               },
@@ -4050,45 +4240,46 @@ export default {
               },
               splitLine: {
                 lineStyle: {
+                  type: "dashed",
                   color: [
-                    "rgba(155, 160, 255, 1)",
-                    "rgba(5, 157, 255, 1)",
-                    "rgba(251, 109, 183, 1)"
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
                   ].reverse()
                 }
               },
               axisLabel: {
                 show: true,
                 color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
+                fontSize: nowSize(20),
+                height: nowSize(32),
                 formatter: function(value, index) {
                   return "{yxStyle" + index + "|" + index + "}";
                 },
                 rich: {
                   yxStyle0: {
                     color: "#00C0FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   }
                 }
               }
@@ -4114,10 +4305,10 @@ export default {
             {
               name: "",
               type: "radar",
-              color: ["rgba(0,117,255,0.4)"],
+              color: ["rgba(0,117,255,0.1)"],
               emphasis: {
                 lineStyle: {
-                  width: 2,
+                  width: nowSize(2),
                   color: "rgba(0, 117, 255, 0.6)"
                 }
               },
@@ -4130,7 +4321,16 @@ export default {
                   ],
                   name: "本次得分",
                   symbol: "circle",
-                  symbolSize: 4,
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
                   areaStyle: {
                     opacity: 1,
                     color: {
@@ -4142,154 +4342,31 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: "rgba(27, 236, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         },
                         {
                           offset: 1,
-                          color: "rgba(0, 198, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         }
                       ],
                       globalCoord: false
                     }
                   },
                   lineStyle: {
-                    width: 1
+                    width: nowSize(1),
+                    color: '#58B5FF'
                   }
                 }
               ]
             }
           ]
         });
-        this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
-        this.myChartLd1.setOption({
-          grid: {
-            bottom: 40,
-            left: 20,
-            top: 40,
-            right: 60
-          },
-          radar: {
-            indicator: [
-              { name: this.details.personalitySubDim[0].name, max: 100 },
-              { name: this.details.personalitySubDim[5].name, max: 100 },
-              { name: this.details.personalitySubDim[4].name, max: 100 },
-              { name: this.details.personalitySubDim[3].name, max: 100 },
-              { name: this.details.personalitySubDim[2].name, max: 100 },
-              { name: this.details.personalitySubDim[1].name, max: 100 }
-            ],
-            center: ["50%", "50%"],
-            radius: "70%",
-            startAngle: 90,
-            splitNumber: 5,
-            name: {
-              formatter: "{value}",
-              textStyle: {
-                color: "#354B70",
-                fontSize: 12,
-                padding: [-10, -10]
-              }
-            },
-            splitArea: {
-              areaStyle: {
-                color: [
-                  "rgba(255, 255, 255, 1)",
-                  "rgba(151, 205, 255, 0.14)"
-                ].reverse()
-              }
-            },
-            axisLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: "#DEE7FF"
-              }
-            }
-          },
-          series: [
-            {
-              name: "人格解读",
-              type: "radar",
-              data: [
-                {
-                  value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
-                  name: "Actual Spending",
-                  symbol: "circle",
-                  symbolSize: 1,
-                  color: "rgba(0, 150, 255, 1)",
-                  itemStyle: {
-                    normal: {
-                      borderColor: "rgba(0, 150, 255, 1)"
-                    }
-                  }
-                }
-              ],
-              label: {
-                show: true,
-                fontSize: 12,
-                textStyle: {
-                  fontSize: 12,
-                  color: "#354B70"
-                },
-                formatter: function(params) {
-                  return params.value;
-                }
-              },
-              areaStyle: {
-                opacity: 0.4,
-                color: {
-                  type: "linear",
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "rgba(0, 150, 255, 1)"
-                    },
-                    {
-                      areaStyle: {
-                        opacity: 0.4,
-                        color: {
-                          type: "linear",
-                          x: 0,
-                          y: 0,
-                          x2: 0,
-                          y2: 1,
-                          colorStops: [
-                            {
-                              offset: 0,
-                              color: "rgba(0, 150, 255, 1)"
-                            },
-                            {
-                              offset: 1,
-                              color: "rgba(41, 101, 255, 1)"
-                            }
-                          ],
-                          globalCoord: false
-                        }
-                      },
-                      offset: 1,
-                      color: "rgba(41, 101, 255, 1)"
-                    }
-                  ],
-                  globalCoord: false
-                }
-              },
-              lineStyle: {
-                width: 0
-              }
-            }
-          ]
-        });
-        this.myChartLd3 = echarts.init(document.getElementById("myChartLd3"));
-        this.myChartLd3.setOption({
+        
+        this.myChartLd5 = echarts.init(document.getElementById("myChartLd5"));
+        this.myChartLd5.setOption({
           tooltip: {
             show: false,
-            padding: 10,
+            padding: nowSize(10),
             axisPointer: {
               type: "shadow"
             },
@@ -4303,17 +4380,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList2[1].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: true }
-                },
-                {
-                  name: that.sysList2[1].subDim[1].name,
+                  name: that.sysList[3].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList2[1].subDim[2].name,
+                  name: that.sysList[3].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[3].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -4330,9 +4407,9 @@ export default {
               splitArea: {
                 areaStyle: {
                   color: [
-                    "rgba(251, 109, 183, 0.14)",
-                    "rgba(155, 160, 255, 0.14)",
-                    "rgba(5, 157, 255, 0.14)"
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
                   ].reverse()
                 }
               },
@@ -4341,45 +4418,46 @@ export default {
               },
               splitLine: {
                 lineStyle: {
+                  type: "dashed",
                   color: [
-                    "rgba(155, 160, 255, 1)",
-                    "rgba(5, 157, 255, 1)",
-                    "rgba(251, 109, 183, 1)"
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
                   ].reverse()
                 }
               },
               axisLabel: {
                 show: true,
                 color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
+                fontSize: nowSize(20),
+                height: nowSize(32),
                 formatter: function(value, index) {
                   return "{yxStyle" + index + "|" + index + "}";
                 },
                 rich: {
                   yxStyle0: {
                     color: "#00C0FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   }
                 }
               }
@@ -4396,9 +4474,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList2[1].subDim[0].name,
-              that.sysList2[1].subDim[1].name,
-              that.sysList2[1].subDim[2].name
+              that.sysList[3].subDim[0].name,
+              that.sysList[3].subDim[1].name,
+              that.sysList[3].subDim[2].name
             ]
           },
           series: [
@@ -4408,23 +4486,29 @@ export default {
               color: ["rgba(0,117,255,0.1)"],
               emphasis: {
                 lineStyle: {
-                  width: 2,
+                  width: nowSize(2),
                   color: "rgba(0, 117, 255, 0.6)"
                 }
               },
               data: [
                 {
                   value: [
-                    that.sysList2[1].subDim[0].score,
-                    that.sysList2[1].subDim[1].score,
-                    that.sysList2[1].subDim[2].score
+                    that.sysList[3].subDim[0].score,
+                    that.sysList[3].subDim[1].score,
+                    that.sysList[3].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
-                  symbolSize: 4,
+                  symbolSize: 0,
                   itemStyle: {
-                    color: "#0099ff"
+                    color: "#58B5FF"
                   },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
                   areaStyle: {
                     opacity: 1,
                     color: {
@@ -4436,29 +4520,30 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: "rgba(27, 236, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         },
                         {
                           offset: 1,
-                          color: "rgba(0, 198, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         }
                       ],
                       globalCoord: false
                     }
                   },
                   lineStyle: {
-                    width: 1
+                    width: nowSize(1),
+                    color: '#58B5FF'
                   }
                 }
               ]
             }
           ]
         });
-        this.myChartLd2 = echarts.init(document.getElementById("myChartLd2"));
-        this.myChartLd2.setOption({
+        this.myChartLd6 = echarts.init(document.getElementById("myChartLd6"));
+        this.myChartLd6.setOption({
           tooltip: {
             show: false,
-            padding: 10,
+            padding: nowSize(10),
             axisPointer: {
               type: "shadow"
             },
@@ -4472,17 +4557,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList2[0].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: true }
-                },
-                {
-                  name: that.sysList2[0].subDim[1].name,
+                  name: that.sysList[4].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList2[0].subDim[2].name,
+                  name: that.sysList[4].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[4].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -4499,9 +4584,9 @@ export default {
               splitArea: {
                 areaStyle: {
                   color: [
-                    "rgba(251, 109, 183, 0.14)",
-                    "rgba(155, 160, 255, 0.14)",
-                    "rgba(5, 157, 255, 0.14)"
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
                   ].reverse()
                 }
               },
@@ -4510,45 +4595,46 @@ export default {
               },
               splitLine: {
                 lineStyle: {
+                  type: "dashed",
                   color: [
-                    "rgba(155, 160, 255, 1)",
-                    "rgba(5, 157, 255, 1)",
-                    "rgba(251, 109, 183, 1)"
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
                   ].reverse()
                 }
               },
               axisLabel: {
                 show: true,
                 color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
+                fontSize: nowSize(20),
+                height: nowSize(32),
                 formatter: function(value, index) {
                   return "{yxStyle" + index + "|" + index + "}";
                 },
                 rich: {
                   yxStyle0: {
                     color: "#00C0FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
-                    fontSize: 12,
+                    fontSize: nowSize(12),
                     // fontWeight: "bold",
-                    padding: [3, -12]
+                    padding: [nowSize(3), -nowSize(12)]
                   }
                 }
               }
@@ -4565,9 +4651,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList2[0].subDim[0].name,
-              that.sysList2[0].subDim[1].name,
-              that.sysList2[0].subDim[2].name
+              that.sysList[4].subDim[0].name,
+              that.sysList[4].subDim[1].name,
+              that.sysList[4].subDim[2].name
             ]
           },
           series: [
@@ -4577,23 +4663,29 @@ export default {
               color: ["rgba(0,117,255,0.1)"],
               emphasis: {
                 lineStyle: {
-                  width: 2,
+                  width: nowSize(2),
                   color: "rgba(0, 117, 255, 0.6)"
                 }
               },
               data: [
                 {
                   value: [
-                    that.sysList2[0].subDim[0].score,
-                    that.sysList2[0].subDim[1].score,
-                    that.sysList2[0].subDim[2].score
+                    that.sysList[4].subDim[0].score,
+                    that.sysList[4].subDim[1].score,
+                    that.sysList[4].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
-                  symbolSize: 4,
+                  symbolSize: 0,
                   itemStyle: {
-                    color: "#0099ff"
+                    color: "#58B5FF"
                   },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
                   areaStyle: {
                     opacity: 1,
                     color: {
@@ -4605,18 +4697,1298 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: "rgba(27, 236, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         },
                         {
                           offset: 1,
-                          color: "rgba(0, 198, 255, 0.67)"
+                          color: "rgba(138, 203, 255, 0.23)"
                         }
                       ],
                       globalCoord: false
                     }
                   },
                   lineStyle: {
-                    width: 1
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLd7 = echarts.init(document.getElementById("myChartLd7"));
+        this.myChartLd7.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[5].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[5].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[5].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[5].subDim[0].name,
+              that.sysList[5].subDim[1].name,
+              that.sysList[5].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[5].subDim[0].score,
+                    that.sysList[5].subDim[1].score,
+                    that.sysList[5].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLd8 = echarts.init(document.getElementById("myChartLd8"));
+        this.myChartLd8.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[6].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[6].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[6].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[6].subDim[0].name,
+              that.sysList[6].subDim[1].name,
+              that.sysList[6].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[6].subDim[0].score,
+                    that.sysList[6].subDim[1].score,
+                    that.sysList[6].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRg2 = echarts.init(document.getElementById("myChartRg2"));
+        this.myChartRg2.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[0].subDim[0].name,
+              that.sysList[0].subDim[1].name,
+              that.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[0].subDim[0].score,
+                    that.sysList[0].subDim[1].score,
+                    that.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRg3 = echarts.init(document.getElementById("myChartRg3"));
+        this.myChartRg3.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[0].subDim[0].name,
+              that.sysList[0].subDim[1].name,
+              that.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[0].subDim[0].score,
+                    that.sysList[0].subDim[1].score,
+                    that.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRg4 = echarts.init(document.getElementById("myChartRg4"));
+        this.myChartRg4.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[0].subDim[0].name,
+              that.sysList[0].subDim[1].name,
+              that.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[0].subDim[0].score,
+                    that.sysList[0].subDim[1].score,
+                    that.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRg5 = echarts.init(document.getElementById("myChartRg5"));
+        this.myChartRg5.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[0].subDim[0].name,
+              that.sysList[0].subDim[1].name,
+              that.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[0].subDim[0].score,
+                    that.sysList[0].subDim[1].score,
+                    that.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRg6 = echarts.init(document.getElementById("myChartRg6"));
+        this.myChartRg6.setOption({
+          tooltip: {
+            show: false,
+            padding: nowSize(10),
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: nowSize(20),
+                height: nowSize(32),
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: nowSize(12),
+                    // fontWeight: "bold",
+                    padding: [nowSize(3), -nowSize(12)]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.sysList[0].subDim[0].name,
+              that.sysList[0].subDim[1].name,
+              that.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: nowSize(2),
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.sysList[0].subDim[0].score,
+                    that.sysList[0].subDim[1].score,
+                    that.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: nowSize(1),
+                    color: '#58B5FF'
                   }
                 }
               ]
@@ -4627,61 +5999,92 @@ export default {
     },
     myChartInit1() {
       let that = this;
+      // 当前视口宽度
+      let nowClientWidth = document.documentElement.clientWidth;
+      // 换算方法
+      let nowSize = function (val, initWidth = 1920) {
+        return val * (nowClientWidth / initWidth);
+      };
       var theIndex = -1;
+      let tuli = []
+      for (let i in that.reviewData.sandUseTimeInfo) {
+        tuli.push(that.reviewData.sandUseTimeInfo[i].sandTypeName)
+      }
       this.myChartRose = echarts.init(this.$refs.myChartRose);
       this.myChartRose.setOption({
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {d}%"
+          formatter: "{a} <br/>{b} : {d}%",
+          padding: nowSize(10),
+          textStyle: {
+            color: "rgba(42, 52, 135, 0.80)",
+            fontSize: nowSize(14)
+          }
+        },
+        legend: {
+          data: tuli, // 图例名称
+          left: 'center', // 调整图例位置
+          orient: 'horizontal',
+          triggerOn: 'none',
+          itemGap: nowSize(30),
+          selectedMode: false,
+          bottom: nowSize(18), // 调整图例位置
+          itemHeight: nowSize(8), // 修改icon图形大小
+          icon: 'circle', // 图例前面的图标形状
+          textStyle: { // 图例文字的样式
+            color: 'rgba(42, 52, 135, 1)', // 图例文字颜色
+            fontSize: nowSize(16), // 图例文字大小
+            padding: [0, 0, 0, -10]
+          }
         },
         series: [
           {
             name: "沙具使用时长占比",
             type: "pie",
-            radius: [30, "70%"],
+            radius: ["40%", "60%"],
             center: ["50%", "50%"],
-            roseType: "area",
+            // roseType: "area",
             itemStyle: {
               emphasis: {
-                shadowBlur: 10,
+                shadowBlur: nowSize(10),
                 shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
+                shadowColor: "rgba(0, 0, 0, 0)"
               },
               normal: {
                 color: function(params) {
                   theIndex++;
                   var colorList = [
                     {
-                      c1: "#97CDFF",
-                      c2: "#C4ECFF"
+                      c1: "rgba(237, 237, 255, 1)",
+                      c2: "rgba(237, 237, 255, 1)"
                     },
                     {
-                      c1: "#FFD356",
-                      c2: "#FFEB8F"
+                      c1: "rgba(181, 184, 255, 1)",
+                      c2: "rgba(181, 184, 255, 1)"
                     },
                     {
-                      c1: "#FE8986",
-                      c2: "#FEAD7E"
+                      c1: "rgba(209, 248, 205, 1)",
+                      c2: "rgba(209, 248, 205, 1)"
                     },
                     {
-                      c1: "#FC4FB0",
-                      c2: "#FD76DA"
+                      c1: "rgba(138, 203, 255, 1)",
+                      c2: "rgba(138, 203, 255, 1)"
                     },
                     {
-                      c1: "#5FF0F9",
-                      c2: "#1BF6CA"
+                      c1: "rgba(255, 176, 219, 1)",
+                      c2: "rgba(255, 176, 219, 1)"
                     },
                     {
-                      c1: "#00B6F0",
-                      c2: "#00EAFE"
+                      c1: "rgba(255, 236, 215, 1)",
+                      c2: "rgba(255, 236, 215, 1)"
                     },
                     {
-                      c1: "#7279FF",
-                      c2: "#BABFFF"
+                      c1: "rgba(255, 163, 163, 1)",
+                      c2: "rgba(255, 163, 163, 1)"
                     },
                     {
-                      c1: "#0075FF",
-                      c2: "#00C2FF"
+                      c1: "rgba(255, 201, 157, 1)",
+                      c2: "rgba(255, 201, 157, 1)"
                     }
                   ];
                   var userIndex = theIndex % colorList.length;
@@ -4701,8 +6104,8 @@ export default {
             labelLine: {
               normal: {
                 smooth: 0,
-                length: 10,
-                length2: 50
+                length: nowSize(10),
+                length2: nowSize(50)
               }
             },
             data: [
@@ -4710,10 +6113,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[0].num,
                 name: that.reviewData.sandUseTimeInfo[0].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#79C2FF"
+                      fontSize: nowSize(14),
+                      color: "rgba(160, 160, 255, 1)"
                     }
                   }
                 }
@@ -4722,10 +6130,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[1].num,
                 name: that.reviewData.sandUseTimeInfo[1].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#FBD356"
+                      fontSize: nowSize(14),
+                      color: "rgba(115, 122, 253, 1)"
                     }
                   }
                 }
@@ -4734,10 +6147,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[2].num,
                 name: that.reviewData.sandUseTimeInfo[2].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#FF9E8C"
+                      fontSize: nowSize(14),
+                      color: "rgba(144, 220, 136, 1)"
                     }
                   }
                 }
@@ -4746,10 +6164,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[3].num,
                 name: that.reviewData.sandUseTimeInfo[3].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#fe2727"
+                      fontSize: nowSize(14),
+                      color: "rgba(88, 181, 255, 1)"
                     }
                   }
                 }
@@ -4758,10 +6181,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[4].num,
                 name: that.reviewData.sandUseTimeInfo[4].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#40E6F8"
+                      fontSize: nowSize(14),
+                      color: "rgba(255, 142, 194, 1)"
                     }
                   }
                 }
@@ -4770,10 +6198,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[5].num,
                 name: that.reviewData.sandUseTimeInfo[5].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#00C0FF"
+                      fontSize: nowSize(14),
+                      color: "rgba(251, 194, 132, 1)"
                     }
                   }
                 }
@@ -4782,10 +6215,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[6].num,
                 name: that.reviewData.sandUseTimeInfo[6].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#ffe400"
+                      fontSize: nowSize(14),
+                      color: "rgba(255, 117, 117, 1)"
                     }
                   }
                 }
@@ -4794,10 +6232,15 @@ export default {
                 value: that.reviewData.sandUseTimeInfo[7].num,
                 name: that.reviewData.sandUseTimeInfo[7].sandTypeName,
                 label: {
-                  formatter: "{b} {a|{d}%}",
+                  formatter: "{m|{b}} {a|{d}%}",
                   rich: {
+                    m: {
+                      fontSize: nowSize(14),
+                      color: "rgba(42, 52, 135, 0.80)"
+                    },
                     a: {
-                      color: "#00e805"
+                      fontSize: nowSize(14),
+                      color: "rgba(255, 173, 106, 1)"
                     }
                   }
                 }
@@ -4812,10 +6255,16 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow"
+          },
+          padding: nowSize(10),
+          textStyle: {
+            color: "rgba(42, 52, 135, 0.80)",
+            fontSize: nowSize(14)
           }
         },
 
         grid: {
+          top: "4%",
           left: "3%",
           right: "4%",
           bottom: "3%",
@@ -4825,6 +6274,14 @@ export default {
           {
             type: "category",
             data: that.sandUseNumInfoName,
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              fontSize: nowSize(14),
+              color: "rgba(42,52,135,0.8)",
+              showMaxLabel: true
+            },
             axisTick: {
               show: false,
               alignWithLabel: true
@@ -4834,6 +6291,14 @@ export default {
         yAxis: [
           {
             type: "value",
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              fontSize: nowSize(14),
+              color: "rgba(42,52,135,0.8)",
+              showMaxLabel: true
+            },
             minInterval: 1
           }
         ],
@@ -4841,17 +6306,19 @@ export default {
           {
             name: "使用数量",
             type: "bar",
-            barWidth: "16",
+            // barWidth: nowSize(10),
+            barMaxWidth: nowSize(14),
             itemStyle: {
               normal: {
+                barBorderRadius: [nowSize(7), nowSize(7), nowSize(7), nowSize(7)],
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#00C2FF"
+                    color: "rgba(214, 182, 246, 1)"
                   },
                   {
                     offset: 1,
-                    color: "#0075FF"
+                    color: "rgba(225, 203, 246, 1)"
                   }
                 ])
               }
@@ -4864,7 +6331,11 @@ export default {
   }
 };
 </script>
-
+<style >
+  .el-table::before{
+    background: transparent
+  }
+</style>
 <style lang="less">
 .detail_report_wrap {
   padding-bottom: 0.02rem;
@@ -4873,7 +6344,7 @@ export default {
   // 新版样式
   .drw_bg {
     width: 100%;
-    height: auto;
+    height: 100%;
     position: absolute;
     margin: auto;
     top: 0;
@@ -4897,7 +6368,7 @@ export default {
         // align-items: center;
         font-family: SourceHanSansCN, SourceHanSansCN;
         font-weight: 400;
-        font-size: 18px;
+        font-size: 0.18rem;
         color: #333E75;
         line-height: 0.42rem;
         margin-top: 0.28rem;
@@ -4922,7 +6393,7 @@ export default {
       margin: 0 auto 0.34rem;
       // height: 2.18rem;
       background: rgba(255,255,255,0.6);
-      box-shadow: 0 0.02rem 0.6rem 0 rgb(228, 228, 235);
+      box-shadow: 0 0.2rem 0.16rem 0 rgba(228, 228, 235, 0.13);
       border-radius: 0.2rem;
       .drwc_b_flex{
         display: flex;
@@ -5099,6 +6570,762 @@ export default {
             margin-left: 0.16rem;
           }
         }
+        .wdrj_box{
+          margin-bottom: 0rem;
+          .wdrj_main {
+            padding: 0.1rem 0.5rem 0.1rem;
+            // background: #ffffff;
+            // box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
+            border-radius: 0.06rem;
+            margin-bottom: 0.2rem;
+            .wdrj_title {
+              display: flex;
+              align-items: center;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 0.2rem;
+              color: #2A3487;
+              line-height: 0.34rem;
+              img {
+                width: 0.1rem;
+                height: 0.1rem;
+                margin-right: 0.07rem;
+              }
+            }
+            .wm_text{
+              text-align: left;
+              padding: 0;
+              margin: 0.16rem 0 0.16rem;
+              word-break: break-all;
+              .el-button {
+                margin-top: 0.16rem;
+                padding: 0.09rem 0.27rem;
+                border-radius: 0.04rem;
+                font-family: PingFangSC, PingFang SC;
+                font-weight: 400;
+                font-size: 0.2rem;
+                color: #FFFFFF;
+                height: 0.4rem;
+                width: 1rem;
+                background: rgba(132, 138, 255, 1);
+              }
+              .primary1{
+                color: #0075ff;
+                border: 0.01rem solid #0075ff !important;
+                background: linear-gradient(263deg, #ffffff, #ffffff);
+                box-shadow: 0px 3px 18px 0px rgba(250, 250, 250, 0.19);
+              }
+              .el-textarea{
+                font-size: 0.16rem;
+                height: 100%;
+                .el-textarea__inner{
+                  resize: none;
+                  font-size: 0.18rem;
+                  color: #333E75;
+                  height: 100%;
+                  background: rgba(226, 234, 255, 0.40);
+                  padding: 14px 0.15rem 14px !important;
+                  border: 0;
+                }
+                .el-input__count{
+                  bottom: 4px;
+                  right: 8px;
+                }
+              }
+            }
+          }
+        }
+        .drwc_b_tab{
+          display: flex;
+          
+          .drwc_bt_left{
+            width: 1.8rem;
+            margin: 0 0.6rem 0.38rem 0.86rem;
+            .drwc_btl{
+              width: 100%;
+              background: rgba(226,234,255,0.4);
+              border-radius: 0.1rem;
+              min-height: 4rem;
+              ul {
+                padding: 0.02rem 0;
+                li {
+                  height: 0.5rem;
+                  line-height: 0.5rem;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 400;
+                  font-size: 0.2rem;
+                  color: #2A3487;
+                  margin:0.3rem 0;
+                  border-left: 0.04rem solid transparent;
+                  cursor: pointer;
+                }
+                li.btl_act {
+                  border-left: 0.04rem solid #737AFD;
+                  background: #ffffff;
+                }
+              }
+            }
+          }
+          .drwc_bt_right{
+            flex: 1;
+            .drwc_btr {
+              .wdrj_box {
+                margin-bottom: 0rem;
+                .wdrj_main {
+                  padding: 0.1rem 0.3rem 0.2rem 0.1rem;
+                  // background: #ffffff;
+                  // box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
+                  border-radius: 0.04rem;
+                  margin-bottom: 0.2rem;
+                  .wdrj_title {
+                    display: flex;
+                    align-items: center;
+                    font-size: 0.22rem;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #354b70;
+                    line-height: 0.34rem;
+                    img {
+                      width: 0.67rem;
+                      height: 0.22rem;
+                      // margin-left: 0.1rem;
+                    }
+                  }
+                  .dtmsb_tar {
+                    width: 8.25rem;
+                    height: 2.66rem;
+                    margin: -0.28rem auto 0.2rem;
+                    position: relative;
+                    .top_top {
+                      position: absolute;
+                      margin: auto;
+                      left: 0;
+                      right: 0;
+                      top: 0.22rem;
+                      width: 4.13rem;
+                      .tt_txt {
+                        font-size: 0.16rem;
+                        font-family: PingFang SC;
+                        font-weight: 400;
+                        color: #354b70;
+                        line-height: 0.2rem;
+                        display: block;
+                        position: relative;
+                      }
+                    }
+                    .bottom_left {
+                      position: absolute;
+                      margin: auto;
+                      left: 3.7rem;
+                      bottom: 0.03rem;
+                      width: 4.13rem;
+                      .tt_txt {
+                        font-size: 0.16rem;
+                        font-family: PingFang SC;
+                        font-weight: 400;
+                        color: #354b70;
+                        line-height: 0.2rem;
+                        display: block;
+                        position: relative;
+                      }
+                    }
+                    .bottom_right {
+                      position: absolute;
+                      margin: auto;
+                      left: 0.42rem;
+                      bottom: 0.03rem;
+                      width: 4.13rem;
+                      .tt_txt {
+                        font-size: 0.16rem;
+                        font-family: PingFang SC;
+                        font-weight: 400;
+                        color: #354b70;
+                        line-height: 0.2rem;
+                        display: block;
+                        position: relative;
+                      }
+                    }
+                    .dengpao{
+                      width:3.12rem;
+                      height:3.07rem;
+                      margin:0 auto;
+                    }
+                    .demsb_tool1 {
+                      position: absolute;
+                      margin: auto;
+                      right: 2.48rem;
+                      top: -0.07rem;
+                      width: auto;
+                      min-width: 65px;
+                      height: 0.34rem;
+                      background: url(../../assets/images/report/exmaple.png) no-repeat
+                        center;
+                      background-size: 100% 100%;
+                      text-align: left;
+                      display: flex;
+                      flex-wrap: wrap;
+                      align-items: center;
+                      .demsb_score {
+                        font-size: 0.14rem;
+                        padding-left: 0.1rem;
+                        padding-right: 0.2rem;
+                        line-height: 0.34rem;
+                        color: #7486af;
+                        display: flex;
+                        span {
+                          margin-left: -0.08rem;
+                          color: #00c0ff;
+                        }
+                      }
+                      .demsb_score1 {
+                        span {
+                          margin-left: -0.26rem;
+                          color: #016cff;
+                        }
+                      }
+                    }
+                    .demsb_tool {
+                      position: absolute;
+                      margin: auto;
+                      left: 2.48rem;
+                      top: -0.07rem;
+                      width: auto;
+                      min-width: 65px;
+                      height: 0.34rem;
+                      background: url(../../assets/images/report/exmaple2.png) no-repeat
+                        center;
+                      background-size: 100% 100%;
+                      text-align: left;
+                      display: flex;
+                      flex-wrap: wrap;
+                      align-items: center;
+
+                      .demsb_score {
+                        font-size: 0.14rem;
+                        padding-left: 0.2rem;
+                        padding-right: 0.1rem;
+                        line-height: 0.34rem;
+                        color: #7486af;
+                        display: flex;
+                        span {
+                          margin-left: -0.08rem;
+                          color: #00c0ff;
+                        }
+                      }
+                      .demsb_score1 {
+                        span {
+                          margin-left: -0.26rem;
+                          color: #016cff;
+                        }
+                      }
+                    }
+                    ul {
+                      position: absolute;
+                      margin: auto;
+                      left: 0;
+                      right: 0;
+                      bottom: -0.32rem;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      li {
+                        padding: 0 0.2rem;
+                        display: flex;
+                        align-items: center;
+                        span {
+                          font-size: 0.16rem;
+                          font-family: Source Han Sans CN;
+                          font-weight: 400;
+                          color: #7786ac;
+                        }
+                        span:first-child {
+                          margin-right: 0.06rem;
+                          width: 0.08rem;
+                          height: 0.08rem;
+                          background: linear-gradient(174deg, #1becff 0%, #00c6ff 98%);
+                          border-radius: 50%;
+                        }
+                      }
+                      li:last-child {
+                        span:first-child {
+                          background: linear-gradient(
+                            0deg,
+                            rgba(0, 117, 255, 0.99),
+                            rgba(0, 194, 255, 0.99)
+                          );
+                        }
+                      }
+                    }
+                    .myChartLd0 {
+                      width: 8.26rem;
+                      height: 4.4rem;
+                    }
+                    .dtmsb_ulc {
+                      position: absolute;
+                      margin: auto;
+                      left: 0;
+                      right: 0;
+                      bottom: -0.54rem;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      li {
+                        padding: 0 0.2rem;
+                        display: flex;
+                        align-items: center;
+                        img {
+                          width: 2.6rem;
+                          height: auto;
+                        }
+                        span {
+                          font-size: 0.16rem;
+                          font-family: Source Han Sans CN;
+                          font-weight: 400;
+                          color: #7786ac;
+                        }
+                        span:first-child {
+                          margin-right: 0.06rem;
+                          width: 0.08rem;
+                          height: 0.08rem;
+                          background: linear-gradient(174deg, #1becff 0%, #00c6ff 98%);
+                          border-radius: 50%;
+                        }
+                      }
+                      li:last-child {
+                        span:first-child {
+                          background: linear-gradient(
+                            0deg,
+                            rgba(0, 117, 255, 0.99),
+                            rgba(0, 194, 255, 0.99)
+                          );
+                        }
+                      }
+                    }
+                  }
+                  .wdrj_suger {
+                    margin-top: 0.5rem;
+                    text-align: left;
+                    .wdrjs_uls{
+                      padding-left: 0.18rem;
+                      li{
+                        display: flex;
+                        font-size: 0.16rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #354B70;
+                        line-height: 0.4rem;
+                        span {
+                          margin-top: 0.12rem;
+                          margin-right: 0.1rem;
+                          text-align: center;
+                          line-height: 0.16rem;
+                          width: 0.16rem;
+                          height: 0.16rem;
+                          background: linear-gradient(177deg, #1becff, #00c6ff);
+                          border-radius: 50%;
+                          font-size: 0.12rem;
+                          font-family: Source Han Sans CN;
+                          font-weight: bold;
+                          color: #ffffff;
+                        }
+                        p {
+                          line-height: 0.36rem;
+                          font-family: SourceHanSansCN, SourceHanSansCN;
+                          font-weight: 400;
+                          font-size: 0.16rem;
+                          color: #333E75;
+                        }
+                        img{
+                          width: 0.16rem;
+                          height: 0.16rem;
+                          margin-right: 0.06rem;
+                          margin-top: 0.12rem;
+                        }
+                      }
+                    }
+                    .wdrjs_title {
+                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-weight: 400;
+                      font-size: 0.18rem;
+                      color: #333E75;
+                      display: flex;
+                      align-items: center;
+                      line-height: 0.34rem;
+                      margin-left: 0.03rem;
+                      img {
+                        width: 0.12rem;
+                        height: 0.12rem;
+                        margin-right: 0.06rem;
+                      }
+                      .wdrjst_res {
+                        display: flex;
+                        align-items: center;
+                        img {
+                          width: 0.19rem;
+                          height: 0.22rem;
+                          margin-right: 0.06rem;
+                          margin-left: 0.2rem;
+                        }
+                        .wdrjstr_txt {
+                          font-size: 0.18rem;
+                          font-family: Source Han Sans CN;
+                          font-weight: 400;
+                          color: #FE5FB8;
+                        }
+                      }
+                    }
+                    .wdrjs_tips {
+                      display: flex;
+                      flex-wrap: wrap;
+                      width: auto;
+                      background: #fffef8;
+                      border: 0.01rem solid #ffe100;
+                      border-radius: 0.02rem;
+                      padding: 0 0.1rem;
+                      margin: 0.15rem 0.15rem 0;
+                      min-height: 0.42rem;
+                      img {
+                        width: 0.32rem;
+                        height: 0.34rem;
+                        margin-top: 0.1rem;
+                      }
+                      p {
+                        text-align: left;
+                        padding-left: 0;
+                        flex: 1;
+                        font-size: 0.16rem;
+                        span {
+                          color: #ff7e00;
+                        }
+                      }
+                    }
+                    .wdrjst_res1 {
+                      display: flex;
+                      align-items: center;
+                      padding: 0 0.15rem;
+                      margin: 0.3rem 0 0.1rem;
+                      line-height: 0.26rem;
+                      img {
+                        width: 0.19rem;
+                        height: 0.22rem;
+                        margin-right: 0.06rem;
+                      }
+                      span {
+                        font-size: 0.18rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #354b70;
+                      }
+                      .wdrjstr_txt {
+                        font-size: 0.18rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #FE5FB8;
+                      }
+                    }
+                    .wdrjst_del {
+                      padding: 0.24rem;
+                      line-height: 0.39rem;
+                      font-size: 0.18rem;
+                      font-family: Source Han Sans CN;
+                      font-weight: 400;
+                      color: #354b70;
+                      text-align: left;
+                      .pd24 {
+                        padding-left: 0.24rem;
+                        font-size: 0.16rem;
+                      }
+                      div {
+                        line-height: 0.39rem;
+                        font-size: 0.18rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #354b70;
+                        img {
+                          width: 0.16rem;
+                          height: 0.12rem;
+                          margin-right: 0.08rem;
+                        }
+                      }
+                      ul {
+                        li {
+                          font-size: 0.14rem;
+                          font-family: Source Han Sans CN;
+                          font-weight: 400;
+                          color: #354b70;
+                          display: flex;
+                          img {
+                            width: 0.06rem;
+                            height: 0.06rem;
+                            margin-right: 0.1rem;
+                            margin-top: 0.16rem;
+                          }
+                        }
+                      }
+                    }
+                    .wdrjst_del1 {
+                      width: 10.82rem;
+                      background: url(../../assets/images/report/h_bg1.png) no-repeat top
+                        left;
+                      background-size: 100% 100%;
+                      margin-left: 0.3rem;
+                    }
+                    .wdrjst_del2 {
+                      width: 10.82rem;
+                      background: url(../../assets/images/report/h_bg2.png) no-repeat top
+                        left;
+                      background-size: 100% 100%;
+                      margin-left: 0.3rem;
+                    }
+                    .gb_contain {
+                      text-align: left;
+                      padding: 0.10rem 0.25rem;
+                      p {
+                        padding: 0.06rem 0 0.06rem;
+                        font-size: 0.16rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #354b70;
+                        display: flex;
+                        align-items: flex-start;
+                        img {
+                          width: 0.04rem;
+                          height: 0.18rem;
+                          margin-top: 0.02rem;
+                          margin-right: 0.06rem;
+                        }
+                      }
+                      ul {
+                        li {
+                          display: flex;
+                          line-height: 0.36rem;
+                          span {
+                            margin-top: 0.09rem;
+                            margin-right: 0.08rem;
+                            text-align: center;
+                            line-height: 0.16rem;
+                            width: 0.16rem;
+                            height: 0.16rem;
+                            background: linear-gradient(177deg, #1becff, #00c6ff);
+                            border-radius: 50%;
+                            font-size: 0.12rem;
+                            font-family: Source Han Sans CN;
+                            font-weight: bold;
+                            color: #ffffff;
+                            border: 0.01rem solid #00c6ff;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                          }
+                          p {
+                            padding: 0;
+                            flex: 1;
+                            display: flex;
+                            flex-wrap: wrap;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  .wdrj_suger1 {
+                    margin-top: 0.1rem;
+                  }
+                  .wm_text{
+                    text-align: center;
+                    padding: 0;
+                    margin: 0.16rem 0 0.16rem;
+                    word-break: break-all;
+                    .el-button {
+                      margin-top: 0.16rem;
+                      border: 0.01rem solid #dcdfe6;
+                      padding: 0.09rem 0.27rem;
+                      font-size: 0.16rem;
+                      border-radius: 0.04rem;
+
+                      color: #ffffff;
+                      background: linear-gradient(263deg, #00c2ff, #0075ff);
+                      box-shadow: 0px 3px 18px 0px rgba(62, 150, 253, 0.19);
+                    }
+                    .primary1{
+                      color: #0075ff;
+                      border: 0.01rem solid #0075ff !important;
+                      background: linear-gradient(263deg, #ffffff, #ffffff);
+                      box-shadow: 0px 3px 18px 0px rgba(250, 250, 250, 0.19);
+                    }
+                    .el-textarea{
+                      font-size: 0.16rem;
+                      height: 100%;
+                      .el-textarea__inner{
+                        resize: none;
+                        font-size: 0.16rem;
+                        color: #354B70;
+                        height: 100%;
+                        padding: 12px 0.15rem 12px !important;
+                      }
+                      .el-input__count{
+                        bottom: 2px;
+                        right: 8px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .drwc_b_tab1{
+          display: block;
+          .drwc_bt_top{
+            width: auto;
+            margin: 0.24rem auto 0.38rem;
+            .drwc_btl{
+              width: auto;
+              background: transparent;
+              border-radius: unset;
+              min-height: auto;
+              ul{
+                width: 10rem;
+                height: 0.5rem;
+                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                li{
+                  flex: 1;
+                  border: 0.01rem solid rgba(203, 206, 224, 1);
+                  margin: 0;
+                  border-right: 0;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 400;
+                  font-size: 0.2rem;
+                  color: #2A3487;
+                }
+                li:last-child{
+                  border-right: 0.01rem solid rgba(203, 206, 224, 1);
+                }
+                li.btl_act{
+                  border: 0;
+                  background: #FFFFFF;
+                  box-shadow: 0 0.02rem 0.2rem 0 #EBECFF;
+                  font-weight: 500;
+                  border-left: 0.01rem solid rgba(203, 206, 224, 1);
+                  color: #333E75;
+                }
+              }
+            }
+          }
+          .drwc_bt_bottom{
+            .drwc_btr{
+              .wdrj_box{
+                .wdrj_main{
+                  width: 10.4rem;
+                  margin: 0 auto 0.4rem;
+                  padding: 0;
+                  .wdrj_line{
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 0.6rem;
+                    margin-top: 0.8rem;
+                    justify-content: center;
+                    .wdrj_l_left{
+                      font-family: PingFangSC, PingFang SC;
+                      font-weight: 400;
+                      font-size: 0.18rem;
+                      color: #6F76B2;
+                    }
+                    .wdrj_l_center{
+                      width: 7.2rem;
+                      height: 0.1rem;
+                      margin: 0 0.26rem;
+                      border-radius: 0.06rem;
+                      background: linear-gradient( 270deg, #999EFF 0%, #9DBDFF 50%, #CDE9FF 100%);
+                      position: relative;
+                      .wdrj_lc_txt{
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-family: PingFangSC, PingFang SC;
+                        font-weight: 400;
+                        font-size: 0.16rem;
+                        color: #6F76B2;
+                        margin-top: 0.2rem;
+                      }
+                      .dttr_btn {
+                        width: 0.48rem;
+                        height: auto;
+                        position: absolute;
+                        margin: auto;
+                        margin-left: -0.24rem;
+                        left: 0;
+                        top: -0.16rem;
+                      }
+                      .dttr_score{
+                        position: absolute;
+                        margin: auto;
+                        margin-left: -0.6rem;
+                        left: 0;
+                        bottom: 0.28rem;
+                        min-width: 1.2rem;
+                        height: 0.36rem;
+                        background: #FFFFFF;
+                        box-shadow: 0 0.02rem 0.1rem 0 #DDDFFF;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.18rem;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        font-weight: 400;
+                        color: #737AFD;
+                        i{
+                          width: 0;
+                          height: 0;
+                          border-left: 0.08rem solid transparent;
+                          border-right: 0.08rem solid transparent;
+                          border-bottom: 0.08rem solid #ffffff;
+                          position: absolute;
+                          margin: auto;
+                          left: 0;
+                          right: 0;
+                          bottom: -0.07rem;
+                          transform: rotate(180deg);
+                        }
+                      }
+                      .dttr_lv {
+                        position: absolute;
+                        margin: auto;
+                        margin-left: -0.7rem;
+                        left: 0;
+                        top: 0.14rem;
+                        width: 1.4rem;
+                        height: 0.6rem;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        -webkit-box-pack: center;
+                        -ms-flex-pack: center;
+                        justify-content: center;
+                        font-size: 0.18rem;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        font-weight: 400;
+                        color: #6F76B2;
+                      }
+                    }
+                    .wdrj_l_right{
+                      font-family: PingFangSC, PingFang SC;
+                      font-weight: 400;
+                      font-size: 0.18rem;
+                      color: #6F76B2;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
         .drwc_b_work{
           display: flex;
           align-items: center;
@@ -5107,6 +7334,7 @@ export default {
             justify-content: space-between;
             text-align: left;
             position: relative;
+            width:100%;
             .dr_review {
               position: absolute;
               right: 0;
@@ -5136,7 +7364,7 @@ export default {
               }
             }
             .dtmc_left {
-              width: auto;
+              width: 5.0rem;
               margin: 0 0.32rem 0.4rem 0.4rem;
               border-radius: 0.16rem;
               // background: #ffffff;
@@ -5184,9 +7412,25 @@ export default {
               }
               .dtmcl_chart {
                 position: relative;
+                .dtmcl_c_nor{
+                  width: 2.2rem;
+                  height: 2.2rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin: 0 auto;
+                  border-radius: 50%;
+                  border: 0.18rem solid #82df95;
+                  // border-image: linear-gradient(324deg, rgba(137, 219, 186, 1), rgba(177, 232, 206, 1)) 12 12;
+                  // clip-path: inset(0 round 1.1rem);
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 0.38rem;
+                  color: #82df95;
+                }
                 .my_chart {
-                  width: 1.9rem;
-                  height: 1.9rem;
+                  width: 2.2rem;
+                  height: 2.2rem;
                   margin: 0 auto;
                 }
                 .c_o_my_txt {
@@ -5251,7 +7495,61 @@ export default {
                 }
               }
               .dtmcl_sys {
-                margin-bottom: 0.3rem;
+                // margin-bottom: 0.3rem;
+                .dtmcl_du3{
+                  margin-top: 0.1rem;
+                  span{
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 600;
+                    font-size: 0.18rem;
+                    color: #333E75;
+                  }
+                }
+                .dtmcl_sbox{
+                  display: flex;
+                  margin-top:0.14rem;
+                  .dtmcl_sb_t{
+                    width: auto;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 400;
+                    font-size: 0.18rem;
+                    color: #333E75;
+                  }
+                  .dtmcl_sb_c{
+                    flex: 1;
+                    ul {
+                      width: 100%;
+                      display: flex;
+                      flex-wrap: wrap;
+                      li{
+                        width: 50%;
+                        // flex: 1;
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 0.1rem;
+                        span{
+                          font-family: SourceHanSansCN, SourceHanSansCN;
+                          font-weight: 400;
+                          font-size: 0.18rem;
+                          color: #333E75;
+                        }
+                        img {
+                          width: 0.67rem;
+                          height: 0.22rem;
+                          margin-left:0.04rem;
+                        }
+                      }
+                    }
+                    div{
+                      width: 100%;
+                      // padding: 0 0.24rem;
+                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-weight: 400;
+                      font-size: 0.18rem;
+                      color: #333E75;
+                    }
+                  }
+                }
                 .dtmcl_du2 {
                   margin-bottom: 0.12rem;
                   img {
@@ -5294,18 +7592,100 @@ export default {
                     font-weight: 400;
                     font-size: 0.16rem;
                     color: #333E75;
-                    line-height: 0.24rem;
+                    line-height: 1.4;
                   }
                 }
               }
             }
             .dtmc_right {
-              width: 7.76rem;
-              background: #ffffff;
-              border-radius: 0.04rem;
+              flex: 1;
+              // background: #ffffff;
+              // border-radius: 0.04rem;
               overflow: hidden;
               position: relative;
-              min-height:4.4rem;
+              margin: 0.1rem 0.75rem 0.36rem 0.1rem;
+              // min-height:4.4rem;
+              .dtmc_r_biao{
+                width: 100%;
+                ul {
+                  width: 100%;
+                  border: 0.01rem solid rgba(166, 172, 204, 1);
+                  border-bottom: 0;
+                  border-right: 0;
+                  // display: flex;
+                  li {
+                    width: 100%;
+                    display: flex;
+
+                    div{
+                      flex: 1;
+                      text-align: center;
+                      font-family: PingFangSC, PingFang SC;
+                      font-weight: 400;
+                      font-size: 0.14rem;
+                      color: #2A3487;
+                      border: 0.01rem solid rgba(166, 172, 204, 1);
+                      border-left: 0;
+                      border-top: 0;
+                      padding: 0.1rem 0;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      span{
+                        font-family: PingFangSC, PingFang SC;
+                        font-weight: 400;
+                        font-size: 0.14rem;
+                        color: #333E75;
+                      }
+                      img{
+                        width: 0.67rem;
+                        height: 0.22rem;
+                      }
+                    }
+                  }
+                  li:nth-child(1) {
+                    div{
+                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-weight: 500;
+                      font-size: 0.16rem;
+                      padding: 0.14rem 0;
+                    }
+                  }
+                }
+              }
+              .myChartScore{
+                width: 8rem;
+                height: 3rem;
+              }
+              .rtr_ul {
+                ul {
+                  display: flex;
+                  justify-content: center;
+                  li {
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 0.16rem;
+                    color: #2A3487;
+                    line-height: 0.32rem;
+                    display: flex;
+                    align-items: center;
+                    padding: 0rem 0.4rem 0.2rem;
+                    span {
+                      margin-right: 0.04rem;
+                      display: inline-block;
+                      width: 0.08rem;
+                      height: 0.08rem;
+                      border-radius: 50%;
+                    }
+                    span.r_cir1 {
+                      background: rgba(147, 207, 255, 1);
+                    }
+                    span.r_cir2 {
+                      background: rgba(169, 173, 255, 1);
+                    }
+                  }
+                }
+              }
               .dtmcl_box {
                 display: flex;
                 flex-wrap: wrap;
@@ -5492,10 +7872,461 @@ export default {
       }
       
     }
+    .drwc_boxr {
+      .drwc_common{
+        .drwc_bw_head{
+          img{
+            width: 0.53rem;
+            height: 0.51rem;
+          }
+        }
+        .dtmt_tle {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin: 0 auto;
+          width: 12rem;
+          img {
+            width: 0.12rem;
+            height: 0.12rem;
+          }
+          span {
+            margin: 0 0.1rem;
+            font-family: PingFangSC, PingFang SC;
+            font-weight: 400;
+            font-size: 0.2rem;
+            color: #333E75;
+          }
+        }
+        .myChartRose,
+        .myChartZhu {
+          margin: 0 auto;
+          width: 12rem;
+          height: 4rem;
+        }
+        .dtm_xls {
+          width: 12.58rem;
+          margin: 0.3rem auto 0.4rem;
+          border: 0.01rem solid rgba(215, 223, 251, 1);
+          .dtmx_li {
+            display: flex;
+
+            height: 0.5rem;
+
+            .dtmxl_head {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 2.5rem;
+              border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
+              border-right: 0.01rem solid rgba(215, 223, 251, 1);
+              background: rgba(246, 249, 255, 0.60);
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 0.18rem;
+              color: #2A3487;
+            }
+            .dtmxl_body {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 3.78rem;
+              border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
+              border-right: 0.01rem solid rgba(215, 223, 251, 1);
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 0.18rem;
+              color: #2A3487;
+              span {
+                color: #2A3487;
+              }
+            }
+            .dtmxl_body:last-child {
+              border-right: 0;
+            }
+          }
+          .dtmx_lis {
+            height: 1rem;
+            .dtmxl_head {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 2.5rem;
+              border-bottom: 0 !important;
+              border-right: 0.01rem solid rgba(215, 223, 251, 1);
+              background: rgba(246, 249, 255, 0.60);
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 0.18rem;
+              color: #2A3487;
+            }
+            .dtmxl_body {
+              display: block;
+              flex: 1;
+              border-bottom: 0 !important;
+              border-right: 0.01rem solid rgba(215, 223, 251, 1);
+              .dtmxl_dl {
+                height: 0.5rem;
+                display: flex;
+
+                .dtmxl_dt {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 2rem;
+                  height: 0.5rem;
+                  border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
+                  border-right: 0.01rem solid rgba(215, 223, 251, 1);
+                  background: rgba(246, 249, 255, 0.60);
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 0.18rem;
+                  color: #2A3487;
+                }
+                .dtmxl_dd {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 4.28rem;
+                  border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
+                  border-right: 0.01rem solid rgba(215, 223, 251, 1);
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 0.18rem;
+                  color: #2A3487;
+                }
+
+                .dtmxl_dds {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 3.78rem;
+                  border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 0.18rem;
+                  color: #2A3487;
+                }
+              }
+              .dtmxl_dl:last-child {
+                .dtmxl_dt {
+                  border-bottom: 0 !important;
+                }
+                .dtmxl_dd {
+                  border-bottom: 0 !important;
+                }
+                .dtmxl_dds {
+                  border-bottom: 0 !important;
+                }
+              }
+            }
+            .dtmxl_body:last-child {
+              border-right: 0;
+            }
+          }
+        }
+        .dtm_img_sys {
+          height: 2.68rem;
+          width: 11.60rem;
+          margin: 0.3rem auto 0.2rem;
+          .el-carousel__item h3 {
+            font-size: 0.22rem;
+            font-family: Source Han Sans CN;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
+          }
+          .el-carousel{
+            .el-carousel__container{
+              width: 90%;
+              margin: 0 auto;
+              .el-carousel__arrow{
+                width: 0.48rem;
+                height: 0.48rem;
+                background: #ffffff;
+                box-shadow: 0 0.02rem 0.1rem 0 #DDDFFF;
+                border-radius: 50%;
+                i {
+                  font-size: 0.2rem;
+                  color: rgba(115, 122, 253, 1);
+                }
+              }
+              .el-carousel__arrow--left {
+                left: -1.4rem;
+              }
+              .el-carousel__arrow--right {
+                right: -1.4rem;
+              }
+              .el-carousel__item--card {
+                width: 3.5rem;
+                scale: 1.2;
+                .el-carousel__mask{
+                  width:0
+                }
+              }
+              // .is-in-stage{
+              //   scale: 1.2;
+              // }
+              .is-active{
+                scale: 1;
+                margin-left: 0.58rem;
+              }
+            }
+          }
+          .el-carousel--horizontal {
+            overflow: inherit;
+            .el-carousel__item--card {
+              display: none;
+            }
+            .is-in-stage {
+              display: block;
+            }
+          }
+          .el-carousel__item {
+            // border-radius: 0.04rem;
+            // background-color: #ffffff;
+            // border: 0.01rem solid #c4ecff;
+            .el-carousel__mask {
+              // background-color: rgba(70, 101, 135, 0.14);
+            }
+          }
+          .is-active {
+            background-color: #ffffff;
+            .el-carousel__mask {
+              background-color: #ffffff;
+            }
+          }
+          .el-carousel__indicators--outside {
+            display: none;
+          }
+          
+          
+          .dtm_img_box {
+            height: 3rem;
+            .dtmi_img {
+              display: block;
+              width: 3.5rem;
+              height: 1.96rem;
+              border-radius: 0.16rem;
+            }
+            .dtmi_txt {
+              width: 100%;
+              // height: 0.25rem;
+              line-height: 0.25rem;
+              padding: 0.23rem 0;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 0.18rem;
+              color: #6F76B2;
+            }
+          }
+        }
+        // 表格样式
+        .dtm_table {
+          margin-bottom: 0.2rem;
+          min-height: auto;
+          width: 10.08rem;
+          margin: 0 auto;
+          border: 0;
+          background: transparent !important;
+          .el-table::before{
+            width: 0 !important;
+            height: 0 !important;
+          }
+          .el-table--border,
+          .el-table--group,
+          .el-table--border:after,
+          .el-table--group:after,
+          .el-table:before {
+            border: none
+          }
+          .el-table--border::after,
+          .el-table--group::after,
+          .el-table::before {
+            background: transparent !important;
+
+          }
+          
+          th,
+          tr,
+          td {
+            background: transparent !important;
+            border: 0;
+            height: 0.46rem;
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            text-align: center;
+            font-family: PingFangSC, PingFang SC;
+            font-weight: 400;
+            font-size: 0.18rem;
+            color: #2A3487;
+          }
+          td,
+          th.is-leaf {
+            border: 0;
+            border-color: transparent;
+            background: transparent !important;
+          }
+          td {
+            height: 0.4rem !important;
+            color: #2A3487;
+            border: 0;
+          }
+          thead {
+            width:100%;
+            height: 0.46rem;
+            border-radius: 0.08rem;
+            th,
+            tr {
+              background: rgba(230, 235, 247, 0.60);
+              font-weight: 400;
+              font-size: 0.18rem;
+              color: #2A3487;
+            }
+          }
+          .el-button--text {
+            font-size: 0.16rem;
+            padding: 0.09rem 0.06rem;
+          }
+          .el-table__header,
+          .el-table__body {
+            col:nth-child(1) {
+              width: 1.2rem;
+            }
+            col:nth-child(2) {
+              width: 2rem;
+            }
+            // col:nth-child(5) {
+            //   width: 2rem;
+            // }
+            col:nth-child(6) {
+              width: 0;
+            }
+          }
+          .primary_g,
+          .primary_r {
+            width: 0.6rem;
+            height: 0.24rem;
+            line-height: 1;
+            margin: 0 auto;
+            background: linear-gradient(
+              45deg,
+              rgba(196, 236, 255, 1) 0%,
+              rgba(151, 205, 255, 1) 100%
+            );
+            padding: 1px;
+            border-radius: 0.02rem;
+            .el-button--primary.is-plain,
+            .el-button--danger.is-plain {
+              width: 100%;
+              height: 100%;
+              padding: 0;
+              border: 0;
+              border-radius: 0.02rem;
+              font-size: 0.16rem;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+            }
+            .el-button--primary.is-plain,
+            .el-button--primary.is-plain:focus,
+            .el-button--primary.is-plain:hover {
+              color: #006cff;
+            }
+            .el-button--danger.is-plain,
+            .el-button--danger.is-plain:focus,
+            .el-button--danger.is-plain:hover {
+              color: #ff8854;
+            }
+          }
+          .primary_r {
+            background: linear-gradient(
+              45deg,
+              rgba(253, 186, 133, 1) 0%,
+              rgba(255, 126, 117, 1) 100%
+            );
+          }
+        }
+        // 底部分页
+        .table_page {
+          display: flex;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          font-size: 0.14rem;
+          align-items: center;
+          justify-content: flex-end;
+          margin-bottom: 0.86rem;
+          .page_total {
+            font-size: 0.14rem;
+            color: #828fb2;
+            span {
+              color: #006cff;
+            }
+          }
+          .el-pagination {
+            .el-pager {
+              .number {
+                padding: 0 0.04rem;
+                height: 0.28rem;
+                line-height: 0.26rem;
+                border: 0.01rem solid #e1e9ff;
+                font-size: 0.14rem;
+                color: #7786ac;
+                min-width: 0.28rem;
+                background: linear-gradient(
+                  0deg,
+                  rgba(196, 236, 255, 0.14) 0%,
+                  rgba(151, 205, 255, 0.14) 100%
+                );
+                margin: 0 0.03rem;
+              }
+              .number.active {
+                color: #ffffff;
+                background: linear-gradient(0deg, #0075ff, #00c2ff);
+              }
+            }
+            .btn-next,
+            .btn-prev {
+              background: center center no-repeat
+                linear-gradient(0deg, #c4ecff 0%, #97cdff 100%);
+              background-size: 100%;
+              cursor: pointer;
+              margin: 0;
+              color: #85b4ff;
+              min-width: 0.28rem;
+              padding: 0;
+              margin: 0 0.04rem;
+            }
+            .el-select .el-input .el-input__inner {
+              color: #7786ac;
+            }
+            button,
+            span:not([class*="suffix"]) {
+              display: inline-block;
+              font-size: 0.14rem;
+              min-width: 0.28rem;
+              height: 0.28rem;
+              line-height: 0.28rem;
+            }
+            .el-pagination__sizes {
+              margin-right: 0.05rem;
+              color: #7786ac;
+            }
+            .el-pagination__jump {
+              margin: 0;
+              color: #7786ac;
+              .el-pagination__editor.el-input .el-input__inner {
+                color: #006cff;
+              }
+            }
+          }
+        }
+      }
+    }
     .drwc_box_t{
       margin: 0 auto 0.34rem;
       background: rgba(255,247,230,0.9);
-      box-shadow: 0 0.02rem 0.6rem 0 rgb(208,210,248,0.13);
+      box-shadow: 0 0.2rem 0.16rem 0 rgba(228, 228, 235, 0.13);
       border-radius: 0.1rem;
       
     }
@@ -5516,58 +8347,157 @@ export default {
       }
     }
   }
-  .r_futi {
-    position: absolute;
-    left: 0.6rem;
-    top: 9.36rem;
-    z-index: 100;
-    width: 1.6rem;
-    .r_t_tab {
-      border: 1px solid #c7e0ff;
-      border-radius: 2px 2px 0px 0px;
-      padding-top: 0.18rem;
-      background: #f6fcff;
-      img {
-        display: block;
-        width: 0.51rem;
-        height: 0.51rem;
-        margin: 0 auto;
-      }
-      span {
-        display: block;
-        width: 100%;
-        text-align: center;
-        font-size: 0.2rem;
-        font-family: Source Han Sans CN;
-        font-weight: 400;
-        line-height: 0.24rem;
-        padding: 0.13rem 0 0.18rem;
-      }
-    }
-    .r_t_tab:last-child {
-      border: 1px solid #c7e0ff;
-      border-bottom: 1px solid #c7e0ff;
-      border-top: 0;
-      border-radius: 0px 0px 2px 2px;
-    }
-    .r_t_b0 {
-      border-bottom: 0;
-    }
-    .r_t_tab_act1 {
-      color: #006cff;
-      border-color: #0090ff;
-      background: rgba(255, 255, 255, 0.08);
-    }
-    .r_t_tab_act2 {
-      color: #006cff;
-      background: rgba(255, 255, 255, 0.08);
-      border-top: 1px solid !important;
-      border-color: #0090ff !important;
-    }
-  }
+  // .r_futi {
+  //   position: absolute;
+  //   left: 0.6rem;
+  //   top: 9.36rem;
+  //   z-index: 100;
+  //   width: 1.6rem;
+  //   .r_t_tab {
+  //     border: 1px solid #c7e0ff;
+  //     border-radius: 2px 2px 0px 0px;
+  //     padding-top: 0.18rem;
+  //     background: #f6fcff;
+  //     img {
+  //       display: block;
+  //       width: 0.51rem;
+  //       height: 0.51rem;
+  //       margin: 0 auto;
+  //     }
+  //     span {
+  //       display: block;
+  //       width: 100%;
+  //       text-align: center;
+  //       font-size: 0.2rem;
+  //       font-family: Source Han Sans CN;
+  //       font-weight: 400;
+  //       line-height: 0.24rem;
+  //       padding: 0.13rem 0 0.18rem;
+  //     }
+  //   }
+  //   .r_t_tab:last-child {
+  //     border: 1px solid #c7e0ff;
+  //     border-bottom: 1px solid #c7e0ff;
+  //     border-top: 0;
+  //     border-radius: 0px 0px 2px 2px;
+  //   }
+  //   .r_t_b0 {
+  //     border-bottom: 0;
+  //   }
+  //   .r_t_tab_act1 {
+  //     color: #006cff;
+  //     border-color: #0090ff;
+  //     background: rgba(255, 255, 255, 0.08);
+  //   }
+  //   .r_t_tab_act2 {
+  //     color: #006cff;
+  //     background: rgba(255, 255, 255, 0.08);
+  //     border-top: 1px solid !important;
+  //     border-color: #0090ff !important;
+  //   }
+  // }
   .r_futi_fix {
     position: fixed;
-    top: 1.5rem;
+    margin: auto;
+    top: 1rem;
+    left: 0.46rem;
+    z-index: 1111;
+    .r_t_tab_t{
+      width: 1.76rem;
+      // height: 0.52rem;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0.02rem 0.6rem 0 rgba(208, 210, 248, 0.13);
+      border-radius: 0.42rem;
+      border: 0.04rem solid #FFFFFF;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.22rem;
+      span{
+        width: auto;
+        font-family: SourceHanSansCN, SourceHanSansCN;
+        font-weight: 400;
+        font-size: 0.2rem;
+        color: #2A3487;
+        line-height: 1;
+        padding: 0.12rem 0;
+      }
+      img{
+        width: 0.2rem;
+        height: 0.18rem;
+        margin: 0;
+        margin-left: 0.03rem;
+      }
+    }
+    .r_ff_box{
+      width: 1.76rem;
+      padding: 0.27rem 0;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0.02rem 0.6rem 0 rgba(208, 210, 248, 0.13);
+      border-radius: 0.2rem;
+      border: 0.04rem solid #FFFFFF;
+      .r_t_tab {
+        // border: 1px solid #c7e0ff;
+        // border-radius: 2px 2px 0px 0px;
+        // padding-top: 0.18rem;
+        // background: #f6fcff;
+        min-height: 1.14rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 0.04rem 0;
+        .act1_line{
+          position: absolute;
+          top: 0;
+          left: -0.06rem;
+          width: 0.06rem;
+          height: 100%;
+          background: rgba(132, 138, 255, 1);
+        }
+        div{
+          padding: 0.15rem 0;
+        }
+        img {
+          display: block;
+          width: 0.53rem;
+          height: 0.55rem;
+          margin: 0 auto 0.08rem;
+        }
+        span {
+          display: block;
+          width: 100%;
+          text-align: center;
+          font-family: SourceHanSansCN, SourceHanSansCN;
+          font-weight: 400;
+          font-size: 0.2rem;
+          color: #2A3487;
+          line-height: 1;
+          // padding: 0.13rem 0 0.18rem;
+        }
+      }
+      // .r_t_tab:last-child {
+      //   border: 1px solid #c7e0ff;
+      //   border-bottom: 1px solid #c7e0ff;
+      //   border-top: 0;
+      //   border-radius: 0px 0px 2px 2px;
+      // }
+      // .r_t_b0 {
+      //   border-bottom: 0;
+      // }
+      .r_t_tab_act1 {
+        // color: #006cff;
+        // border-color: #0090ff;
+        background: rgba(246, 246, 255, 1);
+      }
+      .r_t_tab_act2 {
+        color: #006cff;
+        background: rgba(255, 255, 255, 0.08);
+        // border-top: 1px solid !important;
+        // border-color: #0090ff !important;
+      }
+    }
   }
   .dt_header {
     width: 100%;
@@ -6321,7 +9251,8 @@ export default {
             margin: auto;
             left: 0;
             right: 0;
-            top: 0;
+            top: 0.22rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6329,15 +9260,15 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .bottom_left {
             position: absolute;
             margin: auto;
-            left: 0.4rem;
-            right: 0;
-            bottom: 0.02rem;
-            margin-left: 2.4rem;
+            left: 3.7rem;
+            bottom: 0.03rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6345,15 +9276,15 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .bottom_right {
             position: absolute;
             margin: auto;
-            left: 0;
-            right: 0.4rem;
-            bottom: 0.02rem;
-            margin-right: 2.4rem;
+            left: 0.42rem;
+            bottom: 0.03rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6361,6 +9292,7 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .dtmsb_ulc {
@@ -6407,12 +9339,10 @@ export default {
           .demsb_tool1 {
             position: absolute;
             margin: auto;
-            top: -0.06rem;
-            left: 0;
-            right: 0;
-            margin-right: 1.6rem;
-            width: 1.12rem;
-            min-width: 76px;
+            right: 2.48rem;
+            top: -0.07rem;
+            width: auto;
+            min-width: 65px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple.png) no-repeat
               center;
@@ -6423,12 +9353,13 @@ export default {
             align-items: center;
             .demsb_score {
               font-size: 0.14rem;
-              padding-left: 0.16rem;
-              line-height: 0.2rem;
+              padding-left: 0.1rem;
+              padding-right: 0.2rem;
+              line-height: 0.34rem;
               color: #7486af;
               display: flex;
               span {
-                margin-left: -0.06rem;
+                margin-left: -0.08rem;
                 color: #00c0ff;
               }
             }
@@ -6442,12 +9373,10 @@ export default {
           .demsb_tool {
             position: absolute;
             margin: auto;
-            top: -0.06rem;
-            left: 0;
-            right: 0;
-            margin-left: 3rem;
-            width: 1.12rem;
-            min-width: 76px;
+            left: 2.48rem;
+            top: -0.07rem;
+            width: auto;
+            min-width: 65px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple2.png) no-repeat
               center;
@@ -6459,12 +9388,13 @@ export default {
 
             .demsb_score {
               font-size: 0.14rem;
-              padding-left: 0.26rem;
-              line-height: 0.2rem;
+              padding-left: 0.2rem;
+              padding-right: 0.1rem;
+              line-height: 0.34rem;
               color: #7486af;
               display: flex;
               span {
-                margin-left: -0.06rem;
+                margin-left: -0.08rem;
                 color: #00c0ff;
               }
             }
@@ -6475,9 +9405,9 @@ export default {
               }
             }
           }
-          .myChartPies1,
-          .myChartPies2,
-          .myChartPies3 {
+          .myChartLd0,
+          .myChartLd2,
+          .myChartLd3 {
             width: 5.25rem;
             height: 2.26rem;
           }
@@ -6643,11 +9573,11 @@ export default {
       }
     }
     .wdrj_box {
-      margin-bottom: 0.8rem;
+      margin-bottom: 0rem;
       .wdrj_main {
-        padding: 0.36rem 0.3rem;
-        background: #ffffff;
-        box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
+        padding: 0.1rem 0.3rem 0.2rem 0.1rem;
+        // background: #ffffff;
+        // box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
         border-radius: 0.04rem;
         margin-bottom: 0.2rem;
         .wdrj_title {
@@ -6661,20 +9591,21 @@ export default {
           img {
             width: 0.28rem;
             height: 0.28rem;
-            margin-right: 0.1rem;
+            // margin-right: 0.1rem;
           }
         }
         .dtmsb_tar {
           width: 8.25rem;
           height: 2.66rem;
-          margin: -0.28rem auto 0.5rem;
+          margin: -0.28rem auto 0.2rem;
           position: relative;
           .top_top {
             position: absolute;
             margin: auto;
             left: 0;
             right: 0;
-            top: 0;
+            top: 0.22rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6682,15 +9613,15 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .bottom_left {
             position: absolute;
             margin: auto;
-            left: 0.4rem;
-            right: 0;
-            bottom: 0.02rem;
-            margin-left: 2.8rem;
+            left: 3.7rem;
+            bottom: 0.03rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6698,15 +9629,15 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .bottom_right {
             position: absolute;
             margin: auto;
-            left: 0;
-            right: 0.75rem;
-            bottom: 0.02rem;
-            margin-right: 2.4rem;
+            left: 0.42rem;
+            bottom: 0.03rem;
+            width: 4.13rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -6714,17 +9645,16 @@ export default {
               color: #354b70;
               line-height: 0.2rem;
               display: block;
+              position: relative;
             }
           }
           .demsb_tool1 {
             position: absolute;
             margin: auto;
-            top: -0.06rem;
-            left: 0;
-            right: 0;
-            margin-right: 2.95rem;
-            width: 1.12rem;
-            min-width: 76px;
+            right: 2.48rem;
+            top: -0.07rem;
+            width: auto;
+            min-width: 65px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple.png) no-repeat
               center;
@@ -6735,12 +9665,13 @@ export default {
             align-items: center;
             .demsb_score {
               font-size: 0.14rem;
-              padding-left: 0.16rem;
-              line-height: 0.2rem;
+              padding-left: 0.1rem;
+              padding-right: 0.2rem;
+              line-height: 0.34rem;
               color: #7486af;
               display: flex;
               span {
-                margin-left: -0.06rem;
+                margin-left: -0.08rem;
                 color: #00c0ff;
               }
             }
@@ -6754,12 +9685,10 @@ export default {
           .demsb_tool {
             position: absolute;
             margin: auto;
-            top: -0.06rem;
-            left: 0;
-            right: 0;
-            margin-left: 4.5rem;
-            width: 1.12rem;
-            min-width: 76px;
+            left: 2.48rem;
+            top: -0.07rem;
+            width: auto;
+            min-width: 65px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple2.png) no-repeat
               center;
@@ -6771,12 +9700,13 @@ export default {
 
             .demsb_score {
               font-size: 0.14rem;
-              padding-left: 0.26rem;
-              line-height: 0.2rem;
+              padding-left: 0.2rem;
+              padding-right: 0.1rem;
+              line-height: 0.34rem;
               color: #7486af;
               display: flex;
               span {
-                margin-left: -0.06rem;
+                margin-left: -0.08rem;
                 color: #00c0ff;
               }
             }
@@ -6824,7 +9754,7 @@ export default {
               }
             }
           }
-          .myChartLd1 {
+          .myChartLd0 {
             width: 8.25rem;
             height: 4.4rem;
           }
@@ -6874,7 +9804,7 @@ export default {
           margin-top: 0.5rem;
           text-align: left;
           .wdrjs_uls{
-            padding-left: 0.1rem;
+            padding-left: 0.18rem;
             li{
               display: flex;
               font-size: 0.16rem;
@@ -6897,11 +9827,11 @@ export default {
                 color: #ffffff;
               }
               p {
-                font-size: 0.16rem;
-                font-family: Source Han Sans CN;
+                line-height: 0.36rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
                 font-weight: 400;
-                color: #354B70;
-                line-height: 0.4rem;
+                font-size: 0.16rem;
+                color: #333E75;
               }
               img{
                 width: 0.16rem;
@@ -6912,17 +9842,17 @@ export default {
             }
           }
           .wdrjs_title {
-            font-size: 0.18rem;
-            font-family: Source Han Sans CN;
+            font-family: SourceHanSansCN, SourceHanSansCN;
             font-weight: 400;
-            color: #354b70;
+            font-size: 0.18rem;
+            color: #333E75;
             display: flex;
             align-items: center;
             line-height: 0.34rem;
             margin-left: 0.03rem;
             img {
-              width: 0.04rem;
-              height: 0.16rem;
+              width: 0.12rem;
+              height: 0.12rem;
               margin-right: 0.06rem;
             }
             .wdrjst_res {
@@ -7183,6 +10113,8 @@ export default {
     }
     .dtm_img_sys {
       height: 4.08rem;
+      width: 11.60rem;
+      margin: 0.2rem auto;
       .el-carousel__item h3 {
         font-size: 0.22rem;
         font-family: Source Han Sans CN;
@@ -7251,289 +10183,8 @@ export default {
         }
       }
     }
-    .dtm_xls {
-      width: 12rem;
-      border: 0.01rem solid #e1e9ff;
-      .dtmx_li {
-        display: flex;
-
-        height: 0.42rem;
-
-        .dtmxl_head {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 2.42rem;
-          border-bottom: 0.01rem solid #e1e9ff;
-          border-right: 0.01rem solid #e1e9ff;
-          background: linear-gradient(
-            0deg,
-            rgba(196, 236, 255, 0.14) 0%,
-            rgba(151, 205, 255, 0.14) 100%
-          );
-        }
-        .dtmxl_body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 3.57rem;
-          border-bottom: 0.01rem solid #e1e9ff;
-          border-right: 0.01rem solid #e1e9ff;
-          span {
-            color: #006cff;
-          }
-        }
-        .dtmxl_body:last-child {
-          border-right: 0;
-        }
-      }
-      .dtmx_lis {
-        height: 0.84rem;
-        .dtmxl_head {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 2.42rem;
-          border-bottom: 0 !important;
-          border-right: 0.01rem solid #e1e9ff;
-          background: linear-gradient(
-            0deg,
-            rgba(196, 236, 255, 0.14) 0%,
-            rgba(151, 205, 255, 0.14) 100%
-          );
-        }
-        .dtmxl_body {
-          display: block;
-          flex: 1;
-          border-bottom: 0 !important;
-          border-right: 0.01rem solid #e1e9ff;
-          .dtmxl_dl {
-            height: 0.42rem;
-            display: flex;
-
-            .dtmxl_dt {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 1.52rem;
-              height: 0.42rem;
-              border-bottom: 0.01rem solid #e1e9ff;
-              border-right: 0.01rem solid #e1e9ff;
-              background: linear-gradient(
-                0deg,
-                rgba(196, 236, 255, 0.14) 0%,
-                rgba(151, 205, 255, 0.14) 100%
-              );
-            }
-            .dtmxl_dd {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 4.47rem;
-              border-bottom: 0.01rem solid #e1e9ff;
-              border-right: 0.01rem solid #e1e9ff;
-            }
-
-            .dtmxl_dds {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 3.57rem;
-              border-bottom: 0.01rem solid #e1e9ff;
-            }
-          }
-          .dtmxl_dl:last-child {
-            .dtmxl_dt {
-              border-bottom: 0 !important;
-            }
-            .dtmxl_dd {
-              border-bottom: 0 !important;
-            }
-            .dtmxl_dds {
-              border-bottom: 0 !important;
-            }
-          }
-        }
-        .dtmxl_body:last-child {
-          border-right: 0;
-        }
-      }
-    }
-    // 表格样式
-    .el-table {
-      margin-bottom: 0.2rem;
-      min-height: auto;
-      .el-table--border,
-      .el-table--group,
-      .el-table--border:after,
-      .el-table--group:after,
-      .el-table:before {
-        border-color: #e1e9ff;
-      }
-      .el-table--border::after,
-      .el-table--group::after,
-      .el-table::before {
-        background: #e1e9ff;
-      }
-      th,
-      tr,
-      td {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 400;
-        font-family: Source Han Sans CN;
-      }
-      td,
-      th.is-leaf {
-        border-color: #e1e9ff;
-      }
-      td {
-        height: 0.4rem !important;
-        color: #7786ac;
-      }
-      thead {
-        th,
-        tr {
-          background: linear-gradient(0deg, #c4ecff 0%, #97cdff 100%);
-          color: #354b70;
-        }
-      }
-      .el-button--text {
-        font-size: 0.16rem;
-        padding: 0.09rem 0.06rem;
-      }
-      .el-table__header,
-      .el-table__body {
-        col:nth-child(1) {
-          width: 1rem;
-        }
-        col:nth-child(2) {
-          width: 2rem;
-        }
-        col:nth-child(5) {
-          width: 2rem;
-        }
-        col:nth-child(6) {
-          width: 0;
-        }
-      }
-      .primary_g,
-      .primary_r {
-        width: 0.6rem;
-        height: 0.24rem;
-        line-height: 1;
-        margin: 0 auto;
-        background: linear-gradient(
-          45deg,
-          rgba(196, 236, 255, 1) 0%,
-          rgba(151, 205, 255, 1) 100%
-        );
-        padding: 1px;
-        border-radius: 0.02rem;
-        .el-button--primary.is-plain,
-        .el-button--danger.is-plain {
-          width: 100%;
-          height: 100%;
-          padding: 0;
-          border: 0;
-          border-radius: 0.02rem;
-          font-size: 0.16rem;
-          font-family: Source Han Sans CN;
-          font-weight: 400;
-        }
-        .el-button--primary.is-plain,
-        .el-button--primary.is-plain:focus,
-        .el-button--primary.is-plain:hover {
-          color: #006cff;
-        }
-        .el-button--danger.is-plain,
-        .el-button--danger.is-plain:focus,
-        .el-button--danger.is-plain:hover {
-          color: #ff8854;
-        }
-      }
-      .primary_r {
-        background: linear-gradient(
-          45deg,
-          rgba(253, 186, 133, 1) 0%,
-          rgba(255, 126, 117, 1) 100%
-        );
-      }
-    }
-    // 底部分页
-    .table_page {
-      display: flex;
-      font-family: Source Han Sans CN;
-      font-weight: 400;
-      font-size: 0.14rem;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 0.86rem;
-      .page_total {
-        font-size: 0.14rem;
-        color: #828fb2;
-        span {
-          color: #006cff;
-        }
-      }
-      .el-pagination {
-        .el-pager {
-          .number {
-            padding: 0 0.04rem;
-            height: 0.28rem;
-            line-height: 0.26rem;
-            border: 0.01rem solid #e1e9ff;
-            font-size: 0.14rem;
-            color: #7786ac;
-            min-width: 0.28rem;
-            background: linear-gradient(
-              0deg,
-              rgba(196, 236, 255, 0.14) 0%,
-              rgba(151, 205, 255, 0.14) 100%
-            );
-            margin: 0 0.03rem;
-          }
-          .number.active {
-            color: #ffffff;
-            background: linear-gradient(0deg, #0075ff, #00c2ff);
-          }
-        }
-        .btn-next,
-        .btn-prev {
-          background: center center no-repeat
-            linear-gradient(0deg, #c4ecff 0%, #97cdff 100%);
-          background-size: 100%;
-          cursor: pointer;
-          margin: 0;
-          color: #85b4ff;
-          min-width: 0.28rem;
-          padding: 0;
-          margin: 0 0.04rem;
-        }
-        .el-select .el-input .el-input__inner {
-          color: #7786ac;
-        }
-        button,
-        span:not([class*="suffix"]) {
-          display: inline-block;
-          font-size: 0.14rem;
-          min-width: 0.28rem;
-          height: 0.28rem;
-          line-height: 0.28rem;
-        }
-        .el-pagination__sizes {
-          margin-right: 0.05rem;
-          color: #7786ac;
-        }
-        .el-pagination__jump {
-          margin: 0;
-          color: #7786ac;
-          .el-pagination__editor.el-input .el-input__inner {
-            color: #006cff;
-          }
-        }
-      }
-    }
+    
+    
     .dtm_sys {
       height: 7rem;
       .el-carousel__container {
@@ -7676,9 +10327,9 @@ export default {
           height: 3.1rem;
           margin: 0 auto;
           position: relative;
-          .myChartPies1,
-          .myChartPies2,
-          .myChartPies3 {
+          .myChartLd0,
+          .myChartLd2,
+          .myChartLd3 {
             width: 3.1rem;
             height: 3.1rem;
           }
