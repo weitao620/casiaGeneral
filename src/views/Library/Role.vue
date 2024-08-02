@@ -1089,7 +1089,7 @@ export default {
         }
       )
         .then(() => {
-          var checkArr = { roleID: this.roleID, passports: [{ passport: row.passport }] };
+          var checkArr = { roleID: this.roleID, roleName: this.roleName, passports: [{ passport: row.passport }] };
           this.$http
             .delete(Url + "/aimw/role/deleteMember", {
               data: checkArr
