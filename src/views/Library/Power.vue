@@ -530,7 +530,7 @@ export default {
         .then(() => {
           this.$http
             .delete(Url + "/aimw/role/deleteMember", {
-              data: { roleID: this.powerDetail.roleID, passports: checkArr }
+              data: { roleID: this.powerDetail.roleID, roleName: this.powerDetail.roleName, passports: checkArr }
             })
             .then(res => {
               var data = res.data;
@@ -563,7 +563,7 @@ export default {
         }
       )
         .then(() => {
-          var checkArr = { roleID: this.powerDetail.roleID, passports: [{ passport: row.passport }] };
+          var checkArr = { roleID: this.powerDetail.roleID, roleName: this.powerDetail.roleName, passports: [{ passport: row.passport }] };
           this.$http
             .delete(Url + "/aimw/role/deleteMember", {
               data: checkArr
@@ -601,6 +601,7 @@ export default {
       }
       var param = {
         roleID: this.powerDetail.roleID,
+        roleName: this.powerDetail.roleName,
         passports: listArr
       };
       that.$http
