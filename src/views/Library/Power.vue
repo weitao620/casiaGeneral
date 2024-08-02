@@ -601,7 +601,7 @@ export default {
       }
       var param = {
         roleID: this.powerDetail.roleID,
-        roleName: that.powerDetail.roleName,
+        roleName: this.powerDetail.roleName,
         passports: listArr
       };
       that.$http
