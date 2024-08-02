@@ -215,10 +215,10 @@
                 <li v-if="depressionFlag == 1"><span class="r_cir1"></span>抑郁</li>
                 <li v-if="anxietyFlag == 1"><span class="r_cir2"></span>焦虑</li>
                 <li v-if="forcedFlag == 1"><span class="r_cir3"></span>强迫</li>
-                <li v-if="violenceFlag == 1"><span class="r_cir4"></span>PTSD</li>
+                <li v-if="ptsdFlag == 1"><span class="r_cir4"></span>PTSD</li>
                 <li v-if="violenceFlag == 1"><span class="r_cir5"></span>敌对</li>
                 <li v-if="suicideFlag == 1"><span class="r_cir6"></span>自我伤害</li>
-                <!-- <li v-if="suicideFlag == 1"><span class="r_cir7"></span>自闭</li> -->
+                <!-- <li v-if="zibiFlag == 1"><span class="r_cir7"></span>自闭</li> -->
                 <li><span class="r_line1"></span>预警线</li>
               </ul>
             </div>
@@ -268,7 +268,7 @@
                     强迫
                   </li>
                   <li
-                    v-if="violenceFlag == 1"
+                    v-if="ptsdFlag == 1"
                     :class="[
                       'rsb_yab',
                       { sb_tab10: sbAct == 4 },
@@ -301,7 +301,7 @@
                     自我伤害
                   </li>
                   <!-- <li
-                    v-if="suicideFlag == 1"
+                    v-if="zibiFlag == 1"
                     :class="[
                       'rsb_yab',
                       { sb_tab10: sbAct == 7 },
@@ -381,7 +381,7 @@
                 </ul>
               </div>
             </div>
-            <div v-show="violenceFlag == 1">
+            <div v-show="ptsdFlag == 1">
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 5">
                 <div class="c_titless">
                   <img style="width:0.32rem" src="../../assets/images/report/f_icon1.png" alt="" />
@@ -395,10 +395,10 @@
                 ref="myChartZhe5"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 5">
-                <ul v-if="chartData.length > 0 && chartData[0].violenceSubScore">
-                  <li><span class="r_cir1"></span>{{chartData[0].violenceSubScore[0].name}}</li>
-                  <li><span class="r_cir3"></span>{{chartData[0].violenceSubScore[1].name}}</li>
-                  <li><span class="r_cir2"></span>{{chartData[0].violenceSubScore[2].name}}</li>
+                <ul v-if="chartData.length > 0 && chartData[0].ptsdSubScore">
+                  <li><span class="r_cir1"></span>{{chartData[0].ptsdSubScore[0].name}}</li>
+                  <li><span class="r_cir3"></span>{{chartData[0].ptsdSubScore[1].name}}</li>
+                  <li><span class="r_cir2"></span>{{chartData[0].ptsdSubScore[2].name}}</li>
                   <li><span class="r_line2"></span>PTSD水平</li>
                 </ul>
               </div>
@@ -447,7 +447,7 @@
                 </ul>
               </div>
             </div>
-            <!-- <div v-show="suicideFlag == 1">
+            <!-- <div v-show="zibiFlag == 1">
               <div class="com_titles" v-show="sbAct == 1 || sbAct == 8">
                 <div class="c_titless">
                   <img style="width:0.33rem" src="../../assets/images/report/f_icon2.png" alt="" />
@@ -461,10 +461,10 @@
                 ref="myChartZhe8"
               ></div>
               <div class="rtr_ul" v-show="sbAct == 1 || sbAct == 8">
-                <ul v-if="chartData.length > 0 && chartData[0].suicideSubScore">
-                  <li><span class="r_cir1"></span>{{chartData[0].suicideSubScore[0].name}}</li>
-                  <li><span class="r_cir3"></span>{{chartData[0].suicideSubScore[1].name}}</li>
-                  <li><span class="r_cir2"></span>{{chartData[0].suicideSubScore[2].name}}</li>
+                <ul v-if="chartData.length > 0 && chartData[0].zibiSubScore">
+                  <li><span class="r_cir1"></span>{{chartData[0].zibiSubScore[0].name}}</li>
+                  <li><span class="r_cir3"></span>{{chartData[0].zibiSubScore[1].name}}</li>
+                  <li><span class="r_cir2"></span>{{chartData[0].zibiSubScore[2].name}}</li>
                   <li><span class="r_line2"></span>自闭水平</li>
                 </ul>
               </div>
@@ -580,14 +580,16 @@ export default {
       depressionFlag: 1,
       anxietyFlag: 1,
       forcedFlag: 1,
-      suicideFlag: 0,
+      ptsdFlag: 0,
       violenceFlag: 0,
+      suicideFlag: 0,
+      zibiFlag: 0,
       personalityFlag: 0,
       dialogOneTotalFrame: false,
       pTimeFlag: false,
       partsForm: {
         time: ''
-      },
+      }
     };
   },
   created() {
@@ -595,8 +597,8 @@ export default {
   },
   mounted() {
     this.passport = this.$route.params.userID;
-    this.powerData()
-    this.getList(1);
+    this.auth()
+    
     window.addEventListener("resize", () => {
       setTimeout(() => {
         this.myChartZhe1.resize();
@@ -683,33 +685,134 @@ export default {
       this.currentPage = val;
       this.tableData = this.pagination(val, this.limit, fuluList);
     },
-    powerData() {
-      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
-      console.log(algTypes)
-      // 是否显示抑郁
-      this.depressionFlag = algTypes.depression
-      // 是否显示焦虑
-      this.anxietyFlag = algTypes.anxiety
-      // 是否显示强迫
-      this.forcedFlag = algTypes.forced
-      // 是否显示自我伤害
-      this.suicideFlag = algTypes.suicide
-      // 是否显示敌对
-      this.violenceFlag = algTypes.violence
-      // 是否显示人格
-      this.personalityFlag = algTypes.personality
-      //
-      // this.depressionFlag = 1
-      // this.anxietyFlag = 1
-      // this.forcedFlag = 1
-      // this.suicideFlag = 0
-      // this.violenceFlag = 1
-      // this.personalityFlag = 0
+    auth() {
+      let that = this;
       let power = JSON.parse(localStorage.getItem("userAuth")).menuAuthID;
-      console.log(algTypes)
       this.power1 = power.includes(30103); // 心理档案--查看
       this.power2 = power.includes(30104); // 心理档案--个人综合
+      let param = {
+        passport: JSON.parse(localStorage.getItem("userInfo")).passport
+        // password: JSON.parse(localStorage.getItem("userInfo")).password
+      };
+      that.$http
+        .get(Url + "/aimw/user/getAuthInfo", { params: param })
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            let obja = {
+              menuAuthID: []
+            };
+            if (data.data.userAuth == "") {
+              data.data.userAuth = JSON.stringify(obja);
+            } else {
+              if (JSON.parse(data.data.userAuth).menuAuthID) {
+
+              } else {
+                let nOb = JSON.parse(data.data.userAuth);
+                nOb.menuAuthID = [];
+                data.data.userAuth = JSON.stringify(nOb);
+              }
+            }
+            localStorage.setItem("userAuth", data.data.userAuth);
+            localStorage.setItem("userType", 1);
+            // mentalDim
+            // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+
+            // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+            let mental = data.data.algTypes.mentalDim.toString(2).split('')
+            data.data.algTypes.depressionFlag = mental[0]
+            data.data.algTypes.anxietyFlag = mental[1]
+            data.data.algTypes.forcedFlag = mental[2]
+            data.data.algTypes.ptsdFlag = mental[3]
+            data.data.algTypes.violenceFlag = mental[4]
+            data.data.algTypes.suicideFlag = mental[5]
+            // data.data.algTypes.zibiFlag = mental[6]
+            // personalityDim
+            // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+            // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+            let personality = data.data.algTypes.personalityDim.toString(2).split('')
+            data.data.algTypes.extroversionFlag = personality[0]
+            data.data.algTypes.conscientiousnessFlag = personality[1]
+            data.data.algTypes.nervousnessFlag = personality[2]
+            data.data.algTypes.agreeablenessFlag = personality[3]
+            data.data.algTypes.opennessFlag = personality[4]
+
+            // positiveDim
+            // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+            
+            let positive = data.data.algTypes.positiveDim.toString(2).split('')
+            data.data.algTypes.resilienceFlag = positive[0]
+            data.data.algTypes.selfFlag = positive[1]
+            data.data.algTypes.achievementFlag = positive[2]
+            data.data.algTypes.emotionFlag = positive[3]
+            data.data.algTypes.relationshipFlag = positive[4]
+            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            
+            if (data.data.algTypes) {
+              // 是否显示抑郁
+              this.depressionFlag = data.data.algTypes.depressionFlag
+              // 是否显示焦虑
+              this.anxietyFlag = data.data.algTypes.anxietyFlag
+              // 是否显示强迫
+              this.forcedFlag = data.data.algTypes.forcedFlag
+              // 是否显示PTSD
+              this.ptsdFlag = data.data.algTypes.ptsdFlag
+              // 是否显示敌对
+              this.violenceFlag = data.data.algTypes.violenceFlag
+              // 是否显示自我伤害
+              this.suicideFlag = data.data.algTypes.suicideFlag
+              // // 是否显示自闭
+              // this.zibiFlag = data.data.algTypes.zibiFlag
+              // 是否显示大五人格
+              this.extroversionFlag = data.data.algTypes.extroversionFlag
+              this.conscientiousnessFlag = data.data.algTypes.conscientiousnessFlag
+              this.nervousnessFlag = data.data.algTypes.nervousnessFlag
+              this.agreeablenessFlag = data.data.algTypes.agreeablenessFlag
+              this.opennessFlag = data.data.algTypes.opennessFlag
+              // 是否显示心理韧性
+              this.resilienceFlag = data.data.algTypes.resilienceFlag
+              // 是否显示积极自我
+              this.selfFlag = data.data.algTypes.selfFlag
+              // 是否显示积极成就
+              this.achievementFlag = data.data.algTypes.achievementFlag
+              // 是否显示积极情绪
+              this.emotionFlag = data.data.algTypes.emotionFlag
+              // 是否显示积极关系
+              this.relationshipFlag = data.data.algTypes.relationshipFlag
+            }
+            this.getList(1);
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
     },
+    // powerData() {
+    //   let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+    //   console.log(algTypes)
+    //   // 是否显示抑郁
+    //   this.depressionFlag = algTypes.depression
+    //   // 是否显示焦虑
+    //   this.anxietyFlag = algTypes.anxiety
+    //   // 是否显示强迫
+    //   this.forcedFlag = algTypes.forced
+    //   // 是否显示自我伤害
+    //   this.suicideFlag = algTypes.suicide
+    //   // 是否显示敌对
+    //   this.violenceFlag = algTypes.violence
+    //   // 是否显示人格
+    //   this.personalityFlag = algTypes.personality
+    //   //
+    //   // this.depressionFlag = 1
+    //   // this.anxietyFlag = 1
+    //   // this.forcedFlag = 1
+    //   // this.suicideFlag = 0
+    //   // this.violenceFlag = 1
+    //   // this.personalityFlag = 0
+      
+    // },
     isService(val) {
       let routeData = this.$router.resolve({
         name: "detailsreport",
@@ -822,7 +925,7 @@ export default {
                 data.data[i].evaTime = that.toHHmmss(data.data[i].evaTime * 1000);
                 // data.data[i].tipsName = tipsNames;
               }
-              let sArr = data.data;
+              // let sArr = data.data;
               for (let i in data.data) {
                 data.data[i].index = Number(i) + 1
               }
@@ -908,19 +1011,22 @@ export default {
       let yArr = [];
       let jArr = [];
       let qArr = [];
+      let pArr = [];
+      let vArr = [];
+      let sArr = [];
       let zArr = [];
-      let bArr = [];
-      let lArr = [];
+      // let lArr = [];
       for (let i in that.chartData) {
         xArr.push(that.chartData[i].dateCount);
-        yArr.push(that.chartData[i].depressionScore.score);
-        jArr.push(that.chartData[i].anxietyScore.score);
-        qArr.push(that.chartData[i].forcedScore.score);
-        bArr.push(that.chartData[i].violenceScore.score);
-        bArr.push(that.chartData[i].violenceScore.score);
-        zArr.push(that.chartData[i].suicideScore.score);
-        zArr.push(that.chartData[i].suicideScore.score);
-        lArr.push(that.chartData[i].forcedScore.thre);
+        yArr.push(that.chartData[i].depressionScore);
+        jArr.push(that.chartData[i].anxietyScore);
+        qArr.push(that.chartData[i].forcedScore);
+        pArr.push(that.chartData[i].ptsdScore);
+        vArr.push(that.chartData[i].violenceScore);
+        sArr.push(that.chartData[i].suicideScore);
+        zArr.push(that.chartData[i].zibiScore);
+        // lArr.push(3);
+        // lArr.push(that.chartData[i].forcedScore.thre);
       }
       let serseArr = []
       if (this.depressionFlag == 1) {
@@ -977,7 +1083,7 @@ export default {
           data: qArr
         })
       }
-      if (this.violenceFlag == 1) {
+      if (this.ptsdFlag == 1) {
         serseArr.push({
           name: "PTSD",
           type: "bar",
@@ -992,7 +1098,7 @@ export default {
               ])
             }
           },
-          data: bArr
+          data: pArr
         })
       }
       if (this.violenceFlag == 1) {
@@ -1010,7 +1116,7 @@ export default {
               ])
             }
           },
-          data: bArr
+          data: vArr
         })
       }
       if (this.suicideFlag == 1) {
@@ -1028,10 +1134,10 @@ export default {
               ])
             }
           },
-          data: zArr
+          data: sArr
         })
       }
-      // if (this.suicideFlag == 1) {
+      // if (this.zibiFlag == 1) {
       //   serseArr.push({
       //     name: "自闭",
       //     type: "bar",

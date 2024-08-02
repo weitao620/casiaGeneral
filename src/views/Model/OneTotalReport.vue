@@ -308,7 +308,7 @@
         </div>
       </div>
     </div>
-    <div v-for="(item, index) in repoertPage" :key="index">
+    <div v-for="(item, index) in reportPage" :key="index">
       <div class="table-style group_01">
         <div class="table-border">
           <div class="gp_all_tips">
@@ -576,6 +576,7 @@ export default {
       myChartZhu: "",
       riskPerct: '',
       riskPerct1: '',
+      reportPage: [],
       optionData: [
         {
           name: '启用电梯',
@@ -3578,7 +3579,7 @@ export default {
           }
           console.log("------------------------------")
           console.log(pageList)
-          this.repoertPage = pageList
+          this.reportPage = pageList
           console.log(listAll.length)
           let rPage = 0
           if (listAll.length > 0 && listAll.length < 5) {

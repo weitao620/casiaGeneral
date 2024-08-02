@@ -55,6 +55,7 @@
         <div
           :class="['r_t_tab', { r_t_tab_act1: topAct == 4 }]"
           @click="trendTab(4)"
+          v-if="jjList.length > 0"
         >
           <div>
             <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="" />
@@ -91,7 +92,59 @@
       class="r_futi r_futi_fix"
       v-show="reviewFlag"
     >
-      <div
+    <div
+        class="r_t_tab r_t_tab_t"
+        @click="toReview"
+      >
+        <span>查看测评分析</span>
+        <img src="../../assets/images/news/jiantou.png" alt="" />
+      </div>
+      <div class="r_ff_box">
+        <div
+          :class="[
+            'r_t_tab',
+            { r_t_tab_act1: topAct == 1 }
+          ]"
+          @click="trendTabs(1)"
+        >
+          <div>
+            <img style="width: 0.53rem;height: 0.51rem;" src="../../assets/images/news/tphg.png" alt="" />
+            <span>图片回顾</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 1"></div>
+        </div>
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 2 }]"
+          @click="trendTabs(2)"
+        >
+          <div>
+            <img style="width: 0.52rem;height:0.52rem;" src="../../assets/images/news/zpxxtj.png" alt="" />
+            <span>作品信息统计</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 2"></div>
+        </div>
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 3 }]"
+          @click="trendTabs(3)"
+        >
+          <div>
+            <img style="width: 0.53rem;height:0.52rem;" src="../../assets/images/news/sjsy.png" alt="" />
+            <span>沙具使用情况统计</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 3"></div>
+        </div>
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 }]"
+          @click="trendTabs(4)"
+        >
+          <div>
+            <img style="width: 0.54rem;height:0.53rem;" src="../../assets/images/news/syjlb.png" alt="" />
+            <span>沙具使用记录表</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 4"></div>
+        </div>
+      </div>
+      <!-- <div
         class="r_t_tab"
         style="margin-bottom:0.12rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
         @click="toReview"
@@ -132,7 +185,7 @@
           <img src="../../assets/images/report/part7.png" alt="" />
           <span>附录</span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="drw_contain">
       <div class="dt_header_wt">
@@ -254,7 +307,7 @@
         <div class="drwc_box" ref="parts1">
           <div class="drwc_common">
             <div class="drwc_bw_head">
-              <img src="../../assets/images/news/zuopinjiedu.png" alt="">
+              <img style="width: 0.53rem;height: 0.55rem;" src="../../assets/images/news/zuopinjiedu.png" alt="">
               <span>作品解读</span>
             </div>
             <div class="drwc_b_work">
@@ -320,6 +373,11 @@
                         </div>
                       </div>
                     </div>
+                    <div class="dtmcl_stip">
+                      <span>注：</span>
+                      <img src="../../assets/images/news/hua.png" alt="">
+                      <span>越多表示风险程度越高。</span>
+                    </div>
                   </div>
                 </div>
                 <div class="dtmc_right">
@@ -351,6 +409,10 @@
                   </div>
                 </div>
               </div>
+              
+            </div>
+            <div class="drwc_b_ys" v-if="jjName != ''">
+              <p><span>优势评估：</span>该受测者在{{jjName}}上得分最高，表现最好。</p>
             </div>
           </div>
         </div>
@@ -377,10 +439,10 @@
                     <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == btlActNum ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.id">
                       <div class="wdrj_title">
                         <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
-                        <span v-if="item.levelNum == 0">正常</span>
-                        <img v-if="item.levelNum == 1" src="../../assets/images/news/di.png" alt="">
-                        <img v-if="item.levelNum == 2" src="../../assets/images/news/zhong.png" alt="">
-                        <img v-if="item.levelNum == 3" src="../../assets/images/news/gao.png" alt="">
+                        <span v-if="item.level == 0">正常</span>
+                        <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
+                        <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
+                        <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
                       </div>
                       <div class="dtmsb_tar">
                         <div style="position:relative" id="perViolenceEchart">
@@ -433,7 +495,7 @@
                           <!-- 自我伤害 -->
                           <div v-if="index == 5" id="myChartLd7" class="myChartLd0" ref="myChartLd7" style="height:2.66rem"></div>
                           <!-- 自闭 -->
-                          <div v-if="index == 6" id="myChartLd8" class="myChartLd0" ref="myChartLd8" style="height:2.66rem"></div>
+                          <!-- <div v-if="index == 6" id="myChartLd8" class="myChartLd0" ref="myChartLd8" style="height:2.66rem"></div> -->
                         </div>
                       </div>
                       <div class="wdrj_suger" style="margin-top:0rem">
@@ -458,7 +520,9 @@
                               {{ items }}
                             </p>
                             <div v-if="Array.isArray(items)">
-                              <p v-for="(itemu, indexu) in items" :key="indexu">{{ indexu + 1 }}.{{ itemu }}</p>
+                              <div v-for="(itemu, indexu) in items" :key="indexu">
+                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                              </div>
                             </div>
                           </li>
                         </ul>
@@ -470,7 +534,7 @@
             </div>
           </div>
         </div>
-        <div class="drwc_box" ref="parts4">
+        <div class="drwc_box" ref="parts4" v-show="jjList.length > 0">
           <div class="drwc_common">
             <div class="drwc_bw_head">
               <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="">
@@ -479,7 +543,7 @@
             <div class="drwc_b_tab drwc_b_tab1">
               <div class="drwc_bt_left drwc_bt_top">
                 <div class="drwc_btl" v-if='details.jjList'>
-                  <ul>
+                  <ul v-if="details.jjList.length > 1">
                     <li :class="[{ btl_act: item.id == jjActNum}]" :style="{'display':item.flag == 1 ? 'block' : 'none', 'border-left' : index == 0 && item.id == jjActNum ? '0' : '0.01rem solid rgba(203, 206, 224, 1)' }" v-for="(item, index) in jjList" :key="item.id" @click="jjChange(item.id)">
                       {{ item.title }}
                     </li>
@@ -492,17 +556,17 @@
                     <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == jjActNum ? 'block' : 'none'}" v-for="(item, index) in jjList" :key="item.id">
                       <div class="wdrj_title">
                         <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
-                        <img v-if="item.levelNum == 0" style="width: 0.2rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
-                        <img v-if="item.levelNum == 1" style="width: 0.42rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
-                        <img v-if="item.levelNum == 2" style="width: 0.64rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
-                        <img v-if="item.levelNum == 3" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
+                        <img v-if="item.result.indexOf('较低') != -1" style="width: 0.2rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                        <img v-if="item.result.indexOf('中等') != -1" style="width: 0.42rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                        <img v-if="item.result.indexOf('较高') != -1" style="width: 0.64rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                        <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
                       </div>
                       <div class="dtmsb_tar" style="height: auto;">
                         <div style="position:relative" id="perViolenceEchart">
-                          <img class="dengpao" v-if="item.levelNum == 0" src="../../assets/images/news/jiaodis.png" alt="">
-                          <img class="dengpao" v-if="item.levelNum == 1" src="../../assets/images/news/zhongdengs.png" alt="">
-                          <img class="dengpao" v-if="item.levelNum == 2" src="../../assets/images/news/jiaogaos.png" alt="">
-                          <img class="dengpao" v-if="item.levelNum == 3" src="../../assets/images/news/jigaos.png" alt="">
+                          <img class="dengpao" v-if="item.result.indexOf('较低') != -1" src="../../assets/images/news/jiaodis.png" alt="">
+                          <img class="dengpao" v-if="item.result.indexOf('中等') != -1" src="../../assets/images/news/zhongdengs.png" alt="">
+                          <img class="dengpao" v-if="item.result.indexOf('较高') != -1" src="../../assets/images/news/jiaogaos.png" alt="">
+                          <img class="dengpao" v-if="item.result.indexOf('极高') != -1" src="../../assets/images/news/jigaos.png" alt="">
                           
                         </div>
                       </div>
@@ -518,7 +582,7 @@
                           </li>
                         </ul>
                       </div>
-                      <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+                      <!-- <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
                         <div class="wdrjs_title">
                           <img src="../../assets/images/news/dot.png" alt="" />指导建议
                         </div>
@@ -528,11 +592,13 @@
                               {{ items }}
                             </p>
                             <div v-if="Array.isArray(items)">
-                              <p v-for="(itemu, indexu) in items" :key="indexu">{{ indexu + 1 }}.{{ itemu }}</p>
+                              <div v-for="(itemu, indexu) in items" :key="indexu">
+                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                              </div>
                             </div>
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -695,7 +761,7 @@
                   <el-input v-if="!assessmentFlag" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment" @input="noteChange" maxlength="300" show-word-limit></el-input>
                   <el-input v-else  disabled :autosize="{ minRows: 3}" type="textarea" v-model="assessment"></el-input>
                   <el-button type="primary" v-if="!assessmentFlag" @click="recordSub">提交</el-button>
-                  <el-button type="primary primary1" v-if="assessmentFlag" @click="assessmentFlag = !assessmentFlag">编辑</el-button>
+                  <el-button type="primary primary1" v-if="assessmentFlag" @click="assessmentFlag = !assessmentFlag">修改</el-button>
                 </div>
               </div>
             </div>
@@ -706,7 +772,7 @@
         <div class="drwc_box drwc_boxr" ref="partr1">
           <div class="drwc_common">
             <div class="drwc_bw_head">
-              <img src="../../assets/images/news/tphg.png" alt="">
+              <img style="width: 0.53rem;height: 0.51rem;" src="../../assets/images/news/tphg.png" alt="" />
               <span>图片回顾</span>
             </div>
             <div class="dtm_img_sys">
@@ -729,7 +795,7 @@
         <div class="drwc_box drwc_boxr" ref="partr2">
           <div class="drwc_common">
             <div class="drwc_bw_head">
-              <img src="../../assets/images/news/zpxxtj.png" alt="">
+              <img style="width: 0.52rem;height:0.52rem;" src="../../assets/images/news/zpxxtj.png" alt="" />
               <span>作品信息统计</span>
             </div>
             <div class="dtm_xls" v-if="reviewData.workInfo">
@@ -802,7 +868,7 @@
         <div class="drwc_box drwc_boxr" ref="partr3">
           <div class="drwc_common">
             <div class="drwc_bw_head">
-              <img src="../../assets/images/news/sjsy.png" alt="">
+              <img style="width: 0.53rem;height:0.52rem;" src="../../assets/images/news/sjsy.png" alt="" />
               <span>沙具使用情况统计</span>
             </div>
             <div>
@@ -826,7 +892,7 @@
         <div class="drwc_box drwc_boxr" ref="partr4">
           <div class="drwc_common">
             <div class="drwc_bw_head">
-              <img src="../../assets/images/news/syjlb.png" alt="">
+              <img style="width: 0.54rem;height:0.53rem;" src="../../assets/images/news/syjlb.png" alt="" />
               <span>沙具使用记录表</span>
             </div>
             <template>
@@ -837,15 +903,14 @@
                 <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
                 <el-table-column prop="action_content" label="操作内容">
                   <template slot-scope="scope">
-                    <span style="color:#006cff">{{scope.row.action_content}}</span>
+                    <span style="color:#737AFD">{{scope.row.action_content}}</span>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
             <div class="table_page">
               <div class="page_total">
-                共 <span>{{ total }}</span> 条 , 第
-                <span>{{ currentPage }}/{{ pageNum }}</span> 页
+                共 <span>{{ total }}</span> 条
               </div>
               <el-pagination
                 @current-change="handleCurrentChange"
@@ -858,141 +923,6 @@
             </div>
           </div>
         </div>
-
-      </div>
-    </div>
-    <!-- 删除以下内容 -->
-    <div class="dt_mains2" v-show="reviewFlag">
-      <div class="dtm_title" ref="parts11">
-        图片回顾
-      </div>
-      <div class="dtm_img_sys">
-        <el-carousel
-          :interval="40000"
-          arrow="always"
-          type="card"
-          height="2.68rem"
-        >
-          <el-carousel-item v-for="item in imgList" :key="item.name">
-            <div class="dtm_img_box">
-              <img class="dtmi_img" :src="item.img" alt="" />
-              <div class="dtmi_txt">{{ item.name }}</div>
-            </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div class="dtm_title" ref="parts12">
-        作品信息统计
-      </div>
-      <div class="dtm_xls" v-if="reviewData.workInfo">
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品名称</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.workName }}</div>
-          <div class="dtmxl_head">自我像</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.representSand }}</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">最重要的沙具</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.importantSand }}</div>
-          <div class="dtmxl_head">制作次数</div>
-          <div class="dtmxl_body">
-            第<span>{{ reviewData.workInfo.time }}</span
-            >次
-          </div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">满意程度</div>
-          <div class="dtmxl_body">
-            <span>{{ reviewData.workInfo.satisfaction }}</span
-            >分
-          </div>
-          <div class="dtmxl_head">制作用时</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.operationTime }}</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品场景</div>
-          <div class="dtmxl_body">{{ reviewData.workInfo.scene }}</div>
-          <div class="dtmxl_head">沙具删除比例</div>
-          <div class="dtmxl_body">
-            <span>{{ reviewData.workInfo.deleteScale }}</span
-            >%
-          </div>
-        </div>
-
-        <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
-          <div class="dtmxl_head">主题统计</div>
-          <div class="dtmxl_body">
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">创伤主题</div>
-              <div class="dtmxl_dd">
-                {{ reviewData.workInfo.themeInfo.traumaTheme }}
-              </div>
-              <div class="dtmxl_dds">
-                <span>{{ reviewData.workInfo.themeInfo.traumaNum }}</span
-                >个
-              </div>
-            </div>
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">治愈主题</div>
-              <div class="dtmxl_dd">
-                {{
-                  reviewData.workInfo.themeInfo.cureTheme != ""
-                    ? reviewData.workInfo.themeInfo.cureTheme
-                    : "/"
-                }}
-              </div>
-              <div class="dtmxl_dds">
-                <span>{{ reviewData.workInfo.themeInfo.cureNum }}</span
-                >个
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="dtm_title" ref="parts13">
-        沙具统计
-      </div>
-      <div class="dtmt_tle">
-        <img src="../../assets/images/report/dot.png" alt="" />
-        <span>沙具使用数量分布</span>
-        <img src="../../assets/images/report/dot.png" alt="" />
-      </div>
-      <!-- <div class="myChartZhu" ref="myChartZhu" id="myChartZhu"></div> -->
-      <div class="dtmt_tle" style="margin:0.4rem auto 0.1rem">
-        <img src="../../assets/images/report/dot.png" alt="" />
-        <span>沙具使用时长占比</span>
-        <img src="../../assets/images/report/dot.png" alt="" />
-      </div>
-      <!-- <div class="myChartRose" ref="myChartRose" id="myChartRose"></div> -->
-      <div class="dtm_title" style="margin-top:0.2rem;" ref="parts14">
-        附录
-      </div>
-      <template>
-        <el-table class='dtm_table' border :data="actionInfo">
-          <el-table-column prop="action_idx" label="操作序号"> </el-table-column>
-          <el-table-column prop="action_time" label="操作时间"> </el-table-column>
-          <el-table-column prop="bodies_name" label="沙具名称"> </el-table-column>
-          <el-table-column prop="bodies_type" label="沙具类别"> </el-table-column>
-          <el-table-column prop="action_content" label="操作内容">
-            <template slot-scope="scope">
-              <span style="color:#006cff">{{scope.row.action_content}}</span>
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
-      <div class="table_page">
-        <div class="page_total">
-          共 <span>{{ total }}</span> 条 , 第
-          <span>{{ currentPage }}/{{ pageNum }}</span> 页
-        </div>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-size="limit"
-          layout="prev, pager, next"
-          :total="total"
-        >
-        </el-pagination>
       </div>
     </div>
     <div style="height:0;width:100%;overflow:hidden">
@@ -1080,14 +1010,14 @@ export default {
   data() {
     return {
 
-      btlActNum: 3,
+      btlActNum: 1,
       jjActNum: 1,
       rgActNum: 1,
       assessment: '',
       assessmentFlag: false,
       birdViewImg: '',
       actionInfo: [],
-      limit: 30,
+      limit: 10,
       total: 0,
       pageNum: 1,
       currentPage: 1,
@@ -1172,7 +1102,7 @@ export default {
       myChartLd5: "",
       myChartLd6: "",
       myChartLd7: "",
-      myChartLd8: "",
+      // myChartLd8: "",
 
       myChartRg2: "",
       myChartRg3: "",
@@ -1186,6 +1116,7 @@ export default {
       sysList: [],
       sysList2: [],
       jjList: [],
+      jjName: '',
       rgList: [],
       depressionFlag: 1,
       anxietyFlag: 1,
@@ -1305,21 +1236,89 @@ export default {
           }
           localStorage.setItem("userAuth", data.data.userAuth);
           localStorage.setItem("userType", 1);
-          localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+          if (data.data.algTypes.mentalDim) {
+            // mentalDim
+            // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+
+            // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+            let mental = data.data.algTypes.mentalDim.toString(2).split('')
+            data.data.algTypes.depressionFlag = mental[0]
+            data.data.algTypes.anxietyFlag = mental[1]
+            data.data.algTypes.forcedFlag = mental[2]
+            data.data.algTypes.ptsdFlag = mental[3]
+            data.data.algTypes.violenceFlag = mental[4]
+            data.data.algTypes.suicideFlag = mental[5]
+            // data.data.algTypes.zibiFlag = mental[6]
+            // personalityDim
+            // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+            // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+            let personality = data.data.algTypes.personalityDim.toString(2).split('')
+            data.data.algTypes.extroversionFlag = personality[0]
+            data.data.algTypes.conscientiousnessFlag = personality[1]
+            data.data.algTypes.nervousnessFlag = personality[2]
+            data.data.algTypes.agreeablenessFlag = personality[3]
+            data.data.algTypes.opennessFlag = personality[4]
+
+            // positiveDim
+            // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+            
+            let positive = data.data.algTypes.positiveDim.toString(2).split('')
+            data.data.algTypes.resilienceFlag = positive[0]
+            data.data.algTypes.selfFlag = positive[1]
+            data.data.algTypes.achievementFlag = positive[2]
+            data.data.algTypes.emotionFlag = positive[3]
+            data.data.algTypes.relationshipFlag = positive[4]
+            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+          }
+          
           if (data.data.algTypes) {
             // 是否显示抑郁
-            this.depressionFlag = data.data.algTypes.depression
+            this.depressionFlag = data.data.algTypes.depressionFlag
             // 是否显示焦虑
-            this.anxietyFlag = data.data.algTypes.anxiety
+            this.anxietyFlag = data.data.algTypes.anxietyFlag
             // 是否显示强迫
-            this.forcedFlag = data.data.algTypes.forced
-            // 是否显示自我伤害
-            this.suicideFlag = data.data.algTypes.suicide
+            this.forcedFlag = data.data.algTypes.forcedFlag
+            // 是否显示PTSD
+            this.ptsdFlag = data.data.algTypes.ptsdFlag
             // 是否显示敌对
-            this.violenceFlag = data.data.algTypes.violence
-            // 是否显示人格
-            this.personalityFlag = data.data.algTypes.personality
+            this.violenceFlag = data.data.algTypes.violenceFlag
+            // 是否显示自我伤害
+            this.suicideFlag = data.data.algTypes.suicideFlag
+            // // 是否显示自闭
+            // this.zibiFlag = data.data.algTypes.zibiFlag
+            // 是否显示大五人格
+            this.extroversionFlag = data.data.algTypes.extroversionFlag
+            this.conscientiousnessFlag = data.data.algTypes.conscientiousnessFlag
+            this.nervousnessFlag = data.data.algTypes.nervousnessFlag
+            this.agreeablenessFlag = data.data.algTypes.agreeablenessFlag
+            this.opennessFlag = data.data.algTypes.opennessFlag
+
+            // 是否显示心理韧性
+            this.resilienceFlag = data.data.algTypes.resilienceFlag
+            // 是否显示积极自我
+            this.selfFlag = data.data.algTypes.selfFlag
+            // 是否显示积极成就
+            this.achievementFlag = data.data.algTypes.achievementFlag
+            // 是否显示积极情绪
+            this.emotionFlag = data.data.algTypes.emotionFlag
+            // 是否显示积极关系
+            this.relationshipFlag = data.data.algTypes.relationshipFlag
           }
+          // localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+          // if (data.data.algTypes) {
+          //   // 是否显示抑郁
+          //   this.depressionFlag = data.data.algTypes.depression
+          //   // 是否显示焦虑
+          //   this.anxietyFlag = data.data.algTypes.anxiety
+          //   // 是否显示强迫
+          //   this.forcedFlag = data.data.algTypes.forced
+          //   // 是否显示自我伤害
+          //   this.suicideFlag = data.data.algTypes.suicide
+          //   // 是否显示敌对
+          //   this.violenceFlag = data.data.algTypes.violence
+          //   // 是否显示人格
+          //   this.personalityFlag = data.data.algTypes.personality
+          // }
           //
           // this.depressionFlag = 1
           // this.anxietyFlag = 1
@@ -1351,7 +1350,7 @@ export default {
         this.myChartLd5.resize();
         this.myChartLd6.resize();
         this.myChartLd7.resize();
-        this.myChartLd8.resize();
+        // this.myChartLd8.resize();
         this.myChartRg2.resize();
         this.myChartRg3.resize();
         this.myChartRg4.resize();
@@ -1431,15 +1430,7 @@ export default {
               this.assessmentFlag = false
             }
             this.details.note = that.assessment
-            // this.record.unshift({
-            //   name: param.name,
-            //   dateTime: param.datetime,
-            //   info: param.record
-            // })
-            // this.assessment = ''
             this.$forceUpdate()
-            // console.log(this.record)
-            // that.$router.go(-1)
           } else {
             this.$message({
               type: "error",
@@ -1546,10 +1537,11 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            if (data.data.actionInfoRet == 'null') {
+            if (data.data.actionInfoRet == 'null' || data.data.actionInfoRet == '') {
               data.data.actionInfoRet = '[]';
             }
             console.log(data.data.actionInfoRet)
+            
             fuluList = JSON.parse(data.data.actionInfoRet);
             console.log(fuluList)
             that.total = fuluList.length;
@@ -1616,15 +1608,10 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            data.data.birth = data.data.birth.split(" ")[0];
-            if (data.data.confidenceLevel == 1) {
-              data.data.confidenceLevel = "可信";
-            } else {
-              data.data.confidenceLevel = "不可信";
+            if (data.data.birth) {
+              data.data.birth = data.data.birth.split(" ")[0];
             }
-
             // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
-            // data.data.themeDiscription = data.data.themeDiscription
             if (data.data.themeDiscription && data.data.themeDiscription != '') {
               if (data.data.themeDiscription.indexOf("：")) {
                 data.data.themeDiscription =
@@ -1642,48 +1629,22 @@ export default {
             }
             // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
             if (data.data.selfDiscription && data.data.selfDiscription != '') {
-              // data.data.selfDiscription = '作品描述：' + data.data.selfDiscription
               if (data.data.selfDiscription && data.data.selfDiscription != '') {
                 if (data.data.selfDiscription.indexOf("：")) {
-                  if (data.data.selfDiscription.indexOf("（") != -1) {
-                    data.data.selfDiscription =
-                      '<span style="color:#333E75;font-weight:500">' +
-                      data.data.selfDiscription.substring(
-                        0,
-                        data.data.selfDiscription.indexOf("：") + 1
-                      ) +
-                      "</span>" +
-                      data.data.selfDiscription.substring(
-                        data.data.selfDiscription.indexOf("：") + 1,
-                        data.data.selfDiscription.indexOf("（") + 1
-                      ) +
-                      '<span style="color:#333E75">' +
-                      data.data.selfDiscription.substring(
-                        data.data.selfDiscription.indexOf("（") + 1,
-                        data.data.selfDiscription.indexOf("）")
-                      ) +
-                      "</span>" +
-                      data.data.selfDiscription.substring(
-                        data.data.selfDiscription.indexOf("）"),
-                        data.data.selfDiscription.length
-                      );
-                  } else {
-                    data.data.selfDiscription =
-                      '<span style="color:#333E75;font-weight:500">' +
-                      data.data.selfDiscription.substring(
-                        0,
-                        data.data.selfDiscription.indexOf("：") + 1
-                      ) +
-                      "</span>" +
+                  data.data.selfDiscription =
+                    '<span style="color:#333E75;font-weight:500">' +
                     data.data.selfDiscription.substring(
-                      data.data.selfDiscription.indexOf("：") + 1,
-                      data.data.selfDiscription.length
-                    );
-                  }
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                  data.data.selfDiscription.substring(
+                    data.data.selfDiscription.indexOf("：") + 1,
+                    data.data.selfDiscription.length
+                  );
                 }
               }
               // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
-              // data.data.satisfyArea = '象征意义：' + data.data.satisfyArea
               if (data.data.satisfyArea && data.data.satisfyArea != '') {
                 if (data.data.satisfyArea.indexOf("：")) {
                   data.data.satisfyArea =
@@ -1700,455 +1661,89 @@ export default {
                 }
               }
             }
-
-            if (data.data.selfDiscription.indexOf("“") != -1) {
-              data.data.selfDiscription =
-                data.data.selfDiscription.substring(
-                  0,
-                  data.data.selfDiscription.indexOf("“") + 1
-                ) +
-                '<span style="color:#00C0FF">' +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("“") + 1,
-                  data.data.selfDiscription.indexOf("”")
-                ) +
-                "</span>" +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("”"),
-                  data.data.selfDiscription.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("正常") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("正常"),
-                  data.data.depressionWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("正常") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("轻度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("轻度"),
-                  data.data.depressionWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("轻度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("中度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("中度"),
-                  data.data.depressionWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("中度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("重度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("重度"),
-                  data.data.depressionWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("重度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("正常") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("正常"),
-                  data.data.anxietyWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("正常") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("轻度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("轻度"),
-                  data.data.anxietyWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("轻度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("中度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("中度"),
-                  data.data.anxietyWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("中度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("重度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("重度"),
-                  data.data.anxietyWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("重度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-
-            if (data.data.forcedWarning.indexOf("正常") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("正常"),
-                  data.data.forcedWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("正常") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("轻度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("轻度"),
-                  data.data.forcedWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("轻度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("中度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("中度"),
-                  data.data.forcedWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("中度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("重度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("重度"),
-                  data.data.forcedWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("重度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-
-            if (data.data.suicideWarning.indexOf("正常") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("正常"),
-                  data.data.suicideWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("正常") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("轻度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("轻度"),
-                  data.data.suicideWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("轻度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("中度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("中度"),
-                  data.data.suicideWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("中度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("重度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("重度"),
-                  data.data.suicideWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("重度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-
-            if (data.data.violenceWarning.indexOf("正常") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("正常"),
-                  data.data.violenceWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("正常") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("轻度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("轻度"),
-                  data.data.violenceWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("轻度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("中度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("中度"),
-                  data.data.violenceWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("中度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("重度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("重度"),
-                  data.data.violenceWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("重度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            let oldWarning = [
-              {
-                id: 3,
+            
+            let oldWarning = []
+            if (that.depressionFlag == 1) {
+              oldWarning.push({
+                id: 1,
                 name: '抑郁',
-                old: data.data.reportWarningInfo.depressionResult,
                 score: data.data.reportWarningInfo.depressionScore,
                 lastScore: data.data.lastWarningInfo.depressionScore,
                 level: data.data.reportWarningInfo.depressionLevel,
                 lastLevel: data.data.lastWarningInfo.depressionLevel,
-                new: data.data.depressionWarning,
                 flag: this.depressionFlag
-              },
-              {
-                id: 4,
+              })
+            }
+            if (that.anxietyFlag == 1) {
+              oldWarning.push({
+                id: 2,
                 name: '焦虑',
-                old: data.data.reportWarningInfo.anxietyResult,
                 score: data.data.reportWarningInfo.anxietyScore,
                 lastScore: data.data.lastWarningInfo.anxietyScore,
                 level: data.data.reportWarningInfo.anxietyLevel,
                 lastLevel: data.data.lastWarningInfo.anxietyLevel,
-                new: data.data.anxietyWarning,
-                flag: this.anxietyFlag
-              },
-              {
-                id: 5,
+                flag: that.anxietyFlag
+              })
+            }
+            if (that.forcedFlag == 1) {
+              oldWarning.push({
+                id: 3,
                 name: '强迫',
-                old: data.data.reportWarningInfo.forcedResult,
                 score: data.data.reportWarningInfo.forcedScore,
                 lastScore: data.data.lastWarningInfo.forcedScore,
                 level: data.data.reportWarningInfo.forcedLevel,
                 lastLevel: data.data.lastWarningInfo.forcedLevel,
-                new: data.data.forcedWarning,
-                flag: this.forcedFlag
-              },
-              {
-                id: 6,
+                flag: that.forcedFlag
+              })
+            }
+            if (that.ptsdFlag == 1) {
+              oldWarning.push({
+                id: 4,
                 name: 'PTSD',
-                old: data.data.reportWarningInfo.violenceResult,
-                score: data.data.reportWarningInfo.violenceScore,
-                lastScore: data.data.lastWarningInfo.violenceScore,
-                level: data.data.reportWarningInfo.violenceLevel,
-                lastLevel: data.data.lastWarningInfo.violenceLevel,
-                new: data.data.violenceWarning,
-                flag: this.violenceFlag
-              },
-              {
-                id: 7,
+                score: data.data.reportWarningInfo.ptsdScore,
+                lastScore: data.data.lastWarningInfo.ptsdScore,
+                level: data.data.reportWarningInfo.ptsdLevel,
+                lastLevel: data.data.lastWarningInfo.ptsdLevel,
+                flag: that.ptsdFlag
+              })
+            }
+            if (that.violenceFlag == 1) {
+              oldWarning.push({
+                id: 5,
                 name: '敌对',
-                old: data.data.reportWarningInfo.violenceResult,
                 score: data.data.reportWarningInfo.violenceScore,
                 lastScore: data.data.lastWarningInfo.violenceScore,
                 level: data.data.reportWarningInfo.violenceLevel,
                 lastLevel: data.data.lastWarningInfo.violenceLevel,
-                new: data.data.violenceWarning,
-                flag: this.violenceFlag
-              },
-              {
-                id: 8,
+                flag: that.violenceFlag
+              })
+            }
+            if (that.suicideFlag == 1) {
+              oldWarning.push({
+                id: 6,
                 name: '自我伤害',
-                old: data.data.reportWarningInfo.suicideResult,
                 score: data.data.reportWarningInfo.suicideScore,
                 lastScore: data.data.lastWarningInfo.suicideScore,
                 level: data.data.reportWarningInfo.suicideLevel,
                 lastLevel: data.data.lastWarningInfo.suicideLevel,
-                new: data.data.suicideWarning,
-                flag: this.suicideFlag
-              }
-              // ,
-              // {
-              //   id: 9,
-              //   name: '自闭',
-              //   old: data.data.reportWarningInfo.suicideResult,
-              //   score: data.data.reportWarningInfo.suicideScore,
-              //   lastScore: data.data.lastWarningInfo.suicideScore,
-              //   level: data.data.reportWarningInfo.suicideLevel,
-              //   lastLevel: data.data.lastWarningInfo.suicideLevel,
-              //   new: data.data.suicideWarning,
-              //   flag: this.suicideFlag
-              // }
-            ];
+                flag: that.suicideFlag
+              })
+            }
+            // if (that.zibiFlag == 1) {
+            //   oldWarning.push({
+            //     id: 7,
+            //     name: '自闭',
+            //     score: data.data.reportWarningInfo.zibiScore,
+            //     lastScore: data.data.lastWarningInfo.zibiScore,
+            //     level: data.data.reportWarningInfo.zibiLevel,
+            //     lastLevel: data.data.lastWarningInfo.zibiLevel,
+            //     flag: that.zibiFlag
+            //   })
+            // }
             data.data.warningList = [];
-            
             data.data.whatWarn = [];
             data.data.warnLen = [];
             for (let i in oldWarning) {
-              // if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
-              //   data.data.warningList.push(oldWarning[i]);
-              // }
               if (oldWarning[i].level > 0 && oldWarning[i].flag == 1) {
                 data.data.warningList.push(oldWarning[i]);
               }
@@ -2161,826 +1756,476 @@ export default {
             }
             data.data.rangeList = data.data.warnLen;
             data.data.warningNum = data.data.whatWarn.length;
-            data.data.suggestion = data.data.suggestion.split("|||");
-            console.log(data.data.suggestion)
-            data.data.suggestionDepression = '该受测者情绪低落、消极预期指标异常，建议如下：|||针对情绪低落：|||该受测者在人际关系存在一定程度的敌意，具体表现为有时容易固执己见，看待事物较为片面、喜欢钻牛角尖，不愿意接受其他人的观点。@@将武力攻击视为一种正当的手段来解决问题，而不是通过和平、协商和妥协来达成共识。|||针对消极预期：|||该受测者在人际关系存在一定程度的敌意，具体表现为有时容易固执己见，看待事物较为片面、喜欢钻牛角尖，不愿意接受其他人的观点。将武力攻击视为一种正当的手段来解决问题，而不是通过和平、协商和妥协来达成共识。'
-            data.data.suggestionDepression = data.data.suggestionDepression.split("|||")
-            console.log(data.data.suggestionDepression)
-            for (let i in data.data.suggestionDepression) {
-              if (!(data.data.suggestionDepression[i].indexOf("如下：") != -1 || data.data.suggestionDepression[i].indexOf("针对") != -1)) {
-                console.log(i)
-                data.data.suggestionDepression[i] = data.data.suggestionDepression[i].split("@@")
-              }
-            }
-            console.log(data.data.suggestionDepression)
-            // data.data.suggestionDepression = data.data.suggestionDepression.split("@@");
-            data.data.suggestionAnxiety = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionForced = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
-            // for (let i in data.data.suggestionSuicide) {
-            //   if (data.data.suggestionSuicide[i].indexOf("针对") != -1) {
-            //     data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("@@");
-            //   }
-            // }
-            // // data.data.suggestionSuicide = data.data.suggestionSuicide.split("@@");
-            // // data.data.suggestionViolence = data.data.suggestionViolence.split("@@");
-            // console.log(data.data.suggestion)
             
-            // if (data.data.suggestion && data.data.suggestion != '') {
-            //   data.data.suggestion = data.data.suggestion.split("|||");
-            //   console.log(data.data.suggestion)
-            //   for (let i in data.data.suggestion) {
-            //     if (data.data.suggestion[i].indexOf("&&") != -1) {
-            //       data.data.suggestion[i] = data.data.suggestion[i].split("&&")
-            //       for (let j in data.data.suggestion[i]) {
-            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-            //           for (let k in data.data.suggestion[i][j]) {
-            //             console.log(data.data.suggestion[i][j][k])
-            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-            //               for (let m in data.data.suggestion[i][j][k]) {
-            //                 console.log(data.data.suggestion[i][j][k][m])
-            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     } else {
-            //       if (data.data.suggestion[i].indexOf("span") == -1) {
-            //         data.data.suggestion[i] = [data.data.suggestion[i]]
-            //       }
-            //       for (let j in data.data.suggestion[i]) {
-            //         if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-            //           for (let k in data.data.suggestion[i][j]) {
-            //             console.log(data.data.suggestion[i][j][k])
-            //             if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-            //               for (let m in data.data.suggestion[i][j][k]) {
-            //                 console.log(data.data.suggestion[i][j][k][m])
-            //                 if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         } else {
-            //           for (let j in data.data.suggestion[i]) {
-            //             if (data.data.suggestion[i][j].indexOf("@@") != -1) {
-            //               data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
-            //               for (let m in data.data.suggestion[i][j]) {
-            //                 if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
-            //                   data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-            // if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
-            //   data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-            //   console.log(data.data.suggestionSuicide)
-            //   for (let i in data.data.suggestionSuicide) {
-            //     if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
-            //       data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
-            //       for (let j in data.data.suggestionSuicide[i]) {
-            //         if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-            //           for (let k in data.data.suggestionSuicide[i][j]) {
-            //             console.log(data.data.suggestionSuicide[i][j][k])
-            //             if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-            //               for (let m in data.data.suggestionSuicide[i][j][k]) {
-            //                 console.log(data.data.suggestionSuicide[i][j][k][m])
-            //                 if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     } else {
-            //       if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
-            //         data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
-            //       }
-            //       for (let j in data.data.suggestionSuicide[i]) {
-            //         if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-            //           for (let k in data.data.suggestionSuicide[i][j]) {
-            //             console.log(data.data.suggestionSuicide[i][j][k])
-            //             if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-            //               for (let m in data.data.suggestionSuicide[i][j][k]) {
-            //                 console.log(data.data.suggestionSuicide[i][j][k][m])
-            //                 if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         } else {
-            //           for (let j in data.data.suggestionSuicide[i]) {
-            //             if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
-            //               data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
-            //               for (let m in data.data.suggestionSuicide[i][j]) {
-            //                 if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
-            //                   data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-            // console.log(data.data.suggestionSuicide)
-
-            // if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
-            //   data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
-            //   for (let i in data.data.suggestionViolence) {
-            //     if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
-            //       data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
-            //       for (let j in data.data.suggestionViolence[i]) {
-            //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-            //           for (let k in data.data.suggestionViolence[i][j]) {
-            //             console.log(data.data.suggestionViolence[i][j][k])
-            //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-            //               for (let m in data.data.suggestionViolence[i][j][k]) {
-            //                 console.log(data.data.suggestionViolence[i][j][k][m])
-            //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     } else {
-            //       if (data.data.suggestionViolence[i].indexOf("span") == -1) {
-            //         data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
-            //       }
-            //       for (let j in data.data.suggestionViolence[i]) {
-            //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-            //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-            //           for (let k in data.data.suggestionViolence[i][j]) {
-            //             console.log(data.data.suggestionViolence[i][j][k])
-            //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-            //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-            //               for (let m in data.data.suggestionViolence[i][j][k]) {
-            //                 console.log(data.data.suggestionViolence[i][j][k][m])
-            //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-            //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         } else {
-            //           console.log(data.data.suggestionViolence[i])
-            //           for (let j in data.data.suggestionViolence[i]) {
-            //             if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
-            //               data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
-            //               console.log(data.data.suggestionViolence[i][j])
-            //               for (let m in data.data.suggestionViolence[i][j]) {
-            //                 console.log(data.data.suggestionViolence[i][j][m])
-            //                 if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
-            //                   data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
-            //                 }
-            //               }
-            //             }
-            //           }
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-            // console.log(data.data.suggestionSuicide)
-            console.log(data.data.suggestionViolence)
-            data.data.depressionDim = data.data.depressionDim.split("@@");
-            data.data.anxietyDim = data.data.anxietyDim.split("@@");
-            data.data.forcedDim = data.data.forcedDim.split("@@");
-            data.data.suicideDim = data.data.suicideDim.split("@@");
-            data.data.violenceDim = data.data.violenceDim.split("@@");
-            data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
-            for (let i in data.data.suggestionPersonality) {
-              if (i > 0) {
-                data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
-              }
-            }
+            let mentalHealth = {}
+            let sysList0 = []
             let warningInfo = data.data.reportWarningInfo;
-            let depressionColorStr = "";
-            let depressionLevelStr = "";
-            let depressionBgStr = "";
-            let depressionImgStr = "";
-
-            if (warningInfo.depressionLevel == 0) {
-              depressionColorStr = "#00e805";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "1";
-            } else if (warningInfo.depressionLevel == 1) {
-              depressionColorStr = "#ffe400";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "2";
-            } else if (warningInfo.depressionLevel == 2) {
-              depressionColorStr = "#fc9b2f";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "3";
-            } else if (warningInfo.depressionLevel == 3) {
-              depressionColorStr = "#fe2727";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "4";
-            }
-            let anxietyColorStr = "";
-            let anxietyLevelStr = "";
-            let anxietyBgStr = "";
-            let anxietyImgStr = "";
-            if (warningInfo.anxietyLevel == 0) {
-              anxietyColorStr = "#00e805";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "1";
-            } else if (warningInfo.anxietyLevel == 1) {
-              anxietyColorStr = "#ffe400";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "2";
-            } else if (warningInfo.anxietyLevel == 2) {
-              anxietyColorStr = "#fc9b2f";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "3";
-            } else if (warningInfo.anxietyLevel == 3) {
-              anxietyColorStr = "#fe2727";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "4";
-            }
-            let forcedColorStr = "";
-            let forcedLevelStr = "";
-            let forcedBgStr = "";
-            let forcedImgStr = "";
-            if (warningInfo.forcedLevel == 0) {
-              forcedColorStr = "#00e805";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "1";
-            } else if (warningInfo.forcedLevel == 1) {
-              forcedColorStr = "#ffe400";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "2";
-            } else if (warningInfo.forcedLevel == 2) {
-              forcedColorStr = "#fc9b2f";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "3";
-            } else if (warningInfo.forcedLevel == 3) {
-              forcedColorStr = "#fe2727";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "4";
-            }
-            let suicideColorStr = "";
-            let suicideLevelStr = "";
-            let suicideBgStr = "";
-            let suicideImgStr = "";
-            if (warningInfo.suicideLevel == 0) {
-              suicideColorStr = "#00e805";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "1";
-            } else if (warningInfo.suicideLevel == 1) {
-              suicideColorStr = "#ffe400";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "2";
-            } else if (warningInfo.suicideLevel == 2) {
-              suicideColorStr = "#fc9b2f";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "3";
-            } else if (warningInfo.suicideLevel == 3) {
-              suicideColorStr = "#fe2727";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "4";
-            }
-            let violenceColorStr = "";
-            let violenceLevelStr = "";
-            let violenceBgStr = "";
-            let violenceImgStr = "";
-            if (warningInfo.violenceLevel == 0) {
-              violenceColorStr = "#00e805";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "1";
-            } else if (warningInfo.violenceLevel == 1) {
-              violenceColorStr = "#ffe400";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "2";
-            } else if (warningInfo.violenceLevel == 2) {
-              violenceColorStr = "#fc9b2f";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "3";
-            } else if (warningInfo.violenceLevel == 3) {
-              violenceColorStr = "#fe2727";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "4";
-            }
-            // if (data.data.depressionDim) {
-            //   data.data.depressionDim = data.data.depressionDim.split("@@");
-            // }
-            // let depArr = [];
-            // for (let i in data.data.depressionDim) {
-            //   let str = "";
-            //   if (data.data.depressionDim[i].indexOf(".") != -1) {
-            //     str = data.data.depressionDim[i].split(".")[1];
-            //   } else {
-            //     str = data.data.depressionDim[i];
-            //   }
-            //   depArr.push(str);
-            // }
-            // if (data.data.anxietyDim) {
-            //   data.data.anxietyDim = data.data.anxietyDim.split("@@");
-            // }
-            // let anxArr = [];
-            // for (let i in data.data.anxietyDim) {
-            //   let str = "";
-            //   if (data.data.anxietyDim[i].indexOf(".") != -1) {
-            //     str = data.data.anxietyDim[i].split(".")[1];
-            //   } else {
-            //     str = data.data.anxietyDim[i];
-            //   }
-            //   anxArr.push(str);
-            // }
-            // if (data.data.forcedDim) {
-            //   data.data.forcedDim = data.data.forcedDim.split("@@");
-            // }
-            // let forArr = [];
-            // for (let i in data.data.forcedDim) {
-            //   let str = "";
-            //   if (data.data.forcedDim[i].indexOf(".") != -1) {
-            //     str = data.data.forcedDim[i].split(".")[1];
-            //   } else {
-            //     str = data.data.forcedDim[i];
-            //   }
-            //   forArr.push(str);
-            // }
-
-
-            // let sysList0 = [
-            //   {
-            //     title: "抑郁",
-            //     grade: warningInfo.depressionScore,
-            //     gradep:
-            //       Number(warningInfo.depressionScore) * 0.44 +
-            //       Number(warningInfo.depressionScore) * 0.01 +
-            //       0.24 +
-            //       "rem",
-            //     gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
-            //     level: warningInfo.depressionResult,
-            //     txtColor: depressionColorStr,
-            //     bg: depressionBgStr,
-            //     imgType: depressionImgStr,
-            //     list: depArr,
-            //     subDim: data.data.depressionSubDim,
-            //     flag: this.depressionFlag
-            //   },
-            //   {
-            //     title: "焦虑",
-            //     grade: warningInfo.anxietyScore,
-            //     gradep:
-            //       Number(warningInfo.anxietyScore) * 0.44 +
-            //       Number(warningInfo.anxietyScore) * 0.01 +
-            //       0.24 +
-            //       "rem",
-            //     gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
-            //     level: warningInfo.anxietyResult,
-            //     txtColor: anxietyColorStr,
-            //     bg: anxietyBgStr,
-            //     imgType: anxietyImgStr,
-            //     list: anxArr,
-            //     subDim: data.data.anxietySubDim,
-            //     flag: this.anxietyFlag
-            //   },
-            //   {
-            //     title: "强迫",
-            //     grade: warningInfo.forcedScore,
-            //     gradep:
-            //       Number(warningInfo.forcedScore) * 0.44 +
-            //       Number(warningInfo.forcedScore) * 0.01 +
-            //       0.24 +
-            //       "rem",
-            //     gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
-            //     level: warningInfo.forcedResult,
-            //     txtColor: forcedColorStr,
-            //     bg: forcedBgStr,
-            //     imgType: forcedImgStr,
-            //     list: forArr,
-            //     subDim: data.data.forcedSubDim,
-            //     flag: this.forcedFlag
-            //   }
-            // ];
-            
-            let sysList0 = [
-              {
-                id: 3,
-                title: "抑郁",
-                grade: warningInfo.depressionScore,
-                gradep:
-                  Number(warningInfo.depressionScore) * 0.44 +
-                  Number(warningInfo.depressionScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
-                level: warningInfo.depressionResult,
-                levelNum: warningInfo.violenceLevel,
-                txtColor: depressionColorStr,
-                bg: depressionBgStr,
-                imgType: depressionImgStr,
-                // list: depArr,
-                subDim: data.data.depressionSubDim,
-                suggestDim: data.data.suggestionDepression,
-                sysDim: data.data.depressionDim,
-                flag: this.depressionFlag
-              },
-              {
-                id: 4,
-                title: "焦虑",
-                grade: warningInfo.anxietyScore,
-                gradep:
-                  Number(warningInfo.anxietyScore) * 0.44 +
-                  Number(warningInfo.anxietyScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
-                level: warningInfo.anxietyResult,
-                levelNum: warningInfo.violenceLevel,
-                txtColor: anxietyColorStr,
-                bg: anxietyBgStr,
-                imgType: anxietyImgStr,
-                // list: anxArr,
-                subDim: data.data.anxietySubDim,
-                suggestDim: data.data.suggestionAnxiety,
-                sysDim: data.data.anxietyDim,
-                flag: this.anxietyFlag
-              },
-              {
-                id: 5,
-                title: "强迫",
-                grade: warningInfo.forcedScore,
-                gradep:
-                  Number(warningInfo.forcedScore) * 0.44 +
-                  Number(warningInfo.forcedScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
-                level: warningInfo.forcedResult,
-                levelNum: warningInfo.violenceLevel,
-                txtColor: forcedColorStr,
-                bg: forcedBgStr,
-                imgType: forcedImgStr,
-                // list: forArr,
-                subDim: data.data.forcedSubDim,
-                suggestDim: data.data.suggestionForced,
-                sysDim: data.data.forcedDim,
-                flag: this.forcedFlag
-              },
-              {
-                id: 6,
-                title: "PTSD",
-                grade: warningInfo.violenceScore,
-                gradep:
-                  Number(warningInfo.violenceScore) * 0.44 +
-                  Number(warningInfo.violenceScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                levelNum: warningInfo.violenceLevel,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
-              },
-              {
-                id: 7,
-                title: "敌对",
-                grade: warningInfo.violenceScore,
-                gradep:
-                  Number(warningInfo.violenceScore) * 0.44 +
-                  Number(warningInfo.violenceScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                levelNum: warningInfo.violenceLevel,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
-              },
-              {
-                id: 8,
-                title: "自我伤害",
-                grade: warningInfo.suicideScore,
-                gradep:
-                  Number(warningInfo.suicideScore) * 0.44 +
-                  Number(warningInfo.suicideScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
-                level: warningInfo.suicideResult,
-                txtColor: suicideColorStr,
-                bg: suicideBgStr,
-                imgType: suicideImgStr,
-                // list: forArr,
-                subDim: data.data.suicideSubDim,
-                levelNum: warningInfo.suicideLevel,
-                suggestDim: data.data.suggestionSuicide,
-                sysDim: data.data.suicideDim,
-                flag: this.suicideFlag
-              },
-              {
-                id: 9,
-                title: "自闭",
-                grade: warningInfo.suicideScore,
-                gradep:
-                  Number(warningInfo.suicideScore) * 0.44 +
-                  Number(warningInfo.suicideScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
-                level: warningInfo.suicideResult,
-                txtColor: suicideColorStr,
-                bg: suicideBgStr,
-                imgType: suicideImgStr,
-                // list: forArr,
-                subDim: data.data.suicideSubDim,
-                levelNum: warningInfo.suicideLevel,
-                suggestDim: data.data.suggestionSuicide,
-                sysDim: data.data.suicideDim,
-                flag: this.suicideFlag
+            if (data.data.mentalHealth) {
+              console.log(data.data.mentalHealth)
+              console.log(JSON.parse(data.data.mentalHealth))
+              mentalHealth = JSON.parse(data.data.mentalHealth)
+              if (that.depressionFlag == 1) {
+                if (mentalHealth.depression) {
+                  data.data.depressionSubdim = JSON.parse(mentalHealth.depression.subdim);
+                  data.data.depressionAnalysis = mentalHealth.depression.analysis.split("@@");
+                  data.data.depressionSuggestion = mentalHealth.depression.suggestion.split("|||")
+                  console.log(data.data.depressionSuggestion)
+                  for (let i in data.data.depressionSuggestion) {
+                    if (data.data.depressionSuggestion[i].indexOf("&&") != -1) {
+                      data.data.depressionSuggestion[i] = data.data.depressionSuggestion[i].split("&&")
+                      for (let j in data.data.depressionSuggestion[i]) {
+                        if (data.data.depressionSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.depressionSuggestion[i][j] = data.data.depressionSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.depressionSuggestion[i].indexOf("针对") != -1) {
+                        data.data.depressionSuggestion[i] = [data.data.depressionSuggestion[i]]
+                        for (let j in data.data.depressionSuggestion[i]) {
+                          if (data.data.depressionSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.depressionSuggestion[i][j] = data.data.depressionSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.depressionSuggestion)
+                  sysList0.push({
+                    id: 1,
+                    title: "抑郁",
+                    grade: warningInfo.depressionScore,
+                    level: warningInfo.depressionLevel,
+                    subDim: data.data.depressionSubdim,
+                    suggestDim: data.data.depressionSuggestion,
+                    sysDim: data.data.depressionAnalysis,
+                    flag: that.depressionFlag
+                  })
+                }
               }
-            ];
+              if (that.anxietyFlag == 1) {
+                if (mentalHealth.anxiety) {
+                  data.data.anxietySubdim = JSON.parse(mentalHealth.anxiety.subdim);
+                  data.data.anxietyAnalysis = mentalHealth.anxiety.analysis.split("@@");
+                  data.data.anxietySuggestion = mentalHealth.anxiety.suggestion.split("|||")
+                  for (let i in data.data.anxietySuggestion) {
+                    if (data.data.anxietySuggestion[i].indexOf("&&") != -1) {
+                      data.data.anxietySuggestion[i] = data.data.anxietySuggestion[i].split("&&")
+                      for (let j in data.data.anxietySuggestion[i]) {
+                        if (data.data.anxietySuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.anxietySuggestion[i][j] = data.data.anxietySuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.anxietySuggestion[i].indexOf("针对") != -1) {
+                        data.data.anxietySuggestion[i] = [data.data.anxietySuggestion[i]]
+                        for (let j in data.data.anxietySuggestion[i]) {
+                          if (data.data.anxietySuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.anxietySuggestion[i][j] = data.data.anxietySuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.anxietySuggestion)
+                  sysList0.push({
+                    id: 2,
+                    title: "焦虑",
+                    grade: warningInfo.anxietyScore,
+                    level: warningInfo.anxietyLevel,
+                    subDim: data.data.anxietySubdim,
+                    suggestDim: data.data.anxietySuggestion,
+                    sysDim: data.data.anxietyAnalysis,
+                    flag: that.anxietyFlag
+                  })
+                }
+              }
+              if (that.forcedFlag == 1) {
+                if (mentalHealth.forced) {
+                  data.data.forcedSubdim = JSON.parse(mentalHealth.forced.subdim);
+                  data.data.forcedAnalysis = mentalHealth.forced.analysis.split("@@");
+                  data.data.forcedSuggestion = mentalHealth.forced.suggestion.split("|||")
+                  for (let i in data.data.forcedSuggestion) {
+                    if (data.data.forcedSuggestion[i].indexOf("&&") != -1) {
+                      data.data.forcedSuggestion[i] = data.data.forcedSuggestion[i].split("&&")
+                      for (let j in data.data.forcedSuggestion[i]) {
+                        if (data.data.forcedSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.forcedSuggestion[i][j] = data.data.forcedSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.forcedSuggestion[i].indexOf("针对") != -1) {
+                        data.data.forcedSuggestion[i] = [data.data.forcedSuggestion[i]]
+                        for (let j in data.data.forcedSuggestion[i]) {
+                          if (data.data.forcedSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.forcedSuggestion[i][j] = data.data.forcedSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.forcedSuggestion)
+                  sysList0.push({
+                    id: 3,
+                    title: "强迫",
+                    grade: warningInfo.forcedScore,
+                    level: warningInfo.forcedLevel,
+                    subDim: data.data.forcedSubdim,
+                    suggestDim: data.data.forcedSuggestion,
+                    sysDim: data.data.forcedAnalysis,
+                    flag: that.forcedFlag
+                  })
+                }
+              }
+              if (that.ptsdFlag == 1) {
+                if (mentalHealth.ptsd) {
+                  data.data.ptsdSubdim = JSON.parse(mentalHealth.ptsd.subdim);
+                  data.data.ptsdAnalysis = mentalHealth.ptsd.analysis.split("@@");
+                  data.data.ptsdSuggestion = mentalHealth.ptsd.suggestion.split("|||")
+                  for (let i in data.data.ptsdSuggestion) {
+                    if (data.data.ptsdSuggestion[i].indexOf("&&") != -1) {
+                      data.data.ptsdSuggestion[i] = data.data.ptsdSuggestion[i].split("&&")
+                      for (let j in data.data.ptsdSuggestion[i]) {
+                        if (data.data.ptsdSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.ptsdSuggestion[i][j] = data.data.ptsdSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.ptsdSuggestion[i].indexOf("针对") != -1) {
+                        data.data.ptsdSuggestion[i] = [data.data.ptsdSuggestion[i]]
+                        for (let j in data.data.ptsdSuggestion[i]) {
+                          if (data.data.ptsdSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.ptsdSuggestion[i][j] = data.data.ptsdSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.ptsdSuggestion)
+                  sysList0.push({
+                    id: 4,
+                    title: "PTSD",
+                    grade: warningInfo.ptsdScore,
+                    level: warningInfo.ptsdLevel,
+                    subDim: data.data.ptsdSubdim,
+                    suggestDim: data.data.ptsdSuggestion,
+                    sysDim: data.data.ptsdAnalysis,
+                    flag: that.ptsdFlag
+                  })
+                }
+              }
+              if (that.violenceFlag == 1) {
+                if (mentalHealth.violence) {
+                  data.data.violenceSubdim = JSON.parse(mentalHealth.violence.subdim);
+                  data.data.violenceAnalysis = mentalHealth.violence.analysis.split("@@");
+                  data.data.violenceSuggestion = mentalHealth.violence.suggestion.split("|||")
+                  for (let i in data.data.violenceSuggestion) {
+                    if (data.data.violenceSuggestion[i].indexOf("&&") != -1) {
+                      data.data.violenceSuggestion[i] = data.data.violenceSuggestion[i].split("&&")
+                      for (let j in data.data.violenceSuggestion[i]) {
+                        if (data.data.violenceSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.violenceSuggestion[i][j] = data.data.violenceSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.violenceSuggestion[i].indexOf("针对") != -1) {
+                        data.data.violenceSuggestion[i] = [data.data.violenceSuggestion[i]]
+                        for (let j in data.data.violenceSuggestion[i]) {
+                          if (data.data.violenceSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.violenceSuggestion[i][j] = data.data.violenceSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.violenceSuggestion)
+                  sysList0.push({
+                    id: 5,
+                    title: "敌对",
+                    grade: warningInfo.violenceScore,
+                    level: warningInfo.violenceLevel,
+                    subDim: data.data.violenceSubdim,
+                    suggestDim: data.data.violenceSuggestion,
+                    sysDim: data.data.violenceAnalysis,
+                    flag: that.violenceFlag
+                  })
+                }
+              }
+              if (that.suicideFlag == 1) {
+                if (mentalHealth.suicide) {
+                  data.data.suicideSubdim = JSON.parse(mentalHealth.suicide.subdim);
+                  data.data.suicideAnalysis = mentalHealth.suicide.analysis.split("@@");
+                  data.data.suicideSuggestion = mentalHealth.suicide.suggestion.split("|||")
+                  for (let i in data.data.suicideSuggestion) {
+                    if (data.data.suicideSuggestion[i].indexOf("&&") != -1) {
+                      data.data.suicideSuggestion[i] = data.data.suicideSuggestion[i].split("&&")
+                      for (let j in data.data.suicideSuggestion[i]) {
+                        if (data.data.suicideSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.suicideSuggestion[i][j] = data.data.suicideSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.suicideSuggestion[i].indexOf("针对") != -1) {
+                        data.data.suicideSuggestion[i] = [data.data.suicideSuggestion[i]]
+                        for (let j in data.data.suicideSuggestion[i]) {
+                          if (data.data.suicideSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.suicideSuggestion[i][j] = data.data.suicideSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.suicideSuggestion)
+                  sysList0.push({
+                    id: 6,
+                    title: "自我伤害",
+                    grade: warningInfo.suicideScore,
+                    level: warningInfo.suicideLevel,
+                    subDim: data.data.suicideSubdim,
+                    suggestDim: data.data.suicideSuggestion,
+                    sysDim: data.data.suicideAnalysis,
+                    flag: that.suicideFlag
+                  })
+                }
+              }
+              // if (that.zibiFlag == 1) {
+              //   if (mentalHealth.zibi) {
+              //     data.data.zibiSubdim = JSON.parse(mentalHealth.zibi.subdim);
+              //     data.data.zibiAnalysis = mentalHealth.zibi.analysis.split("@@");
+              //     data.data.zibiSuggestion = mentalHealth.zibi.suggestion.split("|||")
+              //     for (let i in data.data.zibiSuggestion) {
+              //       if (data.data.zibiSuggestion[i].indexOf("&&") != -1) {
+              //         data.data.zibiSuggestion[i] = data.data.zibiSuggestion[i].split("&&")
+              //         for (let j in data.data.zibiSuggestion[i]) {
+              //           if (data.data.zibiSuggestion[i][j].indexOf("$$") != -1) {
+              //             data.data.zibiSuggestion[i][j] = data.data.zibiSuggestion[i][j].split("$$")
+              //           }
+              //         }
+              //       } else {
+              //         if (data.data.zibiSuggestion[i].indexOf("针对") != -1) {
+              //           data.data.zibiSuggestion[i] = [data.data.zibiSuggestion[i]]
+              //           for (let j in data.data.zibiSuggestion[i]) {
+              //             if (data.data.zibiSuggestion[i][j].indexOf("$$") != -1) {
+              //               data.data.zibiSuggestion[i][j] = data.data.zibiSuggestion[i][j].split("$$")
+              //             }
+              //           }
+              //         }
+              //       }
+              //     }
+              //     console.log(data.data.zibiSuggestion)
+              //     sysList0.push({
+              //       id: 7,
+              //       title: "自闭",
+              //       grade: warningInfo.zibiScore,
+              //       level: warningInfo.zibiLevel,
+              //       subDim: data.data.zibiSubdim,
+              //       suggestDim: data.data.zibiSuggestion,
+              //       sysDim: data.data.zibiAnalysis,
+              //       flag: that.zibiFlag
+              //     })
+              //   }
+              // }
+            }
             // this.sysList = sysList0.sort(function(n, m) {
             //   if (m.grade < n.grade) return -1;
             //   else if (m.grade > n.grade) return 1;
             //   else return 0;
             // });
             this.sysList = sysList0
+            
             data.data.sysList = this.sysList;
-
-            let jjList0 = [
-              {
-                id: 1,
-                title: "心理韧性",
-                grade: warningInfo.depressionScore,
-                gradep:
-                  Number(warningInfo.depressionScore) * 0.44 +
-                  Number(warningInfo.depressionScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
-                level: warningInfo.depressionResult,
-                levelNum: 0,
-                txtColor: depressionColorStr,
-                bg: depressionBgStr,
-                imgType: depressionImgStr,
-                // list: depArr,
-                subDim: data.data.depressionSubDim,
-                suggestDim: data.data.suggestionDepression,
-                sysDim: data.data.depressionDim,
-                flag: this.depressionFlag
-              },
-              {
-                id: 2,
-                title: "积极自我",
-                grade: warningInfo.anxietyScore,
-                gradep:
-                  Number(warningInfo.anxietyScore) * 0.44 +
-                  Number(warningInfo.anxietyScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
-                level: warningInfo.anxietyResult,
-                levelNum: 1,
-                txtColor: anxietyColorStr,
-                bg: anxietyBgStr,
-                imgType: anxietyImgStr,
-                // list: anxArr,
-                subDim: data.data.anxietySubDim,
-                suggestDim: data.data.suggestionAnxiety,
-                sysDim: data.data.anxietyDim,
-                flag: this.anxietyFlag
-              },
-              {
-                id: 3,
-                title: "积极情绪",
-                grade: warningInfo.forcedScore,
-                gradep:
-                  Number(warningInfo.forcedScore) * 0.44 +
-                  Number(warningInfo.forcedScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
-                level: warningInfo.forcedResult,
-                levelNum: 2,
-                txtColor: forcedColorStr,
-                bg: forcedBgStr,
-                imgType: forcedImgStr,
-                // list: forArr,
-                subDim: data.data.forcedSubDim,
-                suggestDim: data.data.suggestionForced,
-                sysDim: data.data.forcedDim,
-                flag: this.forcedFlag
-              },
-              {
-                id: 4,
-                title: "积极成就",
-                grade: warningInfo.violenceScore,
-                gradep:
-                  Number(warningInfo.violenceScore) * 0.44 +
-                  Number(warningInfo.violenceScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                levelNum: 3,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
-              },
-              {
-                id: 5,
-                title: "积极关系",
-                grade: warningInfo.violenceScore,
-                gradep:
-                  Number(warningInfo.violenceScore) * 0.44 +
-                  Number(warningInfo.violenceScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                levelNum: 2,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
+            
+            // 积极维度
+            let positivePsychology = {}
+            let jjList0 = []
+            if (data.data.positivePsychology) {
+              console.log(data.data.positivePsychology)
+              console.log(JSON.parse(data.data.positivePsychology))
+              positivePsychology = JSON.parse(data.data.positivePsychology)
+              if (that.resilienceFlag == 1) {
+                if (positivePsychology.resilience) {
+                  data.data.resilienceSubdim = JSON.parse(positivePsychology.resilience.subdim)
+                  data.data.resilienceAnalysis = positivePsychology.resilience.analysis.split("@@");
+                  data.data.resilienceResult = positivePsychology.resilience.result;
+                  let total = Number(data.data.resilienceSubdim[0].score) + Number(data.data.resilienceSubdim[1].score) + Number(data.data.resilienceSubdim[2].score)
+                  jjList0.push({
+                    id: 1,
+                    title: "心理韧性",
+                    result: data.data.resilienceResult,
+                    subDim: data.data.resilienceSubdim,
+                    total: total,
+                    // suggestDim: data.data.resilienceSuggestion,
+                    sysDim: data.data.resilienceAnalysis,
+                    flag: that.resilienceFlag
+                  })
+                }
               }
-            ];
+              if (that.selfFlag == 1) {
+                if (positivePsychology.self) {
+                  data.data.selfSubdim = JSON.parse(positivePsychology.self.subdim)
+                  data.data.selfAnalysis = positivePsychology.self.analysis.split("@@");
+                  data.data.selfResult = positivePsychology.self.result;
+                  let total = Number(data.data.selfSubdim[0].score) + Number(data.data.selfSubdim[1].score) + Number(data.data.selfSubdim[2].score)
+                  jjList0.push({
+                    id: 2,
+                    title: "积极自我",
+                    result: data.data.selfResult,
+                    subDim: data.data.selfSubdim,
+                    total: total,
+                    // suggestDim: data.data.selfSuggestion,
+                    sysDim: data.data.selfAnalysis,
+                    flag: that.selfFlag
+                  })
+                }
+              }
+              if (that.emotionFlag == 1) {
+                if (positivePsychology.emotion) {
+                  data.data.emotionSubdim = JSON.parse(positivePsychology.emotion.subdim)
+                  data.data.emotionAnalysis = positivePsychology.emotion.analysis.split("@@");
+                  data.data.emotionResult = positivePsychology.emotion.result;
+                  let total = Number(data.data.emotionSubdim[0].score) + Number(data.data.emotionSubdim[1].score) + Number(data.data.emotionSubdim[2].score)
+                  jjList0.push({
+                    id: 3,
+                    title: "积极情绪",
+                    result: data.data.emotionResult,
+                    subDim: data.data.emotionSubdim,
+                    total: total,
+                    // suggestDim: data.data.emotionSuggestion,
+                    sysDim: data.data.emotionAnalysis,
+                    flag: that.emotionFlag
+                  })
+                }
+              }
+              if (that.achievementFlag == 1) {
+                if (positivePsychology.achievement) {
+                  data.data.achievementSubdim = JSON.parse(positivePsychology.achievement.subdim)
+                  data.data.achievementAnalysis = positivePsychology.achievement.analysis.split("@@");
+                  data.data.achievementResult = positivePsychology.achievement.result;
+                  let total = Number(data.data.achievementSubdim[0].score) + Number(data.data.achievementSubdim[1].score) + Number(data.data.achievementSubdim[2].score)
+                  jjList0.push({
+                    id: 4,
+                    title: "积极成就",
+                    result: data.data.achievementResult,
+                    subDim: data.data.achievementSubdim,
+                    total: total,
+                    // suggestDim: data.data.achievementSuggestion,
+                    sysDim: data.data.achievementAnalysis,
+                    flag: that.achievementFlag
+                  })
+                }
+              }
+              if (that.relationshipFlag == 1) {
+                if (positivePsychology.relationship) {
+                  data.data.relationshipSubdim = JSON.parse(positivePsychology.relationship.subdim)
+                  data.data.relationshipAnalysis = positivePsychology.relationship.analysis.split("@@");
+                  data.data.relationshipResult = positivePsychology.relationship.result;
+                  let total = Number(data.data.relationshipSubdim[0].score) + Number(data.data.relationshipSubdim[1].score) + Number(data.data.relationshipSubdim[2].score)
+                  jjList0.push({
+                    id: 5,
+                    title: "积极关系",
+                    result: data.data.relationshipResult,
+                    subDim: data.data.relationshipSubdim,
+                    total: total,
+                    // suggestDim: data.data.relationshipSuggestion,
+                    sysDim: data.data.relationshipAnalysis,
+                    flag: that.relationshipFlag
+                  })
+                }
+              }
+            }
             this.jjList = jjList0
             data.data.jjList = this.jjList;
+            if (jjList0.length > 0) {
+              let jjArr = jjList0.sort((a, b) => {
+                return Number(a.total) - Number(b.total);
+              });
+              console.log(jjArr)
+              this.jjName = jjArr[0].title
+            }
+            
 
+            // 大五人格
+            let personality = {}
+            if (data.data.personality) {
+              console.log(data.data.personality)
+              console.log(JSON.parse(data.data.personality))
+              personality = JSON.parse(data.data.personality)
+              if (personality.extroversion) {
+                data.data.extroversionSubdim = JSON.parse(personality.extroversion.subdim)
+                data.data.extroversionAnalysis = personality.extroversion.analysis.split("@@");
+              }
+              if (personality.conscientiousness) {
+                data.data.conscientiousnessSubdim = JSON.parse(personality.conscientiousness.subdim)
+                data.data.conscientiousnessAnalysis = personality.conscientiousness.analysis.split("@@");
+              }
+              if (personality.nervousness) {
+                data.data.nervousnessSubdim = JSON.parse(personality.nervousness.subdim)
+                data.data.nervousnessAnalysis = personality.nervousness.analysis.split("@@");
+              }
+              if (personality.agreeableness) {
+                data.data.agreeablenessSubdim = JSON.parse(personality.agreeableness.subdim)
+                data.data.agreeablenessAnalysis = personality.agreeableness.analysis.split("@@");
+              }
+              if (personality.openness) {
+                data.data.opennessSubdim = JSON.parse(personality.openness.subdim)
+                data.data.opennessAnalysis = personality.openness.analysis.split("@@");
+              }
+            }
+            
             let rgList0 = [
               {
                 id: 1,
                 title: "外向性",
-                grade: 1,
-                gradep: Number(1) * 0.8 + "rem",
-                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
-                level: warningInfo.depressionResult,
-                levelNum: 1,
-                txtColor: depressionColorStr,
-                bg: depressionBgStr,
-                imgType: depressionImgStr,
-                // list: depArr,
-                subDim: data.data.depressionSubDim,
-                suggestDim: data.data.suggestionDepression,
-                sysDim: data.data.depressionDim,
-                flag: this.depressionFlag
+                grade: personality.extroversion.score,
+                gradep: Number(personality.extroversion.score) * 0.8 + "rem",
+                gradep1: Number(personality.extroversion.score) * 80 + "px",
+                subDim: data.data.extroversionSubdim,
+                sysDim: data.data.extroversionAnalysis,
+                flag: that.extroversionFlag
               },
               {
                 id: 2,
                 title: "尽责性",
-                grade: 3,
-                gradep: Number(3) * 0.8 + "rem",
-                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
-                level: warningInfo.anxietyResult,
-                levelNum: 1,
-                txtColor: anxietyColorStr,
-                bg: anxietyBgStr,
-                imgType: anxietyImgStr,
-                // list: anxArr,
-                subDim: data.data.anxietySubDim,
-                suggestDim: data.data.suggestionAnxiety,
-                sysDim: data.data.anxietyDim,
-                flag: this.anxietyFlag
+                grade: personality.conscientiousness.score,
+                gradep: Number(personality.conscientiousness.score) * 0.8 + "rem",
+                gradep1: Number(personality.conscientiousness.score) * 80 + "px",
+                subDim: data.data.conscientiousnessSubdim,
+                sysDim: data.data.conscientiousnessAnalysis,
+                flag: that.conscientiousnessFlag
               },
               {
                 id: 3,
                 title: "神经质",
-                grade: 5,
-                gradep: Number(5) * 0.8 + "rem",
-                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
-                level: warningInfo.forcedResult,
-                levelNum: 2,
-                txtColor: forcedColorStr,
-                bg: forcedBgStr,
-                imgType: forcedImgStr,
-                // list: forArr,
-                subDim: data.data.forcedSubDim,
-                suggestDim: data.data.suggestionForced,
-                sysDim: data.data.forcedDim,
-                flag: this.forcedFlag
+                grade: personality.nervousness.score,
+                gradep: Number(personality.nervousness.score) * 0.8 + "rem",
+                gradep1: Number(personality.nervousness.score) * 80 + "px",
+                subDim: data.data.nervousnessSubdim,
+                sysDim: data.data.nervousnessAnalysis,
+                flag: that.nervousnessFlag
               },
               {
                 id: 4,
                 title: "宜人性",
-                grade: 7,
-                gradep: Number(7) * 0.8 + "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                levelNum: 3,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
+                grade: personality.agreeableness.score,
+                gradep: Number(personality.agreeableness.score) * 0.8 + "rem",
+                gradep1: Number(personality.agreeableness.score) * 80 + "px",
+                subDim: data.data.agreeablenessSubdim,
+                sysDim: data.data.agreeablenessAnalysis,
+                flag: that.agreeablenessFlag
               },
               {
                 id: 5,
                 title: "开放性",
-                grade: 9,
-                gradep: Number(9) * 0.8 + "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                // list: forArr,
-                subDim: data.data.violenceSubDim,
-                levelNum: 2,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
+                grade: personality.openness.score,
+                gradep: Number(personality.openness.score) * 0.8 + "rem",
+                gradep1: Number(personality.openness.score) * 80 + "px",
+                subDim: data.data.opennessSubdim,
+                sysDim: data.data.opennessAnalysis,
+                flag: that.opennessFlag
               }
             ];
             this.rgList = rgList0
             data.data.rgList = this.rgList;
-            // this.sysList2 = sysList02
-            // data.data.sysList2 = this.sysList2;
-            data.data.depressionFlag = this.depressionFlag
-            data.data.anxietyFlag = this.anxietyFlag
-            data.data.forcedFlag = this.forcedFlag
-            data.data.suicideFlag = this.suicideFlag
-            data.data.violenceFlag = this.violenceFlag
-            data.data.personalityFlag = this.personalityFlag
-
-            let perList = []
-            for (let i in data.data.personalitySubDim) {
-              if (data.data.personalitySubDim[i].analysis != "") {
-                data.data.personalitySubDim[i].analysis = data.data.personalitySubDim[i].analysis.split("|||")
-                for (let k in data.data.personalitySubDim[i].analysis) {
-                  if (data.data.personalitySubDim[i].analysis[k].indexOf("@@") != -1) {
-                    data.data.personalitySubDim[i].analysis[k] = data.data.personalitySubDim[i].analysis[k].split("@@");
-                  }
-                }
-                perList.push(data.data.personalitySubDim[i])
-              }
-            }
-            console.log(data.data)
-            data.data.personalitySubDim2 = perList
             data.data.reportId = that.reportId
-            // data.data.note = '111222'
             if (data.data.note) {
               that.assessment = data.data.note
               if (data.data.note == '') {
@@ -2989,8 +2234,31 @@ export default {
                 that.assessmentFlag = true
               }
             }
-            that.details = that.justInfo(data.data);
-            that.getBird()
+            that.details = data.data
+            // that.details = that.justInfo(data.data);
+            // that.getBird()
+            data.data.birdView = ''
+            this.details.birdView = data.data.birdView;
+            this.birdViewImg = data.data.birdView;
+            that.imgList = [
+              {
+                name: "鸟瞰图",
+                img: "data:image;base64," + this.details.birdView
+              },
+              {
+                name: "西侧俯身45度视图",
+                img: ''
+              },
+              {
+                name: "东侧俯身45度视图",
+                img: ''
+              },
+              {
+                name: "操作者视图",
+                img: ''
+              }
+            ];
+            this.part55 = true;
             that.myChartInit();
             this.part33 = true;
             setTimeout(() => {
@@ -3188,10 +2456,10 @@ export default {
         this.part5 = this.$refs.parts5.offsetTop;
         this.part6 = this.$refs.parts6.offsetTop;
 
-        this.parta1 = this.$refs.parts11.offsetTop;
-        this.parta2 = this.$refs.parts12.offsetTop;
-        this.parta3 = this.$refs.parts13.offsetTop;
-        this.parta4 = this.$refs.parts14.offsetTop;
+        this.parta1 = this.$refs.partr1.offsetTop;
+        this.parta2 = this.$refs.partr2.offsetTop;
+        this.parta3 = this.$refs.partr3.offsetTop;
+        this.parta4 = this.$refs.partr4.offsetTop;
         this.listenerFunction();
       }, 500);
     },
@@ -3236,7 +2504,7 @@ export default {
     },
     handleScroll() {
       this.scrollYs = window.pageYOffset;
-      console.log(this.scrollYs)
+      // console.log(this.scrollYs)
       if (this.reviewFlag) {
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
@@ -3254,8 +2522,8 @@ export default {
           this.topAct = 4;
         }
       } else {
-        console.log(this.part0)
-        console.log(this.scrollYs)
+        // console.log(this.part0)
+        // console.log(this.scrollYs)
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
         }
@@ -3444,388 +2712,8 @@ export default {
             z: 1
           }
         ]
-        // tooltip: {
-        //   trigger: "item",
-        //   axisPointer: {
-        //     type: "shadow",
-        //     shadowStyle: {
-        //       width: nowSize(35) + "px",
-        //       color: "rgba(72, 117, 174, 0.25)"
-        //     }
-        //   },
-        //   backgroundColor: "#ffffff",
-        //   borderWidth: 0,
-        //   textStyle: {
-        //     color: "#5B6C89"
-        //   },
-        //   formatter: function(params) {
-        //     console.log(params)
-        //     var result =
-        //       '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
-        //       params.color.colorStops[0].color +
-        //       "," +
-        //       params.color.colorStops[1].color +
-        //       '");></span>' +
-        //       '<span style="color:#7786AC">' +
-        //       params.name +
-        //       "</span>" +
-        //       ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:#7786AC">' +
-        //       params.value +
-        //       "</span>";
-        //     return result;
-        //   }
-        // },
-        // series: [
-        //   {
-        //     name: "",
-        //     type: "pie",
-        //     radius: ["70%", "85%"],
-        //     avoidLabelOverlap: false,
-        //     label: {
-        //       normal: {
-        //         show: false,
-        //         position: "center"
-        //       },
-        //       emphasis: {
-        //         show: false,
-        //         textStyle: {
-        //           fontSize: nowSize(14)
-        //         },
-        //         color: "#5B6C89",
-        //         formatter: "累计需关注频次\n{hr|{c}次}",
-        //         rich: {
-        //           hr: {
-        //             color: "#51A7FF",
-        //             padding: [0, 0, nowSize(6), 0]
-        //           }
-        //         }
-        //       }
-        //     },
-        //     emphasis: {
-        //       label: {
-        //         show: true,
-        //         fontSize: nowSize(30),
-        //         fontWeight: "bold"
-        //       }
-        //     },
-        //     labelLine: {
-        //       show: false
-        //     },
-        //     data: [
-        //       {
-        //         value: that.details.warningNum,
-        //         name: "预警",
-        //         itemStyle: {
-        //           normal: {
-        //             barBorderRadius: nowSize(30),
-        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        //               {
-        //                 offset: 0,
-        //                 color: "rgba(255, 116, 138, 1)"
-        //               },
-        //               {
-        //                 offset: 1,
-        //                 color: "rgba(251, 113, 113, 1)"
-        //               }
-        //             ])
-        //           }
-        //         },
-        //         roundCap: true // 圆角
-        //       },
-        //       {
-        //         value: Number(this.details.warnLen.length) - that.details.warningNum,
-        //         name: "正常",
-        //         itemStyle: {
-        //           normal: {
-        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        //               {
-        //                 offset: 0,
-        //                 color: "rgba(242, 245, 252, 0.72)"
-        //               },
-        //               {
-        //                 offset: 1,
-        //                 color: "rgba(242, 245, 252, 0.72)"
-        //               }
-        //             ])
-        //           }
-        //         }
-        //       }
-        //     ]
-        //   }
-        // ]
       });
-      // // 本次概况右侧柱状图
-      // let xArr = [];
-      // let yArr1 = [];
-      // let yArr2 = [];
-      // for (let i in this.details.rangeList) {
-      //   if (this.details.rangeList[i].flag == 1) {
-      //     xArr.push(this.details.rangeList[i].name)
-      //     yArr1.push(this.details.rangeList[i].score)
-      //     yArr2.push(this.details.rangeList[i].lastScore)
-      //   }
-      // }
-      // console.log(xArr)
-      // console.log(yArr1)
-      // console.log(yArr2)
-      // let serseArr = []
-      // if (this.details.reportWarningInfo) {
-      //   serseArr.push({
-      //     name: "本次结果",
-      //     type: "bar",
-      //     // barWidth: 16,
-      //     barMaxWidth: nowSize(14),
-      //     itemStyle: {
-      //       normal: {
-      //         barBorderRadius: [nowSize(7), nowSize(7), 0, 0],
-      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      //           { offset: 0, color: "#8ACBFF" },
-      //           { offset: 1, color: "#8ACBFF" }
-      //         ])
-      //       }
-      //     },
-      //     data: yArr1
-      //   })
-      // }
-      // if (this.anxietyFlag == 1) {
-      //   serseArr.push({
-      //     name: "上次结果",
-      //     type: "bar",
-      //     // barWidth: 16,
-      //     barMaxWidth: nowSize(14),
-      //     itemStyle: {
-      //       normal: {
-      //         barBorderRadius: [nowSize(7), nowSize(7), 0, 0],
-      //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      //           { offset: 0, color: "#FFB0DB" },
-      //           { offset: 1, color: "#FFB0DB" }
-      //         ])
-      //       }
-      //     },
-      //     data: yArr2
-      //   })
-      // }
-      // // let markLine = {
-      // //   symbol: "none",
-      // //   lineStyle: {
-      // //     normal: {
-      // //       color: "#006cff"
-      // //     }
-      // //   },
-      // //   data: [
-      // //     {
-      // //       yAxis: 3,
-      // //       name: "",
-      // //       lineStyle: {
-      // //         type: "dashed",
-      // //         color: "#FF77C3",
-      // //         width: nowSize(1)
-      // //       },
-      // //       label: {
-      // //         position: "end",
-      // //         fontSize: nowSize(12),
-      // //         formatter: "",
-      // //         color: "#FF77C3"
-      // //       }
-      // //     }
-      // //   ]
-      // // }
-      // // serseArr[0].markLine = markLine
-      // this.myChartScore = echarts.init(this.$refs.myChartScore);
-      // this.myChartScore.setOption({
-      //   tooltip: {
-      //     trigger: "axis",
-      //     axisPointer: {
-      //       type: "line",
-      //       crossStyle: {
-      //         color: "rgba(217, 225, 255, 1)"
-      //       }
-      //     }
-      //   },
-      //   grid: {
-      //     left: nowSize(10),
-      //     top: nowSize(20),
-      //     right: nowSize(10),
-      //     bottom: nowSize(16),
-      //     containLabel: true
-      //   },
-      //   xAxis: [
-      //     {
-      //       type: "category",
-      //       data: xArr,
-      //       axisLine: {
-      //         show: false
-      //       },
-      //       axisTick: {
-      //         show: false
-      //       },
-      //       // x轴文字配置
-      //       axisLabel: {
-      //         // show: false
-      //         fontSize: nowSize(14),
-      //         color: "rgba(42, 52, 135, 1)"
-      //       },
-      //       axisPointer: {
-      //         type: "shadow"
-      //       }
-      //     }
-      //   ],
-      //   yAxis: {
-      //     type: "value",
-      //     name: "",
-      //     min: 0,
-      //     max: 9,
-      //     interval: 1,
-      //     axisLabel: {
-      //       fontSize: nowSize(14),
-      //       color: "rgba(42, 52, 135, 1)",
-      //       formatter: "{value}"
-      //     },
-      //     splitArea: {
-      //       show: true, // 是否显示分隔区域
-      //       interval: '0', // 坐标轴刻度标签的显示间隔，在类目轴中有效.0显示所有
-      //       areaStyle: {
-      //         color: ['rgba(255, 255, 255, 0.30)', 'rgba(255, 255, 255, 0.30)', 'rgba(202, 231, 254, 0.30)','rgba(202, 231, 254, 0.30)','rgba(202, 231, 254, 0.30)', 'rgba(255, 243, 227, 0.30)', 'rgba(255, 243, 227, 0.30)','rgba(255, 243, 227, 0.30)', 'rgba(252, 234, 244, 0.30)'], // 分隔区域颜色。分隔区域会按数组中颜色的顺序依次循环设置颜色。默认是一个深浅的间隔色
-      //         opacity: 1 // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
-      //       }
-      //     },
-      //     splitLine: {
-      //       show: true,
-      //       lineStyle: {
-      //         type: 'dashed',
-      //         color: 'rgba(217, 225, 255, 1)'
-      //       }
-      //     },
-      //     minInterval: 1
-      //   },
-      //   series: serseArr
-      // });
       setTimeout(() => {
-        // this.myChartLd1 = echarts.init(document.getElementById("myChartLd1"));
-        // this.myChartLd1.setOption({
-        //   grid: {
-        //     bottom: 40,
-        //     left: 20,
-        //     top: 40,
-        //     right: 60
-        //   },
-        //   radar: {
-        //     indicator: [
-        //       { name: this.details.personalitySubDim[0].name, max: 100 },
-        //       { name: this.details.personalitySubDim[5].name, max: 100 },
-        //       { name: this.details.personalitySubDim[4].name, max: 100 },
-        //       { name: this.details.personalitySubDim[3].name, max: 100 },
-        //       { name: this.details.personalitySubDim[2].name, max: 100 },
-        //       { name: this.details.personalitySubDim[1].name, max: 100 }
-        //     ],
-        //     center: ["50%", "50%"],
-        //     radius: "70%",
-        //     startAngle: 90,
-        //     splitNumber: 5,
-        //     name: {
-        //       formatter: "{value}",
-        //       textStyle: {
-        //         color: "#354B70",
-        //         fontSize: 12,
-        //         padding: [-10, -10]
-        //       }
-        //     },
-        //     splitArea: {
-        //       areaStyle: {
-        //         color: [
-        //           "rgba(255, 255, 255, 1)",
-        //           "rgba(151, 205, 255, 0.14)"
-        //         ].reverse()
-        //       }
-        //     },
-        //     axisLine: {
-        //       lineStyle: {
-        //         color: "#DEE7FF"
-        //       }
-        //     },
-        //     splitLine: {
-        //       lineStyle: {
-        //         color: "#DEE7FF"
-        //       }
-        //     }
-        //   },
-        //   series: [
-        //     {
-        //       name: "人格解读",
-        //       type: "radar",
-        //       data: [
-        //         {
-        //           value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
-        //           name: "Actual Spending",
-        //           symbol: "circle",
-        //           symbolSize: 1,
-        //           color: "rgba(0, 150, 255, 1)",
-        //           itemStyle: {
-        //             normal: {
-        //               borderColor: "rgba(0, 150, 255, 1)"
-        //             }
-        //           }
-        //         }
-        //       ],
-        //       label: {
-        //         show: true,
-        //         fontSize: 12,
-        //         textStyle: {
-        //           fontSize: 12,
-        //           color: "#354B70"
-        //         },
-        //         formatter: function(params) {
-        //           return params.value;
-        //         }
-        //       },
-        //       areaStyle: {
-        //         opacity: 0.4,
-        //         color: {
-        //           type: "linear",
-        //           x: 0,
-        //           y: 0,
-        //           x2: 0,
-        //           y2: 1,
-        //           colorStops: [
-        //             {
-        //               offset: 0,
-        //               color: "rgba(0, 150, 255, 1)"
-        //             },
-        //             {
-        //               areaStyle: {
-        //                 opacity: 0.4,
-        //                 color: {
-        //                   type: "linear",
-        //                   x: 0,
-        //                   y: 0,
-        //                   x2: 0,
-        //                   y2: 1,
-        //                   colorStops: [
-        //                     {
-        //                       offset: 0,
-        //                       color: "rgba(0, 150, 255, 1)"
-        //                     },
-        //                     {
-        //                       offset: 1,
-        //                       color: "rgba(41, 101, 255, 1)"
-        //                     }
-        //                   ],
-        //                   globalCoord: false
-        //                 }
-        //               },
-        //               offset: 1,
-        //               color: "rgba(41, 101, 255, 1)"
-        //             }
-        //           ],
-        //           globalCoord: false
-        //         }
-        //       },
-        //       lineStyle: {
-        //         width: 0
-        //       }
-        //     }
-        //   ]
-        // });
         this.myChartLd2 = echarts.init(document.getElementById("myChartLd2"));
         this.myChartLd2.setOption({
           tooltip: {
@@ -4893,183 +3781,183 @@ export default {
             }
           ]
         });
-        this.myChartLd8 = echarts.init(document.getElementById("myChartLd8"));
-        this.myChartLd8.setOption({
-          tooltip: {
-            show: false,
-            padding: nowSize(10),
-            axisPointer: {
-              type: "shadow"
-            },
-            backgroundColor: "#fff",
-            textStyle: {
-              color: "#5B6C89"
-            },
-            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
-          },
-          radar: [
-            {
-              indicator: [
-                {
-                  name: that.sysList[6].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.sysList[6].subDim[1].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.sysList[6].subDim[2].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                }
-              ],
-              center: ["50%", "70%"],
-              radius: "100%",
-              splitNumber: 3,
-              name: {
-                formatter: "",
-                textStyle: {
-                  color: "#354B70"
-                }
-              },
-              splitArea: {
-                areaStyle: {
-                  color: [
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  type: "dashed",
-                  color: [
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLabel: {
-                show: true,
-                color: "#FFFFFF",
-                fontSize: nowSize(20),
-                height: nowSize(32),
-                formatter: function(value, index) {
-                  return "{yxStyle" + index + "|" + index + "}";
-                },
-                rich: {
-                  yxStyle0: {
-                    color: "#00C0FF",
-                    fontSize: nowSize(12),
-                    // fontWeight: "bold",
-                    padding: [nowSize(3), -nowSize(12)]
-                  },
-                  yxStyle1: {
-                    color: "#006cff",
-                    fontSize: nowSize(12),
-                    // fontWeight: "bold",
-                    padding: [nowSize(3), -nowSize(12)]
-                  },
-                  yxStyle2: {
-                    color: "#6671FF",
-                    fontSize: nowSize(12),
-                    // fontWeight: "bold",
-                    padding: [nowSize(3), -nowSize(12)]
-                  },
-                  yxStyle3: {
-                    color: "#FE5FB8",
-                    fontSize: nowSize(12),
-                    // fontWeight: "bold",
-                    padding: [nowSize(3), -nowSize(12)]
-                  }
-                }
-              }
-            }
-          ],
-          legend: {
-            left: "center",
-            bottom: "0",
-            icon: "circle",
-            itemWidth: 10,
-            itemHeight: 10,
-            itemGap: 40,
-            textStyle: {
-              color: "#354B70"
-            },
-            data: [
-              that.sysList[6].subDim[0].name,
-              that.sysList[6].subDim[1].name,
-              that.sysList[6].subDim[2].name
-            ]
-          },
-          series: [
-            {
-              name: "",
-              type: "radar",
-              color: ["rgba(0,117,255,0.1)"],
-              emphasis: {
-                lineStyle: {
-                  width: nowSize(2),
-                  color: "rgba(0, 117, 255, 0.6)"
-                }
-              },
-              data: [
-                {
-                  value: [
-                    that.sysList[6].subDim[0].score,
-                    that.sysList[6].subDim[1].score,
-                    that.sysList[6].subDim[2].score
-                  ],
-                  name: "本次得分",
-                  symbol: "circle",
-                  symbolSize: 0,
-                  itemStyle: {
-                    color: "#58B5FF"
-                  },
-                  // // 在圆点上显示相关数据
-                  // label: {
-                  //   show: true,
-                  //   color: 'rgba(147, 207, 255, 1)',
-                  //   fontSize: nowSize(12)
-                  // },
-                  areaStyle: {
-                    opacity: 1,
-                    color: {
-                      type: "linear",
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [
-                        {
-                          offset: 0,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        },
-                        {
-                          offset: 1,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        }
-                      ],
-                      globalCoord: false
-                    }
-                  },
-                  lineStyle: {
-                    width: nowSize(1),
-                    color: '#58B5FF'
-                  }
-                }
-              ]
-            }
-          ]
-        });
+        // this.myChartLd8 = echarts.init(document.getElementById("myChartLd8"));
+        // this.myChartLd8.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: nowSize(10),
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.sysList[6].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.sysList[6].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.sysList[6].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(249, 250, 255, 1)",
+        //             "rgba(249, 250, 255, 1)",
+        //             "rgba(249, 250, 255, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           type: "dashed",
+        //           color: [
+        //             "rgba(201, 212, 255, 1)",
+        //             "rgba(201, 212, 255, 1)",
+        //             "rgba(201, 212, 255, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: nowSize(20),
+        //         height: nowSize(32),
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: nowSize(12),
+        //             // fontWeight: "bold",
+        //             padding: [nowSize(3), -nowSize(12)]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: nowSize(12),
+        //             // fontWeight: "bold",
+        //             padding: [nowSize(3), -nowSize(12)]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: nowSize(12),
+        //             // fontWeight: "bold",
+        //             padding: [nowSize(3), -nowSize(12)]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: nowSize(12),
+        //             // fontWeight: "bold",
+        //             padding: [nowSize(3), -nowSize(12)]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: [
+        //       that.sysList[6].subDim[0].name,
+        //       that.sysList[6].subDim[1].name,
+        //       that.sysList[6].subDim[2].name
+        //     ]
+        //   },
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.1)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: nowSize(2),
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.sysList[6].subDim[0].score,
+        //             that.sysList[6].subDim[1].score,
+        //             that.sysList[6].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 0,
+        //           itemStyle: {
+        //             color: "#58B5FF"
+        //           },
+        //           // // 在圆点上显示相关数据
+        //           // label: {
+        //           //   show: true,
+        //           //   color: 'rgba(147, 207, 255, 1)',
+        //           //   fontSize: nowSize(12)
+        //           // },
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(138, 203, 255, 0.23)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(138, 203, 255, 0.23)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: nowSize(1),
+        //             color: '#58B5FF'
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
         this.myChartRg2 = echarts.init(document.getElementById("myChartRg2"));
         this.myChartRg2.setOption({
           tooltip: {
@@ -5088,17 +3976,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList[0].subDim[0].name,
+                  name: that.rgList[0].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[1].name,
+                  name: that.rgList[0].subDim[1].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[2].name,
+                  name: that.rgList[0].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -5190,9 +4078,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList[0].subDim[0].name,
-              that.sysList[0].subDim[1].name,
-              that.sysList[0].subDim[2].name
+              that.rgList[0].subDim[0].name,
+              that.rgList[0].subDim[1].name,
+              that.rgList[0].subDim[2].name
             ]
           },
           series: [
@@ -5209,9 +4097,9 @@ export default {
               data: [
                 {
                   value: [
-                    that.sysList[0].subDim[0].score,
-                    that.sysList[0].subDim[1].score,
-                    that.sysList[0].subDim[2].score
+                    that.rgList[0].subDim[0].score,
+                    that.rgList[0].subDim[1].score,
+                    that.rgList[0].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
@@ -5256,6 +4144,7 @@ export default {
           ]
         });
         this.myChartRg3 = echarts.init(document.getElementById("myChartRg3"));
+        console.log(that.rgList[1])
         this.myChartRg3.setOption({
           tooltip: {
             show: false,
@@ -5273,17 +4162,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList[0].subDim[0].name,
+                  name: that.rgList[1].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[1].name,
+                  name: that.rgList[1].subDim[1].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[2].name,
+                  name: that.rgList[1].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -5375,9 +4264,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList[0].subDim[0].name,
-              that.sysList[0].subDim[1].name,
-              that.sysList[0].subDim[2].name
+              that.rgList[1].subDim[0].name,
+              that.rgList[1].subDim[1].name,
+              that.rgList[1].subDim[2].name
             ]
           },
           series: [
@@ -5394,9 +4283,9 @@ export default {
               data: [
                 {
                   value: [
-                    that.sysList[0].subDim[0].score,
-                    that.sysList[0].subDim[1].score,
-                    that.sysList[0].subDim[2].score
+                    that.rgList[1].subDim[0].score,
+                    that.rgList[1].subDim[1].score,
+                    that.rgList[1].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
@@ -5458,17 +4347,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList[0].subDim[0].name,
+                  name: that.rgList[2].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[1].name,
+                  name: that.rgList[2].subDim[1].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[2].name,
+                  name: that.rgList[2].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -5560,9 +4449,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList[0].subDim[0].name,
-              that.sysList[0].subDim[1].name,
-              that.sysList[0].subDim[2].name
+              that.rgList[2].subDim[0].name,
+              that.rgList[2].subDim[1].name,
+              that.rgList[2].subDim[2].name
             ]
           },
           series: [
@@ -5579,9 +4468,9 @@ export default {
               data: [
                 {
                   value: [
-                    that.sysList[0].subDim[0].score,
-                    that.sysList[0].subDim[1].score,
-                    that.sysList[0].subDim[2].score
+                    that.rgList[2].subDim[0].score,
+                    that.rgList[2].subDim[1].score,
+                    that.rgList[2].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
@@ -5643,17 +4532,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList[0].subDim[0].name,
+                  name: that.rgList[3].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[1].name,
+                  name: that.rgList[3].subDim[1].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[2].name,
+                  name: that.rgList[3].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -5745,9 +4634,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList[0].subDim[0].name,
-              that.sysList[0].subDim[1].name,
-              that.sysList[0].subDim[2].name
+              that.rgList[3].subDim[0].name,
+              that.rgList[3].subDim[1].name,
+              that.rgList[3].subDim[2].name
             ]
           },
           series: [
@@ -5764,9 +4653,9 @@ export default {
               data: [
                 {
                   value: [
-                    that.sysList[0].subDim[0].score,
-                    that.sysList[0].subDim[1].score,
-                    that.sysList[0].subDim[2].score
+                    that.rgList[3].subDim[0].score,
+                    that.rgList[3].subDim[1].score,
+                    that.rgList[3].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
@@ -5828,17 +4717,17 @@ export default {
             {
               indicator: [
                 {
-                  name: that.sysList[0].subDim[0].name,
+                  name: that.rgList[4].subDim[0].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[1].name,
+                  name: that.rgList[4].subDim[1].name,
                   max: 3,
                   axisLabel: { show: false }
                 },
                 {
-                  name: that.sysList[0].subDim[2].name,
+                  name: that.rgList[4].subDim[2].name,
                   max: 3,
                   axisLabel: { show: false }
                 }
@@ -5894,25 +4783,21 @@ export default {
                   yxStyle0: {
                     color: "#00C0FF",
                     fontSize: nowSize(12),
-                    // fontWeight: "bold",
                     padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle1: {
                     color: "#006cff",
                     fontSize: nowSize(12),
-                    // fontWeight: "bold",
                     padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle2: {
                     color: "#6671FF",
                     fontSize: nowSize(12),
-                    // fontWeight: "bold",
                     padding: [nowSize(3), -nowSize(12)]
                   },
                   yxStyle3: {
                     color: "#FE5FB8",
                     fontSize: nowSize(12),
-                    // fontWeight: "bold",
                     padding: [nowSize(3), -nowSize(12)]
                   }
                 }
@@ -5930,9 +4815,9 @@ export default {
               color: "#354B70"
             },
             data: [
-              that.sysList[0].subDim[0].name,
-              that.sysList[0].subDim[1].name,
-              that.sysList[0].subDim[2].name
+              that.rgList[4].subDim[0].name,
+              that.rgList[4].subDim[1].name,
+              that.rgList[4].subDim[2].name
             ]
           },
           series: [
@@ -5949,9 +4834,9 @@ export default {
               data: [
                 {
                   value: [
-                    that.sysList[0].subDim[0].score,
-                    that.sysList[0].subDim[1].score,
-                    that.sysList[0].subDim[2].score
+                    that.rgList[4].subDim[0].score,
+                    that.rgList[4].subDim[1].score,
+                    that.rgList[4].subDim[2].score
                   ],
                   name: "本次得分",
                   symbol: "circle",
@@ -6022,18 +4907,18 @@ export default {
           }
         },
         legend: {
-          data: tuli, // 图例名称
-          left: 'center', // 调整图例位置
+          data: tuli,
+          left: 'center',
           orient: 'horizontal',
           triggerOn: 'none',
           itemGap: nowSize(30),
           selectedMode: false,
-          bottom: nowSize(18), // 调整图例位置
-          itemHeight: nowSize(8), // 修改icon图形大小
-          icon: 'circle', // 图例前面的图标形状
-          textStyle: { // 图例文字的样式
-            color: 'rgba(42, 52, 135, 1)', // 图例文字颜色
-            fontSize: nowSize(16), // 图例文字大小
+          bottom: nowSize(18),
+          itemHeight: nowSize(8),
+          icon: 'circle',
+          textStyle: {
+            color: 'rgba(42, 52, 135, 1)',
+            fontSize: nowSize(16),
             padding: [0, 0, 0, -10]
           }
         },
@@ -6043,7 +4928,6 @@ export default {
             type: "pie",
             radius: ["40%", "60%"],
             center: ["50%", "50%"],
-            // roseType: "area",
             itemStyle: {
               emphasis: {
                 shadowBlur: nowSize(10),
@@ -6306,7 +5190,6 @@ export default {
           {
             name: "使用数量",
             type: "bar",
-            // barWidth: nowSize(10),
             barMaxWidth: nowSize(14),
             itemStyle: {
               normal: {
@@ -6351,7 +5234,6 @@ export default {
     left: 0;
     right: 0;
     z-index: 0
-    // bottom: 0;
   }
   .drw_contain{
     position: relative;
@@ -6365,7 +5247,6 @@ export default {
         width: 14rem;
         display: flex;
         justify-content: flex-end;
-        // align-items: center;
         font-family: SourceHanSansCN, SourceHanSansCN;
         font-weight: 400;
         font-size: 0.18rem;
@@ -6391,7 +5272,6 @@ export default {
     .drwc_box{
       width: 14rem;
       margin: 0 auto 0.34rem;
-      // height: 2.18rem;
       background: rgba(255,255,255,0.6);
       box-shadow: 0 0.2rem 0.16rem 0 rgba(228, 228, 235, 0.13);
       border-radius: 0.2rem;
@@ -6404,7 +5284,6 @@ export default {
           height: 1.35rem;
         }
         .drwx_b_c{
-          // width: 2.2rem;
           margin: 0 0.53rem 0 0.24rem;
           span{
             display: block;
@@ -6446,18 +5325,7 @@ export default {
           border-radius: 0.2rem;
           display: flex;
           align-items: center;
-          // .dtp_photo {
-          //   width: 1.48rem;
-          //   height: 1.48rem;
-          //   margin-left: 0.2rem;
-          //   margin-right: 0.1rem;
-          //   img {
-          //     width: 100%;
-          //     height: 100%;
-          //   }
-          // }
           .dtp_main {
-            // flex: 1;
             padding: 0.25rem 0.35rem;
             ul {
               display: flex;
@@ -6532,12 +5400,8 @@ export default {
         border: 0.04rem solid #FFFAF3;
         border-radius: 0.1rem;
         height: 0.44rem;
-        // .drwx_b_l{
-
-        // }
         .drwx_b_r{
           margin: 0 0.06rem;
-          // flex: 1;
           p {
             width: 100%;
             text-align: left;
@@ -6574,8 +5438,6 @@ export default {
           margin-bottom: 0rem;
           .wdrj_main {
             padding: 0.1rem 0.5rem 0.1rem;
-            // background: #ffffff;
-            // box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
             border-radius: 0.06rem;
             margin-bottom: 0.2rem;
             .wdrj_title {
@@ -6587,8 +5449,8 @@ export default {
               color: #2A3487;
               line-height: 0.34rem;
               img {
-                width: 0.1rem;
-                height: 0.1rem;
+                width: 0.12rem;
+                height: 0.12rem;
                 margin-right: 0.07rem;
               }
             }
@@ -6610,8 +5472,8 @@ export default {
                 background: rgba(132, 138, 255, 1);
               }
               .primary1{
-                color: #0075ff;
-                border: 0.01rem solid #0075ff !important;
+                color: rgba(132, 138, 255, 1);
+                border: 0.01rem solid rgba(132, 138, 255, 1) !important;
                 background: linear-gradient(263deg, #ffffff, #ffffff);
                 box-shadow: 0px 3px 18px 0px rgba(250, 250, 250, 0.19);
               }
@@ -6673,8 +5535,6 @@ export default {
                 margin-bottom: 0rem;
                 .wdrj_main {
                   padding: 0.1rem 0.3rem 0.2rem 0.1rem;
-                  // background: #ffffff;
-                  // box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.04);
                   border-radius: 0.04rem;
                   margin-bottom: 0.2rem;
                   .wdrj_title {
@@ -6688,7 +5548,6 @@ export default {
                     img {
                       width: 0.67rem;
                       height: 0.22rem;
-                      // margin-left: 0.1rem;
                     }
                   }
                   .dtmsb_tar {
@@ -7192,6 +6051,7 @@ export default {
                 align-items: center;
                 li{
                   flex: 1;
+                  max-width:2rem;
                   border: 0.01rem solid rgba(203, 206, 224, 1);
                   margin: 0;
                   border-right: 0;
@@ -7326,6 +6186,24 @@ export default {
             }
           }
         }
+        .drwc_b_ys{
+          width: auto;
+          padding: 0rem 0.4rem 0.3rem;
+          display: flex;
+          p{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 0.18rem;
+            color: #333E75;
+            padding: 0.3rem 0 0;
+            border-top: 0.01rem solid #ccc;
+            width: 100%;
+            text-align: left;
+          }
+          span{
+            font-weight: 500;
+          }
+        }
         .drwc_b_work{
           display: flex;
           align-items: center;
@@ -7367,39 +6245,15 @@ export default {
               width: 5.0rem;
               margin: 0 0.32rem 0.4rem 0.4rem;
               border-radius: 0.16rem;
-              // background: #ffffff;
               overflow: hidden;
-              // .dtmcl_tle {
-              //   display: flex;
-              //   align-items: center;
-              //   height: 0.6rem;
-              //   background: linear-gradient(
-              //     90deg,
-              //     rgba(5, 157, 255, 0.7),
-              //     rgba(49, 204, 255, 0.7)
-              //   );
-              //   font-size: 0.22rem;
-              //   font-family: Source Han Sans CN;
-              //   font-weight: 400;
-              //   color: #ffffff;
-              //   img {
-              //     width: 0.3rem;
-              //     height: 0.3rem;
-              //     margin-right: 0.1rem;
-              //     margin-left: 0.24rem;
-              //   }
-              // }
               .dtmcl_pic {
                 width: 3.08rem;
                 height: 1.73rem;
-                // margin: 0.2rem auto 0.2rem;
                 position: relative;
-                // background: #F4F3FD;
                 img {
                   width: 100%;
                   height: 100%;
                   border-radius: 0.16rem;
-                  // border-radius: 0.04rem;
                 }
                 .dtmcl_click {
                   width: 0.8rem;
@@ -7421,8 +6275,6 @@ export default {
                   margin: 0 auto;
                   border-radius: 50%;
                   border: 0.18rem solid #82df95;
-                  // border-image: linear-gradient(324deg, rgba(137, 219, 186, 1), rgba(177, 232, 206, 1)) 12 12;
-                  // clip-path: inset(0 round 1.1rem);
                   font-family: SourceHanSansCN, SourceHanSansCN;
                   font-weight: 500;
                   font-size: 0.38rem;
@@ -7495,7 +6347,6 @@ export default {
                 }
               }
               .dtmcl_sys {
-                // margin-bottom: 0.3rem;
                 .dtmcl_du3{
                   margin-top: 0.1rem;
                   span{
@@ -7505,13 +6356,29 @@ export default {
                     color: #333E75;
                   }
                 }
+                .dtmcl_stip{
+                  display: flex;
+                  align-items: center;
+                  margin-top: 0.08rem;
+                  span{
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 400;
+                    font-size: 0.18rem;
+                    color: #333E75;
+                  }
+                  img{
+                    width:0.21rem;
+                    height:0.21rem;
+                    margin: 0 0.02rem 0 0;
+                  }
+                }
                 .dtmcl_sbox{
                   display: flex;
                   margin-top:0.14rem;
                   .dtmcl_sb_t{
                     width: auto;
                     font-family: SourceHanSansCN, SourceHanSansCN;
-                    font-weight: 400;
+                    font-weight: 500;
                     font-size: 0.18rem;
                     color: #333E75;
                   }
@@ -7523,7 +6390,6 @@ export default {
                       flex-wrap: wrap;
                       li{
                         width: 50%;
-                        // flex: 1;
                         display: flex;
                         align-items: center;
                         margin-bottom: 0.1rem;
@@ -8126,9 +6992,17 @@ export default {
           margin-bottom: 0.2rem;
           min-height: auto;
           width: 10.08rem;
-          margin: 0 auto;
+          margin: 0.3rem auto 0.2rem;
           border: 0;
           background: transparent !important;
+          .el-table__header{
+            background: rgba(230, 235, 247, 0.6) !important;
+            overflow: hidden;
+            border-radius: 0.11rem;
+            thead th{
+              font-weight: 500;
+            }
+          }
           .el-table::before{
             width: 0 !important;
             height: 0 !important;
@@ -8255,47 +7129,61 @@ export default {
           font-size: 0.14rem;
           align-items: center;
           justify-content: flex-end;
-          margin-bottom: 0.86rem;
+          width: 10.3rem;
+          margin: 0 auto 0.4rem;
           .page_total {
-            font-size: 0.14rem;
-            color: #828fb2;
+            font-family: PingFangSC, PingFang SC;
+            font-weight: 400;
+            font-size: 0.2rem;
+            color: #2D3788;
             span {
-              color: #006cff;
+              color: #737AFD;
             }
           }
           .el-pagination {
             .el-pager {
               .number {
                 padding: 0 0.04rem;
-                height: 0.28rem;
-                line-height: 0.26rem;
-                border: 0.01rem solid #e1e9ff;
-                font-size: 0.14rem;
-                color: #7786ac;
-                min-width: 0.28rem;
-                background: linear-gradient(
-                  0deg,
-                  rgba(196, 236, 255, 0.14) 0%,
-                  rgba(151, 205, 255, 0.14) 100%
-                );
+                height: 0.4rem;
+                width: 0.4rem;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                font-family: PingFangSC, PingFang SC;
+                font-weight: 400;
+                font-size: 0.2rem;
+                color: #737AFD;
+                line-height: 0.4rem;
+                border: 0.1rem solid #ffffff;
+                box-shadow: 0px 0.02rem 0.1rem 0px #DDDFFF;
+                background: #FFFFFF;
                 margin: 0 0.03rem;
               }
               .number.active {
-                color: #ffffff;
-                background: linear-gradient(0deg, #0075ff, #00c2ff);
+                color: #737AFD;
+                background: #F6F6FF;
+                border: 0.01rem solid #737AFD;
               }
             }
             .btn-next,
             .btn-prev {
-              background: center center no-repeat
-                linear-gradient(0deg, #c4ecff 0%, #97cdff 100%);
-              background-size: 100%;
+              color: #737AFD;
+              background: #FFFFFF;
               cursor: pointer;
-              margin: 0;
-              color: #85b4ff;
-              min-width: 0.28rem;
+              width: 0.4rem;
+              height: 0.4rem;
+              border-radius: 50%;
               padding: 0;
               margin: 0 0.04rem;
+              box-shadow: 0px 0.02rem 0.1rem 0px #DDDFFF;
+             .el-icon{
+                font-size:0.18rem;
+              }
+            }
+            button:disabled{
+              color: #ffffff;
+              background: #becdf8;
             }
             .el-select .el-input .el-input__inner {
               color: #7786ac;

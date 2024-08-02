@@ -107,7 +107,7 @@
                   强迫
                 </div>
               </div>
-              <div class="c_pie_li" v-if="suicideFlag == 1">
+              <div class="c_pie_li" v-if="ptsdFlag == 1">
                 <div class="c_th_txt">
                   <span class="c_pie_th c_th3"></span>
                   PTSD
@@ -119,13 +119,13 @@
                   敌对
                 </div>
               </div>
-              <div class="c_pie_li" v-if="violenceFlag == 1">
+              <div class="c_pie_li" v-if="suicideFlag == 1">
                 <div class="c_th_txt">
                   <span class="c_pie_th c_th5"></span>
                   自我伤害
                 </div>
               </div>
-              <!-- <div class="c_pie_li" v-if="violenceFlag == 1">
+              <!-- <div class="c_pie_li" v-if="zibiFlag == 1">
                 <div class="c_th_txt">
                   <span class="c_pie_th c_th6"></span>
                   自闭
@@ -265,14 +265,14 @@
                     }}</span>
                   </div>
                 </div>
-                <div class="c_pie_li" v-if="violenceFlag == 1">
+                <div class="c_pie_li" v-if="ptsdFlag == 1">
                   <div class="c_th_txt">
                     <span class="c_pie_th c_th3"></span>
                     PTSD
                   </div>
                   <div class="c_th_p">
                     <span class="c_pie_td c_thp3">{{
-                      parseInt(detail.warningStatistics.violencePerct * 100) + "%"
+                      parseInt(detail.warningStatistics.ptsdPerct * 100) + "%"
                     }}</span>
                   </div>
                 </div>
@@ -298,14 +298,14 @@
                     }}</span>
                   </div>
                 </div>
-                <!-- <div class="c_pie_li" v-if="suicideFlag == 1">
+                <!-- <div class="c_pie_li" v-if="zibiFlag == 1">
                   <div class="c_th_txt">
                     <span class="c_pie_th c_th6"></span>
                     自闭
                   </div>
                   <div class="c_th_p">
                     <span class="c_pie_td c_thp6">{{
-                      parseInt(detail.warningStatistics.suicidePerct * 100) + "%"
+                      parseInt(detail.warningStatistics.zibiPerct * 100) + "%"
                     }}</span>
                   </div>
                 </div> -->
@@ -543,8 +543,10 @@ export default {
       depressionFlag: 1,
       anxietyFlag: 1,
       forcedFlag: 1,
+      ptsdFlag: 0,
       suicideFlag: 0,
       violenceFlag: 0,
+      zibiFlag: 0,
       personalityFlag: 0,
       chart1List: [],
       piePrect: [],
@@ -602,27 +604,82 @@ export default {
             }
             localStorage.setItem("userAuth", data.data.userAuth);
             localStorage.setItem("userType", 1);
-            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            if (data.data.algTypes.mentalDim) {
+              // mentalDim
+              // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+
+              // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+              let mental = data.data.algTypes.mentalDim.toString(2).split('')
+              data.data.algTypes.depressionFlag = mental[0]
+              data.data.algTypes.anxietyFlag = mental[1]
+              data.data.algTypes.forcedFlag = mental[2]
+              data.data.algTypes.ptsdFlag = mental[3]
+              data.data.algTypes.violenceFlag = mental[4]
+              data.data.algTypes.suicideFlag = mental[5]
+              // data.data.algTypes.zibiFlag = mental[6]
+              // personalityDim
+              // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+              // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+              let personality = data.data.algTypes.personalityDim.toString(2).split('')
+              data.data.algTypes.extroversionFlag = personality[0]
+              data.data.algTypes.conscientiousnessFlag = personality[1]
+              data.data.algTypes.nervousnessFlag = personality[2]
+              data.data.algTypes.agreeablenessFlag = personality[3]
+              data.data.algTypes.opennessFlag = personality[4]
+
+              // positiveDim
+              // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+              
+              let positive = data.data.algTypes.positiveDim.toString(2).split('')
+              data.data.algTypes.resilienceFlag = positive[0]
+              data.data.algTypes.selfFlag = positive[1]
+              data.data.algTypes.achievementFlag = positive[2]
+              data.data.algTypes.emotionFlag = positive[3]
+              data.data.algTypes.relationshipFlag = positive[4]
+              localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            }
+            
+            
             if (data.data.algTypes) {
               // 是否显示抑郁
-              this.depressionFlag = data.data.algTypes.depression
+              this.depressionFlag = data.data.algTypes.depressionFlag
               // 是否显示焦虑
-              this.anxietyFlag = data.data.algTypes.anxiety
+              this.anxietyFlag = data.data.algTypes.anxietyFlag
               // 是否显示强迫
-              this.forcedFlag = data.data.algTypes.forced
-              // 是否显示自我伤害
-              this.suicideFlag = data.data.algTypes.suicide
+              this.forcedFlag = data.data.algTypes.forcedFlag
+              // 是否显示PTSD
+              this.ptsdFlag = data.data.algTypes.ptsdFlag
               // 是否显示敌对
-              this.violenceFlag = data.data.algTypes.violence
-              // 是否显示人格
-              this.personalityFlag = data.data.algTypes.personality
+              this.violenceFlag = data.data.algTypes.violenceFlag
+              // 是否显示自我伤害
+              this.suicideFlag = data.data.algTypes.suicideFlag
+              // // 是否显示自闭
+              // this.zibiFlag = data.data.algTypes.zibiFlag
+              // 是否显示大五人格
+              this.extroversionFlag = data.data.algTypes.extroversionFlag
+              this.conscientiousnessFlag = data.data.algTypes.conscientiousnessFlag
+              this.nervousnessFlag = data.data.algTypes.nervousnessFlag
+              this.agreeablenessFlag = data.data.algTypes.agreeablenessFlag
+              this.opennessFlag = data.data.algTypes.opennessFlag
+              // 是否显示心理韧性
+              this.resilienceFlag = data.data.algTypes.resilienceFlag
+              // 是否显示积极自我
+              this.selfFlag = data.data.algTypes.selfFlag
+              // 是否显示积极成就
+              this.achievementFlag = data.data.algTypes.achievementFlag
+              // 是否显示积极情绪
+              this.emotionFlag = data.data.algTypes.emotionFlag
+              // 是否显示积极关系
+              this.relationshipFlag = data.data.algTypes.relationshipFlag
             }
             //
             // this.depressionFlag = 1
             // this.anxietyFlag = 1
             // this.forcedFlag = 1
-            // this.suicideFlag = 1
+            // this.ptsdFlag = 1
             // this.violenceFlag = 1
+            // this.suicideFlag = 1
+            // this.zibiFlag = 1
             // this.personalityFlag = 0
             that.powerData();
             if (this.power1) {
@@ -639,15 +696,24 @@ export default {
                 .then(res => {
                   if (res.data.code == 0) {
                     that.detail = res.data.data;
+                    console.log(that.detail)
                     that.detail.warningMale = that.perctInfo(that.detail.warningStatistics.warningMalePerct);
                     that.detail.warningFemale = that.perctInfo(that.detail.warningStatistics.warningFemalePerct);
                     that.detail.changePerct = that.perctInfo(that.detail.changePerct) + "%"
                     value = Number(that.detail.monthHealthPerct.toFixed(2));
                     pointerAngle =
                       (startAngle - endAngle) * (1 - value) + endAngle;
-                    this.getUserInfo();
+                    // this.getUserInfo();
                     let chartArr = []
+                    let piePrect = []
+                    let pieName = []
+                    console.log(this.depressionFlag)
                     if (this.depressionFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.depressionPerct)
+                      pieName.push({
+                        name: "抑郁",
+                        max: 1
+                      })
                       chartArr.push({
                         value: that.detail.warningStatistics.depressionNum,
                         name: "抑郁",
@@ -668,6 +734,11 @@ export default {
                       })
                     }
                     if (this.anxietyFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.anxietyPerct)
+                      pieName.push({
+                        name: "焦虑",
+                        max: 1
+                      })
                       chartArr.push({
                         value: that.detail.warningStatistics.anxietyNum,
                         name: "焦虑",
@@ -688,6 +759,11 @@ export default {
                       })
                     }
                     if (this.forcedFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.forcePerct)
+                      pieName.push({
+                        name: "强迫",
+                        max: 1
+                      })
                       chartArr.push({
                         value: that.detail.warningStatistics.forceNum,
                         name: "强迫",
@@ -707,27 +783,37 @@ export default {
                         }
                       })
                     }
-                    // if (this.ptspFlag == 1) {
-                    chartArr.push({
-                      value: that.detail.warningStatistics.ptsdNum,
-                      name: "PTSD",
-                      itemStyle: {
-                        normal: {
-                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                            {
-                              offset: 0,
-                              color: "#FFA3A3"
-                            },
-                            {
-                              offset: 1,
-                              color: "#FFA3A3"
-                            }
-                          ])
+                    if (this.ptsdFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.ptsdPerct)
+                      pieName.push({
+                        name: "PTSD",
+                        max: 1
+                      })
+                      chartArr.push({
+                        value: that.detail.warningStatistics.ptsdNum,
+                        name: "PTSD",
+                        itemStyle: {
+                          normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                              {
+                                offset: 0,
+                                color: "#FFA3A3"
+                              },
+                              {
+                                offset: 1,
+                                color: "#FFA3A3"
+                              }
+                            ])
+                          }
                         }
-                      }
-                    })
-                    // }
+                      })
+                    }
                     if (this.violenceFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.violencePerct)
+                      pieName.push({
+                        name: "敌对",
+                        max: 1
+                      })
                       chartArr.push({
                         value: that.detail.warningStatistics.violenceNum,
                         name: "敌对",
@@ -748,6 +834,11 @@ export default {
                       })
                     }
                     if (this.suicideFlag == 1) {
+                      piePrect.push(that.detail.warningStatistics.suicidePerct)
+                      pieName.push({
+                        name: "自我伤害",
+                        max: 1
+                      })
                       chartArr.push({
                         value: that.detail.warningStatistics.suicideNum,
                         name: "自我伤害",
@@ -768,8 +859,13 @@ export default {
                       })
                     }
                     // if (this.zibiFlag == 1) {
+                    //   piePrect.push(that.detail.warningStatistics.zibiPerct)
+                    //   pieName.push({
+                    //     name: "自闭",
+                    //     max: 1
+                    //   })
                     // chartArr.push({
-                    //   value: that.detail.warningStatistics.suicideNum,
+                    //   value: that.detail.warningStatistics.zibiNum,
                     //   name: "自闭",
                     //   itemStyle: {
                     //     normal: {
@@ -787,62 +883,12 @@ export default {
                     //   }
                     // })
                     // }
-                    
                     this.chart1List = chartArr
-                    let piePrect = []
-                    let pieName = []
-                    if (this.depressionFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.depressionPerct)
-                      pieName.push({
-                        name: "抑郁",
-                        max: 1
-                      })
-                    }
-                    if (this.anxietyFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.anxietyPerct)
-                      pieName.push({
-                        name: "焦虑",
-                        max: 1
-                      })
-                    }
-                    
-                    if (this.forcedFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.forcePerct)
-                      pieName.push({
-                        name: "强迫",
-                        max: 1
-                      })
-                    }
-                    if (this.suicideFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.suicidePerct)
-                      pieName.push({
-                        name: "PTSD",
-                        max: 1
-                      })
-                    }
-                    if (this.violenceFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.violencePerct)
-                      pieName.push({
-                        name: "敌对",
-                        max: 1
-                      })
-                    }
-                    if (this.suicideFlag == 1) {
-                      piePrect.push(that.detail.warningStatistics.suicidePerct)
-                      pieName.push({
-                        name: "自我伤害",
-                        max: 1
-                      })
-                    }
-                    // if (this.suicideFlag == 1) {
-                    //   piePrect.push(that.detail.warningStatistics.suicidePerct)
-                    //   pieName.push({
-                    //     name: "自闭",
-                    //     max: 1
-                    //   })
-                    // }
                     this.piePrect = piePrect
                     this.pieName = pieName
+                    console.log(chartArr)
+                    console.log(piePrect)
+                    console.log(piePrect)
                     this.draw();
                     setTimeout(() => {
                       this.myTxtFlag = true;
@@ -1445,7 +1491,7 @@ export default {
                 rich: {
                   hr: {
                     color: "#51A7FF",
-                    padding: [0, 0, nowSize(6), 0]
+                    padding: [0, 0, nowSize(0), 0]
                   }
                 }
               }
@@ -1505,7 +1551,7 @@ export default {
               (parseInt(value[2] * 100) + "%") +
               "</span></div>"
             }
-            if (that.violenceFlag == 1) {
+            if (that.ptsdFlag == 1) {
               html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
               "<span style='font-size:0.14rem;'>PTSD：</span>" +
               "<span style='font-size:0.14rem;color:#FF8481'>" +
@@ -1526,7 +1572,7 @@ export default {
               (parseInt(value[5] * 100) + "%") +
               "</span></div>"
             }
-            // if (that.suicideFlag == 1) {
+            // if (that.zibiFlag == 1) {
             //   html += '<div><span style="font-size:0.14rem;display:inline-block;width:0.08rem;height:0.08rem;background:#fff5b3;border-radius: 50%;margin-right:0.04rem"></span>' +
             //    "<span style='font-size:0.14rem;'>自闭：</span>" +
             //   "<span style='font-size:0.14rem;color:#f7de3b'>" +
@@ -1932,7 +1978,7 @@ export default {
             line-height: 0.28rem;
             font-size: 0.18rem;
             margin: auto;
-            top: -0.2rem;
+            top: -0.1rem;
             left: 0;
             right: 0;
             bottom: 0;
@@ -1947,7 +1993,7 @@ export default {
             font-size: 0.2rem;
             font-weight: 500;
             margin: auto;
-            top: 0.36rem;
+            top: 0.46rem;
             color: #509AFF;
             left: 0;
             right: 0;

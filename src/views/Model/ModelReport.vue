@@ -1,6 +1,294 @@
 <template>
-  <div class="table-class" ref="sprintReportPerson">
+  <div class="table-classs" ref="sprintReportPerson">
+    <div class="table-style">
+      <img class="shui_bg1" src="../../assets/images/report/shui_big.png" alt="" />
+      <img class="shui_bg" src="../../assets/images/report/shui.png" alt="" />
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="g1_top">
+          <span>AI心世界</span>
+        </div>
+        <div class="g1_top1">
+          个人报告
+        </div>
+        <div class="g1_top2">
+          <div>
+            <span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span><span>{{details.name}}</span>
+          </div>
+
+          <div>
+            <span>测评次数：</span><span>第{{ details.evaluationTime }}次</span>
+          </div>
+          <div>
+            <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span>{{details.gender == 1 ? '男' : '女'}}</span>
+          </div>
+          <div>
+            <span>测评时间：</span><span>{{ details.datetime }}</span>
+          </div>
+          <div>
+            <span>登录账号：</span><span>{{ details.passport }}</span>
+          </div>
+          <div>
+            <span>所属单位：</span><span>{{ details.departmentName }}</span>
+          </div>
+          <div>
+            <span>手&nbsp;&nbsp;机&nbsp;&nbsp;号：</span><span>{{ details.phone }}</span>
+          </div>
+          <div>
+            <span>出生日期：</span><span>{{ details.birth }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="table-style group_01">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px">
+          <img src="../../assets/images/news/zuopinjiedu.png" style="width: 60px;height: 63px" alt="">
+          <span class="gp2_t_txt">作品解读</span>
+        </div>
+        <div class="gp_title">
+          <!-- <div class="gp_head" style="height: 20px"></div> -->
+          <div class="gp_txt">
+            <p>
+              <span></span>
+            </p>
+            <p v-if="details.themeDiscription && details.themeDiscription != ''">
+              <span v-html="details.themeDiscription"></span>
+            </p>
+            <p v-if="details.selfDiscription && details.selfDiscription != ''">
+              <span v-html="details.selfDiscription"></span>
+            </p>
+            <p v-if="details.satisfyArea && details.satisfyArea != ''">
+              <span v-html="details.satisfyArea"></span>
+            </p>
+          </div>
+        </div>
+        <div class="gp_title" style="padding: 40px 40px 10px;">
+          <div class="gp_bird_box">
+            <div class="gp_bird" v-if="details.birdView && details.birdView !=''">
+              <img :src="'data:image;base64,' + details.birdView" alt="">
+              <div>{{reviewData.workInfo.workName == '' ? '' : reviewData.workInfo.workName +'-'}}{{ details.datetime }}</div>
+            </div>
+            <div class="gp_bird" v-else>
+              <img src="../../assets/images/report/t001.png" alt="">
+              <div>{{ details.datetime }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-style group_02">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px">
+          <img src="../../assets/images/news/bencigaik.png" style="width: 60px;height: 52px" alt="">
+          <span class="gp2_t_txt">本次概况</span>
+        </div>
+        <div class="gp2_main">
+          <div class="myChartBox">
+            <div class="myChart" ref="myChart01" id="myChart01"></div>
+            <div class="myChartTips">
+              <p>{{ details.warningNum }}项</p>
+              <p class="c_o_my_num c_red">
+                风险
+              </p>
+            </div>
+          </div>
+          <div class="gp2_li">
+            <div class="gp2l_head">
+              <!-- <img style="width:34px;height:37px;" src="../../assets/images/model/m_004.png" alt="" /> -->
+              <span>数据解读</span>
+            </div>
+          </div>
+          <div class="gp2b_tips">
+            <!-- <div class="dtmcl_du dtmcl_du1"> -->
+              <img  v-if="details.warning == 0" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i0.png" alt="" />
+              <img v-if="details.warning == 1" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i1.png" alt="" />
+              <img v-if="details.warning == 2" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i2.png" alt="" />
+              <img v-if="details.warning == 3" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i3.png" alt="" />
+              <span>总体评估：</span>
+              <div class="wdrjst_res" v-if="details.warning == 0">
+                <span class="wdrjstr_txt wd_col1">正常</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 1">
+                <span class="wdrjstr_txt wd_col2">轻度预警</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 2">
+                <span class="wdrjstr_txt wd_col3">中度预警</span>
+              </div>
+              <div class="wdrjst_res" v-if="details.warning == 3">
+                <span class="wdrjstr_txt wd_col4">重度预警</span>
+              </div>
+            <!-- </div> -->
+            <!-- <img src="../../assets/images/model/m_002.png" alt="" style="margin-left:48px;margin-right:12px;">
+            <p>
+              总体评估：
+            </p>
+            <p class="c_o_my_num c_red" v-if="details.warningNum != 0">
+              需关注
+            </p> -->
+          </div>
+          <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
+            <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
+              该受测者心理健康水平良好。
+            </div>
+            <div v-else>
+              <div v-for="(item,index) in details.warningList" :key="item.id">
+                <div
+                  class="dtmcl_du dtmcl_du2"
+                  v-if="item.old != '正常' && item.flag == 1"
+                >
+                  <img :src="require('../../assets/images/report/icons'+index+'.png')" alt="" />
+                  <span v-html="item.new"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="gp2_li" style="margin-top:20px">
+            <div class="gp2l_head">
+              <img style="width:35px;height:31px;" src="../../assets/images/model/m_006.png" alt="" />
+              <span>数据对比</span>
+            </div>
+          </div>
+          <div class="gp_warn">
+            <ul>
+              <li class="gp_w_th">
+                <div>指标</div>
+                <div>本次结果</div>
+                <div>上次结果</div>
+                <div>个人平均参测结果</div>
+              </li>
+              <li class="gp_w_td">
+                <div>
+                  <span v-if="details.depressionFlag == 1">抑郁</span>
+                  <span v-if="details.anxietyFlag == 1">焦虑</span>
+                  <span v-if="details.forcedFlag == 1">强迫</span>
+                  <span v-if="details.suicideFlag == 1">自我伤害</span>
+                  <span v-if="details.violenceFlag == 1">敌对</span>
+                </div>
+                <div v-if="details.reportWarningInfo">
+                  <span v-if="details.depressionFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.depressionLevel == 0 }, { wran_col1: details.reportWarningInfo.depressionLevel == 1 }, { wran_col2: details.reportWarningInfo.depressionLevel == 2 }, { wran_col3: details.reportWarningInfo.depressionLevel == 3 }]">
+                    <label>{{ details.reportWarningInfo.depressionLevelTxt }}</label>
+                    <label>{{ details.reportWarningInfo.depressionScore }}</label>
+                  </span>
+                  <span v-if="details.anxietyFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.anxietyLevel == 0 }, { wran_col1: details.reportWarningInfo.anxietyLevel == 1 }, { wran_col2: details.reportWarningInfo.anxietyLevel == 2 }, { wran_col3: details.reportWarningInfo.anxietyLevel == 3 }]">
+                    <label>{{ details.reportWarningInfo.anxietyLevelTxt }}</label>
+                    <label>{{ details.reportWarningInfo.anxietyScore }}</label>
+                  </span>
+                  <span v-if="details.forcedFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.forcedLevel == 0 }, { wran_col1: details.reportWarningInfo.forcedLevel == 1 }, { wran_col2: details.reportWarningInfo.forcedLevel == 2 }, { wran_col3: details.reportWarningInfo.forcedLevel == 3 }]">
+                    <label>{{ details.reportWarningInfo.forcedLevelTxt }}</label>
+                    <label>{{ details.reportWarningInfo.forcedScore }}</label>
+                  </span>
+                  <span v-if="details.suicideFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.suicideLevel == 0 }, { wran_col1: details.reportWarningInfo.suicideLevel == 1 }, { wran_col2: details.reportWarningInfo.suicideLevel == 2 }, { wran_col3: details.reportWarningInfo.suicideLevel == 3 }]">
+                    <label>{{ details.reportWarningInfo.suicideLevelTxt }}</label>
+                    <label>{{ details.reportWarningInfo.suicideScore }}</label>
+                  </span>
+                  <span v-if="details.violenceFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.violenceLevel == 0 }, { wran_col1: details.reportWarningInfo.violenceLevel == 1 }, { wran_col2: details.reportWarningInfo.violenceLevel == 2 }, { wran_col3: details.reportWarningInfo.violenceLevel == 3 }]">
+                    <label>{{ details.reportWarningInfo.violenceLevelTxt }}</label>
+                    <label>{{ details.reportWarningInfo.violenceScore }}</label>
+                  </span>
+                </div>
+                <div v-if="details.lastWarningInfo">
+                  <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.depressionLevel == 0 }, { wran_col1: details.lastWarningInfo.depressionLevel == 1 }, { wran_col2: details.lastWarningInfo.depressionLevel == 2 }, { wran_col3: details.lastWarningInfo.depressionLevel == 3 }]">
+                    <label>{{ details.lastWarningInfo.depressionLevelTxt }}</label>
+                    <label>{{ details.lastWarningInfo.depressionScore }}</label>
+                  </span>
+                  <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.anxietyLevel == 0 }, { wran_col1: details.lastWarningInfo.anxietyLevel == 1 }, { wran_col2: details.lastWarningInfo.anxietyLevel == 2 }, { wran_col3: details.lastWarningInfo.anxietyLevel == 3 }]">
+                    <label>{{ details.lastWarningInfo.anxietyLevelTxt }}</label>
+                    <label>{{ details.lastWarningInfo.anxietyScore }}</label>
+                  </span>
+                  <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.forcedLevel == 0 }, { wran_col1: details.lastWarningInfo.forcedLevel == 1 }, { wran_col2: details.lastWarningInfo.forcedLevel == 2 }, { wran_col3: details.lastWarningInfo.forcedLevel == 3 }]">
+                    <label>{{ details.lastWarningInfo.forcedLevelTxt }}</label>
+                    <label>{{ details.lastWarningInfo.forcedScore }}</label>
+                  </span>
+                  <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.suicideLevel == 0 }, { wran_col1: details.lastWarningInfo.suicideLevel == 1 }, { wran_col2: details.lastWarningInfo.suicideLevel == 2 }, { wran_col3: details.lastWarningInfo.suicideLevel == 3 }]">
+                    <label>{{ details.lastWarningInfo.suicideLevelTxt }}</label>
+                    <label>{{ details.lastWarningInfo.suicideScore }}</label>
+                  </span>
+                  <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.violenceLevel == 0 }, { wran_col1: details.lastWarningInfo.violenceLevel == 1 }, { wran_col2: details.lastWarningInfo.violenceLevel == 2 }, { wran_col3: details.lastWarningInfo.violenceLevel == 3 }]">
+                    <label>{{ details.lastWarningInfo.violenceLevelTxt }}</label>
+                    <label>{{ details.lastWarningInfo.violenceScore }}</label>
+                  </span>
+                  <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                </div>
+                <div v-if="details.warningAvgInfo">
+                  <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.depressionLevel == 0 }, { wran_col1: details.warningAvgInfo.depressionLevel == 1 }, { wran_col2: details.warningAvgInfo.depressionLevel == 2 }, { wran_col3: details.warningAvgInfo.depressionLevel == 3 }]">
+                    <label>{{ details.warningAvgInfo.depressionLevelTxt }}</label>
+                    <label>{{ details.warningAvgInfo.depressionScore }}</label>
+                  </span>
+                  <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.anxietyLevel == 0 }, { wran_col1: details.warningAvgInfo.anxietyLevel == 1 }, { wran_col2: details.warningAvgInfo.anxietyLevel == 2 }, { wran_col3: details.warningAvgInfo.anxietyLevel == 3 }]">
+                    <label>{{ details.warningAvgInfo.anxietyLevelTxt }}</label>
+                    <label>{{ details.warningAvgInfo.anxietyScore }}</label>
+                  </span>
+                  <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.forcedLevel == 0 }, { wran_col1: details.warningAvgInfo.forcedLevel == 1 }, { wran_col2: details.warningAvgInfo.forcedLevel == 2 }, { wran_col3: details.warningAvgInfo.forcedLevel == 3 }]">
+                    <label>{{ details.warningAvgInfo.forcedLevelTxt }}</label>
+                    <label>{{ details.warningAvgInfo.forcedScore }}</label>
+                  </span>
+                  <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.suicideLevel == 0 }, { wran_col1: details.warningAvgInfo.suicideLevel == 1 }, { wran_col2: details.warningAvgInfo.suicideLevel == 2 }, { wran_col3: details.warningAvgInfo.suicideLevel == 3 }]">
+                    <label>{{ details.warningAvgInfo.suicideLevelTxt }}</label>
+                    <label>{{ details.warningAvgInfo.suicideScore }}</label>
+                  </span>
+                  <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                  <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.violenceLevel == 0 }, { wran_col1: details.warningAvgInfo.violenceLevel == 1 }, { wran_col2: details.warningAvgInfo.violenceLevel == 2 }, { wran_col3: details.warningAvgInfo.violenceLevel == 3 }]">
+                    <label>{{ details.warningAvgInfo.violenceLevelTxt }}</label>
+                    <label>{{ details.warningAvgInfo.violenceScore }}</label>
+                  </span>
+                  <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
+                    <label>/</label>
+                    <label>/</label>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="table-style group_01">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <img class="gp_01_bg" src="../../assets/images/model/t_bg.png" alt="" />
       <div class="gp_01_box">
@@ -76,7 +364,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding-top:96px;">
@@ -103,7 +391,8 @@
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
     </div> -->
-    <div class="table-style group_02">
+
+    <!-- <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding: 30px 0">
         <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
@@ -136,7 +425,6 @@
           </div>
         </div>
         <div class="gp2b_tips">
-          <!-- <div class="dtmcl_du dtmcl_du1"> -->
             <img  v-if="details.warning == 0" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i0.png" alt="" />
             <img v-if="details.warning == 1" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i1.png" alt="" />
             <img v-if="details.warning == 2" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i2.png" alt="" />
@@ -154,14 +442,6 @@
             <div class="wdrjst_res" v-if="details.warning == 3">
               <span class="wdrjstr_txt wd_col4">重度预警</span>
             </div>
-          <!-- </div> -->
-          <!-- <img src="../../assets/images/model/m_002.png" alt="" style="margin-left:48px;margin-right:12px;">
-          <p>
-            总体评估：
-          </p>
-          <p class="c_o_my_num c_red" v-if="details.warningNum != 0">
-            需关注
-          </p> -->
         </div>
         <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
           <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
@@ -311,7 +591,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="table-style group_02 group_03">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
@@ -1753,30 +2033,89 @@ export default {
       let that = this;
       this.myChart01 = echarts.init(this.$refs.myChart01);
       this.myChart01.setOption({
-        tooltip: {
-          show: false
+        title: {
+          text: this.details.warningNum + '项',
+          subtext: '风险',
+          textStyle: {
+            color: '#333E75',
+            fontSize: 40,
+            fontWeight: 500
+          },
+          subtextStyle: {
+            color: '#FF748A',
+            fontSize: 25,
+            fontWeight: 500
+          },
+          itemGap: 15, // 主副标题距离
+          left: 'center',
+          top: 65
+        },
+        angleAxis: {
+          max: 6, // 满分
+          clockwise: false, // 逆时针
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        radiusAxis: {
+          type: 'category',
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        polar: {
+          center: ['50%', '50%'],
+          radius: 190 // 图形大小
         },
         series: [
           {
-            name: "需关注",
-            animation: false,
-            type: "pie",
-            clickable: false,
-            radius: ["70%", "90%"],
-            hoverAnimation: false,
-            avoidLabelOverlap: false,
+            type: 'bar',
+            // animation: false,
+            // avoidLabelOverlap: false,
             label: {
-              normal: {
-                show: false,
-                position: "center",
-                formatter: "{a}\n" + '20' + "单",
-                textStyle: {
-                  align: "center",
-                  baseline: "middle",
-                  fontFamily: "微软雅黑",
-                  fontSize: 15,
-                  fontWeight: "bolder"
+              position: 'center',
+              show: false,
+              formatter: function() {
+                let str = '{a|' + this.details.warningNum + '}' + '\n\n' + '{b|有风险}'
+                return str
+              },
+              rich: {
+                a: {
+                  color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
+                  fontSize: 40,
+                  fontWeight: '500'
+                },
+                b: {
+                  color: 'rgba(117, 122, 144, 1)',
+                  fontSize: 24
                 }
+              }
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: "bold"
               }
             },
             labelLine: {
@@ -1784,44 +2123,119 @@ export default {
             },
             data: [
               {
-                value: that.details.warningNum,
-                name: "需关注",
+                name: '风险',
+                value: this.details.warningNum,
                 itemStyle: {
                   normal: {
+                    barBorderRadius: [2, 2, 0, 0],
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                       {
                         offset: 0,
-                        color: "rgba(255, 42, 84, 1)"
+                        color: 'rgba(255, 116, 138, 0.72)'
                       },
                       {
                         offset: 1,
-                        color: "rgba(255, 171, 150, 1)"
-                      }
-                    ])
-                  }
-                }
-              },
-              {
-                value: Number(that.details.warnLen.length) - that.details.warningNum,
-                name: "正常",
-                itemStyle: {
-                  normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                      {
-                        offset: 0,
-                        color: "#EFF7FE"
-                      },
-                      {
-                        offset: 1,
-                        color: "#EFF7FE"
+                        color: 'rgba(251, 113, 113, 0.72)'
                       }
                     ])
                   }
                 }
               }
-            ]
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: 20,
+            barGap: '-100%', // 两环重叠
+            z: 2
+          },
+          {
+            // 灰色环
+            type: 'bar',
+            animation: false,
+            data: [
+              {
+                value: 100,
+                itemStyle: {
+                  color: 'rgba(242, 245, 252, 1)'
+                }
+              }
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: 20,
+            barGap: '-100%', // 两环重叠
+            z: 1
           }
         ]
+        // tooltip: {
+        //   show: false
+        // },
+        // series: [
+        //   {
+        //     name: "需关注",
+        //     animation: false,
+        //     type: "pie",
+        //     clickable: false,
+        //     radius: ["70%", "90%"],
+        //     hoverAnimation: false,
+        //     avoidLabelOverlap: false,
+        //     label: {
+        //       normal: {
+        //         show: false,
+        //         position: "center",
+        //         formatter: "{a}\n" + '20' + "单",
+        //         textStyle: {
+        //           align: "center",
+        //           baseline: "middle",
+        //           fontFamily: "微软雅黑",
+        //           fontSize: 15,
+        //           fontWeight: "bolder"
+        //         }
+        //       }
+        //     },
+        //     labelLine: {
+        //       show: false
+        //     },
+        //     data: [
+        //       {
+        //         value: that.details.warningNum,
+        //         name: "需关注",
+        //         itemStyle: {
+        //           normal: {
+        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //               {
+        //                 offset: 0,
+        //                 color: "rgba(255, 42, 84, 1)"
+        //               },
+        //               {
+        //                 offset: 1,
+        //                 color: "rgba(255, 171, 150, 1)"
+        //               }
+        //             ])
+        //           }
+        //         }
+        //       },
+        //       {
+        //         value: Number(that.details.warnLen.length) - that.details.warningNum,
+        //         name: "正常",
+        //         itemStyle: {
+        //           normal: {
+        //             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //               {
+        //                 offset: 0,
+        //                 color: "#EFF7FE"
+        //               },
+        //               {
+        //                 offset: 1,
+        //                 color: "#EFF7FE"
+        //               }
+        //             ])
+        //           }
+        //         }
+        //       }
+        //     ]
+        //   }
+        // ]
       });
       setTimeout(() => {
         var theIndex = -1;
@@ -3029,7 +3443,7 @@ export default {
 };
 </script>
 <style lang="less">
-  .table-class{
+  .table-classs{
     .el-textarea.is-disabled .el-textarea__inner{
       background: linear-gradient(0deg, rgba(203, 235, 253, 0.1), rgba(161, 204, 250, 0.1));
       border-color: rgba(118, 154, 255, 1);
@@ -3043,165 +3457,759 @@ export default {
   }
 </style>
 <style lang="less" scoped>
-.table-class {
-  display: grid;
-  background-color: #fff;
-  width: 1191px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  transform: scale(0.8);
-  transform-origin: 0 0;
-}
-.table-style {
-  border-collapse: collapse;
-  width: 1190.71px;
-  height: 1684px;
-  text-align: center;
-  position: relative;
-  .shui_bg{
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 800px;
-    bottom: 0;
-    width: 346px;
-    height: 109px;
-  }
-  td,
-  th {
-    padding: 10px;
-    font-size: 15px;
-    border: 1px solid black;
-  }
-  .td-bg {
-    background: #ccc;
-  }
-}
-.group_01 {
-  width: 1190.71px;
-  height: 1684px;
-  background: linear-gradient(214deg, rgba(232, 220, 252, 0.3), rgba(232, 220, 252, 0.3));
-  .gp_01_bg{
-    width: 1190.71px;
-    height: 1684px;
-  }
-  .gp_01_box{
-    position: absolute;
-    top: 739px;
-    left: 67px;
-    width: 1058px;
-    height: 270px;
-    background: #FFFFFF;
-    box-shadow: 0px 13px 54px 0px rgba(76, 100, 132, 0.19);
-    border-radius: 10px;
-    display: flex;
-    padding: 20px;
-    align-items: center;
-    .gp_01_photo{
-      margin-right: 21px;
-      width: 106px;
-      height: 106px;
-      box-shadow: 0px 2px 16px 0px rgba(73, 149, 229, 0.27);
-      border-radius: 50%;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .gp_01_msg{
-      width: 891px;
-      height: 240px;
-      ul{
-        display: flex;
-        height: 100%;
-        flex-wrap: wrap;
-        padding: 30px 0;
-        li{
-          text-align: left;
+
+  // 最新的样式
+  .table-classs {
+    display: grid;
+    background-color: #fff;
+    width: 1191px;
+    box-sizing: border-box;
+    transform: scale(0.8);
+    transform-origin: 0 0;
+    margin: 0 auto;
+    .table-style {
+      border-collapse: collapse;
+      width: 1190px;
+      height: 1684px;
+      text-align: center;
+      position: relative;
+      background: #ffffff !important;
+      overflow: hidden;
+      border:1px solid #ccc;
+      .table-border{
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 1068px;
+        height: 1560px;
+        border: 4px solid #333E75;
+        .gp_all_tips{
+          position: absolute;
+          margin: auto;
+          left: 0;
+          right: 0;
+          bottom: 30px;
+          font-family: PingFangSC, PingFang SC;
+          font-weight: 400;
+          font-size: 24px;
+          color: #2A3487;
+          line-height: 34px;
           display: flex;
           align-items: center;
+          justify-content: center;
+          img{
+            width:26px;
+            height: 24px;
+            margin-right:6px;
+          }
+        }
+      }
+      .shui_bg{
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 472px;
+        height: 356px;
+        // z-index: -1;
+      }
+      .shui_bg1{
+        position: absolute;
+        margin: auto;
+        left: -450px;
+        // right: 0;
+        top: 100px;
+        // bottom: 0;
+        width: 2048px;
+        height: 1546px;
+        // z-index: -1;
+      }
+      td,
+      th {
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid black;
+      }
+      .td-bg {
+        background: #ccc;
+      }
+      .g1_top{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 170px;
+        img{
+          width: 136px;
+          height: auto;
+          margin-right: 20px;
+        }
+        span{
+          font-size: 72px;
+          font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+          font-weight: bold;
+          color: #333E75;
+          line-height: 1;
+        }
+      }
+      .g1_top1{
+        text-align: center;
+        font-size: 52px;
+        font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+        font-weight: 400;
+        color: #333E75;
+        line-height: 1;
+        margin: 50px auto;
+      }
+      .g1_top2{
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 180px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        div{
+          font-family: PingFangSC, PingFang SC;
+          font-weight: 500;
+          font-size: 28px;
+          color: #333E75;
+          line-height: 40px;
+          margin: 16px auto;
+          width: 520px;
+          text-align: left;
+          display: flex;
+          span:nth-child(1){
+            width: 144px;
+            // width: 100% !important;
+            // display: inline-block;
+          }
+          span:nth-child(2){
+            flex: 1;
+            word-break: break-all;
+            // width: 100% !important;
+            // display: inline-block;
+          }
+
+        }
+        div:nth-child(2n+1) {
+          width: 320px;
+          display: flex;
+        }
+      }
+    }
+    .group_01{
+      // 作品解读
+      .gp2_top{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 42px 0 30px 0;
+        img {
+          width: 60px;
+          height: 63px;
+        }
+        .gp2_t_txt {
+          font-family: PingFangSC, PingFang SC;
+          font-weight: 500;
+          font-size: 36px;
+          color: #2A3487;
+          line-height: 50px;
+          margin: 0 14px;
+        }
+        .gp2_t_eng {
+          font-size: 30px;
+          font-family: Montserrat;
+          font-weight: bold;
+          color: #7986a9;
+        }
+      }
+      .gp_echart{
+        width: 100%;
+        height: 600px;
+        padding: 30px 0;
+        // background: #00a5ff;
+        position: relative;
+        // margin-bottom: -10px;
+        .gp_ect_3d{
+          margin: -40px auto 0;
+          width: 980px;
+          height: 560px;
+          // background: #5e6c87;
+          .myChartPie{
+            width: 980px;
+            height: 560px;
+          }
+        }
+        .gp_ect_2d{
+          position: absolute;
+          right: 20px;
+          bottom: -60px;
+          width: 200px;
+          height: 200px;
+          // background: #2A3487;
+          .myChartYes{
+            width: 200px;
+            height: 200px;
+          }
+        }
+      }
+
+      .gp_title{
+        padding: 0 68px;
+        .gp_head{
+          font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+          font-weight: 500;
+          font-size: 28px;
+          color: #333E75;
+          line-height: 52px;
+          text-align: left;
+        }
+        .gp_bird_box{
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+          .gp_bird{
+            width: 552px;
+            height: auto;
+            margin: 0 auto;
+            img{
+              display: block;
+              width: 552px;
+              height: auto;
+            }
+            div{
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 400;
+              font-size: 24px;
+              color: #333E75;
+              line-height: 32px;
+              height: 64px;
+              margin: 15px 0;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              text-overflow: ellipsis;
+
+            }
+          }
+        }
+        
+        .gp_txt{
+          font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+          font-weight: 400;
+          font-size: 24px;
+          color: #333E75;
+          line-height: 52px;
+          text-align: left;
+          word-break: break-all;
+          p{
+            span{
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 400;
+              font-size: 24px;
+              color: #333E75;
+              line-height: 52px;
+            }
+          }
+        }
+        .gp_exl{
+          width: 100%;
+          border: 1px solid #A6ACCC;
+          border-bottom: 0;
+          border-right: 0;
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 10px;
+          .gp_con {
+            width: 100%;
+            border: 1px solid #A6ACCC;
+            border-top: 0;
+            border-left: 0;
+            height: 60px;
+            display: flex;
+            div{
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 16px;
+              color: #333E75;
+              height: 100%;
+              line-height: 1.2;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-right: 1px solid #A6ACCC;
+              padding: 0 5px;
+            }
+            div:nth-child(1) {
+              width: 60px;
+            }
+            div:nth-child(2) {
+              width: 180px;
+            }
+            div:nth-child(3) {
+              width: 100px;
+            }
+            div:nth-child(4) {
+              width: 100px;
+            }
+            div:nth-child(5) {
+              width: 120px;
+            }
+            div:nth-child(6) {
+              width: 100px;
+            }
+            div:nth-child(7) {
+              width: 100px;
+            }
+            div:nth-child(8) {
+              flex: 1;
+              border: 0;
+              overflow: hidden;
+            }
+          }
+          .gp_con1{
+            div{
+              font-weight: 600;
+            }
+          }
+        }
+        .gp_head1{
+          padding: 6px 0 8px;
+          font-size: 19px;
+          color: #333E75;
+          line-height: 28px;
+        }
+        .gp_h_box{
+          display: flex;
+          .gp_h_bt{
+            display: flex;
+            flex: 1;
+            padding:20px 0;
+            img{
+              width: 30px;
+              height: 30px;
+              margin: 5px 10px 0 0;
+            }
+            .gp_h_txt{
+              flex: 1;
+              text-align: left;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 400;
+              font-size: 24px;
+              color: #333E75;
+              line-height: 36px;
+              
+            }
+          }
+        }
+      }
+      
+    }
+    .group_02 {
+      .gp2_main{
+        margin: 0 auto;
+        width: 1060px;
+        background: #FFFFFF;
+        box-shadow: 0px 13px 43px 0px rgba(76, 100, 132, 0.1);
+        border-radius: 4px;
+        padding: 20px 23px 30px;
+        .myChartBox{
+          position: relative;
+          margin: 20px auto 0px;
+          .myChartTips{
+            position: absolute;
+            top: 76px;
+            left: 0;
+            right: 0;
+            p{
+              font-size: 20px;
+              font-family: PingFang SC;
+              font-weight: 500;
+              color: #5E6C87;
+            }
+            p:last-child{
+              font-size: 20px;
+              font-family: Source Han Sans CN;
+              font-weight: 500;
+              color: #006cff;
+            }
+            p.c_red{
+              color: rgba(255, 42, 84, 1);
+            }
+          }
+          .myChartLab{
+            display: flex;
+            justify-content: center;
+            .mcl_span{
+              font-size: 14px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              color: #7E87A1;
+              margin: 0 14px;
+              span{
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: linear-gradient(90deg, #BABFFF, #7279FF);
+                border-radius: 50%;
+                margin-right: 8px;
+              }
+            }
+            .mcl_span1{
+              span{
+                background: linear-gradient(91deg, #4DFBFF, #00CCFF);
+              }
+            }
+          }
+        }
+        .gp2_li {
+          margin-bottom: 16px;
+          .gp2l_head {
+            display: flex;
+            align-items: center;
+            img {
+              width: 34px;
+              height: 37px;
+            }
+            span {
+              margin-left: 10px;
+              font-size: 24px;
+              font-family: Source Han Sans CN;
+              font-weight: 500;
+              color: #394b6d;
+            }
+          }
+          .gp2l_body {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-top: 20px;
+            img {
+              margin-top: 6px;
+              margin-left: 25px;
+              width: 4px;
+              height: 18px;
+              background: linear-gradient(180deg, #babfff, #7279ff);
+            }
+            .gp2lb_txt {
+              line-height: 30px;
+              margin-left: 15px;
+              font-size: 20px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #394b6d;
+              text-align: left;
+              .gp2lb_num {
+                color: #5983f7;
+              }
+              .gp3lb_num {
+                color: #ED6BB5;
+              }
+              .gp4lb_num {
+                color: #00A5FF;
+              }
+            }
+          }
+        }
+        .gp2b_tips{
+          display: flex;
+          align-items: center;
+          img{
+            width: 22px;
+            height: 26px;
+            margin-left: 46px;
+            margin-right: 10px;
+          }
           span{
             font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #394B6D;
-            flex: 1;
           }
-          .dt_blod{
-            flex: unset;
-            width: 100px;
-            font-weight: 500;
-            text-align: right;
-          }
-          .dtb_img{
-            display: flex;
-            align-items: center;
+          p{
             font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #394B6D;
-            img{
-              width: 18px;
-              margin-right: 4px;
+            line-height: 26px;
+            span{
+              font-size: 20px;
+              font-family: Source Han Sans CN;
+              font-weight: 400;
+              color: #ED6BB5;
+            }
+            label{
+              font-size: 20px;
+            }
+            .gp2bt_c{
+              color: #52BEF9;
             }
           }
-          .dt_per1{
-            width: 19px;
-            height: 20px;
-            margin-right: 10px;
+          p.c_o_my_num{
+            color: #006cff;
           }
-          .dt_per2{
-            width: 17px;
-            height: 17px;
-            margin-right: 11px;
-          }
-          .dt_per3{
-            width: 14px;
-            height: 20px;
-            margin-right: 13px;
-          }
-          .dt_per4{
-            width: 20px;
-            height: 20px;
-            margin-right: 9px;
-          }
-          .dt_per5{
-            width: 20px;
-            height: 17px;
-            margin-right: 9px;
-          }
-          .dt_per6{
-            width: 18px;
-            height: 19px;
-            margin-right: 10px;
-            margin-left: 2px;
-          }
-          .dt_per7{
-            width: 19px;
-            height: 20px;
-            margin-right: 10px;
-          }
-          .dt_per8{
-            width: 18px;
-            height: 18px;
-            margin-right: 11px;
+          p.c_red{
+            color: rgba(255, 42, 84, 1);
           }
         }
-        li:nth-child(2n+1){
-          width: 45%;
-          // padding-right:10px;
+        .dtmcl_txt{
+          text-align: left;
+          font-size: 20px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #394B6D;
+          margin-left: 82px;
+          margin-top: 10px;
         }
-        li:nth-child(2n+2){
-          width: 55%;
+        .gp_warn{
+          margin: 24px 30px;
+          ul{
+            border: 1px solid #CFE1F9;
+            li{
+              display: flex;
+              height: 50px;
+              line-height: 50px;
+              div{
+                font-size: 18px;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #607490;
+                flex: 1;
+                border-right: 1px solid #CFE1F9;
+                border-bottom: 1px solid #CFE1F9;
+              }
+              div:last-child{
+                border-right: 0;
+              }
+              .wran_col0{
+                color: #00e805 !important;
+              }
+              .wran_col1{
+                color: #ffe400 !important;
+              }
+              .wran_col2{
+                color: #fc9b2f !important;
+              }
+              .wran_col3{
+                color: #fe2727 !important;
+              }
+            }
+            li:last-child{
+              div{
+                border-bottom: 0;
+              }
+            }
+            li.gp_w_th{
+              div{
+                background: #F1F9FE;
+              }
+            }
+            li.gp_w_td{
+              height: auto;
+              line-height: 135px;
+              div{
+                span{
+                  height: 45px;
+                  line-height: 45px;
+                  display: block;
+                  font-family: Source Han Sans CN;
+                  font-weight: 400;
+                  color: #848DA0;
+                  border-bottom: 1px solid #CFE1F9;
+                }
+                span:last-child{
+                  border-bottom: 0
+                }
+                .gp_w_ll{
+                  display: flex !important;
+                  label{
+                    flex: 1;
+                    font-size: 16px;
+                  }
+                  label:first-child{
+                    border-right: 1px solid #CFE1F9;
+                  }
+                }
+              }
+            }
+          }
         }
-        // li:nth-child(3n+3){
-        //   width: 40%;
-        // }
       }
     }
+    // .name-style {
+    //   text-align: center;
+    //   font-size: 20px;
+    //   font-weight: bold;
+    //   margin-bottom: 20px;
+    // }
   }
-}
+  
+// .table-class {
+//   display: grid;
+//   background-color: #fff;
+//   width: 1191px;
+//   box-sizing: border-box;
+//   margin: 0 auto;
+//   transform: scale(0.8);
+//   transform-origin: 0 0;
+// }
+
+// .table-style {
+//   border-collapse: collapse;
+//   width: 1190.71px;
+//   height: 1684px;
+//   text-align: center;
+//   position: relative;
+//   .shui_bg{
+//     position: absolute;
+//     margin: auto;
+//     left: 0;
+//     right: 0;
+//     top: 800px;
+//     bottom: 0;
+//     width: 346px;
+//     height: 109px;
+//   }
+//   td,
+//   th {
+//     padding: 10px;
+//     font-size: 15px;
+//     border: 1px solid black;
+//   }
+//   .td-bg {
+//     background: #ccc;
+//   }
+// }
+// .group_01 {
+//   width: 1190.71px;
+//   height: 1684px;
+//   background: linear-gradient(214deg, rgba(232, 220, 252, 0.3), rgba(232, 220, 252, 0.3));
+//   .gp_01_bg{
+//     width: 1190.71px;
+//     height: 1684px;
+//   }
+//   .gp_01_box{
+//     position: absolute;
+//     top: 739px;
+//     left: 67px;
+//     width: 1058px;
+//     height: 270px;
+//     background: #FFFFFF;
+//     box-shadow: 0px 13px 54px 0px rgba(76, 100, 132, 0.19);
+//     border-radius: 10px;
+//     display: flex;
+//     padding: 20px;
+//     align-items: center;
+//     .gp_01_photo{
+//       margin-right: 21px;
+//       width: 106px;
+//       height: 106px;
+//       box-shadow: 0px 2px 16px 0px rgba(73, 149, 229, 0.27);
+//       border-radius: 50%;
+//       img{
+//         width: 100%;
+//         height: 100%;
+//       }
+//     }
+//     .gp_01_msg{
+//       width: 891px;
+//       height: 240px;
+//       ul{
+//         display: flex;
+//         height: 100%;
+//         flex-wrap: wrap;
+//         padding: 30px 0;
+//         li{
+//           text-align: left;
+//           display: flex;
+//           align-items: center;
+//           span{
+//             font-size: 20px;
+//             font-family: Source Han Sans CN;
+//             font-weight: 400;
+//             color: #394B6D;
+//             flex: 1;
+//           }
+//           .dt_blod{
+//             flex: unset;
+//             width: 100px;
+//             font-weight: 500;
+//             text-align: right;
+//           }
+//           .dtb_img{
+//             display: flex;
+//             align-items: center;
+//             font-size: 20px;
+//             font-family: Source Han Sans CN;
+//             font-weight: 400;
+//             color: #394B6D;
+//             img{
+//               width: 18px;
+//               margin-right: 4px;
+//             }
+//           }
+//           .dt_per1{
+//             width: 19px;
+//             height: 20px;
+//             margin-right: 10px;
+//           }
+//           .dt_per2{
+//             width: 17px;
+//             height: 17px;
+//             margin-right: 11px;
+//           }
+//           .dt_per3{
+//             width: 14px;
+//             height: 20px;
+//             margin-right: 13px;
+//           }
+//           .dt_per4{
+//             width: 20px;
+//             height: 20px;
+//             margin-right: 9px;
+//           }
+//           .dt_per5{
+//             width: 20px;
+//             height: 17px;
+//             margin-right: 9px;
+//           }
+//           .dt_per6{
+//             width: 18px;
+//             height: 19px;
+//             margin-right: 10px;
+//             margin-left: 2px;
+//           }
+//           .dt_per7{
+//             width: 19px;
+//             height: 20px;
+//             margin-right: 10px;
+//           }
+//           .dt_per8{
+//             width: 18px;
+//             height: 18px;
+//             margin-right: 11px;
+//           }
+//         }
+//         li:nth-child(2n+1){
+//           width: 45%;
+//           // padding-right:10px;
+//         }
+//         li:nth-child(2n+2){
+//           width: 55%;
+//         }
+//         // li:nth-child(3n+3){
+//         //   width: 40%;
+//         // }
+//       }
+//     }
+//   }
+// }
 
 .group_02 {
   background: linear-gradient(214deg, rgba(232, 220, 252, 0.3), rgba(252, 243, 254, 0.3));
@@ -3295,234 +4303,234 @@ export default {
       }
     }
   }
-  .gp2_main{
-    margin: 0 auto;
-    width: 1060px;
-    background: #FFFFFF;
-    box-shadow: 0px 13px 43px 0px rgba(76, 100, 132, 0.1);
-    border-radius: 4px;
-    padding: 20px 23px 30px;
-    .myChartBox{
-      position: relative;
-      margin: 20px auto 0px;
-      .myChartTips{
-        position: absolute;
-        top: 76px;
-        left: 0;
-        right: 0;
-        p{
-          font-size: 20px;
-          font-family: PingFang SC;
-          font-weight: 500;
-          color: #5E6C87;
-        }
-        p:last-child{
-          font-size: 20px;
-          font-family: Source Han Sans CN;
-          font-weight: 500;
-          color: #006cff;
-        }
-        p.c_red{
-          color: rgba(255, 42, 84, 1);
-        }
-      }
-      .myChartLab{
-        display: flex;
-        justify-content: center;
-        .mcl_span{
-          font-size: 14px;
-          font-family: PingFang SC;
-          font-weight: 400;
-          color: #7E87A1;
-          margin: 0 14px;
-          span{
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(90deg, #BABFFF, #7279FF);
-            border-radius: 50%;
-            margin-right: 8px;
-          }
-        }
-        .mcl_span1{
-          span{
-            background: linear-gradient(91deg, #4DFBFF, #00CCFF);
-          }
-        }
-      }
-    }
-    .gp2_li {
-      margin-bottom: 16px;
-      .gp2l_head {
-        display: flex;
-        align-items: center;
-        img {
-          width: 34px;
-          height: 37px;
-        }
-        span {
-          margin-left: 10px;
-          font-size: 24px;
-          font-family: Source Han Sans CN;
-          font-weight: 500;
-          color: #394b6d;
-        }
-      }
-      .gp2l_body {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        margin-top: 20px;
-        img {
-          margin-top: 6px;
-          margin-left: 25px;
-          width: 4px;
-          height: 18px;
-          background: linear-gradient(180deg, #babfff, #7279ff);
-        }
-        .gp2lb_txt {
-          line-height: 30px;
-          margin-left: 15px;
-          font-size: 20px;
-          font-family: Source Han Sans CN;
-          font-weight: 400;
-          color: #394b6d;
-          text-align: left;
-          .gp2lb_num {
-            color: #5983f7;
-          }
-          .gp3lb_num {
-            color: #ED6BB5;
-          }
-          .gp4lb_num {
-            color: #00A5FF;
-          }
-        }
-      }
-    }
-    .gp2b_tips{
-      display: flex;
-      align-items: center;
-      img{
-        width: 22px;
-        height: 26px;
-        margin-left: 46px;
-        margin-right: 10px;
-      }
-      span{
-        font-size: 20px;
-        font-family: Source Han Sans CN;
-        font-weight: 400;
-      }
-      p{
-        font-size: 20px;
-        font-family: Source Han Sans CN;
-        font-weight: 400;
-        color: #394B6D;
-        line-height: 26px;
-        span{
-          font-size: 20px;
-          font-family: Source Han Sans CN;
-          font-weight: 400;
-          color: #ED6BB5;
-        }
-        label{
-          font-size: 20px;
-        }
-        .gp2bt_c{
-          color: #52BEF9;
-        }
-      }
-      p.c_o_my_num{
-        color: #006cff;
-      }
-      p.c_red{
-        color: rgba(255, 42, 84, 1);
-      }
-    }
-    .dtmcl_txt{
-      text-align: left;
-      font-size: 20px;
-      font-family: Source Han Sans CN;
-      font-weight: 400;
-      color: #394B6D;
-      margin-left: 82px;
-      margin-top: 10px;
-    }
-    .gp_warn{
-      margin: 24px 30px;
-      ul{
-        border: 1px solid #CFE1F9;
-        li{
-          display: flex;
-          height: 50px;
-          line-height: 50px;
-          div{
-            font-size: 18px;
-            font-family: Source Han Sans CN;
-            font-weight: 400;
-            color: #607490;
-            flex: 1;
-            border-right: 1px solid #CFE1F9;
-            border-bottom: 1px solid #CFE1F9;
-          }
-          div:last-child{
-            border-right: 0;
-          }
-          .wran_col0{
-            color: #00e805 !important;
-          }
-          .wran_col1{
-            color: #ffe400 !important;
-          }
-          .wran_col2{
-            color: #fc9b2f !important;
-          }
-          .wran_col3{
-            color: #fe2727 !important;
-          }
-        }
-        li:last-child{
-          div{
-            border-bottom: 0;
-          }
-        }
-        li.gp_w_th{
-          div{
-            background: #F1F9FE;
-          }
-        }
-        li.gp_w_td{
-          height: auto;
-          line-height: 135px;
-          div{
-            span{
-              height: 45px;
-              line-height: 45px;
-              display: block;
-              font-family: Source Han Sans CN;
-              font-weight: 400;
-              color: #848DA0;
-              border-bottom: 1px solid #CFE1F9;
-            }
-            span:last-child{
-              border-bottom: 0
-            }
-            .gp_w_ll{
-              display: flex !important;
-              label{
-                flex: 1;
-                font-size: 16px;
-              }
-              label:first-child{
-                border-right: 1px solid #CFE1F9;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  // .gp2_main{
+  //   margin: 0 auto;
+  //   width: 1060px;
+  //   background: #FFFFFF;
+  //   box-shadow: 0px 13px 43px 0px rgba(76, 100, 132, 0.1);
+  //   border-radius: 4px;
+  //   padding: 20px 23px 30px;
+  //   .myChartBox{
+  //     position: relative;
+  //     margin: 20px auto 0px;
+  //     .myChartTips{
+  //       position: absolute;
+  //       top: 76px;
+  //       left: 0;
+  //       right: 0;
+  //       p{
+  //         font-size: 20px;
+  //         font-family: PingFang SC;
+  //         font-weight: 500;
+  //         color: #5E6C87;
+  //       }
+  //       p:last-child{
+  //         font-size: 20px;
+  //         font-family: Source Han Sans CN;
+  //         font-weight: 500;
+  //         color: #006cff;
+  //       }
+  //       p.c_red{
+  //         color: rgba(255, 42, 84, 1);
+  //       }
+  //     }
+  //     .myChartLab{
+  //       display: flex;
+  //       justify-content: center;
+  //       .mcl_span{
+  //         font-size: 14px;
+  //         font-family: PingFang SC;
+  //         font-weight: 400;
+  //         color: #7E87A1;
+  //         margin: 0 14px;
+  //         span{
+  //           display: inline-block;
+  //           width: 8px;
+  //           height: 8px;
+  //           background: linear-gradient(90deg, #BABFFF, #7279FF);
+  //           border-radius: 50%;
+  //           margin-right: 8px;
+  //         }
+  //       }
+  //       .mcl_span1{
+  //         span{
+  //           background: linear-gradient(91deg, #4DFBFF, #00CCFF);
+  //         }
+  //       }
+  //     }
+  //   }
+  //   .gp2_li {
+  //     margin-bottom: 16px;
+  //     .gp2l_head {
+  //       display: flex;
+  //       align-items: center;
+  //       img {
+  //         width: 34px;
+  //         height: 37px;
+  //       }
+  //       span {
+  //         margin-left: 10px;
+  //         font-size: 24px;
+  //         font-family: Source Han Sans CN;
+  //         font-weight: 500;
+  //         color: #394b6d;
+  //       }
+  //     }
+  //     .gp2l_body {
+  //       display: flex;
+  //       align-items: flex-start;
+  //       justify-content: flex-start;
+  //       margin-top: 20px;
+  //       img {
+  //         margin-top: 6px;
+  //         margin-left: 25px;
+  //         width: 4px;
+  //         height: 18px;
+  //         background: linear-gradient(180deg, #babfff, #7279ff);
+  //       }
+  //       .gp2lb_txt {
+  //         line-height: 30px;
+  //         margin-left: 15px;
+  //         font-size: 20px;
+  //         font-family: Source Han Sans CN;
+  //         font-weight: 400;
+  //         color: #394b6d;
+  //         text-align: left;
+  //         .gp2lb_num {
+  //           color: #5983f7;
+  //         }
+  //         .gp3lb_num {
+  //           color: #ED6BB5;
+  //         }
+  //         .gp4lb_num {
+  //           color: #00A5FF;
+  //         }
+  //       }
+  //     }
+  //   }
+  //   .gp2b_tips{
+  //     display: flex;
+  //     align-items: center;
+  //     img{
+  //       width: 22px;
+  //       height: 26px;
+  //       margin-left: 46px;
+  //       margin-right: 10px;
+  //     }
+  //     span{
+  //       font-size: 20px;
+  //       font-family: Source Han Sans CN;
+  //       font-weight: 400;
+  //     }
+  //     p{
+  //       font-size: 20px;
+  //       font-family: Source Han Sans CN;
+  //       font-weight: 400;
+  //       color: #394B6D;
+  //       line-height: 26px;
+  //       span{
+  //         font-size: 20px;
+  //         font-family: Source Han Sans CN;
+  //         font-weight: 400;
+  //         color: #ED6BB5;
+  //       }
+  //       label{
+  //         font-size: 20px;
+  //       }
+  //       .gp2bt_c{
+  //         color: #52BEF9;
+  //       }
+  //     }
+  //     p.c_o_my_num{
+  //       color: #006cff;
+  //     }
+  //     p.c_red{
+  //       color: rgba(255, 42, 84, 1);
+  //     }
+  //   }
+  //   .dtmcl_txt{
+  //     text-align: left;
+  //     font-size: 20px;
+  //     font-family: Source Han Sans CN;
+  //     font-weight: 400;
+  //     color: #394B6D;
+  //     margin-left: 82px;
+  //     margin-top: 10px;
+  //   }
+  //   .gp_warn{
+  //     margin: 24px 30px;
+  //     ul{
+  //       border: 1px solid #CFE1F9;
+  //       li{
+  //         display: flex;
+  //         height: 50px;
+  //         line-height: 50px;
+  //         div{
+  //           font-size: 18px;
+  //           font-family: Source Han Sans CN;
+  //           font-weight: 400;
+  //           color: #607490;
+  //           flex: 1;
+  //           border-right: 1px solid #CFE1F9;
+  //           border-bottom: 1px solid #CFE1F9;
+  //         }
+  //         div:last-child{
+  //           border-right: 0;
+  //         }
+  //         .wran_col0{
+  //           color: #00e805 !important;
+  //         }
+  //         .wran_col1{
+  //           color: #ffe400 !important;
+  //         }
+  //         .wran_col2{
+  //           color: #fc9b2f !important;
+  //         }
+  //         .wran_col3{
+  //           color: #fe2727 !important;
+  //         }
+  //       }
+  //       li:last-child{
+  //         div{
+  //           border-bottom: 0;
+  //         }
+  //       }
+  //       li.gp_w_th{
+  //         div{
+  //           background: #F1F9FE;
+  //         }
+  //       }
+  //       li.gp_w_td{
+  //         height: auto;
+  //         line-height: 135px;
+  //         div{
+  //           span{
+  //             height: 45px;
+  //             line-height: 45px;
+  //             display: block;
+  //             font-family: Source Han Sans CN;
+  //             font-weight: 400;
+  //             color: #848DA0;
+  //             border-bottom: 1px solid #CFE1F9;
+  //           }
+  //           span:last-child{
+  //             border-bottom: 0
+  //           }
+  //           .gp_w_ll{
+  //             display: flex !important;
+  //             label{
+  //               flex: 1;
+  //               font-size: 16px;
+  //             }
+  //             label:first-child{
+  //               border-right: 1px solid #CFE1F9;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
 .group_03{
   background: #F2FAFF;
