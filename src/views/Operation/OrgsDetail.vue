@@ -31,7 +31,7 @@
               v-model="formAddOrgs.name"
               placeholder="请输入机构名称"
             ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
+            <div style="width:3rem;height:0.36rem"></div>
             <div class="tip_left" v-show="nameFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
@@ -45,7 +45,7 @@
               v-model="formAddOrgs.nameAbb"
               placeholder="请输入机构ID"
             ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
+            <div style="width:3rem;height:0.36rem"></div>
             <div class="tip_left" v-show="nameAbbFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
@@ -114,10 +114,6 @@
               placeholder="请输入机构网址"
             ></el-input>
           </el-form-item>
-          <div class="person_msg">
-            <img src="../../assets/images/personPass.png" alt="" />
-            辅助信息
-          </div>
           <el-form-item label="备注：">
             <el-input
               type="textarea"
@@ -129,7 +125,7 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item class="sub_center">
+          <el-form-item class="sub_center" style="margin-left: -0.5rem;">
             <el-button type="primary" @click="addSubmit">保存</el-button>
             <el-button type="primary" class="resets" @click="goBack"
               >取消</el-button
@@ -345,6 +341,16 @@ export default {
 .add_user_wrap {
   text-align: left;
   margin: 0 0.22rem;
+  .wd_box{
+    .el-checkbox__label {
+      padding-left: 0.06rem !important;
+      font-size: 0.16rem !important;
+      line-height: 0.36rem;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #7786ac !important;
+    }
+  }
   //主要内容区
   .person_main {
     background: #ffffff;
@@ -395,11 +401,11 @@ export default {
       //     padding: 0.09rem 0.1rem;
       //   }
       // }
-      
+
       // 左三角
       .tip_left {
         position: absolute;
-        left: 3.6rem;
+        left: 6.1rem;
         top: 0;
         padding: 0.05rem 0.1rem;
         font-size: 0.14rem;
@@ -435,9 +441,12 @@ export default {
       }
       .tip_msg {
         font-size: 0.14rem;
+        display: flex;
+        align-items: center;
         img {
           width: 0.12rem;
           height: 0.12rem;
+          margin-right: 0.05rem;
         }
       }
       // 表单
@@ -510,15 +519,15 @@ export default {
       .adress-select{
         .el-input{
           height: 0.36rem;
-          width: 1.1rem;
+          width: 1.93rem;
         }
       }
       .el-input {
         height: 0.36rem;
-        width: 3.5rem;
+        width: 6rem;
       }
       .el-form-item{
-        margin-left: -0.8rem;
+        margin-left: -2.2rem;
       }
       .el-form-item__label {
         width: 2rem !important;
@@ -538,7 +547,7 @@ export default {
           align-items: center;
         }
         .el-textarea {
-          width: 3.5rem;
+          width: 6rem;
         }
         .el-input--prefix .el-input__inner{
           padding-left: 0.3rem;

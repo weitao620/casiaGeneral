@@ -1381,6 +1381,9 @@ export default {
         col:nth-child(6) {
           width: 1.2rem;
         }
+        // col:nth-child(7) {
+        //   width: 1rem ;
+        // }
         col:nth-child(8) {
           width: 1rem;
         }

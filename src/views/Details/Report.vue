@@ -210,7 +210,8 @@
           </div>
         </div>
       </div>
-
+      
+      <!-- <div class="circle" style="width: 100px;height: 133.33px;border-radius: 50%;background-color: blue;display: inline-block;"></div> -->
       <div class="drwc_box" ref="parts0">
         <div class="drwc_b_person">
           <div class="dt_person_wt">
@@ -412,7 +413,7 @@
               
             </div>
             <div class="drwc_b_ys" v-if="jjName != ''">
-              <p><span>优势评估：</span>该受测者在{{jjName}}上得分最高，表现最好。</p>
+              <p><span>优势评估：</span>该受测者在{{jjName}}得分最高，表现最好。</p>
             </div>
           </div>
         </div>
@@ -553,21 +554,27 @@
               <div class="drwc_bt_right drwc_bt_bottom">
                 <div class="drwc_btr">
                   <div class="wdrj_box">
-                    <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == jjActNum ? 'block' : 'none'}" v-for="(item, index) in jjList" :key="item.id">
+                    <div class="wdrjs_li wdrj_main" :style="{'margin-bottom': '0.3rem', display: item.flag == 1 && item.id == jjActNum ? 'block' : 'none'}" v-for="(item, index) in jjList" :key="item.id">
                       <div class="wdrj_title">
                         <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
-                        <img v-if="item.result.indexOf('较低') != -1" style="width: 0.2rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
-                        <img v-if="item.result.indexOf('中等') != -1" style="width: 0.42rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
-                        <img v-if="item.result.indexOf('较高') != -1" style="width: 0.64rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                        <img v-if="item.result.indexOf('较低') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                        <img v-if="item.result.indexOf('中等') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                        <img v-if="item.result.indexOf('较高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
                         <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
                       </div>
-                      <div class="dtmsb_tar" style="height: auto;">
+                      <div class="dtmsb_tar" style="height: auto;margin-top:0.24rem;margin: 0.2rem;width: auto;">
                         <div style="position:relative" id="perViolenceEchart">
-                          <img class="dengpao" v-if="item.result.indexOf('较低') != -1" src="../../assets/images/news/jiaodis.png" alt="">
+                          <!-- <img class="dengpao" v-if="item.result.indexOf('较低') != -1" src="../../assets/images/news/jiaodis.png" alt="">
                           <img class="dengpao" v-if="item.result.indexOf('中等') != -1" src="../../assets/images/news/zhongdengs.png" alt="">
                           <img class="dengpao" v-if="item.result.indexOf('较高') != -1" src="../../assets/images/news/jiaogaos.png" alt="">
-                          <img class="dengpao" v-if="item.result.indexOf('极高') != -1" src="../../assets/images/news/jigaos.png" alt="">
-                          
+                          <img class="dengpao" v-if="item.result.indexOf('极高') != -1" src="../../assets/images/news/jigaos.png" alt=""> -->
+                          <ol class="dtmsb_tu">
+                            <li v-for="(itemm, indexm) in item.subDim" :key="indexm">
+                              <img src="../../assets/images/news/dot_wz.png" alt="">
+                              <span v-if="indexm < 2">{{itemm.name}}</span>
+                              <span style="margin-left: 0.04rem;" v-else>......</span>
+                            </li>
+                          </ol>
                         </div>
                       </div>
                       <div class="wdrj_suger" style="margin-top:0rem">
@@ -603,6 +610,148 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="drwc_b_ys drwc_b_ysp" style="border-top: 0.01rem solid #EAEBF1;" v-show="jjName != ''">
+              <div class="drwc_sp_head">积极心理品质各维度表现情况</div>
+              <div class="myChartZhu" ref="myChartZhuYs" id="myChartZhuYs"></div>
+            </div>
+            <div class="drwc_b_ys drwc_b_ysp" v-if="jjName != ''">
+              <p>
+                <img src="../../assets/images/news/dengpao_wz.png" alt="">
+                该受测者在{{jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。</p>
+            </div>
+          </div>
+        </div>
+        <div class="drwc_box" ref="parts4" v-if="jjList.length > 0">
+          <div class="drwc_common">
+            <div class="drwc_bw_head">
+              <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="">
+              <span>积极心理品质分析</span>
+            </div>
+            <div class="drwc_bw_shu">
+              <div class="tree_box">
+                <!-- <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                <div class="tb_s_c11"></div>
+                <div class="tb_s_c12"></div>
+                <div class="tb_s_c13"></div> -->
+                <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                <div class="tb_s_c11">
+                  {{ jjList.length > 3 ? jjList[3].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c12">
+                  {{ jjList.length > 3 ? jjList[3].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c13">
+                  {{ jjList.length > 3 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box11', { cir_box12: jjList.length > 3 && jjList[3].result.indexOf('中等') != -1 }, { cir_box13: jjList.length > 3 && jjList[3].result.indexOf('较高') != -1 }, { cir_box14: jjList.length > 3 && jjList[3].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="jjList.length > 3"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="jjList.length > 3">
+                      <span v-for="item in jjList[3].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                <div class="tb_s_c21"></div>
+                <div class="tb_s_c22"></div>
+                <div class="tb_s_c23"></div> -->
+                <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                <div class="tb_s_c21">
+                  {{ jjList.length > 1 ? jjList[1].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c22">
+                  {{ jjList.length > 1 ? jjList[1].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c23">
+                  {{ jjList.length > 1 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box21', { cir_box22: jjList.length > 1 && jjList[1].result.indexOf('中等') != -1 }, { cir_box23: jjList.length > 1 && jjList[1].result.indexOf('较高') != -1 }, { cir_box24: jjList.length > 1 && jjList[1].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="jjList.length > 1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="jjList.length > 1">
+                      <span v-for="item in jjList[1].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                <div class="tb_s_c31"></div>
+                <div class="tb_s_c32"></div>
+                <div class="tb_s_c33"></div> -->
+                <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                <div class="tb_s_c31">
+                  {{ jjList.length > 0 ? jjList[0].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c32">
+                  {{ jjList.length > 0 ? jjList[0].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c33">
+                  {{ jjList.length > 0 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box31', { cir_box32: jjList.length > 0 && jjList[0].result.indexOf('中等') != -1 }, { cir_box33: jjList.length > 0 && jjList[0].result.indexOf('较高') != -1 }, { cir_box34: jjList.length > 0 && jjList[0].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="jjList.length > 0"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="jjList.length > 0">
+                      <span v-for="item in jjList[0].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                <div class="tb_s_c41"></div>
+                <div class="tb_s_c42"></div>
+                <div class="tb_s_c43"></div> -->
+                <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                <div class="tb_s_c41">
+                  {{ jjList.length > 2 ? jjList[2].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c42">
+                  {{ jjList.length > 2 ? jjList[2].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c43">
+                  {{ jjList.length > 2 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box41', { cir_box42: jjList.length > 2 && jjList[2].result.indexOf('中等') != -1 }, { cir_box43: jjList.length > 2 && jjList[2].result.indexOf('较高') != -1 }, { cir_box44: jjList.length > 2 && jjList[2].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="jjList.length > 2"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="jjList.length > 2">
+                      <span v-for="item in jjList[2].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                <div class="tb_s_c51"></div>
+                <div class="tb_s_c52"></div>
+                <div class="tb_s_c53"></div> -->
+                <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                <div class="tb_s_c51">
+                  {{ jjList.length > 4 ? jjList[4].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c52">
+                  {{ jjList.length > 4 ? jjList[4].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c53">
+                  {{ jjList.length > 4 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box51', { cir_box52: jjList.length > 4 && jjList[4].result.indexOf('中等') != -1 }, { cir_box53: jjList.length > 4 && jjList[4].result.indexOf('较高') != -1 }, { cir_box54: jjList.length > 4 && jjList[4].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="jjList.length > 4"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="jjList.length > 4">
+                      <span v-for="item in jjList[4].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="drwc_b_ys drwc_b_ysp" v-if="jjName != ''">
+              <p>
+                <img src="../../assets/images/news/dengpao_wz.png" alt="">
+                该受测者在{{jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。</p>
             </div>
           </div>
         </div>
@@ -784,7 +933,8 @@
               >
                 <el-carousel-item v-for="item in imgList" :key="item.name">
                   <div class="dtm_img_box">
-                    <img class="dtmi_img" :src="item.img" alt="" />
+                    <img v-if="item.img != ''" class="dtmi_img" :src="'data:image;base64,' + item.img" alt="" />
+                    <img v-else class="dtmi_img" src="../../assets/images/report/t001.png" alt="" />
                     <div class="dtmi_txt">{{ item.name }}</div>
                   </div>
                 </el-carousel-item>
@@ -908,7 +1058,7 @@
                 </el-table-column>
               </el-table>
             </template>
-            <div class="table_page">
+            <div class="table_page" v-if="total > 0">
               <div class="page_total">
                 共 <span>{{ total }}</span> 条
               </div>
@@ -1111,6 +1261,7 @@ export default {
       myChartRg6: "",
       myChartRose: "",
       myChartZhu: "",
+      myChartZhuYs: "",
       myTxtFlag: false,
       warningList: [],
       sysList: [],
@@ -1359,6 +1510,7 @@ export default {
         
         this.myChartRose.resize();
         this.myChartZhu.resize();
+        this.myChartZhuYs.resize();
       }, 100);
     });
   },
@@ -2139,10 +2291,21 @@ export default {
                 return Number(a.total) - Number(b.total);
               });
               console.log(jjArr)
-              this.jjName = jjArr[0].title
+              // jjArr = jjArr.concat(jjArr)
+              this.jjName = jjArr[0].title + '上'
+              if (jjArr.length > 1) {
+                if (jjArr[1].total == jjArr[0].total) {
+                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
+                }
+              }
+              if (jjArr.length > 2) {
+                if (jjArr[2].total == jjArr[0].total) {
+                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
+                }
+              }
             }
+            data.data.jjName = this.jjName
             
-
             // 大五人格
             let personality = {}
             if (data.data.personality) {
@@ -2243,7 +2406,7 @@ export default {
             that.imgList = [
               {
                 name: "鸟瞰图",
-                img: "data:image;base64," + this.details.birdView
+                img: ""
               },
               {
                 name: "西侧俯身45度视图",
@@ -2676,11 +2839,11 @@ export default {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                       {
                         offset: 0,
-                        color: 'rgba(255, 116, 138, 0.72)'
+                        color: '#FF748A'
                       },
                       {
                         offset: 1,
-                        color: 'rgba(251, 113, 113, 0.72)'
+                        color: '#FFC7B6'
                       }
                     ])
                   }
@@ -3958,6 +4121,111 @@ export default {
         //     }
         //   ]
         // });
+        let xYs = []
+        let yYs = []
+        for (let i in that.jjList) {
+          xYs.push(that.jjList[i].title)
+          yYs.push(that.jjList[i].total)
+        }
+        this.myChartZhuYs = echarts.init(this.$refs.myChartZhuYs);
+        this.myChartZhuYs.setOption({
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            padding: nowSize(10),
+            textStyle: {
+              color: "rgba(42, 52, 135, 0.80)",
+              fontSize: nowSize(16)
+            },
+            formatter: function(params) {
+              console.log(params)
+              var result =
+                '<span style="display:inline-block;margin-right:0.04rem;border-radius:0.1rem;width:0.1rem;height:0.1rem;background: rgba(214, 182, 246, 1)");></span>' +
+                '<span style="color:#7786AC;font-size:0.14rem">' +
+                params[0].name +
+                "</span>" +
+                ':<span style="color:#7786AC;display:inline-block;font-weight:blod;margin-left:0.05rem;font-size:0.14rem;">' +
+                params[0].value +
+                "</span>";
+              return result;
+            }
+          },
+
+          grid: {
+            top: "6%",
+            left: "1%",
+            right: "1%",
+            bottom: "3%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: xYs,
+              axisLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: nowSize(16),
+                color: "rgba(42,52,135,0.8)",
+                showMaxLabel: true
+              },
+              axisTick: {
+                show: false,
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value",
+              min: 0,
+              max: 9,
+              splitLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: nowSize(16),
+                color: "rgba(42,52,135,0.8)",
+                showMaxLabel: true
+              },
+              minInterval: 3
+            }
+          ],
+          series: [
+            {
+              name: "维度总分",
+              type: "bar",
+              barMaxWidth: nowSize(14),
+              label: {
+                show: true, // 显示数值
+                position: 'top', // 在顶部显示
+                textStyle: {
+                  color: 'rgba(42,52,135,0.8)', // 标签字体颜色
+                  fontSize: nowSize(16) // 标签字体大小
+                }
+              },
+              itemStyle: {
+                normal: {
+                  barBorderRadius: [nowSize(7), nowSize(7), nowSize(7), nowSize(7)],
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(214, 182, 246, 1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(225, 203, 246, 1)"
+                    }
+                  ])
+                }
+              },
+              data: yYs
+            }
+          ]
+        });
         this.myChartRg2 = echarts.init(document.getElementById("myChartRg2"));
         this.myChartRg2.setOption({
           tooltip: {
@@ -5191,6 +5459,14 @@ export default {
             name: "使用数量",
             type: "bar",
             barMaxWidth: nowSize(14),
+            // label: {
+            //   show: true, // 显示数值
+            //   position: 'top', // 在顶部显示
+            //   textStyle: {
+            //     color: 'rgba(42,52,135,0.8)', // 标签字体颜色
+            //     fontSize: nowSize(14) // 标签字体大小
+            //   }
+            // },
             itemStyle: {
               normal: {
                 barBorderRadius: [nowSize(7), nowSize(7), nowSize(7), nowSize(7)],
@@ -5215,6 +5491,9 @@ export default {
 };
 </script>
 <style >
+  .el-table__empty-text{
+    line-height: 2rem;
+  }
   .el-table::before{
     background: transparent
   }
@@ -5417,6 +5696,7 @@ export default {
       .drwc_common{
         border: 0.04rem solid #FFFFFF;
         border-radius: 0.2rem;
+
         .drwc_bw_head {
           display: flex;
           justify-content: center;
@@ -6081,6 +6361,29 @@ export default {
                   width: 10.4rem;
                   margin: 0 auto 0.4rem;
                   padding: 0;
+                  .dtmsb_tar{
+                    ol.dtmsb_tu{
+                      margin: 0;
+                      padding: 0;
+                      li{
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        margin: 0.08rem 0;
+                        img{
+                          width: 0.18rem;
+                          height: 0.18rem;
+                          margin-right: 0.06rem;
+                        }
+                        span{
+                          font-family: PingFangSC, PingFang SC;
+                          font-weight: 400;
+                          font-size: 0.18rem;
+                          color: #2A3487;
+                        }
+                      }
+                    }
+                  }
                   .wdrj_line{
                     display: flex;
                     align-items: center;
@@ -6190,18 +6493,923 @@ export default {
           width: auto;
           padding: 0rem 0.4rem 0.3rem;
           display: flex;
+          .myChartZhu {
+            margin: 0.3rem 0 0;
+            width: 10.4rem;
+            height: 1.6rem;
+          }
           p{
             font-family: SourceHanSansCN, SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #333E75;
             padding: 0.3rem 0 0;
-            border-top: 0.01rem solid #ccc;
             width: 100%;
             text-align: left;
           }
           span{
             font-weight: 500;
+          }
+        }
+        .drwc_bw_shu{
+          .tree_box{
+            position: relative;
+            width: 4.62rem;
+            height: 5.49rem;
+            margin: 0.28rem auto 0.2rem;
+            background: url(../../assets/images/news/tree.png) no-repeat center;
+            background-size: 100% 100%;
+            .tb_l1{
+              width: 0.51rem;
+              height: 0.82rem;
+              position: absolute;
+              top: 2.34rem;
+              left: 0.06rem;
+            }
+            .tb_l2{
+              width: 0.78rem;
+              height: 0.75rem;
+              position: absolute;
+              top: 1.03rem;
+              left: 0.92rem;
+            }
+            .tb_l3{
+              width: 0.82rem;
+              height: 0.67rem;
+              position: absolute;
+              top: 0.7rem;
+              left: 2.41rem;
+            }
+            .tb_l4{
+              width: 0.74rem;
+              height: 0.86rem;
+              position: absolute;
+              top: 1.37rem;
+              left: 3.58rem;
+            }
+            .tb_l5{
+              width: 0.51rem;
+              height: 0.82rem;
+              position: absolute;
+              top: 2.46rem;
+              right: -0.37rem;
+            }
+
+            .tb_s_c11{
+              position: absolute;
+              top: 2rem;
+              left: 0.18rem;
+              width: 0.38rem;
+              height: 0.38rem;
+              border-radius: 50%;
+              background: #9EC870;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c12{
+              position: absolute;
+              top: 2.34rem;
+              left: -0.24rem;
+              width: 0.38rem;
+              height: 0.38rem;
+              border-radius: 50%;
+              background: #78CFAE;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c13{
+              position: absolute;
+              top: 3.02rem;
+              left: -0.16rem;
+              width: 0.28rem;
+              height: 0.28rem;
+              border-radius: 50%;
+              background: #62A77D;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.16rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              line-height: 0.2rem;
+            }
+            .cir_box11{
+              width: 0.64rem;
+              height: 0.64rem;
+              position: absolute;
+              top: 2.54rem;
+              left: 0.32rem;
+              .cir_img{
+                height: 100%;
+                width: 100%;
+                background-color: #03A667;
+                border-radius: 50%;
+                transform: rotate(0deg);
+                position: absolute;
+                clip: rect(auto, 0.32rem, 0.32rem, auto);
+              }
+              .cir_lay{
+                height: 0.58rem;
+                width: 0.58rem;
+                background-color: #D7EFEC;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.03rem;
+                left: 0.03rem;
+              }
+              .cir_cen{
+                height: 0.5rem;
+                width: 0.5rem;
+                background-color: #03A667;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.07rem;
+                left: 0.07rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 500;
+                font-size: 0.14rem;
+                color: #FFFFFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                div{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  span{
+                    width: 35%;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 500;
+                    font-size: 0.14rem;
+                    color: #FFFFFF;
+                    margin: 0 2%;
+                  }
+                  span:nth-child(2n+1) {
+                    text-align: right;
+                  }
+                  span:nth-child(2n+2) {
+                    text-align: left;
+                  }
+
+                }
+              }
+            }
+            .cir_box12 {
+              width: 0.70rem;
+              height: 0.70rem;
+              .cir_img{
+                clip: rect(0.35rem, auto, auto, auto);
+                transform: rotate(90deg);
+              }
+              .cir_lay{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+              .cir_cen{
+                height: 0.56rem;
+                width: 0.56rem;
+              }
+            }
+            .cir_box13 {
+              width: 0.78rem;
+              height: 0.78rem;
+              .cir_img{
+                clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+                transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.72rem;
+                width: 0.72rem;
+              }
+              .cir_cen{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+            }
+            .cir_box14 {
+              width: 0.98rem;
+              height: 0.98rem;
+              top: 2.5rem;
+              left: 0.3rem;
+              .cir_img{
+                transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.92rem;
+                width: 0.92rem;
+              }
+              .cir_cen{
+                height: 0.84rem;
+                width: 0.84rem;
+              }
+            }
+            .tb_s_c21{
+              position: absolute;
+              top: 1.2rem;
+              left: 0.6rem;
+              width: 0.42rem;
+              height: 0.42rem;
+              border-radius: 50%;
+              background: #FFD0A2;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              padding: 0 0.02rem;
+            }
+            .tb_s_c22{
+              position: absolute;
+              top: 1.08rem;
+              left: 1.54rem;
+              width: 0.38rem;
+              height: 0.38rem;
+              border-radius: 50%;
+              background: #FFDD66;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c23{
+              position: absolute;
+              top: 0.72rem;
+              left: 1.04rem;
+              width: 0.34rem;
+              height: 0.34rem;
+              border-radius: 50%;
+              background: #F4B36E;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.16rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              line-height: 0.26rem;
+            }
+
+            .cir_box21{
+              width: 0.64rem;
+              height: 0.64rem;
+              position: absolute;
+              top: 1.6rem;
+              left: 1.16rem;
+              .cir_img{
+                height: 100%;
+                width: 100%;
+                background-color: #FFB641;
+                border-radius: 50%;
+                transform: rotate(30deg);
+                position: absolute;
+                clip: rect(auto, 0.32rem, 0.32rem, auto);
+              }
+              .cir_lay{
+                height: 0.58rem;
+                width: 0.58rem;
+                background-color: #D7EFEC;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.03rem;
+                left: 0.03rem;
+              }
+              .cir_cen{
+                height: 0.5rem;
+                width: 0.5rem;
+                background-color: #FFB641;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.07rem;
+                left: 0.07rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 500;
+                font-size: 0.14rem;
+                color: #FFFFFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                div{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  span{
+                    width: 35%;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 500;
+                    font-size: 0.14rem;
+                    color: #FFFFFF;
+                    margin: 0 2%;
+                  }
+                  span:nth-child(2n+1) {
+                    text-align: right;
+                  }
+                  span:nth-child(2n+2) {
+                    text-align: left;
+                  }
+
+                }
+              }
+            }
+            .cir_box22 {
+              width: 0.70rem;
+              height: 0.70rem;
+              .cir_img{
+                clip: rect(0.35rem, auto, auto, auto);
+                transform: rotate(120deg);
+              }
+              .cir_lay{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+              .cir_cen{
+                height: 0.56rem;
+                width: 0.56rem;
+              }
+            }
+            .cir_box23 {
+              width: 0.78rem;
+              height: 0.78rem;
+              .cir_img{
+                clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+                // transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.72rem;
+                width: 0.72rem;
+              }
+              .cir_cen{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+            }
+            .cir_box24 {
+              width: 0.98rem;
+              height: 0.98rem;
+              top: 1.66rem;
+              left: 1rem;
+              .cir_img{
+                // transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.92rem;
+                width: 0.92rem;
+              }
+              .cir_cen{
+                height: 0.84rem;
+                width: 0.84rem;
+              }
+            }
+
+            .tb_s_c31{
+              position: absolute;
+              top: 0.69rem;
+              left: 3.08rem;
+              width: 0.50rem;
+              height: 0.50rem;
+              border-radius: 50%;
+              background: #FFAAD1;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              padding: 0 0.04rem;
+            }
+            .tb_s_c32{
+              position: absolute;
+              top: 0.70rem;
+              left: 2.12rem;
+              width: 0.44rem;
+              height: 0.44rem;
+              border-radius: 50%;
+              background: #FFB5AD;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              padding: 0 0.04rem;
+            }
+            .tb_s_c33{
+              position: absolute;
+              top: 0.31rem;
+              left: 2.65rem;
+              width: 0.42rem;
+              height: 0.42rem;
+              border-radius: 50%;
+              background: #F494A7;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.16rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              line-height: 0.32rem;
+              padding: 0 0.02rem;
+            }
+            .cir_box31{
+              width: 0.64rem;
+              height: 0.64rem;
+              position: absolute;
+              top: 1.2rem;
+              left: 2.48rem;
+              .cir_img{
+                height: 100%;
+                width: 100%;
+                background-color: #FF918C;
+                border-radius: 50%;
+                transform: rotate(62deg);
+                position: absolute;
+                clip: rect(auto, 0.32rem, 0.32rem, auto);
+              }
+              .cir_lay{
+                height: 0.58rem;
+                width: 0.58rem;
+                background-color: #D7EFEC;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.03rem;
+                left: 0.03rem;
+              }
+              .cir_cen{
+                height: 0.5rem;
+                width: 0.5rem;
+                background-color: #FF918C;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.07rem;
+                left: 0.07rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 500;
+                font-size: 0.14rem;
+                color: #FFFFFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                div{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  span{
+                    width: 35%;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 500;
+                    font-size: 0.14rem;
+                    color: #FFFFFF;
+                    margin: 0 2%;
+                  }
+                  span:nth-child(2n+1) {
+                    text-align: right;
+                  }
+                  span:nth-child(2n+2) {
+                    text-align: left;
+                  }
+
+                }
+              }
+            }
+            .cir_box32 {
+              width: 0.70rem;
+              height: 0.70rem;
+              .cir_img{
+                clip: rect(0.35rem, auto, auto, auto);
+                transform: rotate(142deg);
+              }
+              .cir_lay{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+              .cir_cen{
+                height: 0.56rem;
+                width: 0.56rem;
+              }
+            }
+            .cir_box33 {
+              width: 0.78rem;
+              height: 0.78rem;
+              .cir_img{
+                clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+                transform: rotate(44deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.72rem;
+                width: 0.72rem;
+              }
+              .cir_cen{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+            }
+            .cir_box34 {
+              width: 0.98rem;
+              height: 0.98rem;
+              top: 1.2rem;
+              left: 2.34rem;
+              .cir_img{
+                // transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.92rem;
+                width: 0.92rem;
+              }
+              .cir_cen{
+                height: 0.84rem;
+                width: 0.84rem;
+              }
+            }
+            .tb_s_c41{
+              position: absolute;
+              top: 1.65rem;
+              right: 0.02rem;
+              width: 0.42rem;
+              height: 0.42rem;
+              border-radius: 50%;
+              background: #90CEFF;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              padding: 0.02rem;
+            }
+            .tb_s_c42{
+              position: absolute;
+              top: 1.18rem;
+              left: 3.56rem;
+              width: 0.38rem;
+              height: 0.38rem;
+              border-radius: 50%;
+              background: #93B8ED;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c43{
+              position: absolute;
+              top: 1.08rem;
+              right: 0.1rem;
+              width: 0.34rem;
+              height: 0.34rem;
+              border-radius: 50%;
+              background: #60C8F2;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.16rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              line-height: 0.26rem;
+            }
+            .cir_box41{
+              width: 0.64rem;
+              height: 0.64rem;
+              position: absolute;
+              top: 2.02rem;
+              right: 0.64rem;
+              .cir_img{
+                height: 100%;
+                width: 100%;
+                background-color: #5AB4EE;
+                border-radius: 50%;
+                transform: rotate(76deg);
+                position: absolute;
+                clip: rect(auto, 0.32rem, 0.32rem, auto);
+              }
+              .cir_lay{
+                height: 0.58rem;
+                width: 0.58rem;
+                background-color: #D7EFEC;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.03rem;
+                left: 0.03rem;
+              }
+              .cir_cen{
+                height: 0.5rem;
+                width: 0.5rem;
+                background-color: #5AB4EE;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.07rem;
+                left: 0.07rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 500;
+                font-size: 0.14rem;
+                color: #FFFFFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                div{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  span{
+                    width: 35%;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 500;
+                    font-size: 0.14rem;
+                    color: #FFFFFF;
+                    margin: 0 2%;
+                  }
+                  span:nth-child(2n+1) {
+                    text-align: right;
+                  }
+                  span:nth-child(2n+2) {
+                    text-align: left;
+                  }
+
+                }
+              }
+            }
+            .cir_box42 {
+              width: 0.70rem;
+              height: 0.70rem;
+              .cir_img{
+                clip: rect(0.35rem, auto, auto, auto);
+                transform: rotate(164deg);
+              }
+              .cir_lay{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+              .cir_cen{
+                height: 0.56rem;
+                width: 0.56rem;
+              }
+            }
+            .cir_box43 {
+              width: 0.78rem;
+              height: 0.78rem;
+              .cir_img{
+                clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+                transform: rotate(70deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.72rem;
+                width: 0.72rem;
+              }
+              .cir_cen{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+            }
+            .cir_box44 {
+              width: 0.98rem;
+              height: 0.98rem;
+              top: 2.0rem;
+              right: 0.58rem;
+              .cir_img{
+                // transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.92rem;
+                width: 0.92rem;
+              }
+              .cir_cen{
+                height: 0.84rem;
+                width: 0.84rem;
+              }
+            }
+            .tb_s_c51{
+              position: absolute;
+              top: 2.12rem;
+              right: -0.24rem;
+              width: 0.38rem;
+              height: 0.38rem;
+              border-radius: 50%;
+              background: #C2C2ED;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c52{
+              position: absolute;
+              top: 2.47rem;
+              right: -0.61rem;
+              width: 0.34rem;
+              height: 0.34rem;
+              border-radius: 50%;
+              background: #BD9DEE;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.1rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+            }
+            .tb_s_c53{
+              position: absolute;
+              top: 3.17rem;
+              right: -0.59rem;
+              width: 0.28rem;
+              height: 0.28rem;
+              border-radius: 50%;
+              background: #E3B4FF;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 0.16rem;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              line-height: 0.2rem;
+            }
+            .cir_box51{
+              width: 0.64rem;
+              height: 0.64rem;
+              position: absolute;
+              top: 2.68rem;
+              right: -0.17rem;
+              .cir_img{
+                height: 100%;
+                width: 100%;
+                background-color: #C8B4FF;
+                border-radius: 50%;
+                transform: rotate(130deg);
+                position: absolute;
+                clip: rect(auto, 0.32rem, 0.32rem, auto);
+              }
+              .cir_lay{
+                height: 0.58rem;
+                width: 0.58rem;
+                background-color: #D7EFEC;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.03rem;
+                left: 0.03rem;
+              }
+              .cir_cen{
+                height: 0.5rem;
+                width: 0.5rem;
+                background-color: #C8B4FF;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.07rem;
+                left: 0.07rem;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 500;
+                font-size: 0.14rem;
+                color: #FFFFFF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                div{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  span{
+                    width: 35%;
+                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-weight: 500;
+                    font-size: 0.14rem;
+                    color: #FFFFFF;
+                    margin: 0 2%;
+                  }
+                  span:nth-child(2n+1) {
+                    text-align: right;
+                  }
+                  span:nth-child(2n+2) {
+                    text-align: left;
+                  }
+
+                }
+              }
+            }
+            .cir_box52 {
+              width: 0.70rem;
+              height: 0.70rem;
+              .cir_img{
+                clip: rect(0.35rem, auto, auto, auto);
+                transform: rotate(214deg);
+              }
+              .cir_lay{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+              .cir_cen{
+                height: 0.56rem;
+                width: 0.56rem;
+              }
+            }
+            .cir_box53 {
+              width: 0.78rem;
+              height: 0.78rem;
+              .cir_img{
+                clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+                transform: rotate(114deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.72rem;
+                width: 0.72rem;
+              }
+              .cir_cen{
+                height: 0.64rem;
+                width: 0.64rem;
+              }
+            }
+            .cir_box54 {
+              width: 0.98rem;
+              height: 0.98rem;
+              top: 2.64rem;
+              right: -0.14rem;
+              .cir_img{
+                // transform: rotate(0deg);
+                clip: unset;
+              }
+              .cir_lay{
+                height: 0.92rem;
+                width: 0.92rem;
+              }
+              .cir_cen{
+                height: 0.84rem;
+                width: 0.84rem;
+              }
+            }
+          }
+        }
+        .drwc_b_ysp{
+          display: block;
+          margin: 0 0.5rem;
+          padding: 0 1rem 0.3rem;
+          .drwc_sp_head{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 0.18rem;
+            color: #333E75;
+            text-align: left;
+            margin: 0.34rem 0 0.14rem;
+          }
+          p{
+            padding:0.1rem 0 0;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 0.16rem;
+            color: #2A3487;
+            display: flex;
+            align-items: center;
+            img{
+              width: 0.4rem;
+              height: 0.4rem;
+              margin-right: 0.02rem;
+              margin-top: -0.1rem;
+            }
           }
         }
         .drwc_b_work{
@@ -6469,7 +7677,7 @@ export default {
               // border-radius: 0.04rem;
               overflow: hidden;
               position: relative;
-              margin: 0.1rem 0.75rem 0.36rem 0.1rem;
+              margin: 0.1rem 0.4rem 0.36rem 0.1rem;
               // min-height:4.4rem;
               .dtmc_r_biao{
                 width: 100%;
@@ -6740,6 +7948,7 @@ export default {
     }
     .drwc_boxr {
       .drwc_common{
+        margin-bottom: 0.4rem;
         .drwc_bw_head{
           img{
             width: 0.53rem;

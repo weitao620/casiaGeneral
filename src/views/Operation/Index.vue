@@ -1,5 +1,5 @@
 <template>
-  <div class="accout_wrap">
+  <div class="operation_wrap">
     <div class="search_form_box1" style="margin: 0.2rem auto">
       <div class="right_total">
         <div class="total_o">
@@ -113,7 +113,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="tables_box">
+    <div class="tables_box tables_box1">
       <div class="search_title center_o_title">
         机构列表
       </div>
@@ -198,6 +198,9 @@
               <el-button @click="toDetail(scope.row)" type="text" size="small"
                 >详细信息</el-button
               >
+              <el-button @click="toWd(scope.row)" type="text" size="small"
+                >维度配置</el-button
+              >
               <!-- <el-button v-if="power5" type="text" size="small" @click="onesStop(scope.row)"
                 >{{ scope.row.accountState ? "停用" : "启用" }}</el-button
               >
@@ -209,6 +212,7 @@
                 >删除</el-button
               > -->
             </template>
+            
           </el-table-column>
         </el-table>
       </template>
@@ -1206,6 +1210,13 @@ export default {
         name: "operationorgsdetail"
       });
     },
+    toWd(data) {
+      console.log(data)
+      localStorage.setItem("orgsDetail", JSON.stringify(data));
+      this.$router.push({
+        name: "operationorgswd"
+      });
+    },
     // 新增用户
     addUser() {
       this.$router.push({
@@ -1327,7 +1338,7 @@ export default {
 </script>
 
 <style lang="less">
-.accout_wrap {
+.operation_wrap {
   text-align: left;
   margin: 0 0.22rem;
   .search_form_box1 {
@@ -1706,6 +1717,7 @@ export default {
       .el-button--text {
         font-size: 0.16rem;
         padding: 0.09rem 0.06rem;
+        margin-left: 0
       }
       .el-table__header,
       .el-table__body {
@@ -1725,7 +1737,7 @@ export default {
           width: 1.5rem;
         }
         col:nth-child(6) {
-          width: 1.5rem;
+          width: 2.2rem;
         }
         col:nth-child(7) {
           width: 0;

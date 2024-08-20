@@ -210,7 +210,7 @@
               type="primary"
             >
               <i class="iconfont icon-icon-"></i>
-              批量导出
+              批量导出个人报告
             </el-button>
           </div>
           <!-- <div class="el_one" v-if="tabActive == 1 && power24">
@@ -437,7 +437,7 @@
     </div>
     <!-- 批量导出 -->
     <div style="height:0;width:100%;overflow:hidden">
-      <someReport :iList="pdfList"></someReport>
+      <someReports :iList="pdfList"></someReports>
     </div>
     <!-- 批量导出记录1 -->
     <!-- <div style="height:0;width:100%;overflow:hidden">
@@ -523,7 +523,7 @@
 
 import PartsReport from "../Model/PartsReport.vue";
 import personReport from "../Model/ModelReport.vue";
-import someReport from "../Model/ExportPdf.vue";
+import someReports from "../Model/ExportPdf.vue";
 import { mapGetters, mapMutations } from "vuex";
 import Url from "@/assets/js/url.js";
 import docxtemplater from "docxtemplater";
@@ -536,7 +536,7 @@ export default {
   name: "report",
   components: {
     personReport,
-    someReport,
+    someReports,
     PartsReport
     // wordFile
   },
@@ -1130,6 +1130,7 @@ export default {
         });
     },
     personExport() {
+      console.log(111)
       this.loading.close();
       this.setPersonFlag(true);
     },
@@ -1171,10 +1172,13 @@ export default {
           console.log(res);
         });
     },
-    getDetail(data) {
+    perctInfo (data) {
+      return Math.round(data.toFixed(2) * 100) / 100
+    },
+    getDetail(datas) {
       let that = this;
       var param = {
-        reportId: data.reportId
+        reportId: datas.reportId
       };
       this.loading = this.$loading({
         lock: true,
@@ -1215,6 +1219,11 @@ export default {
             data.data.workInfo.operationTime = this.toHHmmss(
               data.data.workInfo.operationTime * 1000
             );
+            if (Number(data.data.workInfo.deleteScale) < 0) {
+              data.data.workInfo.deleteScale = 0
+            } else {
+              data.data.workInfo.deleteScale = this.perctInfo(data.data.workInfo.deleteScale)
+            }
             that.reviewData = data.data;
             let nameArr = [];
             let numArr = [];
@@ -1235,23 +1244,45 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      this.$http
-        .get(Url + "/aimw/report/reportBirdView", {
-          params: param
-        })
-        .then(res => {
-          let data = res.data;
-          if (data.code == 0) {
-            this.details.birdView = data.data.birdView;
-            this.getfourImg(data.data.birdView, param);
-          } else {
-            that.$message.error(data.msg);
-            this.part4 = true;
-          }
-        })
-        .catch(res => {
-          console.log(res);
-        });
+        
+      // this.$http
+      //   .get(Url + "/aimw/report/reportBirdView", {
+      //     params: param
+      //   })
+      //   .then(res => {
+      //     let data = res.data;
+      //     if (data.code == 0) {
+      //       this.details.birdView = data.data.birdView;
+      //       this.getfourImg(data.data.birdView, param);
+      //     } else {
+      //       that.$message.error(data.msg);
+      //       this.part4 = true;
+      //     }
+      //   })
+      //   .catch(res => {
+      //     console.log(res);
+      //   });
+      this.details.birdView = '';
+      that.imgList = [
+        {
+          name: "鸟瞰图",
+          img: ""
+        },
+        {
+          name: "西侧俯身45度视图",
+          img: ''
+        },
+        {
+          name: "东侧俯身45度视图",
+          img: ''
+        },
+        {
+          name: "操作者视图",
+          img: ''
+        }
+      ];
+      this.part4 = true;
+
       this.$http
         .get(Url + "/aimw/report/reportInfo", {
           params: param
@@ -1259,905 +1290,644 @@ export default {
         .then(res => {
           let data = res.data;
           if (data.code == 0) {
-            if (data.data.confidenceLevel == 1) {
-              data.data.confidenceLevel = "可信";
-            } else {
-              data.data.confidenceLevel = "不可信";
+            if (data.data.birth) {
+              data.data.birth = data.data.birth.split(" ")[0];
             }
-
-            if (data.data.selfDiscription.indexOf("“") != -1) {
-              data.data.selfDiscription =
-                data.data.selfDiscription.substring(
-                  0,
-                  data.data.selfDiscription.indexOf("“") + 1
-                ) +
-                '<span style="color:#00C0FF">' +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("“") + 1,
-                  data.data.selfDiscription.indexOf("”")
-                ) +
-                "</span>" +
-                data.data.selfDiscription.substring(
-                  data.data.selfDiscription.indexOf("”"),
-                  data.data.selfDiscription.length
-                );
-            }
-
-            if (data.data.depressionWarning.indexOf("正常") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("正常"),
-                  data.data.depressionWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("正常") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("轻度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("轻度"),
-                  data.data.depressionWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("轻度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("中度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("中度"),
-                  data.data.depressionWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("中度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.depressionWarning.indexOf("重度") != -1) {
-              data.data.depressionWarning =
-                data.data.depressionWarning.substring(
-                  0,
-                  data.data.depressionWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("重度"),
-                  data.data.depressionWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.depressionWarning.substring(
-                  data.data.depressionWarning.indexOf("重度") + 2,
-                  data.data.depressionWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("正常") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("正常"),
-                  data.data.anxietyWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("正常") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("轻度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("轻度"),
-                  data.data.anxietyWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("轻度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("中度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("中度"),
-                  data.data.anxietyWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("中度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-            if (data.data.anxietyWarning.indexOf("重度") != -1) {
-              data.data.anxietyWarning =
-                data.data.anxietyWarning.substring(
-                  0,
-                  data.data.anxietyWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("重度"),
-                  data.data.anxietyWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.anxietyWarning.substring(
-                  data.data.anxietyWarning.indexOf("重度") + 2,
-                  data.data.anxietyWarning.length
-                );
-            }
-
-            if (data.data.forcedWarning.indexOf("正常") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("正常"),
-                  data.data.forcedWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("正常") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("轻度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("轻度"),
-                  data.data.forcedWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("轻度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("中度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("中度"),
-                  data.data.forcedWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("中度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-            if (data.data.forcedWarning.indexOf("重度") != -1) {
-              data.data.forcedWarning =
-                data.data.forcedWarning.substring(
-                  0,
-                  data.data.forcedWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("重度"),
-                  data.data.forcedWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.forcedWarning.substring(
-                  data.data.forcedWarning.indexOf("重度") + 2,
-                  data.data.forcedWarning.length
-                );
-            }
-
-            if (data.data.suicideWarning.indexOf("正常") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("正常"),
-                  data.data.suicideWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("正常") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("轻度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("轻度"),
-                  data.data.suicideWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("轻度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("中度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("中度"),
-                  data.data.suicideWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("中度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-            if (data.data.suicideWarning.indexOf("重度") != -1) {
-              data.data.suicideWarning =
-                data.data.suicideWarning.substring(
-                  0,
-                  data.data.suicideWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("重度"),
-                  data.data.suicideWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.suicideWarning.substring(
-                  data.data.suicideWarning.indexOf("重度") + 2,
-                  data.data.suicideWarning.length
-                );
-            }
-
-            if (data.data.violenceWarning.indexOf("正常") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("正常")
-                ) +
-                '<span style="color:#00e805">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("正常"),
-                  data.data.violenceWarning.indexOf("正常") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("正常") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("轻度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("轻度")
-                ) +
-                '<span style="color:#ffe400">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("轻度"),
-                  data.data.violenceWarning.indexOf("轻度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("轻度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("中度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("中度")
-                ) +
-                '<span style="color:#fc9b2f">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("中度"),
-                  data.data.violenceWarning.indexOf("中度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("中度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            if (data.data.violenceWarning.indexOf("重度") != -1) {
-              data.data.violenceWarning =
-                data.data.violenceWarning.substring(
-                  0,
-                  data.data.violenceWarning.indexOf("重度")
-                ) +
-                '<span style="color:#fe2727">' +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("重度"),
-                  data.data.violenceWarning.indexOf("重度") + 2
-                ) +
-                "</span>" +
-                data.data.violenceWarning.substring(
-                  data.data.violenceWarning.indexOf("重度") + 2,
-                  data.data.violenceWarning.length
-                );
-            }
-            let oldWarning = [
-              {
-                id: 3,
-                old: data.data.reportWarningInfo.depressionResult,
-                score: data.data.reportWarningInfo.depressionScore,
-                new: data.data.depressionWarning,
-                flag: this.depressionFlag
-              },
-              {
-                id: 4,
-                old: data.data.reportWarningInfo.anxietyResult,
-                score: data.data.reportWarningInfo.anxietyScore,
-                new: data.data.anxietyWarning,
-                flag: this.anxietyFlag
-              },
-              {
-                id: 5,
-                old: data.data.reportWarningInfo.forcedResult,
-                score: data.data.reportWarningInfo.forcedScore,
-                new: data.data.forcedWarning,
-                flag: this.forcedFlag
-              },
-              {
-                id: 6,
-                old: data.data.reportWarningInfo.suicideResult,
-                score: data.data.reportWarningInfo.suicideScore,
-                new: data.data.suicideWarning,
-                flag: this.suicideFlag
-              },
-              {
-                id: 7,
-                old: data.data.reportWarningInfo.violenceResult,
-                score: data.data.reportWarningInfo.violenceScore,
-                new: data.data.violenceWarning,
-                flag: this.violenceFlag
+            // data.data.themeDiscription = '空洞主题释义：一般是指，不用玩具或使用缺少能量、毫无新意的无生命感玩具，给人一种沉默抑郁， 对任何事物都失去了兴趣的感觉。'
+            if (data.data.themeDiscription && data.data.themeDiscription != '') {
+              if (data.data.themeDiscription.indexOf("：")) {
+                data.data.themeDiscription =
+                  '<span style="color:#333E75;font-weight:500">' +
+                  data.data.themeDiscription.substring(
+                    0,
+                    data.data.themeDiscription.indexOf("：") + 1
+                  ) +
+                  "</span>" +
+                  data.data.themeDiscription.substring(
+                    data.data.themeDiscription.indexOf("：") + 1,
+                    data.data.themeDiscription.length
+                  );
               }
-            ];
+            }
+            // data.data.selfDiscription = '作品主题描述：受测者在沙箱中摆放极少的沙具（6个），几乎没有动沙，并且看起来很空旷，给人一种贫乏之感。'
+            if (data.data.selfDiscription && data.data.selfDiscription != '') {
+              if (data.data.selfDiscription && data.data.selfDiscription != '') {
+                if (data.data.selfDiscription.indexOf("：")) {
+                  data.data.selfDiscription =
+                    '<span style="color:#333E75;font-weight:500">' +
+                    data.data.selfDiscription.substring(
+                      0,
+                      data.data.selfDiscription.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                  data.data.selfDiscription.substring(
+                    data.data.selfDiscription.indexOf("：") + 1,
+                    data.data.selfDiscription.length
+                  );
+                }
+              }
+              // data.data.satisfyArea = '主题象征意义：现该主题可能表明受测者对陌生环境感到不安（首次操作），在现实生活中可能表现为安全感低，在陌生环境下警惕性强。而选择少量玩具、使用小部分空间可能也是受测者对于自我价值的一种保护，避免暴露过多的心理内容，侧面反映了受测者害怕被了解、被评价，也可能反映出受测者心理世界的贫乏，不善于利用玩具来表达自己的想法，还可能反映出受测者情感淡漠，没有希望的情绪状态。'
+              if (data.data.satisfyArea && data.data.satisfyArea != '') {
+                if (data.data.satisfyArea.indexOf("：")) {
+                  data.data.satisfyArea =
+                    '<span style="color:#333E75;font-weight:500">' +
+                    data.data.satisfyArea.substring(
+                      0,
+                      data.data.satisfyArea.indexOf("：") + 1
+                    ) +
+                    "</span>" +
+                    data.data.satisfyArea.substring(
+                      data.data.satisfyArea.indexOf("：") + 1,
+                      data.data.satisfyArea.length
+                    );
+                }
+              }
+            }
+            
+            let oldWarning = []
+            if (that.depressionFlag == 1) {
+              oldWarning.push({
+                id: 1,
+                name: '抑郁',
+                score: data.data.reportWarningInfo.depressionScore,
+                lastScore: data.data.lastWarningInfo.depressionScore,
+                level: data.data.reportWarningInfo.depressionLevel,
+                lastLevel: data.data.lastWarningInfo.depressionLevel,
+                flag: this.depressionFlag
+              })
+            }
+            if (that.anxietyFlag == 1) {
+              oldWarning.push({
+                id: 2,
+                name: '焦虑',
+                score: data.data.reportWarningInfo.anxietyScore,
+                lastScore: data.data.lastWarningInfo.anxietyScore,
+                level: data.data.reportWarningInfo.anxietyLevel,
+                lastLevel: data.data.lastWarningInfo.anxietyLevel,
+                flag: that.anxietyFlag
+              })
+            }
+            if (that.forcedFlag == 1) {
+              oldWarning.push({
+                id: 3,
+                name: '强迫',
+                score: data.data.reportWarningInfo.forcedScore,
+                lastScore: data.data.lastWarningInfo.forcedScore,
+                level: data.data.reportWarningInfo.forcedLevel,
+                lastLevel: data.data.lastWarningInfo.forcedLevel,
+                flag: that.forcedFlag
+              })
+            }
+            if (that.ptsdFlag == 1) {
+              oldWarning.push({
+                id: 4,
+                name: 'PTSD',
+                score: data.data.reportWarningInfo.ptsdScore,
+                lastScore: data.data.lastWarningInfo.ptsdScore,
+                level: data.data.reportWarningInfo.ptsdLevel,
+                lastLevel: data.data.lastWarningInfo.ptsdLevel,
+                flag: that.ptsdFlag
+              })
+            }
+            if (that.violenceFlag == 1) {
+              oldWarning.push({
+                id: 5,
+                name: '敌对',
+                score: data.data.reportWarningInfo.violenceScore,
+                lastScore: data.data.lastWarningInfo.violenceScore,
+                level: data.data.reportWarningInfo.violenceLevel,
+                lastLevel: data.data.lastWarningInfo.violenceLevel,
+                flag: that.violenceFlag
+              })
+            }
+            if (that.suicideFlag == 1) {
+              oldWarning.push({
+                id: 6,
+                name: '自我伤害',
+                score: data.data.reportWarningInfo.suicideScore,
+                lastScore: data.data.lastWarningInfo.suicideScore,
+                level: data.data.reportWarningInfo.suicideLevel,
+                lastLevel: data.data.lastWarningInfo.suicideLevel,
+                flag: that.suicideFlag
+              })
+            }
+            // if (that.zibiFlag == 1) {
+            //   oldWarning.push({
+            //     id: 7,
+            //     name: '自闭',
+            //     score: data.data.reportWarningInfo.zibiScore,
+            //     lastScore: data.data.lastWarningInfo.zibiScore,
+            //     level: data.data.reportWarningInfo.zibiLevel,
+            //     lastLevel: data.data.lastWarningInfo.zibiLevel,
+            //     flag: that.zibiFlag
+            //   })
+            // }
             data.data.warningList = [];
             data.data.whatWarn = [];
             data.data.warnLen = [];
             for (let i in oldWarning) {
-              if (oldWarning[i].old != "正常" && oldWarning[i].flag == 1) {
+              if (oldWarning[i].level > 0 && oldWarning[i].flag == 1) {
                 data.data.warningList.push(oldWarning[i]);
               }
               if (oldWarning[i].score > 2 && oldWarning[i].flag == 1) {
                 data.data.whatWarn.push(oldWarning[i]);
               }
               if (oldWarning[i].flag == 1) {
-                data.data.warnLen.push(oldWarning[i]);
+                data.data.warnLen.push(oldWarning[i])
               }
             }
+            data.data.rangeList = data.data.warnLen;
             data.data.warningNum = data.data.whatWarn.length;
-            console.log(data.data.suggestion)
-            if (data.data.suggestion && data.data.suggestion != '') {
-              data.data.suggestion = data.data.suggestion.split("|||");
-              console.log(data.data.suggestion)
-              for (let i in data.data.suggestion) {
-                if (data.data.suggestion[i].indexOf("&&") != -1) {
-                  data.data.suggestion[i] = data.data.suggestion[i].split("&&")
-                  for (let j in data.data.suggestion[i]) {
-                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-                      for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
-                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-                          for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
-                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestion[i].indexOf("span") == -1) {
-                    data.data.suggestion[i] = [data.data.suggestion[i]]
-                  }
-                  for (let j in data.data.suggestion[i]) {
-                    if (data.data.suggestion[i][j].indexOf("$$") != -1) {
-                      data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
-                      for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
-                        if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
-                          for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
-                            if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      for (let j in data.data.suggestion[i]) {
-                        if (data.data.suggestion[i][j].indexOf("@@") != -1) {
-                          data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
-                          for (let m in data.data.suggestion[i][j]) {
-                            if (data.data.suggestion[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestion[i][j][m] = data.data.suggestion[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
-              data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-              console.log(data.data.suggestionSuicide)
-              for (let i in data.data.suggestionSuicide) {
-                if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
-                  data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
-                  for (let j in data.data.suggestionSuicide[i]) {
-                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-                      for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
-                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
-                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestionSuicide[i].indexOf("span") == -1) {
-                    data.data.suggestionSuicide[i] = [data.data.suggestionSuicide[i]]
-                  }
-                  for (let j in data.data.suggestionSuicide[i]) {
-                    if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
-                      for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
-                        if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
-                            if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      for (let j in data.data.suggestionSuicide[i]) {
-                        if (data.data.suggestionSuicide[i][j].indexOf("@@") != -1) {
-                          data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("@@");
-                          for (let m in data.data.suggestionSuicide[i][j]) {
-                            if (data.data.suggestionSuicide[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestionSuicide[i][j][m] = data.data.suggestionSuicide[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            console.log(data.data.suggestionSuicide)
-
-            if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
-              data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
-              for (let i in data.data.suggestionViolence) {
-                if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
-                  data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
-                  for (let j in data.data.suggestionViolence[i]) {
-                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-                      for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
-                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-                          for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
-                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                } else {
-                  if (data.data.suggestionViolence[i].indexOf("span") == -1) {
-                    data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
-                  }
-                  for (let j in data.data.suggestionViolence[i]) {
-                    if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
-                      data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
-                      for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
-                        if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
-                          for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
-                            if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    } else {
-                      for (let j in data.data.suggestionViolence[i]) {
-                        if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
-                          data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
-                          for (let m in data.data.suggestionViolence[i][j]) {
-                            if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
-                              data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            // console.log(data.data.suggestionSuicide)
-            console.log(data.data.suggestionViolence)
-            data.data.suicideDim = data.data.suicideDim.split("@@");
-            data.data.violenceDim = data.data.violenceDim.split("@@");
-            data.data.suggestionPersonality = data.data.suggestionPersonality.split("|||");
-            for (let i in data.data.suggestionPersonality) {
-              if (i > 0) {
-                data.data.suggestionPersonality[i] = data.data.suggestionPersonality[i].split("@@");
-              }
-            }
-
+            
+            let mentalHealth = {}
+            let sysList0 = []
             let warningInfo = data.data.reportWarningInfo;
-            let depressionColorStr = "";
-            let depressionLevelStr = "";
-            let depressionBgStr = "";
-            let depressionImgStr = "";
-
-            if (warningInfo.depressionLevel == 0) {
-              depressionColorStr = "#00e805";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "1";
-            } else if (warningInfo.depressionLevel == 1) {
-              depressionColorStr = "#ffe400";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "2";
-            } else if (warningInfo.depressionLevel == 2) {
-              depressionColorStr = "#fc9b2f";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "3";
-            } else if (warningInfo.depressionLevel == 3) {
-              depressionColorStr = "#fe2727";
-              depressionBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              depressionImgStr = "4";
-            }
-            let anxietyColorStr = "";
-            let anxietyLevelStr = "";
-            let anxietyBgStr = "";
-            let anxietyImgStr = "";
-            if (warningInfo.anxietyLevel == 0) {
-              anxietyColorStr = "#00e805";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "1";
-            } else if (warningInfo.anxietyLevel == 1) {
-              anxietyColorStr = "#ffe400";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "2";
-            } else if (warningInfo.anxietyLevel == 2) {
-              anxietyColorStr = "#fc9b2f";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "3";
-            } else if (warningInfo.anxietyLevel == 3) {
-              anxietyColorStr = "#fe2727";
-              anxietyBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              anxietyImgStr = "4";
-            }
-            let forcedColorStr = "";
-            let forcedLevelStr = "";
-            let forcedBgStr = "";
-            let forcedImgStr = "";
-            if (warningInfo.forcedLevel == 0) {
-              forcedColorStr = "#00e805";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "1";
-            } else if (warningInfo.forcedLevel == 1) {
-              forcedColorStr = "#ffe400";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "2";
-            } else if (warningInfo.forcedLevel == 2) {
-              forcedColorStr = "#fc9b2f";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "3";
-            } else if (warningInfo.forcedLevel == 3) {
-              forcedColorStr = "#fe2727";
-              forcedBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              forcedImgStr = "4";
-            }
-            let suicideColorStr = "";
-            let suicideLevelStr = "";
-            let suicideBgStr = "";
-            let suicideImgStr = "";
-            if (warningInfo.suicideLevel == 0) {
-              suicideColorStr = "#00e805";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "1";
-            } else if (warningInfo.suicideLevel == 1) {
-              suicideColorStr = "#ffe400";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "2";
-            } else if (warningInfo.suicideLevel == 2) {
-              suicideColorStr = "#fc9b2f";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "3";
-            } else if (warningInfo.suicideLevel == 3) {
-              suicideColorStr = "#fe2727";
-              suicideBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              suicideImgStr = "4";
-            }
-            let violenceColorStr = "";
-            let violenceLevelStr = "";
-            let violenceBgStr = "";
-            let violenceImgStr = "";
-            if (warningInfo.violenceLevel == 0) {
-              violenceColorStr = "#00e805";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "1";
-            } else if (warningInfo.violenceLevel == 1) {
-              violenceColorStr = "#ffe400";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "2";
-            } else if (warningInfo.violenceLevel == 2) {
-              violenceColorStr = "#fc9b2f";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "3";
-            } else if (warningInfo.violenceLevel == 3) {
-              violenceColorStr = "#fe2727";
-              violenceBgStr =
-                "linear-gradient(90deg, rgba(39,151,255,0.8), rgba(110,166,236,0.8))";
-              violenceImgStr = "4";
-            }
-            if (data.data.depressionDim) {
-              data.data.depressionDim = data.data.depressionDim.split("@@");
-            }
-            let depArr = [];
-            for (let i in data.data.depressionDim) {
-              let str = "";
-              if (data.data.depressionDim[i].indexOf(".") != -1) {
-                str = data.data.depressionDim[i].split(".")[1];
-              } else {
-                str = data.data.depressionDim[i];
-              }
-              depArr.push(str);
-            }
-            if (data.data.anxietyDim) {
-              data.data.anxietyDim = data.data.anxietyDim.split("@@");
-            }
-            let anxArr = [];
-            for (let i in data.data.anxietyDim) {
-              let str = "";
-              if (data.data.anxietyDim[i].indexOf(".") != -1) {
-                str = data.data.anxietyDim[i].split(".")[1];
-              } else {
-                str = data.data.anxietyDim[i];
-              }
-              anxArr.push(str);
-            }
-            if (data.data.forcedDim) {
-              data.data.forcedDim = data.data.forcedDim.split("@@");
-            }
-            let forArr = [];
-            for (let i in data.data.forcedDim) {
-              let str = "";
-              if (data.data.forcedDim[i].indexOf(".") != -1) {
-                str = data.data.forcedDim[i].split(".")[1];
-              } else {
-                str = data.data.forcedDim[i];
-              }
-              forArr.push(str);
-            }
-            let sysList0 = [
-              {
-                title: "抑郁",
-                grade: warningInfo.depressionScore,
-                gradep:
-                  Number(warningInfo.depressionScore) * 0.44 +
-                  Number(warningInfo.depressionScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.depressionScore) * 82 + 42 + "px",
-                level: warningInfo.depressionResult,
-                txtColor: depressionColorStr,
-                bg: depressionBgStr,
-                imgType: depressionImgStr,
-                list: depArr,
-                subDim: data.data.depressionSubDim,
-                flag: this.depressionFlag
-              },
-              {
-                title: "焦虑",
-                grade: warningInfo.anxietyScore,
-                gradep:
-                  Number(warningInfo.anxietyScore) * 0.44 +
-                  Number(warningInfo.anxietyScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.anxietyScore) * 82 + 42 + "px",
-                level: warningInfo.anxietyResult,
-                txtColor: anxietyColorStr,
-                bg: anxietyBgStr,
-                imgType: anxietyImgStr,
-                list: anxArr,
-                subDim: data.data.anxietySubDim,
-                flag: this.anxietyFlag
-              },
-              {
-                title: "强迫",
-                grade: warningInfo.forcedScore,
-                gradep:
-                  Number(warningInfo.forcedScore) * 0.44 +
-                  Number(warningInfo.forcedScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.forcedScore) * 82 + 42 + "px",
-                level: warningInfo.forcedResult,
-                txtColor: forcedColorStr,
-                bg: forcedBgStr,
-                imgType: forcedImgStr,
-                list: forArr,
-                subDim: data.data.forcedSubDim,
-                flag: this.forcedFlag
-              }
-            ];
-            this.sysList = sysList0.sort(function(n, m) {
-              if (m.grade < n.grade) return -1;
-              else if (m.grade > n.grade) return 1;
-              else return 0;
-            });
-            data.data.sysList = this.sysList;
-            let sysList02 = [
-              {
-                title: "自我伤害",
-                grade: warningInfo.suicideScore,
-                gradep:
-                  Number(warningInfo.suicideScore) * 0.44 +
-                  Number(warningInfo.suicideScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.suicideScore) * 82 + 42 + "px",
-                level: warningInfo.suicideResult,
-                txtColor: suicideColorStr,
-                bg: suicideBgStr,
-                imgType: suicideImgStr,
-                list: forArr,
-                subDim: data.data.suicideSubDim,
-                levelNum: warningInfo.suicideLevel,
-                suggestDim: data.data.suggestionSuicide,
-                sysDim: data.data.suicideDim,
-                flag: this.suicideFlag
-              },
-              {
-                title: "敌对",
-                grade: warningInfo.violenceScore,
-                gradep:
-                  Number(warningInfo.violenceScore) * 0.44 +
-                  Number(warningInfo.violenceScore) * 0.01 +
-                  0.24 +
-                  "rem",
-                gradep1: Number(warningInfo.violenceScore) * 82 + 42 + "px",
-                level: warningInfo.violenceResult,
-                txtColor: violenceColorStr,
-                bg: violenceBgStr,
-                imgType: violenceImgStr,
-                list: forArr,
-                subDim: data.data.violenceSubDim,
-                levelNum: warningInfo.violenceLevel,
-                suggestDim: data.data.suggestionViolence,
-                sysDim: data.data.violenceDim,
-                flag: this.violenceFlag
-              }
-            ];
-            this.sysList2 = sysList02;
-            data.data.sysList2 = this.sysList2;
-            data.data.depressionFlag = this.depressionFlag;
-            data.data.anxietyFlag = this.anxietyFlag;
-            data.data.forcedFlag = this.forcedFlag;
-            data.data.suicideFlag = this.suicideFlag;
-            data.data.violenceFlag = this.violenceFlag;
-            data.data.personalityFlag = this.personalityFlag;
-            let perList = [];
-            for (let i in data.data.personalitySubDim) {
-              if (data.data.personalitySubDim[i].analysis != "") {
-                data.data.personalitySubDim[i].analysis = data.data.personalitySubDim[i].analysis.split("|||");
-                for (let k in data.data.personalitySubDim[i].analysis) {
-                  if (
-                    data.data.personalitySubDim[i].analysis[k].indexOf("@@") !=
-                    -1
-                  ) {
-                    data.data.personalitySubDim[i].analysis[k] = data.data.personalitySubDim[i].analysis[k].split("@@");
+            if (data.data.mentalHealth) {
+              console.log(data.data.mentalHealth)
+              console.log(JSON.parse(data.data.mentalHealth))
+              mentalHealth = JSON.parse(data.data.mentalHealth)
+              if (that.depressionFlag == 1) {
+                if (mentalHealth.depression) {
+                  data.data.depressionSubdim = JSON.parse(mentalHealth.depression.subdim);
+                  data.data.depressionAnalysis = mentalHealth.depression.analysis.split("@@");
+                  data.data.depressionSuggestion = mentalHealth.depression.suggestion.split("|||")
+                  console.log(data.data.depressionSuggestion)
+                  for (let i in data.data.depressionSuggestion) {
+                    if (data.data.depressionSuggestion[i].indexOf("&&") != -1) {
+                      data.data.depressionSuggestion[i] = data.data.depressionSuggestion[i].split("&&")
+                      for (let j in data.data.depressionSuggestion[i]) {
+                        if (data.data.depressionSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.depressionSuggestion[i][j] = data.data.depressionSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.depressionSuggestion[i].indexOf("针对") != -1) {
+                        data.data.depressionSuggestion[i] = [data.data.depressionSuggestion[i]]
+                        for (let j in data.data.depressionSuggestion[i]) {
+                          if (data.data.depressionSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.depressionSuggestion[i][j] = data.data.depressionSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
                   }
+                  console.log(data.data.depressionSuggestion)
+                  sysList0.push({
+                    id: 1,
+                    title: "抑郁",
+                    grade: warningInfo.depressionScore,
+                    level: warningInfo.depressionLevel,
+                    subDim: data.data.depressionSubdim,
+                    suggestDim: data.data.depressionSuggestion,
+                    sysDim: data.data.depressionAnalysis,
+                    flag: that.depressionFlag
+                  })
                 }
-                perList.push(data.data.personalitySubDim[i]);
+              }
+              if (that.anxietyFlag == 1) {
+                if (mentalHealth.anxiety) {
+                  data.data.anxietySubdim = JSON.parse(mentalHealth.anxiety.subdim);
+                  data.data.anxietyAnalysis = mentalHealth.anxiety.analysis.split("@@");
+                  data.data.anxietySuggestion = mentalHealth.anxiety.suggestion.split("|||")
+                  for (let i in data.data.anxietySuggestion) {
+                    if (data.data.anxietySuggestion[i].indexOf("&&") != -1) {
+                      data.data.anxietySuggestion[i] = data.data.anxietySuggestion[i].split("&&")
+                      for (let j in data.data.anxietySuggestion[i]) {
+                        if (data.data.anxietySuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.anxietySuggestion[i][j] = data.data.anxietySuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.anxietySuggestion[i].indexOf("针对") != -1) {
+                        data.data.anxietySuggestion[i] = [data.data.anxietySuggestion[i]]
+                        for (let j in data.data.anxietySuggestion[i]) {
+                          if (data.data.anxietySuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.anxietySuggestion[i][j] = data.data.anxietySuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.anxietySuggestion)
+                  sysList0.push({
+                    id: 2,
+                    title: "焦虑",
+                    grade: warningInfo.anxietyScore,
+                    level: warningInfo.anxietyLevel,
+                    subDim: data.data.anxietySubdim,
+                    suggestDim: data.data.anxietySuggestion,
+                    sysDim: data.data.anxietyAnalysis,
+                    flag: that.anxietyFlag
+                  })
+                }
+              }
+              if (that.forcedFlag == 1) {
+                if (mentalHealth.forced) {
+                  data.data.forcedSubdim = JSON.parse(mentalHealth.forced.subdim);
+                  data.data.forcedAnalysis = mentalHealth.forced.analysis.split("@@");
+                  data.data.forcedSuggestion = mentalHealth.forced.suggestion.split("|||")
+                  for (let i in data.data.forcedSuggestion) {
+                    if (data.data.forcedSuggestion[i].indexOf("&&") != -1) {
+                      data.data.forcedSuggestion[i] = data.data.forcedSuggestion[i].split("&&")
+                      for (let j in data.data.forcedSuggestion[i]) {
+                        if (data.data.forcedSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.forcedSuggestion[i][j] = data.data.forcedSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.forcedSuggestion[i].indexOf("针对") != -1) {
+                        data.data.forcedSuggestion[i] = [data.data.forcedSuggestion[i]]
+                        for (let j in data.data.forcedSuggestion[i]) {
+                          if (data.data.forcedSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.forcedSuggestion[i][j] = data.data.forcedSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.forcedSuggestion)
+                  sysList0.push({
+                    id: 3,
+                    title: "强迫",
+                    grade: warningInfo.forcedScore,
+                    level: warningInfo.forcedLevel,
+                    subDim: data.data.forcedSubdim,
+                    suggestDim: data.data.forcedSuggestion,
+                    sysDim: data.data.forcedAnalysis,
+                    flag: that.forcedFlag
+                  })
+                }
+              }
+              if (that.ptsdFlag == 1) {
+                if (mentalHealth.ptsd) {
+                  data.data.ptsdSubdim = JSON.parse(mentalHealth.ptsd.subdim);
+                  data.data.ptsdAnalysis = mentalHealth.ptsd.analysis.split("@@");
+                  data.data.ptsdSuggestion = mentalHealth.ptsd.suggestion.split("|||")
+                  for (let i in data.data.ptsdSuggestion) {
+                    if (data.data.ptsdSuggestion[i].indexOf("&&") != -1) {
+                      data.data.ptsdSuggestion[i] = data.data.ptsdSuggestion[i].split("&&")
+                      for (let j in data.data.ptsdSuggestion[i]) {
+                        if (data.data.ptsdSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.ptsdSuggestion[i][j] = data.data.ptsdSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.ptsdSuggestion[i].indexOf("针对") != -1) {
+                        data.data.ptsdSuggestion[i] = [data.data.ptsdSuggestion[i]]
+                        for (let j in data.data.ptsdSuggestion[i]) {
+                          if (data.data.ptsdSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.ptsdSuggestion[i][j] = data.data.ptsdSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.ptsdSuggestion)
+                  sysList0.push({
+                    id: 4,
+                    title: "PTSD",
+                    grade: warningInfo.ptsdScore,
+                    level: warningInfo.ptsdLevel,
+                    subDim: data.data.ptsdSubdim,
+                    suggestDim: data.data.ptsdSuggestion,
+                    sysDim: data.data.ptsdAnalysis,
+                    flag: that.ptsdFlag
+                  })
+                }
+              }
+              if (that.violenceFlag == 1) {
+                if (mentalHealth.violence) {
+                  data.data.violenceSubdim = JSON.parse(mentalHealth.violence.subdim);
+                  data.data.violenceAnalysis = mentalHealth.violence.analysis.split("@@");
+                  data.data.violenceSuggestion = mentalHealth.violence.suggestion.split("|||")
+                  for (let i in data.data.violenceSuggestion) {
+                    if (data.data.violenceSuggestion[i].indexOf("&&") != -1) {
+                      data.data.violenceSuggestion[i] = data.data.violenceSuggestion[i].split("&&")
+                      for (let j in data.data.violenceSuggestion[i]) {
+                        if (data.data.violenceSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.violenceSuggestion[i][j] = data.data.violenceSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.violenceSuggestion[i].indexOf("针对") != -1) {
+                        data.data.violenceSuggestion[i] = [data.data.violenceSuggestion[i]]
+                        for (let j in data.data.violenceSuggestion[i]) {
+                          if (data.data.violenceSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.violenceSuggestion[i][j] = data.data.violenceSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.violenceSuggestion)
+                  sysList0.push({
+                    id: 5,
+                    title: "敌对",
+                    grade: warningInfo.violenceScore,
+                    level: warningInfo.violenceLevel,
+                    subDim: data.data.violenceSubdim,
+                    suggestDim: data.data.violenceSuggestion,
+                    sysDim: data.data.violenceAnalysis,
+                    flag: that.violenceFlag
+                  })
+                }
+              }
+              if (that.suicideFlag == 1) {
+                if (mentalHealth.suicide) {
+                  data.data.suicideSubdim = JSON.parse(mentalHealth.suicide.subdim);
+                  data.data.suicideAnalysis = mentalHealth.suicide.analysis.split("@@");
+                  data.data.suicideSuggestion = mentalHealth.suicide.suggestion.split("|||")
+                  for (let i in data.data.suicideSuggestion) {
+                    if (data.data.suicideSuggestion[i].indexOf("&&") != -1) {
+                      data.data.suicideSuggestion[i] = data.data.suicideSuggestion[i].split("&&")
+                      for (let j in data.data.suicideSuggestion[i]) {
+                        if (data.data.suicideSuggestion[i][j].indexOf("$$") != -1) {
+                          data.data.suicideSuggestion[i][j] = data.data.suicideSuggestion[i][j].split("$$")
+                        }
+                      }
+                    } else {
+                      if (data.data.suicideSuggestion[i].indexOf("针对") != -1) {
+                        data.data.suicideSuggestion[i] = [data.data.suicideSuggestion[i]]
+                        for (let j in data.data.suicideSuggestion[i]) {
+                          if (data.data.suicideSuggestion[i][j].indexOf("$$") != -1) {
+                            data.data.suicideSuggestion[i][j] = data.data.suicideSuggestion[i][j].split("$$")
+                          }
+                        }
+                      }
+                    }
+                  }
+                  console.log(data.data.suicideSuggestion)
+                  sysList0.push({
+                    id: 6,
+                    title: "自我伤害",
+                    grade: warningInfo.suicideScore,
+                    level: warningInfo.suicideLevel,
+                    subDim: data.data.suicideSubdim,
+                    suggestDim: data.data.suicideSuggestion,
+                    sysDim: data.data.suicideAnalysis,
+                    flag: that.suicideFlag
+                  })
+                }
+              }
+              // if (that.zibiFlag == 1) {
+              //   if (mentalHealth.zibi) {
+              //     data.data.zibiSubdim = JSON.parse(mentalHealth.zibi.subdim);
+              //     data.data.zibiAnalysis = mentalHealth.zibi.analysis.split("@@");
+              //     data.data.zibiSuggestion = mentalHealth.zibi.suggestion.split("|||")
+              //     for (let i in data.data.zibiSuggestion) {
+              //       if (data.data.zibiSuggestion[i].indexOf("&&") != -1) {
+              //         data.data.zibiSuggestion[i] = data.data.zibiSuggestion[i].split("&&")
+              //         for (let j in data.data.zibiSuggestion[i]) {
+              //           if (data.data.zibiSuggestion[i][j].indexOf("$$") != -1) {
+              //             data.data.zibiSuggestion[i][j] = data.data.zibiSuggestion[i][j].split("$$")
+              //           }
+              //         }
+              //       } else {
+              //         if (data.data.zibiSuggestion[i].indexOf("针对") != -1) {
+              //           data.data.zibiSuggestion[i] = [data.data.zibiSuggestion[i]]
+              //           for (let j in data.data.zibiSuggestion[i]) {
+              //             if (data.data.zibiSuggestion[i][j].indexOf("$$") != -1) {
+              //               data.data.zibiSuggestion[i][j] = data.data.zibiSuggestion[i][j].split("$$")
+              //             }
+              //           }
+              //         }
+              //       }
+              //     }
+              //     console.log(data.data.zibiSuggestion)
+              //     sysList0.push({
+              //       id: 7,
+              //       title: "自闭",
+              //       grade: warningInfo.zibiScore,
+              //       level: warningInfo.zibiLevel,
+              //       subDim: data.data.zibiSubdim,
+              //       suggestDim: data.data.zibiSuggestion,
+              //       sysDim: data.data.zibiAnalysis,
+              //       flag: that.zibiFlag
+              //     })
+              //   }
+              // }
+            }
+            // this.sysList = sysList0.sort(function(n, m) {
+            //   if (m.grade < n.grade) return -1;
+            //   else if (m.grade > n.grade) return 1;
+            //   else return 0;
+            // });
+            this.sysList = sysList0
+            
+            data.data.sysList = this.sysList;
+            
+            // 积极维度
+            let positivePsychology = {}
+            let jjList0 = []
+            if (data.data.positivePsychology) {
+              console.log(data.data.positivePsychology)
+              console.log(JSON.parse(data.data.positivePsychology))
+              positivePsychology = JSON.parse(data.data.positivePsychology)
+              if (that.resilienceFlag == 1) {
+                if (positivePsychology.resilience) {
+                  data.data.resilienceSubdim = JSON.parse(positivePsychology.resilience.subdim)
+                  data.data.resilienceAnalysis = positivePsychology.resilience.analysis.split("@@");
+                  data.data.resilienceResult = positivePsychology.resilience.result;
+                  let total = Number(data.data.resilienceSubdim[0].score) + Number(data.data.resilienceSubdim[1].score) + Number(data.data.resilienceSubdim[2].score)
+                  jjList0.push({
+                    id: 1,
+                    title: "心理韧性",
+                    result: data.data.resilienceResult,
+                    subDim: data.data.resilienceSubdim,
+                    total: total,
+                    // suggestDim: data.data.resilienceSuggestion,
+                    sysDim: data.data.resilienceAnalysis,
+                    flag: that.resilienceFlag
+                  })
+                }
+              }
+              if (that.selfFlag == 1) {
+                if (positivePsychology.self) {
+                  data.data.selfSubdim = JSON.parse(positivePsychology.self.subdim)
+                  data.data.selfAnalysis = positivePsychology.self.analysis.split("@@");
+                  data.data.selfResult = positivePsychology.self.result;
+                  let total = Number(data.data.selfSubdim[0].score) + Number(data.data.selfSubdim[1].score) + Number(data.data.selfSubdim[2].score)
+                  jjList0.push({
+                    id: 2,
+                    title: "积极自我",
+                    result: data.data.selfResult,
+                    subDim: data.data.selfSubdim,
+                    total: total,
+                    // suggestDim: data.data.selfSuggestion,
+                    sysDim: data.data.selfAnalysis,
+                    flag: that.selfFlag
+                  })
+                }
+              }
+              if (that.emotionFlag == 1) {
+                if (positivePsychology.emotion) {
+                  data.data.emotionSubdim = JSON.parse(positivePsychology.emotion.subdim)
+                  data.data.emotionAnalysis = positivePsychology.emotion.analysis.split("@@");
+                  data.data.emotionResult = positivePsychology.emotion.result;
+                  let total = Number(data.data.emotionSubdim[0].score) + Number(data.data.emotionSubdim[1].score) + Number(data.data.emotionSubdim[2].score)
+                  jjList0.push({
+                    id: 3,
+                    title: "积极情绪",
+                    result: data.data.emotionResult,
+                    subDim: data.data.emotionSubdim,
+                    total: total,
+                    // suggestDim: data.data.emotionSuggestion,
+                    sysDim: data.data.emotionAnalysis,
+                    flag: that.emotionFlag
+                  })
+                }
+              }
+              if (that.achievementFlag == 1) {
+                if (positivePsychology.achievement) {
+                  data.data.achievementSubdim = JSON.parse(positivePsychology.achievement.subdim)
+                  data.data.achievementAnalysis = positivePsychology.achievement.analysis.split("@@");
+                  data.data.achievementResult = positivePsychology.achievement.result;
+                  let total = Number(data.data.achievementSubdim[0].score) + Number(data.data.achievementSubdim[1].score) + Number(data.data.achievementSubdim[2].score)
+                  jjList0.push({
+                    id: 4,
+                    title: "积极成就",
+                    result: data.data.achievementResult,
+                    subDim: data.data.achievementSubdim,
+                    total: total,
+                    // suggestDim: data.data.achievementSuggestion,
+                    sysDim: data.data.achievementAnalysis,
+                    flag: that.achievementFlag
+                  })
+                }
+              }
+              if (that.relationshipFlag == 1) {
+                if (positivePsychology.relationship) {
+                  data.data.relationshipSubdim = JSON.parse(positivePsychology.relationship.subdim)
+                  data.data.relationshipAnalysis = positivePsychology.relationship.analysis.split("@@");
+                  data.data.relationshipResult = positivePsychology.relationship.result;
+                  let total = Number(data.data.relationshipSubdim[0].score) + Number(data.data.relationshipSubdim[1].score) + Number(data.data.relationshipSubdim[2].score)
+                  jjList0.push({
+                    id: 5,
+                    title: "积极关系",
+                    result: data.data.relationshipResult,
+                    subDim: data.data.relationshipSubdim,
+                    total: total,
+                    // suggestDim: data.data.relationshipSuggestion,
+                    sysDim: data.data.relationshipAnalysis,
+                    flag: that.relationshipFlag
+                  })
+                }
               }
             }
-            data.data.personalitySubDim2 = perList;
-            data.data.reportId = param.reportId;
-            that.details = that.justInfo(data.data);
+            this.jjList = jjList0
+            data.data.jjList = this.jjList;
+            if (jjList0.length > 0) {
+              let jjArr = jjList0.sort((a, b) => {
+                return Number(a.total) - Number(b.total);
+              });
+              console.log(jjArr)
+              // jjArr = jjArr.concat(jjArr)
+              this.jjName = jjArr[0].title + '上'
+              if (jjArr.length > 1) {
+                if (jjArr[1].total == jjArr[0].total) {
+                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
+                }
+              }
+              if (jjArr.length > 2) {
+                if (jjArr[2].total == jjArr[0].total) {
+                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
+                }
+              }
+            }
+            data.data.jjName = this.jjName
+            
+            // 大五人格
+            let personality = {}
+            if (data.data.personality) {
+              console.log(data.data.personality)
+              console.log(JSON.parse(data.data.personality))
+              personality = JSON.parse(data.data.personality)
+              if (personality.extroversion) {
+                data.data.extroversionSubdim = JSON.parse(personality.extroversion.subdim)
+                data.data.extroversionAnalysis = personality.extroversion.analysis.split("@@");
+              }
+              if (personality.conscientiousness) {
+                data.data.conscientiousnessSubdim = JSON.parse(personality.conscientiousness.subdim)
+                data.data.conscientiousnessAnalysis = personality.conscientiousness.analysis.split("@@");
+              }
+              if (personality.nervousness) {
+                data.data.nervousnessSubdim = JSON.parse(personality.nervousness.subdim)
+                data.data.nervousnessAnalysis = personality.nervousness.analysis.split("@@");
+              }
+              if (personality.agreeableness) {
+                data.data.agreeablenessSubdim = JSON.parse(personality.agreeableness.subdim)
+                data.data.agreeablenessAnalysis = personality.agreeableness.analysis.split("@@");
+              }
+              if (personality.openness) {
+                data.data.opennessSubdim = JSON.parse(personality.openness.subdim)
+                data.data.opennessAnalysis = personality.openness.analysis.split("@@");
+              }
+            }
+            
+            let rgList0 = [
+              {
+                id: 1,
+                title: "外向性",
+                grade: personality.extroversion.score,
+                gradep: Number(personality.extroversion.score) * 0.8 + "rem",
+                gradep1: Number(personality.extroversion.score) * 80 + "px",
+                subDim: data.data.extroversionSubdim,
+                sysDim: data.data.extroversionAnalysis,
+                flag: that.extroversionFlag
+              },
+              {
+                id: 2,
+                title: "尽责性",
+                grade: personality.conscientiousness.score,
+                gradep: Number(personality.conscientiousness.score) * 0.8 + "rem",
+                gradep1: Number(personality.conscientiousness.score) * 80 + "px",
+                subDim: data.data.conscientiousnessSubdim,
+                sysDim: data.data.conscientiousnessAnalysis,
+                flag: that.conscientiousnessFlag
+              },
+              {
+                id: 3,
+                title: "神经质",
+                grade: personality.nervousness.score,
+                gradep: Number(personality.nervousness.score) * 0.8 + "rem",
+                gradep1: Number(personality.nervousness.score) * 80 + "px",
+                subDim: data.data.nervousnessSubdim,
+                sysDim: data.data.nervousnessAnalysis,
+                flag: that.nervousnessFlag
+              },
+              {
+                id: 4,
+                title: "宜人性",
+                grade: personality.agreeableness.score,
+                gradep: Number(personality.agreeableness.score) * 0.8 + "rem",
+                gradep1: Number(personality.agreeableness.score) * 80 + "px",
+                subDim: data.data.agreeablenessSubdim,
+                sysDim: data.data.agreeablenessAnalysis,
+                flag: that.agreeablenessFlag
+              },
+              {
+                id: 5,
+                title: "开放性",
+                grade: personality.openness.score,
+                gradep: Number(personality.openness.score) * 0.8 + "rem",
+                gradep1: Number(personality.openness.score) * 80 + "px",
+                subDim: data.data.opennessSubdim,
+                sysDim: data.data.opennessAnalysis,
+                flag: that.opennessFlag
+              }
+            ];
+            this.rgList = rgList0
+            data.data.rgList = this.rgList;
+            data.data.reportId = datas.reportId
+            if (data.data.note) {
+              that.assessment = data.data.note
+              if (data.data.note == '') {
+                that.assessmentFlag = false
+              } else {
+                that.assessmentFlag = true
+              }
+            }
+            that.details = data.data;
             this.part3 = true;
             setTimeout(() => {
               that.myTxtFlag = true;
@@ -2338,21 +2108,105 @@ export default {
         .then(res => {
           var data = res.data;
           if (data.code == 0) {
-            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            let obja = {
+              menuAuthID: []
+            };
+            if (data.data.userAuth == "") {
+              data.data.userAuth = JSON.stringify(obja);
+            } else {
+              if (JSON.parse(data.data.userAuth).menuAuthID) {
+
+              } else {
+                let nOb = JSON.parse(data.data.userAuth);
+                nOb.menuAuthID = [];
+                data.data.userAuth = JSON.stringify(nOb);
+              }
+            }
+            localStorage.setItem("userAuth", data.data.userAuth);
+            localStorage.setItem("userType", 1);
+            if (data.data.algTypes.mentalDim) {
+              // mentalDim
+              // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+
+              // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+              let mental = data.data.algTypes.mentalDim.toString(2).split('')
+              data.data.algTypes.depressionFlag = mental[0]
+              data.data.algTypes.anxietyFlag = mental[1]
+              data.data.algTypes.forcedFlag = mental[2]
+              data.data.algTypes.ptsdFlag = mental[3]
+              data.data.algTypes.violenceFlag = mental[4]
+              data.data.algTypes.suicideFlag = mental[5]
+              // data.data.algTypes.zibiFlag = mental[6]
+              // personalityDim
+              // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+              // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+              let personality = data.data.algTypes.personalityDim.toString(2).split('')
+              data.data.algTypes.extroversionFlag = personality[0]
+              data.data.algTypes.conscientiousnessFlag = personality[1]
+              data.data.algTypes.nervousnessFlag = personality[2]
+              data.data.algTypes.agreeablenessFlag = personality[3]
+              data.data.algTypes.opennessFlag = personality[4]
+
+              // positiveDim
+              // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+              
+              let positive = data.data.algTypes.positiveDim.toString(2).split('')
+              data.data.algTypes.resilienceFlag = positive[0]
+              data.data.algTypes.selfFlag = positive[1]
+              data.data.algTypes.achievementFlag = positive[2]
+              data.data.algTypes.emotionFlag = positive[3]
+              data.data.algTypes.relationshipFlag = positive[4]
+              localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            }
+            
             if (data.data.algTypes) {
               // 是否显示抑郁
-              this.depressionFlag = data.data.algTypes.depression
+              this.depressionFlag = data.data.algTypes.depressionFlag
               // 是否显示焦虑
-              this.anxietyFlag = data.data.algTypes.anxiety
+              this.anxietyFlag = data.data.algTypes.anxietyFlag
               // 是否显示强迫
-              this.forcedFlag = data.data.algTypes.forced
-              // 是否显示自我伤害
-              this.suicideFlag = data.data.algTypes.suicide
+              this.forcedFlag = data.data.algTypes.forcedFlag
+              // 是否显示PTSD
+              this.ptsdFlag = data.data.algTypes.ptsdFlag
               // 是否显示敌对
-              this.violenceFlag = data.data.algTypes.violence
-              // 是否显示人格
-              this.personalityFlag = data.data.algTypes.personality
+              this.violenceFlag = data.data.algTypes.violenceFlag
+              // 是否显示自我伤害
+              this.suicideFlag = data.data.algTypes.suicideFlag
+              // // 是否显示自闭
+              // this.zibiFlag = data.data.algTypes.zibiFlag
+              // 是否显示大五人格
+              this.extroversionFlag = data.data.algTypes.extroversionFlag
+              this.conscientiousnessFlag = data.data.algTypes.conscientiousnessFlag
+              this.nervousnessFlag = data.data.algTypes.nervousnessFlag
+              this.agreeablenessFlag = data.data.algTypes.agreeablenessFlag
+              this.opennessFlag = data.data.algTypes.opennessFlag
+
+              // 是否显示心理韧性
+              this.resilienceFlag = data.data.algTypes.resilienceFlag
+              // 是否显示积极自我
+              this.selfFlag = data.data.algTypes.selfFlag
+              // 是否显示积极成就
+              this.achievementFlag = data.data.algTypes.achievementFlag
+              // 是否显示积极情绪
+              this.emotionFlag = data.data.algTypes.emotionFlag
+              // 是否显示积极关系
+              this.relationshipFlag = data.data.algTypes.relationshipFlag
             }
+            // localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            // if (data.data.algTypes) {
+            //   // 是否显示抑郁
+            //   this.depressionFlag = data.data.algTypes.depression
+            //   // 是否显示焦虑
+            //   this.anxietyFlag = data.data.algTypes.anxiety
+            //   // 是否显示强迫
+            //   this.forcedFlag = data.data.algTypes.forced
+            //   // 是否显示自我伤害
+            //   this.suicideFlag = data.data.algTypes.suicide
+            //   // 是否显示敌对
+            //   this.violenceFlag = data.data.algTypes.violence
+            //   // 是否显示人格
+            //   this.personalityFlag = data.data.algTypes.personality
+            // }
             //
             // this.depressionFlag = 1
             // this.anxietyFlag = 1
@@ -2810,29 +2664,30 @@ export default {
       this.partList = param
       this.setPartsFlag(true);
       this.dialogPartFrame = false
-      return
+      // return
       
-      if (this.department == "") {
-        this.frameFlag = true;
-        return false;
-      }
-      if (this.partsForm.reason == "") {
-        this.reasonFlag = true;
-        return false;
-      }
-      let checkArr = []
-      for (let i in this.checkList) {
-        checkArr.push({ passport: this.checkList[i].passport });
-      }
-      for (let i in this.studyList) {
-        if (this.studyList[i].Pid == this.department) {
-          this.departmentName = this.studyList[i].Name
-        }
-      }
+      // if (this.department == "") {
+      //   this.frameFlag = true;
+      //   return false;
+      // }
+      // if (this.partsForm.reason == "") {
+      //   this.reasonFlag = true;
+      //   return false;
+      // }
+      // let checkArr = []
+      // for (let i in this.checkList) {
+      //   checkArr.push({ passport: this.checkList[i].passport });
+      // }
+      // for (let i in this.studyList) {
+      //   if (this.studyList[i].Pid == this.department) {
+      //     this.departmentName = this.studyList[i].Name
+      //   }
+      // }
       
     },
     // // 批量导出
     someExport() {
+      let that = this;
       this.pdfList = [];
       if (this.checkList.length == 0) {
         this.$message({
@@ -2848,9 +2703,110 @@ export default {
           reportId: this.checkList[i].reportId,
           gender: this.checkList[i].gender
         });
+        
       }
       this.pdfList = checkArr;
-      this.setSomePdfFlag(true);
+      console.log(this.pdfList)
+      that.$http
+        .get(Url + "/aimw/user/getAuthInfo", { params: {
+          passport: JSON.parse(localStorage.getItem("userInfo")).passport
+        } })
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            let obja = {
+              menuAuthID: []
+            };
+            if (data.data.userAuth == "") {
+              data.data.userAuth = JSON.stringify(obja);
+            } else {
+              if (JSON.parse(data.data.userAuth).menuAuthID) {
+
+              } else {
+                let nOb = JSON.parse(data.data.userAuth);
+                nOb.menuAuthID = [];
+                data.data.userAuth = JSON.stringify(nOb);
+              }
+            }
+            localStorage.setItem("userAuth", data.data.userAuth);
+            localStorage.setItem("userType", 1);
+            if (data.data.algTypes.mentalDim) {
+              // mentalDim
+              // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+
+              // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+              let mental = data.data.algTypes.mentalDim.toString(2).split('')
+              data.data.algTypes.depressionFlag = mental[0]
+              data.data.algTypes.anxietyFlag = mental[1]
+              data.data.algTypes.forcedFlag = mental[2]
+              data.data.algTypes.ptsdFlag = mental[3]
+              data.data.algTypes.violenceFlag = mental[4]
+              data.data.algTypes.suicideFlag = mental[5]
+              // data.data.algTypes.zibiFlag = mental[6]
+              // personalityDim
+              // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+              // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+              let personality = data.data.algTypes.personalityDim.toString(2).split('')
+              data.data.algTypes.extroversionFlag = personality[0]
+              data.data.algTypes.conscientiousnessFlag = personality[1]
+              data.data.algTypes.nervousnessFlag = personality[2]
+              data.data.algTypes.agreeablenessFlag = personality[3]
+              data.data.algTypes.opennessFlag = personality[4]
+
+              // positiveDim
+              // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+              
+              let positive = data.data.algTypes.positiveDim.toString(2).split('')
+              data.data.algTypes.resilienceFlag = positive[0]
+              data.data.algTypes.selfFlag = positive[1]
+              data.data.algTypes.achievementFlag = positive[2]
+              data.data.algTypes.emotionFlag = positive[3]
+              data.data.algTypes.relationshipFlag = positive[4]
+              localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            }
+            
+            if (data.data.algTypes) {
+              // 是否显示抑郁
+              that.depressionFlag = data.data.algTypes.depressionFlag
+              // 是否显示焦虑
+              that.anxietyFlag = data.data.algTypes.anxietyFlag
+              // 是否显示强迫
+              that.forcedFlag = data.data.algTypes.forcedFlag
+              // 是否显示PTSD
+              that.ptsdFlag = data.data.algTypes.ptsdFlag
+              // 是否显示敌对
+              that.violenceFlag = data.data.algTypes.violenceFlag
+              // 是否显示自我伤害
+              that.suicideFlag = data.data.algTypes.suicideFlag
+              // // 是否显示自闭
+              // this.zibiFlag = data.data.algTypes.zibiFlag
+              // 是否显示大五人格
+              that.extroversionFlag = data.data.algTypes.extroversionFlag
+              that.conscientiousnessFlag = data.data.algTypes.conscientiousnessFlag
+              that.nervousnessFlag = data.data.algTypes.nervousnessFlag
+              that.agreeablenessFlag = data.data.algTypes.agreeablenessFlag
+              that.opennessFlag = data.data.algTypes.opennessFlag
+
+              // 是否显示心理韧性
+              that.resilienceFlag = data.data.algTypes.resilienceFlag
+              // 是否显示积极自我
+              that.selfFlag = data.data.algTypes.selfFlag
+              // 是否显示积极成就
+              that.achievementFlag = data.data.algTypes.achievementFlag
+              // 是否显示积极情绪
+              that.emotionFlag = data.data.algTypes.emotionFlag
+              // 是否显示积极关系
+              that.relationshipFlag = data.data.algTypes.relationshipFlag
+            }
+
+            this.setSomePdfFlag(true);
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
     },
     // 批量删除
     someDelete() {

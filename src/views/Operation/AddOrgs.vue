@@ -31,7 +31,7 @@
               v-model="formAddOrgs.name"
               placeholder="请输入机构名称"
             ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
+            <div style="width:3rem;height:0.36rem"></div>
             <div class="tip_left" v-show="nameFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
@@ -44,7 +44,7 @@
               v-model="formAddOrgs.nameAbb"
               placeholder="请输入机构ID"
             ></el-input>
-            <div style="width:4rem;height:0.36rem"></div>
+            <div style="width:3rem;height:0.36rem"></div>
             <div class="tip_left" v-show="nameAbbFlag">
               <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
@@ -95,7 +95,7 @@
               </el-select>
             </section>
             <div class="tip_left" v-show="areaFlag">
-              <div class="tip_msg" style="width:1.44rem">
+              <div class="tip_msg">
                 <img src="../../assets/images/x.png" alt="" />
                 请选择省/市/区
               </div>
@@ -113,10 +113,6 @@
               placeholder="请输入机构网址"
             ></el-input>
           </el-form-item>
-          <div class="person_msg">
-            <img src="../../assets/images/personPass.png" alt="" />
-            辅助信息
-          </div>
           <el-form-item label="备注：">
             <el-input
               type="textarea"
@@ -128,12 +124,30 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item class="sub_center">
-            <el-button type="primary" @click="addSubmit">保存</el-button>
-            <el-button type="primary" class="resets" @click="goBack"
-              >取消</el-button
-            >
-          </el-form-item>
+          <div class="person_msg" style="margin-bottom: 0.1rem;">
+            <img src="../../assets/images/personPass.png" alt="" />
+            维度配置
+          </div>
+          <el-form-item required label="开通维度：" style="margin-bottom: 0.1rem"></el-form-item>
+          <div style="margin-left: -0.24rem;" class="wd_box">
+            
+            <el-checkbox style="margin-bottom: 0.06rem;" disabled :indeterminate="xinliIndeter" v-model="xinliCheckAll" @change="xinliCheckAllChange">心理健康水平分析：</el-checkbox>
+            <el-checkbox-group style="margin-bottom: 0.26rem; margin-left: 0.24rem;" v-model="xinliChecked" @change="xinliCheckedChange">
+              <el-checkbox v-for="item in xinliList" :disabled="item.id < 4 ? true : false" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox style="margin-bottom: 0.06rem;" :indeterminate="xinliIndeter1" v-model="xinliCheckAll1" @change="xinliCheckAllChange1">积极心理品质分析：</el-checkbox>
+            <el-checkbox-group style="margin-bottom: 0.26rem; margin-left: 0.24rem;" v-model="xinliChecked1" @change="xinliCheckedChange1">
+              <el-checkbox v-for="item in xinliList1" :label="item.id" :key="item.id">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox style="margin-bottom: 1rem;" v-model="xinliRen" @change="xinliCheckedChange2">人格分析</el-checkbox>
+            <el-form-item class="sub_center" style="margin-left: -0.5rem;">
+              <el-button type="primary" @click="addSubmit">保存</el-button>
+              <el-button type="primary" class="resets" @click="goBack"
+                >取消</el-button
+              >
+            </el-form-item>
+          </div>
+          
         </el-form>
       </div>
     </div>
@@ -166,7 +180,73 @@ export default {
         address: "", // 详细地址
         website: "", // 机构网址
         remark: "" // 备注
-      }
+      },
+      xinliCheckAll: true,
+      xinliCheckedAll: [1, 2, 3, 4, 5, 6],
+      xinliChecked: [1, 2, 3, 4, 5, 6],
+      xinliIndeter: false,
+      xinliList: [
+        {
+          id: 1,
+          name: '抑郁'
+        },
+        {
+          id: 2,
+          name: '焦虑'
+        },
+        {
+          id: 3,
+          name: '强迫'
+        },
+        {
+          id: 4,
+          name: '自我伤害'
+        },
+        {
+          id: 5,
+          name: '敌对'
+        },
+        {
+          id: 6,
+          name: 'PTSD'
+        }
+        // ,
+        // {
+        //   id: 7,
+        //   name: '自闭'
+        // }
+      ],
+      xinliCheckAll1: true,
+      xinliCheckedAll1: [1, 2, 3, 4, 5],
+      xinliChecked1: [1, 2, 3, 4, 5],
+      xinliIndeter1: false,
+      xinliList1: [
+        {
+          id: 1,
+          name: '心理韧性'
+        },
+        {
+          id: 2,
+          name: '积极自我'
+        },
+        {
+          id: 3,
+          name: '积极成就'
+        },
+        {
+          id: 4,
+          name: '积极情绪'
+        },
+        {
+          id: 5,
+          name: '积极关系'
+        }
+      ],
+      xinliRen: true,
+
+      mentalDim: 0,
+      positiveDim: 0,
+      personalityDim: 0
     };
   },
   created() {
@@ -176,6 +256,38 @@ export default {
     this.initAddressFrom(areaJson);
   },
   methods: {
+    xinliCheckAllChange(val) {
+      console.log(val)
+      this.xinliChecked = val ? this.xinliCheckedAll : [];
+      this.xinliIndeter = false;
+      console.log(this.xinliIndeter)
+    },
+    xinliCheckedChange(value) {
+      console.log(value)
+      let checkedCount = value.length;
+      this.xinliCheckAll = checkedCount === this.xinliList.length;
+      this.xinliIndeter = checkedCount > 0 && checkedCount < this.xinliList.length;
+      console.log(this.xinliIndeter)
+    },
+    xinliCheckAllChange1(val) {
+      console.log(val)
+      this.xinliChecked1 = val ? this.xinliCheckedAll1 : [];
+      this.xinliIndeter1 = false;
+      console.log(this.xinliIndeter1)
+    },
+    xinliCheckedChange1(value) {
+      console.log(value)
+      let checkedCount = value.length;
+      this.xinliCheckAll1 = checkedCount === this.xinliList1.length;
+      this.xinliIndeter1 = checkedCount > 0 && checkedCount < this.xinliList1.length;
+      console.log(this.xinliIndeter1)
+    },
+
+    xinliCheckedChange2(val) {
+      console.log(val)
+      this.personalityDim = val ? 31 : 0
+      console.log(this.personalityDim)
+    },
     // 初始化表单信息
     initAddressFrom(data) {
       this.provinceData = data;
@@ -241,7 +353,7 @@ export default {
         this.areaFlag = true;
         return false;
       }
-      console.log(this.formAddOrgs)
+      // return
       let params = {
         name: this.formAddOrgs.name, // 机构名称
         nameAbb: this.formAddOrgs.nameAbb, // 机构id
@@ -259,6 +371,62 @@ export default {
       // return
       that.$http
         .post(Url + "/aimw/ops/addOrganization", params)
+        .then(res => {
+          var data = res.data;
+          console.log(data)
+          if (data.code == 0) {
+            this.wdSubmit()
+          } else {
+            this.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    // 新增机构提交
+    wdSubmit() {
+      let that = this;
+      console.log(this.xinliChecked)
+      console.log(this.xinliChecked1)
+      console.log(this.xinliRen)
+      
+      let xlArr = [0, 0, 0, 0, 0, 0]
+      for (let j in xlArr) {
+        for (let i in this.xinliChecked) {
+          xlArr[this.xinliChecked[i] - 1] = 1
+        }
+      }
+      let xlArr1 = [0, 0, 0, 0, 0]
+      for (let j in xlArr1) {
+        for (let i in this.xinliChecked1) {
+          xlArr1[this.xinliChecked1[i] - 1] = 1
+        }
+      }
+      xlArr = xlArr.reverse()
+      xlArr1 = xlArr1.reverse()
+      if (this.xinliRen) {
+        this.personalityDim = 31
+      }
+
+      console.log(xlArr)
+      console.log(xlArr1)
+      this.mentalDim = parseInt(xlArr.join(''), 2)
+      this.positiveDim = parseInt(xlArr1.join(''), 2)
+      console.log(this.mentalDim)
+      console.log(this.positiveDim)
+      console.log(this.personalityDim)
+      // return
+      let params = {
+        nameAbb: this.formAddOrgs.nameAbb, // 机构id
+        mentalDim: this.mentalDim, // 机构id
+        positiveDim: this.positiveDim, // 机构id
+        personalityDim: this.personalityDim
+      }
+      console.log(params)
+      // return
+      that.$http
+        .put(Url + "/aimw/ops/updateDimInfo", params)
         .then(res => {
           var data = res.data;
           console.log(data)
@@ -289,6 +457,16 @@ export default {
 .add_user_wrap {
   text-align: left;
   margin: 0 0.22rem;
+  .wd_box{
+    .el-checkbox__label {
+      padding-left: 0.06rem !important;
+      font-size: 0.16rem !important;
+      line-height: 0.36rem;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #7786ac !important;
+    }
+  }
   //主要内容区
   .person_main {
     background: #ffffff;
@@ -343,7 +521,7 @@ export default {
       // 左三角
       .tip_left {
         position: absolute;
-        left: 3.6rem;
+        left: 6.1rem;
         top: 0;
         padding: 0.05rem 0.1rem;
         font-size: 0.14rem;
@@ -379,9 +557,12 @@ export default {
       }
       .tip_msg {
         font-size: 0.14rem;
+        display: flex;
+        align-items: center;
         img {
           width: 0.12rem;
           height: 0.12rem;
+          margin-right: 0.05rem;
         }
       }
       // 表单
@@ -454,15 +635,15 @@ export default {
       .adress-select{
         .el-input{
           height: 0.36rem;
-          width: 1.1rem;
+          width: 1.93rem;
         }
       }
       .el-input {
         height: 0.36rem;
-        width: 3.5rem;
+        width: 6rem;
       }
       .el-form-item{
-        margin-left: -0.8rem;
+        margin-left: -2.2rem;
       }
       .el-form-item__label {
         width: 2rem !important;
@@ -482,7 +663,7 @@ export default {
           align-items: center;
         }
         .el-textarea {
-          width: 3.5rem;
+          width: 6rem;
         }
         .el-input--prefix .el-input__inner{
           padding-left: 0.3rem;

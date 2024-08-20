@@ -141,6 +141,7 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
     border-color:#0075FF !important;
     box-shadow: 0px 3px 18px 0px rgba(32, 98, 184, 0.19);
     border-radius: 2px;
+    cursor: pointer;
 }
 .el-checkbox__inner:hover{
     border-color:#E1E9FF !important;
@@ -782,11 +783,16 @@ input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
     min-height: auto;
     // 开关
     .el-switch__core {
-      border-color: #ffffff;
+      // width: 0.4rem !important;
+      // height: 0.2rem !important;
       background: linear-gradient(-90deg, #d4e7ff 0%, #8fb1d7 100%);
+      border-color: #ffffff !important;
     }
     .el-switch.is-checked .el-switch__core {
       background: linear-gradient(-90deg, #00b6f0, #00eafe);
+    }
+    .el-switch.is-checked .el-switch__core::after{
+
     }
     .el-table--border,
     .el-table--group,
@@ -1457,4 +1463,45 @@ col[name="gutter"] {
   font-weight: 400;
   color: #7786ac;
   margin-right: -0.3rem;
+}
+.wd_box{
+  .el-checkbox{
+    display: flex !important;
+    align-items: center !important;
+  }
+  .el-checkbox__input{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .el-checkbox-group{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .el-checkbox__input.is-disabled{
+    background: #aaaaaa !important;
+  }
+  .el-checkbox__input.is-disabled .el-checkbox__inner{
+    background-color: #aaaaaa !important;
+    border-color: #DCDFE6;
+    background: linear-gradient(179deg, #cccccc, #cccccc) !important;
+    border-color: #cccccc !important;
+    
+  }
+  .el-checkbox__input.is-disabled .el-checkbox__inner::before {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+  }
+  .el-checkbox__input.is-disabled .el-checkbox__inner::after {
+    border-color: #ffffff !important;
+  }
+}
+.el-checkbox__input.is-indeterminate .el-checkbox__inner::before{
+  height: 0.04rem !important;
+  -webkit-transform: scale(.5);
+  transform: scale(.5);
+  left: 0;
+  right: 0;
+  top: 0.06rem !important;
 }

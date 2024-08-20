@@ -58,6 +58,12 @@ export default new Router({
           name: 'operationorgsdetail',
           component: () => import('./views/Operation/OrgsDetail.vue')
         },
+        // 主页--详情
+        {
+          path: '/operation/orgswd',
+          name: 'operationorgswd',
+          component: () => import('./views/Operation/OrgsWd.vue')
+        },
         // 主页--新增
         {
           path: '/operation/addorgs',

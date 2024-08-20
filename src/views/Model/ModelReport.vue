@@ -50,15 +50,11 @@
           温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
         </div>
         <div class="gp2_top" style="padding-bottom: 20px">
-          <img src="../../assets/images/news/zuopinjiedu.png" style="width: 60px;height: 63px" alt="">
+          <img src="../../assets/images/news/zuopinjiedu.png" style="width: 60px;height: auto" alt="">
           <span class="gp2_t_txt">作品解读</span>
         </div>
         <div class="gp_title">
-          <!-- <div class="gp_head" style="height: 20px"></div> -->
           <div class="gp_txt">
-            <p>
-              <span></span>
-            </p>
             <p v-if="details.themeDiscription && details.themeDiscription != ''">
               <span v-html="details.themeDiscription"></span>
             </p>
@@ -71,14 +67,14 @@
           </div>
         </div>
         <div class="gp_title" style="padding: 40px 40px 10px;">
-          <div class="gp_bird_box">
+          <div class="gp_bird_box" v-if="reviewData.workInfo">
             <div class="gp_bird" v-if="details.birdView && details.birdView !=''">
               <img :src="'data:image;base64,' + details.birdView" alt="">
-              <div>{{reviewData.workInfo.workName == '' ? '' : reviewData.workInfo.workName +'-'}}{{ details.datetime }}</div>
+              <div>{{reviewData.workInfo.workName == '' ? '' : reviewData.workInfo.workName +' - '}}{{ details.datetime }}</div>
             </div>
             <div class="gp_bird" v-else>
               <img src="../../assets/images/report/t001.png" alt="">
-              <div>{{ details.datetime }}</div>
+              <div>{{reviewData.workInfo.workName == '' ? '' : reviewData.workInfo.workName +' - '}}{{ details.datetime }}</div>
             </div>
           </div>
         </div>
@@ -91,1611 +87,520 @@
           温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
         </div>
         <div class="gp2_top" style="padding-bottom: 20px">
-          <img src="../../assets/images/news/bencigaik.png" style="width: 60px;height: 52px" alt="">
+          <img src="../../assets/images/news/bencigaik.png" style="width: 60px;height: auto" alt="">
           <span class="gp2_t_txt">本次概况</span>
         </div>
         <div class="gp2_main">
           <div class="myChartBox">
-            <div class="myChart" ref="myChart01" id="myChart01"></div>
-            <div class="myChartTips">
-              <p>{{ details.warningNum }}项</p>
-              <p class="c_o_my_num c_red">
-                风险
-              </p>
+            <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length > 0">
+              <div class="myChart" ref="myChart01" id="myChart01"></div>
+            </div>
+            <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length == 0">
+              <div class="dtmcl_c_nor">正常</div>
             </div>
           </div>
           <div class="gp2_li">
             <div class="gp2l_head">
-              <!-- <img style="width:34px;height:37px;" src="../../assets/images/model/m_004.png" alt="" /> -->
               <span>数据解读</span>
             </div>
           </div>
-          <div class="gp2b_tips">
-            <!-- <div class="dtmcl_du dtmcl_du1"> -->
-              <img  v-if="details.warning == 0" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i0.png" alt="" />
-              <img v-if="details.warning == 1" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i1.png" alt="" />
-              <img v-if="details.warning == 2" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i2.png" alt="" />
-              <img v-if="details.warning == 3" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i3.png" alt="" />
-              <span>总体评估：</span>
-              <div class="wdrjst_res" v-if="details.warning == 0">
-                <span class="wdrjstr_txt wd_col1">正常</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 1">
-                <span class="wdrjstr_txt wd_col2">轻度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 2">
-                <span class="wdrjstr_txt wd_col3">中度预警</span>
-              </div>
-              <div class="wdrjst_res" v-if="details.warning == 3">
-                <span class="wdrjstr_txt wd_col4">重度预警</span>
-              </div>
-            <!-- </div> -->
-            <!-- <img src="../../assets/images/model/m_002.png" alt="" style="margin-left:48px;margin-right:12px;">
-            <p>
-              总体评估：
-            </p>
-            <p class="c_o_my_num c_red" v-if="details.warningNum != 0">
-              需关注
-            </p> -->
-          </div>
-          <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
-            <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
-              该受测者心理健康水平良好。
-            </div>
-            <div v-else>
-              <div v-for="(item,index) in details.warningList" :key="item.id">
-                <div
-                  class="dtmcl_du dtmcl_du2"
-                  v-if="item.old != '正常' && item.flag == 1"
-                >
-                  <img :src="require('../../assets/images/report/icons'+index+'.png')" alt="" />
-                  <span v-html="item.new"></span>
-                </div>
+          <div class="dtmcl_sbox">
+            <div class="dtmcl_sb_t">风险评估：</div>
+            <div class="dtmcl_sb_c" v-if="details.reportWarningInfo">
+              <ul v-if="details.warningList.length > 0">
+                <li v-for="item in details.warningList" :key="item.id">
+                  <span>{{item.name}}风险</span>
+                  <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                  <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                  <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                </li>
+              </ul>
+              <div v-else>
+                正常
               </div>
             </div>
           </div>
-          <div class="gp2_li" style="margin-top:20px">
+          <div class="dtmcl_stip">
+            <span>注：</span>
+            <img src="../../assets/images/news/huas.png" alt="">
+            <span>越多表示风险程度越高。</span>
+          </div>
+          <div class="dtmcl_sbox" v-if="details.jjName != ''" style="margin: 30px 0 20px;">
+            <div class="dtmcl_sb_t">优势评估：</div>
+            <div class="dtmcl_sb_c">该受测者在{{details.jjName}}得分最高，表现最好。</div>
+          </div>
+          <div class="gp2_li">
             <div class="gp2l_head">
-              <img style="width:35px;height:31px;" src="../../assets/images/model/m_006.png" alt="" />
               <span>数据对比</span>
             </div>
           </div>
           <div class="gp_warn">
-            <ul>
-              <li class="gp_w_th">
-                <div>指标</div>
-                <div>本次结果</div>
-                <div>上次结果</div>
-                <div>个人平均参测结果</div>
-              </li>
-              <li class="gp_w_td">
-                <div>
-                  <span v-if="details.depressionFlag == 1">抑郁</span>
-                  <span v-if="details.anxietyFlag == 1">焦虑</span>
-                  <span v-if="details.forcedFlag == 1">强迫</span>
-                  <span v-if="details.suicideFlag == 1">自我伤害</span>
-                  <span v-if="details.violenceFlag == 1">敌对</span>
-                </div>
-                <div v-if="details.reportWarningInfo">
-                  <span v-if="details.depressionFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.depressionLevel == 0 }, { wran_col1: details.reportWarningInfo.depressionLevel == 1 }, { wran_col2: details.reportWarningInfo.depressionLevel == 2 }, { wran_col3: details.reportWarningInfo.depressionLevel == 3 }]">
-                    <label>{{ details.reportWarningInfo.depressionLevelTxt }}</label>
-                    <label>{{ details.reportWarningInfo.depressionScore }}</label>
-                  </span>
-                  <span v-if="details.anxietyFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.anxietyLevel == 0 }, { wran_col1: details.reportWarningInfo.anxietyLevel == 1 }, { wran_col2: details.reportWarningInfo.anxietyLevel == 2 }, { wran_col3: details.reportWarningInfo.anxietyLevel == 3 }]">
-                    <label>{{ details.reportWarningInfo.anxietyLevelTxt }}</label>
-                    <label>{{ details.reportWarningInfo.anxietyScore }}</label>
-                  </span>
-                  <span v-if="details.forcedFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.forcedLevel == 0 }, { wran_col1: details.reportWarningInfo.forcedLevel == 1 }, { wran_col2: details.reportWarningInfo.forcedLevel == 2 }, { wran_col3: details.reportWarningInfo.forcedLevel == 3 }]">
-                    <label>{{ details.reportWarningInfo.forcedLevelTxt }}</label>
-                    <label>{{ details.reportWarningInfo.forcedScore }}</label>
-                  </span>
-                  <span v-if="details.suicideFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.suicideLevel == 0 }, { wran_col1: details.reportWarningInfo.suicideLevel == 1 }, { wran_col2: details.reportWarningInfo.suicideLevel == 2 }, { wran_col3: details.reportWarningInfo.suicideLevel == 3 }]">
-                    <label>{{ details.reportWarningInfo.suicideLevelTxt }}</label>
-                    <label>{{ details.reportWarningInfo.suicideScore }}</label>
-                  </span>
-                  <span v-if="details.violenceFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.violenceLevel == 0 }, { wran_col1: details.reportWarningInfo.violenceLevel == 1 }, { wran_col2: details.reportWarningInfo.violenceLevel == 2 }, { wran_col3: details.reportWarningInfo.violenceLevel == 3 }]">
-                    <label>{{ details.reportWarningInfo.violenceLevelTxt }}</label>
-                    <label>{{ details.reportWarningInfo.violenceScore }}</label>
-                  </span>
-                </div>
-                <div v-if="details.lastWarningInfo">
-                  <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.depressionLevel == 0 }, { wran_col1: details.lastWarningInfo.depressionLevel == 1 }, { wran_col2: details.lastWarningInfo.depressionLevel == 2 }, { wran_col3: details.lastWarningInfo.depressionLevel == 3 }]">
-                    <label>{{ details.lastWarningInfo.depressionLevelTxt }}</label>
-                    <label>{{ details.lastWarningInfo.depressionScore }}</label>
-                  </span>
-                  <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.anxietyLevel == 0 }, { wran_col1: details.lastWarningInfo.anxietyLevel == 1 }, { wran_col2: details.lastWarningInfo.anxietyLevel == 2 }, { wran_col3: details.lastWarningInfo.anxietyLevel == 3 }]">
-                    <label>{{ details.lastWarningInfo.anxietyLevelTxt }}</label>
-                    <label>{{ details.lastWarningInfo.anxietyScore }}</label>
-                  </span>
-                  <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.forcedLevel == 0 }, { wran_col1: details.lastWarningInfo.forcedLevel == 1 }, { wran_col2: details.lastWarningInfo.forcedLevel == 2 }, { wran_col3: details.lastWarningInfo.forcedLevel == 3 }]">
-                    <label>{{ details.lastWarningInfo.forcedLevelTxt }}</label>
-                    <label>{{ details.lastWarningInfo.forcedScore }}</label>
-                  </span>
-                  <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.suicideLevel == 0 }, { wran_col1: details.lastWarningInfo.suicideLevel == 1 }, { wran_col2: details.lastWarningInfo.suicideLevel == 2 }, { wran_col3: details.lastWarningInfo.suicideLevel == 3 }]">
-                    <label>{{ details.lastWarningInfo.suicideLevelTxt }}</label>
-                    <label>{{ details.lastWarningInfo.suicideScore }}</label>
-                  </span>
-                  <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.violenceLevel == 0 }, { wran_col1: details.lastWarningInfo.violenceLevel == 1 }, { wran_col2: details.lastWarningInfo.violenceLevel == 2 }, { wran_col3: details.lastWarningInfo.violenceLevel == 3 }]">
-                    <label>{{ details.lastWarningInfo.violenceLevelTxt }}</label>
-                    <label>{{ details.lastWarningInfo.violenceScore }}</label>
-                  </span>
-                  <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                </div>
-                <div v-if="details.warningAvgInfo">
-                  <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.depressionLevel == 0 }, { wran_col1: details.warningAvgInfo.depressionLevel == 1 }, { wran_col2: details.warningAvgInfo.depressionLevel == 2 }, { wran_col3: details.warningAvgInfo.depressionLevel == 3 }]">
-                    <label>{{ details.warningAvgInfo.depressionLevelTxt }}</label>
-                    <label>{{ details.warningAvgInfo.depressionScore }}</label>
-                  </span>
-                  <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.anxietyLevel == 0 }, { wran_col1: details.warningAvgInfo.anxietyLevel == 1 }, { wran_col2: details.warningAvgInfo.anxietyLevel == 2 }, { wran_col3: details.warningAvgInfo.anxietyLevel == 3 }]">
-                    <label>{{ details.warningAvgInfo.anxietyLevelTxt }}</label>
-                    <label>{{ details.warningAvgInfo.anxietyScore }}</label>
-                  </span>
-                  <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.forcedLevel == 0 }, { wran_col1: details.warningAvgInfo.forcedLevel == 1 }, { wran_col2: details.warningAvgInfo.forcedLevel == 2 }, { wran_col3: details.warningAvgInfo.forcedLevel == 3 }]">
-                    <label>{{ details.warningAvgInfo.forcedLevelTxt }}</label>
-                    <label>{{ details.warningAvgInfo.forcedScore }}</label>
-                  </span>
-                  <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.suicideLevel == 0 }, { wran_col1: details.warningAvgInfo.suicideLevel == 1 }, { wran_col2: details.warningAvgInfo.suicideLevel == 2 }, { wran_col3: details.warningAvgInfo.suicideLevel == 3 }]">
-                    <label>{{ details.warningAvgInfo.suicideLevelTxt }}</label>
-                    <label>{{ details.warningAvgInfo.suicideScore }}</label>
-                  </span>
-                  <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                  <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.violenceLevel == 0 }, { wran_col1: details.warningAvgInfo.violenceLevel == 1 }, { wran_col2: details.warningAvgInfo.violenceLevel == 2 }, { wran_col3: details.warningAvgInfo.violenceLevel == 3 }]">
-                    <label>{{ details.warningAvgInfo.violenceLevelTxt }}</label>
-                    <label>{{ details.warningAvgInfo.violenceScore }}</label>
-                  </span>
-                  <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
-                    <label>/</label>
-                    <label>/</label>
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="table-style group_01">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <img class="gp_01_bg" src="../../assets/images/model/t_bg.png" alt="" />
-      <div class="gp_01_box">
-        <div class="gp_01_photo">
-          <img src="../../assets/images/mo_man.png" v-if="gender == 1" alt="">
-          <img src="../../assets/images/mo_woman.png" v-else alt="">
-        </div>
-        <div class="gp_01_msg">
-          <ul>
-            <li>
-              <img
-                class="dt_per1"
-                src="../../assets/images/report/person1.png"
-                alt=""
-              />
-              <span class="dt_blod">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-              <span>{{details.name}}</span>
-            </li>
-            <li>
-              <img
-                class="dt_per2"
-                src="../../assets/images/report/person9.png"
-                alt=""
-              />
-              <span class="dt_blod">登录账号：</span>
-              <span>{{details.passport}}</span>
-            </li>
-            <li>
-              <img
-                class="dt_per3"
-                src="../../assets/images/report/person10.png"
-                alt=""
-              />
-              <span class="dt_blod">手&nbsp;&nbsp;机&nbsp;号：</span>
-              <span>{{details.phone}}</span>
-            </li>
-            <li>
-              <img
-                class="dt_per4"
-                src="../../assets/images/report/person4.png"
-                alt=""
-              />
-              <span class="dt_blod">出生日期：</span>
-              <span>{{details.birth}}</span>
-            </li>
-            <li>
-              <img
-                class="dt_per7"
-                src="../../assets/images/report/person7.png"
-                alt=""
-              />
-              <span class="dt_blod">测评次数：</span>
-              <span>第{{ details.evaluationTime }}次</span>
-            </li>
-            <li>
-              <img
-                class="dt_per6"
-                src="../../assets/images/report/person6.png"
-                alt=""
-              />
-              <span class="dt_blod">所属部门：</span>
-              <span>{{details.departmentName}}</span>
-            </li>
-            <li style="width:400px">
-              <img
-                class="dt_per8"
-                src="../../assets/images/report/person8.png"
-                alt=""
-              />
-              <span class="dt_blod">测评时间：</span>
-              <span>{{ details.datetime }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="table-style group_02">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding-top:96px;">
-        <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
-        <span class="gp2_t_txt">导读</span>
-        <span class="gp2_t_eng">Reading Guide</span>
-      </div>
-      <div class="gp2_box">
-        <p>沙盘游戏，也被称为箱庭疗法，是指来访者在治疗师的陪伴下，从玩具架上自由挑选沙具，在盛有细沙的特制箱子里进行自我表现的一种心理疗法。沙盘游戏的有效性已经得到国内外临床实践的广泛验证，对于丰富个体的情感体验、促进自我成长及人格完善具有显著的作用。</p>
-        <p>我们基于投射、沙盘游戏理论，运用人工智能、三维仿真等多项技术研发了AI心世界，实现了实物沙盘的电子化与智能化。</p>
-        <p>AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。</p>
-        <div class="gp2b_tips">
-          <img src="../../assets/images/model/m_002.png" alt="">
-          <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
-        </div>
-      </div>
-      <div class="gp2_top">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
-        <span class="gp2_t_txt">作品解读</span>
-        <span class="gp2_t_eng">Interpretation Of Works</span>
-      </div>
-      <div class="gp2_box">
-        <p v-html="details.selfDiscription"></p>
-        <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
-      </div>
-    </div> -->
-
-    <!-- <div class="table-style group_02">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
-        <span class="gp2_t_txt">作品解读</span>
-        <span class="gp2_t_eng">Interpretation Of Works</span>
-      </div>
-      <div class="gp2_box">
-        <p v-html="details.selfDiscription"></p>
-        <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
-      </div>
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" />
-        <span class="gp2_t_txt">本次概况</span>
-        <span class="gp2_t_eng">This Overview</span>
-      </div>
-      <div class="gp2_main">
-        <div class="myChartBox">
-          <div class="myChart" ref="myChart01" id="myChart01"></div>
-          <div class="myChartTips">
-            <p>{{ details.warningNum }}项</p>
-            <p class="c_o_my_num c_red">
-              预警
-            </p>
-          </div>
-        </div>
-        <div class="gp2_li">
-          <div class="gp2l_head">
-            <img style="width:34px;height:37px;" src="../../assets/images/model/m_004.png" alt="" />
-            <span>数据解读</span>
-          </div>
-        </div>
-        <div class="gp2b_tips">
-            <img  v-if="details.warning == 0" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i0.png" alt="" />
-            <img v-if="details.warning == 1" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i1.png" alt="" />
-            <img v-if="details.warning == 2" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i2.png" alt="" />
-            <img v-if="details.warning == 3" style="margin-left:48px;margin-right:12px;" src="../../assets/images/report/per_i3.png" alt="" />
-            <span>总体评估：</span>
-            <div class="wdrjst_res" v-if="details.warning == 0">
-              <span class="wdrjstr_txt wd_col1">正常</span>
-            </div>
-            <div class="wdrjst_res" v-if="details.warning == 1">
-              <span class="wdrjstr_txt wd_col2">轻度预警</span>
-            </div>
-            <div class="wdrjst_res" v-if="details.warning == 2">
-              <span class="wdrjstr_txt wd_col3">中度预警</span>
-            </div>
-            <div class="wdrjst_res" v-if="details.warning == 3">
-              <span class="wdrjstr_txt wd_col4">重度预警</span>
-            </div>
-        </div>
-        <div class="gp2Cbox" style="margin-left:82px" v-if="details.reportWarningInfo">
-          <div style="font-size:20px;color: #394B6D;" v-if="details.warningList.length == 0">
-            该受测者心理健康水平良好。
-          </div>
-          <div v-else>
-            <div v-for="(item,index) in details.warningList" :key="item.id">
-              <div
-                class="dtmcl_du dtmcl_du2"
-                v-if="item.old != '正常' && item.flag == 1"
-              >
-                <img :src="require('../../assets/images/report/icons'+index+'.png')" alt="" />
-                <span v-html="item.new"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="gp2_li" style="margin-top:20px">
-          <div class="gp2l_head">
-            <img style="width:35px;height:31px;" src="../../assets/images/model/m_006.png" alt="" />
-            <span>数据对比</span>
-          </div>
-        </div>
-        <div class="gp_warn">
-          <ul>
-            <li class="gp_w_th">
-              <div>指标</div>
-              <div>本次结果</div>
-              <div>上次结果</div>
-              <div>个人平均参测结果</div>
-            </li>
-            <li class="gp_w_td">
-              <div>
-                <span v-if="details.depressionFlag == 1">抑郁</span>
-                <span v-if="details.anxietyFlag == 1">焦虑</span>
-                <span v-if="details.forcedFlag == 1">强迫</span>
-                <span v-if="details.suicideFlag == 1">自我伤害</span>
-                <span v-if="details.violenceFlag == 1">敌对</span>
-              </div>
-              <div v-if="details.reportWarningInfo">
-                <span v-if="details.depressionFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.depressionLevel == 0 }, { wran_col1: details.reportWarningInfo.depressionLevel == 1 }, { wran_col2: details.reportWarningInfo.depressionLevel == 2 }, { wran_col3: details.reportWarningInfo.depressionLevel == 3 }]">
-                  <label>{{ details.reportWarningInfo.depressionLevelTxt }}</label>
-                  <label>{{ details.reportWarningInfo.depressionScore }}</label>
-                </span>
-                <span v-if="details.anxietyFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.anxietyLevel == 0 }, { wran_col1: details.reportWarningInfo.anxietyLevel == 1 }, { wran_col2: details.reportWarningInfo.anxietyLevel == 2 }, { wran_col3: details.reportWarningInfo.anxietyLevel == 3 }]">
-                  <label>{{ details.reportWarningInfo.anxietyLevelTxt }}</label>
-                  <label>{{ details.reportWarningInfo.anxietyScore }}</label>
-                </span>
-                <span v-if="details.forcedFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.forcedLevel == 0 }, { wran_col1: details.reportWarningInfo.forcedLevel == 1 }, { wran_col2: details.reportWarningInfo.forcedLevel == 2 }, { wran_col3: details.reportWarningInfo.forcedLevel == 3 }]">
-                  <label>{{ details.reportWarningInfo.forcedLevelTxt }}</label>
-                  <label>{{ details.reportWarningInfo.forcedScore }}</label>
-                </span>
-                <span v-if="details.suicideFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.suicideLevel == 0 }, { wran_col1: details.reportWarningInfo.suicideLevel == 1 }, { wran_col2: details.reportWarningInfo.suicideLevel == 2 }, { wran_col3: details.reportWarningInfo.suicideLevel == 3 }]">
-                  <label>{{ details.reportWarningInfo.suicideLevelTxt }}</label>
-                  <label>{{ details.reportWarningInfo.suicideScore }}</label>
-                </span>
-                <span v-if="details.violenceFlag == 1" :class="[ 'gp_w_ll', { wran_col0: details.reportWarningInfo.violenceLevel == 0 }, { wran_col1: details.reportWarningInfo.violenceLevel == 1 }, { wran_col2: details.reportWarningInfo.violenceLevel == 2 }, { wran_col3: details.reportWarningInfo.violenceLevel == 3 }]">
-                  <label>{{ details.reportWarningInfo.violenceLevelTxt }}</label>
-                  <label>{{ details.reportWarningInfo.violenceScore }}</label>
-                </span>
-              </div>
-              <div v-if="details.lastWarningInfo">
-                <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.depressionLevel == 0 }, { wran_col1: details.lastWarningInfo.depressionLevel == 1 }, { wran_col2: details.lastWarningInfo.depressionLevel == 2 }, { wran_col3: details.lastWarningInfo.depressionLevel == 3 }]">
-                  <label>{{ details.lastWarningInfo.depressionLevelTxt }}</label>
-                  <label>{{ details.lastWarningInfo.depressionScore }}</label>
-                </span>
-                <span v-if="details.depressionFlag == 1 && details.lastWarningInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.anxietyLevel == 0 }, { wran_col1: details.lastWarningInfo.anxietyLevel == 1 }, { wran_col2: details.lastWarningInfo.anxietyLevel == 2 }, { wran_col3: details.lastWarningInfo.anxietyLevel == 3 }]">
-                  <label>{{ details.lastWarningInfo.anxietyLevelTxt }}</label>
-                  <label>{{ details.lastWarningInfo.anxietyScore }}</label>
-                </span>
-                <span v-if="details.anxietyFlag == 1 &&details.lastWarningInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.forcedLevel == 0 }, { wran_col1: details.lastWarningInfo.forcedLevel == 1 }, { wran_col2: details.lastWarningInfo.forcedLevel == 2 }, { wran_col3: details.lastWarningInfo.forcedLevel == 3 }]">
-                  <label>{{ details.lastWarningInfo.forcedLevelTxt }}</label>
-                  <label>{{ details.lastWarningInfo.forcedScore }}</label>
-                </span>
-                <span v-if="details.forcedFlag == 1 && details.lastWarningInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.suicideLevel == 0 }, { wran_col1: details.lastWarningInfo.suicideLevel == 1 }, { wran_col2: details.lastWarningInfo.suicideLevel == 2 }, { wran_col3: details.lastWarningInfo.suicideLevel == 3 }]">
-                  <label>{{ details.lastWarningInfo.suicideLevelTxt }}</label>
-                  <label>{{ details.lastWarningInfo.suicideScore }}</label>
-                </span>
-                <span v-if="details.suicideFlag == 1 && details.lastWarningInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.lastWarningInfo.violenceLevel == 0 }, { wran_col1: details.lastWarningInfo.violenceLevel == 1 }, { wran_col2: details.lastWarningInfo.violenceLevel == 2 }, { wran_col3: details.lastWarningInfo.violenceLevel == 3 }]">
-                  <label>{{ details.lastWarningInfo.violenceLevelTxt }}</label>
-                  <label>{{ details.lastWarningInfo.violenceScore }}</label>
-                </span>
-                <span v-if="details.violenceFlag == 1 && details.lastWarningInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-              </div>
-              <div v-if="details.warningAvgInfo">
-                <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.depressionLevel == 0 }, { wran_col1: details.warningAvgInfo.depressionLevel == 1 }, { wran_col2: details.warningAvgInfo.depressionLevel == 2 }, { wran_col3: details.warningAvgInfo.depressionLevel == 3 }]">
-                  <label>{{ details.warningAvgInfo.depressionLevelTxt }}</label>
-                  <label>{{ details.warningAvgInfo.depressionScore }}</label>
-                </span>
-                <span v-if="details.depressionFlag == 1 && details.warningAvgInfo.depressionLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.anxietyLevel == 0 }, { wran_col1: details.warningAvgInfo.anxietyLevel == 1 }, { wran_col2: details.warningAvgInfo.anxietyLevel == 2 }, { wran_col3: details.warningAvgInfo.anxietyLevel == 3 }]">
-                  <label>{{ details.warningAvgInfo.anxietyLevelTxt }}</label>
-                  <label>{{ details.warningAvgInfo.anxietyScore }}</label>
-                </span>
-                <span v-if="details.anxietyFlag == 1 &&details.warningAvgInfo.anxietyLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.forcedLevel == 0 }, { wran_col1: details.warningAvgInfo.forcedLevel == 1 }, { wran_col2: details.warningAvgInfo.forcedLevel == 2 }, { wran_col3: details.warningAvgInfo.forcedLevel == 3 }]">
-                  <label>{{ details.warningAvgInfo.forcedLevelTxt }}</label>
-                  <label>{{ details.warningAvgInfo.forcedScore }}</label>
-                </span>
-                <span v-if="details.forcedFlag == 1 && details.warningAvgInfo.forcedLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.suicideLevel == 0 }, { wran_col1: details.warningAvgInfo.suicideLevel == 1 }, { wran_col2: details.warningAvgInfo.suicideLevel == 2 }, { wran_col3: details.warningAvgInfo.suicideLevel == 3 }]">
-                  <label>{{ details.warningAvgInfo.suicideLevelTxt }}</label>
-                  <label>{{ details.warningAvgInfo.suicideScore }}</label>
-                </span>
-                <span v-if="details.suicideFlag == 1 && details.warningAvgInfo.suicideLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel != -1" :class="[ 'gp_w_ll', { wran_col0: details.warningAvgInfo.violenceLevel == 0 }, { wran_col1: details.warningAvgInfo.violenceLevel == 1 }, { wran_col2: details.warningAvgInfo.violenceLevel == 2 }, { wran_col3: details.warningAvgInfo.violenceLevel == 3 }]">
-                  <label>{{ details.warningAvgInfo.violenceLevelTxt }}</label>
-                  <label>{{ details.warningAvgInfo.violenceScore }}</label>
-                </span>
-                <span v-if="details.violenceFlag == 1 && details.warningAvgInfo.violenceLevel == -1" :class="[ 'gp_w_ll']">
-                  <label>/</label>
-                  <label>/</label>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div> -->
-    <div class="table-style group_02 group_03">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top">
-        <img style="width:132px;height:132px;" src="../../assets/images/model/m_007.png" alt="" />
-        <span class="gp2_t_txt">维度分析</span>
-        <span class="gp2_t_eng">Dimensional Analysis</span>
-      </div>
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[0].flag == 1 ? 'block' : 'none', margin: '0 auto 40px'}">
-        <div class="dtms_box" v-if="details.sysList">
-          <div class="dtmsb_tle" :style="{ background: details.sysList[0].bg }">
-            <h3>{{ details.sysList[0].title }}</h3>
-            <div class="dtt_res">
-              <span>评估结果</span>
-              <div class="dtt_img">
-                <img
-                  src="../../assets/images/report/grade_line2.png"
-                  alt=""
-                />
-                <img
-                  class="dttr_btn"
-                  :style="{ left: details.sysList[0].gradep1 }"
-                  src="../../assets/images/report/grade_btn.png"
-                  alt=""
-                />
-                <span class="dttr_lv" :style="{ left: details.sysList[0].gradep1 }">{{
-                  details.sysList[0].level
-                }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative">
-              <div class="top_top" v-if="details.sysList[0].subDim">
-                <span class="tt_txt">{{details.sysList[0].subDim[0].name}}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[0].score) }}</span></div>
-                </div>
-              </div>
-              <div class="bottom_left" v-if="details.sysList[0].subDim">
-                <span class="tt_txt">{{details.sysList[0].subDim[2].name}}</span>
-                <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[2].score) }}</span></div>
-                </div>
-              </div>
-              <div class="bottom_right" v-if="details.sysList[0].subDim">
-                <span class="tt_txt">{{details.sysList[0].subDim[1].name}}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">本次得分：<span>{{ parseInt(details.sysList[0].subDim[1].score) }}</span></div>
-                </div>
-              </div>
-              <div
-                id="myChartPies11"
-                class="myChartPies11"
-                ref="myChartPies11"
-              ></div>
-            </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="dtmcr_bts">
-            <!-- :style="{ color: details.sysList[0].txtColor }" -->
-            <div class="db_img">
-              <img
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/sys2.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/sys3.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/sys4.png"
-                alt=""
-              /> -->
-              测评结果分析
-            </div>
-            <p v-for="(items, keps) in details.sysList[0].list" :key="keps">
-              <img
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/icon1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/icon6.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/icon7.png"
-                alt=""
-              /> -->
-              {{ items }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[1].flag == 1 ? 'block' : 'none', margin: details.sysList && details.sysList[0].flag == 1 ? '0 auto 0' : '0 auto 40px'}">
-        <div class="dtms_box" v-if="details.sysList">
-          <div class="dtmsb_tle" :style="{ background: details.sysList[1].bg }">
-            <h3>{{ details.sysList[1].title }}</h3>
-            <div class="dtt_res">
-              <span>评估结果</span>
-              <div class="dtt_img">
-                <img
-                  src="../../assets/images/report/grade_line2.png"
-                  alt=""
-                />
-                <img
-                  class="dttr_btn"
-                  :style="{ left: details.sysList[1].gradep1 }"
-                  src="../../assets/images/report/grade_btn.png"
-                  alt=""
-                />
-                <span class="dttr_lv" :style="{ left: details.sysList[1].gradep1 }">{{
-                  details.sysList[1].level
-                }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative">
-              <div class="top_top" v-if="details.sysList[1].subDim">
-                <span class="tt_txt">{{details.sysList[1].subDim[0].name}}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[0].score)}}</span></div>
-                </div>
-              </div>
-              <div class="bottom_left" v-if="details.sysList[1].subDim">
-                <span class="tt_txt">{{details.sysList[1].subDim[2].name}}</span>
-                <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[2].score)}}</span></div>
-                </div>
-              </div>
-              <div class="bottom_right" v-if="details.sysList[1].subDim">
-                <span class="tt_txt">{{details.sysList[1].subDim[1].name}}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[1].subDim[1].score)}}</span></div>
-                </div>
-              </div>
-              <div
-                id="myChartPies22"
-                class="myChartPies22"
-                ref="myChartPies22"
-              ></div>
-            </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="dtmcr_bts">
-            <div class="db_img">
-              <img
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/sys2.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/sys3.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/sys4.png"
-                alt=""
-              /> -->
-              测评结果分析
-            </div>
-            <p v-for="(items, keps) in details.sysList[1].list" :key="keps">
-              <img
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/icon1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/icon6.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/icon7.png"
-                alt=""
-              /> -->
-              {{ items }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style  group_02 group_03 group_04">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '80px auto 0'}">
-        <div class="dtms_box" v-if="details.sysList">
-          <div class="dtmsb_tle" :style="{ background: details.sysList[2].bg }">
-            <h3>{{ details.sysList[2].title }}</h3>
-            <div class="dtt_res">
-              <span>评估结果</span>
-              <div class="dtt_img">
-                <img
-                  src="../../assets/images/report/grade_line2.png"
-                  alt=""
-                />
-                <img
-                  class="dttr_btn"
-                  :style="{ left: details.sysList[2].gradep1 }"
-                  src="../../assets/images/report/grade_btn.png"
-                  alt=""
-                />
-                <span class="dttr_lv" :style="{ left: details.sysList[2].gradep1 }">{{
-                  details.sysList[2].level
-                }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="dtmsb_tar">
-            <div style="position:relative">
-              <div class="top_top" v-if="details.sysList[2].subDim">
-                <span class="tt_txt">{{details.sysList[2].subDim[0].name}}</span>
-                <div class="demsb_tool">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[0].score)}}</span></div>
-                </div>
-              </div>
-              <div class="bottom_left" v-if="details.sysList[2].subDim">
-                <span class="tt_txt">{{details.sysList[2].subDim[2].name}}</span>
-                <div class="demsb_tool" style="margin-left:160px">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[2].score)}}</span></div>
-                </div>
-              </div>
-              <div class="bottom_right" v-if="details.sysList[2].subDim">
-                <span class="tt_txt">{{details.sysList[2].subDim[1].name}}</span>
-                <div class="demsb_tool1">
-                  <div class="demsb_score">本次得分：<span>{{parseInt(details.sysList[2].subDim[1].score)}}</span></div>
-                </div>
-              </div>
-              <div
-                id="myChartPies33"
-                class="myChartPies33"
-                ref="myChartPies33"
-              ></div>
-            </div>
-            <!-- <ul class="dtmsb_ulc">
-              <li>
-                <img src="../../assets/images/report/fwLine.png" alt="" />
-              </li>
-            </ul> -->
-          </div>
-          <div class="dtmcr_bts">
-            <div class="db_img">
-              <img
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/sys1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/sys2.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/sys3.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/sys4.png"
-                alt=""
-              /> -->
-              测评结果分析
-            </div>
-            <p v-for="(items, keps) in details.sysList[2].list" :key="keps">
-              <img
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <!-- <img
-                v-if="details.sysList[0].imgType == 1"
-                src="../../assets/images/report/icon0.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 2"
-                src="../../assets/images/report/icon1.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 3"
-                src="../../assets/images/report/icon6.png"
-                alt=""
-              />
-              <img
-                v-if="details.sysList[0].imgType == 4"
-                src="../../assets/images/report/icon7.png"
-                alt=""
-              /> -->
-              {{ items }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="guide_box" v-if="details.suggestion && details.suggestion.length == 1">
-        <div class="gb_main" style="margin-top:40px">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <!-- <span>{{ indexs + 1 }}</span> -->
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
-        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
-        <span class="gp2_t_txt">指导建议</span>
-        <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
-      <div class="guide_box" style="margin-top:40px">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <!-- <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <div v-if="index < 4">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <div v-for="(itemt, indext) in item" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
-                        </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                            <p v-if="!Array.isArray(items)">
-                              {{ items }}
-                            </p>
-                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(items, indexs) in itemp" :key="indexs">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
-                              <p>
-                                {{ items }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <!-- <span>1</span> -->
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 4">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
-        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
-        <span class="gp2_t_txt">指导建议</span>
-        <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
-      <div class="guide_box" style="margin-top:40px">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <div v-if="index > 3">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <div v-for="(itemt, indext) in item" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
-                        </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                            <p v-if="!Array.isArray(items)">
-                              {{ items }}
-                            </p>
-                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(items, indexs) in itemp" :key="indexs">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
-                              <p>
-                                {{ items }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <!-- <span>1</span> -->
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
-        <span class="gp2_t_txt">人身危险性分析</span>
-        <span class="gp2_t_eng">Personal risk analysis</span>
-      </div>
-      <div class="gp3_box gp3_box1" style="margin-bottom:40px;" v-if="details.sysList2">
-        <div v-for="(item, index) in details.sysList2" :key="item.title">
-          <div v-if="index == 0" class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}">
-          
-            <div class="wdrj_title">
-              <img
-                v-if="item.title == '敌对'"
-                src="../../assets/images/report/f_icon1.png"
-                alt=""
-                style="width: 32px;height: 28px"
-              />
-              <img
-                v-if="item.title == '自我伤害'"
-                src="../../assets/images/report/f_icon2.png"
-                alt=""
-                style="width: 33px;height: 33px"
-              />
-              <span>{{item.title}}</span>
-            </div>
-            <div class="wdrj_suger wdrj_suger1">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />
-                <span>评估结果</span>
-                <div class="wdrjst_res" v-if="item.levelNum == 0">
-                  <img src="../../assets/images/report/per_i0.png" alt="" />
-                  <span class="wdrjstr_txt wd_col1">正常</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 1">
-                  <img src="../../assets/images/report/per_i1.png" alt="" />
-                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 2">
-                  <img src="../../assets/images/report/per_i2.png" alt="" />
-                  <span class="wdrjstr_txt wd_col3">中度预警</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 3">
-                  <img src="../../assets/images/report/per_i3.png" alt="" />
-                  <span class="wdrjstr_txt wd_col4">高度预警</span>
-                </div>
-              </div>
-            </div>
-            <div class="dtmsb_tar">
-              <div style="position:relative">
-                <div class="top_top" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                  <div class="demsb_tool">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[0].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="bottom_left" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                  <div class="demsb_tool" style="margin-left:290px">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[2].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="bottom_right" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                  <div class="demsb_tool1">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[1].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="item.title == '敌对' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-                <div v-if="item.title == '敌对' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-                <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-                <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-              </div>
-              <!-- <ul class="dtmsb_ulc">
+            <div class="dtmc_r_biao">
+              <ul>
                 <li>
-                  <img src="../../assets/images/report/fwLine.png" alt="" />
+                  <div>指标</div>
+                  <div>本次结果</div>
+                  <div>上次结果</div>
                 </li>
-              </ul> -->
-            </div>
-            <div class="wdrj_suger">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
-              </div>
-              <ul class="wdrjs_uls">
-                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
-                  <span>{{ indexs + 1 }}</span>
-                  <p>
-                    {{ items }}
-                  </p>
+                <li v-for="item in details.rangeList" :key="item.id">
+                  <div>{{item.name}}</div>
+                  <div>
+                    <span v-if="item.level == -1">/</span>
+                    <span v-if="item.level == 0">正常</span>
+                    <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                  <div>
+                    <span v-if="item.lastLevel == -1">/</span>
+                    <span v-if="item.lastLevel == 0">正常</span>
+                    <img v-if="item.lastLevel == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.lastLevel == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
                 </li>
               </ul>
             </div>
-            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
-              </div>
-              <!-- <ul class="wdrjs_uls">
-                <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                  <span>{{ indexs + 1 }}</span>
-                  <p>
-                    {{ items }}
-                  </p>
-                </li>
-              </ul> -->
-              <div class="gb_contain">
-                <!-- <div v-for="(item, index) in details.suggestion" :key="index">
-                  <p v-if="!Array.isArray(item)">
-                    <img src="../../assets/images/report/icon0.png" alt="" /><span
-                      v-html="item"
-                    ></span>
-                  </p>
-                  <div v-if="Array.isArray(item)">
-                    <ul>
-                      <li v-for="(items, indexs) in item" :key="indexs">
-                        <span>{{ indexs + 1 }}</span>
-                        <p>
-                          {{ items }}
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
-                </div> -->
-                <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                  <p style="margin-left: -10px" v-if="!Array.isArray(items)">
-                    <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
-                    <span
-                      v-html="items"
-                    ></span>
-                  </p>
-                  <div style="margin-left: 0px;margin-bottom: 0px" v-if="Array.isArray(items)">
-                    <div v-for="(itemt, indext) in items" :key="indext">
-                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                            {{ itemp }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-style group_02" v-for="(item, index) in details.sysList" :key="item.title">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px" v-if="index < 1">
+          <img src="../../assets/images/news/xlweidu.png" style="width: 60px;height: auto" alt="">
+          <span class="gp2_t_txt">心理健康维度分析</span>
+        </div>
+        <div class="gp2_main" :style="{'padding-top': index < 1 ? '0px' : '48px'}">
+          <div class="drwc_btr">
+            <div class="wdrj_box">
+              <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 ? 'block' : 'none'}">
+                <div class="wdrj_title">
+                  <span style="font-weight:500">{{index == 0 ? '一、' : index == 1 ? '二、' : index == 2 ? '三、' : index == 3 ? '四、' : index == 4 ? '五、' : index == 5 ? '六、' : index == 6 ? '七、' : index == 7 ? '八、' : ''}}{{item.title}}</span>
+                </div>
+                <div class="wdrj_title wdrj_titles">
+                  <span>测评结果：</span>
+                  <span v-if="item.level == 0">正常</span>
+                  <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                  <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                  <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                </div>
+                <div class="dtmsb_tar">
+                  <div style="position:relative" id="perViolenceEchart">
+                    <div class="top_top" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[0].name }}
+                        <!-- <div class="demsb_tool">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[0].score)
+                            }}</span>
                           </div>
-                          <ul v-if="Array.isArray(itemp)">
-                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
-                              <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
-                              <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
-                              <p v-if="!Array.isArray(itemv)">
-                                {{ itemv }}
-                              </p>
-                              <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
-                                <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                  <p>{{itemf}}</p>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <div v-if="indext == 0">
-                          <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                              {{ itemp }}
-                            </div>
-                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                              <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
-                                <p>
-                                  {{ itemv }}
-                                </p>
-                              </li>
-                            </ul>
-                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                              <li >
-                                <p>
-                                  {{ itemp }}
-                                </p>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+                        </div> -->
+                      </span>
                     </div>
+                    <div class="bottom_left" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[2].name }}
+                        <!-- <div class="demsb_tool">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[2].score)
+                            }}</span>
+                          </div>
+                        </div> -->
+                      </span>
+                    </div>
+                    <div class="bottom_right" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[1].name }}
+                        <!-- <div class="demsb_tool1">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[1].score)
+                            }}</span>
+                          </div>
+                        </div> -->
+                      </span>
+                    </div>
+                    <!-- 抑郁 -->
+                    <div v-if="index == 0" id="myChartLds2" class="myChartLd0" ref="myChartLds2"></div>
+                    <!-- 焦虑 -->
+                    <div v-if="index == 1" id="myChartLds3" class="myChartLd0" ref="myChartLds3"></div>
+                    <!-- 强迫 -->
+                    <div v-if="index == 2" id="myChartLds4" class="myChartLd0" ref="myChartLds4"></div>
+                    <!-- PTSD -->
+                    <div v-if="index == 3" id="myChartLds5" class="myChartLd0" ref="myChartLds5"></div>
+                    <!-- 敌对 -->
+                    <div v-if="index == 4" id="myChartLds6" class="myChartLd0" ref="myChartLds6"></div>
+                    <!-- 自我伤害 -->
+                    <div v-if="index == 5" id="myChartLds7" class="myChartLd0" ref="myChartLds7"></div>
+                    <!-- 自闭 -->
+                    <!-- <div v-if="index == 6" id="myChartLds8" class="myChartLd0" ref="myChartLds8"></div> -->
                   </div>
+                </div>
+                <div class="wdrj_suger" style="margin-top:0rem">
+                  <div class="wdrjs_title">
+                    测评结果分析
+                  </div>
+                  <ul class="wdrjs_uls">
+                    <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                      <p>
+                        {{ indexs + 1 }}.{{ items }}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="wdrj_suger wdrj_sugers" v-if="item.suggestDim != ''">
+                  <div class="wdrjs_title">
+                    指导建议
+                  </div>
+                  <ul class="wdrjs_uls">
+                    <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                      <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                        {{ items }}
+                      </p>
+                      <div v-if="Array.isArray(items)">
+                        <div v-for="(itemu, indexu) in items" :key="indexu">
+                          <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">
+                            <span v-if="String(itemv).indexOf('针对') != -1"></span>
+                            {{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
+    <div class="table-style group_02" v-for="(item, index) in details.jjList" :key="item.title">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px" v-if="index < 1">
+          <img src="../../assets/images/news/jiji.png" style="width: 60px;height: auto" alt="">
+          <span class="gp2_t_txt">积极心理品质分析</span>
+        </div>
+        <div class="gp2_main" :style="{'padding-top': index < 1 ? '0px' : '48px'}">
+          <div class="drwc_btr">
+            <div class="wdrj_box">
+              <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 ? 'block' : 'none'}">
+                <div class="wdrj_title">
+                  <span style="font-weight:500">{{index == 0 ? '一、' : index == 1 ? '二、' : index == 2 ? '三、' : index == 3 ? '四、' : index == 4 ? '五、' : index == 5 ? '六、' : index == 6 ? '七、' : index == 7 ? '八、' : ''}}{{item.title}}</span>
+                </div>
+                <div class="wdrj_title wdrj_titles" style="margin-top: 16px;">
+                  <span>测评结果：</span>
+                  <span v-if="item.level == 0">正常</span>
+                  <img v-if="item.result.indexOf('较低') != -1" style="width: 86px;height: 20px" src="../../assets/images/news/jiaodi.png" alt="">
+                  <img v-if="item.result.indexOf('中等') != -1" style="width: 86px;height: 20px" src="../../assets/images/news/zhongdeng.png" alt="">
+                  <img v-if="item.result.indexOf('较高') != -1" style="width: 86px;height: 20px" src="../../assets/images/news/jiaogao.png" alt="">
+                  <img v-if="item.result.indexOf('极高') != -1" style="width: 86px;height: 20px" src="../../assets/images/news/jigao.png" alt="">
+                </div>
+                <div class="dtmsb_tar" style="height: auto;margin-top:10px;margin: 20px;margin-bottom:40px;width: auto;">
+                  <div style="position:relative" id="perViolenceEchart">
+                    <ol class="dtmsb_tu">
+                      <li v-for="(itemm, indexm) in item.subDim" :key="indexm">
+                        <img src="../../assets/images/news/dot_wz.png" alt="">
+                        <span v-if="indexm < 2">{{itemm.name}}</span>
+                        <span style="margin-left: 4px;" v-else>......</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="wdrj_suger wdrj_sugers" style="margin-top:0">
+                  <div class="wdrjs_title">
+                    测评结果分析
+                  </div>
+                  <ul class="wdrjs_uls">
+                    <li v-for="(items, indexs) in item.sysDim" :key="indexs">
+                      <p>
+                        {{ indexs + 1 }}.{{ items }}
+                      </p>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          
+          <div class="drwc_b_ys drwc_b_ysp" v-if="index == details.jjList.length - 1">
+            <div class="drwc_sp_head"><span></span>积极心理品质各维度表现情况</div>
+            <div class="myChartZhu" v-show="index == details.jjList.length - 1" ref="myChartZhusYs" id="myChartZhusYs"></div>
+          </div>
+          <div class="drwc_b_ys drwc_b_ysp" v-if="index == details.jjList.length - 1 && details.jjName != ''">
+            <p>
+              <img src="../../assets/images/news/dengpao_wz.png" alt="">
+              该受测者在{{details.jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
-        <span class="gp2_t_txt">人身危险性分析</span>
-        <span class="gp2_t_eng">Personal risk analysis</span>
-      </div>
-      <div class="gp3_box gp3_box1" style="margin-top:40px;margin-bottom:40px;" v-if="details.sysList2">
-        <div v-for="(item, index) in details.sysList2" :key="item.title">
-          <div v-if="index == 1" class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}">
-          
-            <div class="wdrj_title">
-              <img
-                v-if="item.title == '敌对'"
-                src="../../assets/images/report/f_icon1.png"
-                alt=""
-                style="width: 32px;height: 28px"
-              />
-              <img
-                v-if="item.title == '自我伤害'"
-                src="../../assets/images/report/f_icon2.png"
-                alt=""
-                style="width: 33px;height: 33px"
-              />
-              <span>{{item.title}}</span>
+    <div class="table-style group_02" v-if="details.jjList && details.jjList.length > 0">
+      <div class="table-border">
+        <div class="gp2_top" style="padding-bottom: 20px">
+          <img src="../../assets/images/news/jiji.png" style="width: 60px;height: auto" alt="">
+          <span class="gp2_t_txt">积极心理品质分析</span>
+        </div>
+        <div class="drwc_bw_shu">
+          <div class="tree_box">
+            <!-- <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+            <div class="tb_s_c11"></div>
+            <div class="tb_s_c12"></div>
+            <div class="tb_s_c13"></div> -->
+            <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+            <div class="tb_s_c11">
+              {{ details.jjList.length > 3 ? details.jjList[3].subDim[0].name : '' }}
             </div>
-            <div class="wdrj_suger wdrj_suger1">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />
-                <span>评估结果</span>
-                <div class="wdrjst_res" v-if="item.levelNum == 0">
-                  <img src="../../assets/images/report/per_i0.png" alt="" />
-                  <span class="wdrjstr_txt wd_col1">正常</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 1">
-                  <img src="../../assets/images/report/per_i1.png" alt="" />
-                  <span class="wdrjstr_txt wd_col2">轻度预警</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 2">
-                  <img src="../../assets/images/report/per_i2.png" alt="" />
-                  <span class="wdrjstr_txt wd_col3">中度预警</span>
-                </div>
-                <div class="wdrjst_res" v-if="item.levelNum == 3">
-                  <img src="../../assets/images/report/per_i3.png" alt="" />
-                  <span class="wdrjstr_txt wd_col4">高度预警</span>
+            <div class="tb_s_c12">
+              {{ details.jjList.length > 3 ? details.jjList[3].subDim[1].name : ''}}
+            </div>
+            <div class="tb_s_c13">
+              {{ details.jjList.length > 3 ? "..." : ''}}
+            </div>
+            <div :class="['cir_box11', { cir_box12: details.jjList.length > 3 && details.jjList[3].result.indexOf('中等') != -1 }, { cir_box13: details.jjList.length > 3 && details.jjList[3].result.indexOf('较高') != -1 }, { cir_box14: details.jjList.length > 3 && details.jjList[3].result.indexOf('极高') != -1 }]">
+              <div class="cir_img" v-if="details.jjList.length > 3"></div>
+              <div class="cir_img34" v-show="details.jjList.length > 3 && details.jjList[3].result.indexOf('较高') != -1"></div>
+              <div class="cir_lay"></div>
+              <div class="cir_cen">
+                <div v-if="details.jjList.length > 3">
+                  <span v-for="item in details.jjList[3].title" :key="item.index">{{ item }}</span>
                 </div>
               </div>
             </div>
-            <div class="dtmsb_tar">
-              <div style="position:relative">
-                <div class="top_top" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[0].name }}</span>
-                  <div class="demsb_tool">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[0].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="bottom_left" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                  <div class="demsb_tool" style="margin-left:290px">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[2].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="bottom_right" v-if="item.subDim">
-                  <span class="tt_txt">{{ item.subDim[1].name }}</span>
-                  <div class="demsb_tool1">
-                    <div class="demsb_score">
-                      本次得分：<span>{{
-                        parseInt(item.subDim[1].score)
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="item.title == '敌对' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-                <div v-if="item.title == '敌对' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-                <div v-if="item.title == '自我伤害' && index == 0" id="myChartLd22" class="myChartLd11" ref="myChartLd22" style="height:246px"></div>
-                <div v-if="item.title == '自我伤害' && index == 1" id="myChartLd33" class="myChartLd11" ref="myChartLd33" style="height:246px"></div>
-              </div>
-              <!-- <ul class="dtmsb_ulc">
-                <li>
-                  <img src="../../assets/images/report/fwLine.png" alt="" />
-                </li>
-              </ul> -->
+            <!-- <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+            <div class="tb_s_c21"></div>
+            <div class="tb_s_c22"></div>
+            <div class="tb_s_c23"></div> -->
+            <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+            <div class="tb_s_c21">
+              {{ details.jjList.length > 1 ? details.jjList[1].subDim[0].name : '' }}
             </div>
-            <div class="wdrj_suger">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />测评结果分析
-              </div>
-              <ul class="wdrjs_uls">
-                <li v-for="(items, indexs) in item.sysDim" :key="indexs">
-                  <span>{{ indexs + 1 }}</span>
-                  <p>
-                    {{ items }}
-                  </p>
-                </li>
-              </ul>
+            <div class="tb_s_c22">
+              {{ details.jjList.length > 1 ? details.jjList[1].subDim[1].name : ''}}
             </div>
-            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
+            <div class="tb_s_c23">
+              {{ details.jjList.length > 1 ? "..." : ''}}
+            </div>
+            <div :class="['cir_box21', { cir_box22: details.jjList.length > 1 && details.jjList[1].result.indexOf('中等') != -1 }, { cir_box23: details.jjList.length > 1 && details.jjList[1].result.indexOf('较高') != -1 }, { cir_box24: details.jjList.length > 1 && details.jjList[1].result.indexOf('极高') != -1 }]">
+              <div class="cir_img" v-if="details.jjList.length > 1"></div>
+              <div class="cir_img34" v-show="details.jjList.length > 1 && details.jjList[1].result.indexOf('较高') != -1"></div>
+              <div class="cir_lay"></div>
+              <div class="cir_cen">
+                <div v-if="details.jjList.length > 1">
+                  <span v-for="item in details.jjList[1].title" :key="item.index">{{ item }}</span>
+                </div>
               </div>
-              <!-- <ul class="wdrjs_uls">
-                <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                  <span>{{ indexs + 1 }}</span>
-                  <p>
-                    {{ items }}
-                  </p>
-                </li>
-              </ul> -->
-              <div class="gb_contain">
-                <!-- <div v-for="(item, index) in details.suggestion" :key="index">
-                  <p v-if="!Array.isArray(item)">
-                    <img src="../../assets/images/report/icon0.png" alt="" /><span
-                      v-html="item"
-                    ></span>
-                  </p>
-                  <div v-if="Array.isArray(item)">
-                    <ul>
-                      <li v-for="(items, indexs) in item" :key="indexs">
-                        <span>{{ indexs + 1 }}</span>
-                        <p>
-                          {{ items }}
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
-                </div> -->
-                <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                  <p style="margin-left: -10px" v-if="!Array.isArray(items)">
-                    <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
-                    <span
-                      v-html="items"
-                    ></span>
-                  </p>
-                  <div style="margin-left: 0;margin-bottom: 0;" v-if="Array.isArray(items)">
-                    <div v-for="(itemt, indext) in items" :key="indext">
-                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp)">
-                            <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
-                              <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
-                              <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
-                              <p v-if="!Array.isArray(itemv)">
-                                {{ itemv }}
-                              </p>
-                              <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
-                                <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                  <p>{{itemf}}</p>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <div v-if="indext == 0">
-                          <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                              {{ itemp }}
-                            </div>
-                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                              <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
-                                <p>
-                                  {{ itemv }}
-                                </p>
-                              </li>
-                            </ul>
-                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                              <li >
-                                <p>
-                                  {{ itemp }}
-                                </p>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            </div>
+            <!-- <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+            <div class="tb_s_c31"></div>
+            <div class="tb_s_c32"></div>
+            <div class="tb_s_c33"></div> -->
+            <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+            <div class="tb_s_c31">
+              {{ details.jjList.length > 0 ? details.jjList[0].subDim[0].name : '' }}
+            </div>
+            <div class="tb_s_c32">
+              {{ details.jjList.length > 0 ? details.jjList[0].subDim[1].name : ''}}
+            </div>
+            <div class="tb_s_c33">
+              {{ details.jjList.length > 0 ? "..." : ''}}
+            </div>
+            <div :class="['cir_box31', { cir_box32: details.jjList.length > 0 && details.jjList[0].result.indexOf('中等') != -1 }, { cir_box33: details.jjList.length > 0 && details.jjList[0].result.indexOf('较高') != -1 }, { cir_box34: details.jjList.length > 0 && details.jjList[0].result.indexOf('极高') != -1 }]">
+              
+              <div class="cir_img" v-if="details.jjList.length > 0"></div>
+              <div class="cir_img34" v-show="details.jjList.length > 0 && details.jjList[0].result.indexOf('较高') != -1"></div>
+              <div class="cir_lay"></div>
+              <div class="cir_cen">
+                <div v-if="details.jjList.length > 0">
+                  <span v-for="item in details.jjList[0].title" :key="item.index">{{ item }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+            <div class="tb_s_c41"></div>
+            <div class="tb_s_c42"></div>
+            <div class="tb_s_c43"></div> -->
+            <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+            <div class="tb_s_c41">
+              {{ details.jjList.length > 2 ? details.jjList[2].subDim[0].name : '' }}
+            </div>
+            <div class="tb_s_c42">
+              {{ details.jjList.length > 2 ? details.jjList[2].subDim[1].name : ''}}
+            </div>
+            <div class="tb_s_c43">
+              {{ details.jjList.length > 2 ? "..." : ''}}
+            </div>
+            <div :class="['cir_box41', { cir_box42: details.jjList.length > 2 && details.jjList[2].result.indexOf('中等') != -1 }, { cir_box43: details.jjList.length > 2 && details.jjList[2].result.indexOf('较高') != -1 }, { cir_box44: details.jjList.length > 2 &&details.jjList[2].result.indexOf('极高') != -1 }]">
+              <div class="cir_img" v-if="details.jjList.length > 2"></div>
+              <div class="cir_img34" v-show="details.jjList.length > 2 && details.jjList[2].result.indexOf('较高') != -1"></div>
+              <div class="cir_lay"></div>
+              <div class="cir_cen">
+                <div v-if="details.jjList.length > 2">
+                  <span v-for="item in details.jjList[2].title" :key="item.index">{{ item }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+            <div class="tb_s_c51"></div>
+            <div class="tb_s_c52"></div>
+            <div class="tb_s_c53"></div> -->
+            <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+            <div class="tb_s_c51">
+              {{ details.jjList.length > 4 ? details.jjList[4].subDim[0].name : '' }}
+            </div>
+            <div class="tb_s_c52">
+              {{ details.jjList.length > 4 ? details.jjList[4].subDim[1].name : ''}}
+            </div>
+            <div class="tb_s_c53">
+              {{ details.jjList.length > 4 ? "..." : ''}}
+            </div>
+            <div :class="['cir_box51', { cir_box52: details.jjList.length > 4 && details.jjList[4].result.indexOf('中等') != -1 }, { cir_box53: details.jjList.length > 4 && details.jjList[4].result.indexOf('较高') != -1 }, { cir_box54: details.jjList.length > 4 && details.jjList[4].result.indexOf('极高') != -1 }]">
+              <div class="cir_img" v-if="details.jjList.length > 4"></div>
+              <div class="cir_img34" v-show="details.jjList.length > 4 && details.jjList[4].result.indexOf('较高') != -1"></div>
+              <div class="cir_lay"></div>
+              <div class="cir_cen">
+                <div v-if="details.jjList.length > 4">
+                  <span v-for="item in details.jjList[4].title" :key="item.index">{{ item }}</span>
+                </div>
+              </div>
+            </div>
 
-                </div>
-              </div>
-            </div>
           </div>
-          
+        </div>
+        <div class="drwc_b_ys drwc_b_yst" v-if="details.jjName != ''">
+          <p>
+            <img src="../../assets/images/news/dengpao_wz.png" alt="">
+            该受测者在{{details.jjName}}表现最好，得分最高。
+          </p>
+          <p>
+            <span></span><span>自我效能感：该受测者多数时候对自己较为有信心，敢于面对挑战。</span>
+          </p>
+          <p>
+            <span></span><span>情绪管理：该受测者整体状态较好，面对困难和挫折，会主动调整好心态。</span>
+          </p>
         </div>
       </div>
     </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top" style="padding:30px 0">
-        <img style="width:128px;height:116px;" src="../../assets/images/model/rengejd.png" alt="" />
-        <span class="gp2_t_txt">人格解读</span>
-        <span class="gp2_t_eng">Interpretation of personality</span>
-      </div>
-      <div class="gp3_box gp3_box1" style="margin-bottom:40px;">
-        <div class="wdrjs_li wdrj_main" style="height:1450px">
-          <div class="wdrj_title">
-            <img
-              src="../../assets/images/report/f_icon6.png"
-              alt=""
-              style="width: 28px;height: 28px"
-            />
-            <span>人格解读</span>
-          </div>
-          <div class="dtmsb_tar" style="margin: -30px auto 0;height: 340px;">
-            <div style="position:relative">
-              <div id="myChartLd11" class="myChartLd11" ref="myChartLd11"></div>
-            </div>
-            <ul class="dtmsb_ulc" style="bottom:-16px">
-              <li>
-                <span></span>
-                <span>本次得分</span>
-              </li>
-            </ul>
-          </div>
-          <div class="wdrj_suger" style="margin-top:30px">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />评估结果
-            </div>
-            <div class="wdrjs_tips" v-if="details.personalityDim">
-              <img src="../../assets/images/report/ai_res.png" alt="" />
-              <p style="padding: 10px 8px;">
-                {{details.personalityDim}}
-              </p>
-            </div>
-            <div v-for="(item, index) in details.personalitySubDim2" :key="item.name">
-              <div class="wdrjst_res wdrjst_res1" v-if="index < 2">
-                <img src="../../assets/images/report/per_i3.png" alt="" />
-                <span>{{item.name}}：</span>
-                <!-- <span class="wdrjstr_txt wd_col4">高风险</span> -->
-              </div>
-              <div class="wdrjst_del wdrjst_del2" v-if="index < 2">
-                <div>
-                  <img src="../../assets/images/report/jt_h.png" alt="" />释义
+    
+    <div class="table-style group_02" v-for="(item, index) in details.rgList" :key="item.title">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px" v-if="index < 1">
+          <img src="../../assets/images/news/rengefenxi.png" style="width: 50px;height: auto;margin-top: -6px;" alt="">
+          <span class="gp2_t_txt">人格分析</span>
+        </div>
+        <div class="gp2_main" :style="{'padding-top': index < 1 ? '0px' : '48px'}">
+          <div class="drwc_btr">
+            <div class="wdrj_box">
+              <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 ? 'block' : 'none'}">
+                <div class="wdrj_title">
+                  <span style="font-weight:500">{{index == 0 ? '一、' : index == 1 ? '二、' : index == 2 ? '三、' : index == 3 ? '四、' : index == 4 ? '五、' : ''}}{{item.title}}</span>
                 </div>
-                <div class="pd24">
-                  {{item.analysis[0]}}
+                <div class="wdrj_title wdrj_titles" style="margin-top:14px;">
+                  <span>测评结果：</span>
+                  <span v-if="item.grade < 2 && item.grade > -1">低</span>
+                  <span v-if="item.grade < 4 && item.grade > 1">偏低</span>
+                  <span v-if="item.grade < 6 && item.grade > 3">中等</span>
+                  <span v-if="item.grade < 8 && item.grade > 5">偏高</span>
+                  <span v-if="item.grade < 10 && item.grade > 7">高</span>
                 </div>
-                <div>
-                  <img
-                    src="../../assets/images/report/jt_h.png"
-                    alt=""
-                  />具体表现
-                </div>
-                <div class="pd24">这类群体可能会有如下表现：</div>
-                <ul class="pd24">
-                  <li v-for="(itema, indexa) in item.analysis[1]" :key="indexa">
+                <div class="wdrj_line">
+                  <div class="wdrj_l_left">低</div>
+                  <div class="wdrj_l_center">
+                    <div class="wdrj_lc_txt">
+                      <span>0分</span>
+                      <span>{{item.title}}</span>
+                      <span>9分</span>
+                    </div>
                     <img
-                      src="../../assets/images/report/jt_h_d.png"
+                      class="dttr_btn"
+                      :style="{ left: item.gradep1 }"
+                      src="../../assets/images/news/grade_btn.png"
                       alt=""
-                    />{{itema}}
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="wdrj_suger" v-if="details.suggestionPersonality != '' && details.personalitySubDim2 && details.personalitySubDim2.length < 2">
-              <div class="wdrjs_title">
-                <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
-              </div>
-              <div class="gb_contain">
-                <div v-for="(item, index) in details.suggestionPersonality" :key="index">
-                  <p v-if="!Array.isArray(item)">
-                    <span
-                      v-html="item"
-                    ></span>
-                  </p>
-                  <div v-if="Array.isArray(item)">
-                    <ul>
-                      <li v-for="(items, indexs) in item" :key="indexs">
-                        <span>{{ indexs + 1 }}</span>
-                        <p>
-                          {{ items }}
-                        </p>
-                      </li>
-                    </ul>
+                    />
+                    <span class="dttr_score" :style="{ left: item.gradep1 }">
+                      {{item.grade}}分，
+                      <span v-if="item.grade < 2 && item.grade > -1">低</span>
+                      <span v-if="item.grade < 4 && item.grade > 1">偏低</span>
+                      <span v-if="item.grade < 6 && item.grade > 3">中等</span>
+                      <span v-if="item.grade < 8 && item.grade > 5">偏高</span>
+                      <span v-if="item.grade < 10 && item.grade > 7">高</span>
+                    <i></i>
+                    </span>
+                  </div>
+                  <div class="wdrj_l_right">高</div>
+                </div>
+                <div class="dtmsb_tar" style="height: 366px">
+                  <div style="position:relative" id="perViolenceEchart">
+                    <div class="top_top" style="top:40px" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[0].name }}
+                        <!-- <div class="demsb_tool" style="left: 233px;">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[0].score)
+                            }}</span>
+                          </div>
+                        </div> -->
+                      </span>
+                    </div>
+                    <div class="bottom_left" style="left: 370px;bottom: 60px;" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[2].name }}
+                        <!-- <div class="demsb_tool" style="left: 233px;">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[2].score)
+                            }}</span>
+                          </div>
+                        </div> -->
+                      </span>
+                    </div>
+                    <div class="bottom_right" style="left: 45px;bottom: 60px;" v-if="item.subDim">
+                      <span class="tt_txt">
+                        {{ item.subDim[1].name }}
+                        <!-- <div class="demsb_tool1" style="right: 233px;">
+                          <div class="demsb_score">
+                            本次得分：<span>{{
+                              parseInt(item.subDim[1].score)
+                            }}</span>
+                          </div>
+                        </div> -->
+                      </span>
+                    </div>
+                    <!-- 抑郁 -->
+                    <div v-if="index == 0" id="myChartRgs2" class="myChartLd0" ref="myChartRgs2" style="height:366px"></div>
+                    <!-- 焦虑 -->
+                    <div v-if="index == 1" id="myChartRgs3" class="myChartLd0" ref="myChartRgs3" style="height:366px"></div>
+                    <!-- 强迫 -->
+                    <div v-if="index == 2" id="myChartRgs4" class="myChartLd0" ref="myChartRgs4" style="height:366px"></div>
+                    <!-- PTSD -->
+                    <div v-if="index == 3" id="myChartRgs5" class="myChartLd0" ref="myChartRgs5" style="height:366px"></div>
+                    <!-- 敌对 -->
+                    <div v-if="index == 4" id="myChartRgs6" class="myChartLd0" ref="myChartRgs6" style="height:366px"></div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2.length > 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp3_box gp3_box1" style="margin-bottom:40px;margin-top:40px">
-        <div class="wdrjs_li wdrj_main" style="height:1600px">
-          <div class="wdrj_suger" style="margin-top:-30px">
-            <div v-for="(item, index) in details.personalitySubDim2" :key="item.name">
-              <div class="wdrjst_res wdrjst_res1" v-if="index > 1 && index < 6">
-                <img src="../../assets/images/report/per_i2.png" alt="" />
-                <span>{{item.name}}：</span>
-                <span class="wdrjstr_txt wd_col4">高风险</span>
-              </div>
-              <div class="wdrjst_del wdrjst_del2" v-if="index > 1 && index < 6">
-                <div>
-                  <img src="../../assets/images/report/jt_h.png" alt="" />释义
-                </div>
-                <div class="pd24">
-                  {{item.analysis[0]}}
-                </div>
-                <div>
-                  <img
-                    src="../../assets/images/report/jt_h.png"
-                    alt=""
-                  />具体表现
-                </div>
-                <div class="pd24">这类群体可能会有如下表现：</div>
-                <ul class="pd24">
-                  <li v-for="(itema, indexa) in item.analysis[1]" :key="indexa">
-                    <img
-                      src="../../assets/images/report/jt_h_d.png"
-                      alt=""
-                    />{{itema}}
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="wdrj_suger" v-if="details.suggestionPersonality != '' && details.personalitySubDim2 && details.personalitySubDim2.length < 6">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
-            </div>
-            <div class="gb_contain">
-              <div v-for="(item, index) in details.suggestionPersonality" :key="index">
-                <p v-if="!Array.isArray(item)">
-                  <span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <ul>
-                    <li v-for="(items, indexs) in item" :key="indexs">
-                      <span>{{ indexs + 1 }}</span>
+                <div class="wdrj_suger wdrj_sugers" style="margin-top: 50px;">
+                  <div class="wdrjs_title">
+                    测评结果分析
+                  </div>
+                  <ul class="wdrjs_uls">
+                    <li v-for="(items, indexs) in item.sysDim" :key="indexs">
                       <p>
                         {{ items }}
                       </p>
@@ -1708,191 +613,198 @@
         </div>
       </div>
     </div>
-    <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1 && details.personalitySubDim2 && details.personalitySubDim2.length == 6">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp3_box gp3_box1" style="margin-bottom:40px;margin-top:40px">
-        <div class="wdrjs_li wdrj_main" style="height:1600px">
-          <div class="wdrj_suger" style="margin:0" v-if="details.suggestionPersonality != ''">
-            <div class="wdrjs_title">
-              <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
+    <div class="table-style group_02">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_top" style="padding-bottom: 20px">
+          <img src="../../assets/images/news/beizhu.png" style="width: 60px;height: auto" alt="">
+          <span class="gp2_t_txt">附录</span>
+        </div>
+        <div class="gp2_main" style="margin-top: 0px">
+
+          <div class="gp2_li">
+            <div class="gp2l_head" style="margin-top: 0">
+              <span>一、作品信息统计</span>
             </div>
-            <div class="gb_contain">
-              <div v-for="(item, index) in details.suggestionPersonality" :key="index">
-                <p v-if="!Array.isArray(item)">
-                  <span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <ul>
-                    <li v-for="(items, indexs) in item" :key="indexs">
-                      <span>{{ indexs + 1 }}</span>
-                      <p>
-                        {{ items }}
-                      </p>
-                    </li>
-                  </ul>
+          </div>
+          <div class="dtm_xls" v-if="reviewData.workInfo">
+            <div class="dtmx_li">
+              <div class="dtmxl_head">作品名称</div>
+              <div class="dtmxl_body">{{ reviewData.workInfo.workName }}</div>
+              <div class="dtmxl_head">自我像</div>
+              <div class="dtmxl_body">{{ reviewData.workInfo.representSand }}</div>
+            </div>
+            <div class="dtmx_li">
+              <div class="dtmxl_head">最重要的沙具</div>
+              <div class="dtmxl_body">{{ reviewData.workInfo.importantSand }}</div>
+              <div class="dtmxl_head">制作次数</div>
+              <div class="dtmxl_body">
+                第<span>{{ reviewData.workInfo.time }}</span
+                >次
+              </div>
+            </div>
+            <div class="dtmx_li">
+              <div class="dtmxl_head">满意程度</div>
+              <div class="dtmxl_body">
+                <span>{{ reviewData.workInfo.satisfaction }}</span
+                >分
+              </div>
+              <div class="dtmxl_head">制作用时</div>
+              <div class="dtmxl_body">{{ reviewData.workInfo.operationTime }}</div>
+            </div>
+            <div class="dtmx_li">
+              <div class="dtmxl_head">作品场景</div>
+              <div class="dtmxl_body">{{ reviewData.workInfo.scene }}</div>
+              <div class="dtmxl_head">沙具删除比例</div>
+              <div class="dtmxl_body">
+                <span>{{ reviewData.workInfo.deleteScale }}</span
+                >%
+              </div>
+            </div>
+            <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
+              <div class="dtmxl_head">主题统计</div>
+              <div class="dtmxl_body">
+                <div class="dtmxl_dl">
+                  <div class="dtmxl_dt">创伤主题</div>
+                  <div class="dtmxl_dd">
+                    {{ reviewData.workInfo.themeInfo.traumaTheme }}
+                  </div>
+                  <div class="dtmxl_dds">
+                    <span>{{ reviewData.workInfo.themeInfo.traumaNum }}</span
+                    >个
+                  </div>
+                </div>
+                <div class="dtmxl_dl">
+                  <div class="dtmxl_dt">治愈主题</div>
+                  <div class="dtmxl_dd">
+                    {{
+                      reviewData.workInfo.themeInfo.cureTheme != ""
+                        ? reviewData.workInfo.themeInfo.cureTheme
+                        : "/"
+                    }}
+                  </div>
+                  <div class="dtmxl_dds">
+                    <span>{{ reviewData.workInfo.themeInfo.cureNum }}</span
+                    >个
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style group_02 group_03 group_04 group_05">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
-        <span class="gp2_t_txt">附录</span>
-        <span class="gp2_t_eng">Appendix</span>
-      </div>
-      <div class="gp5_img_tle" v-if="details.note != ''">
-        <img src="../../assets/images/model/m_011.png" alt="">
-        <span>补充说明</span>
-        <img src="../../assets/images/model/m_011.png" alt="">
-      </div>
-      <div class="wm_text1" v-if="details.note != ''">
-
-        <div class="wm_note" v-html="details.note"></div>
-        <!-- <el-input  disabled :autosize="{ minRows: 5}" type="textarea" v-model="details.note"></el-input> -->
-      </div>
-      <div class="gp5_img_tle">
-        <img src="../../assets/images/model/m_011.png" alt="">
-        <span>图片回顾</span>
-        <img src="../../assets/images/model/m_011.png" alt="">
-      </div>
-      <div class="gp5_img_ul">
-        <div class="gp5_img_li" v-for="item in imgList" :key="item.name">
-          <img :src="item.img" alt="">
-          <p>{{item.name}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="table-style group_02 group_03 group_04 group_05 group_06">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp5_img_tle" style="margin-top:100px;">
-        <img src="../../assets/images/model/m_011.png" alt="">
-        <span>作品信息统计</span>
-        <img src="../../assets/images/model/m_011.png" alt="">
-      </div>
-      <div class="dtm_xls" v-if="reviewData.workInfo">
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品名称</div>
-          <div class="dtmxl_body">{{reviewData.workInfo.workName}}</div>
-          <div class="dtmxl_head">自我像</div>
-          <div class="dtmxl_body">{{reviewData.workInfo.representSand}}</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">最重要的沙具</div>
-          <div class="dtmxl_body">{{reviewData.workInfo.importantSand}}</div>
-          <div class="dtmxl_head">制作次数</div>
-          <div class="dtmxl_body">第<span>{{reviewData.workInfo.time}}</span>次</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">满意程度</div>
-          <div class="dtmxl_body"><span>{{reviewData.workInfo.satisfaction}}</span>分</div>
-          <div class="dtmxl_head">制作用时</div>
-          <div class="dtmxl_body">{{reviewData.workInfo.operationTime}}</div>
-        </div>
-        <div class="dtmx_li">
-          <div class="dtmxl_head">作品场景</div>
-          <div class="dtmxl_body">{{reviewData.workInfo.scene}}</div>
-          <div class="dtmxl_head">沙具删除比例</div>
-          <div class="dtmxl_body"><span>{{reviewData.workInfo.deleteScale}}</span>%</div>
-        </div>
-        <div class="dtmx_li dtmx_lis" v-if="reviewData.workInfo.themeInfo">
-          <div class="dtmxl_head">主题统计</div>
-          <div class="dtmxl_body">
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">创伤主题</div>
-              <div class="dtmxl_dd">{{reviewData.workInfo.themeInfo.traumaTheme}}</div>
-              <div class="dtmxl_dds"><span>{{reviewData.workInfo.themeInfo.traumaNum}}</span>个</div>
+          <div class="gp2_li">
+            <div class="gp2l_head">
+              <span>二、沙具使用情况统计</span>
             </div>
-            <div class="dtmxl_dl">
-              <div class="dtmxl_dt">治愈主题</div>
-              <div class="dtmxl_dd">{{reviewData.workInfo.themeInfo.cureTheme != '' ? reviewData.workInfo.themeInfo.cureTheme : '/'}}</div>
-              <div class="dtmxl_dds"><span>{{reviewData.workInfo.themeInfo.cureNum}}</span>个</div>
+          </div>
+          <div>
+            <div class="dtmt_tle" style="margin-bottom: 10px">
+              <span class="dt_dot"></span>
+              <span>沙具使用数量分布</span>
+            </div>
+            <div class="myChartZhu1" ref="myChartZhu1" id="myChartZhu1"></div>
+          </div>
+          <div style="margin-top:30px;">
+            <div class="dtmt_tle" style="margin-bottom: 0">
+              <span class="dt_dot"></span>
+              <span>沙具使用时长占比</span>
+            </div>
+            <div class="myChartRose1" ref="myChartRose1" id="myChartRose1"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="table-style group_02" v-if="sandInfo.length > 0">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        
+        <div class="gp2_main">
+          <div class="gp2_li">
+            <div class="gp2l_head" style="margin-top: 20px;">
+              <span>沙具使用记录表</span>
+            </div>
+          </div>
+          <div class="gp_warn">
+            <div class="dtmc_r_biao">
+              <ul>
+                <li>
+                  <div>序号</div>
+                  <div>沙具类别</div>
+                  <div>沙具</div>
+                  <div>使用时长(秒)</div>
+                  <div>是否删除沙具</div>
+                </li>
+                <li v-for="(item, index) in sandInfo.slice(0,23)" :key="index">
+                  <div>
+                    <span>{{item.id}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.type}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.name}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.time}}</span>
+                  </div>
+                  <div>
+                    <span>{{item.isDel}}</span>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="gp5_img_tle" style="margin-bottom:30px">
-        <img src="../../assets/images/model/m_011.png" alt="">
-        <span>沙具使用情况统计</span>
-        <img src="../../assets/images/model/m_011.png" alt="">
-      </div>
-      <div class="dtmt_tle">
-        <label></label>
-        <span>沙具使用数量分布</span>
-      </div>
-      <div class="myChartZhu1" ref="myChartZhu1" id="myChartZhu1"></div>
-      <div class="dtmt_tle" style="margin:40px auto 10px">
-        <label></label>
-        <span>沙具使用时长占比</span>
-      </div>
-      <div class="myChartRose1" ref="myChartRose1" id="myChartRose1"></div>
     </div>
-    <div class="table-style group_02 group_03 group_04 group_05 group_06 group_07">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp5_img_tle" style="margin-top:40px;">
-        <img src="../../assets/images/model/m_011.png" alt="">
-        <span>沙具使用记录表</span>
-        <img src="../../assets/images/model/m_011.png" alt="">
-      </div>
-      <div class="gp_warn gp7_box">
-        <ul>
-          <li class="gp_w_th">
-            <div style="width:100px;flex:none;">序号</div>
-            <div>沙具类别</div>
-            <div>沙具</div>
-            <div>使用时长(秒)</div>
-            <div>是否删除沙具</div>
-          </li>
-          <li class="gp_w_td" v-for="(item, index) in sandInfo.slice(0,40)" :key="index">
-            <div style="width:100px;flex:none;">
-              <span :style="{'height': '36px','line-height': '36px'}">{{item.id}}</span>
+    <div v-for="(item, index) in sandList" :key="index" class="table-style group_02">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <div class="gp2_main" style="padding-top: 30px;">
+          <div class="gp_warn">
+            <div class="dtmc_r_biao">
+              <ul>
+                <li>
+                  <div>序号</div>
+                  <div>沙具类别</div>
+                  <div>沙具</div>
+                  <div>使用时长(秒)</div>
+                  <div>是否删除沙具</div>
+                </li>
+                <li v-for="itemc in item" :key="itemc.id">
+                  <div>
+                    <span>{{itemc.id}}</span>
+                  </div>
+                  <div>
+                    <span>{{itemc.type}}</span>
+                  </div>
+                  <div>
+                    <span>{{itemc.name}}</span>
+                  </div>
+                  <div>
+                    <span>{{itemc.time}}</span>
+                  </div>
+                  <div>
+                    <span>{{itemc.isDel}}</span>
+                  </div>
+                </li>
+              </ul>
             </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{item.type}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{item.name}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{item.time}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{item.isDel}}</span>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <div v-for="(item, index) in sandList" :key="index" class="table-style group_02 group_03 group_04 group_05 group_06 group_07">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp_warn gp7_box">
-        <ul>
-          <li class="gp_w_td" v-for="itemc in item" :key="itemc.id">
-            <div style="width:100px;flex:none;">
-              <span :style="{'height': '36px','line-height': '36px'}">{{itemc.id}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{itemc.type}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{itemc.name}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{itemc.time}}</span>
-            </div>
-            <div>
-              <span :style="{'height': '36px','line-height': '36px'}">{{itemc.isDel}}</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="table-style group_02" style="background:#ffffff">
+    <!-- <div class="table-style group_02" style="background:#ffffff">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top" style="padding-top:96px;">
         <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
@@ -1908,7 +820,7 @@
           <span>报告结果仅供参考，不作为选拔或诊断依据。</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -1945,6 +857,19 @@ export default {
   name: "modelreport",
   data() {
     return {
+      myChartLds2: "",
+      myChartLds3: "",
+      myChartLds4: "",
+      myChartLds5: "",
+      myChartLds6: "",
+      myChartLds7: "",
+      myChartLds8: "",
+      myChartZhusYs: "",
+      myChartRgs2: "",
+      myChartRgs3: "",
+      myChartRgs4: "",
+      myChartRgs5: "",
+      myChartRgs6: "",
       // heNum: 37,
       myChartPies11: "",
       myChartPies22: "",
@@ -2001,20 +926,23 @@ export default {
     this.gender = localStorage.getItem('expGender')
     this.details = this.row
     this.reviewData = this.rowr
+    // this.rows = [{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1},{id:1}]
     this.sandInfo = this.rows
     for (let i in this.sandInfo) {
       this.sandInfo[i].id = Number(i) + 1
     }
     let list2 = []
-    let sandLen2 = Math.ceil((this.sandInfo.length - 40) / 43)
+    let sandLen2 = Math.ceil((this.sandInfo.length - 23) / 24)
     for (let j = 0; j < sandLen2; j++) {
-      list2.push(this.sandInfo.slice(40 + 43 * j, 40 + 43 * (Number(j) + 1)))
+      list2.push(this.sandInfo.slice(23 + 24 * j, 23 + 24 * (Number(j) + 1)))
     }
+    console.log(list2)
     this.sandList = list2
     this.imgList = this.row3
     this.sandUseNumInfoName = this.row4
     this.sandUseNumInfoNum = this.row5
-    this.initEchart();
+    this.initEcharts();
+    // return
     setTimeout(() => {
       this.$nextTick(() => {
         this.downloadSprintTestReport()
@@ -2024,10 +952,3750 @@ export default {
   methods: {
     ...mapMutations(["setPersonFlag"]),
     downloadSprintTestReport() {
-      this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
-      this.$nextTick(() => {
-        this.setPersonFlag(false)
-      })
+      setTimeout(() => {
+        this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
+        this.$nextTick(() => {
+          this.setPersonFlag(false)
+        })
+      }, 1000)
+    },
+    initEcharts() {
+      let that = this;
+      that.myChart01 = echarts.init(that.$refs.myChart01);
+      that.myChart01.setOption({
+        title: {
+          text: that.details.warningNum + '项',
+          subtext: '风险',
+          textStyle: {
+            color: '#333E75',
+            fontSize: 80,
+            fontWeight: 500
+          },
+          subtextStyle: {
+            color: '#FF748A',
+            fontSize: 50,
+            fontWeight: 500
+          },
+          itemGap: 30, // 主副标题距离
+          left: 'center',
+          top: 105
+        },
+        angleAxis: {
+          max: 6, // 满分
+          clockwise: false, // 逆时针
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        radiusAxis: {
+          type: 'category',
+          // 隐藏刻度线
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          }
+        },
+        polar: {
+          center: ['50%', '50%'],
+          radius: 340 // 图形大小
+        },
+        series: [
+          {
+            type: 'bar',
+            animation: false,
+            // avoidLabelOverlap: false,
+            label: {
+              position: 'center',
+              show: false,
+              formatter: function() {
+                let str = '{a|' + that.details.warningNum + '}' + '\n\n' + '{b|有风险}'
+                return str
+              },
+              rich: {
+                a: {
+                  color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
+                  fontSize: 40,
+                  fontWeight: '500'
+                },
+                b: {
+                  color: 'rgba(117, 122, 144, 1)',
+                  fontSize: 24
+                }
+              }
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 30,
+                fontWeight: "bold"
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              {
+                name: '风险',
+                value: that.details.warningNum,
+                itemStyle: {
+                  normal: {
+                    barBorderRadius: [4, 4, 0, 0],
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: '#FF748A'
+                      },
+                      {
+                        offset: 1,
+                        color: '#FFC7B6'
+                      }
+                    ])
+                  }
+                }
+              }
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: 40,
+            barGap: '-100%', // 两环重叠
+            z: 2
+          },
+          {
+            // 灰色环
+            type: 'bar',
+            animation: false,
+            data: [
+              {
+                value: 100,
+                itemStyle: {
+                  color: 'rgba(242, 245, 252, 1)'
+                }
+              }
+            ],
+            coordinateSystem: 'polar',
+            roundCap: true,
+            barWidth: 40,
+            barGap: '-100%', // 两环重叠
+            z: 1
+          }
+        ]
+      });
+      setTimeout(() => {
+        var theIndex = -1;
+        this.myChartRose1 = echarts.init(
+          document.getElementById("myChartRose1")
+        );
+        this.myChartRose1.setOption({
+          tooltip: {
+            trigger: "item",
+            formatter: "{a} <br/>{b} : {d}%",
+            padding: 10,
+            textStyle: {
+              color: "rgba(42, 52, 135, 0.80)",
+              fontSize: 18
+            }
+          },
+          legend: {
+            show: false,
+            // data: tuli,
+            left: 'center',
+            orient: 'horizontal',
+            triggerOn: 'none',
+            itemGap: 30,
+            selectedMode: false,
+            bottom: 18,
+            itemHeight: 8,
+            icon: 'circle',
+            textStyle: {
+              color: 'rgba(42, 52, 135, 1)',
+              fontSize: 18,
+              padding: [0, 0, 0, -10]
+            }
+          },
+          series: [
+            {
+              name: "沙具使用时长占比",
+              type: "pie",
+              animation: false,
+              radius: ["40%", "70%"],
+              center: ["50%", "50%"],
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0)"
+                },
+                normal: {
+                  color: function(params) {
+                    theIndex++;
+                    var colorList = [
+                      {
+                        c1: "rgba(237, 237, 255, 1)",
+                        c2: "rgba(237, 237, 255, 1)"
+                      },
+                      {
+                        c1: "rgba(181, 184, 255, 1)",
+                        c2: "rgba(181, 184, 255, 1)"
+                      },
+                      {
+                        c1: "rgba(209, 248, 205, 1)",
+                        c2: "rgba(209, 248, 205, 1)"
+                      },
+                      {
+                        c1: "rgba(138, 203, 255, 1)",
+                        c2: "rgba(138, 203, 255, 1)"
+                      },
+                      {
+                        c1: "rgba(255, 176, 219, 1)",
+                        c2: "rgba(255, 176, 219, 1)"
+                      },
+                      {
+                        c1: "rgba(255, 236, 215, 1)",
+                        c2: "rgba(255, 236, 215, 1)"
+                      },
+                      {
+                        c1: "rgba(255, 163, 163, 1)",
+                        c2: "rgba(255, 163, 163, 1)"
+                      },
+                      {
+                        c1: "rgba(255, 201, 157, 1)",
+                        c2: "rgba(255, 201, 157, 1)"
+                      }
+                    ];
+                    var userIndex = theIndex % colorList.length;
+                    return new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                      {
+                        offset: 0,
+                        color: colorList[userIndex].c1
+                      },
+                      {
+                        offset: 1,
+                        color: colorList[userIndex].c2
+                      }
+                    ]);
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  smooth: 0,
+                  length: 10,
+                  length2: 50
+                }
+              },
+              data: [
+                {
+                  value: that.reviewData.sandUseTimeInfo[0].num,
+                  name: that.reviewData.sandUseTimeInfo[0].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(160, 160, 255, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[1].num,
+                  name: that.reviewData.sandUseTimeInfo[1].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(115, 122, 253, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[2].num,
+                  name: that.reviewData.sandUseTimeInfo[2].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(144, 220, 136, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[3].num,
+                  name: that.reviewData.sandUseTimeInfo[3].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(88, 181, 255, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[4].num,
+                  name: that.reviewData.sandUseTimeInfo[4].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(255, 142, 194, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[5].num,
+                  name: that.reviewData.sandUseTimeInfo[5].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(251, 194, 132, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[6].num,
+                  name: that.reviewData.sandUseTimeInfo[6].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(255, 117, 117, 1)"
+                      }
+                    }
+                  }
+                },
+                {
+                  value: that.reviewData.sandUseTimeInfo[7].num,
+                  name: that.reviewData.sandUseTimeInfo[7].sandTypeName,
+                  label: {
+                    formatter: "{m|{b}} {a|{d}%}",
+                    rich: {
+                      m: {
+                        fontSize: 18,
+                        color: "rgba(42, 52, 135, 0.80)"
+                      },
+                      a: {
+                        fontSize: 18,
+                        color: "rgba(255, 173, 106, 1)"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartZhu1 = echarts.init(
+          document.getElementById("myChartZhu1")
+        );
+        this.myChartZhu1.setOption({
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            padding: 10,
+            textStyle: {
+              color: "rgba(42, 52, 135, 0.80)",
+              fontSize: 18
+            }
+          },
+
+          grid: {
+            top: "25",
+            left: "4%",
+            right: "0%",
+            bottom: "2%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: that.sandUseNumInfoName,
+              axisLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: 15,
+                color: "#2A3487",
+                showMaxLabel: true
+              },
+              axisTick: {
+                show: false,
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value",
+              splitLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: 15,
+                color: "#2A3487",
+                showMaxLabel: true
+              },
+              minInterval: 1
+            }
+          ],
+          series: [
+            {
+              name: "使用数量",
+              type: "bar",
+              animation: false,
+              barMaxWidth: 14,
+              // barWidth: '12%',
+              barCategoryGap: '0%',
+              label: {
+                show: true, // 显示数值
+                position: 'top', // 在顶部显示
+                textStyle: {
+                  color: 'rgba(42,52,135,0.8)', // 标签字体颜色
+                  fontSize: 16 // 标签字体大小
+                }
+              },
+              itemStyle: {
+                normal: {
+                  barBorderRadius: [0, 0, 0, 0],
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(214, 182, 246, 1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(225, 203, 246, 1)"
+                    }
+                  ])
+                }
+              },
+              data: that.sandUseNumInfoNum
+            }
+          ]
+        });
+        this.myChartLds2 = echarts.init(
+          document.getElementById("myChartLds2")
+        );
+        this.myChartLds2.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[0].subDim[0].name,
+              that.details.sysList[0].subDim[1].name,
+              that.details.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[0].subDim[0].score,
+                    that.details.sysList[0].subDim[1].score,
+                    that.details.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds3 = echarts.init(
+          document.getElementById("myChartLds3")
+        );
+        this.myChartLds3.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[1].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[1].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[1].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[1].subDim[0].name,
+              that.details.sysList[1].subDim[1].name,
+              that.details.sysList[1].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[1].subDim[0].score,
+                    that.details.sysList[1].subDim[1].score,
+                    that.details.sysList[1].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds4 = echarts.init(
+          document.getElementById("myChartLds4")
+        );
+        this.myChartLds4.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[2].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[2].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[2].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[2].subDim[0].name,
+              that.details.sysList[2].subDim[1].name,
+              that.details.sysList[2].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[2].subDim[0].score,
+                    that.details.sysList[2].subDim[1].score,
+                    that.details.sysList[2].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds5 = echarts.init(
+          document.getElementById("myChartLds5")
+        );
+        this.myChartLds5.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[3].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[3].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[3].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[3].subDim[0].name,
+              that.details.sysList[3].subDim[1].name,
+              that.details.sysList[3].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[3].subDim[0].score,
+                    that.details.sysList[3].subDim[1].score,
+                    that.details.sysList[3].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds6 = echarts.init(
+          document.getElementById("myChartLds6")
+        );
+        this.myChartLds6.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[4].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[4].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[4].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[4].subDim[0].name,
+              that.details.sysList[4].subDim[1].name,
+              that.details.sysList[4].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[4].subDim[0].score,
+                    that.details.sysList[4].subDim[1].score,
+                    that.details.sysList[4].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds7 = echarts.init(
+          document.getElementById("myChartLds7")
+        );
+        this.myChartLds7.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[5].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[5].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[5].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[5].subDim[0].name,
+              that.details.sysList[5].subDim[1].name,
+              that.details.sysList[5].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[5].subDim[0].score,
+                    that.details.sysList[5].subDim[1].score,
+                    that.details.sysList[5].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        // this.myChartLds8 = echarts.init(
+        //   document.getElementById("myChartLds8")
+        // );
+        
+        // this.myChartLds8.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList[6].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList[6].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList[6].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(249, 250, 255, 1)",
+        //             "rgba(249, 250, 255, 1)",
+        //             "rgba(249, 250, 255, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           type: "dashed",
+        //           color: [
+        //             "rgba(201, 212, 255, 1)",
+        //             "rgba(201, 212, 255, 1)",
+        //             "rgba(201, 212, 255, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             // fontWeight: "bold",
+        //             padding: [3, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             // fontWeight: "bold",
+        //             padding: [3, -12]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             // fontWeight: "bold",
+        //             padding: [3, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             // fontWeight: "bold",
+        //             padding: [3, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: [
+        //       that.details.sysList[6].subDim[0].name,
+        //       that.details.sysList[6].subDim[1].name,
+        //       that.details.sysList[6].subDim[2].name
+        //     ]
+        //   },
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.1)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList[6].subDim[0].score,
+        //             that.details.sysList[6].subDim[1].score,
+        //             that.details.sysList[6].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 0,
+        //           itemStyle: {
+        //             color: "#58B5FF"
+        //           },
+        //           // // 在圆点上显示相关数据
+        //           // label: {
+        //           //   show: true,
+        //           //   color: 'rgba(147, 207, 255, 1)',
+        //           //   fontSize: nowSize(12)
+        //           // },
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(138, 203, 255, 0.23)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(138, 203, 255, 0.23)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1,
+        //             color: '#58B5FF'
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+        let xYs = []
+        let yYs = []
+        for (let i in that.details.jjList) {
+          xYs.push(that.details.jjList[i].title)
+          yYs.push(that.details.jjList[i].total)
+        }
+        this.myChartZhusYs = echarts.init(
+          document.getElementById("myChartZhusYs")
+        );
+        this.myChartZhusYs.setOption({
+          tooltip: {
+            show: false,
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            },
+            padding: 10,
+            textStyle: {
+              color: "rgba(42, 52, 135, 0.80)",
+              fontSize: 16
+            },
+            formatter: function(params) {
+              console.log(params)
+              var result =
+                '<span style="display:inline-block;margin-right:0.04rem;border-radius:0.1rem;width:0.1rem;height:0.1rem;background: rgba(214, 182, 246, 1)");></span>' +
+                '<span style="color:#7786AC;font-size:0.14rem">' +
+                params[0].name +
+                "</span>" +
+                ':<span style="color:#7786AC;display:inline-block;font-weight:blod;margin-left:0.05rem;font-size:0.14rem;">' +
+                params[0].value +
+                "</span>";
+              return result;
+            }
+          },
+
+          grid: {
+            top: "6%",
+            left: "1%",
+            right: "1%",
+            bottom: "3%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: xYs,
+              axisLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: 20,
+                color: "rgba(42,52,135,0.8)",
+                showMaxLabel: true
+              },
+              axisTick: {
+                show: false,
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value",
+              min: 0,
+              max: 9,
+              splitLine: {
+                show: false
+              },
+              axisLabel: {
+                fontSize: 20,
+                color: "rgba(42,52,135,0.8)",
+                showMaxLabel: true
+              },
+              minInterval: 3
+            }
+          ],
+          series: [
+            {
+              name: "维度总分",
+              type: "bar",
+              animation: false,
+              barMaxWidth: 20,
+              label: {
+                show: true, // 显示数值
+                position: 'top', // 在顶部显示
+                textStyle: {
+                  color: 'rgba(42,52,135,0.8)', // 标签字体颜色
+                  fontSize: 20 // 标签字体大小
+                }
+              },
+              itemStyle: {
+                normal: {
+                  barBorderRadius: [0, 0, 0, 0],
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#D6B6F6"
+                    },
+                    {
+                      offset: 1,
+                      color: "#E1CBF6"
+                    }
+                  ])
+                }
+              },
+              data: yYs
+            }
+          ]
+        });
+        this.myChartRgs2 = echarts.init(document.getElementById("myChartRgs2"));
+        this.myChartRgs2.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.rgList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.rgList[0].subDim[0].name,
+              that.details.rgList[0].subDim[1].name,
+              that.details.rgList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.rgList[0].subDim[0].score,
+                    that.details.rgList[0].subDim[1].score,
+                    that.details.rgList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRgs3 = echarts.init(document.getElementById("myChartRgs3"));
+        this.myChartRgs3.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.rgList[1].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[1].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[1].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.rgList[1].subDim[0].name,
+              that.details.rgList[1].subDim[1].name,
+              that.details.rgList[1].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.rgList[1].subDim[0].score,
+                    that.details.rgList[1].subDim[1].score,
+                    that.details.rgList[1].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRgs4 = echarts.init(document.getElementById("myChartRgs4"));
+        this.myChartRgs4.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.rgList[2].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[2].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[2].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.rgList[2].subDim[0].name,
+              that.details.rgList[2].subDim[1].name,
+              that.details.rgList[2].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.rgList[2].subDim[0].score,
+                    that.details.rgList[2].subDim[1].score,
+                    that.details.rgList[2].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRgs5 = echarts.init(document.getElementById("myChartRgs5"));
+        this.myChartRgs5.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.rgList[3].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[3].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[3].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.rgList[3].subDim[0].name,
+              that.details.rgList[3].subDim[1].name,
+              that.details.rgList[3].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.rgList[3].subDim[0].score,
+                    that.details.rgList[3].subDim[1].score,
+                    that.details.rgList[3].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartRgs6 = echarts.init(document.getElementById("myChartRgs6"));
+        this.myChartRgs6.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.rgList[4].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[4].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.rgList[4].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "60%"],
+              radius: "80%",
+              splitNumber: 3,
+              shape: 'circle',
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -1]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.rgList[4].subDim[0].name,
+              that.details.rgList[4].subDim[1].name,
+              that.details.rgList[4].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              animation: false,
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.rgList[4].subDim[0].score,
+                    that.details.rgList[4].subDim[1].score,
+                    that.details.rgList[4].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        // this.myChartPies11 = echarts.init(
+        //   document.getElementById("myChartPies11")
+        // );
+        // this.myChartPies11.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList[0].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: true }
+        //         },
+        //         {
+        //           name: that.details.sysList[0].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList[0].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(251, 109, 183, 0.14)",
+        //             "rgba(155, 160, 255, 0.14)",
+        //             "rgba(5, 157, 255, 0.14)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           color: [
+        //             "rgba(155, 160, 255, 1)",
+        //             "rgba(5, 157, 255, 1)",
+        //             "rgba(251, 109, 183, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -10]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: [
+        //       that.details.sysList[0].subDim[0].name,
+        //       that.details.sysList[0].subDim[1].name,
+        //       that.details.sysList[0].subDim[2].name
+        //     ]
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.4)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList[0].subDim[0].score,
+        //             that.details.sysList[0].subDim[1].score,
+        //             that.details.sysList[0].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 4,
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(27, 236, 255, 0.67)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(0, 198, 255, 0.67)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+        // this.myChartPies22 = echarts.init(
+        //   document.getElementById("myChartPies22")
+        // );
+        // this.myChartPies22.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList[1].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: true }
+        //         },
+        //         {
+        //           name: that.details.sysList[1].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList[1].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(251, 109, 183, 0.14)",
+        //             "rgba(155, 160, 255, 0.14)",
+        //             "rgba(5, 157, 255, 0.14)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           color: [
+        //             "rgba(155, 160, 255, 1)",
+        //             "rgba(5, 157, 255, 1)",
+        //             "rgba(251, 109, 183, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -10]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: [
+        //       that.details.sysList[1].subDim[0].name,
+        //       that.details.sysList[1].subDim[1].name,
+        //       that.details.sysList[1].subDim[2].name
+        //     ]
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.4)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList[1].subDim[0].score,
+        //             that.details.sysList[1].subDim[1].score,
+        //             that.details.sysList[1].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 4,
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(27, 236, 255, 0.67)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(0, 198, 255, 0.67)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+        // this.myChartPies33 = echarts.init(
+        //   document.getElementById("myChartPies33")
+        // );
+        // this.myChartPies33.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList[2].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: true }
+        //         },
+        //         {
+        //           name: that.details.sysList[2].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList[2].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(251, 109, 183, 0.14)",
+        //             "rgba(155, 160, 255, 0.14)",
+        //             "rgba(5, 157, 255, 0.14)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           color: [
+        //             "rgba(155, 160, 255, 1)",
+        //             "rgba(5, 157, 255, 1)",
+        //             "rgba(251, 109, 183, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -10]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: [
+        //       that.details.sysList[2].subDim[0].name,
+        //       that.details.sysList[2].subDim[1].name,
+        //       that.details.sysList[2].subDim[2].name
+        //     ]
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.4)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList[2].subDim[0].score,
+        //             that.details.sysList[2].subDim[1].score,
+        //             that.details.sysList[2].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 4,
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(27, 236, 255, 0.67)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(0, 198, 255, 0.67)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+        // this.myChartLd11 = echarts.init(document.getElementById("myChartLd11"));
+        // this.myChartLd11.setOption({
+        //   grid: {
+        //     bottom: 30,
+        //     left: 20,
+        //     top: 40,
+        //     right: 60
+        //   },
+        //   radar: {
+        //     indicator: [
+        //       { name: this.details.personalitySubDim[0].name, max: 100 },
+        //       { name: this.details.personalitySubDim[5].name, max: 100 },
+        //       { name: this.details.personalitySubDim[4].name, max: 100 },
+        //       { name: this.details.personalitySubDim[3].name, max: 100 },
+        //       { name: this.details.personalitySubDim[2].name, max: 100 },
+        //       { name: this.details.personalitySubDim[1].name, max: 100 }
+        //     ],
+        //     center: ["50%", "50%"],
+        //     radius: "70%",
+        //     startAngle: -30,
+        //     splitNumber: 5,
+        //     name: {
+        //       formatter: "{value}",
+        //       textStyle: {
+        //         color: "#354B70",
+        //         fontSize: 14
+        //       }
+        //     },
+        //     splitArea: {
+        //       areaStyle: {
+        //         color: [
+        //           "rgba(255, 255, 255, 1)",
+        //           "rgba(151, 205, 255, 0.14)"
+        //         ].reverse()
+        //       }
+        //     },
+        //     axisLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     },
+        //     splitLine: {
+        //       lineStyle: {
+        //         color: "#DEE7FF"
+        //       }
+        //     }
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "人格解读",
+        //       type: "radar",
+        //       data: [
+        //         {
+        //           value: [this.details.personalitySubDim[0].score, this.details.personalitySubDim[5].score, this.details.personalitySubDim[4].score, this.details.personalitySubDim[3].score, this.details.personalitySubDim[2].score, this.details.personalitySubDim[1].score],
+        //           name: "Actual Spending",
+        //           symbol: "circle",
+        //           symbolSize: 1,
+        //           color: "rgba(0, 150, 255, 1)",
+        //           itemStyle: {
+        //             normal: {
+        //               borderColor: "rgba(0, 150, 255, 1)"
+        //             }
+        //           }
+        //         }
+        //       ],
+        //       label: {
+        //         show: true,
+        //         fontSize: 14,
+        //         textStyle: {
+        //           fontSize: 14,
+        //           color: "#354B70"
+        //         },
+        //         formatter: function(params) {
+        //           return params.value;
+        //         }
+        //       },
+        //       areaStyle: {
+        //         opacity: 0.4,
+        //         color: {
+        //           type: "linear",
+        //           x: 0,
+        //           y: 0,
+        //           x2: 0,
+        //           y2: 1,
+        //           colorStops: [
+        //             {
+        //               offset: 0,
+        //               color: "rgba(0, 150, 255, 1)"
+        //             },
+        //             {
+        //               areaStyle: {
+        //                 opacity: 0.4,
+        //                 color: {
+        //                   type: "linear",
+        //                   x: 0,
+        //                   y: 0,
+        //                   x2: 0,
+        //                   y2: 1,
+        //                   colorStops: [
+        //                     {
+        //                       offset: 0,
+        //                       color: "rgba(0, 150, 255, 1)"
+        //                     },
+        //                     {
+        //                       offset: 1,
+        //                       color: "rgba(41, 101, 255, 1)"
+        //                     }
+        //                   ],
+        //                   globalCoord: false
+        //                 }
+        //               },
+        //               offset: 1,
+        //               color: "rgba(41, 101, 255, 1)"
+        //             }
+        //           ],
+        //           globalCoord: false
+        //         }
+        //       },
+        //       lineStyle: {
+        //         width: 0
+        //       }
+        //     }
+        //   ]
+        // });
+        // this.myChartLd33 = echarts.init(document.getElementById("myChartLd33"));
+        // this.myChartLd33.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList2[1].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: true }
+        //         },
+        //         {
+        //           name: that.details.sysList2[1].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList2[1].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(251, 109, 183, 0.14)",
+        //             "rgba(155, 160, 255, 0.14)",
+        //             "rgba(5, 157, 255, 0.14)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           color: [
+        //             "rgba(155, 160, 255, 1)",
+        //             "rgba(5, 157, 255, 1)",
+        //             "rgba(251, 109, 183, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -10]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: []
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.1)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList2[1].subDim[0].score,
+        //             that.details.sysList2[1].subDim[1].score,
+        //             that.details.sysList2[1].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 4,
+        //           itemStyle: {
+        //             color: "#0099ff"
+        //           },
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(27, 236, 255, 0.67)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(0, 198, 255, 0.67)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+        // this.myChartLd22 = echarts.init(document.getElementById("myChartLd22"));
+        // this.myChartLd22.setOption({
+        //   tooltip: {
+        //     show: false,
+        //     padding: 10,
+        //     axisPointer: {
+        //       type: "shadow"
+        //     },
+        //     backgroundColor: "#fff",
+        //     textStyle: {
+        //       color: "#5B6C89"
+        //     },
+        //     extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+        //   },
+        //   radar: [
+        //     {
+        //       indicator: [
+        //         {
+        //           name: that.details.sysList2[0].subDim[0].name,
+        //           max: 3,
+        //           axisLabel: { show: true }
+        //         },
+        //         {
+        //           name: that.details.sysList2[0].subDim[1].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         },
+        //         {
+        //           name: that.details.sysList2[0].subDim[2].name,
+        //           max: 3,
+        //           axisLabel: { show: false }
+        //         }
+        //       ],
+        //       center: ["50%", "70%"],
+        //       radius: "100%",
+        //       splitNumber: 3,
+        //       name: {
+        //         formatter: "",
+        //         textStyle: {
+        //           color: "#354B70"
+        //         }
+        //       },
+        //       splitArea: {
+        //         areaStyle: {
+        //           color: [
+        //             "rgba(251, 109, 183, 0.14)",
+        //             "rgba(155, 160, 255, 0.14)",
+        //             "rgba(5, 157, 255, 0.14)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLine: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         lineStyle: {
+        //           color: [
+        //             "rgba(155, 160, 255, 1)",
+        //             "rgba(5, 157, 255, 1)",
+        //             "rgba(251, 109, 183, 1)"
+        //           ].reverse()
+        //         }
+        //       },
+        //       axisLabel: {
+        //         show: true,
+        //         color: "#FFFFFF",
+        //         fontSize: 20,
+        //         height: 32,
+        //         formatter: function(value, index) {
+        //           return "{yxStyle" + index + "|" + index + "}";
+        //         },
+        //         rich: {
+        //           yxStyle0: {
+        //             color: "#00C0FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle1: {
+        //             color: "#006cff",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -10]
+        //           },
+        //           yxStyle2: {
+        //             color: "#6671FF",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           },
+        //           yxStyle3: {
+        //             color: "#FE5FB8",
+        //             fontSize: 12,
+        //             fontWeight: "bold",
+        //             padding: [-1, -12]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   ],
+        //   legend: {
+        //     left: "center",
+        //     bottom: "0",
+        //     icon: "circle",
+        //     itemWidth: 10,
+        //     itemHeight: 10,
+        //     itemGap: 40,
+        //     textStyle: {
+        //       color: "#354B70"
+        //     },
+        //     data: []
+        //   },
+        //   animation: false,
+        //   series: [
+        //     {
+        //       name: "",
+        //       type: "radar",
+        //       color: ["rgba(0,117,255,0.1)"],
+        //       emphasis: {
+        //         lineStyle: {
+        //           width: 2,
+        //           color: "rgba(0, 117, 255, 0.6)"
+        //         }
+        //       },
+        //       data: [
+        //         {
+        //           value: [
+        //             that.details.sysList2[0].subDim[0].score,
+        //             that.details.sysList2[0].subDim[1].score,
+        //             that.details.sysList2[0].subDim[2].score
+        //           ],
+        //           name: "本次得分",
+        //           symbol: "circle",
+        //           symbolSize: 4,
+        //           itemStyle: {
+        //             color: "#0099ff"
+        //           },
+        //           areaStyle: {
+        //             opacity: 1,
+        //             color: {
+        //               type: "linear",
+        //               x: 0,
+        //               y: 0,
+        //               x2: 0,
+        //               y2: 1,
+        //               colorStops: [
+        //                 {
+        //                   offset: 0,
+        //                   color: "rgba(27, 236, 255, 0.67)"
+        //                 },
+        //                 {
+        //                   offset: 1,
+        //                   color: "rgba(0, 198, 255, 0.67)"
+        //                 }
+        //               ],
+        //               globalCoord: false
+        //             }
+        //           },
+        //           lineStyle: {
+        //             width: 1
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // });
+      }, 500);
     },
     initEchart() {
       let that = this;
@@ -2250,7 +4918,7 @@ export default {
               name: "面积模式",
               type: "pie",
               animation: false,
-              radius: [30, "70%"],
+              radius: ["50%", "90%"],
               center: ["50%", "50%"],
               roseType: "area",
               itemStyle: {
@@ -2428,10 +5096,10 @@ export default {
           },
 
           grid: {
-            left: "3%",
-            right: "4%",
+            left: "2%",
+            right: "2%",
             top: "30",
-            bottom: "3%",
+            bottom: "2%",
             containLabel: true
           },
           xAxis: [
@@ -2454,7 +5122,7 @@ export default {
               name: "直接访问",
               type: "bar",
               animation: false,
-              barWidth: "16",
+              barWidth: "14",
               itemStyle: {
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -2470,6 +5138,1259 @@ export default {
                 }
               },
               data: that.sandUseNumInfoNum
+            }
+          ]
+        });
+        this.myChartLds2 = echarts.init(
+          document.getElementById("myChartLds2")
+        );
+        this.myChartLds2.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[0].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[0].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[0].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[0].subDim[0].name,
+              that.details.sysList[0].subDim[1].name,
+              that.details.sysList[0].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[0].subDim[0].score,
+                    that.details.sysList[0].subDim[1].score,
+                    that.details.sysList[0].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds3 = echarts.init(
+          document.getElementById("myChartLds3")
+        );
+        this.myChartLds3.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[1].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[1].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[1].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[1].subDim[0].name,
+              that.details.sysList[1].subDim[1].name,
+              that.details.sysList[1].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[1].subDim[0].score,
+                    that.details.sysList[1].subDim[1].score,
+                    that.details.sysList[1].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds4 = echarts.init(
+          document.getElementById("myChartLds4")
+        );
+        this.myChartLds4.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[2].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[2].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[2].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[2].subDim[0].name,
+              that.details.sysList[2].subDim[1].name,
+              that.details.sysList[2].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[2].subDim[0].score,
+                    that.details.sysList[2].subDim[1].score,
+                    that.details.sysList[2].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds5 = echarts.init(
+          document.getElementById("myChartLds5")
+        );
+        this.myChartLds5.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[3].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[3].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[3].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[3].subDim[0].name,
+              that.details.sysList[3].subDim[1].name,
+              that.details.sysList[3].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[3].subDim[0].score,
+                    that.details.sysList[3].subDim[1].score,
+                    that.details.sysList[3].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds6 = echarts.init(
+          document.getElementById("myChartLds6")
+        );
+        this.myChartLds6.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[4].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[4].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[4].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[4].subDim[0].name,
+              that.details.sysList[4].subDim[1].name,
+              that.details.sysList[4].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[4].subDim[0].score,
+                    that.details.sysList[4].subDim[1].score,
+                    that.details.sysList[4].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds7 = echarts.init(
+          document.getElementById("myChartLds7")
+        );
+        this.myChartLds7.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[5].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[5].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[5].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[5].subDim[0].name,
+              that.details.sysList[5].subDim[1].name,
+              that.details.sysList[5].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[5].subDim[0].score,
+                    that.details.sysList[5].subDim[1].score,
+                    that.details.sysList[5].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
+            }
+          ]
+        });
+        this.myChartLds8 = echarts.init(
+          document.getElementById("myChartLds8")
+        );
+        this.myChartLds8.setOption({
+          tooltip: {
+            show: false,
+            padding: 10,
+            axisPointer: {
+              type: "shadow"
+            },
+            backgroundColor: "#fff",
+            textStyle: {
+              color: "#5B6C89"
+            },
+            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
+          },
+          radar: [
+            {
+              indicator: [
+                {
+                  name: that.details.sysList[6].subDim[0].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[6].subDim[1].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                },
+                {
+                  name: that.details.sysList[6].subDim[2].name,
+                  max: 3,
+                  axisLabel: { show: false }
+                }
+              ],
+              center: ["50%", "70%"],
+              radius: "100%",
+              splitNumber: 3,
+              name: {
+                formatter: "",
+                textStyle: {
+                  color: "#354B70"
+                }
+              },
+              splitArea: {
+                areaStyle: {
+                  color: [
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)",
+                    "rgba(249, 250, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  type: "dashed",
+                  color: [
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)",
+                    "rgba(201, 212, 255, 1)"
+                  ].reverse()
+                }
+              },
+              axisLabel: {
+                show: true,
+                color: "#FFFFFF",
+                fontSize: 20,
+                height: 32,
+                formatter: function(value, index) {
+                  return "{yxStyle" + index + "|" + index + "}";
+                },
+                rich: {
+                  yxStyle0: {
+                    color: "#00C0FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle1: {
+                    color: "#006cff",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle2: {
+                    color: "#6671FF",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  },
+                  yxStyle3: {
+                    color: "#FE5FB8",
+                    fontSize: 12,
+                    // fontWeight: "bold",
+                    padding: [3, -12]
+                  }
+                }
+              }
+            }
+          ],
+          legend: {
+            left: "center",
+            bottom: "0",
+            icon: "circle",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 40,
+            textStyle: {
+              color: "#354B70"
+            },
+            data: [
+              that.details.sysList[6].subDim[0].name,
+              that.details.sysList[6].subDim[1].name,
+              that.details.sysList[6].subDim[2].name
+            ]
+          },
+          series: [
+            {
+              name: "",
+              type: "radar",
+              color: ["rgba(0,117,255,0.1)"],
+              emphasis: {
+                lineStyle: {
+                  width: 2,
+                  color: "rgba(0, 117, 255, 0.6)"
+                }
+              },
+              data: [
+                {
+                  value: [
+                    that.details.sysList[6].subDim[0].score,
+                    that.details.sysList[6].subDim[1].score,
+                    that.details.sysList[6].subDim[2].score
+                  ],
+                  name: "本次得分",
+                  symbol: "circle",
+                  symbolSize: 0,
+                  itemStyle: {
+                    color: "#58B5FF"
+                  },
+                  // // 在圆点上显示相关数据
+                  // label: {
+                  //   show: true,
+                  //   color: 'rgba(147, 207, 255, 1)',
+                  //   fontSize: nowSize(12)
+                  // },
+                  areaStyle: {
+                    opacity: 1,
+                    color: {
+                      type: "linear",
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        },
+                        {
+                          offset: 1,
+                          color: "rgba(138, 203, 255, 0.23)"
+                        }
+                      ],
+                      globalCoord: false
+                    }
+                  },
+                  lineStyle: {
+                    width: 1,
+                    color: '#58B5FF'
+                  }
+                }
+              ]
             }
           ]
         });
@@ -3471,11 +7392,12 @@ export default {
       border-collapse: collapse;
       width: 1190px;
       height: 1684px;
+      // margin-bottom: 1px;
       text-align: center;
       position: relative;
       background: #ffffff !important;
       overflow: hidden;
-      border:1px solid #ccc;
+      // border:1px solid #ccc;
       .table-border{
         position: absolute;
         margin: auto;
@@ -3491,7 +7413,7 @@ export default {
           margin: auto;
           left: 0;
           right: 0;
-          bottom: 30px;
+          bottom: 20px;
           font-family: PingFangSC, PingFang SC;
           font-weight: 400;
           font-size: 24px;
@@ -3609,7 +7531,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 42px 0 30px 0;
+        padding: 30px 0 30px 0;
         img {
           width: 60px;
           height: 63px;
@@ -3712,10 +7634,13 @@ export default {
           p{
             span{
               font-family: SourceHanSansCN, SourceHanSansCN;
-              font-weight: 400;
+              font-weight: 400 !important;
               font-size: 24px;
               color: #333E75;
-              line-height: 52px;
+              line-height: 50px;
+              span{
+                font-weight: 400 !important;
+              }
             }
           }
         }
@@ -3813,16 +7738,1960 @@ export default {
       
     }
     .group_02 {
+      .drwc_b_yst{
+        width: auto;
+        min-width: 306px;
+        max-width: 666px;
+        min-height: 108px;
+        background: #F8FAFC;
+        border: 1px solid #DADCE9;
+        margin: 40px auto 0;
+        z-index: 1;
+        position: relative;
+        padding: 10px 30px 20px;
+        p{
+          display: flex;
+          font-family: SourceHanSansCN, SourceHanSansCN;
+          font-weight: 400;
+          font-size: 20px;
+          color: #2A3487;
+          line-height: 32px;
+          padding: 10px 0 0;
+          text-align: left;
+          img{
+            width: 40px;
+            height: 40px;
+            margin-right: 0px;
+            margin-top: -8px;
+            margin-left: -6px;
+          }
+          span{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 18px;
+            color: #2A3487;
+            line-height: 32px;
+          }
+          span:nth-child(1) {
+            width: 6px;
+            height: 6px;
+            background: #2A3487;
+            border-radius: 3px;
+            line-height: 1;
+            margin-top: 13px;
+            margin-right: 6px;
+          }
+        }
+      }
+      .drwc_bw_shu{
+        padding: 100px 0;
+        transform: scale(1.6);
+        margin-top: 100px;
+        margin-left: -60px;
+        margin-bottom: 0;
+        .tree_box{
+          position: relative;
+          width: 462px;
+          height: 549px;
+          margin: 28px auto 20px;
+          background: url(../../assets/images/news/tree.png) no-repeat center;
+          background-size: 100% 100%;
+          .tb_l1{
+            width: 51px;
+            height: 82px;
+            position: absolute;
+            top: 234px;
+            left: 6px;
+          }
+          .tb_l2{
+            width: 78px;
+            height: 75px;
+            position: absolute;
+            top: 103px;
+            left: 92px;
+          }
+          .tb_l3{
+            width: 82px;
+            height: 67px;
+            position: absolute;
+            top: 70px;
+            left: 241px;
+          }
+          .tb_l4{
+            width: 74px;
+            height: 86px;
+            position: absolute;
+            top: 137px;
+            left: 358px;
+          }
+          .tb_l5{
+            width: 51px;
+            height: 82px;
+            position: absolute;
+            top: 246px;
+            right: -37px;
+          }
+
+          .tb_s_c11{
+            position: absolute;
+            top: 200px;
+            left: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #9EC870;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 14px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c12{
+            position: absolute;
+            top: 234px;
+            left: -24px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #78CFAE;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c13{
+            position: absolute;
+            top: 302px;
+            left: -16px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #62A77D;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            line-height: 20px;
+          }
+          .cir_box11{
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 254px;
+            left: 32px;
+            transform: rotate(-10deg);
+            .cir_img{
+              height: 32px;
+              width: 32px;
+              background-color: #03A667;
+              border-radius: 50%;
+              transform: rotate(0deg);
+              position: absolute;
+              border-radius: 32px 0 0 0;
+            }
+            .cir_lay{
+              height: 58px;
+              width: 58px;
+              background-color: #D7EFEC;
+              border-radius: 50%;
+              position: absolute;
+              top: 3px;
+              left: 3px;
+            }
+            .cir_cen{
+              height: 50px;
+              width: 50px;
+              background-color: #03A667;
+              border-radius: 50%;
+              position: absolute;
+              top: 7px;
+              left: 7px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 14px;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              transform: rotate(10deg);
+              div{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                span{
+                  width: 35%;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  margin: 0 2%;
+                }
+                span:nth-child(2n+1) {
+                  text-align: right;
+                }
+                span:nth-child(2n+2) {
+                  text-align: left;
+                }
+
+              }
+            }
+          }
+          .cir_box12 {
+            width: 70px;
+            height: 70px;
+            transform: rotate(-100deg);
+            .cir_img{
+              width: 70px;
+              height: 35px;
+              border-radius: 35px 35px 0 0;
+              transform: rotate(0deg);
+            }
+            .cir_lay{
+              height: 64px;
+              width: 64px;
+            }
+            .cir_cen{
+              height: 56px;
+              width: 56px;
+              transform: rotate(100deg);
+            }
+          }
+          .cir_box13 {
+            width: 78px;
+            height: 78px;
+            transform: rotate(70deg);
+            .cir_img{
+              width: 39px;
+              height: 39px;
+              border-radius: 39px 0 0 0;
+              // clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+              transform: rotate(0deg);
+              background: #D7EFEC;
+              // clip: unset;
+            }
+            .cir_img34{
+              width: 100%;
+              height: 100%;
+              background-color: #03A667;
+              border-radius: 50%;
+              // clip: unset;
+            }
+            .cir_lay{
+              height: 72px;
+              width: 72px;
+            }
+            .cir_cen{
+              height: 64px;
+              width: 64px;
+              transform: rotate(-70deg);
+            }
+          }
+          .cir_box14 {
+            width: 98px;
+            height: 98px;
+            top: 250px;
+            left: 30px;
+            .cir_img{
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+            }
+            .cir_lay{
+              height: 92px;
+              width: 92px;
+            }
+            .cir_cen{
+              height: 84px;
+              width: 84px;
+            }
+          }
+          .tb_s_c21{
+            position: absolute;
+            top: 120px;
+            left: 60px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #FFD0A2;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 14px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 20px;
+          }
+          .tb_s_c22{
+            position: absolute;
+            top: 108px;
+            left: 154px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #FFDD66;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c23{
+            position: absolute;
+            top: 72px;
+            left: 104px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #F4B36E;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            line-height: 26px;
+          }
+          .cir_box21{
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 160px;
+            left: 116px;
+            transform: rotate(30deg);
+            .cir_img{
+              height: 32px;
+              width: 32px;
+              background-color: #FFB641;
+              border-radius: 50%;
+              transform: rotate(0deg);
+              position: absolute;
+              border-radius: 32px 0 0 0;
+            }
+            .cir_lay{
+              height: 58px;
+              width: 58px;
+              background-color: #D7EFEC;
+              border-radius: 50%;
+              position: absolute;
+              top: 3px;
+              left: 3px;
+            }
+            .cir_cen{
+              height: 50px;
+              width: 50px;
+              background-color: #FFB641;
+              border-radius: 50%;
+              position: absolute;
+              top: 7px;
+              left: 7px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 14px;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              transform: rotate(-30deg);
+              div{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                span{
+                  width: 35%;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  margin: 0 2%;
+                }
+                span:nth-child(2n+1) {
+                  text-align: right;
+                }
+                span:nth-child(2n+2) {
+                  text-align: left;
+                }
+
+              }
+            }
+          }
+          .cir_box22 {
+            width: 70px;
+            height: 70px;
+            transform: rotate(-65deg);
+            .cir_img{
+              width: 70px;
+              height: 35px;
+              border-radius: 35px 35px 0 0;
+              transform: rotate(0deg);
+              // clip: rect(35px, auto, auto, auto);
+              // transform: rotate(120deg);
+            }
+            .cir_lay{
+              height: 64px;
+              width: 64px;
+            }
+            .cir_cen{
+              height: 56px;
+              width: 56px;
+              transform: rotate(65deg);
+            }
+          }
+          .cir_box23 {
+            width: 78px;
+            height: 78px;
+            transform: rotate(105deg);
+            .cir_img{
+              width: 39px;
+              height: 39px;
+              border-radius: 39px 0 0 0;
+              // clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+              transform: rotate(0deg);
+              background: #D7EFEC;
+            }
+            .cir_img34{
+              width: 100%;
+              height: 100%;
+              background-color: #FFB641;
+              border-radius: 50%;
+              // clip: unset;
+            }
+            .cir_lay{
+              height: 72px;
+              width: 72px;
+            }
+            .cir_cen{
+              height: 64px;
+              width: 64px;
+              transform: rotate(-105deg);
+            }
+          }
+          .cir_box24 {
+            width: 98px;
+            height: 98px;
+            top: 166px;
+            left: 100px;
+            .cir_img{
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+            }
+            .cir_lay{
+              height: 92px;
+              width: 92px;
+            }
+            .cir_cen{
+              height: 84px;
+              width: 84px;
+            }
+          }
+
+          .tb_s_c31{
+            position: absolute;
+            top: 69px;
+            left: 308px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #FFAAD1;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 14px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 4px;
+          }
+          .tb_s_c32{
+            position: absolute;
+            top: 70px;
+            left: 212px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #FFB5AD;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 4px;
+          }
+          .tb_s_c33{
+            position: absolute;
+            top: 31px;
+            left: 265px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #F494A7;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            line-height: 32px;
+            padding: 0 2px;
+          }
+          .cir_box31{
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 120px;
+            left: 248px;
+            transform: rotate(70deg);
+            .cir_img{
+              height: 32px;
+              width: 32px;
+              background-color: #FF918C;
+              border-radius: 50%;
+              transform: rotate(0deg);
+              position: absolute;
+              border-radius: 32px 0 0 0;
+            }
+            .cir_lay{
+              height: 58px;
+              width: 58px;
+              background-color: #D7EFEC;
+              border-radius: 50%;
+              position: absolute;
+              top: 3px;
+              left: 3px;
+            }
+            .cir_cen{
+              height: 50px;
+              width: 50px;
+              background-color: #FF918C;
+              border-radius: 50%;
+              position: absolute;
+              top: 7px;
+              left: 7px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 14px;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              transform: rotate(-70deg);
+              div{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                span{
+                  width: 35%;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  margin: 0 2%;
+                }
+                span:nth-child(2n+1) {
+                  text-align: right;
+                }
+                span:nth-child(2n+2) {
+                  text-align: left;
+                }
+
+              }
+            }
+          }
+          .cir_box32 {
+            width: 70px;
+            height: 70px;
+            transform: rotate(-30deg);
+            .cir_img{
+              width: 70px;
+              height: 35px;
+              border-radius: 35px 35px 0 0;
+              transform: rotate(0deg);
+              // clip: rect(35px, auto, auto, auto);
+            }
+            .cir_lay{
+              height: 64px;
+              width: 64px;
+            }
+            .cir_cen{
+              height: 56px;
+              width: 56px;
+              transform: rotate(30deg);
+            }
+          }
+          .cir_box33 {
+            width: 78px;
+            height: 78px;
+            transform: rotate(140deg);
+            .cir_img{
+              width: 39px;
+              height: 39px;
+              border-radius: 39px 0 0 0;
+              // clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+              transform: rotate(0deg);
+              background: #D7EFEC;
+              // clip: unset;
+            }
+            .cir_img34{
+              width: 100%;
+              height: 100%;
+              background-color: #FF918C;
+              border-radius: 50%;
+              // clip: unset;
+            }
+            .cir_lay{
+              height: 72px;
+              width: 72px;
+            }
+            .cir_cen{
+              height: 64px;
+              width: 64px;
+              transform: rotate(-140deg);
+            }
+          }
+          .cir_box34 {
+            width: 98px;
+            height: 98px;
+            top: 120px;
+            left: 234px;
+            .cir_img{
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+            }
+            .cir_lay{
+              height: 92px;
+              width: 92px;
+            }
+            .cir_cen{
+              height: 84px;
+              width: 84px;
+            }
+          }
+          .tb_s_c41{
+            position: absolute;
+            top: 165px;
+            right: 2px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #90CEFF;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 14px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 2px;
+          }
+          .tb_s_c42{
+            position: absolute;
+            top: 118px;
+            left: 356px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #93B8ED;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c43{
+            position: absolute;
+            top: 108px;
+            right: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #60C8F2;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            line-height: 26px;
+          }
+          .cir_box41{
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 202px;
+            right: 64px;
+            transform: rotate(70deg);
+            .cir_img{
+              height: 32px;
+              width: 32px;
+              background-color: #5AB4EE;
+              border-radius: 50%;
+              transform: rotate(0deg);
+              position: absolute;
+              border-radius: 32px 0 0 0;
+            }
+            .cir_lay{
+              height: 58px;
+              width: 58px;
+              background-color: #D7EFEC;
+              border-radius: 50%;
+              position: absolute;
+              top: 3px;
+              left: 3px;
+            }
+            .cir_cen{
+              height: 50px;
+              width: 50px;
+              background-color: #5AB4EE;
+              border-radius: 50%;
+              position: absolute;
+              top: 7px;
+              left: 7px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 14px;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              transform: rotate(-70deg);
+              div{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                span{
+                  width: 35%;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  margin: 0 2%;
+                }
+                span:nth-child(2n+1) {
+                  text-align: right;
+                }
+                span:nth-child(2n+2) {
+                  text-align: left;
+                }
+
+              }
+            }
+          }
+          .cir_box42 {
+            width: 70px;
+            height: 70px;
+            transform: rotate(-20deg);
+            .cir_img{
+              width: 70px;
+              height: 35px;
+              border-radius: 35px 35px 0 0;
+              transform: rotate(0deg);
+            }
+            .cir_lay{
+              height: 64px;
+              width: 64px;
+            }
+            .cir_cen{
+              height: 56px;
+              width: 56px;
+              transform: rotate(20deg);
+            }
+          }
+          .cir_box43 {
+            width: 78px;
+            height: 78px;
+            transform: rotate(155deg);
+            .cir_img{
+              width: 39px;
+              height: 39px;
+              border-radius: 39px 0 0 0;
+              // clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+              transform: rotate(0deg);
+              background: #D7EFEC;
+              // clip: unset;
+            }
+            .cir_img34{
+              width: 100%;
+              height: 100%;
+              background-color: #5AB4EE;
+              border-radius: 50%;
+              // clip: unset;
+            }
+            .cir_lay{
+              height: 72px;
+              width: 72px;
+            }
+            .cir_cen{
+              height: 64px;
+              width: 64px;
+              transform: rotate(-155deg);
+            }
+          }
+          .cir_box44 {
+            width: 98px;
+            height: 98px;
+            top: 200px;
+            right: 58px;
+            .cir_img{
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+            }
+            .cir_lay{
+              height: 92px;
+              width: 92px;
+            }
+            .cir_cen{
+              height: 84px;
+              width: 84px;
+            }
+          }
+          .tb_s_c51{
+            position: absolute;
+            top: 212px;
+            right: -24px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #C2C2ED;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 14px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c52{
+            position: absolute;
+            top: 247px;
+            right: -61px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #BD9DEE;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+          .tb_s_c53{
+            position: absolute;
+            top: 317px;
+            right: -59px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E3B4FF;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            line-height: 20px;
+          }
+          .cir_box51{
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 268px;
+            right: -17px;
+            transform: rotate(90deg);
+            .cir_img{
+              height: 32px;
+              width: 32px;
+              background-color: #C8B4FF;
+              border-radius: 50%;
+              transform: rotate(0deg);
+              position: absolute;
+              border-radius: 32px 0 0 0;
+            }
+            .cir_lay{
+              height: 58px;
+              width: 58px;
+              background-color: #D7EFEC;
+              border-radius: 50%;
+              position: absolute;
+              top: 3px;
+              left: 3px;
+            }
+            .cir_cen{
+              height: 50px;
+              width: 50px;
+              background-color: #C8B4FF;
+              border-radius: 50%;
+              position: absolute;
+              top: 7px;
+              left: 7px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 14px;
+              color: #FFFFFF;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+              transform: rotate(-90deg);
+              div{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                span{
+                  width: 35%;
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 14px;
+                  color: #FFFFFF;
+                  margin: 0 2%;
+                }
+                span:nth-child(2n+1) {
+                  text-align: right;
+                }
+                span:nth-child(2n+2) {
+                  text-align: left;
+                }
+
+              }
+            }
+          }
+          .cir_box52 {
+            width: 70px;
+            height: 70px;
+            transform: rotate(90deg);
+            .cir_img{
+              width: 70px;
+              height: 35px;
+              border-radius: 35px 35px 0 0;
+              transform: rotate(0deg);
+            }
+            .cir_lay{
+              height: 64px;
+              width: 64px;
+            }
+            .cir_cen{
+              height: 56px;
+              width: 56px;
+              transform: rotate(-90deg);
+            }
+          }
+          .cir_box53 {
+            width: 78px;
+            height: 78px;
+            transform: rotate(10deg);
+            .cir_img{
+              width: 39px;
+              height: 39px;
+              border-radius: 39px 0 0 0;
+              // clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 100%, 0 100%, 0% 0%, 50% 0%);
+              transform: rotate(0deg);
+              background: #D7EFEC;
+              // clip: unset;
+            }
+            .cir_img34{
+              width: 100%;
+              height: 100%;
+              background-color: #C8B4FF;
+              border-radius: 50%;
+              // clip: unset;
+            }
+            .cir_lay{
+              height: 72px;
+              width: 72px;
+            }
+            .cir_cen{
+              height: 64px;
+              width: 64px;
+              transform: rotate(-10deg);
+            }
+          }
+          .cir_box54 {
+            width: 98px;
+            height: 98px;
+            top: 264px;
+            right: -14px;
+            .cir_img{
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+            }
+            .cir_lay{
+              height: 92px;
+              width: 92px;
+            }
+            .cir_cen{
+              height: 84px;
+              width: 84px;
+            }
+          }
+        }
+      }
+      // .gp7_box{
+      //   // width: 1060px;
+      //   // margin: 0 auto;
+      //   // margin-top: 40px;
+      //   // ul{
+      //   //   li.gp_w_th{
+      //   //     height: 42px;
+      //   //     line-height: 42px;
+      //   //     font-size: 16px;
+      //   //     font-family: Source Han Sans CN;
+      //   //     font-weight: 400;
+      //   //     color: #394B6D;
+      //   //   }
+      //   //   li{
+      //   //     div{
+      //   //       span{
+      //   //         height: 36px;
+      //   //         line-height: 36px;
+      //   //         font-size: 15px;
+      //   //         font-family: PingFang SC;
+      //   //         font-weight: 400;
+      //   //         color: #7986A9;
+      //   //       }
+      //   //     }
+      //   //   }
+      //   // }
+      // }
       .gp2_main{
         margin: 0 auto;
         width: 1060px;
         background: #FFFFFF;
-        box-shadow: 0px 13px 43px 0px rgba(76, 100, 132, 0.1);
-        border-radius: 4px;
-        padding: 20px 23px 30px;
+        // box-shadow: 0px 13px 43px 0px rgba(76, 100, 132, 0.1);
+        // border-radius: 4px;
+        padding: 20px 44px 0px;
+        .myChartZhu1{
+          margin: 0 auto;
+          width: 1060px;
+          height: 300px;
+          margin-left: -45px;
+        }
+        .myChartRose1{
+          margin: 0 auto;
+          width: 972px;
+          height: 400px;
+        }
+        .dtmt_tle{
+          display: flex;
+          align-items: center;
+          margin: 30px 0 20px;
+          span{
+            font-family: PingFangSC, PingFang SC;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+          }
+          .dt_dot{
+            width: 8px;
+            height: 8px;
+            border: 2px solid #333E75;
+            border-radius: 50%;
+            margin: 0;
+            margin-right: 5px;
+            line-height: unset;
+            background: transparent;
+            display: inline-block;
+          }
+        }
+        .dtm_xls {
+          width: 100%;
+          margin: 30px auto 40px;
+          border: 1px solid #d7dffb;
+          .dtmx_li {
+            display: flex;
+            height: 58px;
+            .dtmxl_head {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 220px;
+              border-bottom: 1px solid #d7dffb;
+              border-right: 1px solid #d7dffb;
+              background: transparent;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 20px;
+              color: #2A3487;
+            }
+            .dtmxl_body {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 265px;
+              border-bottom: 1px solid #d7dffb;
+              border-right: 1px solid #d7dffb;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 20px;
+              color: #2A3487;
+              span {
+                color: #2A3487;
+              }
+            }
+            .dtmxl_body:last-child {
+              border-right: 0;
+            }
+          }
+          .dtmx_lis {
+            height: auto;
+            .dtmxl_head {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 220px;
+              border-bottom: 0 !important;
+              border-right: 0.01rem solid #d7dffb;
+              background: transparent;
+              font-family: PingFangSC, PingFang SC;
+              font-weight: 400;
+              font-size: 20px;
+              color: #2A3487;
+            }
+            .dtmxl_body {
+              display: block;
+              flex: 1;
+              border-bottom: 0 !important;
+              border-right: 1px solid rgba(215, 223, 251, 1);
+              .dtmxl_dl {
+                height: 58px;
+                display: flex;
+
+                .dtmxl_dt {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 133px;
+                  height: 100%;
+                  border-bottom: 0.01rem solid #d7dffb;
+                  border-right: 0.01rem solid #d7dffb;
+                  background: transparent;
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 20px;
+                  color: #2A3487;
+                }
+                .dtmxl_dd {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 352px;
+                  border-bottom: 1px solid #d7dffb;
+                  border-right: 1px solid #d7dffb;
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 20px;
+                  color: #2A3487;
+                }
+
+                .dtmxl_dds {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 265px;
+                  border-bottom: 1px solid #d7dffb;
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 20px;
+                  color: #2A3487;
+                }
+              }
+              .dtmxl_dl:last-child {
+                .dtmxl_dt {
+                  border-bottom: 0 !important;
+                }
+                .dtmxl_dd {
+                  border-bottom: 0 !important;
+                }
+                .dtmxl_dds {
+                  border-bottom: 0 !important;
+                }
+              }
+            }
+            .dtmxl_body:last-child {
+              border-right: 0;
+            }
+          }
+        }
+        .drwc_b_ys{
+          width: auto;
+          padding: 0 40px 30px;
+          display: flex;
+          .myChartZhu {
+            margin: 30px auto 0;
+            width: 960px;
+            height: 266px;
+          }
+          p{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+            padding: 30px 0 0;
+            width: 100%;
+            text-align: left;
+          }
+          span{
+            font-weight: 500;
+          }
+        }
+        .drwc_b_ysp{
+          display: block;
+          margin: 0 auto;
+          padding: 0;
+          .drwc_sp_head{
+            text-align: left;
+            margin: 30px 0 10px;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 32px;
+            color: #333E75;
+            display: flex;
+            align-items: center;
+            span{
+              width: 8px;
+              height: 8px;
+              border: 2px solid #333E75;
+              border-radius: 50%;
+              margin: 0;
+              margin-right: 6px;
+              line-height: unset;
+              background: transparent;
+              display: inline-block;
+            }
+          }
+          p{
+            padding: 26px 30px;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #2A3487;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border: 1px solid #333E75;
+            text-align: left;
+            line-height: 42px;
+            margin-top: 36px;
+            img{
+              width: 50px;
+              height: 50px;
+              margin-right: 4px;
+              margin-top: -10px;
+            }
+          }
+        }
+        .drwc_btr {
+          .wdrj_box {
+            margin-bottom: 0;
+            .wdrj_main {
+              padding: 0px 0 20px 0px;
+              border-radius: 4px;
+              margin-bottom: 20px;
+              .wdrj_title {
+                display: flex;
+                align-items: center;
+                span{
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 32px;
+                  color: #333E75;
+                }
+                img {
+                  width: 80px;
+                  height: 24px;
+                }
+              }
+              .wdrj_titles {
+                margin-left: 64px;
+                margin-top: 6px;
+                span{
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 400;
+                  font-size: 28px;
+                  color: #333E75;
+                }
+              }
+              .wdrj_line{
+                display: flex;
+                align-items: center;
+                margin-bottom: 60px;
+                margin-top: 80px;
+                justify-content: center;
+                .wdrj_l_left{
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 24px;
+                  color: #6F76B2;
+                }
+                .wdrj_l_center{
+                  width: 720px;
+                  height: 12px;
+                  margin: 0 20px;
+                  border-radius: 6px;
+                  background: linear-gradient( 270deg, #999EFF 0%, #9DBDFF 50%, #CDE9FF 100%);
+                  position: relative;
+                  .wdrj_lc_txt{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #6F76B2;
+                    margin-top: 20px;
+                  }
+                  .dttr_btn {
+                    width: 48px;
+                    height: auto;
+                    position: absolute;
+                    margin: auto;
+                    margin-left: -24px;
+                    left: 0;
+                    top: -16px;
+                  }
+                  .dttr_score{
+                    position: absolute;
+                    margin: auto;
+                    margin-left: -60px;
+                    left: 0;
+                    bottom: 28px;
+                    min-width: 120px;
+                    height: 48px;
+                    background: url(../../assets/images/news/tuli.png) no-repeat center;
+                    background-size: 100% 100%;
+                    // box-shadow: 0 2px 10px 0 #DDDFFF;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px;
+                    font-family: PingFangSC-Regular, PingFang SC;
+                    font-weight: 400;
+                    color: #737AFD;
+                    i{
+                      width: 0;
+                      height: 0;
+                      border-left: 8px solid transparent;
+                      border-right: 8px solid transparent;
+                      border-bottom: 8px solid #ffffff;
+                      position: absolute;
+                      margin: auto;
+                      left: 0;
+                      right: 0;
+                      bottom: -7px;
+                      transform: rotate(180deg);
+                    }
+                  }
+                  .dttr_lv {
+                    position: absolute;
+                    margin: auto;
+                    margin-left: -0.7rem;
+                    left: 0;
+                    top: 0.14rem;
+                    width: 1.4rem;
+                    height: 0.6rem;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    font-size: 0.18rem;
+                    font-family: PingFangSC-Regular, PingFang SC;
+                    font-weight: 400;
+                    color: #6F76B2;
+                  }
+                }
+                .wdrj_l_right{
+                  font-family: PingFangSC, PingFang SC;
+                  font-weight: 400;
+                  font-size: 24px;
+                  color: #6F76B2;
+                }
+              }
+              .dtmsb_tar {
+                width: 825px;
+                height: 266px;
+                margin: -30px auto 24px;
+                position: relative;
+                ol.dtmsb_tu{
+                  margin: 0;
+                  padding: 0;
+                  li{
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    margin: 14px 0;
+                    img{
+                      width: 32px;
+                      height: 32px;
+                      margin-right: 8px;
+                    }
+                    span{
+                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-weight: 400;
+                      font-size: 24px;
+                      color: #333E75;
+                      margin-top: -3px;
+                    }
+                  }
+                }
+                .top_top {
+                  position: absolute;
+                  margin: auto;
+                  left: 0;
+                  right: 0;
+                  top: 22px;
+                  width: 413px;
+                  .tt_txt {
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #6F76B2;
+                    line-height: 20px;
+                    display: block;
+                    position: relative;
+                  }
+                }
+                .bottom_left {
+                  position: absolute;
+                  margin: auto;
+                  left: 370px;
+                  bottom: 3px;
+                  width: 413px;
+                  .tt_txt {
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #6F76B2;
+                    line-height: 20px;
+                    display: block;
+                    position: relative;
+                  }
+                }
+                .bottom_right {
+                  position: absolute;
+                  margin: auto;
+                  left: 42px;
+                  bottom: 3px;
+                  width: 413px;
+                  .tt_txt {
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #6F76B2;
+                    line-height: 20px;
+                    display: block;
+                    position: relative;
+                  }
+                }
+                .dengpao{
+                  width: 312px;
+                  height: 307px;
+                  margin:0 auto;
+                }
+                .demsb_tool1 {
+                  position: absolute;
+                  margin: auto;
+                  right: 250px;
+                  top: -8px;
+                  width: auto;
+                  min-width: 65px;
+                  height: 34px;
+                  background: url(../../assets/images/report/exmaple.png) no-repeat
+                    center;
+                  background-size: 100% 100%;
+                  text-align: left;
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: center;
+                  .demsb_score {
+                    font-size: 16px;
+                    padding-left: 14px;
+                    padding-right: 20px;
+                    line-height: 34px;
+                    color: #7486af;
+                    display: flex;
+                    span {
+                      margin-left: -8px;
+                      color: #00c0ff;
+                    }
+                  }
+                  .demsb_score1 {
+                    span {
+                      margin-left: -26px;
+                      color: #016cff;
+                    }
+                  }
+                }
+                .demsb_tool {
+                  position: absolute;
+                  margin: auto;
+                  left: 250px;
+                  top: -8px;
+                  width: auto;
+                  min-width: 65px;
+                  height: 34px;
+                  background: url(../../assets/images/report/exmaple2.png) no-repeat
+                    center;
+                  background-size: 100% 100%;
+                  text-align: left;
+                  display: flex;
+                  flex-wrap: wrap;
+                  align-items: center;
+
+                  .demsb_score {
+                    font-size: 16px;
+                    padding-left: 20px;
+                    padding-right: 14px;
+                    line-height: 34px;
+                    color: #7486af;
+                    display: flex;
+                    span {
+                      margin-left: -8px;
+                      color: #00c0ff;
+                    }
+                  }
+                  .demsb_score1 {
+                    span {
+                      margin-left: -26px;
+                      color: #016cff;
+                    }
+                  }
+                }
+                ul {
+                  position: absolute;
+                  margin: auto;
+                  left: 0;
+                  right: 0;
+                  bottom: -32px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  li {
+                    padding: 0 20px;
+                    display: flex;
+                    align-items: center;
+                    span {
+                      font-size: 16px;
+                      font-family: Source Han Sans CN;
+                      font-weight: 400;
+                      color: #7786ac;
+                    }
+                    span:first-child {
+                      margin-right: 6px;
+                      width: 8px;
+                      height: 8px;
+                      background: linear-gradient(174deg, #1becff 0%, #00c6ff 98%);
+                      border-radius: 50%;
+                    }
+                  }
+                  li:last-child {
+                    span:first-child {
+                      background: linear-gradient(
+                        0deg,
+                        rgba(0, 117, 255, 0.99),
+                        rgba(0, 194, 255, 0.99)
+                      );
+                    }
+                  }
+                }
+                .myChartLd0 {
+                  width: 826px;
+                  height: 266px;
+                }
+                .dtmsb_ulc {
+                  position: absolute;
+                  margin: auto;
+                  left: 0;
+                  right: 0;
+                  bottom: -54px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  li {
+                    padding: 0 20px;
+                    display: flex;
+                    align-items: center;
+                    img {
+                      width: 260px;
+                      height: auto;
+                    }
+                    span {
+                      font-size: 16px;
+                      font-family: Source Han Sans CN;
+                      font-weight: 400;
+                      color: #7786ac;
+                    }
+                    span:first-child {
+                      margin-right: 6px;
+                      width: 8px;
+                      height: 8px;
+                      background: linear-gradient(174deg, #1becff 0%, #00c6ff 98%);
+                      border-radius: 50%;
+                    }
+                  }
+                  li:last-child {
+                    span:first-child {
+                      background: linear-gradient(
+                        0deg,
+                        rgba(0, 117, 255, 0.99),
+                        rgba(0, 194, 255, 0.99)
+                      );
+                    }
+                  }
+                }
+              }
+              .wdrj_suger {
+                margin-top: 50px;
+                text-align: left;
+                background: url(../../assets/images/news/sys_bg.png) no-repeat
+                  center;
+                background-size: 100% 100%;
+                padding: 16px 26px;
+                .wdrjs_uls{
+                  padding-left: 0;
+                  li{
+                    display: flex;
+                    font-size: 16px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #354B70;
+                    line-height: 40px;
+                    span {
+                      margin-top: 12px;
+                      margin-right: 10px;
+                      text-align: center;
+                      line-height: 16px;
+                      width: 16px;
+                      height: 16px;
+                      background: linear-gradient(177deg, #1becff, #00c6ff);
+                      border-radius: 50%;
+                      font-size: 12px;
+                      font-family: Source Han Sans CN;
+                      font-weight: bold;
+                      color: #ffffff;
+                    }
+                    p {
+                      line-height: 44px;
+                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-weight: 400;
+                      font-size: 24px;
+                      color: #333E75;
+                      display: flex;
+                      align-items: center;
+                      span{
+                        width: 8px;
+                        height: 8px;
+                        border: 2px solid #333E75;
+                        border-radius: 50%;
+                        margin: 0;
+                        margin-right: 5px;
+                        line-height: unset;
+                        background: transparent;
+                        display: inline-block;
+                      }
+                    }
+                    img{
+                      width: 16px;
+                      height: 16px;
+                      margin-right: 6px;
+                      margin-top: 12px;
+                    }
+                  }
+                }
+                .wdrjs_title {
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 28px;;
+                  color: #333E75;
+                  display: flex;
+                  align-items: center;
+                  line-height: 48px;
+                  margin-left: 3px;
+                  img {
+                    width: 12px;
+                    height: 12px;
+                    margin-right: 6px;
+                  }
+                  .wdrjst_res {
+                    display: flex;
+                    align-items: center;
+                    img {
+                      width: 19px;
+                      height: 22px;
+                      margin-right: 6px;
+                      margin-left: 20px;
+                    }
+                    .wdrjstr_txt {
+                      font-size: 18px;
+                      font-family: Source Han Sans CN;
+                      font-weight: 400;
+                      color: #FE5FB8;
+                    }
+                  }
+                }
+                .wdrjs_tips {
+                  display: flex;
+                  flex-wrap: wrap;
+                  width: auto;
+                  background: #fffef8;
+                  border: 1px solid #ffe100;
+                  border-radius: 2px;
+                  padding: 0 10px;
+                  margin: 15px 15px 0;
+                  min-height: 42px;
+                  img {
+                    width: 32px;
+                    height: 34px;
+                    margin-top: 10px;
+                  }
+                  p {
+                    text-align: left;
+                    padding-left: 0;
+                    flex: 1;
+                    font-size: 16px;
+                    span {
+                      color: #ff7e00;
+                    }
+                  }
+                }
+                .wdrjst_res1 {
+                  display: flex;
+                  align-items: center;
+                  padding: 0 15px;
+                  margin: 30px 0 10px;
+                  line-height: 26px;
+                  img {
+                    width: 19px;
+                    height: 22px;
+                    margin-right: 6px;
+                  }
+                  span {
+                    font-size: 18px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #354b70;
+                  }
+                  .wdrjstr_txt {
+                    font-size: 18px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #FE5FB8;
+                  }
+                }
+                .wdrjst_del {
+                  padding: 24px;
+                  line-height: 39px;
+                  font-size: 18px;
+                  font-family: Source Han Sans CN;
+                  font-weight: 400;
+                  color: #354b70;
+                  text-align: left;
+                  .pd24 {
+                    padding-left: 24px;
+                    font-size: 16px;
+                  }
+                  div {
+                    line-height: 39px;
+                    font-size: 18px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #354b70;
+                    img {
+                      width: 16px;
+                      height: 12px;
+                      margin-right: 8px;
+                    }
+                  }
+                  ul {
+                    li {
+                      font-size: 14px;
+                      font-family: Source Han Sans CN;
+                      font-weight: 400;
+                      color: #354b70;
+                      display: flex;
+                      img {
+                        width: 6px;
+                        height: 6px;
+                        margin-right: 10px;
+                        margin-top: 16px;
+                      }
+                    }
+                  }
+                }
+                .wdrjst_del1 {
+                  width: 1082px;
+                  background: url(../../assets/images/report/h_bg1.png) no-repeat top
+                    left;
+                  background-size: 100% 100%;
+                  margin-left: 30px;
+                }
+                .wdrjst_del2 {
+                  width: 1082px;
+                  background: url(../../assets/images/report/h_bg2.png) no-repeat top
+                    left;
+                  background-size: 100% 100%;
+                  margin-left: 30px;
+                }
+                .gb_contain {
+                  text-align: left;
+                  padding: 10px 25px;
+                  p {
+                    padding: 6px 0 6px;
+                    font-size: 16px;
+                    font-family: Source Han Sans CN;
+                    font-weight: 400;
+                    color: #354b70;
+                    display: flex;
+                    align-items: flex-start;
+                    img {
+                      width: 4px;
+                      height: 18px;
+                      margin-top: 2px;
+                      margin-right: 6px;
+                    }
+                  }
+                  ul {
+                    li {
+                      display: flex;
+                      line-height: 36px;
+                      span {
+                        margin-top: 9px;
+                        margin-right: 8px;
+                        text-align: center;
+                        line-height: 16px;
+                        width: 16px;
+                        height: 16px;
+                        background: linear-gradient(177deg, #1becff, #00c6ff);
+                        border-radius: 50%;
+                        font-size: 12px;
+                        font-family: Source Han Sans CN;
+                        font-weight: bold;
+                        color: #ffffff;
+                        border: 1px solid #00c6ff;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      }
+                      p {
+                        padding: 0;
+                        flex: 1;
+                        display: flex;
+                        flex-wrap: wrap;
+                      }
+                    }
+                  }
+                }
+              }
+              .wdrj_sugers{
+                background: transparent;
+                margin-top: 24px;
+                border: 1px solid #333E75;
+              }
+              .wdrj_suger1 {
+                margin-top: 10px;
+              }
+              .wm_text{
+                text-align: center;
+                padding: 0;
+                margin: 16px 0 16px;
+                word-break: break-all;
+                .el-button {
+                  margin-top: 16px;
+                  border: 1px solid #dcdfe6;
+                  padding: 9px 27px;
+                  font-size: 16px;
+                  border-radius: 4px;
+
+                  color: #ffffff;
+                  background: linear-gradient(263deg, #00c2ff, #0075ff);
+                  box-shadow: 0px 3px 18px 0px rgba(62, 150, 253, 0.19);
+                }
+                .primary1{
+                  color: #0075ff;
+                  border: 1px solid #0075ff !important;
+                  background: linear-gradient(263deg, #ffffff, #ffffff);
+                  box-shadow: 0px 3px 18px 0px rgba(250, 250, 250, 0.19);
+                }
+                .el-textarea{
+                  font-size: 16px;
+                  height: 100%;
+                  .el-textarea__inner{
+                    resize: none;
+                    font-size: 16px;
+                    color: #354B70;
+                    height: 100%;
+                    padding: 12px 15px 12px !important;
+                  }
+                  .el-input__count{
+                    bottom: 2px;
+                    right: 8px;
+                  }
+                }
+              }
+            }
+          }
+        }
         .myChartBox{
           position: relative;
           margin: 20px auto 0px;
+          .dtmcl_chart {
+            position: relative;
+            .dtmcl_c_nor{
+              width: 385px;
+              height: 385px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 0 auto;
+              border-radius: 50%;
+              border: 40px solid #82df95;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 500;
+              font-size: 80px;
+              color: #82df95;
+            }
+          }
           .myChartTips{
             position: absolute;
             top: 76px;
@@ -3874,16 +9743,17 @@ export default {
           .gp2l_head {
             display: flex;
             align-items: center;
+            margin-top: 50px;
             img {
               width: 34px;
               height: 37px;
             }
             span {
-              margin-left: 10px;
-              font-size: 24px;
-              font-family: Source Han Sans CN;
+              // margin-left: 10px;
+              font-family: SourceHanSansCN, SourceHanSansCN;
               font-weight: 500;
-              color: #394b6d;
+              font-size: 28px;
+              color: #333E75;
             }
           }
           .gp2l_body {
@@ -3916,6 +9786,70 @@ export default {
                 color: #00A5FF;
               }
             }
+          }
+        }
+        .dtmcl_sbox{
+          display: flex;
+          margin-top: 18px;
+          .dtmcl_sb_t{
+            width: auto;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 24px;
+            color: #333E75;
+          }
+          .dtmcl_sb_c{
+            flex: 1;
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+            text-align: left;
+            ul {
+              width: 100%;
+              display: flex;
+              flex-wrap: wrap;
+              li{
+                width: 33.33%;
+                display: flex;
+                align-items: center;
+                margin-bottom: 14px;
+                span{
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 400;
+                  font-size: 24px;
+                  color: #333E75;
+                }
+                img {
+                  width: 80px;
+                  height: 24px;
+                  margin-left: 6px;
+                }
+              }
+            }
+            div{
+              width: 100%;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 400;
+              font-size: 24px;
+              color: #333E75;
+            }
+          }
+        }
+        .dtmcl_stip{
+          display: flex;
+          align-items: center;
+          margin-top: 10px;
+          span{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+          }
+          img{
+            width: 24px;
+            height: 24px;
+            margin: 0 3px 0 0;
           }
         }
         .gp2b_tips{
@@ -3968,77 +9902,125 @@ export default {
           margin-top: 10px;
         }
         .gp_warn{
-          margin: 24px 30px;
-          ul{
-            border: 1px solid #CFE1F9;
-            li{
-              display: flex;
-              height: 50px;
-              line-height: 50px;
-              div{
-                font-size: 18px;
-                font-family: Source Han Sans CN;
-                font-weight: 400;
-                color: #607490;
-                flex: 1;
-                border-right: 1px solid #CFE1F9;
-                border-bottom: 1px solid #CFE1F9;
-              }
-              div:last-child{
-                border-right: 0;
-              }
-              .wran_col0{
-                color: #00e805 !important;
-              }
-              .wran_col1{
-                color: #ffe400 !important;
-              }
-              .wran_col2{
-                color: #fc9b2f !important;
-              }
-              .wran_col3{
-                color: #fe2727 !important;
-              }
-            }
-            li:last-child{
-              div{
-                border-bottom: 0;
-              }
-            }
-            li.gp_w_th{
-              div{
-                background: #F1F9FE;
-              }
-            }
-            li.gp_w_td{
-              height: auto;
-              line-height: 135px;
-              div{
-                span{
-                  height: 45px;
-                  line-height: 45px;
-                  display: block;
-                  font-family: Source Han Sans CN;
+          margin: 0 auto;
+          .dtmc_r_biao{
+            width: 100%;
+            ul {
+              width: 100%;
+              border: 1px solid rgba(166, 172, 204, 1);
+              border-bottom: 0;
+              border-right: 0;
+              // display: flex;
+              li {
+                width: 100%;
+                display: flex;
+
+                div{
+                  flex: 1;
+                  text-align: center;
+                  font-family: PingFangSC, PingFang SC;
                   font-weight: 400;
-                  color: #848DA0;
-                  border-bottom: 1px solid #CFE1F9;
-                }
-                span:last-child{
-                  border-bottom: 0
-                }
-                .gp_w_ll{
-                  display: flex !important;
-                  label{
-                    flex: 1;
-                    font-size: 16px;
+                  font-size: 20px;
+                  color: #2A3487;
+                  border: 1px solid rgba(166, 172, 204, 1);
+                  border-left: 0;
+                  border-top: 0;
+                  padding: 14px 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  span{
+                    font-family: PingFangSC, PingFang SC;
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #333E75;
                   }
-                  label:first-child{
-                    border-right: 1px solid #CFE1F9;
+                  img{
+                    width: 80px;
+                    height: 24px;
                   }
+                }
+              }
+              li:nth-child(1) {
+                div{
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 500;
+                  font-size: 20px;
+                  padding: 18px 0;
                 }
               }
             }
           }
+          // ul{
+          //   border: 1px solid #CFE1F9;
+          //   li{
+          //     display: flex;
+          //     height: 50px;
+          //     line-height: 50px;
+          //     div{
+          //       font-size: 18px;
+          //       font-family: Source Han Sans CN;
+          //       font-weight: 400;
+          //       color: #607490;
+          //       flex: 1;
+          //       border-right: 1px solid #CFE1F9;
+          //       border-bottom: 1px solid #CFE1F9;
+          //     }
+          //     div:last-child{
+          //       border-right: 0;
+          //     }
+          //     .wran_col0{
+          //       color: #00e805 !important;
+          //     }
+          //     .wran_col1{
+          //       color: #ffe400 !important;
+          //     }
+          //     .wran_col2{
+          //       color: #fc9b2f !important;
+          //     }
+          //     .wran_col3{
+          //       color: #fe2727 !important;
+          //     }
+          //   }
+          //   li:last-child{
+          //     div{
+          //       border-bottom: 0;
+          //     }
+          //   }
+          //   li.gp_w_th{
+          //     div{
+          //       background: #F1F9FE;
+          //     }
+          //   }
+          //   li.gp_w_td{
+          //     height: auto;
+          //     line-height: 135px;
+          //     div{
+          //       span{
+          //         height: 45px;
+          //         line-height: 45px;
+          //         display: block;
+          //         font-family: Source Han Sans CN;
+          //         font-weight: 400;
+          //         color: #848DA0;
+          //         border-bottom: 1px solid #CFE1F9;
+          //       }
+          //       span:last-child{
+          //         border-bottom: 0
+          //       }
+          //       .gp_w_ll{
+          //         display: flex !important;
+          //         label{
+          //           flex: 1;
+          //           font-size: 16px;
+          //         }
+          //         label:first-child{
+          //           border-right: 1px solid #CFE1F9;
+          //         }
+          //       }
+          //     }
+          //   }
+          // }
         }
       }
     }
@@ -4217,16 +10199,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 50px 0 45px 0;
+    padding: 30px 0 45px 0;
     img {
       width: 132px;
       height: 127px;
     }
     .gp2_t_txt {
-      font-size: 32px;
-      font-family: Source Han Sans CN;
-      font-weight: 400;
-      color: #394b6d;
+      font-family: PingFangSC, PingFang SC;
+      font-weight: 500;
+      font-size: 36px;
+      color: #2A3487;
       margin: 0 14px;
     }
     .gp2_t_eng {
@@ -5477,11 +11459,7 @@ export default {
       color: #394B6D;
     }
   }
-  .myChartRose1, .myChartZhu1{
-    margin: 0 auto;
-    width: 1060px;
-    height: 400px;
-  }
+  
   .dtm_xls {
     margin: 44px auto 70px;
     width: 1060px;
@@ -5707,8 +11685,8 @@ export default {
 .myChart {
   display: flex;
   justify-content: center;
-  width: 202px;
-  height: 202px;
-  margin: 0 auto 2px;
+  width: 385px;
+  height: 385px;
+  margin: 0 auto;
 }
 </style>
