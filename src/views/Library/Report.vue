@@ -931,7 +931,8 @@ export default {
     },
     isService(val) {
       let routeData = this.$router.resolve({
-        name: "detailsreport",
+        // name: "detailsreport",
+        name: "detailsreportmobile",
         params: { userID: val.reportId }
       });
       window.open(routeData.href, "_blank");

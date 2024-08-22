@@ -53,6 +53,11 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/details/reportmobile/:userID/:token?',
+      name: 'detailsreportmobile',
+      component: () => import('./views/Details/ReportMobile.vue')
+    },
     // 导出word
     {
       path: '/library/expword/:userID',
@@ -83,6 +88,7 @@ export default new Router({
           name: 'report',
           component: () => import('./views/Library/Report.vue')
         },
+        
         // 心理档案
         {
           path: '/library/heart',

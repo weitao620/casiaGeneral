@@ -1,15 +1,15 @@
 <template>
-  <div class="detail_report_wrap">
+  <div class="detail_mobile_wrap">
     <div class="top_back" @click="topBacks" v-show="scrollYs > part0">
       <img src="../../assets/images/report/to_top.png" alt="" />
     </div>
-    <div
+    <!-- <div
       :class="['r_futi', { r_futi_fix: scrollYs > part0 }]"
       v-show="scrollYs > part0 && !reviewFlag"
     >
       <div
         class="r_t_tab"
-        style="margin-bottom:0.12rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
+        style="margin-bottom:0.1rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
         @click="toReview"
       >
         <img src="../../assets/images/report/part0.png" alt="" />
@@ -58,14 +58,14 @@
           <span>&nbsp;附录一<br>人格解读</span>
         </div>
       </div>
-    </div>
-    <div
+    </div> -->
+    <!-- <div
       :class="['r_futi', { r_futi_fix: scrollYs > part0 }]"
       v-show="scrollYs > part0 && reviewFlag"
     >
       <div
         class="r_t_tab"
-        style="margin-bottom:0.12rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
+        style="margin-bottom:0.1rem;box-shadow: 0px 13px 43px 0px rgba(70, 101, 135, 0.1);"
         @click="toReview"
       >
         <img src="../../assets/images/report/part0.png" alt="" />
@@ -105,7 +105,7 @@
           <span>附录</span>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="dt_header">
       <div class="dt_h_box">
         <span>数据更新时间：{{ details.reportTime }}</span>
@@ -131,24 +131,35 @@
           AI心世界为评估个体心理健康水平、人格及能力提供了重要的参考依据，是咨询辅导工作中的智能助手。
         </p>
       </div>
-      <img src="../../assets/images/report/teacherRbg.png" alt="" />
+      <img style="width: auto;height:6rem;margin-left: -55%;" src="../../assets/images/report/teacherRbg.png" alt="" />
+    </div>
+    <div class="dt_top_bg" style="height: auto;">
       <div class="dt_person" ref="parts0">
         <div class="dtp_photo">
           <img v-if="String(details.gender) == '1'"  src="../../assets/images/report/human.png" alt="" />
-          <img v-if="String(details.gender) == '0'" style="width: 1.3rem;height:1.3rem;margin-top:0.09rem" src="../../assets/images/report/huwoman.png" alt="" />
+          <img v-if="String(details.gender) == '0'" style="transform: scale(0.9);" src="../../assets/images/report/huwoman.png" alt="" />
         </div>
         <div class="dtp_main">
           <ul>
-            <li style="width:3.2rem">
+            <li>
               <img
                 class="dt_per1"
                 src="../../assets/images/report/person1.png"
                 alt=""
               />
-              <span class="dt_blod">姓名：</span>
+              <span class="dt_blod">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
               <span>{{ details.name }}</span>
             </li>
-            <li style="width:3.8rem">
+            <li>
+              <img
+                class="dt_per3"
+                src="../../assets/images/report/person10.png"
+                alt=""
+              />
+              <span class="dt_blod" style="letter-spacing: 0.05rem;text-indent: 0.04rem;">手机号：</span>
+              <span>{{ details.phone }}</span>
+            </li>
+            <li>
               <img
                 class="dt_per2"
                 src="../../assets/images/report/person9.png"
@@ -157,16 +168,7 @@
               <span class="dt_blod">登录账号：</span>
               <span>{{ details.passport }}</span>
             </li>
-            <li style="width:3.2rem">
-              <img
-                class="dt_per3"
-                src="../../assets/images/report/person10.png"
-                alt=""
-              />
-              <span class="dt_blod">手机号：</span>
-              <span>{{ details.phone }}</span>
-            </li>
-            <li style="width:3.2rem">
+            <li>
               <img
                 class="dt_per4"
                 src="../../assets/images/report/person4.png"
@@ -177,7 +179,7 @@
             </li>
           <!-- </ul>
           <ul> -->
-            <li style="width:3.8rem">
+            <li>
               <img
                 class="dt_per4"
                 style="margin-left: 0.02rem;"
@@ -187,7 +189,7 @@
               <span class="dt_blod">所属部门：</span>
               <span>{{ details.departmentName }}</span>
             </li>
-            <li style="width:3.2rem">
+            <li>
               <img
                 class="dt_per7"
                 src="../../assets/images/report/person7.png"
@@ -196,7 +198,7 @@
               <span class="dt_blod">测评次数：</span>
               <span>第{{ details.evaluationTime }}次</span>
             </li>
-            <li style="width:3.2rem">
+            <li>
               <img
                 class="dt_per8"
                 src="../../assets/images/report/person8.png"
@@ -215,30 +217,17 @@
       </div>
       <div class="dtm_contain">
         <div class="dtmc_left">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/total2.png"
-              style="width:0.35rem;height:0.34rem"
-              alt=""
-            />
-            <span>箱庭鸟瞰图</span>
-          </div>
+          
           <div class="dtmcl_pic" v-if="birdViewImg !=''" @click="birdView">
             <img :src="'data:image;base64,' + birdViewImg" alt="" />
           </div>
           <div class="dtmcl_pic" v-else>
             <img src="../../assets/images/report/t001.png" alt="" />
           </div>
+          <span class="dtmcl_pic_t">箱庭鸟瞰图</span>
         </div>
         <div class="dtmc_right1">
-          <div class="dtmcl_tle">
-            <img
-              src="../../assets/images/report/total3.png"
-              style="width:0.28rem;height:0.30rem"
-              alt=""
-            />
-            <span>箱庭解析</span>
-          </div>
+          
           <div class="dtmcr_bts1">
             <p>
               <img src="../../assets/images/report/icon1.png" alt="" />
@@ -256,10 +245,10 @@
       </div>
       <div class="dtm_contain">
         <div class="dtmc_left">
-          <div class="dtmcl_tle">
+          <!-- <div class="dtmcl_tle">
             <img src="../../assets/images/report/total1.png" alt="" />
             <span>总体评估概况</span>
-          </div>
+          </div> -->
           <div class="dtmcl_chart">
             <div id="myChart" class="my_chart" ref="myChart"></div>
             <div class="c_o_my_txt" v-show="myTxtFlag">
@@ -863,8 +852,11 @@
         心理健康水平分析
       </div>
       <div class="dtm_sys">
-        <el-carousel :interval="40000" arrow="always" type="card" height="7rem">
-          <el-carousel-item :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title">
+        <!-- <el-carousel :interval="40000" arrow="always" type="card" height="7rem">
+          <el-carousel-item :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title"> -->
+        <div>
+          <div :style="{display:item.flag == 1 ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.title">
+            
             <div class="dtms_box">
               <div class="dtmsb_tle" :style="{ background: item.bg }">
                 <h3>{{ item.title }}</h3>
@@ -989,8 +981,8 @@
                 </p>
               </div>
             </div>
-          </el-carousel-item>
-        </el-carousel>
+          </div>
+        </div>
       </div>
       <div class="guide_box">
         <div class="gb_main">
@@ -1032,7 +1024,7 @@
                 <div v-for="(itemt, indext) in item" :key="indext">
                   <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                     <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                      <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                      <div class="color-blue" style="padding: 0.1rem 0 0.04rem" v-if="!Array.isArray(itemp)">
                         {{ itemp }}
                       </div>
                       <ul v-if="Array.isArray(itemp)">
@@ -1056,7 +1048,7 @@
                   <div v-else>
                     <div v-if="indext == 0">
                       <div v-for="(itemp, indexp) in item" :key="indexp">
-                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                        <div class="color-blue" style="padding: 0.1rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                           {{ itemp }}
                         </div>
                         <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
@@ -1085,7 +1077,7 @@
           </div>
         </div>
       </div>
-      <div class="dtm_title dtm_title2" :style="{height: suicideFlag == 1 || violenceFlag == 1 ? 'auto' : '0',margin: suicideFlag == 1 || violenceFlag == 1 ? '0rem auto 0.62rem' : '0 auto 0'}" ref="parts3">
+      <div class="dtm_title dtm_title2" :style="{height: suicideFlag == 1 || violenceFlag == 1 ? 'auto' : '0',margin: suicideFlag == 1 || violenceFlag == 1 ? '0.3rem auto 0.3rem' : '0.3rem auto 0.3rem'}" ref="parts3">
         人身危险性分析
       </div>
       <div class="wdrj_box" v-show="suicideFlag == 1 || violenceFlag == 1">
@@ -1141,7 +1133,7 @@
               </div>
               <div class="bottom_left" v-if="item.subDim">
                 <span class="tt_txt">{{ item.subDim[2].name }}</span>
-                <div class="demsb_tool" style="margin-left:2.9rem">
+                <div class="demsb_tool" style="margin-left: 2.14rem">
                   <div class="demsb_score">
                     本次得分：<span>{{
                       parseInt(item.subDim[2].score)
@@ -1214,7 +1206,7 @@
                 </div>
               </div> -->
               <div v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                <p style="margin-left: -0.12rem" v-if="!Array.isArray(items)">
+                <p style="margin-left: -0.1rem" v-if="!Array.isArray(items)">
                   <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
                   <span
                     v-html="items"
@@ -1224,11 +1216,13 @@
                   <div v-for="(itemt, indext) in items" :key="indext">
                     <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                       <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp)">
+                        <div :class="[{'color-blue': String(itemp).indexOf('：') != -1}]" style="padding: 0.1rem 0 0.04rem;color:#354b70" v-if="!Array.isArray(itemp)">
                           {{ itemp }}
                         </div>
+                        
                         <ul v-if="Array.isArray(itemp)">
                           <li v-for="(itemv, indexv) in itemp" :key="indexv">
+                            
                             <span v-if="String(itemp).indexOf('？') == -1">{{ indexv + 1 }}</span>
                             <span v-if="String(itemp).indexOf('？') != -1 && indexv < 1">{{ indexv + 1 }}</span>
                             <span v-if="String(itemp).indexOf('？') != -1 && indexv > 1">{{ indexv }}</span>
@@ -1237,6 +1231,7 @@
                             </p>
                             <div style="padding-left:0.26rem;" v-if="Array.isArray(itemv)">
                               <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
+                                
                                 <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
                                 <p>{{itemf}}</p>
                               </div>
@@ -1248,8 +1243,8 @@
                     <div v-else>
                       <div v-if="indext == 0">
                         <div v-for="(itemp, indexp) in items" :key="indexp">
-                          <div class="color-blue" style="padding: 0.12rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
+                          <div class="color-blue" style="padding: 0.1rem 0 0.04rem" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            {{ itemp }}2
                           </div>
                           <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                             <li v-for="(itemv, indexv) in itemp" :key="indexv">
@@ -1547,7 +1542,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 import personReport from "../Model/ModelReport.vue";
 import { mapGetters, mapMutations } from "vuex";
@@ -1738,6 +1732,7 @@ export default {
   },
   mounted() {
     let that = this;
+    this.setRem();
     if (localStorage.getItem('version')) {
       if (localStorage.getItem('version') == 2) {
         this.tokenFlag = true
@@ -1843,6 +1838,7 @@ export default {
         console.log(res);
       });
     window.addEventListener("resize", () => {
+      this.setRem()
       setTimeout(() => {
         this.myTxtFlag = false;
         setTimeout(() => {
@@ -1865,6 +1861,12 @@ export default {
   },
   methods: {
     ...mapMutations(["setPersonFlag"]),
+    setRem() {
+      const baseWidth = 750; // 基准设计稿宽度
+      const baseFontSize = 100; // 基准字体大小
+      const scale = document.documentElement.clientWidth / baseWidth; // 缩放比例
+      document.documentElement.style.fontSize = (baseFontSize * Math.min(scale, 2)) + 'px';
+    },
     noteChange(val) {
       console.log(val)
 
@@ -3352,7 +3354,7 @@ export default {
           {
             name: "",
             type: "pie",
-            radius: ["60%", "80%"],
+            radius: ["65%", "80%"],
             avoidLabelOverlap: false,
             label: {
               normal: {
@@ -4612,16 +4614,17 @@ export default {
   }
 };
 </script>
-
 <style lang="less">
-.detail_report_wrap {
+.detail_mobile_wrap {
   padding-bottom: 0.02rem;
   background: rgba(5, 157, 255, 0.05);
+  width: 7.5rem;
+  overflow: hidden;
   .fix_pass {
     .el-dialog {
       width: auto;
       .el-dialog__body {
-        width: 12rem;
+        width: 7.5rem;
         padding: 0.2rem;
         .dtmcl_click {
           display: block;
@@ -4686,12 +4689,12 @@ export default {
   }
   .dt_header {
     width: 100%;
-    height: 0.6rem;
+    height: 0.68rem;
     background: #f7fbff;
     display: flex;
     justify-content: center;
     .dt_h_box {
-      width: 12rem;
+      width: 7.2rem;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -4715,13 +4718,14 @@ export default {
   }
   .dt_top_bg {
     width: 100%;
-    height: 5.9rem;
+    height: 5rem;
     position: relative;
+    overflow: hidden;
     .dttb_tips {
       position: absolute;
       margin: auto;
-      top: 0.25rem;
-      left: 50%;
+      top: 0.2rem;
+      right: 0.15rem;
       margin-left: 0;
       padding: 0 0.21rem;
       height: 0.42rem;
@@ -4747,7 +4751,7 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: rgba(255, 255, 255, 0.9);
-      width: 8.97rem;
+      width: 6.2rem;
       text-align: left;
       position: absolute;
       margin: auto;
@@ -4763,33 +4767,30 @@ export default {
         margin-bottom: 0.28rem;
       }
       p {
-        text-indent: 0.2rem;
+        text-indent: 0.4rem;
         font-size: 0.2rem;
         line-height: 0.32rem;
-        margin-bottom: 0.18rem;
+        margin-bottom: 0.1rem;
       }
     }
     img {
-      width: 100%;
       height: 100%;
+      width: 100%;
     }
     .dt_person {
-      position: absolute;
-      margin: auto;
-      top: 4.96rem;
-      left: 0;
-      right: 0;
-      width: 12rem;
-      height: 1.8rem;
+      margin: 0 auto;
+      width: 7.5rem;
+      height: auto;
+      padding: 0.1rem 0;
       background: #ffffff;
       box-shadow: 0 0.13rem 0.43rem 0 rgba(70, 101, 135, 0.1);
       border-radius: 0.04rem;
       display: flex;
       align-items: center;
       .dtp_photo {
-        width: 1.48rem;
-        height: 1.48rem;
-        margin-left: 0.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-left: 0.1rem;
         margin-right: 0.1rem;
         img {
           width: 100%;
@@ -4803,9 +4804,11 @@ export default {
           flex-wrap: wrap;
           li {
             padding: 0.1rem 0;
+            padding-right: 0.1rem;
             text-align: left;
             display: flex;
             align-items: center;
+            width: 55%;
             img {
               margin-right: 0.08rem;
             }
@@ -4856,19 +4859,22 @@ export default {
               flex: none;
             }
           }
+          li:nth-child(2n) {
+            width: 45%;
+          }
         }
       }
     }
   }
   .dt_mains {
-    width: 12rem;
+    width: 7.1rem;
     margin: 0 auto;
-    padding-top: 0.86rem;
+    // padding-top: 0.2rem;
 
     .dtm_title {
       width: 1.88rem;
       height: 0.34rem;
-      margin: 0.82rem auto 0.62rem;
+      margin: 0.3rem auto 0.3rem;
       line-height: 0.34rem;
       text-align: center;
       font-size: 0.2rem;
@@ -4890,10 +4896,12 @@ export default {
       background-size: 100%;
     }
     .dtm_contain {
-      display: flex;
-      justify-content: space-between;
-      text-align: left;
+      // display: flex;
+      // justify-content: space-between;
+      // text-align: left;
       position: relative;
+      background: #ffffff;
+      padding: 0.1rem 0;
       .dr_review {
         position: absolute;
         right: 0;
@@ -4923,10 +4931,17 @@ export default {
         }
       }
       .dtmc_left {
-        width: 4rem;
+        width: 100%;
         border-radius: 0.04rem;
         background: #ffffff;
         overflow: hidden;
+        padding-bottom: 0.1rem;
+        span.dtmcl_pic_t{
+          font-size: 0.16rem;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #5b6c89;
+        }
         .dtmcl_tle {
           display: flex;
           align-items: center;
@@ -4950,7 +4965,7 @@ export default {
         .dtmcl_pic {
           width: 3.58rem;
           height: 2.01rem;
-          margin: 0.2rem auto 0.2rem;
+          margin: 0.2rem auto 0.06rem;
           position: relative;
           img {
             width: 100%;
@@ -5024,7 +5039,7 @@ export default {
           }
         }
         .dtmcl_du1 {
-          margin-bottom: 0.12rem;
+          margin-bottom: 0.1rem;
           img {
             width: 0.22rem;
             height: 0.25rem;
@@ -5035,9 +5050,9 @@ export default {
           }
         }
         .dtmcl_sys {
-          margin-bottom: 0.3rem;
+          margin-bottom: 0.1rem;
           .dtmcl_du2 {
-            margin-bottom: 0.12rem;
+            margin-bottom: 0.1rem;
             img {
               width: 0.2rem;
               height: 0.2rem;
@@ -5055,23 +5070,24 @@ export default {
         }
       }
       .dtmc_right {
-        width: 7.76rem;
+        width: 6.6rem;
         background: #ffffff;
         border-radius: 0.04rem;
         overflow: hidden;
         position: relative;
-        min-height:4.4rem;
+        min-height:4.0rem;
+        margin: 0 auto;
         .dtmcl_box {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           position: absolute;
-          top: 0.6rem;
+          top: 0.48rem;
           bottom: 0;
           left: 0;
           right: 0;
-          min-height: 4rem;
-          padding-bottom: 0.2rem;
+          // min-height: 4rem;
+          padding-bottom: 0.1rem;
           .dtmcr_ul {
             width: 100%;
           }
@@ -5079,13 +5095,13 @@ export default {
         .dtmcl_tle {
           display: flex;
           align-items: center;
-          height: 0.6rem;
+          height: 0.48rem;
           background: linear-gradient(
             90deg,
             rgba(114, 121, 255, 0.78),
             rgba(186, 191, 255, 0.78)
           );
-          font-size: 0.22rem;
+          font-size: 0.2rem;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #ffffff;
@@ -5118,6 +5134,10 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 0.18rem;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #5b6c89;
             .dr_sp0 {
               color: #00e805;
             }
@@ -5242,8 +5262,7 @@ export default {
         }
       }
       .dtmc_right1 {
-        width: 7.76rem;
-        background: #ffffff;
+        width: 100%;
         border-radius: 0.04rem;
         overflow: hidden;
 
@@ -5268,7 +5287,7 @@ export default {
           }
         }
         .dtmcr_bts1 {
-          padding: 0.36rem 0.36rem 0;
+          padding: 0.0rem 0.3rem 0;
           margin-bottom: 0.2rem;
           p {
             text-align: left;
@@ -5449,7 +5468,7 @@ export default {
           .bottom_left {
             position: absolute;
             margin: auto;
-            left: 0.4rem;
+            left: 0.2rem;
             right: 0;
             bottom: 0.02rem;
             margin-left: 2.4rem;
@@ -5526,7 +5545,7 @@ export default {
             left: 0;
             right: 0;
             margin-right: 1.6rem;
-            width: 1.12rem;
+            width: 1.3rem;
             min-width: 76px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple.png) no-repeat
@@ -5560,8 +5579,8 @@ export default {
             top: -0.06rem;
             left: 0;
             right: 0;
-            margin-left: 3rem;
-            width: 1.12rem;
+            margin-left: 3.66rem;
+            width: 1.14rem;
             min-width: 76px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple2.png) no-repeat
@@ -5679,8 +5698,8 @@ export default {
       }
     }
     .guide_box {
-      margin-top: 0.82rem;
-      margin-bottom: 1.04rem;
+      // margin-top: 0.82rem;
+      // margin-bottom: 1.04rem;
       .gb_main {
         width: 100%;
         border-radius: 0.04rem;
@@ -5737,7 +5756,7 @@ export default {
                 height: 0.16rem;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 0.12rem;
+                font-size: 0.1rem;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
@@ -5780,7 +5799,7 @@ export default {
           }
         }
         .dtmsb_tar {
-          width: 8.25rem;
+          width: 6.6rem;
           height: 2.66rem;
           margin: -0.28rem auto 0.5rem;
           position: relative;
@@ -5789,7 +5808,7 @@ export default {
             margin: auto;
             left: 0;
             right: 0;
-            top: 0;
+            top: 0.16rem;
             .tt_txt {
               font-size: 0.16rem;
               font-family: PingFang SC;
@@ -5802,7 +5821,7 @@ export default {
           .bottom_left {
             position: absolute;
             margin: auto;
-            left: 0.4rem;
+            left: 0.2rem;
             right: 0;
             bottom: 0.02rem;
             margin-left: 2.8rem;
@@ -5837,8 +5856,8 @@ export default {
             top: -0.06rem;
             left: 0;
             right: 0;
-            margin-right: 2.95rem;
-            width: 1.12rem;
+            margin-right: 2.08rem;
+            width: 1.14rem;
             min-width: 76px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple.png) no-repeat
@@ -5872,8 +5891,8 @@ export default {
             top: -0.06rem;
             left: 0;
             right: 0;
-            margin-left: 4.5rem;
-            width: 1.12rem;
+            margin-left: 3.66rem;
+            width: 1.14rem;
             min-width: 76px;
             height: 0.34rem;
             background: url(../../assets/images/report/exmaple2.png) no-repeat
@@ -5940,7 +5959,7 @@ export default {
             }
           }
           .myChartLd1 {
-            width: 8.25rem;
+            width: 6.5rem;
             height: 4.4rem;
           }
           .dtmsb_ulc {
@@ -5998,7 +6017,7 @@ export default {
               color: #354B70;
               line-height: 0.4rem;
               span {
-                margin-top: 0.12rem;
+                margin-top: 0.1rem;
                 margin-right: 0.1rem;
                 text-align: center;
                 line-height: 0.16rem;
@@ -6006,7 +6025,7 @@ export default {
                 height: 0.16rem;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 0.12rem;
+                font-size: 0.1rem;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
@@ -6016,14 +6035,14 @@ export default {
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 color: #354B70;
-                line-height: 0.4rem;
+                line-height: 0.36rem;
                 flex: 1
               }
               img{
                 width: 0.16rem;
                 height: 0.16rem;
                 margin-right: 0.06rem;
-                margin-top: 0.12rem;
+                margin-top: 0.1rem;
               }
             }
           }
@@ -6127,7 +6146,7 @@ export default {
               color: #354b70;
               img {
                 width: 0.16rem;
-                height: 0.12rem;
+                height: 0.1rem;
                 margin-right: 0.08rem;
               }
             }
@@ -6192,7 +6211,7 @@ export default {
                   height: 0.16rem;
                   background: linear-gradient(177deg, #1becff, #00c6ff);
                   border-radius: 50%;
-                  font-size: 0.12rem;
+                  font-size: 0.1rem;
                   font-family: Source Han Sans CN;
                   font-weight: bold;
                   color: #ffffff;
@@ -6256,7 +6275,7 @@ export default {
     }
   }
   .dt_mains2 {
-    width: 12rem;
+    width: 7.5rem;
     margin: 0 auto;
     padding-top: 0.86rem;
 
@@ -6294,7 +6313,7 @@ export default {
     .myChartRose,
     .myChartZhu {
       margin: 0 auto;
-      width: 12rem;
+      width: 7.5rem;
       height: 4rem;
     }
     .dtm_img_sys {
@@ -6368,7 +6387,7 @@ export default {
       }
     }
     .dtm_xls {
-      width: 12rem;
+      width: 7.5rem;
       border: 0.01rem solid #e1e9ff;
       .dtmx_li {
         display: flex;
