@@ -472,13 +472,13 @@ export default {
       .el-button--text {
         width: 0.72rem;
         height: 0.3rem;
-        background: url(../assets/images/heart/com1.png) no-repeat center;
+        background: url(../assets/images/heart/co1.png) no-repeat center;
         background-size: cover;
       }
       .el-button--primary {
         width: 0.72rem;
         height: 0.3rem;
-        background: url(../assets/images/heart/com2.png) no-repeat center;
+        background: url(../assets/images/heart/co2.png) no-repeat center;
         background-size: cover;
       }
     }

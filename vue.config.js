@@ -7,7 +7,7 @@ module.exports = {
     // 设置主机地址
     host: '0.0.0.0',
     // 设置默认端口
-    port: 8088,
+    port: 8080,
     // 设置代理
     proxy: {
       '/api': {
