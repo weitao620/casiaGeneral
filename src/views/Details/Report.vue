@@ -5342,6 +5342,7 @@ export default {
         right: -0.9rem;
       }
       .dtms_box {
+        // background: #ffffff;
         .dtmsb_tle {
           height: 1.7rem;
           h3 {
@@ -6701,6 +6702,7 @@ export default {
       }
 
       .dtms_box {
+        // background: #ffffff;
         .dtmsb_tle {
           height: 1.5rem;
           h3 {
