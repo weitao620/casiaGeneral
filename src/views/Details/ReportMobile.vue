@@ -1217,7 +1217,7 @@
                   <div v-for="(itemt, indext) in items" :key="indext">
                     <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                       <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div :class="[{'color-blue': String(itemp).indexOf('：') != -1}]" style="padding: 0.1rem 0 0.04rem;color:#354b70" v-if="!Array.isArray(itemp)">
+                        <div :class="[{'color-blue': String(itemp).indexOf('：') != -1}]" style="padding: 0.1rem 0 0.04rem;color:#354b70;display: flex;" v-if="!Array.isArray(itemp)">
                           {{ itemp }}
                         </div>
                         
@@ -4645,6 +4645,13 @@ export default {
   background: rgba(5, 157, 255, 0.05);
   width: 7.5rem;
   overflow: hidden;
+  .color-blue {
+    display: inline-block;
+    color: #006cff !important;
+    font-size: 0.16rem;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+  }
   .fix_pass {
     .el-dialog {
       width: auto;
@@ -6173,6 +6180,8 @@ export default {
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354b70;
+              display: flex;
+              align-items: center;
               img {
                 width: 0.16rem;
                 height: 0.1rem;
@@ -6538,6 +6547,14 @@ export default {
       min-height: auto;
       width:7rem;
       margin: 0 auto;
+      .cell{
+        padding-left: 0;
+        padding-right: 0;
+        line-height: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .el-table--border,
       .el-table--group,
       .el-table--border:after,
