@@ -1748,6 +1748,7 @@ export default {
     this.token = this.$route.params.token;
     console.log(this.token)
     this.tokenFlag = true
+    localStorage.setItem('totalToken',this.token)
     // if (typeof this.token === 'undefined') {
     //   console.log("不免登录")
     //   this.tokenFlag = false
@@ -1785,7 +1786,7 @@ export default {
     // } else {
     //   param.passport = JSON.parse(localStorage.getItem('userInfo')).passport
     // }
-    let postStr = this.tokenFlag ? '/aimw/game/getAuthInfo' : '/aimw/user/getAuthInfo'
+    let postStr = '/aimw/game/getAuthInfo'
     this.$http
       .get(Url + postStr, { params: param })
       .then(res => {
@@ -1901,7 +1902,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr1 = this.tokenFlag ? '/aimw/zkyx/report/updateNote' : '/aimw/report/updateNote'
+      let postStr1 = '/aimw/zkyx/report/updateNote'
       this.$http
         .put(Url + postStr1, param)
         .then(res => {
@@ -1976,7 +1977,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr2 = this.tokenFlag ? '/aimw/game/reportReviewImgs' : '/aimw/report/reportReviewImgs'
+      let postStr2 = '/aimw/game/reportReviewImgs'
       this.$http
         .get(Url + postStr2, {
           params: param
@@ -2028,7 +2029,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr3 = this.tokenFlag ? '/aimw/game/appendix' : '/aimw/report/appendix'
+      let postStr3 = '/aimw/game/appendix'
       this.$http
         .get(Url + postStr3, {
           params: param
@@ -2061,7 +2062,7 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      let postStr4 = this.tokenFlag ? '/aimw/game/reportReview' : '/aimw/report/reportReview'
+      let postStr4 = '/aimw/game/reportReview'
       this.$http
         .get(Url + postStr4, {
           params: param
@@ -2098,7 +2099,7 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      let postStr5 = this.tokenFlag ? '/aimw/game/reportInfo' : '/aimw/report/reportInfo'
+      let postStr5 = '/aimw/game/reportInfo'
       this.$http
         .get(Url + postStr5, {
           params: param
@@ -3048,7 +3049,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr6 = this.tokenFlag ? '/aimw/game/reportBirdView' : '/aimw/report/reportBirdView'
+      let postStr6 = '/aimw/game/reportBirdView'
       this.$http
         .get(Url + postStr6, {
           params: param
