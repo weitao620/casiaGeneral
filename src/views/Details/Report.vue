@@ -535,7 +535,8 @@
             </div>
           </div>
         </div>
-        <div class="drwc_box" ref="parts4" v-show="jjList.length > 0">
+        <!-- <div class="drwc_box" ref="parts4" v-show="jjList.length > 0"> -->
+        <div class="drwc_box" ref="parts4" style="display: none;">
           <div class="drwc_common">
             <div class="drwc_bw_head">
               <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="">
@@ -933,7 +934,7 @@
               >
                 <el-carousel-item v-for="item in imgList" :key="item.name">
                   <div class="dtm_img_box">
-                    <img v-if="item.img != ''" class="dtmi_img" :src="'data:image;base64,' + item.img" alt="" />
+                    <img v-if="item.img != ''" class="dtmi_img" :src="item.img" alt="" />
                     <img v-else class="dtmi_img" src="../../assets/images/report/t001.png" alt="" />
                     <div class="dtmi_txt">{{ item.name }}</div>
                   </div>
@@ -2288,7 +2289,7 @@ export default {
             data.data.jjList = this.jjList;
             if (jjList0.length > 0) {
               let jjArr = jjList0.sort((a, b) => {
-                return Number(a.total) - Number(b.total);
+                return Number(b.total) - Number(a.total);
               });
               console.log(jjArr)
               // jjArr = jjArr.concat(jjArr)
@@ -2399,29 +2400,29 @@ export default {
             }
             that.details = data.data
             // that.details = that.justInfo(data.data);
-            // that.getBird()
-            data.data.birdView = ''
-            this.details.birdView = data.data.birdView;
-            this.birdViewImg = data.data.birdView;
-            that.imgList = [
-              {
-                name: "鸟瞰图",
-                img: ""
-              },
-              {
-                name: "西侧俯身45度视图",
-                img: ''
-              },
-              {
-                name: "东侧俯身45度视图",
-                img: ''
-              },
-              {
-                name: "操作者视图",
-                img: ''
-              }
-            ];
-            this.part55 = true;
+            that.getBird()
+            // data.data.birdView = ''
+            // this.details.birdView = data.data.birdView;
+            // this.birdViewImg = data.data.birdView;
+            // that.imgList = [
+            //   {
+            //     name: "鸟瞰图",
+            //     img: ""
+            //   },
+            //   {
+            //     name: "西侧俯身45度视图",
+            //     img: ''
+            //   },
+            //   {
+            //     name: "东侧俯身45度视图",
+            //     img: ''
+            //   },
+            //   {
+            //     name: "操作者视图",
+            //     img: ''
+            //   }
+            // ];
+            // this.part55 = true;
             that.myChartInit();
             this.part33 = true;
             setTimeout(() => {

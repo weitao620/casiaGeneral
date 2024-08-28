@@ -14,12 +14,16 @@
           <div class="error_msg" v-if="errorMsg.length > 0">{{ errorMsg }}</div>
           <el-form-item label="" prop="allOrgsAbb">
             <img class="login_uesr" src="../assets/images/xuexiao.png" alt="" />
-            <el-select v-model="ruleForm.allOrgsAbb" @change="clearError" filterable placeholder="请选择学校">
+            <el-select v-model="ruleForm.allOrgsAbb" @change="clearError" filterable placeholder="请选择机构">
               <el-option
                 v-for="item in allOrgsInfo"
                 :key="item.ID"
                 :label="item.Name"
                 :value="item.NameAbb">
+                <div style="display:flex;align-items:baseline;">
+                  <span style="font-size:0.14rem;">{{item.Name}}</span>
+                  <span style="font-size:0.1rem;">（{{item.Province}}-{{item.City}}-{{item.District}}）</span>
+                </div>
               </el-option>
             </el-select>
           </el-form-item>
@@ -364,6 +368,7 @@ export default {
             //   Name: "百佳",
             //   NameAbb: "baijia"
             // })
+            
             that.allOrgsInfo = data.data
             console.log(that.allOrgsInfo)
           }

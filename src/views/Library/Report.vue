@@ -1245,43 +1245,43 @@ export default {
           console.log(res);
         });
         
-      // this.$http
-      //   .get(Url + "/aimw/report/reportBirdView", {
-      //     params: param
-      //   })
-      //   .then(res => {
-      //     let data = res.data;
-      //     if (data.code == 0) {
-      //       this.details.birdView = data.data.birdView;
-      //       this.getfourImg(data.data.birdView, param);
-      //     } else {
-      //       that.$message.error(data.msg);
-      //       this.part4 = true;
-      //     }
-      //   })
-      //   .catch(res => {
-      //     console.log(res);
-      //   });
-      this.details.birdView = '';
-      that.imgList = [
-        {
-          name: "鸟瞰图",
-          img: ""
-        },
-        {
-          name: "西侧俯身45度视图",
-          img: ''
-        },
-        {
-          name: "东侧俯身45度视图",
-          img: ''
-        },
-        {
-          name: "操作者视图",
-          img: ''
-        }
-      ];
-      this.part4 = true;
+      this.$http
+        .get(Url + "/aimw/report/reportBirdView", {
+          params: param
+        })
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            this.details.birdView = data.data.birdView;
+            this.getfourImg(data.data.birdView, param);
+          } else {
+            that.$message.error(data.msg);
+            this.part4 = true;
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+      // this.details.birdView = '';
+      // that.imgList = [
+      //   {
+      //     name: "鸟瞰图",
+      //     img: ""
+      //   },
+      //   {
+      //     name: "西侧俯身45度视图",
+      //     img: ''
+      //   },
+      //   {
+      //     name: "东侧俯身45度视图",
+      //     img: ''
+      //   },
+      //   {
+      //     name: "操作者视图",
+      //     img: ''
+      //   }
+      // ];
+      // this.part4 = true;
 
       this.$http
         .get(Url + "/aimw/report/reportInfo", {

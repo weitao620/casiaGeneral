@@ -283,7 +283,7 @@
       </div>
     </div>
 
-    <div class="table-style group_02" v-for="(item, index) in details.jjList" :key="item.title">
+    <div class="table-style group_02" style="display: none;" v-for="(item, index) in details.jjList" :key="item.title">
       <div class="table-border">
         <div class="gp_all_tips">
           <img src="../../assets/images/part/tipss.png" alt="" />
@@ -937,105 +937,106 @@ export default {
       let that = this;
       return new Promise((resolve, reject) => {
         that.getDetail(id)
-        setTimeout(() => {
-          setTimeout(() => {
-            that.details.birdView = '';
-            that.imgList = [
-              {
-                name: "鸟瞰图",
-                img: ""
-              },
-              {
-                name: "西侧俯身45度视图",
-                img: ''
-              },
-              {
-                name: "东侧俯身45度视图",
-                img: ''
-              },
-              {
-                name: "操作者视图",
-                img: ''
-              }
-            ];
-            let allAjax = {
-              row: this.details,
-              rowr: this.reviewData,
-              rows: this.sandInfo,
-              row3: this.imgList,
-              row4: this.sandUseNumInfoName,
-              row5: this.sandUseNumInfoNum
-            }
-            setTimeout(() => {
-              resolve(allAjax)
-              this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
-            }, 500);
-          }, 500);
-        }, 500);
         // setTimeout(() => {
-        //   let param = {
-        //     reportId: id
-        //   }
-        //   this.$http
-        //     .get(Url + "/aimw/report/reportBirdView", {
-        //       params: param
-        //     })
-        //     .then(res => {
-        //       let data = res.data;
-        //       if (data.code == 0) {
-        //         this.details.birdView = data.data.birdView
-        //         this.$http
-        //           .get(Url + "/aimw/report/reportReviewImgs", {
-        //             params: param
-        //           })
-        //           .then(res1 => {
-        //             let data1 = res1.data;
-        //             if (data1.code == 0) {
-        //               that.imgList = [
-        //                 {
-        //                   name: "鸟瞰图",
-        //                   img: "data:image;base64," + data.data.birdView
-        //                 },
-        //                 {
-        //                   name: "西侧俯身45度视图",
-        //                   img: "data:image;base64," + data1.data.workView.westView
-        //                 },
-        //                 {
-        //                   name: "东侧俯身45度视图",
-        //                   img: "data:image;base64," + data1.data.workView.eastView
-        //                 },
-        //                 {
-        //                   name: "操作者视图",
-        //                   img: "data:image;base64," + data1.data.workView.operatorView
-        //                 }
-        //               ];
-        //               let allAjax = {
-        //                 row: this.details,
-        //                 rowr: this.reviewData,
-        //                 rows: this.sandInfo,
-        //                 row3: this.imgList,
-        //                 row4: this.sandUseNumInfoName,
-        //                 row5: this.sandUseNumInfoNum
-        //               }
-        //               setTimeout(() => {
-        //                 resolve(allAjax)
-        //                 this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
-        //               }, 500);
-        //             } else {
-        //               that.$message.error(data.msg);
-        //             }
-        //           })
-        //           .catch(res => {
-        //             console.log(res);
-        //           });
-        //       } else {
-        //         that.$message.error(data.msg);
+        //   setTimeout(() => {
+        //     that.details.birdView = '';
+        //     that.imgList = [
+        //       {
+        //         name: "鸟瞰图",
+        //         img: ""
+        //       },
+        //       {
+        //         name: "西侧俯身45度视图",
+        //         img: ''
+        //       },
+        //       {
+        //         name: "东侧俯身45度视图",
+        //         img: ''
+        //       },
+        //       {
+        //         name: "操作者视图",
+        //         img: ''
         //       }
-        //     })
-        //     .catch(res => {
-        //       console.log(res);
-        //     });
-        // }, 1000);
+        //     ];
+        //     let allAjax = {
+        //       row: this.details,
+        //       rowr: this.reviewData,
+        //       rows: this.sandInfo,
+        //       row3: this.imgList,
+        //       row4: this.sandUseNumInfoName,
+        //       row5: this.sandUseNumInfoNum
+        //     }
+        //     setTimeout(() => {
+        //       resolve(allAjax)
+        //       this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
+        //     }, 500);
+        //   }, 500);
+        // }, 500);
+        setTimeout(() => {
+          let param = {
+            reportId: id
+          }
+          this.$http
+            .get(Url + "/aimw/report/reportBirdView", {
+              params: param
+            })
+            .then(res => {
+              let data = res.data;
+              if (data.code == 0) {
+                console.log(11111111)
+                this.details.birdView = data.data.birdView
+                this.$http
+                  .get(Url + "/aimw/report/reportReviewImgs", {
+                    params: param
+                  })
+                  .then(res1 => {
+                    let data1 = res1.data;
+                    if (data1.code == 0) {
+                      that.imgList = [
+                        {
+                          name: "鸟瞰图",
+                          img: "data:image;base64," + data.data.birdView
+                        },
+                        {
+                          name: "西侧俯身45度视图",
+                          img: "data:image;base64," + data1.data.workView.westView
+                        },
+                        {
+                          name: "东侧俯身45度视图",
+                          img: "data:image;base64," + data1.data.workView.eastView
+                        },
+                        {
+                          name: "操作者视图",
+                          img: "data:image;base64," + data1.data.workView.operatorView
+                        }
+                      ];
+                      let allAjax = {
+                        row: this.details,
+                        rowr: this.reviewData,
+                        rows: this.sandInfo,
+                        row3: this.imgList,
+                        row4: this.sandUseNumInfoName,
+                        row5: this.sandUseNumInfoNum
+                      }
+                      setTimeout(() => {
+                        resolve(allAjax)
+                        this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
+                      }, 500);
+                    } else {
+                      that.$message.error(data.msg);
+                    }
+                  })
+                  .catch(res => {
+                    console.log(res);
+                  });
+              } else {
+                that.$message.error(data.msg);
+              }
+            })
+            .catch(res => {
+              console.log(res);
+            });
+        }, 500);
       })
     },
     async exportMeeting (type) {
@@ -1742,7 +1743,7 @@ export default {
             data.data.jjList = this.jjList;
             if (jjList0.length > 0) {
               let jjArr = jjList0.sort((a, b) => {
-                return Number(a.total) - Number(b.total);
+                return Number(b.total) - Number(a.total);
               });
               console.log(jjArr)
               // jjArr = jjArr.concat(jjArr)

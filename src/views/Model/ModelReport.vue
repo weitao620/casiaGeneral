@@ -283,7 +283,7 @@
       </div>
     </div>
 
-    <div class="table-style group_02" v-for="(item, index) in details.jjList" :key="item.title">
+    <div class="table-style group_02" style="display: none;" v-for="(item, index) in details.jjList" :key="item.title">
       <div class="table-border">
         <div class="gp_all_tips">
           <img src="../../assets/images/part/tipss.png" alt="" />
