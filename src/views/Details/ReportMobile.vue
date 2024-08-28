@@ -1738,59 +1738,54 @@ export default {
   mounted() {
     let that = this;
     this.setRem();
-    if (localStorage.getItem('version')) {
-      if (localStorage.getItem('version') == 2) {
-        this.tokenFlag = true
-      }
-    }
+    // if (localStorage.getItem('version')) {
+    //   if (localStorage.getItem('version') == 2) {
+    //     this.tokenFlag = true
+    //   }
+    // }
     this.reportId = this.$route.params.userID;
     console.log(this.reportId)
     this.token = this.$route.params.token;
-    // console.log(String(this.token) === 'undefined')
-    // console.log(String(this.token) == 'undefined')
-    if (typeof this.token === 'undefined') {
-      console.log("不免登录")
-      this.tokenFlag = false
-    } else {
-      console.log("免登录")
-      this.tokenFlag = true
-    }
-    // let href = window.location.href
-    // let hrefStr = href.match(/details\/report\/(\S*)/)[1];
-    // console.log(hrefStr)
-    // this.reportId0 = hrefStr.split('/')[0]
-    // this.token0 = hrefStr.split('/')[1]
-    // console.log(this.reportId0)
-    console.log(!localStorage.getItem('isLogin'))
-    console.log(!(typeof this.token === 'undefined'))
-    if (!localStorage.getItem('isLogin')) {
-      if (typeof this.token === 'undefined') {
-        console.log("不免登录")
-        localStorage.removeItem("isLogin");
-        localStorage.removeItem("userInfo");
-        localStorage.removeItem("userAuth");
-        localStorage.removeItem("passport");
-        localStorage.removeItem("userType");
-        this.$router.replace({
-          path: "/login"
-        });
-        return false
-      } else {
-        console.log("免登录")
-        this.tokenFlag = true
-      }
-    }
+    console.log(this.token)
+    this.tokenFlag = true
+    // if (typeof this.token === 'undefined') {
+    //   console.log("不免登录")
+    //   this.tokenFlag = false
+    // } else {
+    //   console.log("免登录")
+      
+      
+    // }
+    // console.log(!localStorage.getItem('isLogin'))
+    // console.log(!(typeof this.token === 'undefined'))
+    // if (!localStorage.getItem('isLogin')) {
+    //   if (typeof this.token === 'undefined') {
+    //     console.log("不免登录")
+    //     localStorage.removeItem("isLogin");
+    //     localStorage.removeItem("userInfo");
+    //     localStorage.removeItem("userAuth");
+    //     localStorage.removeItem("passport");
+    //     localStorage.removeItem("userType");
+    //     this.$router.replace({
+    //       path: "/login"
+    //     });
+    //     return false
+    //   } else {
+    //     console.log("免登录")
+    //     this.tokenFlag = true
+    //   }
+    // }
     let param = {
       // passport: JSON.parse(localStorage.getItem('userInfo')).passport
       // token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
-    if (this.tokenFlag) {
-      param.token = this.token
-    } else {
-      param.passport = JSON.parse(localStorage.getItem('userInfo')).passport
-    }
-    let postStr = this.tokenFlag ? '/aimw/zkyx/report/getDimInfo' : '/aimw/user/getAuthInfo'
+    // if (this.tokenFlag) {
+    //   param.token = this.token
+    // } else {
+    //   param.passport = JSON.parse(localStorage.getItem('userInfo')).passport
+    // }
+    let postStr = this.tokenFlag ? '/aimw/game/getAuthInfo' : '/aimw/user/getAuthInfo'
     this.$http
       .get(Url + postStr, { params: param })
       .then(res => {
@@ -1981,7 +1976,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr2 = this.tokenFlag ? '/aimw/zkyx/report/reportReviewImgs' : '/aimw/report/reportReviewImgs'
+      let postStr2 = this.tokenFlag ? '/aimw/game/reportReviewImgs' : '/aimw/report/reportReviewImgs'
       this.$http
         .get(Url + postStr2, {
           params: param
@@ -2033,7 +2028,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr3 = this.tokenFlag ? '/aimw/zkyx/report/appendix' : '/aimw/report/appendix'
+      let postStr3 = this.tokenFlag ? '/aimw/game/appendix' : '/aimw/report/appendix'
       this.$http
         .get(Url + postStr3, {
           params: param
@@ -2066,7 +2061,7 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      let postStr4 = this.tokenFlag ? '/aimw/zkyx/report/reportReview' : '/aimw/report/reportReview'
+      let postStr4 = this.tokenFlag ? '/aimw/game/reportReview' : '/aimw/report/reportReview'
       this.$http
         .get(Url + postStr4, {
           params: param
@@ -2103,7 +2098,7 @@ export default {
         .catch(res => {
           console.log(res);
         });
-      let postStr5 = this.tokenFlag ? '/aimw/zkyx/report/reportInfo' : '/aimw/report/reportInfo'
+      let postStr5 = this.tokenFlag ? '/aimw/game/reportInfo' : '/aimw/report/reportInfo'
       this.$http
         .get(Url + postStr5, {
           params: param
@@ -3053,7 +3048,7 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
-      let postStr6 = this.tokenFlag ? '/aimw/zkyx/report/reportBirdView' : '/aimw/report/reportBirdView'
+      let postStr6 = this.tokenFlag ? '/aimw/game/reportBirdView' : '/aimw/report/reportBirdView'
       this.$http
         .get(Url + postStr6, {
           params: param
