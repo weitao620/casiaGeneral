@@ -55,6 +55,10 @@ export default {
       if (this.$route.name == 'login') {
         return false
       }
+      if (localStorage.getItem('totalToken')) {
+        console.log('不需要权限')
+        return false
+      }
       let param = {
         passport: JSON.parse(localStorage.getItem('userInfo')).passport
         // password: JSON.parse(localStorage.getItem('userInfo')).password

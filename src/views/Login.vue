@@ -12,6 +12,17 @@
           class="demo-ruleForm"
         >
           <div class="error_msg" v-if="errorMsg.length > 0">{{ errorMsg }}</div>
+          <el-form-item label="" prop="allOrgsAbb">
+            <img class="login_uesr" src="../assets/images/xuexiao.png" alt="" />
+            <el-select v-model="ruleForm.allOrgsAbb" @change="clearError" filterable placeholder="请选择学校">
+              <el-option
+                v-for="item in allOrgsInfo"
+                :key="item.ID"
+                :label="item.Name"
+                :value="item.NameAbb">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="" prop="usercount">
             <img class="login_uesr" src="../assets/images/yonghu.png" alt="" />
             <el-input
@@ -60,6 +71,13 @@ export default {
   inject: ["reload"],
   name: "login",
   data() {
+    // var allOrgsName = (rule, value, callback) => {
+    //   console.log(value)
+    //   if (value == "" || value == undefined) {
+    //     return callback(new Error("机构ID不能为空"));
+    //   }
+    //   callback();
+    // };
     var checkName = (rule, value, callback) => {
       if (value == "") {
         return callback(new Error("账号不能为空"));
@@ -82,20 +100,24 @@ export default {
     return {
       errorMsg: "",
       ruleForm: {
+        allOrgsAbb: "",
         password: "",
         usercount: "",
         remember: false
       },
       rules: {
+        // allOrgsAbb: [{ validator: allOrgsName, trigger: "change" }],
         password: [{ validator: validatePass, trigger: "blur" }],
         usercount: [{ validator: checkName, trigger: "blur" }]
       },
-      swicthFlag: false
+      swicthFlag: false,
+      allOrgsInfo: []
     };
   },
 
   mounted() {
-
+    console.log(this.data);
+    this.getAllOrgs()
   },
   created() {
     let loginDatas = JSON.parse(localStorage.getItem("loginDatas"));
@@ -110,6 +132,7 @@ export default {
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
+        console.log(valid);
         if (valid) {
           this.subLogin();
         } else {
@@ -134,6 +157,12 @@ export default {
           password: passMd5
         };
       }
+      
+      // if (that.ruleForm.usercount != 'OpsAdmin') {
+      //   that.errorMsg = "机构ID不能为空！";
+      //   return false
+      // }
+      param.orgId = that.ruleForm.allOrgsAbb
       console.log(param)
       // return
       if (that.ruleForm.usercount === 'admins') {
@@ -200,6 +229,8 @@ export default {
                 if (data.data.userType) {
                   if (data.data.userType == 1) {
                     console.log('普通管理员')
+                  } else if (data.data.userType == 2) {
+                    console.log('运维管理员')
                   } else if (data.data.userType == 0) {
                     console.log('超管')
                   }
@@ -210,6 +241,8 @@ export default {
                 localStorage.setItem('passGMd5', param.password)
                 localStorage.setItem("userAuth", data.data.userAuth);
                 localStorage.setItem("userType", 1);
+                localStorage.setItem('allOrgs', that.ruleForm.allOrgsAbb)
+                localStorage.setItem("totalToken", data.data.token);
                 console.log(data.data.algTypes)
                 localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
                 if (that.ruleForm.remember) {
@@ -231,43 +264,81 @@ export default {
       }
     },
     getUserInfo() {
+      let that = this
+      if (that.ruleForm.usercount === 'OpsAdmin') {
+        localStorage.setItem("isLogin", true);
+        console.log('跳转到运维')
+        that.$router.replace({
+          path: "/operation/index"
+        });
+      } else {
+        console.log('跳转到后台')
+        that.$http
+          .get(Url + "/aimw/user/getUserProfile", {
+            params: { passport: that.ruleForm.usercount }
+          })
+          .then(res => {
+            var data = res.data;
+            console.log(data)
+            if (data.code == 0) {
+              if (data.data.accountState == 2) {
+                this.$alert(<span style='text-align:center;padding: 0.2rem 0.05rem;color: #333333 !important;font-size: 0.2rem; '>该账号处于禁用状态，请联系管理员！</span>, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {}
+                });
+                return false
+              }
+              localStorage.setItem("isLogin", true);
+              localStorage.setItem("userInfo", JSON.stringify(data.data));
+              sessionStorage.setItem("userName", data.data.name);
+              that.setUserName(data.data.name);
+              if (that.ruleForm.usercount === 'jiankong') {
+                console.log('跳转到大屏')
+                that.$router.replace({
+                  path: "/screen/index"
+                });
+              } else if (that.ruleForm.usercount === 'OpsAdmin') {
+                console.log('跳转到运维')
+                that.$router.replace({
+                  path: "/operation/index"
+                });
+              } else {
+                console.log('跳转到正常后台')
+                that.$router.replace({
+                  path: "/library/index"
+                });
+              }
+            }
+          })
+          .catch(res => {
+            console.log(res);
+          });
+      }
+    },
+    getAllOrgs() {
       let that = this;
       that.$http
-        .get(Url + "/aimw/user/getUserProfile", {
-          params: { passport: that.ruleForm.usercount }
+        .get(Url + "/aimw/getAllOrgsInfo", {
+          params: {}
         })
         .then(res => {
+          console.log(res);
           var data = res.data;
+          console.log(data)
           if (data.code == 0) {
-            if (data.data.accountState == 2) {
-              this.$alert(<span style='text-align:center;padding: 0.2rem 0.05rem;color: #333333 !important;font-size: 0.2rem; '>该账号处于禁用状态，请联系管理员！</span>, '提示', {
-                confirmButtonText: '确定',
-                callback: action => {}
-              });
-              return false
-            }
-            localStorage.setItem("isLogin", true);
-            localStorage.setItem("userInfo", JSON.stringify(data.data));
-            sessionStorage.setItem("userName", data.data.name);
-            that.setUserName(data.data.name);
-            if (that.ruleForm.usercount === 'jiankong') {
-              console.log('跳转到大屏')
-              that.$router.replace({
-                path: "/screen/index"
-              });
-            } else {
-              console.log('跳转到正常后台')
-              that.$router.replace({
-                path: "/library/index"
-              });
-            }
+            // data.data.push({
+            //   ID: "999",
+            //   Name: "百佳",
+            //   NameAbb: "baijia"
+            // })
+            that.allOrgsInfo = data.data
+            console.log(that.allOrgsInfo)
           }
         })
         .catch(res => {
           console.log(res);
         });
     },
-
     ...mapMutations(["setUserName"])
   }
 };
@@ -346,7 +417,7 @@ export default {
     .form_wrap {
       width: 3.6rem;
       position: absolute;
-      top: 0.88rem;
+      top: 0.78rem;
       right: 1.2rem;
       .demo-ruleForm {
         position: relative;
@@ -362,7 +433,7 @@ export default {
       .login_logo {
         width: 0.68rem;
         height: 0.68rem;
-        margin: 0 auto 0.22rem;
+        margin: 0 auto 0.16rem;
         display: block;
       }
       .login_title {
@@ -374,7 +445,7 @@ export default {
         font-weight: bold;
         color: #ffffff;
         line-height: 0.34rem;
-        margin-bottom: 0.48rem;
+        margin-bottom: 0.36rem;
         background: linear-gradient(-1deg, #2b87ed 0%, #00b0ff 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -385,6 +456,9 @@ export default {
         }
       }
       .demo-ruleForm {
+        .el-select{
+          width: 100%;
+        }
         .reminds {
           display: flex;
           .el-checkbox__inner {
@@ -537,7 +611,7 @@ export default {
           }
         }
         .sub_btn {
-          margin-top: 0.3rem;
+          margin-top: 0.2rem;
         }
       }
     }
