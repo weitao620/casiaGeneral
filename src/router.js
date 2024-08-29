@@ -98,6 +98,12 @@ export default new Router({
         }
       ]
     },
+    // 指导建议手册
+    {
+      path: '/details/guide',
+      name: 'guide',
+      component: () => import('./views/Details/Guide.vue')
+    },
     // 导出word
     {
       path: '/library/expword/:userID',

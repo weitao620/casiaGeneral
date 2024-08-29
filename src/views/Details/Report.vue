@@ -301,7 +301,7 @@
           <div class="drwx_b_r">
             <p>本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》</p>
           </div>
-          <img class="drwx_b_l" style="width:0.19rem;" src="../../assets/images/news/xiazai.png" alt="">
+          <img class="drwx_b_l" @click="toGuide" style="width:0.19rem;cursor: pointer;" src="../../assets/images/news/xiazai.png" alt="">
         </div>
       </div>
       <div v-show="!reviewFlag">
@@ -517,12 +517,12 @@
                         </div>
                         <ul class="wdrjs_uls">
                           <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
                               {{ items }}
                             </p>
                             <div v-if="Array.isArray(items)">
                               <div v-for="(itemu, indexu) in items" :key="indexu">
-                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '500' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
                               </div>
                             </div>
                           </li>
@@ -596,12 +596,12 @@
                         </div>
                         <ul class="wdrjs_uls">
                           <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
                               {{ items }}
                             </p>
                             <div v-if="Array.isArray(items)">
                               <div v-for="(itemu, indexu) in items" :key="indexu">
-                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '500' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
                               </div>
                             </div>
                           </li>
@@ -879,7 +879,7 @@
                         </div>
                         <ul class="wdrjs_uls">
                           <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
                               {{ items }}
                             </p>
                             <div v-if="Array.isArray(items)">
@@ -2436,6 +2436,13 @@ export default {
         .catch(res => {
           console.log(res);
         });
+    },
+    toGuide() {
+      let routeData = this.$router.resolve({
+        name: "guide",
+        params: {}
+      });
+      window.open(routeData.href, "_blank");
     },
     getBird() {
       let that = this;
@@ -5527,7 +5534,7 @@ export default {
         width: 14rem;
         display: flex;
         justify-content: flex-end;
-        font-family: SourceHanSansCN, SourceHanSansCN;
+        font-family: SourceHanSansCN;
         font-weight: 400;
         font-size: 0.18rem;
         color: #333E75;
@@ -5538,7 +5545,7 @@ export default {
           height: 0.42rem;
           background: #848AFF;
           border-radius: 0.08rem;
-          font-family: SourceHanSansCN, SourceHanSansCN;
+          font-family: SourceHanSansCN;
           font-weight: 500;
           font-size: 0.2rem;
           color: #FFFFFF;
@@ -5573,7 +5580,7 @@ export default {
             text-align: left;
           }
           span:nth-child(1){
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             margin-bottom: 0.3rem;
           }
@@ -5587,7 +5594,7 @@ export default {
           p {
             width: 100%;
             text-align: left;
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #333E75;
@@ -5657,7 +5664,7 @@ export default {
                   height: 0.19rem;
                 }
                 span {
-                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.18rem;
                   color: #333E75;
@@ -5685,7 +5692,7 @@ export default {
           p {
             width: 100%;
             text-align: left;
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #333E75;
@@ -5708,7 +5715,7 @@ export default {
             height: 0.55rem;
           }
           span{
-            font-family: PingFangSC, PingFang SC;
+            font-family: SourceHanSansCN;
             font-weight: 500;
             font-size: 0.2rem;
             color: #2A3487;
@@ -5724,7 +5731,7 @@ export default {
             .wdrj_title {
               display: flex;
               align-items: center;
-              font-family: PingFangSC, PingFang SC;
+              font-family: SourceHanSansCN;
               font-weight: 400;
               font-size: 0.2rem;
               color: #2A3487;
@@ -5744,7 +5751,7 @@ export default {
                 margin-top: 0.16rem;
                 padding: 0.09rem 0.27rem;
                 border-radius: 0.04rem;
-                font-family: PingFangSC, PingFang SC;
+                font-family: SourceHanSansCN;
                 font-weight: 400;
                 font-size: 0.2rem;
                 color: #FFFFFF;
@@ -5794,7 +5801,7 @@ export default {
                 li {
                   height: 0.5rem;
                   line-height: 0.5rem;
-                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.2rem;
                   color: #2A3487;
@@ -6070,7 +6077,7 @@ export default {
                         }
                         p {
                           line-height: 0.36rem;
-                          font-family: SourceHanSansCN, SourceHanSansCN;
+                          font-family: SourceHanSansCN;
                           font-weight: 400;
                           font-size: 0.16rem;
                           color: #333E75;
@@ -6084,7 +6091,7 @@ export default {
                       }
                     }
                     .wdrjs_title {
-                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-family: SourceHanSansCN;
                       font-weight: 400;
                       font-size: 0.18rem;
                       color: #333E75;
@@ -6336,7 +6343,7 @@ export default {
                   border: 0.01rem solid rgba(203, 206, 224, 1);
                   margin: 0;
                   border-right: 0;
-                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.2rem;
                   color: #2A3487;
@@ -6377,7 +6384,7 @@ export default {
                           margin-right: 0.06rem;
                         }
                         span{
-                          font-family: PingFangSC, PingFang SC;
+                          font-family: SourceHanSansCN;
                           font-weight: 400;
                           font-size: 0.18rem;
                           color: #2A3487;
@@ -6392,7 +6399,7 @@ export default {
                     margin-top: 0.8rem;
                     justify-content: center;
                     .wdrj_l_left{
-                      font-family: PingFangSC, PingFang SC;
+                      font-family: SourceHanSansCN;
                       font-weight: 400;
                       font-size: 0.18rem;
                       color: #6F76B2;
@@ -6409,7 +6416,7 @@ export default {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        font-family: PingFangSC, PingFang SC;
+                        font-family: SourceHanSansCN;
                         font-weight: 400;
                         font-size: 0.16rem;
                         color: #6F76B2;
@@ -6438,7 +6445,7 @@ export default {
                         align-items: center;
                         justify-content: center;
                         font-size: 0.18rem;
-                        font-family: PingFangSC-Regular, PingFang SC;
+                        font-family: SourceHanSansCN;
                         font-weight: 400;
                         color: #737AFD;
                         i{
@@ -6473,13 +6480,13 @@ export default {
                         -ms-flex-pack: center;
                         justify-content: center;
                         font-size: 0.18rem;
-                        font-family: PingFangSC-Regular, PingFang SC;
+                        font-family: SourceHanSansCN;
                         font-weight: 400;
                         color: #6F76B2;
                       }
                     }
                     .wdrj_l_right{
-                      font-family: PingFangSC, PingFang SC;
+                      font-family: SourceHanSansCN;
                       font-weight: 400;
                       font-size: 0.18rem;
                       color: #6F76B2;
@@ -6500,13 +6507,14 @@ export default {
             height: 1.6rem;
           }
           p{
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #333E75;
             padding: 0.3rem 0 0;
             width: 100%;
             text-align: left;
+            border-top: 0.01rem solid #EAEBF1;
           }
           span{
             font-weight: 500;
@@ -6564,7 +6572,7 @@ export default {
               height: 0.38rem;
               border-radius: 50%;
               background: #9EC870;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6581,7 +6589,7 @@ export default {
               height: 0.38rem;
               border-radius: 50%;
               background: #78CFAE;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6598,7 +6606,7 @@ export default {
               height: 0.28rem;
               border-radius: 50%;
               background: #62A77D;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.16rem;
               color: #FFFFFF;
@@ -6638,7 +6646,7 @@ export default {
                 position: absolute;
                 top: 0.07rem;
                 left: 0.07rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 500;
                 font-size: 0.14rem;
                 color: #FFFFFF;
@@ -6653,7 +6661,7 @@ export default {
                   flex-wrap: wrap;
                   span{
                     width: 35%;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.14rem;
                     color: #FFFFFF;
@@ -6728,7 +6736,7 @@ export default {
               height: 0.42rem;
               border-radius: 50%;
               background: #FFD0A2;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6746,7 +6754,7 @@ export default {
               height: 0.38rem;
               border-radius: 50%;
               background: #FFDD66;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6763,7 +6771,7 @@ export default {
               height: 0.34rem;
               border-radius: 50%;
               background: #F4B36E;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.16rem;
               color: #FFFFFF;
@@ -6804,7 +6812,7 @@ export default {
                 position: absolute;
                 top: 0.07rem;
                 left: 0.07rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 500;
                 font-size: 0.14rem;
                 color: #FFFFFF;
@@ -6819,7 +6827,7 @@ export default {
                   flex-wrap: wrap;
                   span{
                     width: 35%;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.14rem;
                     color: #FFFFFF;
@@ -6895,7 +6903,7 @@ export default {
               height: 0.50rem;
               border-radius: 50%;
               background: #FFAAD1;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6913,7 +6921,7 @@ export default {
               height: 0.44rem;
               border-radius: 50%;
               background: #FFB5AD;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -6931,7 +6939,7 @@ export default {
               height: 0.42rem;
               border-radius: 50%;
               background: #F494A7;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.16rem;
               color: #FFFFFF;
@@ -6972,7 +6980,7 @@ export default {
                 position: absolute;
                 top: 0.07rem;
                 left: 0.07rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 500;
                 font-size: 0.14rem;
                 color: #FFFFFF;
@@ -6987,7 +6995,7 @@ export default {
                   flex-wrap: wrap;
                   span{
                     width: 35%;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.14rem;
                     color: #FFFFFF;
@@ -7062,7 +7070,7 @@ export default {
               height: 0.42rem;
               border-radius: 50%;
               background: #90CEFF;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -7080,7 +7088,7 @@ export default {
               height: 0.38rem;
               border-radius: 50%;
               background: #93B8ED;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -7097,7 +7105,7 @@ export default {
               height: 0.34rem;
               border-radius: 50%;
               background: #60C8F2;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.16rem;
               color: #FFFFFF;
@@ -7137,7 +7145,7 @@ export default {
                 position: absolute;
                 top: 0.07rem;
                 left: 0.07rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 500;
                 font-size: 0.14rem;
                 color: #FFFFFF;
@@ -7152,7 +7160,7 @@ export default {
                   flex-wrap: wrap;
                   span{
                     width: 35%;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.14rem;
                     color: #FFFFFF;
@@ -7227,7 +7235,7 @@ export default {
               height: 0.38rem;
               border-radius: 50%;
               background: #C2C2ED;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -7244,7 +7252,7 @@ export default {
               height: 0.34rem;
               border-radius: 50%;
               background: #BD9DEE;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.1rem;
               color: #FFFFFF;
@@ -7261,7 +7269,7 @@ export default {
               height: 0.28rem;
               border-radius: 50%;
               background: #E3B4FF;
-              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-family: SourceHanSansCN;
               font-weight: 500;
               font-size: 0.16rem;
               color: #FFFFFF;
@@ -7301,7 +7309,7 @@ export default {
                 position: absolute;
                 top: 0.07rem;
                 left: 0.07rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 500;
                 font-size: 0.14rem;
                 color: #FFFFFF;
@@ -7316,7 +7324,7 @@ export default {
                   flex-wrap: wrap;
                   span{
                     width: 35%;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.14rem;
                     color: #FFFFFF;
@@ -7390,7 +7398,7 @@ export default {
           margin: 0 0.5rem;
           padding: 0 1rem 0.3rem;
           .drwc_sp_head{
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 500;
             font-size: 0.18rem;
             color: #333E75;
@@ -7399,7 +7407,7 @@ export default {
           }
           p{
             padding:0.1rem 0 0;
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.16rem;
             color: #2A3487;
@@ -7484,7 +7492,7 @@ export default {
                   margin: 0 auto;
                   border-radius: 50%;
                   border: 0.18rem solid #82df95;
-                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-family: SourceHanSansCN;
                   font-weight: 500;
                   font-size: 0.38rem;
                   color: #82df95;
@@ -7559,8 +7567,8 @@ export default {
                 .dtmcl_du3{
                   margin-top: 0.1rem;
                   span{
-                    font-family: SourceHanSansCN, SourceHanSansCN;
-                    font-weight: 600;
+                    font-family: SourceHanSansCN;
+                    font-weight: 500;
                     font-size: 0.18rem;
                     color: #333E75;
                   }
@@ -7570,7 +7578,7 @@ export default {
                   align-items: center;
                   margin-top: 0.08rem;
                   span{
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 400;
                     font-size: 0.18rem;
                     color: #333E75;
@@ -7586,7 +7594,7 @@ export default {
                   margin-top:0.14rem;
                   .dtmcl_sb_t{
                     width: auto;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 500;
                     font-size: 0.18rem;
                     color: #333E75;
@@ -7603,7 +7611,7 @@ export default {
                         align-items: center;
                         margin-bottom: 0.1rem;
                         span{
-                          font-family: SourceHanSansCN, SourceHanSansCN;
+                          font-family: SourceHanSansCN;
                           font-weight: 400;
                           font-size: 0.18rem;
                           color: #333E75;
@@ -7618,7 +7626,7 @@ export default {
                     div{
                       width: 100%;
                       // padding: 0 0.24rem;
-                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-family: SourceHanSansCN;
                       font-weight: 400;
                       font-size: 0.18rem;
                       color: #333E75;
@@ -7663,7 +7671,7 @@ export default {
                   }
                   span {
                     text-align: left;
-                    font-family: SourceHanSansCN, SourceHanSansCN;
+                    font-family: SourceHanSansCN;
                     font-weight: 400;
                     font-size: 0.16rem;
                     color: #333E75;
@@ -7695,7 +7703,7 @@ export default {
                     div{
                       flex: 1;
                       text-align: center;
-                      font-family: PingFangSC, PingFang SC;
+                      font-family: SourceHanSansCN;
                       font-weight: 400;
                       font-size: 0.14rem;
                       color: #2A3487;
@@ -7707,7 +7715,7 @@ export default {
                       justify-content: center;
                       align-items: center;
                       span{
-                        font-family: PingFangSC, PingFang SC;
+                        font-family: SourceHanSansCN;
                         font-weight: 400;
                         font-size: 0.14rem;
                         color: #333E75;
@@ -7720,7 +7728,7 @@ export default {
                   }
                   li:nth-child(1) {
                     div{
-                      font-family: SourceHanSansCN, SourceHanSansCN;
+                      font-family: SourceHanSansCN;
                       font-weight: 500;
                       font-size: 0.16rem;
                       padding: 0.14rem 0;
@@ -7737,7 +7745,7 @@ export default {
                   display: flex;
                   justify-content: center;
                   li {
-                    font-family: PingFangSC, PingFang SC;
+                    font-family: SourceHanSansCN;
                     font-weight: 400;
                     font-size: 0.16rem;
                     color: #2A3487;
@@ -7968,7 +7976,7 @@ export default {
           }
           span {
             margin: 0 0.1rem;
-            font-family: PingFangSC, PingFang SC;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.2rem;
             color: #333E75;
@@ -7997,7 +8005,7 @@ export default {
               border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
               border-right: 0.01rem solid rgba(215, 223, 251, 1);
               background: rgba(246, 249, 255, 0.60);
-              font-family: PingFangSC, PingFang SC;
+              font-family: SourceHanSansCN;
               font-weight: 400;
               font-size: 0.18rem;
               color: #2A3487;
@@ -8009,7 +8017,7 @@ export default {
               width: 3.78rem;
               border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
               border-right: 0.01rem solid rgba(215, 223, 251, 1);
-              font-family: PingFangSC, PingFang SC;
+              font-family: SourceHanSansCN;
               font-weight: 400;
               font-size: 0.18rem;
               color: #2A3487;
@@ -8031,7 +8039,7 @@ export default {
               border-bottom: 0 !important;
               border-right: 0.01rem solid rgba(215, 223, 251, 1);
               background: rgba(246, 249, 255, 0.60);
-              font-family: PingFangSC, PingFang SC;
+              font-family: SourceHanSansCN;
               font-weight: 400;
               font-size: 0.18rem;
               color: #2A3487;
@@ -8054,7 +8062,7 @@ export default {
                   border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
                   border-right: 0.01rem solid rgba(215, 223, 251, 1);
                   background: rgba(246, 249, 255, 0.60);
-                  font-family: PingFangSC, PingFang SC;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.18rem;
                   color: #2A3487;
@@ -8066,7 +8074,7 @@ export default {
                   width: 4.28rem;
                   border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
                   border-right: 0.01rem solid rgba(215, 223, 251, 1);
-                  font-family: PingFangSC, PingFang SC;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.18rem;
                   color: #2A3487;
@@ -8078,7 +8086,7 @@ export default {
                   justify-content: center;
                   width: 3.78rem;
                   border-bottom: 0.01rem solid rgba(215, 223, 251, 1);
-                  font-family: PingFangSC, PingFang SC;
+                  font-family: SourceHanSansCN;
                   font-weight: 400;
                   font-size: 0.18rem;
                   color: #2A3487;
@@ -8190,7 +8198,7 @@ export default {
               // height: 0.25rem;
               line-height: 0.25rem;
               padding: 0.23rem 0;
-              font-family: PingFangSC, PingFang SC;
+              font-family: SourceHanSansCN;
               font-weight: 400;
               font-size: 0.18rem;
               color: #6F76B2;
@@ -8241,7 +8249,7 @@ export default {
             // justify-content: center;
             // align-items: center;
             text-align: center;
-            font-family: PingFangSC, PingFang SC;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #2A3487;
@@ -8342,7 +8350,7 @@ export default {
           width: 10.3rem;
           margin: 0 auto 0.4rem;
           .page_total {
-            font-family: PingFangSC, PingFang SC;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.2rem;
             color: #2D3788;
@@ -8360,7 +8368,7 @@ export default {
                 justify-content: center;
                 align-items: center;
                 border-radius: 50%;
-                font-family: PingFangSC, PingFang SC;
+                font-family: SourceHanSansCN;
                 font-weight: 400;
                 font-size: 0.2rem;
                 color: #737AFD;
@@ -8514,7 +8522,7 @@ export default {
       margin-bottom: 0.22rem;
       span{
         width: auto;
-        font-family: SourceHanSansCN, SourceHanSansCN;
+        font-family: SourceHanSansCN;
         font-weight: 400;
         font-size: 0.2rem;
         color: #2A3487;
@@ -8567,7 +8575,7 @@ export default {
           display: block;
           width: 100%;
           text-align: center;
-          font-family: SourceHanSansCN, SourceHanSansCN;
+          font-family: SourceHanSansCN;
           font-weight: 400;
           font-size: 0.2rem;
           color: #2A3487;
@@ -8765,7 +8773,7 @@ export default {
     //           padding-right: 0.04rem;
     //         }
     //         .dt_blod {
-    //           font-weight: 600;
+    //           font-weight: 500;
     //           flex: none;
     //         }
     //       }
@@ -9926,7 +9934,7 @@ export default {
               }
               p {
                 line-height: 0.36rem;
-                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-family: SourceHanSansCN;
                 font-weight: 400;
                 font-size: 0.16rem;
                 color: #333E75;
@@ -9940,7 +9948,7 @@ export default {
             }
           }
           .wdrjs_title {
-            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-family: SourceHanSansCN;
             font-weight: 400;
             font-size: 0.18rem;
             color: #333E75;
