@@ -1748,7 +1748,7 @@ export default {
     this.token = this.$route.params.token;
     console.log(this.token)
     this.tokenFlag = true
-    localStorage.setItem('totalToken',this.token)
+    // localStorage.setItem('totalToken',this.token)
     // if (typeof this.token === 'undefined') {
     //   console.log("不免登录")
     //   this.tokenFlag = false
@@ -1777,7 +1777,7 @@ export default {
     //   }
     // }
     let param = {
-      // passport: JSON.parse(localStorage.getItem('userInfo')).passport
+      passport: this.token
       // token: this.token
       // password: JSON.parse(localStorage.getItem('userInfo')).password
     }
@@ -1895,13 +1895,14 @@ export default {
       let that = this;
       let param = {
         reportId: that.reportId,
-        note: that.assessment
+        note: that.assessment,
+        passport: this.token
       }
       console.log(param)
       // return
-      if (this.tokenFlag) {
-        param.token = this.token
-      }
+      // if (this.tokenFlag) {
+      //   param.token = this.token
+      // }
       let postStr1 = '/aimw/zkyx/report/updateNote'
       this.$http
         .put(Url + postStr1, param)
@@ -1972,11 +1973,12 @@ export default {
     getfourImg(birdView) {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        passport: this.token
       };
-      if (this.tokenFlag) {
-        param.token = this.token
-      }
+      // if (this.tokenFlag) {
+      //   param.token = this.token
+      // }
       let postStr2 = '/aimw/game/reportReviewImgs'
       this.$http
         .get(Url + postStr2, {
@@ -2024,11 +2026,12 @@ export default {
         background: "rgba(0, 0, 0, 0.7)"
       });
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        passport: this.token
       };
-      if (this.tokenFlag) {
-        param.token = this.token
-      }
+      // if (this.tokenFlag) {
+      //   param.token = this.token
+      // }
       let postStr3 = '/aimw/game/appendix'
       this.$http
         .get(Url + postStr3, {
@@ -3044,11 +3047,12 @@ export default {
     getBird() {
       let that = this;
       var param = {
-        reportId: that.reportId
+        reportId: that.reportId,
+        passport: this.token
       };
-      if (this.tokenFlag) {
-        param.token = this.token
-      }
+      // if (this.tokenFlag) {
+      //   param.token = this.token
+      // }
       let postStr6 = '/aimw/game/reportBirdView'
       this.$http
         .get(Url + postStr6, {

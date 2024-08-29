@@ -44,13 +44,13 @@ axios.interceptors.request.use(
     } else {
       console.log("不需要鉴权")
     }
-    if (res.url.indexOf("/aimw/game") != -1) {
-      console.log(localStorage.getItem('totalToken'))
-      res.headers['Authorization'] = localStorage.getItem('totalToken');
-      console.log("加鉴权")
-    } else {
-      console.log("不需要鉴权")
-    }
+    // if (res.url.indexOf("/aimw/game") != -1) {
+    //   console.log(localStorage.getItem('totalToken'))
+    //   res.headers['Authorization'] = localStorage.getItem('totalToken');
+    //   console.log("加鉴权")
+    // } else {
+    //   console.log("不需要鉴权")
+    // }
     if (res.url.indexOf("/report/exportGroupReport") != -1 || res.url.indexOf("/user/getUserProfile") != -1 || res.url.indexOf("/index/listLatestReportsUserIcon") != -1 || res.url.indexOf("/report/reportReviewImgs") != -1 || res.url.indexOf("/report/reportBirdView") != -1 || res.url.indexOf("/report/appendix") != -1 || res.url.indexOf("/report/reportReview") != -1 || res.url.indexOf("/report/reportInfo") != -1 || res.url.indexOf("report/consultationInfo") != -1 || (res.params && res.params.type == 'y')) {
       console.log('不需要')
       console.log(res.url)
