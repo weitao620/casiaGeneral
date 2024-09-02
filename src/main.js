@@ -12,6 +12,8 @@ import $ from 'jquery'
 import { is } from 'core-js/core/object';
 import './assets/fonts/iconfont.css'
 import htmlToPdf from "@/common/utils/htmlToPdf"
+
+// import htmlToPdfSc from "@/common/utils/htmlToPdfSc"
 // import VideoPlayer from 'vue-video-player'
 // require('video.js/dist/video-js.css')
 // require('vue-video-player/src/custom-theme.css')
@@ -21,6 +23,7 @@ import Highcharts3d from 'highcharts/highcharts-3d'
 Highcharts3d(Highcharts)
 
 Vue.use(htmlToPdf)
+// Vue.use(htmlToPdfSc)
 Vue.prototype.JQ = $
 
 Vue.use(Element);

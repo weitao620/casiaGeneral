@@ -7663,6 +7663,7 @@ export default {
                   // color: #5b6c89;
                   display: flex;
                   align-items: flex-start;
+                  text-indent: 0.32rem;
                   img {
                     width: 0.04rem;
                     height: 0.18rem;

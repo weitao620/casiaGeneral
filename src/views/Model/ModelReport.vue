@@ -7632,6 +7632,7 @@ export default {
           text-align: left;
           word-break: break-all;
           p{
+            text-indent: 48px;
             span{
               font-family: SourceHanSansCN, SourceHanSansCN;
               font-weight: 400 !important;

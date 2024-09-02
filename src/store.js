@@ -8,6 +8,7 @@ export default new Vuex.Store({
     userName: '',
     groupFlag: false,
     personFlag: false,
+    guideFlag: false,
     isToken: false,
     collapseFlag: false,
     somePdfFlag: false,
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     setPersonFlag(state, data) {
       state.personFlag = data;
+    },
+    setGuideFlag(state, data) {
+      state.guideFlag = data;
     },
     setSomePdfFlag(state, data) {
       state.somePdfFlag = data;
@@ -64,6 +68,9 @@ export default new Vuex.Store({
     },
     getPersonFlag(state) {
       return state.personFlag;
+    },
+    getGuideFlag(state) {
+      return state.guideFlag;
     },
     getSomePdfFlag(state) {
       return state.somePdfFlag;

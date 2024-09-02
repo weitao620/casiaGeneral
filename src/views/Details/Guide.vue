@@ -5,11 +5,29 @@
     >
       <div
         class="r_t_tab r_t_tab_t"
-        @click="toReview"
+        @click="guideExport"
       >
-        <span>目录</span>
+        <span>下载手册</span>
       </div>
+      <div
+        :class="['r_t_tab r_t_tab_t', { r_t_tab_t_ac: topAct != -1 }]"
+        @click="trendTab(-1)"
+      >
+        <span>回到顶部</span>
+      </div>
+      
+      
       <div class="r_ff_box">
+        <div
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 0 }]"
+          @click="trendTab(0)"
+        >
+          <div>
+            <img src="../../assets/images/news/zuopinjiedu.png" alt="" />
+            <span>目录</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 0"></div>
+        </div>
         <div
           :class="['r_t_tab', { r_t_tab_act1: topAct == 1 }]"
           @click="trendTab(1)"
@@ -72,7 +90,7 @@
         </div>
         <div
           :class="['r_t_tab', { r_t_tab_act1: topAct == 7 }]"
-          @click="trendTab(6)"
+          @click="trendTab(7)"
         >
           <div>
             <img style="width: 0.54rem;height:0.44rem;" src="../../assets/images/news/beizhu.png" alt="" />
@@ -82,61 +100,86 @@
         </div>
       </div>
     </div>
-    <img src="../../assets/images/guide/fengmian.png" alt="">
-    <img src="../../assets/images/guide/mulu.png" alt="">
-    
+    <img src="../../assets/images/guide/fengmian.png" alt="" ref="partg00">
+    <div ref="partg00s"></div>
+    <img src="../../assets/images/guide/mulu.png" alt="" ref="partg0">
+    <div ref="partg0s"></div>
     <img src="../../assets/images/guide/A1@2x.png" alt="" ref="partg1">
+    
     <img src="../../assets/images/guide/A2@2x.png" alt="">
     <img src="../../assets/images/guide/A3@2x.png" alt="">
     <img src="../../assets/images/guide/A4@2x.png" alt="">
     <img src="../../assets/images/guide/A5@2x.png" alt="">
     <img src="../../assets/images/guide/A6@2x.png" alt="">
+    <div ref="partg1s"></div>
     <img src="../../assets/images/guide/A7@2x.png" alt="" ref="partg2">
+    
     <img src="../../assets/images/guide/A8@2x.png" alt="">
     <img src="../../assets/images/guide/A9@2x.png" alt="">
     <img src="../../assets/images/guide/A10@2x.png" alt="">
 
     <img src="../../assets/images/guide/A11@2x.png" alt="">
     <img src="../../assets/images/guide/A12@2x.png" alt="">
+    <div ref="partg2s"></div>
     <img src="../../assets/images/guide/A13@2x.png" alt="" ref="partg3">
+    
     <img src="../../assets/images/guide/A14@2x.png" alt="">
     <img src="../../assets/images/guide/A15@2x.png" alt="">
     <img src="../../assets/images/guide/A16@2x.png" alt="">
     <img src="../../assets/images/guide/A17@2x.png" alt="">
     <img src="../../assets/images/guide/A18@2x.png" alt="">
+    <div ref="partg3s"></div>
     <img src="../../assets/images/guide/A19@2x.png" alt="" ref="partg4">
+    
     <img src="../../assets/images/guide/A20@2x.png" alt="">
     
     <img src="../../assets/images/guide/A21@2x.png" alt="">
     <img src="../../assets/images/guide/A22@2x.png" alt="">
     <img src="../../assets/images/guide/A23@2x.png" alt="">
     <img src="../../assets/images/guide/A24@2x.png" alt="">
+    <div ref="partg4s"></div>
     <img src="../../assets/images/guide/A25@2x.png" alt="" ref="partg5">
+    
     <img src="../../assets/images/guide/A26@2x.png" alt="">
     <img src="../../assets/images/guide/A27@2x.png" alt="">
     <img src="../../assets/images/guide/A28@2x.png" alt="">
     <img src="../../assets/images/guide/A29@2x.png" alt="">
     <img src="../../assets/images/guide/A30@2x.png" alt="">
-
+    <div ref="partg5s"></div>
     <img src="../../assets/images/guide/A31@2x.png" alt="" ref="partg6">
+    
     <img src="../../assets/images/guide/A32@2x.png" alt="">
     <img src="../../assets/images/guide/A33@2x.png" alt="">
     <img src="../../assets/images/guide/A34@2x.png" alt="">
     <img src="../../assets/images/guide/A35@2x.png" alt="">
     <img src="../../assets/images/guide/A36@2x.png" alt="">
+    <div ref="partg6s"></div>
     <img src="../../assets/images/guide/A37@2x.png" alt="" ref="partg7">
+    
     <img src="../../assets/images/guide/A38@2x.png" alt="">
     <img src="../../assets/images/guide/A39@2x.png" alt="">
     <img src="../../assets/images/guide/A40@2x.png" alt="">
 
     <img src="../../assets/images/guide/A41@2x.png" alt="">
+    <div ref="partg7s"></div>
+    <div style="height:0;width:1190px;overflow:hidden">
+      <guideReport
+        v-if="getGuideFlag"
+      ></guideReport>
+    </div>
   </div>
 </template>
 
 <script>
+import guideReport from "../Model/ModelGuide.vue";
+import { mapGetters, mapMutations } from "vuex";
 export default {
+  components: {
+    guideReport
+  },
   data() {
     return {
+      part00: "",
       part0: "",
       part1: "",
       part2: "",
@@ -144,10 +187,25 @@ export default {
       part4: "",
       part5: "",
       part6: "",
-      part7: ""
+      part7: "",
+      part00s: "",
+      part0s: "",
+      part1s: "",
+      part2s: "",
+      part3s: "",
+      part4s: "",
+      part5s: "",
+      part6s: "",
+      part7s: "",
+      topAct: -1
     };
   },
+  computed: {
+    ...mapGetters(["getGuideFlag"])
+  },
   mounted() {
+    
+    this.part00 = this.$refs.partg00.offsetTop;
     this.part0 = this.$refs.partg0.offsetTop;
     this.part1 = this.$refs.partg1.offsetTop;
     this.part2 = this.$refs.partg2.offsetTop;
@@ -155,35 +213,104 @@ export default {
     this.part4 = this.$refs.partg4.offsetTop;
     this.part5 = this.$refs.partg5.offsetTop;
     this.part6 = this.$refs.partg6.offsetTop;
-    this.part7 = this.$refs.partg6.offsetTop;
+    this.part7 = this.$refs.partg7.offsetTop;
+    this.part00s = this.$refs.partg00s.offsetTop;
+    this.part0s = this.$refs.partg0s.offsetTop;
+    this.part1s = this.$refs.partg1s.offsetTop;
+    this.part2s = this.$refs.partg2s.offsetTop;
+    this.part3s = this.$refs.partg3s.offsetTop;
+    this.part4s = this.$refs.partg4s.offsetTop;
+    this.part5s = this.$refs.partg5s.offsetTop;
+    this.part6s = this.$refs.partg6s.offsetTop;
+    this.part7s = this.$refs.partg7s.offsetTop;
+    setTimeout(() => {
+      this.toReview()
+      this.listenerFunction()
+    }, 500);
+    
   },
   methods: {
+    ...mapMutations(["setGuideFlag"]),
+    guideExport() {
+      this.setGuideFlag(true);
+      console.log(111)
+    },
+    listenerFunction(e) {
+      document.addEventListener("scroll", this.handleScroll, true);
+    },
+    handleScroll() {
+      this.scrollYs = window.pageYOffset;
+      // console.log(this.scrollYs)
+      // console.log(this.part0)
+      // console.log(this.scrollYs)
+      if (this.scrollYs < this.part00s) {
+        this.topAct = -1;
+      }
+      if (this.part00s < this.scrollYs && this.scrollYs < this.part0s) {
+        this.topAct = 0;
+      }
+      if (this.part0s < this.scrollYs && this.scrollYs < this.part1s) {
+        this.topAct = 1;
+      }
+      if (this.part1s < this.scrollYs && this.scrollYs < this.part2s) {
+        this.topAct = 2;
+      }
+      if (this.part2s < this.scrollYs && this.scrollYs < this.part3s) {
+        this.topAct = 3;
+      }
+      if (this.part3s < this.scrollYs && this.scrollYs < this.part4s) {
+        this.topAct = 4;
+      }
+      if (this.part4s < this.scrollYs && this.scrollYs < this.part5s) {
+        this.topAct = 5;
+      }
+      if (this.part5s < this.scrollYs && this.scrollYs < this.part6s) {
+        this.topAct = 6;
+      }
+      if (this.part6s < this.scrollYs && this.scrollYs < this.part7s) {
+        this.topAct = 7;
+      }
+    },
     toReview() {
-      console.log('回到目录')
+      window.scrollTo(0, 0);
     },
     trendTab(type) {
-      this.topAct = type;
-      if (type == 1) {
-        window.scrollTo(0, this.part1 - 20);
-      }
-      if (type == 2) {
-        window.scrollTo(0, this.part2 - 20);
-      }
-      if (type == 3) {
-        window.scrollTo(0, this.part3 - 20);
-      }
-      if (type == 4) {
-        window.scrollTo(0, this.part4 - 20);
-      }
-      if (type == 5) {
-        window.scrollTo(0, this.part5 - 20);
-      }
-      if (type == 6) {
-        window.scrollTo(0, this.part6 - 20);
-      }
-      if (type == 7) {
-        window.scrollTo(0, this.part7 - 20);
-      }
+      document.removeEventListener("scroll", this.handleScroll, true);
+      setTimeout(() => {
+        this.topAct = type;
+        if (type == -1) {
+          window.scrollTo(0, this.part00 - 20);
+        }
+        if (type == 0) {
+          window.scrollTo(0, this.part0 - 20);
+        }
+        if (type == 1) {
+          window.scrollTo(0, this.part1 - 20);
+        }
+        if (type == 2) {
+          window.scrollTo(0, this.part2 - 20);
+        }
+        if (type == 3) {
+          window.scrollTo(0, this.part3 - 20);
+        }
+        if (type == 4) {
+          window.scrollTo(0, this.part4 - 20);
+        }
+        if (type == 5) {
+          window.scrollTo(0, this.part5 - 20);
+        }
+        if (type == 6) {
+          window.scrollTo(0, this.part6 - 20);
+        }
+        if (type == 7) {
+          window.scrollTo(0, this.part7 - 20);
+        }
+      }, 0);
+      
+      setTimeout(() => {
+        document.addEventListener("scroll", this.handleScroll, true);
+      }, 0);
+      
     },
   }
 }
@@ -233,9 +360,15 @@ export default {
           margin-left: 0.03rem;
         }
       }
+      .r_t_tab_t_ac{
+        background: #848aff;
+        span{
+          color: #ffffff;
+        }
+      }
       .r_ff_box{
         width: 1.76rem;
-        padding: 0.27rem 0;
+        padding: 0.1rem 0;
         background: rgba(255, 255, 255, 0.8);
         box-shadow: 0 0.02rem 0.6rem 0 rgba(208, 210, 248, 0.13);
         border-radius: 0.2rem;
@@ -245,7 +378,7 @@ export default {
           // border-radius: 2px 2px 0px 0px;
           // padding-top: 0.18rem;
           // background: #f6fcff;
-          min-height: 1.14rem;
+          min-height: 0.68rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -254,7 +387,7 @@ export default {
           .act1_line{
             position: absolute;
             top: 0;
-            left: -0.06rem;
+            left: -0rem;
             width: 0.06rem;
             height: 100%;
             background: rgba(132, 138, 255, 1);
@@ -263,7 +396,7 @@ export default {
             padding: 0.15rem 0;
           }
           img {
-            display: block;
+            display: none;
             width: 0.53rem;
             height: 0.55rem;
             margin: 0 auto 0.08rem;
