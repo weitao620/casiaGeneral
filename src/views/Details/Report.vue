@@ -301,7 +301,7 @@
           <div class="drwx_b_r">
             <p>本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》</p>
           </div>
-          <img class="drwx_b_l" @click="toGuide" style="width:0.19rem;cursor: pointer;" src="../../assets/images/news/xiazai.png" alt="">
+          <img class="drwx_b_l" @click="toGuide" style="width:0.19rem;cursor: pointer;" src="../../assets/images/news/watch.png" alt="">
         </div>
       </div>
       <div v-show="!reviewFlag">
