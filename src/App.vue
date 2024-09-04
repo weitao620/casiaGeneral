@@ -96,7 +96,7 @@ export default {
     if (user) {
       this.setUserName(user);
     }
-    if (window.location.href.indexOf('details/report/') != -1 || window.location.href.indexOf('details/reportmobile/') != -1) {
+    if (window.location.href.indexOf('details/report/') != -1 || window.location.href.indexOf('details/reportmobile/') != -1 || window.location.href.indexOf('details/reporteidcard/') != -1) {
       console.log('不获取权限')
     } else {
       this.auth()

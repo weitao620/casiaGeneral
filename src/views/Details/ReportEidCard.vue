@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_mobile_wrap">
+  <div class="detail_card_wrap">
     <div class="top_back" @click="topBacks" v-show="scrollYs > part0">
       <img src="../../assets/images/report/to_top.png" alt="" />
     </div>
@@ -4640,7 +4640,7 @@ export default {
 };
 </script>
 <style lang="less">
-.detail_mobile_wrap {
+.detail_card_wrap {
   padding-bottom: 0.02rem;
   background: rgba(5, 157, 255, 0.05);
   width: 100%;

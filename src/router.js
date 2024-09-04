@@ -58,6 +58,11 @@ export default new Router({
       name: 'detailsreportmobile',
       component: () => import('./views/Details/ReportMobile.vue')
     },
+    {
+      path: '/details/reporteidcard/:userID/:token?',
+      name: 'detailsreporteidcard',
+      component: () => import('./views/Details/ReportEidCard.vue')
+    },
     // 导出word
     {
       path: '/library/expword/:userID',
