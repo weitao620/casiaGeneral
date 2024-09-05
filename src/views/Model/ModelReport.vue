@@ -261,12 +261,12 @@
                   </div>
                   <ul class="wdrjs_uls">
                     <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                      <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '600' : '400'}">
+                      <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
                         {{ items }}
                       </p>
                       <div v-if="Array.isArray(items)">
                         <div v-for="(itemu, indexu) in items" :key="indexu">
-                          <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '600' : '400'}">
+                          <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '500' : '400'}">
                             <span v-if="String(itemv).indexOf('针对') != -1"></span>
                             {{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}
                           </p>
@@ -7702,7 +7702,7 @@ export default {
           }
           .gp_con1{
             div{
-              font-weight: 600;
+              font-weight: 500;
             }
           }
         }
@@ -8033,7 +8033,7 @@ export default {
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 0 20px;
+            // padding: 0 20px;
           }
           .tb_s_c22{
             position: absolute;
@@ -8402,13 +8402,14 @@ export default {
             background: #90CEFF;
             font-family: SourceHanSansCN, SourceHanSansCN;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 12px;
             color: #FFFFFF;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 2px;
+            padding: 4px;
+            line-height: 1
           }
           .tb_s_c42{
             position: absolute;
@@ -8587,12 +8588,14 @@ export default {
             background: #C2C2ED;
             font-family: SourceHanSansCN, SourceHanSansCN;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 12px;
             color: #FFFFFF;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            line-height: 1;
+            padding: 0 2px;
           }
           .tb_s_c52{
             position: absolute;
@@ -8610,6 +8613,7 @@ export default {
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            line-height: 1;
           }
           .tb_s_c53{
             position: absolute;

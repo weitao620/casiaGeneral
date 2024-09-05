@@ -305,11 +305,11 @@ export default {
         if (type == 7) {
           window.scrollTo(0, this.part7 - 20);
         }
-      }, 0);
+      }, 100);
       
       setTimeout(() => {
         document.addEventListener("scroll", this.handleScroll, true);
-      }, 0);
+      }, 200);
       
     },
   }

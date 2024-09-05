@@ -6744,7 +6744,8 @@ export default {
               justify-content: center;
               align-items: center;
               overflow: hidden;
-              padding: 0 0.02rem;
+              padding: 0 0.06rem;
+              line-height: 1.4
             }
             .tb_s_c22{
               position: absolute;
@@ -7243,6 +7244,8 @@ export default {
               justify-content: center;
               align-items: center;
               overflow: hidden;
+              padding: 0 0.04rem;
+              line-height: 1.2;
             }
             .tb_s_c52{
               position: absolute;
@@ -7260,6 +7263,8 @@ export default {
               justify-content: center;
               align-items: center;
               overflow: hidden;
+              padding: 0 0.04rem;
+              line-height: 1.2;
             }
             .tb_s_c53{
               position: absolute;
