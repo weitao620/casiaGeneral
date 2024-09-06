@@ -621,7 +621,7 @@ export default {
       this.pTimeFlag = false
     },
     aoneTotalReport() {
-      console.log('导出团体报告')
+      console.log('导出个人综合报告')
       let that = this;
       this.pTimeFlag = false;
       this.partsForm = {
@@ -719,18 +719,18 @@ export default {
             // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
 
             // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
-            let mental = data.data.algTypes.mentalDim.toString(2).split('')
+            let mental = data.data.algTypes.mentalDim.toString(2).split('').reverse()
             data.data.algTypes.depressionFlag = mental[0]
             data.data.algTypes.anxietyFlag = mental[1]
             data.data.algTypes.forcedFlag = mental[2]
-            data.data.algTypes.ptsdFlag = mental[3]
+            data.data.algTypes.suicideFlag = mental[3]
             data.data.algTypes.violenceFlag = mental[4]
-            data.data.algTypes.suicideFlag = mental[5]
+            data.data.algTypes.ptsdFlag = mental[5]
             // data.data.algTypes.zibiFlag = mental[6]
             // personalityDim
             // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
             // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
-            let personality = data.data.algTypes.personalityDim.toString(2).split('')
+            let personality = data.data.algTypes.personalityDim.toString(2).split('').reverse()
             data.data.algTypes.extroversionFlag = personality[0]
             data.data.algTypes.conscientiousnessFlag = personality[1]
             data.data.algTypes.nervousnessFlag = personality[2]
@@ -740,7 +740,7 @@ export default {
             // positiveDim
             // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
             
-            let positive = data.data.algTypes.positiveDim.toString(2).split('')
+            let positive = data.data.algTypes.positiveDim.toString(2).split('').reverse()
             data.data.algTypes.resilienceFlag = positive[0]
             data.data.algTypes.selfFlag = positive[1]
             data.data.algTypes.achievementFlag = positive[2]
