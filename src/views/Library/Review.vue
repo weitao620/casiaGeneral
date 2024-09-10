@@ -1714,6 +1714,8 @@ export default {
         qArr.push(that.chartData[i].ptsdSubScore[2].score);
         lArr.push(that.chartData[i].ptsdScore);
       }
+
+      
       this.myChartZhe5 = echarts.init(this.$refs.myChartZhe5);
       this.myChartZhe5.setOption({
         tooltip: {
