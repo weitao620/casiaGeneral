@@ -619,13 +619,14 @@ export default {
           this.zipFlag = true;
         }, 2000);
       } else {
-        console.log('2222')
+        console.log('222211111')
         this.zipFlag = false;
       }
     }
   },
   created () {
     // this.setLabel()
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
   },
   beforeDestroy() {
     console.log("销毁了");
@@ -635,6 +636,8 @@ export default {
   mounted() {
     let that = this;
     let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+    // this.zipFlag = false;
+    console.log("!!!!!!!!!!!!!!!!!!!!!!"+algTypes)
     if (algTypes) {
       // 是否显示抑郁
       that.depressionFlag = algTypes.depressionFlag
@@ -668,6 +671,7 @@ export default {
       // 是否显示积极关系
       that.relationshipFlag = algTypes.relationshipFlag
     }
+    console.log(that.relationshipFlag)
     // console.log(this.gList)
     // this.getInfo()
     console.log(this.cutStr("测试1字符串哈哈哈哈", 6))
@@ -3517,6 +3521,44 @@ export default {
     },
     async exportMeeting(type) {
       // type:'1' 选择导出 'all':导出所有
+      console.log("~~~~~~2")
+      let that = this;
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      this.zipFlag = false;
+      console.log("!!!!!!!!!!!!!!!!!!!!!!"+algTypes)
+      if (algTypes) {
+        // 是否显示抑郁
+        that.depressionFlag = algTypes.depressionFlag
+        // 是否显示焦虑
+        that.anxietyFlag = algTypes.anxietyFlag
+        // 是否显示强迫
+        that.forcedFlag = algTypes.forcedFlag
+        // 是否显示PTSD
+        that.ptsdFlag = algTypes.ptsdFlag
+        // 是否显示敌对
+        that.violenceFlag = algTypes.violenceFlag
+        // 是否显示自我伤害
+        that.suicideFlag = algTypes.suicideFlag
+        // // 是否显示自闭
+        // this.zibiFlag = algTypes.zibiFlag
+        // 是否显示大五人格
+        that.extroversionFlag = algTypes.extroversionFlag
+        that.conscientiousnessFlag = algTypes.conscientiousnessFlag
+        that.nervousnessFlag = algTypes.nervousnessFlag
+        that.agreeablenessFlag = algTypes.agreeablenessFlag
+        that.opennessFlag = algTypes.opennessFlag
+
+        // 是否显示心理韧性
+        that.resilienceFlag = algTypes.resilienceFlag
+        // 是否显示积极自我
+        that.selfFlag = algTypes.selfFlag
+        // 是否显示积极成就
+        that.achievementFlag = algTypes.achievementFlag
+        // 是否显示积极情绪
+        that.emotionFlag = algTypes.emotionFlag
+        // 是否显示积极关系
+        that.relationshipFlag = algTypes.relationshipFlag
+      }
       try {
         this.allLoading = true;
         let selectedData = [];
@@ -3528,6 +3570,7 @@ export default {
         const zip = new JSZip();
         const promises = [];
         this.isShowPdf = true;
+        
         for (let i = 0; i < selectedData.length; i++) {
           // 解析数据
           console.log(selectedData[i]);
@@ -3654,6 +3697,7 @@ export default {
           console.log(this.reportList)
           // ['#519AFE', '#FF89CB', '#7C82FF', '#FF8481', '#FFBB79', '#8DE684', '#f7de3b']
           let wdStr = []
+          console.log(this.depressionFlag)
           if (this.depressionFlag == 1) {
             wdStr.push(
               {
@@ -3821,21 +3865,58 @@ export default {
           this.evaFrequency = selectedData[i].evaFrequency
 
           let yjstr = '';
+          console.log(wdArr)
           let yjArrs = wdArr.sort((a, b) => {
             return b.num - a.num
           })
           console.log(yjArrs)
+          // if (yjArrs[0].num == 0) {
+          //   yjstr += '2.在该测评时间段内，受测者在各个维度上皆无风险，可进行适当运动、规律饮食等等，维持身心健康。'
+          // } else {
+          //   let cont = 1
+          //   if (yjArrs[0].num == yjArrs[1].num) {
+          //     cont++
+          //     if (yjArrs[1].num == yjArrs[2].num) {
+          //       cont++
+          //       if (yjArrs[2].num == yjArrs[3].num) {
+          //         cont++
+          //         if (yjArrs[3].num == yjArrs[4].num) {
+          //           cont++
+          //         }
+          //       }
+          //     }
+          //   }
+          //   yjstr += '2.在该测评时间段内，受测者在'
+          //   yjstr += yjArrs[0].name
+          //   if (yjArrs[0].num == yjArrs[1].num) {
+          //     yjstr += '、' + yjArrs[1].name
+          //   }
+          //   if (yjArrs[0].num == yjArrs[2].num) {
+          //     yjstr += '、' + yjArrs[2].name
+          //   }
+          //   if (yjArrs[0].num == yjArrs[3].num) {
+          //     yjstr += '、' + yjArrs[3].name
+          //   }
+          //   if (yjArrs[0].num == yjArrs[4].num) {
+          //     yjstr += '、' + yjArrs[4].name
+          //   }
+          //   if (cont > 0 && cont < 4) {
+          //     yjstr += '维度上预警最多，建议可进一步关注受测者饮食、睡眠等情况；如有必要，还可以建议受测者及时寻求专业的心理咨询服务。'
+          //   } else {
+          //     yjstr += '维度上预警较多，建议从多方面关注受测者身心状况，如饮食睡眠、人际关系等等；如有必要，还可以建议受测者及时寻求专业的心理咨询服务。'
+          //   }
+          // }
           if (yjArrs[0].num == 0) {
             yjstr += '2.在该测评时间段内，受测者在各个维度上皆无风险，可进行适当运动、规律饮食等等，维持身心健康。'
           } else {
             let cont = 1
-            if (yjArrs[0].num == yjArrs[1].num) {
+            if (yjArrs.length > 1 && yjArrs[0].num == yjArrs[1].num) {
               cont++
-              if (yjArrs[1].num == yjArrs[2].num) {
+              if (yjArrs.length > 2 && yjArrs[1].num == yjArrs[2].num) {
                 cont++
-                if (yjArrs[2].num == yjArrs[3].num) {
+                if (yjArrs.length > 3 && yjArrs[2].num == yjArrs[3].num) {
                   cont++
-                  if (yjArrs[3].num == yjArrs[4].num) {
+                  if (yjArrs.length > 4 && yjArrs[3].num == yjArrs[4].num) {
                     cont++
                   }
                 }
@@ -3843,16 +3924,16 @@ export default {
             }
             yjstr += '2.在该测评时间段内，受测者在'
             yjstr += yjArrs[0].name
-            if (yjArrs[0].num == yjArrs[1].num) {
+            if (yjArrs.length > 1 && yjArrs[0].num == yjArrs[1].num) {
               yjstr += '、' + yjArrs[1].name
             }
-            if (yjArrs[0].num == yjArrs[2].num) {
+            if (yjArrs.length > 2 && yjArrs[0].num == yjArrs[2].num) {
               yjstr += '、' + yjArrs[2].name
             }
-            if (yjArrs[0].num == yjArrs[3].num) {
+            if (yjArrs.length > 3 && yjArrs[0].num == yjArrs[3].num) {
               yjstr += '、' + yjArrs[3].name
             }
-            if (yjArrs[0].num == yjArrs[4].num) {
+            if (yjArrs.length > 4 && yjArrs[0].num == yjArrs[4].num) {
               yjstr += '、' + yjArrs[4].name
             }
             if (cont > 0 && cont < 4) {
