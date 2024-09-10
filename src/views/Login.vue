@@ -255,7 +255,7 @@ export default {
                   let mental = data.data.algTypes.mentalDim.toString(2).split('').reverse()
                   data.data.algTypes.depressionFlag = mental[0]
                   data.data.algTypes.anxietyFlag = mental[1]
-                  data.data.algTypes.forceFlag = mental[2]
+                  data.data.algTypes.forcedFlag = mental[2]
                   data.data.algTypes.suicideFlag = mental[3]
                   data.data.algTypes.violenceFlag = mental[4]
                   data.data.algTypes.ptsdFlag = mental[5]

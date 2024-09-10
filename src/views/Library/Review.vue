@@ -717,36 +717,69 @@ export default {
             localStorage.setItem("userType", 1);
             // mentalDim
             // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
+            if (data.data.algTypes.mentalDim) {
+              // mentalDim
+              // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
 
-            // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
-            let mental = data.data.algTypes.mentalDim.toString(2).split('').reverse()
-            data.data.algTypes.depressionFlag = mental[0]
-            data.data.algTypes.anxietyFlag = mental[1]
-            data.data.algTypes.forcedFlag = mental[2]
-            data.data.algTypes.suicideFlag = mental[3]
-            data.data.algTypes.violenceFlag = mental[4]
-            data.data.algTypes.ptsdFlag = mental[5]
-            // data.data.algTypes.zibiFlag = mental[6]
-            // personalityDim
-            // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
-            // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
-            let personality = data.data.algTypes.personalityDim.toString(2).split('').reverse()
-            data.data.algTypes.extroversionFlag = personality[0]
-            data.data.algTypes.conscientiousnessFlag = personality[1]
-            data.data.algTypes.nervousnessFlag = personality[2]
-            data.data.algTypes.agreeablenessFlag = personality[3]
-            data.data.algTypes.opennessFlag = personality[4]
+              // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+              let mental = data.data.algTypes.mentalDim.toString(2).split('').reverse()
+              data.data.algTypes.depressionFlag = mental[0]
+              data.data.algTypes.anxietyFlag = mental[1]
+              data.data.algTypes.forcedFlag = mental[2]
+              data.data.algTypes.suicideFlag = mental[3]
+              data.data.algTypes.violenceFlag = mental[4]
+              data.data.algTypes.ptsdFlag = mental[5]
+              // personalityDim
+              // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+              // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+              let personality = data.data.algTypes.personalityDim.toString(2).split('').reverse()
+              data.data.algTypes.extroversionFlag = personality[0]
+              data.data.algTypes.conscientiousnessFlag = personality[1]
+              data.data.algTypes.nervousnessFlag = personality[2]
+              data.data.algTypes.agreeablenessFlag = personality[3]
+              data.data.algTypes.opennessFlag = personality[4]
 
-            // positiveDim
-            // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+              // positiveDim
+              // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
+              
+              let positive = data.data.algTypes.positiveDim.toString(2).split('').reverse()
+              data.data.algTypes.resilienceFlag = positive[0]
+              data.data.algTypes.selfFlag = positive[1]
+              data.data.algTypes.achievementFlag = positive[2]
+              data.data.algTypes.emotionFlag = positive[3]
+              data.data.algTypes.relationshipFlag = positive[4]
+              console.log(data.data.algTypes)
+              localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            }
+            // // console.log(data.data.algTypes.mentalDim.toString(2).split(''))
+            // let mental = data.data.algTypes.mentalDim.toString(2).split('').reverse()
+            // data.data.algTypes.depressionFlag = mental[0]
+            // data.data.algTypes.anxietyFlag = mental[1]
+            // data.data.algTypes.forcedFlag = mental[2]
+            // data.data.algTypes.suicideFlag = mental[3]
+            // data.data.algTypes.violenceFlag = mental[4]
+            // data.data.algTypes.ptsdFlag = mental[5]
+            // // data.data.algTypes.zibiFlag = mental[6]
+            // // personalityDim
+            // // 人格分析维度(0x11111由低位到高位分别代表：外向性extroversion、尽责性conscientiousness、神经质nervousness、宜人性agreeableness、开放性openness)
+            // // console.log(data.data.algTypes.personalityDim.toString(2).split(''))
+            // let personality = data.data.algTypes.personalityDim.toString(2).split('').reverse()
+            // data.data.algTypes.extroversionFlag = personality[0]
+            // data.data.algTypes.conscientiousnessFlag = personality[1]
+            // data.data.algTypes.nervousnessFlag = personality[2]
+            // data.data.algTypes.agreeablenessFlag = personality[3]
+            // data.data.algTypes.opennessFlag = personality[4]
+
+            // // positiveDim
+            // // 积极心理维度(0b11111由低到高代表：心理韧性resilience、积极自我self、积极成就achievement、积极情绪emotion、积极关系relationship)
             
-            let positive = data.data.algTypes.positiveDim.toString(2).split('').reverse()
-            data.data.algTypes.resilienceFlag = positive[0]
-            data.data.algTypes.selfFlag = positive[1]
-            data.data.algTypes.achievementFlag = positive[2]
-            data.data.algTypes.emotionFlag = positive[3]
-            data.data.algTypes.relationshipFlag = positive[4]
-            localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
+            // let positive = data.data.algTypes.positiveDim.toString(2).split('').reverse()
+            // data.data.algTypes.resilienceFlag = positive[0]
+            // data.data.algTypes.selfFlag = positive[1]
+            // data.data.algTypes.achievementFlag = positive[2]
+            // data.data.algTypes.emotionFlag = positive[3]
+            // data.data.algTypes.relationshipFlag = positive[4]
+            // localStorage.setItem("algTypes", JSON.stringify(data.data.algTypes));
             
             if (data.data.algTypes) {
               // 是否显示抑郁
@@ -1235,7 +1268,7 @@ export default {
         yArr.push(that.chartData[i].depressionSubScore[0].score);
         jArr.push(that.chartData[i].depressionSubScore[1].score);
         qArr.push(that.chartData[i].depressionSubScore[2].score);
-        lArr.push(that.chartData[i].depressionScore.score);
+        lArr.push(that.chartData[i].depressionScore);
       }
       this.myChartZhe2 = echarts.init(this.$refs.myChartZhe2);
       this.myChartZhe2.setOption({
@@ -1383,7 +1416,7 @@ export default {
         yArr.push(that.chartData[i].anxietySubScore[0].score);
         jArr.push(that.chartData[i].anxietySubScore[1].score);
         qArr.push(that.chartData[i].anxietySubScore[2].score);
-        lArr.push(that.chartData[i].anxietyScore.score);
+        lArr.push(that.chartData[i].anxietyScore);
       }
       this.myChartZhe3 = echarts.init(this.$refs.myChartZhe3);
       this.myChartZhe3.setOption({
@@ -1531,7 +1564,7 @@ export default {
         yArr.push(that.chartData[i].forcedSubScore[0].score);
         jArr.push(that.chartData[i].forcedSubScore[1].score);
         qArr.push(that.chartData[i].forcedSubScore[2].score);
-        lArr.push(that.chartData[i].forcedScore.score);
+        lArr.push(that.chartData[i].forcedScore);
       }
       this.myChartZhe4 = echarts.init(this.$refs.myChartZhe4);
       this.myChartZhe4.setOption({
@@ -1676,10 +1709,10 @@ export default {
       let lArr = [];
       for (let i in that.chartData) {
         xArr.push(that.chartData[i].dateCount);
-        yArr.push(that.chartData[i].suicideSubScore[0].score);
-        jArr.push(that.chartData[i].suicideSubScore[1].score);
-        qArr.push(that.chartData[i].suicideSubScore[2].score);
-        lArr.push(that.chartData[i].suicideScore.score);
+        yArr.push(that.chartData[i].ptsdSubScore[0].score);
+        jArr.push(that.chartData[i].ptsdSubScore[1].score);
+        qArr.push(that.chartData[i].ptsdSubScore[2].score);
+        lArr.push(that.chartData[i].ptsdScore);
       }
       this.myChartZhe5 = echarts.init(this.$refs.myChartZhe5);
       this.myChartZhe5.setOption({
@@ -1732,7 +1765,7 @@ export default {
         ],
         series: [
           {
-            name: that.chartData[0].suicideSubScore[0].name,
+            name: that.chartData[0].ptsdSubScore[0].name,
             type: "bar",
             // barWidth: 16,
             barMaxWidth: 14,
@@ -1771,7 +1804,7 @@ export default {
             }
           },
           {
-            name: that.chartData[0].suicideSubScore[1].name,
+            name: that.chartData[0].ptsdSubScore[1].name,
             type: "bar",
             // barWidth: 16,
             barMaxWidth: 14,
@@ -1785,7 +1818,7 @@ export default {
             data: jArr
           },
           {
-            name: that.chartData[0].suicideSubScore[2].name,
+            name: that.chartData[0].ptsdSubScore[2].name,
             type: "bar",
             // barWidth: 16,
             barMaxWidth: 14,
@@ -1827,7 +1860,7 @@ export default {
         yArr.push(that.chartData[i].violenceSubScore[0].score);
         jArr.push(that.chartData[i].violenceSubScore[1].score);
         qArr.push(that.chartData[i].violenceSubScore[2].score);
-        lArr.push(that.chartData[i].violenceScore.score);
+        lArr.push(that.chartData[i].violenceScore);
       }
       this.myChartZhe6 = echarts.init(this.$refs.myChartZhe6);
       this.myChartZhe6.setOption({
@@ -1975,7 +2008,7 @@ export default {
         yArr.push(that.chartData[i].suicideSubScore[0].score);
         jArr.push(that.chartData[i].suicideSubScore[1].score);
         qArr.push(that.chartData[i].suicideSubScore[2].score);
-        lArr.push(that.chartData[i].suicideScore.score);
+        lArr.push(that.chartData[i].suicideScore);
       }
       this.myChartZhe7 = echarts.init(this.$refs.myChartZhe7);
       this.myChartZhe7.setOption({
@@ -2123,7 +2156,7 @@ export default {
     //     yArr.push(that.chartData[i].violenceSubScore[0].score);
     //     jArr.push(that.chartData[i].violenceSubScore[1].score);
     //     qArr.push(that.chartData[i].violenceSubScore[2].score);
-    //     lArr.push(that.chartData[i].violenceScore.score);
+    //     lArr.push(that.chartData[i].violenceScore);
     //   }
     //   this.myChartZhe8 = echarts.init(this.$refs.myChartZhe8);
     //   this.myChartZhe8.setOption({

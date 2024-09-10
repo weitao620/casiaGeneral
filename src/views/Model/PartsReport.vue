@@ -596,51 +596,71 @@ export default {
       let flag = false;
       // console.log(this.warningStatistic.depressionNum)
       // console.log(this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0)
-      this.pieList = [
-        {
-          name: that.wdPerctList[0].name,
-          value: that.wdPerctList[0].perct,
-          y: that.wdPerctList[0].perct,
+      this.pieList = []
+      let flagNum = 0
+      console.log(this.wdPerctList )
+      for ( let i in that.wdPerctList) {
+        this.pieList.push({
+          name: that.wdPerctList[i].name,
+          value: that.wdPerctList[i].perct,
+          y: that.wdPerctList[i].perct,
           // y: 50,
           num: 0
-        },
-        {
-          name: that.wdPerctList[1].name,
-          value: that.wdPerctList[1].perct,
-          y: that.wdPerctList[1].perct,
-          // y: 10,
-          num: 0
-        },
-        {
-          name: that.wdPerctList[2].name,
-          value: that.wdPerctList[2].perct,
-          y: that.wdPerctList[2].perct,
-          // y: 20,
-          num: 0
-        },
-        {
-          name: that.wdPerctList[3].name,
-          value: that.wdPerctList[3].perct,
-          y: that.wdPerctList[3].perct,
-          // y: 10,
-          num: 0
-        },
-        {
-          name: that.wdPerctList[4].name,
-          value: that.wdPerctList[4].perct,
-          y: that.wdPerctList[4].perct,
-          // y: 10,
-          num: 0
+        })
+        if (that.wdPerctList[i].perct > 0) {
+          flagNum++
         }
-      ];
+      }
+      // this.pieList = [
+      //   {
+      //     name: that.wdPerctList[0].name,
+      //     value: that.wdPerctList[0].perct,
+      //     y: that.wdPerctList[0].perct,
+      //     // y: 50,
+      //     num: 0
+      //   },
+      //   {
+      //     name: that.wdPerctList[1].name,
+      //     value: that.wdPerctList[1].perct,
+      //     y: that.wdPerctList[1].perct,
+      //     // y: 10,
+      //     num: 0
+      //   },
+      //   {
+      //     name: that.wdPerctList[2].name,
+      //     value: that.wdPerctList[2].perct,
+      //     y: that.wdPerctList[2].perct,
+      //     // y: 20,
+      //     num: 0
+      //   },
+      //   {
+      //     name: that.wdPerctList[3].name,
+      //     value: that.wdPerctList[3].perct,
+      //     y: that.wdPerctList[3].perct,
+      //     // y: 10,
+      //     num: 0
+      //   },
+      //   {
+      //     name: that.wdPerctList[4].name,
+      //     value: that.wdPerctList[4].perct,
+      //     y: that.wdPerctList[4].perct,
+      //     // y: 10,
+      //     num: 0
+      //   }
+      // ];
       console.log(this.pieList)
-      if (this.pieList[0].value === 0 &&
-      this.pieList[1].value === 0 &&
-      this.pieList[2].value === 0 &&
-      this.pieList[3].value === 0 &&
-      this.pieList[4].value === 0) {
+      // this.pieList = 
+      console.log(flagNum)
+      if (flagNum === 0) {
         flag = true
       }
+      // if (this.pieList[0].value === 0 &&
+      // this.pieList[1].value === 0 &&
+      // this.pieList[2].value === 0 &&
+      // this.pieList[3].value === 0 &&
+      // this.pieList[4].value === 0) {
+      //   flag = true
+      // }
       this.pieList.forEach((item, index) => {
         item.itemStyle = {
           opacity: 1,
@@ -3604,6 +3624,44 @@ export default {
     },
     async exportMeeting(type) {
       // type:'1' 选择导出 'all':导出所有
+      let that = this;
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      // this.zipFlag = false;
+      console.log("!!!!!!!!!!!!!!!!!!!!!!"+algTypes)
+      console.log(algTypes)
+      if (algTypes) {
+        // 是否显示抑郁
+        that.depressionFlag = algTypes.depressionFlag
+        // 是否显示焦虑
+        that.anxietyFlag = algTypes.anxietyFlag
+        // 是否显示强迫
+        that.forcedFlag = algTypes.forcedFlag
+        // 是否显示PTSD
+        that.ptsdFlag = algTypes.ptsdFlag
+        // 是否显示敌对
+        that.violenceFlag = algTypes.violenceFlag
+        // 是否显示自我伤害
+        that.suicideFlag = algTypes.suicideFlag
+        // // 是否显示自闭
+        // this.zibiFlag = algTypes.zibiFlag
+        // 是否显示大五人格
+        that.extroversionFlag = algTypes.extroversionFlag
+        that.conscientiousnessFlag = algTypes.conscientiousnessFlag
+        that.nervousnessFlag = algTypes.nervousnessFlag
+        that.agreeablenessFlag = algTypes.agreeablenessFlag
+        that.opennessFlag = algTypes.opennessFlag
+
+        // 是否显示心理韧性
+        that.resilienceFlag = algTypes.resilienceFlag
+        // 是否显示积极自我
+        that.selfFlag = algTypes.selfFlag
+        // 是否显示积极成就
+        that.achievementFlag = algTypes.achievementFlag
+        // 是否显示积极情绪
+        that.emotionFlag = algTypes.emotionFlag
+        // 是否显示积极关系
+        that.relationshipFlag = algTypes.relationshipFlag
+      }
       try {
         this.allLoading = true;
         let selectedData = [];
@@ -3836,54 +3894,106 @@ export default {
             return b.riskPerct - a.riskPerct
           })
           // 焦虑（**%），其次分别为：强迫（**%），抑郁（**%），自我伤害（**%），敌对（**%）。
-          let wdArr = [
-            {
-              name: '抑郁',
-              color1: 'rgba(132, 138, 255, 0.6)',
-              color2: 'rgba(162, 176, 255, 0.6)',
-              color3: "rgba(153, 169, 255, 1)",
-              color4: 'rgba(201, 204, 255, 1)',
-              perct: selectedData[i].depressionPerct,
-              info: selectedData[i].depressionInfo
-            },
-            {
-              name: '焦虑',
-              color1: 'rgba(214, 182, 246, 0.6)',
-              color2: 'rgba(225, 203, 246, 0.6)',
-              color3: "rgba(214, 182, 246, 1)",
-              color4: 'rgba(225, 203, 246, 1)',
-              perct: selectedData[i].anxietyPerct,
-              info: selectedData[i].anxietyInfo
-            },
-            {
-              name: '强迫',
-              color1: 'rgba(255, 193, 150, 0.6)',
-              color2: 'rgba(255, 227, 184, 0.6)',
-              color3: "rgba(255, 210, 97, 1)",
-              color4: 'rgba(255, 210, 97, 1)',
-              perct: selectedData[i].forcedPerct,
-              info: selectedData[i].forcedInfo
-            },
-            {
-              name: '自我伤害',
-              color1: 'rgba(255, 146, 186, 0.6)',
-              color2: 'rgba(255, 182, 207, 0.6)',
-              color3: "rgba(255, 178, 206, 1)",
-              color4: 'rgba(255, 207, 224, 1)',
-              perct: selectedData[i].suicidePerct,
-              info: selectedData[i].suicideInfo
-            },
-            {
-              name: '敌对',
-              color1: 'rgba(135, 201, 255, 0.6)',
-              color2: 'rgba(175, 236, 255, 0.6)',
-              color3: "rgba(148, 207, 255, 1)",
-              color4: 'rgba(178, 231, 247, 1)',
-              perct: selectedData[i].violencePerct,
-              info: selectedData[i].violenceInfo
-            }
-          ]
-          console.log(wdArr)
+          let wdStr = []
+          console.log(this.depressionFlag)
+          if (this.depressionFlag == 1) {
+            wdStr.push(
+              {
+                name: '抑郁',
+                color1: 'rgba(132, 138, 255, 0.6)',
+                color2: 'rgba(162, 176, 255, 0.6)',
+                color3: "rgba(153, 169, 255, 1)",
+                color4: 'rgba(201, 204, 255, 1)',
+                perct: selectedData[i].depressionPerct,
+                info: selectedData[i].depressionInfo
+              }
+            )
+          }
+          if (this.anxietyFlag == 1) {
+            wdStr.push(
+              {
+                name: '焦虑',
+                color1: 'rgba(214, 182, 246, 0.6)',
+                color2: 'rgba(225, 203, 246, 0.6)',
+                color3: "rgba(214, 182, 246, 1)",
+                color4: 'rgba(225, 203, 246, 1)',
+                perct: selectedData[i].anxietyPerct,
+                info: selectedData[i].anxietyInfo
+              }
+            )
+          }
+          if (this.forcedFlag == 1) {
+            wdStr.push(
+              {
+                name: '强迫',
+                color1: 'rgba(255, 193, 150, 0.6)',
+                color2: 'rgba(255, 227, 184, 0.6)',
+                color3: "rgba(255, 210, 97, 1)",
+                color4: 'rgba(255, 210, 97, 1)',
+                perct: selectedData[i].forcedPerct,
+                info: selectedData[i].forcedInfo
+              }
+            )
+          }
+          if (this.ptsdFlag == 1) {
+            wdStr.push(
+              {
+                name: 'PTSD',
+                color1: 'rgba(255, 163, 163, 0.6)',
+                color2: 'rgba(255, 163, 163, 0.6)',
+                color3: '#FFA3A3',
+                color4: 'rgba(255, 207, 224, 1)',
+                perct: selectedData[i].ptsdPerct,
+                info: selectedData[i].ptsdInfo
+              }
+            )
+          }
+          if (this.violenceFlag == 1) {
+            wdStr.push(
+              {
+                name: '敌对',
+                color1: 'rgba(135, 201, 255, 0.6)',
+                color2: 'rgba(175, 236, 255, 0.6)',
+                color3: "rgba(148, 207, 255, 1)",
+                color4: 'rgba(178, 231, 247, 1)',
+                perct: selectedData[i].violencePerct,
+                info: selectedData[i].violenceInfo
+              }
+            )
+          }
+          if (this.suicideFlag == 1) {
+            wdStr.push(
+              {
+                name: '自我伤害',
+                color1: 'rgba(255, 146, 186, 0.6)',
+                color2: 'rgba(255, 182, 207, 0.6)',
+                color3: "rgba(255, 178, 206, 1)",
+                color4: 'rgba(255, 207, 224, 1)',
+                perct: selectedData[i].suicidePerct,
+                info: selectedData[i].suicideInfo
+              }
+            )
+          }
+          if (this.zibiFlag == 1) {
+            wdStr.push(
+              {
+                name: '自闭',
+                color1: 'rgba(189, 245, 184, 1)',
+                color2: 'rgba(189, 245, 184, 1)',
+                color3: '#BDF5B8',
+                color4: 'rgba(255, 207, 224, 1)',
+                num: selectedData[i].zibiNum,
+                perct: selectedData[i].zibiPerct,
+                riskNum: selectedData[i].zibiNum,
+                level1: selectedData[i].zibiMildNum,
+                level2: selectedData[i].zibiModerateNum,
+                level3: selectedData[i].zibiSevereNum,
+                info: zibiInfo
+              }
+            )
+          }
+          let wdArr = wdStr
+          
           let wdArrs = wdArr.sort((a, b) => {
             return b.perct - a.perct
           })
@@ -3906,6 +4016,7 @@ export default {
           this.partsStr3 = wstr
           console.log(wdArr)
           this.wdPerctList = wdArr
+          console.log(this.wdPerctList)
           let ecList = []
           this.wdPerctList.sort((a, b) => {
             return b.perct - a.perct
