@@ -1077,9 +1077,7 @@ export default {
       }
 
       this.$http
-        .get(Url + "/aimw/report/listReports", {
-          params: param
-        })
+        .post(Url + "/aimw/report/listReports", param )
         .then(res => {
           let data = res.data.data;
           if (res.data.code == 0) {
