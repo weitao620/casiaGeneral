@@ -16,6 +16,7 @@ export default new Vuex.Store({
     mqttUpdate: false,
     sysType: 1,
     partsFlag: false,
+    partsFourFlag: false,
     oneTotalFlag: false
   },
   mutations: {
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     },
     setPartsFlag(state, data) {
       state.partsFlag = data;
+    },
+    setPartsFourFlag(state, data) {
+      state.partsFourFlag = data;
     },
     setOneTotalFlag(state, data) {
       state.oneTotalFlag = data;
@@ -89,6 +93,9 @@ export default new Vuex.Store({
     },
     getPartsFlag(state) {
       return state.partsFlag;
+    },
+    getPartsFourFlag(state) {
+      return state.partsFourFlag;
     },
     getOneTotalFlag(state) {
       return state.OneTotalFlag;

@@ -442,9 +442,9 @@ export default {
       class: [],
       zipFlag: false,
 
-      organizationName: '北京',
-      startDate: '2024年10月01日',
-      endDate: '2024年11月01日',
+      organizationName: '',
+      startDate: '',
+      endDate: '',
       riskPage: 7,
       // ecCount: 0,
       wdPerctList: [],
@@ -4371,7 +4371,7 @@ export default {
     position: relative;
     background: #ffffff !important;
     overflow: hidden;
-    border:1px solid #ccc;
+    // border:1px solid #ccc;
 
     .table-border{
       position: absolute;

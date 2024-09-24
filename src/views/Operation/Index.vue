@@ -1250,8 +1250,8 @@ export default {
         currentPage: page,
         pageSize: that.limit,
         name: that.formSearch.name,
-        startTime: star,
-        endTime: end,
+        startDate: star,
+        endDate: end,
         provinceId: that.formSearch.region,
         cityId: that.formSearch.city,
         districtId: that.formSearch.district

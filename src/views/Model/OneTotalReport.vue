@@ -4519,7 +4519,7 @@ export default {
     position: relative;
     background: #ffffff !important;
     overflow: hidden;
-    border:1px solid #ccc;
+    // border:1px solid #ccc;
 
     .table-border{
       position: absolute;

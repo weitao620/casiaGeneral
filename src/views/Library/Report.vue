@@ -515,6 +515,11 @@
         :gList="partList"
       ></PartsReport>
     </div>
+    <div style="height:0;width:100%;overflow:hidden">
+      <PartsReportFour
+        :gList="partList"
+      ></PartsReportFour>
+    </div>
   </div>
 </template>
 
@@ -522,6 +527,7 @@
 // import wordFile from "../Details/WordFile.vue";
 
 import PartsReport from "../Model/PartsReport.vue";
+import PartsReportFour from "../Model/PartsReportFour.vue";
 import personReport from "../Model/ModelReport.vue";
 import someReports from "../Model/ExportPdf.vue";
 import { mapGetters, mapMutations } from "vuex";
@@ -537,7 +543,8 @@ export default {
   components: {
     personReport,
     someReports,
-    PartsReport
+    PartsReport,
+    PartsReportFour
     // wordFile
   },
   data() {
@@ -674,7 +681,9 @@ export default {
         required: 0
       },
       wordList: [],
-      trainFlag: true
+      trainFlag: true,
+      // organizationObj: {}
+      isFourFlag: false
     };
   },
   computed: {
@@ -726,7 +735,8 @@ export default {
       "setGradesFlag",
       "setPersonFlag",
       "setSomePdfFlag",
-      "setPartsFlag"
+      "setPartsFlag",
+      "setPartsFourFlag"
     ]),
     renderContent(h, { node, data, store }) {
       if (data.Mark == 1) {
@@ -2579,7 +2589,6 @@ export default {
           that.studyList1.push({ Name: this.studyList[i].Name, Pid: this.studyList[i].Pid });
         }
       }
-      
       this.dialogPartFrame = true
       
       // this.pdfList = []
@@ -2652,12 +2661,59 @@ export default {
     },
     orgChange(val) {
       console.log(val)
+      this.isFourFlag = false
+      let orgObj = {}
       for (let i in this.studyList) {
         if (this.studyList[i].Pid == val) {
+          
           this.organizationName = this.studyList[i].Name
+          this.organizationPid = this.studyList[i].Pid
+          orgObj = this.studyList[i]
         }
       }
+      console.log(orgObj)
+      console.log(this.treeData)
+      if (orgObj.list && orgObj.list.length > 0) {
+        console.log(1)
+      } else {
+        this.organizationObj = orgObj
+        console.log(2)
+        if (this.getParentsById(this.treeData, this.organizationPid).length == 0) {
+          console.log(3)
+        } else {
+
+          let oName = this.getParentsById(this.treeData, this.organizationPid).join('-') + '-' + this.organizationName
+          console.log(oName)
+          this.organizationName = oName
+          this.isFourFlag = true
+          console.log(4)
+        }
+        
+      }
       this.organizationFlag = false
+    },
+    getParentsById(tree, id, parents = []) {
+      let that = this;
+      // 遍历当前节点
+      for (const node of tree) {
+        if (node.Pid === id) {
+          // 如果找到节点，返回已经找到的父节点
+          return parents;
+        } else if (node.list && node.list.length > 0) {
+          // 如果有子节点，将当前节点加入父节点数组，并递归查找
+          if(node.Mark == 1) {
+            parents.push(node.Name);
+          }
+          const foundParents = that.getParentsById(node.list, id, parents);
+          if (foundParents) {
+            return foundParents;
+          }
+          // 如果没有找到，移除刚刚加入的节点
+          parents.pop();
+        }
+      }
+      // 如果遍历完成未找到，返回null
+      return null;
     },
     // 下载报告
     partsSub() {
@@ -2688,11 +2744,18 @@ export default {
         organizationName: this.organizationName,
         startDate: star,
         endDate: end,
-        type: that.partsForm.type == 2 ? Number(1) : Number(0)
+        type: that.partsForm.type == 2 ? Number(1) : Number(0),
+        isFourFlag: this.isFourFlag
       };
       console.log(param)
       this.partList = param
-      this.setPartsFlag(true);
+      // return 
+      if (this.isFourFlag) {
+        this.setPartsFourFlag(true);
+      } else {
+        this.setPartsFlag(true);
+      }
+      
       this.dialogPartFrame = false
       // return
       
@@ -3180,7 +3243,7 @@ export default {
             }
             .el-input__inner {
               border: 0.01rem solid #dcdfe6;
-              height: 0.36rem;
+              height: 0.36rem !important;
               line-height: 0.36rem;
               padding: 0 0.1rem;
             }
@@ -3195,7 +3258,7 @@ export default {
             top: 0.01rem;
             background: #ffffff;
             width: auto;
-            height: 0.34rem;
+            height: 0.28rem;
             bottom: 0.01rem;
             display: flex;
             align-items: center;
