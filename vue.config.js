@@ -7,7 +7,7 @@ module.exports = {
     // 设置主机地址
     host: '0.0.0.0',
     // 设置默认端口
-    port: 8088,
+    port: 8080,
     // 设置代理
     proxy: {
       '/api': {
@@ -15,7 +15,7 @@ module.exports = {
         // target: 'http://10.0.6.89:6120',
         // target: "http://172.18.40.12",
         // target: "http://36.110.172.217:6222/", // 通用
-        target: "http://36.110.172.217:16666/", // 通用
+        target: "http://36.110.172.216:12300/", // 通用
         // target: "https://ipathy.net/aimwmb/",
         // target: "http://36.110.172.216:11800/",
         // target: "http://36.110.172.216:40004/",

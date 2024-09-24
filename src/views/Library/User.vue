@@ -1111,9 +1111,7 @@ export default {
         passport: that.formSearch.passport
       };
       this.$http
-        .get(Url + "/aimw/user/listUsersInfo", {
-          params: param
-        })
+        .post(Url + "/aimw/user/listUsersInfo", param)
         .then(res => {
           let data = res.data.data;
           if (res.data.code == 0) {

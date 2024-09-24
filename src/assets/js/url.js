@@ -8,7 +8,7 @@ function find(str, cha, num) {
 }
 var host = window.location.href;
 
-if (host.indexOf('localhost') != -1 || host.indexOf('10.0.6.234') != -1) {
+if (host.indexOf('localhost') != -1 || host.indexOf('http://192.168.0.111') != -1) {
   url = '/api';
 }
 let index = find(host, '/', 2);

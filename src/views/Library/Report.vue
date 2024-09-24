@@ -931,7 +931,8 @@ export default {
     },
     isService(val) {
       let routeData = this.$router.resolve({
-        name: "detailsreport",
+        // name: "detailsreport",
+        name: "detailsreportmobile",
         params: { userID: val.reportId }
       });
       window.open(routeData.href, "_blank");
@@ -1076,9 +1077,7 @@ export default {
       }
 
       this.$http
-        .get(Url + "/aimw/report/listReports", {
-          params: param
-        })
+        .post(Url + "/aimw/report/listReports", param )
         .then(res => {
           let data = res.data.data;
           if (res.data.code == 0) {
