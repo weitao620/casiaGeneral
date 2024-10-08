@@ -193,6 +193,16 @@
               导出团体报告
             </el-button>
           </div>
+          <div class="el_two" v-if="tabActive == 0 && power26">
+            <el-button
+              class="el_btn_two"
+              @click="apartsReportDui"
+              type="primary"
+            >
+              <i class="iconfont icon-icon-"></i>
+              导出团体对比报告
+            </el-button>
+          </div>
           <div class="el_two" v-if="tabActive == 0 && power15">
             <el-button
               class="el_btn_two"
@@ -510,6 +520,63 @@
         <el-button @click="dialogPartFrame = false">取 消</el-button>
       </div>
     </el-dialog>
+    <el-dialog
+      class="fix_pass fix_pass3"
+      :close-on-click-modal="false"
+      title="导出团体对比报告"
+      :visible.sync="dialogPartFrameDui"
+    >
+      <el-form ref="partsFormDui" :model="partsFormDui">
+        <el-form-item required class="time_data" label="测评时间段:">
+          <el-date-picker
+            v-model="partsFormDui.time"
+            type="daterange"
+            range-separator="~"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="timeChange"
+          >
+          </el-date-picker>
+          <div class="tip_left" v-show="pTimeFlagDui">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择测评时间段
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item required label="选择对比团体:" style="margin-bottom: 0;">
+         
+        </el-form-item>
+        <el-form-item required label="团队一:">
+          <!-- studyList1 -->
+          <el-select v-model="partsFormDui.organization1" @change="orgChangeDui1" placeholder="请选择某一个团体或部门" style="width:100%">
+            <el-option v-for="item in studyListDui1" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+          </el-select>
+          <div class="tip_left" v-show="organizationFlagDui1">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择团队一
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item required label="团队二:">
+          <!-- studyList1 -->
+          <el-select v-model="partsFormDui.organization2" @change="orgChangeDui2" placeholder="请选择某一个团体或部门" style="width:100%">
+            <el-option v-for="item in studyListDui2" :key="item.Pid" :label="item.Name" :value="item.Pid"></el-option>
+          </el-select>
+          <div class="tip_left" v-show="organizationFlagDui2">
+            <div class="tip_msg">
+              <img src="../../assets/images/x.png" alt="" />
+              请选择团队二
+            </div>
+          </div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="partsSubDui">下 载</el-button>
+        <el-button @click="dialogPartFrameDui = false">取 消</el-button>
+      </div>
+    </el-dialog>
     <div style="height:0;width:100%;overflow:hidden">
       <PartsReport
         :gList="partList"
@@ -520,6 +587,11 @@
         :gList="partList"
       ></PartsReportFour>
     </div>
+    <div style="height:0;width:100%;overflow:hidden">
+      <PartsReportDui
+        :gList="partListDui"
+      ></PartsReportDui>
+    </div>
   </div>
 </template>
 
@@ -528,6 +600,7 @@
 
 import PartsReport from "../Model/PartsReport.vue";
 import PartsReportFour from "../Model/PartsReportFour.vue";
+import PartsReportDui from "../Model/PartsReportDui.vue";
 import personReport from "../Model/ModelReport.vue";
 import someReports from "../Model/ExportPdf.vue";
 import { mapGetters, mapMutations } from "vuex";
@@ -544,24 +617,45 @@ export default {
     personReport,
     someReports,
     PartsReport,
-    PartsReportFour
+    PartsReportFour,
+    PartsReportDui
     // wordFile
   },
   data() {
     return {
       partList: {},
+      partListDui: {},
       pTimeFlag: false,
+      pTimeFlagDui: false,
       organizationFlag: false,
+      organizationFlagDui1: false,
+      organizationFlagDui2: false,
       pTypeFlag: false,
+      pTypeFlagDui: false,
       partsForm: {
         time: '',
         organization: '',
         type: 1
       },
+      partsFormDui: {
+        time: '',
+        organization1: '',
+        organization2: ''
+      },
+      pTimeFlagDui: false,
       organizationName: '',
+      organizationPid: '',
+
+      organizationNameDui1: '',
+      organizationPidDui1: '',
+
+      organizationNameDui2: '',
+      organizationPidDui2: '',
+
       department: '',
       departmentName: '',
       dialogPartFrame: false,
+      dialogPartFrameDui: false,
       schoolOrg1: [],
       checkAll: false,
       isIndeterminate: false,
@@ -668,6 +762,10 @@ export default {
       violenceFlag: 0,
       personalityFlag: 0,
       studyList: [],
+      studyListDui1: [],
+      studyListDui2: [],
+
+      studyList1: [],
       studyList1: [],
       fid30207: {
         enable: 1,
@@ -736,7 +834,8 @@ export default {
       "setPersonFlag",
       "setSomePdfFlag",
       "setPartsFlag",
-      "setPartsFourFlag"
+      "setPartsFourFlag",
+      "setPartsDuiFlag"
     ]),
     renderContent(h, { node, data, store }) {
       if (data.Mark == 1) {
@@ -800,6 +899,7 @@ export default {
                 return Number(a.Pid) - Number(b.Pid);
               });
               this.treeData = schoolOrg;
+              console.log(this.studyList)
               this.tabChange(0);
             }
           } else {
@@ -827,6 +927,7 @@ export default {
     recursiveFunction2(data) {
       let that = this;
       that.getStr2(data);
+      console.log(that.studyList)
     },
     clearTrees() {
       this.formSearch.department = "";
@@ -1145,9 +1246,7 @@ export default {
       }
 
       this.$http
-        .get(Url + "/aimw/report/listReports", {
-          params: param
-        })
+        .post(Url + "/aimw/report/listReports", param)
         .then(res => {
           let data = res.data.data;
           if (res.data.code == 0) {
@@ -2572,6 +2671,65 @@ export default {
       }
       return num;
     },
+    apartsReportDui() {
+      console.log('导出团体对比报告')
+      let that = this;
+      this.addChange3Dui();
+      this.pTimeFlagDui = this.pTypeFlagDui = this.organizationFlagDui1 = this.organizationFlagDui2 = false;
+      this.partsFormDui = {
+        time: '',
+        organization1: '',
+        organization2: ''
+      }
+      console.log(this.studyList)
+      that.studyListDui1 = []
+      for (let i in this.studyList) {
+        // if (this.studyList[i].list) {
+          that.studyListDui1.push({ Name: this.studyList[i].Name, Pid: this.studyList[i].Pid });
+        // }
+      }
+      that.studyListDui2 = []
+      for (let i in this.studyList) {
+        // if (this.studyList[i].list) {
+          that.studyListDui2.push({ Name: this.studyList[i].Name, Pid: this.studyList[i].Pid });
+        // }
+      }
+      console.log(that.studyListDui1)
+      console.log(that.studyListDui2)
+      this.dialogPartFrameDui = true
+    },
+    addChange3Dui() {
+      let that = this;
+      this.addChangeFlag = true;
+      var param = {
+        passport: localStorage.getItem("passport")
+      };
+      this.$http
+        .get(Url + "/aimw/organization/listOrgTreeInfo", {
+          params: param
+        })
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            if (data) {
+              this.addChangeFlag = true;
+              let schoolOrg = JSON.parse(data.data).organization;
+              this.studyList = []
+              this.recursiveFunction2(schoolOrg)
+              this.studyList.sort((a, b) => {
+                return Number(a.Pid) - Number(b.Pid);
+              });
+              this.treeData = schoolOrg;
+              // this.getList(that.currentPage)
+            }
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
     apartsReport() {
       console.log('导出团体报告')
       let that = this;
@@ -2583,12 +2741,14 @@ export default {
         type: 1
       }
       that.studyList1 = []
+      console.log(this.studyList)
       for (let i in this.studyList) {
         if (this.studyList[i].list) {
           console.log(3)
           that.studyList1.push({ Name: this.studyList[i].Name, Pid: this.studyList[i].Pid });
         }
       }
+      
       this.dialogPartFrame = true
       
       // this.pdfList = []
@@ -2692,6 +2852,127 @@ export default {
       }
       this.organizationFlag = false
     },
+    orgChangeDui1(val) {
+      console.log(val)
+      // this.studyListDui2 = JSON.parse(JSON.stringify(this.studyList))
+      // let orgObj = {}
+      // if (this.organizationPidDui1 == '') {
+      //   this.studyList1 = JSON.parse(JSON.stringify(this.studyList))
+      // }
+      for (let i in this.studyListDui1) {
+        if (this.studyListDui1[i].Pid == val) {
+          this.organizationNameDui1 = this.studyListDui1[i].Name
+          this.organizationPidDui1 = this.studyListDui1[i].Pid
+          // orgObj = this.studyListDui1
+        }
+        // if (this.studyListDui1[i].Pid != val) {
+        //   this.studyList2.push(this.studyList1[i])
+        // }
+      }
+      // console.log(orgObj)
+      console.log(this.studyListDui1)
+      console.log(this.studyListDui2)
+      this.studyListDui2 = []
+      for (let i in this.studyList) {
+        if (this.studyList[i].Pid != val) {
+          this.studyListDui2.push(this.studyList[i])
+        }
+      }
+      this.partsFormDui.organization2 = ''
+      console.log(this.organizationPidDui2)
+      console.log(val)
+      if (this.organizationPidDui2 != '' && val == this.organizationPidDui2) {
+        this.partsFormDui.organization2 = ''
+        this.organizationPidDui2 = ''
+        this.$forceUpdate();
+      }
+      console.log(this.studyListDui2)
+      // if (orgObj.list && orgObj.list.length > 0) {
+      //   console.log(1)
+      // } else {
+      //   this.organizationObj = orgObj
+      //   console.log(2)
+      //   if (this.getParentsById(this.treeData, this.organizationPid).length == 0) {
+      //     console.log(3)
+      //   } else {
+
+      //     let oName = this.getParentsById(this.treeData, this.organizationPid).join('-') + '-' + this.organizationName
+      //     console.log(oName)
+      //     this.organizationName = oName
+      //     this.isFourFlag = true
+      //     console.log(4)
+      //   }
+        
+      // }
+      this.organizationFlagDui1 = false
+    },
+    orgChangeDui2(val) {
+      console.log(val)
+      // if (this.organizationPidDui2 == '') {
+      //   this.studyList2 = JSON.parse(JSON.stringify(this.studyList))
+      // }
+      for (let i in this.studyListDui2) {
+        if (this.studyListDui2[i].Pid == val) {
+          this.organizationNameDui2 = this.studyListDui2[i].Name
+          this.organizationPidDui2 = this.studyListDui2[i].Pid
+          // orgObj = this.studyListDui1
+        }
+        // if (this.studyListDui1[i].Pid != val) {
+        //   this.studyList2.push(this.studyList1[i])
+        // }
+      }
+      // console.log(orgObj)
+      console.log(this.studyListDui1)
+      console.log(this.studyListDui2)
+      // if (this.partsFormDui.organization1 == '') {
+        // this.studyListDui1 = []
+        // for (let i in this.studyList) {
+        //   if (this.studyList[i].Pid != val) {
+        //     this.studyListDui1.push(this.studyList[i])
+        //   }
+        // }
+        // this.partsFormDui.organization2 = ''
+        console.log(this.organizationPidDui1)
+        console.log(val)
+        if (this.organizationPidDui1 != '' && val == this.organizationPidDui1) {
+          this.partsFormDui.organization1 = ''
+          this.organizationPidDui1 = ''
+          this.$forceUpdate();
+        }
+        console.log(this.studyListDui1)
+      // }
+      
+      // this.isFourFlag = false
+      // let orgObj = {}
+      // for (let i in this.studyList) {
+      //   if (this.studyList[i].Pid == val) {
+      //     this.organizationNameDui2 = this.studyList[i].Name
+      //     this.organizationPidDui2 = this.studyList[i].Pid
+      //     orgObj = this.studyList[i]
+      //   }
+      // }
+      // console.log(orgObj)
+      
+      // // console.log(this.treeData)
+      // // if (orgObj.list && orgObj.list.length > 0) {
+      // //   console.log(1)
+      // // } else {
+      // //   this.organizationObj = orgObj
+      // //   console.log(2)
+      // //   if (this.getParentsById(this.treeData, this.organizationPid).length == 0) {
+      // //     console.log(3)
+      // //   } else {
+
+      // //     let oName = this.getParentsById(this.treeData, this.organizationPid).join('-') + '-' + this.organizationName
+      // //     console.log(oName)
+      // //     this.organizationName = oName
+      // //     this.isFourFlag = true
+      // //     console.log(4)
+      // //   }
+        
+      // // }
+      this.organizationFlagDui2 = false
+    },
     getParentsById(tree, id, parents = []) {
       let that = this;
       // 遍历当前节点
@@ -2714,6 +2995,74 @@ export default {
       }
       // 如果遍历完成未找到，返回null
       return null;
+    },
+    // 下载对比报告
+    partsSubDui() {
+      var that = this;
+      console.log(this.partsFormDui)
+      this.pTimeFlagDui = this.pTypeFlagDui = this.organizationFlagdui1 = this.organizationFlagdui2 = false;
+      if (that.partsFormDui.time == '') {
+        this.pTimeFlagDui = true;
+        return false;
+      }
+      if (that.partsFormDui.organization1 == '') {
+        this.organizationFlagDui1 = true;
+        return false;
+      }
+      if (that.partsFormDui.organization2 == '') {
+        this.organizationFlagDui2 = true;
+        return false;
+      }
+      let star = "";
+      let end = "";
+      if (that.partsFormDui.time != "" && that.partsFormDui.time) {
+        star =
+          that.formTimes(that.partsFormDui.time[0]).replace(/-/g, "") +
+          "000000";
+        end =
+          that.formTimes(that.partsFormDui.time[1]).replace(/-/g, "") +
+          "235959";
+      }
+      
+      let param = {
+        organizationA: this.partsFormDui.organization1,
+        organizationB: this.partsFormDui.organization2,
+        departmentNameA: this.organizationNameDui1,
+        departmentNameB: this.organizationNameDui2,
+        startDate: star,
+        endDate: end
+      };
+      console.log(param)
+      this.partListDui = param
+      // return 
+      this.setPartsDuiFlag(true);
+      // if (this.isFourFlag) {
+      //   this.setPartsFourFlag(true);
+      // } else {
+      //   this.setPartsFlag(true);
+      // }
+      
+      this.dialogPartFrameDui = false
+      // return
+      
+      // if (this.department == "") {
+      //   this.frameFlag = true;
+      //   return false;
+      // }
+      // if (this.partsForm.reason == "") {
+      //   this.reasonFlag = true;
+      //   return false;
+      // }
+      // let checkArr = []
+      // for (let i in this.checkList) {
+      //   checkArr.push({ passport: this.checkList[i].passport });
+      // }
+      // for (let i in this.studyList) {
+      //   if (this.studyList[i].Pid == this.department) {
+      //     this.departmentName = this.studyList[i].Name
+      //   }
+      // }
+      
     },
     // 下载报告
     partsSub() {
