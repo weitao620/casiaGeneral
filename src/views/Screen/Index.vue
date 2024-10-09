@@ -144,7 +144,7 @@
                   v-for="(items, indexs) in fiveList"
                   :key="items.frame"
                 >
-                  <div slot="content">
+                  <div slot="content" class="tooltipss">
                     <div class="top_title">预警因子</div>
                     <div class="c_pies">
                       <span
@@ -489,7 +489,7 @@
                 <div class="huml_p_li">
                   <div class="huml_pl_name">反社会</div>
 
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">反社会</div>
                       <div class="c_pies">
@@ -553,7 +553,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">完美主义</div>
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">完美主义</div>
                       <div class="c_pies">
@@ -617,7 +617,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">攻击性</div>
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">攻击性</div>
                       <div class="c_pies">
@@ -682,7 +682,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">自恋</div>
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">自恋</div>
                       <div class="c_pies">
@@ -744,7 +744,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">边缘</div>
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">边缘</div>
                       <div class="c_pies">
@@ -806,7 +806,7 @@
                 </div>
                 <div class="huml_p_li">
                   <div class="huml_pl_name">偏执</div>
-                  <el-tooltip effect="light" placement="top">
+                  <el-tooltip class="tooltipss" effect="light" placement="top">
                     <div slot="content">
                       <div class="top_title">偏执</div>
                       <div class="c_pies">
@@ -3504,9 +3504,9 @@ export default {
                 params.seriesName
               }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                 params.color
-              };"></span>${(params.series[params.seriesIndex].pieData.value /
+              };"></span>${Math.round((params.series[params.seriesIndex].pieData.value /
                 100) *
-                this.participationNum}`;
+                this.participationNum)}`;
             }
           }
         };
@@ -3516,7 +3516,7 @@ export default {
             // lineHeight: nowSize(18),
             color: sexColor[index],
             overflow: "none",
-            formatter: `{c|${this.sexList[index].value / 100 * that.participationNum}}\n{b|{b}：}{d|{d}%}`, // 用\n来换行
+            formatter: `{c|${Math.round(this.sexList[index].value / 100 * that.participationNum)}}\n{b|{b}：}{d|{d}%}`, // 用\n来换行
             rich: {
               b: {
                 fontSize: nowSize(12),
@@ -3609,9 +3609,9 @@ export default {
 </script>
 <style lang="less">
 .el-tooltip__popper.is-light {
-  background: rgba(5, 16, 62, 1);
-  border: 0.01rem solid rgba(138, 184, 255, 1);
-  color: #fff;
+  background: rgba(5, 16, 62, 1) !important;
+  border: 0.01rem solid rgba(138, 184, 255, 1) !important;
+  color: #fff !important;
   .top_title {
     font-size: 0.2rem;
     font-family: SourceHanSansCN-Regular, SourceHanSansCN;

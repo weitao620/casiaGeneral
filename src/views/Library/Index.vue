@@ -66,7 +66,7 @@
                   <i class="el-icon-top-right stxt_r" v-else></i>
                   相较于上月
                 </div>
-                <div class="per_more" @click="toReport">了解更多 →</div>
+                <div class="per_more" v-if="power22" @click="toReport">了解更多 →</div>
               </div>
               <div class="sur_right" id="myChartGauge" ref="myChartGauge"></div>
             </div>
@@ -434,6 +434,7 @@ export default {
       power1: false,
       power11: false,
       power2: false,
+      power22: false,
       power3: false,
       power4: false,
       power5: false,
@@ -777,6 +778,7 @@ export default {
       this.power2 = power.includes(20000); // 最近十条数据
       this.power3 = power.includes(20101); // 用户查看
       this.power4 = power.includes(20106); // 游客查看
+      this.power22 = power.includes(20000); // 评估报告
     },
     isService(val) {
       let routeData = this.$router.resolve({
