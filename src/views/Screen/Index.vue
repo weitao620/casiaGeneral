@@ -3609,8 +3609,8 @@ export default {
 </script>
 <style lang="less">
 .el-tooltip__popper.is-light {
-  background: rgba(5, 16, 62, 1);
-  border: 0.01rem solid rgba(138, 184, 255, 1);
+  background: rgba(5, 16, 62, 1) !important;
+  border: 0.01rem solid rgba(138, 184, 255, 1) !important;
   color: #fff;
   .top_title {
     font-size: 0.2rem;
