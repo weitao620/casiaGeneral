@@ -171,6 +171,8 @@ export default {
                 if (data.data.userAuth == '') {
                   data.data.userAuth = JSON.stringify(obja)
                 } else {
+                  console.log(data.data.userAuth)
+                  console.log(JSON.parse(data.data.userAuth))
                   if (JSON.parse(data.data.userAuth).menuAuthID) {
 
                   } else {
