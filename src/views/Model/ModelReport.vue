@@ -1972,546 +1972,552 @@ export default {
             }
           ]
         });
-        this.myChartLds5 = echarts.init(
-          document.getElementById("myChartLds5")
-        );
-        this.myChartLds5.setOption({
-          tooltip: {
-            show: false,
-            padding: 10,
-            axisPointer: {
-              type: "shadow"
+        if (document.getElementById("myChartLds5") != null) {
+          this.myChartLds5 = echarts.init(
+            document.getElementById("myChartLds5")
+          );
+          this.myChartLds5.setOption({
+            tooltip: {
+              show: false,
+              padding: 10,
+              axisPointer: {
+                type: "shadow"
+              },
+              backgroundColor: "#fff",
+              textStyle: {
+                color: "#5B6C89"
+              },
+              extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
             },
-            backgroundColor: "#fff",
-            textStyle: {
-              color: "#5B6C89"
-            },
-            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
-          },
-          radar: [
-            {
-              indicator: [
-                {
-                  name: that.details.sysList[3].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[3].subDim[1].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[3].subDim[2].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                }
-              ],
-              center: ["50%", "70%"],
-              radius: "100%",
-              splitNumber: 3,
-              name: {
-                formatter: "",
-                textStyle: {
-                  color: "#354B70"
-                }
-              },
-              splitArea: {
-                areaStyle: {
-                  color: [
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  type: "dashed",
-                  color: [
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLabel: {
-                show: true,
-                color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
-                formatter: function(value, index) {
-                  return "{yxStyle" + index + "|" + index + "}";
-                },
-                rich: {
-                  yxStyle0: {
-                    color: "#00C0FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+            radar: [
+              {
+                indicator: [
+                  {
+                    name: that.details.sysList[3].subDim[0].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle1: {
-                    color: "#006cff",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[3].subDim[1].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle2: {
-                    color: "#6671FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[3].subDim[2].name,
+                    max: 3,
+                    axisLabel: { show: false }
+                  }
+                ],
+                center: ["50%", "70%"],
+                radius: "100%",
+                splitNumber: 3,
+                name: {
+                  formatter: "",
+                  textStyle: {
+                    color: "#354B70"
+                  }
+                },
+                splitArea: {
+                  areaStyle: {
+                    color: [
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLine: {
+                  show: false
+                },
+                splitLine: {
+                  lineStyle: {
+                    type: "dashed",
+                    color: [
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLabel: {
+                  show: true,
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                  height: 32,
+                  formatter: function(value, index) {
+                    return "{yxStyle" + index + "|" + index + "}";
                   },
-                  yxStyle3: {
-                    color: "#FE5FB8",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  rich: {
+                    yxStyle0: {
+                      color: "#00C0FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle1: {
+                      color: "#006cff",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle2: {
+                      color: "#6671FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle3: {
+                      color: "#FE5FB8",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    }
                   }
                 }
               }
-            }
-          ],
-          legend: {
-            left: "center",
-            bottom: "0",
-            icon: "circle",
-            itemWidth: 10,
-            itemHeight: 10,
-            itemGap: 40,
-            textStyle: {
-              color: "#354B70"
-            },
-            data: [
-              that.details.sysList[3].subDim[0].name,
-              that.details.sysList[3].subDim[1].name,
-              that.details.sysList[3].subDim[2].name
-            ]
-          },
-          series: [
-            {
-              name: "",
-              type: "radar",
-              animation: false,
-              color: ["rgba(0,117,255,0.1)"],
-              emphasis: {
-                lineStyle: {
-                  width: 2,
-                  color: "rgba(0, 117, 255, 0.6)"
-                }
+            ],
+            legend: {
+              left: "center",
+              bottom: "0",
+              icon: "circle",
+              itemWidth: 10,
+              itemHeight: 10,
+              itemGap: 40,
+              textStyle: {
+                color: "#354B70"
               },
               data: [
-                {
-                  value: [
-                    that.details.sysList[3].subDim[0].score,
-                    that.details.sysList[3].subDim[1].score,
-                    that.details.sysList[3].subDim[2].score
-                  ],
-                  name: "本次得分",
-                  symbol: "circle",
-                  symbolSize: 0,
-                  itemStyle: {
-                    color: "#58B5FF"
-                  },
-                  // // 在圆点上显示相关数据
-                  // label: {
-                  //   show: true,
-                  //   color: 'rgba(147, 207, 255, 1)',
-                  //   fontSize: nowSize(12)
-                  // },
-                  areaStyle: {
-                    opacity: 1,
-                    color: {
-                      type: "linear",
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [
-                        {
-                          offset: 0,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        },
-                        {
-                          offset: 1,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        }
-                      ],
-                      globalCoord: false
-                    }
-                  },
-                  lineStyle: {
-                    width: 1,
-                    color: '#58B5FF'
-                  }
-                }
+                that.details.sysList[3].subDim[0].name,
+                that.details.sysList[3].subDim[1].name,
+                that.details.sysList[3].subDim[2].name
               ]
-            }
-          ]
-        });
-        this.myChartLds6 = echarts.init(
-          document.getElementById("myChartLds6")
-        );
-        this.myChartLds6.setOption({
-          tooltip: {
-            show: false,
-            padding: 10,
-            axisPointer: {
-              type: "shadow"
             },
-            backgroundColor: "#fff",
-            textStyle: {
-              color: "#5B6C89"
+            series: [
+              {
+                name: "",
+                type: "radar",
+                animation: false,
+                color: ["rgba(0,117,255,0.1)"],
+                emphasis: {
+                  lineStyle: {
+                    width: 2,
+                    color: "rgba(0, 117, 255, 0.6)"
+                  }
+                },
+                data: [
+                  {
+                    value: [
+                      that.details.sysList[3].subDim[0].score,
+                      that.details.sysList[3].subDim[1].score,
+                      that.details.sysList[3].subDim[2].score
+                    ],
+                    name: "本次得分",
+                    symbol: "circle",
+                    symbolSize: 0,
+                    itemStyle: {
+                      color: "#58B5FF"
+                    },
+                    // // 在圆点上显示相关数据
+                    // label: {
+                    //   show: true,
+                    //   color: 'rgba(147, 207, 255, 1)',
+                    //   fontSize: nowSize(12)
+                    // },
+                    areaStyle: {
+                      opacity: 1,
+                      color: {
+                        type: "linear",
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                          {
+                            offset: 0,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          },
+                          {
+                            offset: 1,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          }
+                        ],
+                        globalCoord: false
+                      }
+                    },
+                    lineStyle: {
+                      width: 1,
+                      color: '#58B5FF'
+                    }
+                  }
+                ]
+              }
+            ]
+          });
+        }
+        if (document.getElementById("myChartLds6") != null) {
+          this.myChartLds6 = echarts.init(
+            document.getElementById("myChartLds6")
+          );
+          this.myChartLds6.setOption({
+            tooltip: {
+              show: false,
+              padding: 10,
+              axisPointer: {
+                type: "shadow"
+              },
+              backgroundColor: "#fff",
+              textStyle: {
+                color: "#5B6C89"
+              },
+              extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
             },
-            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
-          },
-          radar: [
-            {
-              indicator: [
-                {
-                  name: that.details.sysList[4].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[4].subDim[1].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[4].subDim[2].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                }
-              ],
-              center: ["50%", "70%"],
-              radius: "100%",
-              splitNumber: 3,
-              name: {
-                formatter: "",
-                textStyle: {
-                  color: "#354B70"
-                }
-              },
-              splitArea: {
-                areaStyle: {
-                  color: [
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  type: "dashed",
-                  color: [
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLabel: {
-                show: true,
-                color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
-                formatter: function(value, index) {
-                  return "{yxStyle" + index + "|" + index + "}";
-                },
-                rich: {
-                  yxStyle0: {
-                    color: "#00C0FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+            radar: [
+              {
+                indicator: [
+                  {
+                    name: that.details.sysList[4].subDim[0].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle1: {
-                    color: "#006cff",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[4].subDim[1].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle2: {
-                    color: "#6671FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[4].subDim[2].name,
+                    max: 3,
+                    axisLabel: { show: false }
+                  }
+                ],
+                center: ["50%", "70%"],
+                radius: "100%",
+                splitNumber: 3,
+                name: {
+                  formatter: "",
+                  textStyle: {
+                    color: "#354B70"
+                  }
+                },
+                splitArea: {
+                  areaStyle: {
+                    color: [
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLine: {
+                  show: false
+                },
+                splitLine: {
+                  lineStyle: {
+                    type: "dashed",
+                    color: [
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLabel: {
+                  show: true,
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                  height: 32,
+                  formatter: function(value, index) {
+                    return "{yxStyle" + index + "|" + index + "}";
                   },
-                  yxStyle3: {
-                    color: "#FE5FB8",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  rich: {
+                    yxStyle0: {
+                      color: "#00C0FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle1: {
+                      color: "#006cff",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle2: {
+                      color: "#6671FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle3: {
+                      color: "#FE5FB8",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    }
                   }
                 }
               }
-            }
-          ],
-          legend: {
-            left: "center",
-            bottom: "0",
-            icon: "circle",
-            itemWidth: 10,
-            itemHeight: 10,
-            itemGap: 40,
-            textStyle: {
-              color: "#354B70"
-            },
-            data: [
-              that.details.sysList[4].subDim[0].name,
-              that.details.sysList[4].subDim[1].name,
-              that.details.sysList[4].subDim[2].name
-            ]
-          },
-          series: [
-            {
-              name: "",
-              type: "radar",
-              animation: false,
-              color: ["rgba(0,117,255,0.1)"],
-              emphasis: {
-                lineStyle: {
-                  width: 2,
-                  color: "rgba(0, 117, 255, 0.6)"
-                }
+            ],
+            legend: {
+              left: "center",
+              bottom: "0",
+              icon: "circle",
+              itemWidth: 10,
+              itemHeight: 10,
+              itemGap: 40,
+              textStyle: {
+                color: "#354B70"
               },
               data: [
-                {
-                  value: [
-                    that.details.sysList[4].subDim[0].score,
-                    that.details.sysList[4].subDim[1].score,
-                    that.details.sysList[4].subDim[2].score
-                  ],
-                  name: "本次得分",
-                  symbol: "circle",
-                  symbolSize: 0,
-                  itemStyle: {
-                    color: "#58B5FF"
-                  },
-                  // // 在圆点上显示相关数据
-                  // label: {
-                  //   show: true,
-                  //   color: 'rgba(147, 207, 255, 1)',
-                  //   fontSize: nowSize(12)
-                  // },
-                  areaStyle: {
-                    opacity: 1,
-                    color: {
-                      type: "linear",
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [
-                        {
-                          offset: 0,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        },
-                        {
-                          offset: 1,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        }
-                      ],
-                      globalCoord: false
-                    }
-                  },
-                  lineStyle: {
-                    width: 1,
-                    color: '#58B5FF'
-                  }
-                }
+                that.details.sysList[4].subDim[0].name,
+                that.details.sysList[4].subDim[1].name,
+                that.details.sysList[4].subDim[2].name
               ]
-            }
-          ]
-        });
-        this.myChartLds7 = echarts.init(
-          document.getElementById("myChartLds7")
-        );
-        this.myChartLds7.setOption({
-          tooltip: {
-            show: false,
-            padding: 10,
-            axisPointer: {
-              type: "shadow"
             },
-            backgroundColor: "#fff",
-            textStyle: {
-              color: "#5B6C89"
+            series: [
+              {
+                name: "",
+                type: "radar",
+                animation: false,
+                color: ["rgba(0,117,255,0.1)"],
+                emphasis: {
+                  lineStyle: {
+                    width: 2,
+                    color: "rgba(0, 117, 255, 0.6)"
+                  }
+                },
+                data: [
+                  {
+                    value: [
+                      that.details.sysList[4].subDim[0].score,
+                      that.details.sysList[4].subDim[1].score,
+                      that.details.sysList[4].subDim[2].score
+                    ],
+                    name: "本次得分",
+                    symbol: "circle",
+                    symbolSize: 0,
+                    itemStyle: {
+                      color: "#58B5FF"
+                    },
+                    // // 在圆点上显示相关数据
+                    // label: {
+                    //   show: true,
+                    //   color: 'rgba(147, 207, 255, 1)',
+                    //   fontSize: nowSize(12)
+                    // },
+                    areaStyle: {
+                      opacity: 1,
+                      color: {
+                        type: "linear",
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                          {
+                            offset: 0,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          },
+                          {
+                            offset: 1,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          }
+                        ],
+                        globalCoord: false
+                      }
+                    },
+                    lineStyle: {
+                      width: 1,
+                      color: '#58B5FF'
+                    }
+                  }
+                ]
+              }
+            ]
+          });
+        }
+        if (document.getElementById("myChartLds7") != null) {
+          this.myChartLds7 = echarts.init(
+            document.getElementById("myChartLds7")
+          );
+          this.myChartLds7.setOption({
+            tooltip: {
+              show: false,
+              padding: 10,
+              axisPointer: {
+                type: "shadow"
+              },
+              backgroundColor: "#fff",
+              textStyle: {
+                color: "#5B6C89"
+              },
+              extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
             },
-            extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);"
-          },
-          radar: [
-            {
-              indicator: [
-                {
-                  name: that.details.sysList[5].subDim[0].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[5].subDim[1].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                },
-                {
-                  name: that.details.sysList[5].subDim[2].name,
-                  max: 3,
-                  axisLabel: { show: false }
-                }
-              ],
-              center: ["50%", "70%"],
-              radius: "100%",
-              splitNumber: 3,
-              name: {
-                formatter: "",
-                textStyle: {
-                  color: "#354B70"
-                }
-              },
-              splitArea: {
-                areaStyle: {
-                  color: [
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)",
-                    "rgba(249, 250, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLine: {
-                show: false
-              },
-              splitLine: {
-                lineStyle: {
-                  type: "dashed",
-                  color: [
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)",
-                    "rgba(201, 212, 255, 1)"
-                  ].reverse()
-                }
-              },
-              axisLabel: {
-                show: true,
-                color: "#FFFFFF",
-                fontSize: 20,
-                height: 32,
-                formatter: function(value, index) {
-                  return "{yxStyle" + index + "|" + index + "}";
-                },
-                rich: {
-                  yxStyle0: {
-                    color: "#00C0FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+            radar: [
+              {
+                indicator: [
+                  {
+                    name: that.details.sysList[5].subDim[0].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle1: {
-                    color: "#006cff",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[5].subDim[1].name,
+                    max: 3,
+                    axisLabel: { show: false }
                   },
-                  yxStyle2: {
-                    color: "#6671FF",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  {
+                    name: that.details.sysList[5].subDim[2].name,
+                    max: 3,
+                    axisLabel: { show: false }
+                  }
+                ],
+                center: ["50%", "70%"],
+                radius: "100%",
+                splitNumber: 3,
+                name: {
+                  formatter: "",
+                  textStyle: {
+                    color: "#354B70"
+                  }
+                },
+                splitArea: {
+                  areaStyle: {
+                    color: [
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)",
+                      "rgba(249, 250, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLine: {
+                  show: false
+                },
+                splitLine: {
+                  lineStyle: {
+                    type: "dashed",
+                    color: [
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)",
+                      "rgba(201, 212, 255, 1)"
+                    ].reverse()
+                  }
+                },
+                axisLabel: {
+                  show: true,
+                  color: "#FFFFFF",
+                  fontSize: 20,
+                  height: 32,
+                  formatter: function(value, index) {
+                    return "{yxStyle" + index + "|" + index + "}";
                   },
-                  yxStyle3: {
-                    color: "#FE5FB8",
-                    fontSize: 12,
-                    // fontWeight: "bold",
-                    padding: [3, -12]
+                  rich: {
+                    yxStyle0: {
+                      color: "#00C0FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle1: {
+                      color: "#006cff",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle2: {
+                      color: "#6671FF",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    },
+                    yxStyle3: {
+                      color: "#FE5FB8",
+                      fontSize: 12,
+                      // fontWeight: "bold",
+                      padding: [3, -12]
+                    }
                   }
                 }
               }
-            }
-          ],
-          legend: {
-            left: "center",
-            bottom: "0",
-            icon: "circle",
-            itemWidth: 10,
-            itemHeight: 10,
-            itemGap: 40,
-            textStyle: {
-              color: "#354B70"
-            },
-            data: [
-              that.details.sysList[5].subDim[0].name,
-              that.details.sysList[5].subDim[1].name,
-              that.details.sysList[5].subDim[2].name
-            ]
-          },
-          series: [
-            {
-              name: "",
-              type: "radar",
-              animation: false,
-              color: ["rgba(0,117,255,0.1)"],
-              emphasis: {
-                lineStyle: {
-                  width: 2,
-                  color: "rgba(0, 117, 255, 0.6)"
-                }
+            ],
+            legend: {
+              left: "center",
+              bottom: "0",
+              icon: "circle",
+              itemWidth: 10,
+              itemHeight: 10,
+              itemGap: 40,
+              textStyle: {
+                color: "#354B70"
               },
               data: [
-                {
-                  value: [
-                    that.details.sysList[5].subDim[0].score,
-                    that.details.sysList[5].subDim[1].score,
-                    that.details.sysList[5].subDim[2].score
-                  ],
-                  name: "本次得分",
-                  symbol: "circle",
-                  symbolSize: 0,
-                  itemStyle: {
-                    color: "#58B5FF"
-                  },
-                  // // 在圆点上显示相关数据
-                  // label: {
-                  //   show: true,
-                  //   color: 'rgba(147, 207, 255, 1)',
-                  //   fontSize: nowSize(12)
-                  // },
-                  areaStyle: {
-                    opacity: 1,
-                    color: {
-                      type: "linear",
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [
-                        {
-                          offset: 0,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        },
-                        {
-                          offset: 1,
-                          color: "rgba(138, 203, 255, 0.23)"
-                        }
-                      ],
-                      globalCoord: false
-                    }
-                  },
-                  lineStyle: {
-                    width: 1,
-                    color: '#58B5FF'
-                  }
-                }
+                that.details.sysList[5].subDim[0].name,
+                that.details.sysList[5].subDim[1].name,
+                that.details.sysList[5].subDim[2].name
               ]
-            }
-          ]
-        });
+            },
+            series: [
+              {
+                name: "",
+                type: "radar",
+                animation: false,
+                color: ["rgba(0,117,255,0.1)"],
+                emphasis: {
+                  lineStyle: {
+                    width: 2,
+                    color: "rgba(0, 117, 255, 0.6)"
+                  }
+                },
+                data: [
+                  {
+                    value: [
+                      that.details.sysList[5].subDim[0].score,
+                      that.details.sysList[5].subDim[1].score,
+                      that.details.sysList[5].subDim[2].score
+                    ],
+                    name: "本次得分",
+                    symbol: "circle",
+                    symbolSize: 0,
+                    itemStyle: {
+                      color: "#58B5FF"
+                    },
+                    // // 在圆点上显示相关数据
+                    // label: {
+                    //   show: true,
+                    //   color: 'rgba(147, 207, 255, 1)',
+                    //   fontSize: nowSize(12)
+                    // },
+                    areaStyle: {
+                      opacity: 1,
+                      color: {
+                        type: "linear",
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                          {
+                            offset: 0,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          },
+                          {
+                            offset: 1,
+                            color: "rgba(138, 203, 255, 0.23)"
+                          }
+                        ],
+                        globalCoord: false
+                      }
+                    },
+                    lineStyle: {
+                      width: 1,
+                      color: '#58B5FF'
+                    }
+                  }
+                ]
+              }
+            ]
+          });
+        }
         // this.myChartLds8 = echarts.init(
         //   document.getElementById("myChartLds8")
         // );

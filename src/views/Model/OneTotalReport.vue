@@ -4770,7 +4770,7 @@ export default {
           div{
             font-family: PingFangSC, PingFang SC;
             font-weight: 400;
-            font-size: 16px;
+            font-size: 20px;
             color: #333E75;
             height: 100%;
             line-height: 1.2;

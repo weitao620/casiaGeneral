@@ -1334,7 +1334,7 @@
       console.log(this.cutStr("测试1字符串哈哈哈哈", 6))
   
       // this.echartsOther()
-      console.log(this.cutStr("测试1字符串哈哈哈哈", 10).substring(this.cutStr("测试1字符串哈哈哈哈", 6).length, this.cutStr("测试1字符串哈哈哈哈", 10).length))
+      console.log(this.cutStr("测试1字符串哈哈哈哈1", 10).substring(this.cutStr("测试1字符串哈哈哈哈", 6).length, this.cutStr("测试1字符串哈哈哈哈", 10).length))
       window.addEventListener("resize", () => {
         setTimeout(() => {
           // this.myChartZhu.resize();

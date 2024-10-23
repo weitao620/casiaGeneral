@@ -8,11 +8,16 @@
             <span>AI心世界</span>
           </div>
           <div class="g1_top1">
-            团体测评报告
+            团体对比测评报告
+          </div>
+          <div class="g1_top3">
+            <div>{{ gList.departmentNameA }}</div>
+            <div>&</div>
+            <div>{{ gList.departmentNameB }}</div>
           </div>
           <div class="g1_top2">
             <div>
-              测评单位：<span>{{organizationName}}</span>
+              测评对象：<span>{{gList.departmentNameA}}测评人员&{{gList.departmentNameB}}测评人员</span>
             </div>
             <div>
               测评时间：<span>{{startDate + '—' + endDate}}</span>
@@ -36,37 +41,124 @@
             <img src="../../assets/images/part/tipss.png" alt="" />
             温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
           </div>
-          <div class="gp2_top">
+          <!-- <div class="gp2_top">
             <img
               style="width:62px;height:66px;"
               src="../../assets/images/part/Documents.png"
               alt=""
             />
             <span class="gp2_t_txt">总体测评情况</span>
-          </div>
-          <div class="gp_echart">
-            <div class="gp_ect_3d">
-              <div class="myChartPie" id="myChartPie" ref="myChartPie"></div>
+          </div> -->
+          <div class="gp_echart_box">
+            <div class="gp_echart">
+              <div class="gp_ec_txt">{{gList.departmentNameA}}风险情况</div>
+              <div class="gp_ect_3d">
+                <div class="myChartPie" ref="myChartPieA" id="myChartPieA" ></div>
+                <div class="center_pie">
+                  <div class="c_pie_li" v-for="item in wdPerctListA">
+                    <div class="c_th_txt">
+                      <span class="c_pie_th c_th0" :style="{'background': item.color3}"></span>
+                      {{ item.name }}
+                    </div>
+                    <div class="c_th_p">
+                      <span class="c_pie_td c_thp0">
+                        {{ item.perct1 }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="gp_ect_2d">
+                <div class="myChartYes" ref="myChartYesA" id="myChartYesA"></div>
+              </div>
+
             </div>
-            <div class="gp_ect_2d">
-              <div class="myChartYes" ref="myChartYes" id="myChartYes"></div>
+            <div class="gp_echart" style="left: 200px;">
+              <div class="gp_ec_txt">{{gList.departmentNameB}}风险情况</div>
+              <div class="gp_ect_3d">
+                <div class="myChartPie" ref="myChartPieB" id="myChartPieB"></div>
+                <div class="center_pie">
+                  <div class="c_pie_li" v-for="item in wdPerctListB">
+                    <div class="c_th_txt">
+                      <span class="c_pie_th c_th0" :style="{'background': item.color3}"></span>
+                      {{ item.name }}
+                    </div>
+                    <div class="c_th_p">
+                      <span class="c_pie_td c_thp0">
+                        {{ item.perct1 }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="gp_ect_2d">
+                <div class="myChartYes" ref="myChartYesB" id="myChartYesB"></div>
+              </div>
             </div>
           </div>
+
+          <div class="gp_titles">
+            <div class="gp_head" style="margin-bottom: 20px;margin-top: 10px;">测评情况对比</div>
+            <div class="gp_exl">
+              <div class="gp_con gp_con1">
+                <div>团队名称</div>
+                <div>总人数</div>
+                <div>实测人数</div>
+                <div>实测占比</div>
+                <div>风险人数</div>
+                <div>风险占比</div>
+              </div>
+              <div style="width: 100%;" v-for="(item, index) in GroupStatistic" :key="index">
+                <div class="gp_con">
+                  <div>{{ item.departmentName }}</div>
+                  <div>{{ item.totalNum }}</div>
+                  <div>{{ item.evaNum }}</div>
+                  <div>{{ item.evaPerct1 }}</div>
+                  <div>{{ item.riskNum }}</div>
+                  <div>{{ item.riskPerct1 }}</div>
+                </div>
+              </div>
+              <div style="width: 100%;">
+                <div class="gp_con">
+                  <div>合计</div>
+                  <div>{{ totalNum }}</div>
+                  <div>{{ evaNum }}</div>
+                  <div>{{ evaPerct1 }}</div>
+                  <div>{{ riskNum }}</div>
+                  <div>{{ riskPerct1 }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gp_titles" style="margin-top: 40px;" v-if="warningListsDui && warningListsDui.length > 0 && duiTab < 4">
+            <div class="gp_exl">
+              <div class="gp_con gp_con1">
+                <div style="flex: 1;">序号</div>
+                <div>团队名称</div>
+                <div>姓名</div>
+                <div>登录账号</div>
+                <div style="flex: 2.6;">预警类型</div>
+                <div>测试时间</div>
+              </div>
+              <div style="width: 100%;" v-for="(item, index) in warningListsDui.slice(0,9)" :key="index">
+                <div class="gp_con">
+                  <div style="flex: 1;">{{ item.id }}</div>
+                  <div>{{ item.depName }}</div>
+                  <div>{{ item.name }}</div>
+                  <div>{{ item.passport }}</div>
+                  <div style="flex: 2.6;">{{ item.levelStr}}</div>
+                  <div>{{ item.datetime }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--           
           <div class="gp_title">
             <div class="gp_head">测评人数</div>
             <div class="gp_txt">
               {{cpHead}}
             </div>
-            <!-- <div class="gp_exl">
-              <div class="gp_con"  v-for="(item, index) in cpList1" :key="index">
-                <div v-if="item.name != ''">
-                  {{ item.name }}：共{{ item.total }}人，实测{{ item.evaNum }}人（{{item.evaPerct }}%）
-                </div>
-                <div v-else>
-                  
-                </div>
-              </div>
-            </div> -->
           </div>
           <div class="gp_title">
             <div class="gp_head">总体风险情况</div>
@@ -79,250 +171,42 @@
             <div class="gp_txt">
               {{ partsStr3 }}
             </div>
-          </div>
-          <div class="gp_title">
+          </div> -->
+          <div class="gp_title" v-if="duiTab == 1">
             <div class="gp_head">指导建议：</div>
             <div class="gp_txt">
-              {{ partsStr4 }}
+              {{ suggestionDui }}
             </div>
             <div class="gp_txt">
-              {{ partsStr5 }}
+              {{ riskDui }}
             </div>
           </div>
           
         </div>
       </div>
-      <!-- <div class="table-style group_01" v-if="riskPage < 5 && riskPage > 1">
+      <div class="table-style group_01" v-if="duiTab == 2">
         <div class="table-border">
           <div class="gp_all_tips">
             <img src="../../assets/images/part/tipss.png" alt="" />
             温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
           </div>
-          <div style="height:10px;"></div>
-          <div class="gp_title" v-if="riskPage < 5 && riskPage > 3">
-            <div class="gp_exl">
-              <div class="gp_con"  v-for="(item, index) in cpList2" :key="index">
-                <div v-if="item.name != ''">
-                  {{ item.name }}：共{{ item.total }}人，实测{{ item.evaNum }}人（{{item.evaPerct }}%）
-                </div>
-                <div v-else>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 5 && riskPage > 2">
-            <div class="gp_head">总体风险情况</div>
-            <div class="gp_txt">
-              {{ partsStr2 }}
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 5 && riskPage > 1">
-            <div class="gp_head">总体维度风险占比情况</div>
-            <div class="gp_txt">
-              {{ partsStr3 }}
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="table-style group_01" v-if="riskPage < 10 && riskPage > 4">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div style="height:10px;"></div>
-          <div class="gp_title" v-if="riskPage < 10 && riskPage > 4">
-            <div class="gp_exl">
-              <div class="gp_con"  v-for="(item, index) in cpList2" :key="index">
-                <div v-if="item.name != ''">
-                  {{ item.name }}：共{{ item.total }}人，实测{{ item.evaNum }}人（{{item.evaPerct }}%）
-                </div>
-                <div v-else>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 6 && riskPage > 4">
-            <div class="gp_head">总体风险情况</div>
-            <div class="gp_txt">
-              {{ partsStr2 }}
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 5 && riskPage > 1">
-            <div class="gp_head">总体维度风险占比情况</div>
-            <div class="gp_txt">
-              {{ partsStr3 }}
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="table-style group_01" v-if="riskPage < 10 && riskPage > 4">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div style="height:10px;"></div>
-          <div class="gp_title" v-if="riskPage < 10 && riskPage > 6">
-            <div class="gp_exl">
-              <div class="gp_con"  v-for="(item, index) in cpList3" :key="index">
-                <div v-if="item.name != ''">
-                  {{ item.name }}：共{{ item.total }}人，实测{{ item.evaNum }}人（{{item.evaPerct }}%）
-                </div>
-                <div v-else>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 9 && riskPage > 5">
-            <div class="gp_head">总体风险情况</div>
-            <div class="gp_txt">
-              {{ partsStr2 }}
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage < 8 && riskPage > 4">
-            <div class="gp_head">总体维度风险占比情况</div>
-            <div class="gp_txt">
-              {{ partsStr3 }}
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="table-style group_01" v-if="riskPage > 7">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div style="height:10px;"></div>
-          
-          <div class="gp_title" v-if="riskPage > 8">
-            <div class="gp_head">总体风险情况</div>
-            <div class="gp_txt">
-              {{ partsStr2 }}
-            </div>
-          </div>
-          <div class="gp_title" v-if="riskPage > 7">
-            <div class="gp_head">总体维度风险占比情况</div>
-            <div class="gp_txt">
-              {{ partsStr3 }}
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 0">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div>
-          <div v-if="wdPerctList && wdPerctList.length > 0">
+          <div>
             <div>
-              <div class="gp_title">
-                <div class="gp_head">{{ wdPerctList[0].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[0].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[0].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[0].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[0].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[0].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[0].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[0].info.MildNum }}</div>
-                      <div>{{ wdPerctList[0].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[0].info.normalNum }}</div>
-                      <div>{{ wdPerctList[0].info.normalPct }}%</div>
-                    </div>
-                  </div>
+              <div class="gp_title" style="margin-top:30px">
+                <div class="gp_head">指导建议：</div>
+                <div class="gp_txt">
+                  {{ suggestionDui }}
                 </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[0].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[0].info.warningList && wdPerctList[0].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[0].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 13">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[0].name : itemw.level == 2 ? '中度' + wdPerctList[0].name : itemw.level == 3 ? '重度' + wdPerctList[0].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[0].info.warningList && wdPerctList[0].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[0].name }}风险的人员</div>
-                  </div>
+                <div class="gp_txt">
+                  {{ riskDui }}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 0 ? wdPerctList[0].info.warningInfo : [])">
+      
+      <div class="table-style group_01"  v-for="item in warnListDui">
         <div class="table-border">
           <div class="gp_all_tips">
             <img src="../../assets/images/part/tipss.png" alt="" />
@@ -331,831 +215,11 @@
           <div>
             <div>
               
-              <div class="gp_title" style="padding: 40px;">
+              <div class="gp_title" style="padding: 40px 40px 20px;">
                 <div class="gp_exl">
                   <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[0].name : itemw.level == 2 ? '中度' + wdPerctList[0].name : itemw.level == 3 ? '重度' + wdPerctList[0].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 1">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <!-- <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div> -->
-          <div v-if="wdPerctList && wdPerctList.length > 1">
-            <div>
-              <div class="gp_title" style="padding-top: 60px;">
-                <div class="gp_head">{{ wdPerctList[1].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[1].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[1].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[1].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[1].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[1].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[1].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[1].info.MildNum }}</div>
-                      <div>{{ wdPerctList[1].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[1].info.normalNum }}</div>
-                      <div>{{ wdPerctList[1].info.normalPct }}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[1].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[1].info.warningList && wdPerctList[1].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[1].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 14">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[1].name : itemw.level == 2 ? '中度' + wdPerctList[1].name : itemw.level == 3 ? '重度' + wdPerctList[1].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[1].info.warningList && wdPerctList[1].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[1].name }}风险的人员</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 1 ? wdPerctList[1].info.warningInfo : [])">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[1].name : itemw.level == 2 ? '中度' + wdPerctList[1].name : itemw.level == 3 ? '重度' + wdPerctList[1].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 2">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <!-- <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div> -->
-          <div v-if="wdPerctList && wdPerctList.length > 2">
-            <div>
-              <div class="gp_title" style="padding-top: 60px;">
-                <div class="gp_head">{{ wdPerctList[2].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[2].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[2].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[2].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[2].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[2].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[2].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[2].info.MildNum }}</div>
-                      <div>{{ wdPerctList[2].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[2].info.normalNum }}</div>
-                      <div>{{ wdPerctList[2].info.normalPct }}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[2].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[2].info.warningList && wdPerctList[2].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[2].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 14">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[2].name : itemw.level == 2 ? '中度' + wdPerctList[2].name : itemw.level == 3 ? '重度' + wdPerctList[2].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[2].info.warningList && wdPerctList[2].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[2].name }}风险的人员</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 2 ? wdPerctList[2].info.warningInfo : [])">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[2].name : itemw.level == 2 ? '中度' + wdPerctList[2].name : itemw.level == 3 ? '重度' + wdPerctList[2].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 3">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <!-- <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div> -->
-          <div v-if="wdPerctList && wdPerctList.length > 3">
-            <div>
-              <div class="gp_title" style="padding-top: 60px;">
-                <div class="gp_head">{{ wdPerctList[3].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[3].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[3].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[3].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[3].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[3].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[3].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[3].info.MildNum }}</div>
-                      <div>{{ wdPerctList[3].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[3].info.normalNum }}</div>
-                      <div>{{ wdPerctList[3].info.normalPct }}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[3].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[3].info.warningList && wdPerctList[3].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[3].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 14">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[3].name : itemw.level == 2 ? '中度' + wdPerctList[3].name : itemw.level == 3 ? '重度' + wdPerctList[3].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[3].info.warningList && wdPerctList[3].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[3].name }}风险的人员</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 3 ? wdPerctList[3].info.warningInfo : [])">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[3].name : itemw.level == 2 ? '中度' + wdPerctList[3].name : itemw.level == 3 ? '重度' + wdPerctList[3].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 4">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <!-- <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div> -->
-          <div v-if="wdPerctList && wdPerctList.length > 4">
-            <div>
-              <div class="gp_title" style="padding-top: 60px;">
-                <div class="gp_head">{{ wdPerctList[4].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[4].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[4].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[4].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[4].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[4].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[4].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[4].info.MildNum }}</div>
-                      <div>{{ wdPerctList[4].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[4].info.normalNum }}</div>
-                      <div>{{ wdPerctList[4].info.normalPct }}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[4].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[4].info.warningList && wdPerctList[4].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[4].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 14">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[4].name : itemw.level == 2 ? '中度' + wdPerctList[4].name : itemw.level == 3 ? '重度' + wdPerctList[4].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[4].info.warningList && wdPerctList[4].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[4].name }}风险的人员</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 4 ? wdPerctList[4].info.warningInfo : [])">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[4].name : itemw.level == 2 ? '中度' + wdPerctList[4].name : itemw.level == 3 ? '重度' + wdPerctList[4].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="table-style group_01" v-if="wdPerctList && wdPerctList.length > 5">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <!-- <div class="gp2_top" style="padding-bottom: 20px">
-            <img
-              style="width:60px;height:52px;"
-              src="../../assets/images/part/Graphs.png"
-              alt=""
-            />
-            <span class="gp2_t_txt">维度预警情况</span>
-          </div> -->
-          <div v-if="wdPerctList && wdPerctList.length > 5">
-            <div>
-              <div class="gp_title" style="padding-top: 60px;">
-                <div class="gp_head">{{ wdPerctList[5].names }}</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">1.{{ wdPerctList[5].name }}风险一览表</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>维度</div>
-                    <div>风险水平</div>
-                    <div>实测人数</div>
-                    <div>风险占比</div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>重度</div>
-                      <div>{{ wdPerctList[5].info.SevereNum }}</div>
-                      <div>{{ wdPerctList[5].info.SeverePct }}%</div>
-                      <div class="gp_con_a">{{ wdPerctList[5].name }}</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>中度</div>
-                      <div>{{ wdPerctList[5].info.ModerateNum }}</div>
-                      <div>{{ wdPerctList[5].info.ModeratePct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>轻度</div>
-                      <div>{{ wdPerctList[5].info.MildNum }}</div>
-                      <div>{{ wdPerctList[5].info.MildPct }}%</div>
-                    </div>
-                  </div>
-                  <div style="width: 100%;">
-                    <div class="gp_con">
-                      <div></div>
-                      <div>正常</div>
-                      <div>{{ wdPerctList[5].info.normalNum }}</div>
-                      <div>{{ wdPerctList[5].info.normalPct }}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_head gp_head1">2.{{ wdPerctList[5].name }}风险名单</div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[5].info.warningList && wdPerctList[5].info.warningList.length > 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in wdPerctList[5].info.warningList" :key="indexw">
-                    <div class="gp_con" v-if="indexw < 14">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[5].name : itemw.level == 2 ? '中度' + wdPerctList[5].name : itemw.level == 3 ? '重度' + wdPerctList[5].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="gp_title" v-if="wdPerctList[5].info.warningList && wdPerctList[5].info.warningList.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有{{ wdPerctList[5].name }}风险的人员</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in (wdPerctList && wdPerctList.length > 5 ? wdPerctList[5].info.warningInfo : [])">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in item" :key="indexw">
-                    <div class="gp_con">
-                      <div>{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div>{{ itemw.level == 1 ? "轻度" + wdPerctList[5].name : itemw.level == 2 ? '中度' + wdPerctList[5].name : itemw.level == 3 ? '重度' + wdPerctList[5].name : '正常' }}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="table-style group_01" v-if="warningLists && warningLists.length > 0">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              <div class="gp_title" style="padding-top: 60px;padding-bottom: 30px;">
-                <div class="gp_head">附录：预警人员名单</div>
-              </div>
-              <div class="gp_title">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div style="flex: 0.4;">序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div style="flex: 2.6;">预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div style="width: 100%;" v-for="(itemw, indexw) in warningLists.slice(0,21)" :key="indexw">
-                    <div class="gp_con">
-                      <div style="flex: 0.4;">{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
-                      <div>{{ itemw.name }}</div>
-                      <div>{{ itemw.passport }}</div>
-                      <div style="flex: 2.6;">{{ itemw.levelStr}}</div>
-                      <div>{{ itemw.finishTime }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="gp_title" v-if="warningLists && warningLists.length == 0">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div>序号</div>
-                    <div>团队部门</div>
-                    <div>姓名</div>
-                    <div>登录账号</div>
-                    <div>预警类型</div>
-                    <div>测试时间</div>
-                  </div>
-                  <div class="gp_con">
-                    <div>未检测出有风险的人员</div>
-                  </div>
-                </div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-style group_01"  v-for="item in warnList">
-        <div class="table-border">
-          <div class="gp_all_tips">
-            <img src="../../assets/images/part/tipss.png" alt="" />
-            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
-          </div>
-          <div>
-            <div>
-              
-              <div class="gp_title" style="padding: 40px;">
-                <div class="gp_exl">
-                  <div class="gp_con gp_con1">
-                    <div style="flex: 0.4;">序号</div>
-                    <div>团队部门</div>
+                    <div style="flex: 1;">序号</div>
+                    <div>团队名称</div>
                     <div>姓名</div>
                     <div>登录账号</div>
                     <div style="flex: 2.6;">预警类型</div>
@@ -1163,17 +227,122 @@
                   </div>
                   <div style="width: 100%;" v-for="itemw in item" :key="itemw.id">
                     <div class="gp_con">
-                      <div style="flex: 0.4;">{{ itemw.id }}</div>
-                      <div>{{ depName }}</div>
+                      <div style="flex: 1;">{{ itemw.id }}</div>
+                      <div>{{ itemw.depName }}</div>
                       <div>{{ itemw.name }}</div>
                       <div>{{ itemw.passport }}</div>
                       <div style="flex: 2.6;">{{ itemw.levelStr}}</div>
-                      <div>{{ itemw.finishTime }}</div>
+                      <div>{{ itemw.datetime }}</div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="gp_title" v-if="duiTab == 3 && suggestFlag && item.length < 18">
+                <div class="gp_head">指导建议：</div>
+                <div class="gp_txt">
+                  {{ suggestionDui }}
+                </div>
+                <div class="gp_txt">
+                  {{ riskDui }}
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-style group_01" v-if="duiTab == 3 && !suggestFlag">
+        <div class="table-border">
+          <div class="gp_all_tips">
+            <img src="../../assets/images/part/tipss.png" alt="" />
+            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+          </div>
+          <div>
+            <div>
+              <div class="gp_title" style="margin-top:30px">
+                <div class="gp_head">指导建议：</div>
+                <div class="gp_txt">
+                  {{ suggestionDui }}
+                </div>
+                <div class="gp_txt">
+                  {{ riskDui }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-style group_01">
+        <div class="table-border">
+          <div class="gp_all_tips">
+            <img src="../../assets/images/part/tipss.png" alt="" />
+            温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+          </div>
+          <div class="gp2_top" style="padding-bottom: 10px;padding-top:24px">
+            <img
+              style="width:60px;height:52px;"
+              src="../../assets/images/part/Graphs.png"
+              alt=""
+            />
+            <span class="gp2_t_txt">各维度测评情况</span>
+          </div>
+          <!-- {{ ecList }} -->
+          <div v-for="(item, index) in ecList" :key="index">
+            <div class="gp_title">
+              <div class="gp_head gp_head1">{{ item.name1 }}</div>
+              <div class="gp_h_box">
+                <div class="myChartZhu" :ref="'myChartZhu'+ index" :id="'myChartZhu' + index"></div>
+                <div class="gp_h_bt">
+                  <!-- <img
+                    style="width:30px;height:26px;"
+                    src="../../assets/images/part/Graphs.png"
+                    alt=""
+                  /> -->
+                  <div class="gp_c_box" style="margin-bottom: 14px">
+                    <div class="gp_h_txt">
+                      <!-- 在该测评时间内，受测者{{item.name}}轻度风险{{item.level1}}次，中度风险{{item.level2}}次，重度风险{{item.level3}}次。 -->
+                      <div class="gp_c_bt1">
+                        <div class="gp_c1"></div>
+                        {{item.nameA}}风险人数为{{item.num}}人（{{item.Pct}}）
+                      </div>
+                      <div class="gp_c_bt2">
+                        <div>轻度风险{{item.infos.a}}人</div>
+                        <div>中度风险{{item.infos.b}}人</div>
+                        <div>重度风险{{item.infos.c}}人</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="gp_c_box">
+                    <div class="gp_h_txt">
+                      <!-- 在该测评时间内，受测者{{item.name}}轻度风险{{item.level1}}次，中度风险{{item.level2}}次，重度风险{{item.level3}}次。 -->
+                      <div class="gp_c_bt1">
+                        <div class="gp_c1"></div>
+                        {{item.nameB}}风险人数为{{item.numB}}人（{{item.PctB}}）
+                      </div>
+                      <div class="gp_c_bt2">
+                        <div>轻度风险{{item.infos.a1}}人</div>
+                        <div>中度风险{{item.infos.b1}}人</div>
+                        <div>重度风险{{item.infos.c1}}人</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+                <!-- <div class="gp_h_bt" v-else>
+                  <img
+                    style="width:30px;height:26px;"
+                    src="../../assets/images/part/Graphs.png"
+                    alt=""
+                  />
+                  <div class="gp_h_txt">
+                    在该测评时间内，受测者{{item.name}}无风险。
+                  </div>
+                </div> -->
+              </div>
+              
+            </div>
+
           </div>
         </div>
       </div>
@@ -1270,7 +439,8 @@
         partsStr5: '',
         ecList: [],
         myChartZhu: "",
-        myChartYes: '',
+        myChartYesA: '',
+        myChartYesB: '',
         riskPerct: '',
         riskPerct1: '',
         optionData: [
@@ -1284,7 +454,21 @@
           }
         ],
         statusChart: null,
-        option: {}
+        option: {},
+        ecList: [],
+        GroupStatistic: [],
+        wdPerctListA: [],
+        wdPerctListB: [],
+        totalNum: '',
+        evaNum: '',
+        evaPerct1: '',
+        riskNum: '',
+        warningListsDui: [],
+        warnListDui: [],
+        suggestionDui: '',
+        riskDui: '',
+        duiTab: 1,
+        suggestFlag: false
       };
     },
     props: {
@@ -1335,13 +519,14 @@
   
       // this.echartsOther()
       console.log(this.cutStr("测试1字符串哈哈哈哈", 10).substring(this.cutStr("测试1字符串哈哈哈哈", 6).length, this.cutStr("测试1字符串哈哈哈哈", 10).length))
-      window.addEventListener("resize", () => {
-        setTimeout(() => {
-          // this.myChartZhu.resize();
-          this.myChartYes.resize();
-          this.changeSize()
-        }, 100);
-      });
+      // window.addEventListener("resize", () => {
+      //   setTimeout(() => {
+      //     // this.myChartZhu.resize();
+      //     // this.myChartYesA.resize();
+      //     // this.myChartYesB.resize();
+      //     // this.changeSize()
+      //   }, 100);
+      // });
     },
     methods: {
       ...mapMutations(["setPartsDuiFlag"]),
@@ -1392,7 +577,7 @@
         })
       },
       // 图表初始化
-      initChart () {
+      initChartA () {
         let that = this;
         console.log(456);
         // 当前视口宽度
@@ -1403,77 +588,32 @@
         };
         // 绘制立体饼图
         let flag = false;
-        // console.log(this.warningStatistic.depressionNum)
-        // console.log(this.warningStatistic.depressionNum ? this.warningStatistic.depressionNum : 0)
-        this.pieList = []
+        this.pieListA = []
         let flagNum = 0
-        console.log(this.wdPerctList )
-        for ( let i in that.wdPerctList) {
-          this.pieList.push({
-            name: that.wdPerctList[i].name,
-            value: that.wdPerctList[i].perct,
-            y: that.wdPerctList[i].perct,
+        console.log(this.wdPerctListA )
+        for ( let i in that.wdPerctListA) {
+          this.pieListA.push({
+            name: that.wdPerctListA[i].name,
+            value: that.wdPerctListA[i].perct,
+            y: that.wdPerctListA[i].perct,
             // y: 50,
             num: 0
           })
-          if (that.wdPerctList[i].perct > 0) {
+          if (that.wdPerctListA[i].perct > 0) {
             flagNum++
           }
         }
-        // this.pieList = [
-        //   {
-        //     name: that.wdPerctList[0].name,
-        //     value: that.wdPerctList[0].perct,
-        //     y: that.wdPerctList[0].perct,
-        //     // y: 50,
-        //     num: 0
-        //   },
-        //   {
-        //     name: that.wdPerctList[1].name,
-        //     value: that.wdPerctList[1].perct,
-        //     y: that.wdPerctList[1].perct,
-        //     // y: 10,
-        //     num: 0
-        //   },
-        //   {
-        //     name: that.wdPerctList[2].name,
-        //     value: that.wdPerctList[2].perct,
-        //     y: that.wdPerctList[2].perct,
-        //     // y: 20,
-        //     num: 0
-        //   },
-        //   {
-        //     name: that.wdPerctList[3].name,
-        //     value: that.wdPerctList[3].perct,
-        //     y: that.wdPerctList[3].perct,
-        //     // y: 10,
-        //     num: 0
-        //   },
-        //   {
-        //     name: that.wdPerctList[4].name,
-        //     value: that.wdPerctList[4].perct,
-        //     y: that.wdPerctList[4].perct,
-        //     // y: 10,
-        //     num: 0
-        //   }
-        // ];
-        console.log(this.pieList)
-        // this.pieList = 
+        
+        console.log(this.pieListA)
         console.log(flagNum)
         if (flagNum === 0) {
           flag = true
         }
-        // if (this.pieList[0].value === 0 &&
-        // this.pieList[1].value === 0 &&
-        // this.pieList[2].value === 0 &&
-        // this.pieList[3].value === 0 &&
-        // this.pieList[4].value === 0) {
-        //   flag = true
-        // }
-        this.pieList.forEach((item, index) => {
+        console.log(flag)
+        this.pieListA.forEach((item, index) => {
           item.itemStyle = {
             opacity: 1,
-            color: that.wdPerctList[index].color3
+            color: that.wdPerctListA[index].color3
           }
           item.tooltip = {
             formatter: params => {
@@ -1494,7 +634,7 @@
               margin: 0,
               show: true,
               lineHeight: 30,
-              color: that.wdPerctList[index].color3,
+              color: that.wdPerctListA[index].color3,
               formatter: [
                 '{b|{b}：}{d|{d}%}\n{hr|}'
               ].join('\n'), // 用\n来换行
@@ -1519,7 +659,7 @@
                   padding: [10, 14, -20, 0]
                 },
                 hr: {
-                  backgroundColor: that.wdPerctList[index].color3,
+                  backgroundColor: that.wdPerctListA[index].color3,
                   borderRadius: 8,
                   width: 8,
                   height: 8
@@ -1545,46 +685,295 @@
               minSurfaceAngle: 90,
               lineStyle: {
                 width: 1.5,
-                color: that.wdPerctList[index].color3
+                color: that.wdPerctListA[index].color3
               }
             }
           }
         })
-        this.myChartPie = echarts.init(this.$refs.myChartPie);
-        console.log(this.pieList)
-        this.pieOption = getPie3D(this.pieList, 2, 300, 40, 20, 2, -1)
-        this.myChartPie.setOption(this.pieOption);
+        // this.myChartPie = echarts.init(this.$refs.myChartPie);
+        // console.log(this.pieList)
+        // this.pieOption = getPie3D(this.pieList, 2, 300, 40, 20, 2, -1)
+        // this.myChartPie.setOption(this.pieOption);
+        // // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
+        // let pieList1 = JSON.parse(JSON.stringify(this.pieList))
+        // if (!flag) {
+        //   for (let i in pieList1) {
+        //     pieList1[i].itemStyle.color = "transparent"
+        //   }
+        // }
+        // this.pieOption.series.push({
+        //   name: '预警', // 自己根据场景修改
+        //   backgroundColor: 'transparent',
+        //   color: 'transparent',
+        //   type: 'pie',
+        //   animation: false,
+        //   label: {
+        //     opacity: 1,
+        //     fontSize: 13,
+        //     lineHeight: 20
+        //   },
+        //   startAngle: -60, // 起始角度，支持范围[0, 360]。
+        //   clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+        //   radius: flag ? ['0%', '60%'] : ['0%', '60%'],
+        //   center: ['50%', '50%'],
+        //   data: pieList1,
+        //   itemStyle: {
+        //     color: "transparent",
+        //     opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
+        //   }
+        // })
+        // this.myChartPie.setOption(this.pieOption)
+        // console.log(this.myChartPie)
+        // // this.bindListen(this.myChartPie, 'pieOption')
+
+
+        this.myChartPieA = echarts.init(this.$refs.myChartPieA);
+        console.log(this.pieListA)
+        this.pieOptionA = null
+        this.pieOptionA = getPie3D(this.pieListA, 2, 240, 40, 20, 2, -1)
+        this.myChartPieA.setOption(this.pieOptionA);
         // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
-        let pieList1 = JSON.parse(JSON.stringify(this.pieList))
+        let pieList1A = JSON.parse(JSON.stringify(this.pieListA))
         if (!flag) {
-          for (let i in pieList1) {
-            pieList1[i].itemStyle.color = "transparent"
+          for (let i in pieList1A) {
+            pieList1A[i].itemStyle.color = "transparent"
           }
         }
-        this.pieOption.series.push({
-          name: '预警', // 自己根据场景修改
-          backgroundColor: 'transparent',
-          color: 'transparent',
-          type: 'pie',
-          animation: false,
-          label: {
+        if (flag) {
+          this.pieOptionA.series.push({
+            name: '预警', // 自己根据场景修改
+            backgroundColor: 'transparent',
+            color: 'transparent',
+            type: 'pie',
+            animation: false,
+            labelLine: {
+              show: false
+            },
+            label: {
+              opacity: 0,
+              fontSize: 13,
+              lineHeight: 20
+            },
+            startAngle: 0, // 起始角度，支持范围[0, 360]。
+            clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+            radius: flag ? ['0%', '60%'] : ['0%', '60%'],
+            center: ['50%', '50%'],
+            data: pieList1A,
+            itemStyle: {
+              color: "transparent",
+              opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
+            }
+          })
+        } else {
+          this.pieOptionA.series.push({
+            name: '预警', // 自己根据场景修改
+            backgroundColor: 'transparent',
+            color: 'transparent',
+            type: 'pie',
+            animation: false,
+            labelLine: {
+              show: false
+            },
+            label: {
+              opacity: 0,
+              fontSize: 13,
+              lineHeight: 20
+            },
+            startAngle: 0, // 起始角度，支持范围[0, 360]。
+            clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+            radius: flag ? ['0%', '60%'] : ['0%', '60%'],
+            center: ['50%', '50%'],
+            data: pieList1A,
+            itemStyle: {
+              color: "transparent",
+              opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
+            }
+          })
+        }
+        
+        this.myChartPieA.setOption(this.pieOptionA)
+        console.log(this.myChartPieA)
+      },
+      // 图表初始化
+      initChartB () {
+        let that = this;
+        console.log(456);
+        // 当前视口宽度
+        let nowClientWidth = document.documentElement.clientWidth;
+        // 换算方法
+        let nowSize = function(val, initWidth = 1920) {
+          return val * (nowClientWidth / initWidth);
+        };
+        // 绘制立体饼图
+        let flag = false;
+        this.pieListB = []
+        let flagNum = 0
+        console.log(this.wdPerctListB )
+        for ( let i in that.wdPerctListB) {
+          this.pieListB.push({
+            name: that.wdPerctListB[i].name,
+            value: that.wdPerctListB[i].perct,
+            y: that.wdPerctListB[i].perct,
+            // y: 50,
+            num: 0
+          })
+          if (that.wdPerctListB[i].perct > 0) {
+            flagNum++
+          }
+        }
+        
+        console.log(this.pieListB)
+        console.log(flagNum)
+        if (flagNum === 0) {
+          flag = true
+        }
+        
+        this.pieListB.forEach((item, index) => {
+          item.itemStyle = {
             opacity: 1,
-            fontSize: 13,
-            lineHeight: 20
-          },
-          startAngle: -60, // 起始角度，支持范围[0, 360]。
-          clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
-          radius: flag ? ['0%', '60%'] : ['0%', '60%'],
-          center: ['50%', '50%'],
-          data: pieList1,
-          itemStyle: {
-            color: "transparent",
-            opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
+            color: that.wdPerctListB[index].color3
+          }
+          item.tooltip = {
+            formatter: params => {
+              if (params.seriesName !== "mouseoutSeries") {
+                return `${
+                  params.seriesName
+                }<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
+                  params.color
+                };"></span>${
+                  params.series[params.seriesIndex].pieData.value
+                }`;
+              }
+            }
+          }
+          item.label = {
+            normal: {
+              // alignTo: 'edge',
+              margin: 0,
+              show: true,
+              lineHeight: 30,
+              color: that.wdPerctListB[index].color3,
+              formatter: [
+                '{b|{b}：}{d|{d}%}\n{hr|}'
+              ].join('\n'), // 用\n来换行
+              rich: {
+                b: {
+                  fontSize: 22,
+                  fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                  fontWeight: 400,
+                  color: '#333E75',
+                  lineHeight: 1,
+                  align: 'left',
+                  padding: [10, 0, -20, 20]
+                },
+                d: {
+                  fontSize: 22,
+                  fontFamily: 'SourceHanSansCN-Regular, SourceHanSansCN',
+                  fontWeight: 400,
+                  lineHeight: 1,
+                  // color: pieColor[index],
+                  color: '#333E75',
+                  align: 'left',
+                  padding: [10, 14, -20, 0]
+                },
+                hr: {
+                  backgroundColor: that.wdPerctListB[index].color3,
+                  borderRadius: 8,
+                  width: 8,
+                  height: 8
+                  // padding: [6, 6, 0, -12]
+                }
+                // hr: {
+                //   backgroundColor: pieColor[index],
+                //   borderRadius: nowSize(3),
+                //   width: nowSize(6),
+                //   height: nowSize(6)
+                // }
+              },
+              distanceToLabelLine: 0
+  
+            }
+          }
+          item.labelLine = {
+            normal: {
+              length: 50,
+              length2: 45,
+              showAbove: true,
+              // minTurnAngle: 90,
+              minSurfaceAngle: 90,
+              lineStyle: {
+                width: 1.5,
+                color: that.wdPerctListB[index].color3
+              }
+            }
           }
         })
-        this.myChartPie.setOption(this.pieOption)
-        console.log(this.myChartPie)
-        // this.bindListen(this.myChartPie, 'pieOption')
+
+        this.myChartPieB = echarts.init(this.$refs.myChartPieB);
+        console.log(this.pieListB)
+        this.pieOptionB = null
+        this.pieOptionB = getPie3D(this.pieListB, 2, 240, 40, 20, 2, -1)
+        this.myChartPieB.setOption(this.pieOptionB);
+        // // 是否需要label指引线，如果要就添加一个透明的2d饼状图并调整角度使得labelLine和3d的饼状图对齐，并再次setOption
+        let pieList1B = JSON.parse(JSON.stringify(this.pieListB))
+        if (!flag) {
+          for (let i in pieList1B) {
+            pieList1B[i].itemStyle.color = "transparent"
+          }
+        }
+        if (flag) {
+          this.pieOptionB.series.push({
+            name: '预警', // 自己根据场景修改
+            backgroundColor: 'transparent',
+            color: 'transparent',
+            type: 'pie',
+            animation: false,
+            labelLine: {
+              show: false
+            },
+            label: {
+              opacity: 0,
+              fontSize: 13,
+              lineHeight: 20
+            },
+            startAngle: 0, // 起始角度，支持范围[0, 360]。
+            clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+            radius: flag ? ['0%', '60%'] : ['0%', '60%'],
+            center: ['50%', '50%'],
+            data: pieList1B,
+            itemStyle: {
+              color: "transparent",
+              opacity: 1 // 这里必须是0，不然2d的图会覆盖在表面
+            }
+          })
+        } else {
+          this.pieOptionB.series.push({
+            name: '预警', // 自己根据场景修改
+            backgroundColor: 'transparent',
+            color: 'transparent',
+            type: 'pie',
+            animation: false,
+            labelLine: {
+              show: false
+            },
+            label: {
+              opacity: 0,
+              fontSize: 13,
+              lineHeight: 20
+            },
+            startAngle: 0, // 起始角度，支持范围[0, 360]。
+            clockwise: false, // 饼图的扇区是否是顺时针排布。上述这两项配置主要是为了对齐3d的样式
+            radius: flag ? ['0%', '60%'] : ['0%', '60%'],
+            center: ['50%', '50%'],
+            data: pieList1B,
+            itemStyle: {
+              color: "transparent",
+              opacity: 0 // 这里必须是0，不然2d的图会覆盖在表面
+            }
+          })
+        }
+        this.myChartPieB.setOption(this.pieOptionB)
+        console.log(this.myChartPieB)
       },
       // 监听鼠标事件，实现饼图选中效果（单选），近似实现高亮（放大）效果。
       // optionName是防止有多个图表进行定向option传递，单个图表可以不传，默认是opiton
@@ -1739,7 +1128,7 @@
       },
       // 自适应宽高
       changeSize () {
-        this.statusChart.resize()
+        // this.statusChart.resize()
       },
       getInfo() {
         let that = this;
@@ -3818,10 +3207,10 @@
         let that = this;
         
         // 总体评估概况
-        this.myChartYes = echarts.init(this.$refs.myChartYes);
-        this.myChartYes.setOption({
+        this.myChartYesA = echarts.init(this.$refs.myChartYesA);
+        this.myChartYesA.setOption({
           title: {
-            text: that.riskPerct1,
+            text: that.riskPerctA1,
             subtext: '有风险',
             textStyle: {
               color: 'rgba(51, 62, 117, 1)',
@@ -3875,87 +3264,7 @@
             radius: '170' // 图形大小
           },
           series: [
-            // {
-            //   name: "",
-            //   type: "pie",
-            //   radius: ["75%", "95%"],
-            //   avoidLabelOverlap: false,
-            //   label: {
-            //     position: 'center',
-            //     show: true,
-            //     formatter: function() {
-            //       let str = '{a|' + that.riskPerct1 + '}' + '\n\n' + '{b|有风险}'
-            //       return str
-            //     },
-            //     rich: {
-            //       a: {
-            //         color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
-            //         fontSize: '40',
-            //         fontWeight: '600'
-            //       },
-            //       b: {
-            //         color: 'rgba(117, 122, 144, 1)',
-            //         fontSize: '24'
-            //       }
-            //     }
-            //   },
-            //   emphasis: {
-            //     label: {
-            //       show: true,
-            //       fontSize: "30",
-            //       fontWeight: "bold"
-            //     }
-            //   },
-            //   labelLine: {
-            //     show: false
-            //   },
-            //   data: [
-            //     {
-            //       value: 10,
-            //       name: "预警",
-  
-            //       itemStyle: {
-            //         normal: {
-            //           barBorderRadius: [2, 2, 0, 0],
-            //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //             {
-            //               offset: 0,
-            //               color: 'rgba(255, 116, 138, 1)'
-            //             },
-            //             {
-            //               offset: 1,
-            //               color: 'rgba(255, 199, 182, 1)'
-            //             }
-            //           ])
-            //         }
-            //       }
-            //     },
-            //     {
-            //       value: 90,
-            //       name: "正常",
-            //       itemStyle: {
-            //         normal: {
-            //           barBorderRadius: [2, 2, 0, 0],
-            //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            //             {
-            //               offset: 0,
-            //               color: "transparent"
-            //             },
-            //             {
-            //               offset: 1,
-            //               color: "transparent"
-            //             }
-            //           ])
-            //         }
-            //       }
-            //     }
-            //   ],
-            //   coordinateSystem: 'polar',
-            //   roundCap: true,
-            //   barWidth: 10,
-            //   barGap: '-100%', // 两环重叠
-            //   z: 2
-            // },
+            
             {
               type: 'bar',
               animation: false,
@@ -3964,7 +3273,7 @@
                 position: 'center',
                 show: true,
                 formatter: function() {
-                  let str = '{a|' + that.riskPerct1 + '}' + '\n\n' + '{b|有风险}'
+                  let str = '{a|' + that.riskPerctA1 + '}' + '\n\n' + '{b|有风险}'
                   return str
                 },
                 rich: {
@@ -3992,7 +3301,7 @@
               data: [
                 {
                   name: '报警',
-                  value: that.riskPerct,
+                  value: that.riskPerctA,
                   itemStyle: {
                     normal: {
                       barBorderRadius: [2, 2, 0, 0],
@@ -4036,135 +3345,175 @@
             }
           ]
         });
-        // this.myChartYes.setOption({
-        //   tooltip: {
-        //     trigger: "item",
-        //     axisPointer: {
-        //       type: "shadow",
-        //       shadowStyle: {
-        //         width: "35px",
-        //         color: "rgba(72, 117, 174, 0.25)"
-        //       }
-        //     },
-        //     backgroundColor: "#ffffff",
-        //     borderWidth: 0,
-        //     textStyle: {
-        //       color: "#5B6C89"
-        //     },
-        //     formatter: function(params) {
-        //       var result =
-        //         '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background: linear-gradient(174deg, ' +
-        //         params.color.colorStops[0].color +
-        //         "," +
-        //         params.color.colorStops[1].color +
-        //         '");></span>' +
-        //         '<span style="color:#7786AC">' +
-        //         params.name +
-        //         "</span>" +
-        //         ':<span style="display:inline-block;font-weight:blod;margin-left:5px;font-size:14px;color:#7786AC">' +
-        //         params.value +
-        //         "</span>";
-        //       return result;
-        //     }
-        //   },
-          
-        //   series: [
-        //     {
-        //       name: "",
-        //       type: "pie",
-        //       radius: ["75%", "95%"],
-        //       avoidLabelOverlap: false,
-        //       label: {
-        //         position: 'center',
-        //         show: true,
-        //         formatter: function() {
-        //           let str = '{a|' + that.riskPerct1 + '}' + '\n\n' + '{b|有风险}'
-        //           return str
-        //         },
-        //         rich: {
-        //           a: {
-        //             color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
-        //             fontSize: '40',
-        //             fontWeight: '600'
-        //           },
-        //           b: {
-        //             color: 'rgba(117, 122, 144, 1)',
-        //             fontSize: '24'
-        //           }
-        //         }
-        //       },
-        //       emphasis: {
-        //         label: {
-        //           show: true,
-        //           fontSize: "30",
-        //           fontWeight: "bold"
-        //         }
-        //       },
-        //       labelLine: {
-        //         show: false
-        //       },
-        //       data: [
-        //         {
-        //           value: 10,
-        //           name: "预警",
-        //           itemStyle: {
-        //             normal: {
-        //               barBorderRadius: [2, 2, 0, 0],
-        //               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        //                 {
-        //                   offset: 0,
-        //                   color: 'rgba(255, 116, 138, 1)'
-        //                 },
-        //                 {
-        //                   offset: 1,
-        //                   color: 'rgba(255, 199, 182, 1)'
-        //                 }
-        //               ])
-        //             }
-        //           }
-        //         },
-        //         {
-        //           value: 90,
-        //           name: "正常",
-        //           itemStyle: {
-        //             normal: {
-        //               barBorderRadius: [2, 2, 0, 0],
-        //               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        //                 {
-        //                   offset: 0,
-        //                   color: 'rgba(242, 245, 252, 1)'
-        //                 },
-        //                 {
-        //                   offset: 1,
-        //                   color: 'rgba(242, 245, 252, 1)'
-        //                 }
-        //               ])
-        //             }
-        //           }
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // });
+
+        // 总体评估概况
+        this.myChartYesB = echarts.init(this.$refs.myChartYesB);
+        this.myChartYesB.setOption({
+          title: {
+            text: that.riskPerctB1,
+            subtext: '有风险',
+            textStyle: {
+              color: 'rgba(51, 62, 117, 1)',
+              fontSize: 40,
+              fontWeight: 600
+            },
+            subtextStyle: {
+              color: 'rgba(117, 122, 144, 1)',
+              fontSize: 24,
+              fontWeight: 600
+            },
+            itemGap: 10, // 主副标题距离
+            left: 'center',
+            top: '63'
+          },
+          angleAxis: {
+            max: 100, // 满分
+            clockwise: false, // 逆时针
+            // 隐藏刻度线
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          radiusAxis: {
+            type: 'category',
+            // 隐藏刻度线
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          polar: {
+            center: ['50%', '50%'],
+            radius: '170' // 图形大小
+          },
+          series: [
+            {
+              type: 'bar',
+              animation: false,
+              avoidLabelOverlap: false,
+              label: {
+                position: 'center',
+                show: true,
+                formatter: function() {
+                  let str = '{a|' + that.riskPerctB1 + '}' + '\n\n' + '{b|有风险}'
+                  return str
+                },
+                rich: {
+                  a: {
+                    color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
+                    fontSize: '40',
+                    fontWeight: '600'
+                  },
+                  b: {
+                    color: 'rgba(117, 122, 144, 1)',
+                    fontSize: '24'
+                  }
+                }
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: "30",
+                  fontWeight: "bold"
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                {
+                  name: '报警',
+                  value: that.riskPerctB,
+                  itemStyle: {
+                    normal: {
+                      barBorderRadius: [2, 2, 0, 0],
+                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                          offset: 0,
+                          color: 'rgba(255, 116, 138, 1)'
+                        },
+                        {
+                          offset: 1,
+                          color: 'rgba(255, 199, 182, 1)'
+                        }
+                      ])
+                    }
+                  }
+                }
+              ],
+              coordinateSystem: 'polar',
+              roundCap: true,
+              barWidth: 20,
+              barGap: '-100%', // 两环重叠
+              z: 2
+            },
+            {
+              // 灰色环
+              type: 'bar',
+              animation: false,
+              data: [
+                {
+                  value: 100,
+                  itemStyle: {
+                    color: 'rgba(242, 245, 252, 1)'
+                  }
+                }
+              ],
+              coordinateSystem: 'polar',
+              roundCap: true,
+              barWidth: 20,
+              barGap: '-100%', // 两环重叠
+              z: 1
+            }
+          ]
+        });
+        
       },
       echartInfo (dataName, datas) {
         let that = this;
         // for (let i in this.ecCount) {
         //   console.log(i)
         // }
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         console.log(dataName)
         console.log(datas)
-        let listX = []
-        let listY = []
+        let listX = ["轻度风险", "中度风险", "重度风险"]
+        let listY1 = [datas.infos.a, datas.infos.b, datas.infos.c]
+        let listY2 = [datas.infos.a1, datas.infos.b1, datas.infos.c1]
         // depName: '测试92部门',
         // riskPerct: 30
-        datas.list.sort((a, b) => {
-          return b.riskPerct - a.riskPerct
-        })
-        for (let i in datas.list) {
-          listX.push(datas.list[i].depName)
-          listY.push(datas.list[i].riskPerct)
-        }
+        // let maxList = JSON.parse(JSON.stringify(datas.infos)).sort((a, b) => {
+        //   return b.y - a.y
+        // })
+        // let max = maxList[0].y
+        // datas.infos = datas.infos.reverse()
+        
+        // for (let i in datas.infos) {
+          // listX.push(datas.infos[i].x.replace(/-/g, '/'))
+          // listY1.push(datas.infos[i].a, datas.infos[i].b, datas.infos[i].c)
+          // listY2.push(datas.infos[i].a1, datas.infos[i].b1, datas.infos[i].c1)
+        // }
+        console.log(listX)
+        console.log(listY1)
+        console.log(listY2)
+
         console.log(this)
         console.log(this.$refs)
         console.log(this.$refs[dataName])
@@ -4178,52 +3527,76 @@
               type: "shadow"
             }
           },
-  
+
           grid: {
             top: '16',
-            left: "2%",
-            right: "2%",
+            left: "4%",
+            right: "6%",
             bottom: "0%",
             containLabel: true
           },
           xAxis: [
             {
-              axisLabel: {
-                show: true,
-                fontSize: '14',
-                fontWeight: '300',
-                color: '#2A3487',
-                interval: 0, // 横轴信息全部显示
-                rotate: 45, // -30度角倾斜显示
-                textStyle: {
-                  rich: {}
+              type: "category",
+              boundaryGap: false,
+              // x轴文字配置
+              axisLine: {
+                // show: false
+                lineStyle: {
+                  color: "rgba(216,216,216,0.18)"
                 }
               },
-              axisLine: {
-                show: false // 不显示坐标轴线
-              },
-              type: "category",
-              data: listX,
               axisTick: {
-                show: false,
-                alignWithLabel: true
-              }
+                show: false
+              },
+              axisLabel: {
+                margin: 10,
+                color: "#2A3487",
+                fontSize: 14,
+                showMaxLabel: true,
+                interval: 'auto',
+                // 文字换行
+                formatter: function (value) {
+                  let res = ""; // 拼接加\n返回的类目项
+                  let maxLength = 10; // 每项显示文字个数  数字设置几，就一行显示几个文字
+                  let valLength = value.length; // X轴上的文字个数
+                  let rowN = Math.ceil(valLength / maxLength); // 需要换行的行数
+                  // 换行的行数大于1,
+                  if (rowN > 1) {
+                    for (let i = 0; i < rowN; i++) {
+                      let temp = ""; // 每次截取的字符串
+                      let start = i * maxLength; // 开始截取的位置
+                      let end = start + maxLength; // 结束截取的位置
+                      temp = value.substring(start, end) + "\n";
+                      res += temp; // 拼接字符串
+                    }
+                    return res;
+                  } else {
+                    return value;
+                  }
+                }
+                // interval: 0
+              },
+              data: listX
             }
           ],
           yAxis: [
             {
               // min: 0, // 最小百分比
-              // max: 100, // 最大百分比
+              // max: max < 3 ? 3 : max, // 最大百分比
               type: 'value',
+              minInterval: 1,
               // name: '单位（%）',
               nameGap: 35,
               nameTextStyle: { color: '#6F76B2' },
               axisTick: { show: false },
               axisLabel: {
                 show: true,
+                // padding: [0,0,0,-10],
                 interval: 0, // 使x轴文字显示全
                 color: '#6F76B2',
-                formatter: '{value}%' // y轴数值，带百分号
+                fontSize: 14,
+                formatter: '{value}' // y轴数值，带百分号
               },
               axisLine: { show: false, lineStyle: { color: '#dddddd' } },
               splitLine: { show: false, lineStyle: { type: 'dashed', color: '' } }
@@ -4231,35 +3604,70 @@
           ],
           series: [
             {
-              name: "使用数量",
-              type: "bar",
+              name: "A团体",
+              type: "line",
+              symbol: "none",
+              smooth: true,
               animation: false,
-              barWidth: "14",
               itemStyle: {
                 normal: {
-                  barBorderRadius: [2, 2, 0, 0],
+                  color: 'rgba(135, 201, 255, 1)',
+                  lineStyle: {
+                    type: "solid",
+                    width: 1
+                  }
+                }
+              },
+              areaStyle: {
+                normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                       offset: 0,
-                      color: datas.color1
+                      color: 'rgba(72,146,254,0.1)'
                     },
                     {
                       offset: 1,
-                      color: datas.color2
+                      color: 'rgba(72,146,254,0.1)'
                     }
                   ])
                 }
               },
-              label: {
-                show: true,
-                position: 'top', // 顶部显示
-                fontSize: '10',
-                color: '#2A3487',
-                formatter: function(data) {
-                  return data.value + '%'
+              barWidth: 0,
+              // color:"#00FFFF",
+              data: listY1
+            },
+            {
+              name: "B团体",
+              type: "line",
+              symbol: "none",
+              smooth: true,
+              animation: false,
+              itemStyle: {
+                normal: {
+                  color: 'rgba(222, 185, 255, 1)',
+                  lineStyle: {
+                    type: "solid",
+                    width: 1
+                  }
                 }
               },
-              data: listY
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: 'rgba(184, 124, 255, 0.1)'
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(189, 187, 255, 0.1)'
+                    }
+                  ])
+                }
+              },
+              barWidth: 0,
+              // color:"#00FFFF",
+              data: listY2
             }
           ]
         });
@@ -4300,23 +3708,25 @@
       getMeetingAll() {
         let that = this;
         return new Promise((resolve, reject) => {
+          console.log("this.gList")
           console.log(this.gList)
           let paramt = {
-            organizationA: this.gList.organization1,
-            organizationB: this.gList.organization2,
-            departmentNameA: this.gList.organizationNameDui1,
-            departmentNameB: this.gList.organizationNameDui2,
+            organizationA: this.gList.organizationA,
+            organizationB: this.gList.organizationB,
+            departmentNameA: this.gList.departmentNameA,
+            departmentNameB: this.gList.departmentNameB,
             startDate: this.gList.startDate,
             endDate: this.gList.endDate
           }
+          
           // // 用例
           // alert(this.cutStr("测试1字符串哈哈哈哈", 1, 6));
           // alert(this.cutStr("测试1字符串哈哈哈哈", 6, 10));
           this.$http
-            .get(Url + "/aimw/report/exportGroupCompareReport", { params: paramt })
+            .post(Url + "/aimw/report/exportGroupCompareReport", paramt)
             .then(res => {
               console.log(res)
-              return
+              // return
               // res.data = {
               //   "code": 0,
               //   "data": {
@@ -4529,7 +3939,8 @@
               if (data.code == 0) {
                 let info = res.data.data
                 console.log(info)
-                info.organizationName = this.gList.organizationName;
+                info.departmentNameA = this.gList.departmentNameA,
+                info.departmentNameB = this.gList.departmentNameB,
                 info.startDate = this.gList.startDate;
                 info.endDate = this.gList.endDate;
                 console.log(info.totalNum)
@@ -4619,767 +4030,603 @@
             // 解析数据
             console.log(selectedData[u]);
             // EvaResult
-            this.organizationName = selectedData[u].organizationName;
-            this.depName = selectedData[u].depName;
+            // this.organizationName = selectedData[u].organizationName;
+            // this.depName = selectedData[u].depName;
             this.startDate = selectedData[u].startDate.substring(0, 4) + '年' + selectedData[u].startDate.substring(4, 6) + "月" + selectedData[u].startDate.substring(6, 8) + "日";
             console.log(this.startDate)
             this.endDate = selectedData[u].endDate.substring(0, 4) + '年' + selectedData[u].endDate.substring(4, 6) + "月" + selectedData[u].endDate.substring(6, 8) + "日";
             console.log(this.endDate)
             this.time = this.startDate + ' —— ' + this.endDate;
             
+            this.evaNum = selectedData[u].evaNum
+            this.evaPerct = selectedData[u].evaPerct
+            this.evaPerct1 = this.perctInfo1(selectedData[u].evaPerct) + "%";
+            this.riskNum = selectedData[u].riskNum
             this.riskPerct = selectedData[u].riskPerct
             this.riskPerct1 = this.perctInfo1(selectedData[u].riskPerct) + "%";
-  
-            this.depressionPerct = selectedData[u].depressionPerct
-            this.anxietyPerct = selectedData[u].anxietyPerct
-            this.forcedPerct = selectedData[u].forcedPerct
-            this.ptsdPerct = selectedData[u].forcedPerct
-            this.violencePerct = selectedData[u].violencePerct
-            this.suicidePerct = selectedData[u].suicidePerct
-            this.depressionPerct1 = this.perctInfo1(selectedData[u].depressionPerct) + "%";
-            this.anxietyPerct1 = this.perctInfo1(selectedData[u].anxietyPerct) + "%";
-            this.forcedPerct1 = this.perctInfo1(selectedData[u].forcedPerct) + "%";
-            this.ptsdPerct1 = this.perctInfo1(selectedData[u].ptsdPerct) + "%";
-            this.violencePerct1 = this.perctInfo1(selectedData[u].violencePerct) + "%";
-            this.suicidePerct1 = this.perctInfo1(selectedData[u].suicidePerct) + "%";
-            selectedData[u].evaPerct = this.perctInfo(selectedData[u].evaNum / selectedData[u].totalNum) + "%";
-  
-            this.cpHead = '本机构共' + selectedData[u].totalNum + '人，实测' + selectedData[u].evaNum + '人（' + selectedData[u].evaPerct + '）。'
-            // 系统发现，本机构中有**人（23%）存在风险，**人（**%）无风险。
-            var rstr = '';
-            rstr += '系统发现，本机构实测人数中有' + selectedData[u].riskNum + '人（' + selectedData[u].riskPerct + '%）存在风险，' + parseInt(selectedData[u].evaNum - selectedData[u].riskNum) + '人（' + this.perctInfo1(100 - selectedData[u].riskPerct) + "%" + '）无风险。'
-  
-            console.log(rstr)
-            this.partsStr2 = rstr
+            this.totalNum = selectedData[u].totalNum
             
+            if (selectedData[u].GroupStatistic && selectedData[u].GroupStatistic.length > 1) {
+              selectedData[u].GroupStatistic[0].evaPerct1 = this.perctInfo1(selectedData[u].GroupStatistic[0].evaPerct) + "%";
+              selectedData[u].GroupStatistic[0].riskPerct1 = this.perctInfo1(selectedData[u].GroupStatistic[0].riskPerct) + "%";
+              selectedData[u].GroupStatistic[1].evaPerct1 = this.perctInfo1(selectedData[u].GroupStatistic[1].evaPerct) + "%";
+              selectedData[u].GroupStatistic[1].riskPerct1 = this.perctInfo1(selectedData[u].GroupStatistic[1].riskPerct) + "%";
+              if (selectedData[u].GroupStatistic[0].GroupUsersInfo === null) {
+                selectedData[u].GroupStatistic[0].GroupUsersInfo = []
+              }
+              for (let o in selectedData[u].GroupStatistic[0].GroupUsersInfo) {
+                selectedData[u].GroupStatistic[0].GroupUsersInfo[o].depName = selectedData[u].GroupStatistic[0].departmentName
+                selectedData[u].GroupStatistic[0].GroupUsersInfo[o].id = Number(o) + 1
+                
+              }
 
-            if (selectedData[u].depressionInfo.warningList === null) {
-              selectedData[u].depressionInfo.warningList = []
-            }
-            if (selectedData[u].anxietyInfo.warningList === null) {
-              selectedData[u].anxietyInfo.warningList = []
-            }
-            if (selectedData[u].forcedInfo.warningList === null) {
-              selectedData[u].forcedInfo.warningList = []
-            }
-            if (selectedData[u].ptsdInfo.warningList === null) {
-              selectedData[u].ptsdInfo.warningList = []
-            }
-            if (selectedData[u].violenceInfo.warningList === null) {
-              selectedData[u].violenceInfo.warningList = []
-            }
-            if (selectedData[u].suicideInfo.warningList === null) {
-              selectedData[u].suicideInfo.warningList = []
-            }
-            // selectedData[u].depressionInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
+              if (selectedData[u].GroupStatistic[1].GroupUsersInfo === null) {
+                selectedData[u].GroupStatistic[1].GroupUsersInfo = []
+              }
+              for (let o in selectedData[u].GroupStatistic[1].GroupUsersInfo) {
+                selectedData[u].GroupStatistic[1].GroupUsersInfo[o].depName = selectedData[u].GroupStatistic[1].departmentName
+                selectedData[u].GroupStatistic[1].GroupUsersInfo[o].id = Number(o) + 1
+              }
 
+              this.warningListsDui = selectedData[u].GroupStatistic[0].GroupUsersInfo.concat(selectedData[u].GroupStatistic[1].GroupUsersInfo)
+              console.log(this.warningListsDui)
+              for (let i in this.warningListsDui) {
+                let levelStr = []
+                if (that.depressionFlag == 1) {
+                  let wName = '抑郁'
+                  let level =  this.warningListsDui[i].depressionLevel == 1 ? "轻度" + wName  :   this.warningListsDui[i].depressionLevel == 2 ? '中度' + wName :   this.warningListsDui[i].depressionLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                if (that.anxietyFlag == 1) {
+                  let wName = '焦虑'
+                  let level =  this.warningListsDui[i].anxietyLevel == 1 ? "轻度" + wName  :   this.warningListsDui[i].anxietyLevel == 2 ? '中度' + wName :   this.warningListsDui[i].anxietyLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                if (that.forcedFlag == 1) {
+                  let wName = '强迫'
+                  let level =  this.warningListsDui[i].forcedLevel == 1 ? "轻度" + wName  :   this.warningListsDui[i].forcedLevel == 2 ? '中度' + wName :   this.warningListsDui[i].forcedLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                if (that.ptsdFlag == 1) {
+                  let wName = 'PTSD'
+                  let level =  this.warningListsDui[i].ptsdLevel == 1 ? "轻度" + wName  :   this.warningListsDui[i].ptsdLevel == 2 ? '中度' + wName : this.warningListsDui[i].ptsdLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                if (that.violenceFlag == 1) {
+                  let wName = '敌对'
+                  let level =  this.warningListsDui[i].violenceLevel == 1 ? "轻度" + wName  :   this.warningListsDui[i].violenceLevel == 2 ? '中度' + wName : this.warningListsDui[i].violenceLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                if (that.suicideFlag == 1) {
+                  let wName = '自我伤害'
+                  let level = this.warningListsDui[i].suicideLevel == 1 ? "轻度" + wName  :  this.warningListsDui[i].suicideLevel == 2 ? '中度' + wName :  this.warningListsDui[i].suicideLevel == 3 ? '重度' + wName : ''
+                  if (level != '') {
+                    levelStr.push(level)
+                  }
+                }
+                this.warningListsDui[i].levelStr = levelStr.join('、')
+                console.log(levelStr)
+              }
+              console.log(this.warningListsDui)
 
-            // let depressionInfo = selectedData[u].depressionInfo.warningList
-            // for (let i in depressionInfo) {
-            //   depressionInfo[i].id = Number(i) + 1
-            // }
-            // let depression1 = []
-            // let depressionLen1 = Math.ceil((depressionInfo.length - 13) / 23)
-            // for (let j = 0; j < depressionLen1; j++) {
-            //   depression1.push(depressionInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(depression1)
-
-            // selectedData[u].depressionInfo.warningInfo = depression1
-            // console.log(this.depressionList)
-
-
-            // selectedData[u].anxietyInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
-
-
-            // let anxietyInfo = selectedData[u].anxietyInfo.warningList
-            // for (let i in anxietyInfo) {
-            //   anxietyInfo[i].id = Number(i) + 1
-            // }
-            // let anxiety1 = []
-            // let anxietyLen1 = Math.ceil((anxietyInfo.length - 13) / 23)
-            // for (let j = 0; j < anxietyLen1; j++) {
-            //   anxiety1.push(anxietyInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(anxiety1)
-
-            // selectedData[u].anxietyInfo.warningInfo = anxiety1
-            // console.log(this.anxietyList)
-
-            // selectedData[u].forcedInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
-
-
-            // let forcedInfo = selectedData[u].forcedInfo.warningList
-            // for (let i in forcedInfo) {
-            //   forcedInfo[i].id = Number(i) + 1
-            // }
-            // let forced1 = []
-            // let forcedLen1 = Math.ceil((forcedInfo.length - 13) / 23)
-            // for (let j = 0; j < forcedLen1; j++) {
-            //   forced1.push(forcedInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(forced1)
-
-            // selectedData[u].forcedInfo.warningInfo = forced1
-            // console.log(this.forcedList)
-
-
-            // selectedData[u].ptsdInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
-
-
-            // let ptsdInfo = selectedData[u].ptsdInfo.warningList
-            // for (let i in ptsdInfo) {
-            //   ptsdInfo[i].id = Number(i) + 1
-            // }
-            // let ptsd1 = []
-            // let ptsdLen1 = Math.ceil((ptsdInfo.length - 13) / 23)
-            // for (let j = 0; j < ptsdLen1; j++) {
-            //   ptsd1.push(ptsdInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(ptsd1)
-
-            // selectedData[u].ptsdInfo.warningInfo = ptsd1
-            // console.log(this.ptsdList)
-
-            // selectedData[u].violenceInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
-
-            // let violenceInfo = selectedData[u].violenceInfo.warningList
-            // for (let i in violenceInfo) {
-            //   violenceInfo[i].id = Number(i) + 1
-            // }
-            // let violence1 = []
-            // let violenceLen1 = Math.ceil((violenceInfo.length - 13) / 23)
-            // for (let j = 0; j < violenceLen1; j++) {
-            //   violence1.push(violenceInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(violence1)
-
-            // selectedData[u].violenceInfo.warningInfo = violence1
-            // console.log(this.violenceList)
-            
-
-            // selectedData[u].suicideInfo.warningList = [
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-13", level: 1, finishTime: "2024-09-12 09:19:37"},
-            //   {name: "测试22", passport: "222222-14", level: 1, finishTime: "2024-09-12 09:19:37"}
-            // ]
-
-            // let suicideInfo = selectedData[u].suicideInfo.warningList
-            // for (let i in suicideInfo) {
-            //   suicideInfo[i].id = Number(i) + 1
-            // }
-            // let suicide1 = []
-            // let suicideLen1 = Math.ceil((suicideInfo.length - 13) / 23)
-            // for (let j = 0; j < suicideLen1; j++) {
-            //   suicide1.push(suicideInfo.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-            // }
-            // console.log(suicide1)
-
-            // selectedData[u].suicideInfo.warningInfo = suicide1
-            // console.log(this.suicideList)
-
-
-
-            // let cpList = []
-            // // 其中：（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）。
-  
-            // var sstr = '';
-            // sstr += '本机构共' + selectedData[u].totalNum + '人，实测' + selectedData[u].evaNum + '人（' + selectedData[u].evaPerct + '）。其中：'
-            // for (let j in selectedData[u].depInfo) {
-            //   sstr += '（' + selectedData[u].depInfo[j].depName + '）共' + selectedData[u].depInfo[j].totalNum + '人，实测' + selectedData[u].depInfo[j].evaNum + '人（' + this.perctInfo1(selectedData[u].depInfo[j].evaPerct) + '%）'
-            //   // sstr += '（' + selectedData[u].depInfo[j].depName + '）共' + selectedData[u].depInfo[j].totalNum + '人，实测' + selectedData[u].depInfo[j].evaNum + '人（' + this.perctInfo1(selectedData[u].depInfo[j].evaPerct) + '%）'
-            //   // sstr += '（' + selectedData[u].depInfo[j].depName + '）共' + selectedData[u].depInfo[j].totalNum + '人，实测' + selectedData[u].depInfo[j].evaNum + '人（' + this.perctInfo1(selectedData[u].depInfo[j].evaPerct) + '%）'
-            //   // sstr += '（' + selectedData[u].depInfo[j].depName + '）共' + selectedData[u].depInfo[j].totalNum + '人，实测' + selectedData[u].depInfo[j].evaNum + '人（' + this.perctInfo1(selectedData[u].depInfo[j].evaPerct) + '%）'
-            //   // sstr += '（' + selectedData[u].depInfo[j].depName + '）共' + selectedData[u].depInfo[j].totalNum + '人，实测' + selectedData[u].depInfo[j].evaNum + '人（' + this.perctInfo1(selectedData[u].depInfo[j].evaPerct) + '%）'
-            //   cpList.push({
-            //     name: selectedData[u].depInfo[j].depName,
-            //     total: selectedData[u].depInfo[j].totalNum,
-            //     evaNum: selectedData[u].depInfo[j].evaNum,
-            //     evaPerct: this.perctInfo1(selectedData[u].depInfo[j].evaPerct)
-            //   })
-            //   if (j < selectedData[u].depInfo.length - 1) {
-            //     sstr += ';'
-            //   } else {
-            //     sstr += '。'
-            //   }
-            // }
-            // this.partsStr1 = sstr
-            // console.log(cpList.length)
-            // console.log(cpList.length % 2)
-            
-            // cpList = [
-            //   { name: '', total: '', evaNum: '', evaPerct: '' }
-  
-            // ]
-            // if (cpList.length > 0 && cpList.length % 2 > 0) {
-            //   cpList.push({
-            //     name: '',
-            //     total: '',
-            //     evaNum: '',
-            //     evaPerct: ''
-            //   })
-            // }
-            // this.cpList = cpList
-            // console.log('~~~~~~~~~~~~~~~~~~' + cpList.length)
-            // if (cpList.length < 11) {
-            //   this.riskPage = 1
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 533)
-            //   this.cpList1 = this.cpList
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 10 && cpList.length < 15) {
-            //   // 总体维度，放到下一页
-            //   this.riskPage = 2
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 767)
-            //   this.cpList1 = this.cpList
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 14 && cpList.length < 19) {
-            //   // 总体维度，总体风险，放到下一页
-            //   this.riskPage = 3
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   this.cpList1 = this.cpList
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 18 && cpList.length < 53) {
-            //   // 第二页不分页
-            //   this.riskPage = 4
+              let listd1 = []
               
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 2672).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2672).length)
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, cpList.length)
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 52 && cpList.length < 57) {
-            //   // 总体维度，放到第三页
-            //   this.riskPage = 5
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 2905).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2905).length)
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, cpList.length)
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 56 && cpList.length < 61) {
-            //   // 总体维度，总体风险，放到第三页
-            //   this.riskPage = 6
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 3060).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 3060).length)
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, cpList.length)
-            //   this.partsStr13 = ''
-            // } else if (cpList.length > 60 && cpList.length < 95) {
-            //   // 第三页不分页
-            //   this.riskPage = 7
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, 60)
-            //   this.cpList3 = this.cpList.slice(60, cpList.length)
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // // console.log(this.partsStr11)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 3060).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 3060).length)
-            //   // // console.log(this.partsStr12)
-            //   // this.partsStr13 = this.partsStr1.substring(this.cutStr(this.partsStr1, 3060).length, this.partsStr1.length)
-            //   // // console.log(this.partsStr13)
-            // } else if (cpList.length > 94 && cpList.length < 99) {
-            //   // 总体维度，放到第四页
-            //   this.riskPage = 8
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 2905).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2905).length)
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, 60)
-            //   this.cpList3 = this.cpList.slice(60, cpList.length)
-            // } else if (cpList.length > 98) {
-            //   // 总体维度，总体风险，放到第四页
-            //   this.riskPage = 9
-            //   // this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   // this.partsStr12 = this.cutStr(this.partsStr1, 2905).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2905).length)
-            //   this.cpList1 = this.cpList.slice(0, 18)
-            //   this.cpList2 = this.cpList.slice(18, 60)
-            //   this.cpList3 = this.cpList.slice(60, 100)
-            // }
-            // // if (cpList.length)
-            // // sstr = '本机构共50人，实测39人（**%）。其中：（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%），（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）。（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）。'
-            // // sstr = '本机构共50人，实测39人（**%）。其中：（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%），（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）。（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门222）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门222）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）。'
-            // // sstr = '本机构共50人，实测39人（**%）。其中：（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%），（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）。（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门222）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门222）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门333）共**人，实测**人（**%）；（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%），（二级部门1）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）。（二级部门3）共**人，实测**人（**%）；（二级部门4）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门22）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）；（二级部门2）共**人，实测**人（**%）。'
-            // console.log(sstr.length)
-            // console.log(this.etBLen(sstr))
-  
-            // console.log(sstr)
+              let warnLend1 = Math.ceil((this.warningListsDui.length - 9) / 23)
+              for (let j = 0; j < warnLend1; j++) {
+                listd1.push(this.warningListsDui.slice(9 + 23 * j, 9 + 23 * (Number(j) + 1)))
+              }
+              console.log(listd1)
+              this.warnListDui = listd1
+
+              let duiTab = 1
+              console.log(this.warningListsDui.length)
+              if (this.warningListsDui.length < 5) {
+                duiTab = 1
+              } else if (this.warningListsDui.length > 4 && this.warningListsDui.length < 10 ) {
+                duiTab = 2
+              } else if (this.warningListsDui.length > 9) {
+                // && this.warningListsDui.length < 27 
+                if (this.warnListDui[this.warnListDui.length - 1].length < 18) {
+                  this.suggestFlag = true
+                } else {
+                  this.suggestFlag = false
+                }
+                duiTab = 3
+              }
+              this.duiTab = duiTab
+              console.log('duiTab')
+              console.log(duiTab)
+              
+
+              this.GroupStatistic = selectedData[u].GroupStatistic
+              let suggestionDui = ''
+              suggestionDui += this.GroupStatistic[0].departmentName + '实测占比' + this.GroupStatistic[0].evaPerct1 + '，' + this.GroupStatistic[1].departmentName + '实测占比' + this.GroupStatistic[1].evaPerct1 + '，'
+              if (this.GroupStatistic[0].evaPerct > 95 && this.GroupStatistic[1].evaPerct > 95) {
+                suggestionDui += this.GroupStatistic[0].departmentName + '和' + this.GroupStatistic[1].departmentName + '心理测评覆盖率都很高，请继续保持；此外，还可以将心理测评进行常态化，便于对心理健康状态进行追踪评估。'
+              
+              } else if (this.GroupStatistic[0].evaPerct < 96 && this.GroupStatistic[1].evaPerct <96) {
+                
+                suggestionDui += '管理者可多多组织职工参加AI心世界测评，提高心理测评的覆盖率；此外，还可以将心理测评进行常态化，便于对心理健康状态进行追踪评估。'
+              
+              } else {
+                if (this.GroupStatistic[0].evaPerct > this.GroupStatistic[1].evaPerct) {
+                  suggestionDui += this.GroupStatistic[0].departmentName + '心理测评覆盖率很高，请继续保持，' + this.GroupStatistic[1].departmentName
+                } else {
+                  suggestionDui += this.GroupStatistic[1].departmentName + '心理测评覆盖率很高，请继续保持，' + this.GroupStatistic[0].departmentName
+                }
+                 suggestionDui += '管理者可多多组织职工参加AI心世界测评，提高心理测评的覆盖率；此外，还可以将心理测评进行常态化，便于对心理健康状态进行追踪评估。'
+             
+              }
+              this.suggestionDui = suggestionDui
+
+              let riskDui = ''
+              if (this.GroupStatistic[0].riskPerct == this.GroupStatistic[1].riskPerct) {
+
+                riskDui += this.GroupStatistic[0].departmentName + '和' + this.GroupStatistic[1].departmentName + '预警人数占比相同（为' + this.GroupStatistic[0].riskPerct1 +'），建议管理者定期安排心理健康讲座，针对性地开展情绪舒缓活动，必要时，建议预警人员及时进行心理咨询或者去医院就诊。'
+              
+              } else {
+                riskDui += this.GroupStatistic[0].departmentName + '预警人数占比（' + this.GroupStatistic[0].riskPerct1 + '）'
+                if (this.GroupStatistic[0].riskPerct > this.GroupStatistic[1].riskPerct) {
+                  riskDui += '高于'
+                } else {
+                  riskDui += '低于'
+                }
+                riskDui += this.GroupStatistic[1].departmentName + '（' + this.GroupStatistic[1].riskPerct1 + '）'
+                riskDui += '，建议管理者定期安排心理健康讲座，针对性地开展情绪舒缓活动，必要时，建议预警人员及时进行心理咨询或者去医院就诊。'
+              }
+              this.riskDui = riskDui
 
 
-            // if (this.etBLen(sstr) < 534) {
-            //   // 不需要分页
-            //   this.riskPage = 1
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 533)
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            //   // this.partsStr1.
-            // } else if (this.etBLen(sstr) > 533 && this.etBLen(sstr) < 768) {
-            //   // 总体维度，放到下一页
-            //   this.riskPage = 2
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 767)
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            // } else if (this.etBLen(sstr) > 767 && this.etBLen(sstr) < 922) {
-            //   // 总体维度，总体风险，放到下一页
-            //   this.riskPage = 3
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   this.partsStr12 = ''
-            //   this.partsStr13 = ''
-            // } else if (this.etBLen(sstr) > 921 && this.etBLen(sstr) < 2673) {
-            //   // 第二页不分页
-            //   this.riskPage = 4
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   this.partsStr12 = this.cutStr(this.partsStr1, 2672).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2672).length)
-            //   this.partsStr13 = ''
-            // } else if (this.etBLen(sstr) > 2672 && this.etBLen(sstr) < 2906) {
-            //   // 总体维度，放到第三页
-            //   this.riskPage = 5
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   this.partsStr12 = this.cutStr(this.partsStr1, 2905).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 2905).length)
-            //   this.partsStr13 = ''
-            // } else if (this.etBLen(sstr) > 2905 && this.etBLen(sstr) < 3060) {
-            //   // 总体维度，总体风险，放到第三页
-            //   this.riskPage = 6
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   this.partsStr12 = this.cutStr(this.partsStr1, 3060).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 3060).length)
-            //   this.partsStr13 = ''
-            // } else if (this.etBLen(sstr) > 3059) {
-            //   // 第三页不分页
-            //   this.riskPage = 7
-            //   this.partsStr11 = this.cutStr(this.partsStr1, 921)
-            //   console.log(this.partsStr11)
-            //   this.partsStr12 = this.cutStr(this.partsStr1, 3060).substring(this.partsStr11.length, this.cutStr(this.partsStr1, 3060).length)
-            //   console.log(this.partsStr12)
-            //   this.partsStr13 = this.partsStr1.substring(this.cutStr(this.partsStr1, 3060).length, this.partsStr1.length)
-            //   console.log(this.partsStr13)
-            // }
-            // console.log('~~~~~~~~~~~~~~~~~~~~~' + this.etBLen(sstr))
-            // console.log(this.riskPage)
+              let departA = selectedData[u].GroupStatistic[0]
+              let departB = selectedData[u].GroupStatistic[1]
+
+              this.riskPerctA = departA.riskPerct
+              this.riskPerctA1 = this.perctInfo1(departA.riskPerct) + "%";
+              this.depressionPerctA = departA.depressionPerct
+              this.anxietyPerctA = departA.anxietyPerct
+              this.forcedPerctA = departA.forcedPerct
+              this.ptsdPerctA = departA.forcedPerct
+              this.violencePerctA = departA.violencePerct
+              this.suicidePerctA = departA.suicidePerct
+
+              this.depressionPerctA1 = this.perctInfo1(departA.depressionPerct) + "%";
+              this.anxietyPerctA1 = this.perctInfo1(departA.anxietyPerct) + "%";
+              this.forcedPerctA1 = this.perctInfo1(departA.forcedPerct) + "%";
+              this.ptsdPerctA1 = this.perctInfo1(departA.ptsdPerct) + "%";
+              this.violencePerctA1 = this.perctInfo1(departA.violencePerct) + "%";
+              this.suicidePerctA1 = this.perctInfo1(departA.suicidePerct) + "%";
+
+              let wdStrA = []
+              if (this.depressionFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: '抑郁',
+                    color1: 'rgba(132, 138, 255, 0.6)',
+                    color2: 'rgba(162, 176, 255, 0.6)',
+                    color3: "rgba(153, 169, 255, 1)",
+                    color4: 'rgba(201, 204, 255, 1)',
+                    // perct: 10,
+                    perct: departA.depressionPerct,
+                    perct1: this.depressionPerctA1,
+                    // num: 10,
+                    num: departA.depressionNum,
+                    numB: departB.depressionNum,
+                    Pct:  this.perctInfo1(departA.depressionPct) + "%",
+                    PctB:  this.perctInfo1(departB.depressionPct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.depressionMildNum,
+                      b: departA.depressionModerateNum,
+                      c: departA.depressionSevereNum,
+                      a1: departB.depressionMildNum,
+                      b1: departB.depressionModerateNum,
+                      c1: departB.depressionSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.anxietyFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: '焦虑',
+                    color1: 'rgba(214, 182, 246, 0.6)',
+                    color2: 'rgba(225, 203, 246, 0.6)',
+                    color3: "rgba(214, 182, 246, 1)",
+                    color4: 'rgba(225, 203, 246, 1)',
+                    // perct: 15,
+                    perct: departA.anxietyPerct,
+                    perct1: this.anxietyPerctA1,
+                    // num: 10,
+                    num: departA.anxietyNum,
+                    numB: departB.anxietyNum,
+                    Pct:  this.perctInfo1(departA.anxietyPct) + "%",
+                    PctB:  this.perctInfo1(departB.anxietyPct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.anxietyMildNum,
+                      b: departA.anxietyModerateNum,
+                      c: departA.anxietySevereNum,
+                      a1: departB.anxietyMildNum,
+                      b1: departB.anxietyModerateNum,
+                      c1: departB.anxietySevereNum
+                    }
+                  }
+                )
+              }
+              if (this.forcedFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: '强迫',
+                    color1: 'rgba(255, 193, 150, 0.6)',
+                    color2: 'rgba(255, 227, 184, 0.6)',
+                    color3: "rgba(255, 210, 97, 1)",
+                    color4: 'rgba(255, 210, 97, 1)',
+                    // perct: 20,
+                    perct: departA.forcedPerct,
+                    perct1: this.forcedPerctA1,
+                    // num: 10,
+                    num: departA.forcedNum,
+                    numB: departB.forcedNum,
+                    Pct: this.perctInfo1(departA.forcedPct) + "%",
+                    PctB: this.perctInfo1(departB.forcedPct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.forcedMildNum,
+                      b: departA.forcedModerateNum,
+                      c: departA.forcedSevereNum,
+                      a1: departB.forcedMildNum,
+                      b1: departB.forcedModerateNum,
+                      c1: departB.forcedSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.ptsdFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: 'PTSD',
+                    color1: 'rgba(255, 163, 163, 0.6)',
+                    color2: 'rgba(255, 163, 163, 0.6)',
+                    color3: '#FFA3A3',
+                    color4: 'rgba(255, 207, 224, 1)',
+                    // perct: 10,
+                    perct: departA.ptsdPerct,
+                    perct1: this.ptsdPerctA1,
+                    // num: 10,
+                    num: departA.ptsdNum,
+                    numB: departB.ptsdNum,
+                    Pct: this.perctInfo1(departA.ptsdPct) + "%",
+                    PctB: this.perctInfo1(departB.ptsdPct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.ptsdMildNum,
+                      b: departA.ptsdModerateNum,
+                      c: departA.ptsdSevereNum,
+                      a1: departB.ptsdMildNum,
+                      b1: departB.ptsdModerateNum,
+                      c1: departB.ptsdSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.violenceFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: '敌对',
+                    color1: 'rgba(135, 201, 255, 0.6)',
+                    color2: 'rgba(175, 236, 255, 0.6)',
+                    color3: "rgba(148, 207, 255, 1)",
+                    color4: 'rgba(178, 231, 247, 1)',
+                    // perct: 6,
+                    perct: departA.violencePerct,
+                    perct1: this.violencePerctA1,
+                    // num: 10,
+                    num: departA.violenceNum,
+                    numB: departB.violenceNum,
+                    Pct: this.perctInfo1(departA.violencePct) + "%",
+                    PctB: this.perctInfo1(departB.violencePct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.violenceMildNum,
+                      b: departA.violenceModerateNum,
+                      c: departA.violenceSevereNum,
+                      a1: departB.violenceMildNum,
+                      b1: departB.violenceModerateNum,
+                      c1: departB.violenceSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.suicideFlag == 1) {
+                wdStrA.push(
+                  {
+                    name: '自我伤害',
+                    color1: 'rgba(255, 146, 186, 0.6)',
+                    color2: 'rgba(255, 182, 207, 0.6)',
+                    color3: "rgba(255, 178, 206, 1)",
+                    color4: 'rgba(255, 207, 224, 1)',
+                    // perct: 0,
+                    perct: departA.suicidePerct,
+                    perct1: this.suicidePerctA1,
+                    // num: 10,
+                    num: departA.suicideNum,
+                    numB: departB.suicideNum,
+                    Pct: this.perctInfo1(departA.suicidePct) + "%",
+                    PctB: this.perctInfo1(departB.suicidePct) + "%",
+                    nameA: selectedData[u].departmentNameA,
+                    nameB: selectedData[u].departmentNameB,
+                    infos: {
+                      a: departA.suicideMildNum,
+                      b: departA.suicideModerateNum,
+                      c: departA.suicideSevereNum,
+                      a1: departB.suicideMildNum,
+                      b1: departB.suicideModerateNum,
+                      c1: departB.suicideSevereNum
+                    }
+                  }
+                )
+              }
+              let wdArrA = wdStrA
             
-            // selectedData[u].depressionInfo.sort((a, b) => {
-            //   return b.riskPerct - a.riskPerct
-            // })
-            // selectedData[u].anxietyInfo.sort((a, b) => {
-            //   return b.riskPerct - a.riskPerct
-            // })
-            // selectedData[u].forcedInfo.sort((a, b) => {
-            //   return b.riskPerct - a.riskPerct
-            // })
-            // selectedData[u].suicideInfo.sort((a, b) => {
-            //   return b.riskPerct - a.riskPerct
-            // })
-            // selectedData[u].violenceInfo.sort((a, b) => {
-            //   return b.riskPerct - a.riskPerct
-            // })
+              let wdArrsA = wdArrA.sort((a, b) => {
+                return b.perct - a.perct
+              })
+              console.log(wdArrsA)
+              this.wdPerctListA = wdArrsA
+              console.log(this.wdPerctListA)
+              
+
+
+              this.riskPerctB = departB.riskPerct
+              this.riskPerctB1 = this.perctInfo1(departB.riskPerct) + "%";
+              this.depressionPerctB = departB.depressionPerct
+              this.anxietyPerctB = departB.anxietyPerct
+              this.forcedPerctB = departB.forcedPerct
+              this.ptsdPerctB = departB.forcedPerct
+              this.violencePerctB = departB.violencePerct
+              this.suicidePerctB = departB.suicidePerct
+
+              this.depressionPerctB1 = this.perctInfo1(departB.depressionPerct) + "%";
+              this.anxietyPerctB1 = this.perctInfo1(departB.anxietyPerct) + "%";
+              this.forcedPerctB1 = this.perctInfo1(departB.forcedPerct) + "%";
+              this.ptsdPerctB1 = this.perctInfo1(departB.ptsdPerct) + "%";
+              this.violencePerctB1 = this.perctInfo1(departB.violencePerct) + "%";
+              this.suicidePerctB1 = this.perctInfo1(departB.suicidePerct) + "%";
+
+              let wdStrB = []
+              if (this.depressionFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: '抑郁',
+                    color1: 'rgba(132, 138, 255, 0.6)',
+                    color2: 'rgba(162, 176, 255, 0.6)',
+                    color3: "rgba(153, 169, 255, 1)",
+                    color4: 'rgba(201, 204, 255, 1)',
+                    // perct: 10,
+                    perct: departB.depressionPerct,
+                    perct1: this.depressionPerctB1,
+                    // num: 10,
+                    num: departB.depressionNum,
+                    infos: {
+                      a: departB.depressionMildNum,
+                      b: departB.depressionModerateNum,
+                      c: departB.depressionSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.anxietyFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: '焦虑',
+                    color1: 'rgba(214, 182, 246, 0.6)',
+                    color2: 'rgba(225, 203, 246, 0.6)',
+                    color3: "rgba(214, 182, 246, 1)",
+                    color4: 'rgba(225, 203, 246, 1)',
+                    // perct: 15,
+                    perct: departB.anxietyPerct,
+                    perct1: this.anxietyPerctB1,
+                    // num: 10,
+                    num: departB.anxietyNum,
+                    infos: {
+                      a: departB.anxietyMildNum,
+                      b: departB.anxietyModerateNum,
+                      c: departB.anxietySevereNum
+                    }
+                  }
+                )
+              }
+              if (this.forcedFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: '强迫',
+                    color1: 'rgba(255, 193, 150, 0.6)',
+                    color2: 'rgba(255, 227, 184, 0.6)',
+                    color3: "rgba(255, 210, 97, 1)",
+                    color4: 'rgba(255, 210, 97, 1)',
+                    // perct: 20,
+                    perct: departB.forcedPerct,
+                    perct1: this.forcedPerctB1,
+                    // num: 10,
+                    num: departB.forcedNum,
+                    infos: {
+                      a: departB.forcedMildNum,
+                      b: departB.forcedModerateNum,
+                      c: departB.forcedSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.ptsdFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: 'PTSD',
+                    color1: 'rgba(255, 163, 163, 0.6)',
+                    color2: 'rgba(255, 163, 163, 0.6)',
+                    color3: '#FFA3A3',
+                    color4: 'rgba(255, 207, 224, 1)',
+                    // perct: 10,
+                    perct: departB.ptsdPerct,
+                    perct1: this.ptsdPerctB1,
+                    // num: 10,
+                    num: departB.ptsdNum,
+                    infos: {
+                      a: departB.ptsdMildNum,
+                      b: departB.ptsdModerateNum,
+                      c: departB.ptsdSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.violenceFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: '敌对',
+                    color1: 'rgba(135, 201, 255, 0.6)',
+                    color2: 'rgba(175, 236, 255, 0.6)',
+                    color3: "rgba(148, 207, 255, 1)",
+                    color4: 'rgba(178, 231, 247, 1)',
+                    // perct: 6,
+                    perct: departB.violencePerct,
+                    perct1: this.violencePerctB1,
+                    // num: 10,
+                    num: departB.violenceNum,
+                    infos: {
+                      a: departB.violenceMildNum,
+                      b: departB.violenceModerateNum,
+                      c: departB.violenceSevereNum
+                    }
+                  }
+                )
+              }
+              if (this.suicideFlag == 1) {
+                wdStrB.push(
+                  {
+                    name: '自我伤害',
+                    color1: 'rgba(255, 146, 186, 0.6)',
+                    color2: 'rgba(255, 182, 207, 0.6)',
+                    color3: "rgba(255, 178, 206, 1)",
+                    color4: 'rgba(255, 207, 224, 1)',
+                    // perct: 0,
+                    perct: departB.suicidePerct,
+                    perct1: this.suicidePerctB1,
+                    // num: 10,
+                    num: departB.suicideNum,
+                    infos: {
+                      a: departB.suicideMildNum,
+                      b: departB.suicideModerateNum,
+                      c: departB.suicideSevereNum
+                    }
+                  }
+                )
+              }
+              let wdArrB = wdStrB
+            
+              let wdArrsB = wdArrB.sort((a, b) => {
+                return b.perct - a.perct
+              })
+              console.log(wdArrsB)
+              this.wdPerctListB = wdArrsB
+              console.log(this.wdPerctListB)
+            }
+            
+            console.log(this.wdPerctListA)
+            console.log(this.wdPerctListB)
+            // let ecList = []
+            this.wdPerctListA.sort((a, b) => {
+              return b.perct - a.perct
+            })
+            // return
+            for (let i in this.wdPerctListA) {
+              console.log(this.wdPerctListA[i].name)
+              let name = i < 1 ? '一、' + this.wdPerctListA[i].name : i == 1 ? '二、' + this.wdPerctListA[i].name : i == 2 ? '三、' + this.wdPerctListA[i].name : i == 3 ? '四、' + this.wdPerctListA[i].name : i == 4 ?  '五、' + this.wdPerctListA[i].name : '六、' + this.wdPerctListA[i].name
+              this.wdPerctListA[i].name1 = name
+              // let info = this.wdPerctList[i].info
+              // let infos = []
+              // for (let j = 0; j < info.length; j += 20) {
+              //   // 每次循环中取出原数组的五个元素，并存入新数组
+              //   infos.push({
+              //     name: j < 1 ? name : '',
+              //     list: info.slice(j, j + 20)
+              //   });
+              //   ecList.push({
+              //     name: j < 1 ? this.wdPerctList[i].name : '',
+              //     color1: this.wdPerctList[i].color1,
+              //     color2: this.wdPerctList[i].color2,
+              //     list: info.slice(j, j + 20)
+              //   })
+              // }
+              // this.wdPerctList[i].infos = infos
+
+              // that.echartInfo(i + 'Z' + that.ecType)
+            }
+            
+            console.log(this.wdPerctListA)
+            // console.log(ecList)
+            for (let i in this.wdPerctListA) {
+              this['myChartZhu' + i] = null
+            }
+            this.ecList = this.wdPerctListA
+            setTimeout(() => {
+              for (let i in this.ecList) {
+                console.log(this.ecList[i])
+                this.echartInfo('myChartZhu' + i, this.ecList[i])
+              }
+              this.initChartA()
+              this.initChartB()
+              this.echartsOther()
+            }, 0);
+            // return
+            
+            // // selectedData[u].evaPerct = this.perctInfo(selectedData[u].evaNum / selectedData[u].totalNum) + "%";
+  
+            // this.cpHead = '本机构共' + selectedData[u].totalNum + '人，实测' + selectedData[u].evaNum + '人（' + selectedData[u].evaPerct + '）。'
+            // // 系统发现，本机构中有**人（23%）存在风险，**人（**%）无风险。
+            // var rstr = '';
+            // rstr += '系统发现，本机构实测人数中有' + selectedData[u].riskNum + '人（' + selectedData[u].riskPerct + '%）存在风险，' + parseInt(selectedData[u].evaNum - selectedData[u].riskNum) + '人（' + this.perctInfo1(100 - selectedData[u].riskPerct) + "%" + '）无风险。'
+  
+            // console.log(rstr)
+            // this.partsStr2 = rstr
+            
+
+            // if (selectedData[u].depressionInfo.warningList === null) {
+            //   selectedData[u].depressionInfo.warningList = []
+            // }
+            // if (selectedData[u].anxietyInfo.warningList === null) {
+            //   selectedData[u].anxietyInfo.warningList = []
+            // }
+            // if (selectedData[u].forcedInfo.warningList === null) {
+            //   selectedData[u].forcedInfo.warningList = []
+            // }
+            // if (selectedData[u].ptsdInfo.warningList === null) {
+            //   selectedData[u].ptsdInfo.warningList = []
+            // }
+            // if (selectedData[u].violenceInfo.warningList === null) {
+            //   selectedData[u].violenceInfo.warningList = []
+            // }
+            // if (selectedData[u].suicideInfo.warningList === null) {
+            //   selectedData[u].suicideInfo.warningList = []
+            // }
+            
 
 
             // 焦虑（**%），其次分别为：强迫（**%），抑郁（**%），自我伤害（**%），敌对（**%）。
-            let wdStr = []
-            console.log(this.depressionFlag)
-            console.log(selectedData[u].depressionInfo.warningList != null)
-            if (this.depressionFlag == 1) {
-              wdStr.push(
-                {
-                  name: '抑郁',
-                  color1: 'rgba(132, 138, 255, 0.6)',
-                  color2: 'rgba(162, 176, 255, 0.6)',
-                  color3: "rgba(153, 169, 255, 1)",
-                  color4: 'rgba(201, 204, 255, 1)',
-                  // perct: 10,
-                  perct: selectedData[u].depressionPerct,
-                  // num: 10,
-                  num: selectedData[u].depressionInfo.warningList === null ? 0 : selectedData[u].depressionInfo.warningList.length,
-                  info: selectedData[u].depressionInfo
-                }
-              )
-            }
-            if (this.anxietyFlag == 1) {
-              wdStr.push(
-                {
-                  name: '焦虑',
-                  color1: 'rgba(214, 182, 246, 0.6)',
-                  color2: 'rgba(225, 203, 246, 0.6)',
-                  color3: "rgba(214, 182, 246, 1)",
-                  color4: 'rgba(225, 203, 246, 1)',
-                  // perct: 15,
-                  perct: selectedData[u].anxietyPerct,
-                  // num: 10,
-                  num: selectedData[u].anxietyInfo.warningList === null ? 0 : selectedData[u].anxietyInfo.warningList.length,
-                  info: selectedData[u].anxietyInfo
-                }
-              )
-            }
-            if (this.forcedFlag == 1) {
-              wdStr.push(
-                {
-                  name: '强迫',
-                  color1: 'rgba(255, 193, 150, 0.6)',
-                  color2: 'rgba(255, 227, 184, 0.6)',
-                  color3: "rgba(255, 210, 97, 1)",
-                  color4: 'rgba(255, 210, 97, 1)',
-                  // perct: 20,
-                  perct: selectedData[u].forcedPerct,
-                  // num: 10,
-                  num: selectedData[u].forcedInfo.warningList === null ? 0 : selectedData[u].forcedInfo.warningList.length,
-                  info: selectedData[u].forcedInfo
-                }
-              )
-            }
-            if (this.ptsdFlag == 1) {
-              wdStr.push(
-                {
-                  name: 'PTSD',
-                  color1: 'rgba(255, 163, 163, 0.6)',
-                  color2: 'rgba(255, 163, 163, 0.6)',
-                  color3: '#FFA3A3',
-                  color4: 'rgba(255, 207, 224, 1)',
-                  // perct: 10,
-                  perct: selectedData[u].ptsdPerct,
-                  // num: 10,
-                  num: selectedData[u].ptsdInfo.warningList === null ? 0 : selectedData[u].ptsdInfo.warningList.length,
-                  info: selectedData[u].ptsdInfo
-                }
-              )
-            }
-            if (this.violenceFlag == 1) {
-              wdStr.push(
-                {
-                  name: '敌对',
-                  color1: 'rgba(135, 201, 255, 0.6)',
-                  color2: 'rgba(175, 236, 255, 0.6)',
-                  color3: "rgba(148, 207, 255, 1)",
-                  color4: 'rgba(178, 231, 247, 1)',
-                  // perct: 6,
-                  perct: selectedData[u].violencePerct,
-                  // num: 10,
-                  num: selectedData[u].violenceInfo.warningList === null ? 0 : selectedData[u].violenceInfo.warningList.length,
-                  info: selectedData[u].violenceInfo
-                }
-              )
-            }
-            if (this.suicideFlag == 1) {
-              wdStr.push(
-                {
-                  name: '自我伤害',
-                  color1: 'rgba(255, 146, 186, 0.6)',
-                  color2: 'rgba(255, 182, 207, 0.6)',
-                  color3: "rgba(255, 178, 206, 1)",
-                  color4: 'rgba(255, 207, 224, 1)',
-                  // perct: 0,
-                  perct: selectedData[u].suicidePerct,
-                  // num: 10,
-                  num: selectedData[u].suicideInfo.warningList === null ? 0 : selectedData[u].suicideInfo.warningList.length,
-                  info: selectedData[u].suicideInfo
-                }
-              )
-            }
+            
             // if (this.zibiFlag == 1) {
             //   wdStr.push(
             //     {
@@ -5398,41 +4645,36 @@
             //     }
             //   )
             // }
-            let wdArr = wdStr
             
-            let wdArrs = wdArr.sort((a, b) => {
-              return b.perct - a.perct
-            })
-            console.log(wdArrs)
-            for (let i in wdArrs) {
-              let infoArr = wdArrs[i].info.warningList
-              for (let k in infoArr) {
-                infoArr[k].id = Number(k) + 1
-              }
-              let info1 = []
-              if (i < 1) {
-                let infoLen1 = Math.ceil((infoArr.length - 13) / 23)
-                for (let j = 0; j < infoLen1; j++) {
-                  info1.push(infoArr.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-                }
-              } else {
-                let infoLen1 = Math.ceil((infoArr.length - 14) / 23)
-                for (let j = 0; j < infoLen1; j++) {
-                  info1.push(infoArr.slice(14 + 23 * j, 14 + 23 * (Number(j) + 1)))
-                }
-              }
+            // for (let i in wdArrs) {
+            //   let infoArr = wdArrs[i].info.warningList
+            //   for (let k in infoArr) {
+            //     infoArr[k].id = Number(k) + 1
+            //   }
+            //   let info1 = []
+            //   if (i < 1) {
+            //     let infoLen1 = Math.ceil((infoArr.length - 13) / 23)
+            //     for (let j = 0; j < infoLen1; j++) {
+            //       info1.push(infoArr.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
+            //     }
+            //   } else {
+            //     let infoLen1 = Math.ceil((infoArr.length - 14) / 23)
+            //     for (let j = 0; j < infoLen1; j++) {
+            //       info1.push(infoArr.slice(14 + 23 * j, 14 + 23 * (Number(j) + 1)))
+            //     }
+            //   }
               
-              console.log(info1)
+            //   console.log(info1)
 
-              wdArrs[i].info.warningInfo = info1
-            }
-            console.log(wdArrs)
-            let warningLists = []
-            if (selectedData[u].warningListAppendix === null) {
+            //   wdArrs[i].info.warningInfo = info1
+            // }
+            // console.log(wdArrs)
+            // let warningLists = []
+            // if (selectedData[u].warningListAppendix === null) {
               
-            } else {
-              warningLists = selectedData[u].warningListAppendix
-            }
+            // } else {
+            //   warningLists = selectedData[u].warningListAppendix
+            // }
 
             // let warningLists = [
             //   {anxietyLevel: 1,depressionLevel: 1,finishTime: "2024-09-09 14:39:53",forcedLevel: 1,id: 1,levelStr: "轻度强迫、轻度自我伤害",name: "测试22",passport: "222222",ptsdLevel: 1,suicideLevel: 1,violenceLevel: 1},
@@ -5447,256 +4689,256 @@
             //   {anxietyLevel: 0,depressionLevel: 0,finishTime: "2024-09-09 14:39:53",forcedLevel: 1,id: 1,levelStr: "轻度强迫、轻度自我伤害",name: "测试22",passport: "222222",ptsdLevel: 0,suicideLevel: 1,violenceLevel: 0},
             //   {anxietyLevel: 0,depressionLevel: 0,finishTime: "2024-09-09 14:39:53",forcedLevel: 1,id: 1,levelStr: "轻度强迫、轻度自我伤害",name: "测试22",passport: "222222",ptsdLevel: 0,suicideLevel: 1,violenceLevel: 0}
             // ]
-            for (let i in warningLists) {
-              console.log(warningLists[i])
-              warningLists[i].id = Number(i) + 1
-              let levelStr = []
-              if (that.depressionFlag == 1) {
-                let wName = '抑郁'
-                let level = warningLists[i].depressionLevel == 1 ? "轻度" + wName  :  warningLists[i].depressionLevel == 2 ? '中度' + wName :  warningLists[i].depressionLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              if (that.anxietyFlag == 1) {
-                let wName = '焦虑'
-                let level = warningLists[i].anxietyLevel == 1 ? "轻度" + wName  :  warningLists[i].anxietyLevel == 2 ? '中度' + wName :  warningLists[i].anxietyLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              if (that.forcedFlag == 1) {
-                let wName = '强迫'
-                let level = warningLists[i].forcedLevel == 1 ? "轻度" + wName  :  warningLists[i].forcedLevel == 2 ? '中度' + wName :  warningLists[i].forcedLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              if (that.ptsdFlag == 1) {
-                let wName = 'PTSD'
-                let level = warningLists[i].ptsdLevel == 1 ? "轻度" + wName  :  warningLists[i].ptsdLevel == 2 ? '中度' + wName :  warningLists[i].ptsdLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              if (that.violenceFlag == 1) {
-                let wName = '敌对'
-                let level = warningLists[i].violenceLevel == 1 ? "轻度" + wName  :  warningLists[i].violenceLevel == 2 ? '中度' + wName :  warningLists[i].violenceLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              if (that.suicideFlag == 1) {
-                let wName = '自我伤害'
-                let level = warningLists[i].suicideLevel == 1 ? "轻度" + wName  :  warningLists[i].suicideLevel == 2 ? '中度' + wName :  warningLists[i].suicideLevel == 3 ? '重度' + wName : ''
-                if (level != '') {
-                  levelStr.push(level)
-                }
-              }
-              warningLists[i].levelStr = levelStr.join('、')
-              console.log(levelStr)
-              // console.log(i)
-              // if (i < 1) {
-              //   let listLen1 = Math.ceil((warningLists.length - 13) / 23)
-              //   for (let j = 0; j < listLen1; j++) {
-              //     list1.push(warningLists.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
-              //   }
-              // } else {
-              //   let listLen1 = Math.ceil((warningLists.length - 14) / 23)
-              //   for (let j = 0; j < listLen1; j++) {
-              //     list1.push(warningLists.slice(14 + 23 * j, 14 + 23 * (Number(j) + 1)))
-              //   }
-              // }
+            // for (let i in warningLists) {
+            //   console.log(warningLists[i])
+            //   warningLists[i].id = Number(i) + 1
+            //   let levelStr = []
+            //   if (that.depressionFlag == 1) {
+            //     let wName = '抑郁'
+            //     let level = warningLists[i].depressionLevel == 1 ? "轻度" + wName  :  warningLists[i].depressionLevel == 2 ? '中度' + wName :  warningLists[i].depressionLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   if (that.anxietyFlag == 1) {
+            //     let wName = '焦虑'
+            //     let level = warningLists[i].anxietyLevel == 1 ? "轻度" + wName  :  warningLists[i].anxietyLevel == 2 ? '中度' + wName :  warningLists[i].anxietyLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   if (that.forcedFlag == 1) {
+            //     let wName = '强迫'
+            //     let level = warningLists[i].forcedLevel == 1 ? "轻度" + wName  :  warningLists[i].forcedLevel == 2 ? '中度' + wName :  warningLists[i].forcedLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   if (that.ptsdFlag == 1) {
+            //     let wName = 'PTSD'
+            //     let level = warningLists[i].ptsdLevel == 1 ? "轻度" + wName  :  warningLists[i].ptsdLevel == 2 ? '中度' + wName :  warningLists[i].ptsdLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   if (that.violenceFlag == 1) {
+            //     let wName = '敌对'
+            //     let level = warningLists[i].violenceLevel == 1 ? "轻度" + wName  :  warningLists[i].violenceLevel == 2 ? '中度' + wName :  warningLists[i].violenceLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   if (that.suicideFlag == 1) {
+            //     let wName = '自我伤害'
+            //     let level = warningLists[i].suicideLevel == 1 ? "轻度" + wName  :  warningLists[i].suicideLevel == 2 ? '中度' + wName :  warningLists[i].suicideLevel == 3 ? '重度' + wName : ''
+            //     if (level != '') {
+            //       levelStr.push(level)
+            //     }
+            //   }
+            //   warningLists[i].levelStr = levelStr.join('、')
+            //   console.log(levelStr)
+            //   // console.log(i)
+            //   // if (i < 1) {
+            //   //   let listLen1 = Math.ceil((warningLists.length - 13) / 23)
+            //   //   for (let j = 0; j < listLen1; j++) {
+            //   //     list1.push(warningLists.slice(13 + 23 * j, 13 + 23 * (Number(j) + 1)))
+            //   //   }
+            //   // } else {
+            //   //   let listLen1 = Math.ceil((warningLists.length - 14) / 23)
+            //   //   for (let j = 0; j < listLen1; j++) {
+            //   //     list1.push(warningLists.slice(14 + 23 * j, 14 + 23 * (Number(j) + 1)))
+            //   //   }
+            //   // }
               
-              // console.log(list1)
-            }
+            //   // console.log(list1)
+            // }
             // selectedData[u].warningLists = list1 
-            this.warningLists = warningLists
-            console.log(warningLists)
-            let list22 = []
-            let warnLen2 = Math.ceil((warningLists.length - 21) / 23)
-            for (let j = 0; j < warnLen2; j++) {
-              list22.push(warningLists.slice(21 + 23 * j, 21 + 23 * (Number(j) + 1)))
-            }
-            console.log(list22)
-            this.warnList = list22
-            var wstr = '';
+            // this.warningLists = warningLists
+            // console.log(warningLists)
+            // let list22 = []
+            // let warnLen2 = Math.ceil((warningLists.length - 21) / 23)
+            // for (let j = 0; j < warnLen2; j++) {
+            //   list22.push(warningLists.slice(21 + 23 * j, 21 + 23 * (Number(j) + 1)))
+            // }
+            // console.log(list22)
+            // this.warnList = list22
+            // var wstr = '';
             
-            if (wdArrs[0].perct > 0) {
-              wstr += '如图所示，在该测评时间段内，各维度风险占比，由高到低，依次为：'
-              for (let k in wdArrs) {
-                if (wdArrs[k].perct > 0) {
-                  wstr += wdArrs[k].name + '（' + wdArrs[k].perct + '%）'
-                } else {
-                  wstr += '无' + wdArrs[k].name + '风险'
-                }
-                if (k < wdArrs.length - 1) {
-                  wstr += '、'
-                } else {
-                  wstr += '。'
-                }
-              }
-            } else {
-              wstr += '如上图所示，在该测评时间段内，未检测出'
-              for (let k in wdArrs) {
-                wstr += wdArrs[k].name 
-                if (k < wdArrs.length - 1) {
-                  wstr += '、'
-                } else {
-                  wstr += ''
-                }
-              }
-              wstr += '风险人员。'
-            }
+            // if (wdArrs[0].perct > 0) {
+            //   wstr += '如图所示，在该测评时间段内，各维度风险占比，由高到低，依次为：'
+            //   for (let k in wdArrs) {
+            //     if (wdArrs[k].perct > 0) {
+            //       wstr += wdArrs[k].name + '（' + wdArrs[k].perct + '%）'
+            //     } else {
+            //       wstr += '无' + wdArrs[k].name + '风险'
+            //     }
+            //     if (k < wdArrs.length - 1) {
+            //       wstr += '、'
+            //     } else {
+            //       wstr += '。'
+            //     }
+            //   }
+            // } else {
+            //   wstr += '如上图所示，在该测评时间段内，未检测出'
+            //   for (let k in wdArrs) {
+            //     wstr += wdArrs[k].name 
+            //     if (k < wdArrs.length - 1) {
+            //       wstr += '、'
+            //     } else {
+            //       wstr += ''
+            //     }
+            //   }
+            //   wstr += '风险人员。'
+            // }
             
-            console.log(wstr)
+            // console.log(wstr)
   
-            this.partsStr3 = wstr
+            // this.partsStr3 = wstr
 
-            var wsts = '';
-            if (selectedData[u].pinci) {
+            // var wsts = '';
+            // if (selectedData[u].pinci) {
 
-            } else {
-              selectedData[u].pinci = 0
-            }
-            let evaNump = this.perctInfo(selectedData[u].evaNum / selectedData[u].totalNum)
-            if (evaNump > 49) {
-              wsts += '1.本机构测评人数占比较高（为' + evaNump + '%），说明本机构人员的心理健康受到重视，后续请继续保持。'
+            // } else {
+            //   selectedData[u].pinci = 0
+            // }
+            // let evaNump = this.perctInfo(selectedData[u].evaNum / selectedData[u].totalNum)
+            // if (evaNump > 49) {
+            //   wsts += '1.本机构测评人数占比较高（为' + evaNump + '%），说明本机构人员的心理健康受到重视，后续请继续保持。'
               
-            } else {
-              wsts += '1.本机构测评人数占比较低（为' + evaNump + '%），相关管理者可多多组织本机构人员参加AI心世界测评，加大对于心理健康的重视。'
-            }
-            console.log(wsts)
-            this.partsStr4 = wsts
-            let wsts2 = ''
-            let flagNums = this.maxCount1(wdArrs)[0]
-            let flagName = this.maxCount1(wdArrs)[1]
-            console.log(flagNums)
-            console.log(flagName)
-            console.log(wdArrs)
-            // 1、若风险占比最高的维度占比≥10%，且占比比例为唯一值，则输出：
-            if (wdArrs[0].perct > 9 && flagNums == 1){
-              console.log(1115)
-              wsts2 = '2.系统发现，本机构' + flagName + '风险占比最高（' + wdArrs[0].perct + '%），相关管理者需多关注本机构' + flagName + '情况，有条件的可安排' + flagName + '主题相关讲座和课程；建议对' + flagName + '预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
-            }
-            // 21.若风险占比最高的维度占比＜10%，且占比比例不一的维度≥2，则输出：
-            if (wdArrs[0].perct > 9 && flagNums < wdArrs.length && flagNums > 1){
-              console.log(1113)
-              wsts2 += '2.系统发现，本机构在'
-              for ( let i in wdArrs) {
-                if (wdArrs[i].perct > 9) {
-                  if (i == 0) {
-                    wsts2 += wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
-                  } else {
-                    wsts2 += '、' + wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
-                  }
+            // } else {
+            //   wsts += '1.本机构测评人数占比较低（为' + evaNump + '%），相关管理者可多多组织本机构人员参加AI心世界测评，加大对于心理健康的重视。'
+            // }
+            // console.log(wsts)
+            // this.partsStr4 = wsts
+            // let wsts2 = ''
+            // let flagNums = this.maxCount1(wdArrs)[0]
+            // let flagName = this.maxCount1(wdArrs)[1]
+            // console.log(flagNums)
+            // console.log(flagName)
+            // console.log(wdArrs)
+            // // 1、若风险占比最高的维度占比≥10%，且占比比例为唯一值，则输出：
+            // if (wdArrs[0].perct > 9 && flagNums == 1){
+            //   console.log(1115)
+            //   wsts2 = '2.系统发现，本机构' + flagName + '风险占比最高（' + wdArrs[0].perct + '%），相关管理者需多关注本机构' + flagName + '情况，有条件的可安排' + flagName + '主题相关讲座和课程；建议对' + flagName + '预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
+            // }
+            // // 21.若风险占比最高的维度占比＜10%，且占比比例不一的维度≥2，则输出：
+            // if (wdArrs[0].perct > 9 && flagNums < wdArrs.length && flagNums > 1){
+            //   console.log(1113)
+            //   wsts2 += '2.系统发现，本机构在'
+            //   for ( let i in wdArrs) {
+            //     if (wdArrs[i].perct > 9) {
+            //       if (i == 0) {
+            //         wsts2 += wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
+            //       } else {
+            //         wsts2 += '、' + wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
+            //       }
                   
                  
-                }
-              }
-              wsts2 += '风险占比较高，相关管理者需多关注本机构人员心理健康情况，有条件的可安排相关主题讲座，组织团体活动让受测者放松身心；此外，还建议对预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
-            }
-            // 22.若风险占比最高的维度占比≥10%，所有维度占比一致，则输出：
-            if (wdArrs[0].perct > 9 && flagNums == wdArrs.length){
-              console.log(1114)
-              wsts2 = '2.系统发现，本机构在' + flagName + '风险维度占比较高（皆为' + wdArrs[0].perct + '%），相关管理者需多关注本机构人员心理健康情况，有条件的可安排相关主题讲座，组织团体活动让受测者放松身心；此外，还建议对预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
-            }
-            // 3.若风险占比最高的维度占比＜10%，且占比比例不一的维度≥2，则输出：
-            if (wdArrs[0].perct < 10 && wdArrs[0].perct > 0 && flagNums < wdArrs.length){
-              console.log(1113)
-              wsts2 += '2.系统发现，本机构在'
-              for ( let i in wdArrs) {
-                if (i == 0) {
-                  wsts2 += wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
-                } else {
-                  wsts2 += '、' + wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
-                }
-              }
-              wsts2 += '风险占比都不高，说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平；此外，还建议对维度预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
-            }
-            // 4.若风险占比最高的维度占比＜10%，且所有维度占比一致，则输出：
-            if (wdArrs[0].perct < 10 && wdArrs[0].perct > 0 && flagNums == wdArrs.length){
-              console.log(1112)
-              wsts2 = '2.系统发现，本机构在' + flagName + '风险占比都不高（皆为' + wdArrs[0].perct + '%），说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平；此外，还建议对维度预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
-            }
-            // 5.若风险占比全部为0，则输出：
-            console.log(wdArrs[0] )
-            console.log(wdArrs[0].perct )
-            console.log(wdArrs[0].perct == 0)
-            console.log(wdArrs[0].perct === 0)
-            if (wdArrs[0].perct == 0){
-              console.log(111)
-              wsts2 = '2.系统发现，本机构在' + flagName + '风险占比都很低（皆为0%），说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平。'
-            }
-            console.log(wsts2)
-            // if (flagNums > 0 && flagNums < 4) {
+            //     }
+            //   }
+            //   wsts2 += '风险占比较高，相关管理者需多关注本机构人员心理健康情况，有条件的可安排相关主题讲座，组织团体活动让受测者放松身心；此外，还建议对预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
+            // }
+            // // 22.若风险占比最高的维度占比≥10%，所有维度占比一致，则输出：
+            // if (wdArrs[0].perct > 9 && flagNums == wdArrs.length){
+            //   console.log(1114)
+            //   wsts2 = '2.系统发现，本机构在' + flagName + '风险维度占比较高（皆为' + wdArrs[0].perct + '%），相关管理者需多关注本机构人员心理健康情况，有条件的可安排相关主题讲座，组织团体活动让受测者放松身心；此外，还建议对预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
+            // }
+            // // 3.若风险占比最高的维度占比＜10%，且占比比例不一的维度≥2，则输出：
+            // if (wdArrs[0].perct < 10 && wdArrs[0].perct > 0 && flagNums < wdArrs.length){
+            //   console.log(1113)
+            //   wsts2 += '2.系统发现，本机构在'
+            //   for ( let i in wdArrs) {
+            //     if (i == 0) {
+            //       wsts2 += wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
+            //     } else {
+            //       wsts2 += '、' + wdArrs[i].name + '(' + wdArrs[i].perct + '%)'
+            //     }
+            //   }
+            //   wsts2 += '风险占比都不高，说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平；此外，还建议对维度预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
+            // }
+            // // 4.若风险占比最高的维度占比＜10%，且所有维度占比一致，则输出：
+            // if (wdArrs[0].perct < 10 && wdArrs[0].perct > 0 && flagNums == wdArrs.length){
+            //   console.log(1112)
+            //   wsts2 = '2.系统发现，本机构在' + flagName + '风险占比都不高（皆为' + wdArrs[0].perct + '%），说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平；此外，还建议对维度预警人员进行一对一评估，酌情安排个体咨询或团体辅导，若情况严重建议转介。'
+            // }
+            // // 5.若风险占比全部为0，则输出：
+            // console.log(wdArrs[0] )
+            // console.log(wdArrs[0].perct )
+            // console.log(wdArrs[0].perct == 0)
+            // console.log(wdArrs[0].perct === 0)
+            // if (wdArrs[0].perct == 0){
+            //   console.log(111)
+            //   wsts2 = '2.系统发现，本机构在' + flagName + '风险占比都很低（皆为0%），说明本机构人员心理健康风险较小，相关管理者可依据实际情况组织积极向上的团体活动，提升团队凝聚力和心理健康水平。'
+            // }
+            // console.log(wsts2)
+            // // if (flagNums > 0 && flagNums < 4) {
               
-            // }
-            // if (flagNums > 3) {
-            //   wsts2 = '2.在该测评时间段内，受测者在' + flagName + '维度上预警较多，建议从多方面关注受测者身心状况，如饮食睡眠、人际关系等等；如有必要，还可以建议受测者及时寻求专业的心理咨询服务。'
-            // }
-            // if (flagNums < 1) {
-            //   wsts2 = '2.在该测评时间段内，受测者在各个维度上皆无风险，可进行适当运动、规律饮食等等，维持身心健康。'
-            // }
+            // // }
+            // // if (flagNums > 3) {
+            // //   wsts2 = '2.在该测评时间段内，受测者在' + flagName + '维度上预警较多，建议从多方面关注受测者身心状况，如饮食睡眠、人际关系等等；如有必要，还可以建议受测者及时寻求专业的心理咨询服务。'
+            // // }
+            // // if (flagNums < 1) {
+            // //   wsts2 = '2.在该测评时间段内，受测者在各个维度上皆无风险，可进行适当运动、规律饮食等等，维持身心健康。'
+            // // }
             
-            console.log(wsts2)
-            this.partsStr5 = wsts2
-            console.log(wdArr)
-            this.wdPerctList = wdArr
-            console.log(this.wdPerctList)
+            // console.log(wsts2)
+            // this.partsStr5 = wsts2
+            // console.log(wdArr)
+            // this.wdPerctList = wdArr
+            // console.log(this.wdPerctList)
             
-            let ecList = []
-            this.wdPerctList.sort((a, b) => {
-              return b.perct - a.perct
-            })
-            // return
-            for (let i in this.wdPerctList) {
-              console.log(this.wdPerctList[i].name)
-              let name = i < 1 ? '一、' + this.wdPerctList[i].name : i == 1 ? '二、' + this.wdPerctList[i].name : i == 2 ? '三、' + this.wdPerctList[i].name : i == 3 ? '四、' + this.wdPerctList[i].name : i == 4 ? '五、' + this.wdPerctList[i].name : '六、' + this.wdPerctList[i].name
-              this.wdPerctList[i].names = name
-              // let info = this.wdPerctList[i].info
-              // let infos = []
-              // infos.push({
-              //   name: name,
-              //   info: info
-              // })
-              // for (let j = 0; j < info.length; j += 20) {
-              //   // 每次循环中取出原数组的五个元素，并存入新数组
-              //   infos.push({
-              //     name: j < 1 ? name : '',
-              //     list: info.slice(j, j + 20)
-              //   });
-              //   ecList.push({
-              //     name: j < 1 ? this.wdPerctList[i].name : '',
-              //     color1: this.wdPerctList[i].color1,
-              //     color2: this.wdPerctList[i].color2,
-              //     list: info.slice(j, j + 20)
-              //   })
-              // }
-              // this.wdPerctList[i].infos = infos
+            // let ecList = []
+            // this.wdPerctList.sort((a, b) => {
+            //   return b.perct - a.perct
+            // })
+            // // return
+            // for (let i in this.wdPerctList) {
+            //   console.log(this.wdPerctList[i].name)
+            //   let name = i < 1 ? '一、' + this.wdPerctList[i].name : i == 1 ? '二、' + this.wdPerctList[i].name : i == 2 ? '三、' + this.wdPerctList[i].name : i == 3 ? '四、' + this.wdPerctList[i].name : i == 4 ? '五、' + this.wdPerctList[i].name : '六、' + this.wdPerctList[i].name
+            //   this.wdPerctList[i].names = name
+            //   // let info = this.wdPerctList[i].info
+            //   // let infos = []
+            //   // infos.push({
+            //   //   name: name,
+            //   //   info: info
+            //   // })
+            //   // for (let j = 0; j < info.length; j += 20) {
+            //   //   // 每次循环中取出原数组的五个元素，并存入新数组
+            //   //   infos.push({
+            //   //     name: j < 1 ? name : '',
+            //   //     list: info.slice(j, j + 20)
+            //   //   });
+            //   //   ecList.push({
+            //   //     name: j < 1 ? this.wdPerctList[i].name : '',
+            //   //     color1: this.wdPerctList[i].color1,
+            //   //     color2: this.wdPerctList[i].color2,
+            //   //     list: info.slice(j, j + 20)
+            //   //   })
+            //   // }
+            //   // this.wdPerctList[i].infos = infos
   
-              // that.echartInfo(i + 'Z' + that.ecType)
-            }
-            console.log(this.wdPerctList)
+            //   // that.echartInfo(i + 'Z' + that.ecType)
+            // }
+            // console.log(this.wdPerctList)
             // console.log(ecList)
             // for (let i in ecList) {
             //   this['myChartZhu' + i] = null
             // }
             // this.ecList = ecList
-            setTimeout(() => {
-              // for (let i in ecList) {
-              //   // console.log(ecList[i])
-              //   this.echartInfo('myChartZhu' + i, ecList[i])
-              // }
-              this.initChart()
-              // this.echartsOther()
-            }, 0);
+            // setTimeout(() => {
+            //   // for (let i in ecList) {
+            //   //   // console.log(ecList[i])
+            //   //   this.echartInfo('myChartZhu' + i, ecList[i])
+            //   // }
+            //   this.initChart()
+            //   // this.echartsOther()
+            // }, 0);
             // 等待每一个转为pdf
             
             console.log(htmlToZip)
             const p = await htmlToZip.getPdfs(
               this.$refs.sprintSchoolPdf,
-              selectedData[u].organizationName
+              selectedData[u].departmentNameA+'&'+selectedData[u].departmentNameB+'-团体对比报告'
             );
             promises.push(p);
           }
@@ -5829,9 +5071,9 @@
   
   <style lang="less" scoped>
     .myChartZhu {
-      margin: 0 auto;
-      width: 995px;
-      height: 220px;
+      // margin: 0 auto;
+      width: 520px;
+      height: 180px;
     }
     .table-classd {
       display: grid;
@@ -5889,6 +5131,118 @@
         height: 1560px;
         border: 4px solid #333E75;
         // z-index: -1;
+        .gp_titles{
+          padding: 0 40px;
+          .gp_head{
+            font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 28px;
+            color: #333E75;
+            line-height: 52px;
+            text-align: left;
+          }
+          .gp_bird_box{
+            display: flex;
+            flex-wrap: wrap;
+            .gp_bird{
+              width: 420px;
+              height: auto;
+              margin: 0px 35px 0px;
+              img{
+                display: block;
+                width: 420px;
+                height: auto;
+              }
+              div{
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 400;
+                font-size: 24px;
+                color: #333E75;
+                line-height: 32px;
+                height: 64px;
+                margin: 15px 0;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+          }
+          
+          .gp_txt{
+            font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+            font-weight: 400;
+            font-size: 24px;
+            color: #333E75;
+            line-height: 48px;
+            text-align: left;
+            word-break: break-all;
+          }
+          .gp_exl{
+            width: 100%;
+            border: 1px solid #A6ACCC;
+            border-bottom: 0;
+            border-right: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            .gp_con {
+              width: 100%;
+              border: 1px solid #A6ACCC;
+              border-top: 0;
+              border-left: 0;
+              height: 60px;
+              display: flex;
+              div{
+                font-family: PingFangSC, PingFang SC;
+                font-weight: 400;
+                font-size: 20px;
+                color: #333E75;
+                height: 100%;
+                line-height: 1.2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-right: 1px solid #A6ACCC;
+                padding: 0 5px;
+                flex: 1
+              }
+              div:nth-child(1) {
+                flex: 2
+              }
+              div:nth-child(3) {
+                // width: 100px;
+              }
+              div:nth-child(4) {
+                // width: 100px;
+              }
+              div:nth-child(5) {
+                // width: 120px;
+              }
+              div:nth-child(6) {
+                flex: 1;
+                border: 0;
+                overflow: hidden;
+              }
+              // div:nth-child(7) {
+              
+              // }
+            }
+            .gp_con1{
+              div{
+                font-weight: 600;
+              }
+            }
+          }
+          .gp_head1{
+            padding: 5px 0 5px;
+            font-size: 19px;
+            color: #333E75;
+            line-height: 28px;
+          }
+          
+        }
         .gp_all_tips{
           position: absolute;
           margin: auto;
@@ -5968,6 +5322,17 @@
         line-height: 1;
         margin: 50px auto;
       }
+      .g1_top3{
+        margin: 300px auto 0;
+        div{
+          text-align: center;
+          font-size: 48px;
+          font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+          font-weight: 400;
+          color: #333E75;
+          line-height: 72px;
+        }
+      }
       .g1_top2{
         position: absolute;
         margin: auto;
@@ -6016,36 +5381,96 @@
           color: #7986a9;
         }
       }
-      .gp_echart{
+      .gp_echart_box{
+        display: flex;
+        justify-content: center;
         width: 100%;
-        height: 600px;
-        padding: 30px 0;
-        // background: #00a5ff;
-        position: relative;
-        margin-bottom: -10px;
-        .gp_ect_3d{
-          margin: -40px auto 0;
-          width: 950px;
-          height: 540px;
-          // background: #5e6c87;
-          .myChartPie{
-            width: 950px;
-            height: 540px;
-          }
-        }
-        .gp_ect_2d{
+        height: 630px;
+        margin-top: -150px;
+        .gp_echart{
+          width: 100%;
+          height: auto;
+          // padding: 30px 0;
+          // background: #00a5ff;
+          position: relative;
+          // margin-bottom: -10px;
+          transform: scale(0.6);
           position: absolute;
-          right: 20px;
-          bottom: -60px;
-          width: 200px;
-          height: 200px;
-          // background: #2A3487;
-          .myChartYes{
+          left: -340px;
+          .gp_ec_txt{
+            font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 46px;
+            color: #333E75;
+            line-height: 1;
+            margin: 70px 0 60px;
+            margin-left: 210px;
+          }
+          .gp_ect_3d{
+            margin: -100px auto 0;
+            width: 950px;
+            height: 640px;
+            // background: #5e6c87;
+            .myChartPie{
+              width: 950px;
+              height: 550px;
+            }
+            .center_pie{
+              display: flex;
+              justify-content: space-evenly;
+              align-items: center;
+              width: 70%;
+              justify-content: flex-start;
+              margin: 0 auto;
+              flex-wrap: wrap;
+              margin-left: 210px;
+              margin-top: 30px;
+              .c_pie_li {
+                padding: 0;
+                font-size: 32px;
+                font-family: Source Han Sans CN;
+                font-weight: 500;
+                color: #354b70;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-right: 20px;
+                min-width: 26%;
+                padding: 20px 0 0;
+                .c_pie_th {
+                  display: inline-block;
+                  width: 15px;
+                  height: 15px;
+                  margin-right: 8px;
+                  border-radius: 50%;
+                }
+                .c_th_txt {
+                  display: flex;
+                  align-items: center;
+                  font-size: 32px;
+                }
+                .c_th_p {
+                  padding-left: 4px;
+                  font-size: 32px;
+                }
+              }
+            }
+          }
+          .gp_ect_2d{
+            position: absolute;
+            right: 20px;
+            bottom: 60px;
             width: 200px;
             height: 200px;
+            // background: #2A3487;
+            .myChartYes{
+              width: 200px;
+              height: 200px;
+            }
           }
         }
       }
+      
   
       .gp_title{
         padding: 0 40px;
@@ -6062,7 +5487,7 @@
           font-weight: 400;
           font-size: 24px;
           color: #333E75;
-          line-height: 52px;
+          line-height: 48px;
           text-align: left;
           word-break: break-all;
         }
@@ -6130,10 +5555,60 @@
           }
         }
         .gp_head1{
-          padding: 20px 0 20px;
+          padding: 16px 0 8px;
           font-size: 24px;
           color: #333E75;
           line-height: 28px;
+        }
+        .gp_h_box{
+          display: flex;
+          .gp_h_bt{
+            flex: 1;
+            padding-left: 24px;
+            .gp_c_box{
+              // margin-bottom: 14px;
+            }
+            img{
+              width: 30px;
+              height: 30px;
+              margin: 5px 10px 0 0;
+            }
+            .gp_h_txt{
+              flex: 1;
+              text-align: left;
+              font-family: SourceHanSansCN, SourceHanSansCN;
+              font-weight: 400;
+              font-size: 22px;
+              color: #333E75;
+              line-height: 36px;
+              .gp_c_bt1{
+                display: flex;
+                font-family: SourceHanSansCN, SourceHanSansCN;
+                font-weight: 400;
+                font-size: 18px;
+                color: #333E75;
+                align-items: center;
+                .gp_c1{
+                  width: 8px;
+                  height: 8px;
+                  background: linear-gradient(127deg, #87C9FF 0%, #AFECFF 100%);
+                  border-radius: 50%;
+                  margin-right: 5px;
+                }
+              }
+              .gp_c_bt2{
+                display: flex;
+                justify-content: space-between;
+                padding: 0 50px 0 13px;
+                div{
+                  font-family: SourceHanSansCN, SourceHanSansCN;
+                  font-weight: 400;
+                  font-size: 18px;
+                  color: #333E75;
+                }
+              }
+            }
+          }
         }
       }
     }
