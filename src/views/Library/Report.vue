@@ -179,6 +179,12 @@
               批量删除
             </el-button>
           </div>
+          <div class="el_two" v-if="tabActive == 0 && power14">
+            <el-button class="el_btn_two" @click="exportUser" type="primary">
+              <i class="iconfont icon-daochu"></i>
+              导出
+            </el-button>
+          </div>
           <div class="el_one" v-if="tabActive == 1 && power24">
             <el-button
               class="el_btn_one"
@@ -1077,7 +1083,8 @@ export default {
       }
 
       this.$http
-        .post(Url + "/aimw/report/listReports", param )
+        .get(Url + "/aimw/report/listReports", {params: param} )
+        // .post(Url + "/aimw/report/listReports", param )
         .then(res => {
           let data = res.data.data;
           if (res.data.code == 0) {
@@ -1099,6 +1106,8 @@ export default {
           console.log(res);
         });
     },
+
+    
     personExport() {
       this.loading.close();
       this.setPersonFlag(true);
@@ -2800,6 +2809,148 @@ export default {
         }
       }
       
+    },
+    // 获取报告列表  用户0 游客1
+    getListUser() {
+      let that = this;
+      var param = {};
+      let star = "";
+      let end = "";
+      this.currentPage = 1;
+      if (that.tabActive == 0) {
+        if (that.formSearch.time != "" && that.formSearch.time) {
+          star =
+            that.formTimes(that.formSearch.time[0]).replace(/-/g, "") +
+            "000000";
+          end =
+            that.formTimes(that.formSearch.time[1]).replace(/-/g, "") +
+            "235959";
+        }
+        let frameArr = [];
+        console.log(this.studyList);
+        if (that.formSearch.department == "") {
+          for (let i in this.studyList) {
+            frameArr.push(this.studyList[i].Pid);
+          }
+        } else {
+          frameArr = this.formSearch.department;
+        }
+        let warns = that.formSearch.warning;
+        console.log(frameArr);
+        param = {
+          currentPage: 1,
+          pageSize: 10000,
+          type: that.tabActive,
+          name: that.formSearch.name,
+          passport: that.formSearch.passport,
+          departments: frameArr,
+          startDate: star,
+          endDate: end,
+          warning: warns,
+          userAuth: localStorage.getItem("userAuth")
+        };
+      } else {
+        if (that.formSearchYou.time != "" && that.formSearchYou.time) {
+          star =
+            that.formTimes(that.formSearchYou.time[0]).replace(/-/g, "") +
+            "000000";
+          end =
+            that.formTimes(that.formSearchYou.time[1]).replace(/-/g, "") +
+            "235959";
+        }
+        let warns = that.formSearchYou.warning;
+        // if (that.formSearchYou.warning == "") {
+        //   warns = 2;
+        // } else {
+        // warns = that.formSearchYou.warning;
+        // }
+        param = {
+          currentPage: 1,
+          pageSize: 10000,
+          type: that.tabActive,
+          name: that.formSearchYou.name,
+          passport: that.formSearchYou.passport,
+          startDate: star,
+          endDate: end,
+          warning: warns,
+          userAuth: localStorage.getItem("userAuth")
+        };
+      }
+
+      this.$http
+        .get(Url + "/aimw/report/listReports", {params: param} )
+        // .post(Url + "/aimw/report/listReports", param )
+        .then(res => {
+          let data = res.data.data;
+          if (res.data.code == 0) {
+            if (data) {
+              // that.tableData = data.results;
+              
+              that.download(data.results)
+              // that.total = data.count;
+              // that.pageNum =
+              //   data.count == 0 ? 1 : Math.ceil(data.count / that.limit);
+            } else {
+              // that.tableData = [];
+              // that.total = 0;
+              // that.pageNum = 1;
+            }
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
+    exportUser() {
+      // if (this.checkList.length == 0) {
+      //   this.$message({
+      //     type: "warning",
+      //     message: "没有选择要导出的用户!"
+      //   });
+      //   return false;
+      // }
+      this.getListUser()
+    },
+    download(daoData) {
+      let that = this;
+
+      // const content = [...that.tableData];
+      import("@/excel/Export2Excel").then(excel => {
+        const tHeader = ["姓名", "性别", "所属部门", "登录账号", "测评次数", "测评时间", "评估结果"];
+        const filterVal = ["name", "genderStr", "departmentName", "passport", "evaluationTime", "date", "warningStr"];
+        const content = daoData
+        console.log(content)
+        for (let i in content) {
+          if (content[i].warning == 3) {
+            content[i].warningStr = "重度预警"
+          } else if (content[i].warning == 2) {
+            content[i].warningStr = "中度预警"
+          } else if (content[i].warning == 1) {
+            content[i].warningStr = "轻度预警"
+          } else {
+            content[i].warningStr = "正常"
+          }
+          if (content[i].gender == 1) {
+            content[i].genderStr = "男"
+          } else if (content[i].gender == 0) {
+            content[i].genderStr = "女"
+          }
+        }
+        const data = this.formatJson(filterVal, content);
+        excel.export_json_to_excel(tHeader, data, "测评报告--用户列表");
+        setTimeout(() => {
+          this.toggleSelection()
+          this.$message.success('导出成功！');
+        }, 100);
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
+    },
+    toggleSelection() {
+      this.$refs.accountTables.clearSelection();
     },
     // // 批量导出
     someExport() {
