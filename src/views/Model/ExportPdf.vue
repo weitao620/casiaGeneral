@@ -1724,71 +1724,8 @@ export default {
         // this.violenceFlag = 0
         // this.personalityFlag = 0
         console.log(11111)
-        this.getDetail(id)
-        setTimeout(() => {
-          let param = {
-            reportId: id
-          }
-          this.$http
-            .get(Url + "/aimw/report/reportBirdView", {
-              params: param
-            })
-            .then(res => {
-              let data = res.data;
-              if (data.code == 0) {
-                this.details.birdView = data.data.birdView
-                this.$http
-                  .get(Url + "/aimw/report/reportReviewImgs", {
-                    params: param
-                  })
-                  .then(res1 => {
-                    let data1 = res1.data;
-                    if (data1.code == 0) {
-                      that.imgList = [
-                        {
-                          name: "鸟瞰图",
-                          img: "data:image;base64," + data.data.birdView
-                        },
-                        {
-                          name: "西侧俯身45度视图",
-                          img: "data:image;base64," + data1.data.workView.westView
-                        },
-                        {
-                          name: "东侧俯身45度视图",
-                          img: "data:image;base64," + data1.data.workView.eastView
-                        },
-                        {
-                          name: "操作者视图",
-                          img: "data:image;base64," + data1.data.workView.operatorView
-                        }
-                      ];
-                      let allAjax = {
-                        row: this.details,
-                        rowr: this.reviewData,
-                        rows: this.sandInfo,
-                        row3: this.imgList,
-                        row4: this.sandUseNumInfoName,
-                        row5: this.sandUseNumInfoNum
-                      }
-                      setTimeout(() => {
-                        resolve(allAjax)
-                        this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
-                      }, 500);
-                    } else {
-                      that.$message.error(data.msg);
-                    }
-                  })
-                  .catch(res => {
-                    console.log(res);
-                  });
-              } else {
-                that.$message.error(data.msg);
-              }
-            })
-            .catch(res => {
-              console.log(res);
-            });
-        }, 500);
+        this.getDetail(id, resolve, count, len)
+        
       })
     },
     async exportMeeting (type) {
@@ -1810,6 +1747,7 @@ export default {
           // 解析数据
           this.gender = this.iList[i].gender
           this.details = selectedData[i].row
+          console.log(this.details)
           this.reviewData = selectedData[i].rowr
           this.reviewData = selectedData[i].rowr
           this.sandInfo = selectedData[i].rows
@@ -1898,7 +1836,7 @@ export default {
       let timeN = y + "年" + m + "月" + d + '日 ' + h + '时' + minute + '分' + second + '秒'
       return timeN;
     },
-    getDetail(id) {
+    getDetail(id, resolve, count, len) {
       let that = this;
       var param = {
         reportId: id
@@ -2852,7 +2790,73 @@ export default {
 
             console.log(data.data)
             // setTimeout(() => {
-            that.details = that.justInfo(data.data);
+              let param = {
+                reportId: id
+              }
+              this.$http
+                .get(Url + "/aimw/report/reportBirdView", {
+                  params: param
+                })
+                .then(resp => {
+                  let datap = resp.data;
+                  if (datap.code == 0) {
+                    this.details.birdView = datap.data.birdView
+                    this.$http
+                      .get(Url + "/aimw/report/reportReviewImgs", {
+                        params: param
+                      })
+                      .then(res1 => {
+                        let data1 = res1.data;
+                        if (data1.code == 0) {
+                          that.imgList = [
+                            {
+                              name: "鸟瞰图",
+                              img: "data:image;base64," + this.details.birdView
+                            },
+                            {
+                              name: "西侧俯身45度视图",
+                              img: "data:image;base64," + data1.data.workView.westView
+                            },
+                            {
+                              name: "东侧俯身45度视图",
+                              img: "data:image;base64," + data1.data.workView.eastView
+                            },
+                            {
+                              name: "操作者视图",
+                              img: "data:image;base64," + data1.data.workView.operatorView
+                            }
+                          ];
+                          that.details = that.justInfo(data.data);
+                          let allAjax = {
+                            row: this.details,
+                            rowr: this.reviewData,
+                            rows: this.sandInfo,
+                            row3: this.imgList,
+                            row4: this.sandUseNumInfoName,
+                            row5: this.sandUseNumInfoNum
+                          }
+                          console.log(allAjax)
+                          setTimeout(() => {
+                            resolve(allAjax)
+                            this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
+                          }, 100);
+                        } else {
+                          that.$message.error(data.msg);
+                        }
+                      })
+                      .catch(res => {
+                        console.log(res);
+                      });
+                  } else {
+                    that.$message.error(data.msg);
+                  }
+                })
+                .catch(res => {
+                  console.log(res);
+                });
+            // }, 500);
+            // setTimeout(() => {
+            
             console.log(that.details)
             // }, 0);
           } else {

@@ -17,7 +17,7 @@ module.exports = {
         // target: "http://36.110.172.217:6222/", // 通用
         // target: "http://36.110.172.216:12300/", // 通用
         // target: "http://36.110.172.216:13000/",
-        target: "http://36.110.172.217:18888/",
+        target: "http://36.110.172.217:16666/",
         
         // target: "https://ipathy.net/aimwmb/",
         // target: "http://36.110.172.216:11800/",
