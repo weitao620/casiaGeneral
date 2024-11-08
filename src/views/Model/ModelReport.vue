@@ -100,8 +100,8 @@
             </div>
           </div>
           <div class="gp2_li">
-            <div class="gp2l_head">
-              <span>数据解读</span>
+            <div class="gp2l_head" style="justify-content: center;">
+              <span>心理健康水平概况</span>
             </div>
           </div>
           <div class="dtmcl_sbox">
@@ -125,10 +125,10 @@
             <img src="../../assets/images/news/huas.png" alt="">
             <span>越多表示风险程度越高。</span>
           </div>
-          <div class="dtmcl_sbox" v-if="details.jjName != ''" style="margin: 30px 0 20px;">
+          <!-- <div class="dtmcl_sbox" v-if="details.jjName != ''" style="margin: 30px 0 20px;">
             <div class="dtmcl_sb_t">优势评估：</div>
             <div class="dtmcl_sb_c">该受测者在{{details.jjName}}得分最高，表现最好。</div>
-          </div>
+          </div> -->
           <div class="gp2_li">
             <div class="gp2l_head">
               <span>数据对比</span>
@@ -157,6 +157,243 @@
                     <img v-if="item.lastLevel == 1" src="../../assets/images/news/dis.png" alt="">
                     <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhongs.png" alt="">
                     <img v-if="item.lastLevel == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-style group_02">
+      <div class="table-border">
+        <div class="gp_all_tips">
+          <img src="../../assets/images/part/tipss.png" alt="" />
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用。
+        </div>
+        <!-- <div class="gp2_top" style="padding-bottom: 20px">
+          <img src="../../assets/images/news/bencigaik.png" style="width: 60px;height: auto" alt="">
+          <span class="gp2_t_txt">本次概况2</span>
+        </div> -->
+        <div class="gp2_main">
+          <div class="myChartBox">
+            <div class="drwc_bw_shu  drwc_bw_shu1">
+              <div class="tree_box">
+                <!-- <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                <div class="tb_s_c11"></div>
+                <div class="tb_s_c12"></div>
+                <div class="tb_s_c13"></div> -->
+                <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                <div class="tb_s_c11">
+                  {{ details.jjList.length > 3 ? details.jjList[3].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c12">
+                  {{ details.jjList.length > 3 ? details.jjList[3].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c13">
+                  {{ details.jjList.length > 3 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box11', { cir_box12: details.jjList.length > 3 && details.jjList[3].result.indexOf('中等') != -1 }, { cir_box13: details.jjList.length > 3 && details.jjList[3].result.indexOf('较高') != -1 }, { cir_box14: details.jjList.length > 3 && details.jjList[3].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="details.jjList.length > 3"></div>
+                  <div class="cir_img34" v-show="details.jjList.length > 3 && details.jjList[3].result.indexOf('较高') != -1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="details.jjList.length > 3">
+                      <span v-for="item in details.jjList[3].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                <div class="tb_s_c21"></div>
+                <div class="tb_s_c22"></div>
+                <div class="tb_s_c23"></div> -->
+                <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                <div class="tb_s_c21">
+                  {{ details.jjList.length > 1 ? details.jjList[1].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c22">
+                  {{ details.jjList.length > 1 ? details.jjList[1].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c23">
+                  {{ details.jjList.length > 1 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box21', { cir_box22: details.jjList.length > 1 && details.jjList[1].result.indexOf('中等') != -1 }, { cir_box23: details.jjList.length > 1 && details.jjList[1].result.indexOf('较高') != -1 }, { cir_box24: details.jjList.length > 1 && details.jjList[1].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="details.jjList.length > 1"></div>
+                  <div class="cir_img34" v-show="details.jjList.length > 1 && details.jjList[1].result.indexOf('较高') != -1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="details.jjList.length > 1">
+                      <span v-for="item in details.jjList[1].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                <div class="tb_s_c31"></div>
+                <div class="tb_s_c32"></div>
+                <div class="tb_s_c33"></div> -->
+                <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                <div class="tb_s_c31">
+                  {{ details.jjList.length > 0 ? details.jjList[0].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c32">
+                  {{ details.jjList.length > 0 ? details.jjList[0].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c33">
+                  {{ details.jjList.length > 0 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box31', { cir_box32: details.jjList.length > 0 && details.jjList[0].result.indexOf('中等') != -1 }, { cir_box33: details.jjList.length > 0 && details.jjList[0].result.indexOf('较高') != -1 }, { cir_box34: details.jjList.length > 0 && details.jjList[0].result.indexOf('极高') != -1 }]">
+                  
+                  <div class="cir_img" v-if="details.jjList.length > 0"></div>
+                  <div class="cir_img34" v-show="details.jjList.length > 0 && details.jjList[0].result.indexOf('较高') != -1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="details.jjList.length > 0">
+                      <span v-for="item in details.jjList[0].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                <div class="tb_s_c41"></div>
+                <div class="tb_s_c42"></div>
+                <div class="tb_s_c43"></div> -->
+                <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                <div class="tb_s_c41">
+                  {{ details.jjList.length > 2 ? details.jjList[2].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c42">
+                  {{ details.jjList.length > 2 ? details.jjList[2].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c43">
+                  {{ details.jjList.length > 2 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box41', { cir_box42: details.jjList.length > 2 && details.jjList[2].result.indexOf('中等') != -1 }, { cir_box43: details.jjList.length > 2 && details.jjList[2].result.indexOf('较高') != -1 }, { cir_box44: details.jjList.length > 2 &&details.jjList[2].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="details.jjList.length > 2"></div>
+                  <div class="cir_img34" v-show="details.jjList.length > 2 && details.jjList[2].result.indexOf('较高') != -1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="details.jjList.length > 2">
+                      <span v-for="item in details.jjList[2].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                <div class="tb_s_c51"></div>
+                <div class="tb_s_c52"></div>
+                <div class="tb_s_c53"></div> -->
+                <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                <div class="tb_s_c51">
+                  {{ details.jjList.length > 4 ? details.jjList[4].subDim[0].name : '' }}
+                </div>
+                <div class="tb_s_c52">
+                  {{ details.jjList.length > 4 ? details.jjList[4].subDim[1].name : ''}}
+                </div>
+                <div class="tb_s_c53">
+                  {{ details.jjList.length > 4 ? "..." : ''}}
+                </div>
+                <div :class="['cir_box51', { cir_box52: details.jjList.length > 4 && details.jjList[4].result.indexOf('中等') != -1 }, { cir_box53: details.jjList.length > 4 && details.jjList[4].result.indexOf('较高') != -1 }, { cir_box54: details.jjList.length > 4 && details.jjList[4].result.indexOf('极高') != -1 }]">
+                  <div class="cir_img" v-if="details.jjList.length > 4"></div>
+                  <div class="cir_img34" v-show="details.jjList.length > 4 && details.jjList[4].result.indexOf('较高') != -1"></div>
+                  <div class="cir_lay"></div>
+                  <div class="cir_cen">
+                    <div v-if="details.jjList.length > 4">
+                      <span v-for="item in details.jjList[4].title" :key="item.index">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!-- <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length > 0">
+              <div class="myChart" ref="myChart01" id="myChart01"></div>
+            </div>
+            <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length == 0">
+              <div class="dtmcl_c_nor">正常</div>
+            </div> -->
+          </div>
+          <div class="gp2_li">
+            <div class="gp2l_head" style="justify-content: center;">
+              <span>积极心理品质概况</span>
+            </div>
+          </div>
+          <div class="dtmcl_sbox" style="margin-top: 50px;" v-if="details.jjName != ''">
+            <div class="dtmcl_sb_t">优势评估：该受测者在{{details.jjName}}得分最高，表现最好{{ details.jjTotal != '' ? '，' + details.jjTotal : '' }}。</div>
+            <!-- <div class="dtmcl_sb_c" v-if="details.reportWarningInfo">
+              <ul v-if="details.warningList.length > 0">
+                <li v-for="item in details.warningList" :key="item.id">
+                  <span>{{item.name}}风险</span>
+                  <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                  <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                  <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                </li>
+              </ul>
+              <div v-else>
+                正常
+              </div>
+            </div> -->
+          </div>
+          <div class="dtmcl_stip">
+            <span>注：</span>
+            <img src="../../assets/images/news/xingh.png" alt="">
+            <span>越多表示在该维度上表现越好。</span>
+          </div>
+          <!-- <div class="dtmcl_sbox" v-if="details.jjName != ''" style="margin: 30px 0 20px;">
+            <div class="dtmcl_sb_t">优势评估：</div>
+            <div class="dtmcl_sb_c">该受测者在{{details.jjName}}得分最高，表现最好。</div>
+          </div> -->
+          <div class="gp2_li">
+            <div class="gp2l_head">
+              <span>数据对比</span>
+            </div>
+          </div>
+          <div class="gp_warn">
+            <div class="dtmc_r_biao">
+              <ul>
+                <li>
+                  <div>指标</div>
+                  <div>本次结果</div>
+                  <div>上次结果</div>
+                </li>
+                <!-- <li v-for="item in details.jjList" :key="item.id">
+                  <div>{{item.name}}</div>
+                  <div>
+                    <span v-if="item.level == -1">/</span>
+                    <span v-if="item.level == 0">正常</span>
+                    <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                  <div>
+                    <span v-if="item.lastLevel == -1">/</span>
+                    <span v-if="item.lastLevel == 0">正常</span>
+                    <img v-if="item.lastLevel == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.lastLevel == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                </li> -->
+                <li v-for="item in details.jjList" :key="item.id">
+                  <div>{{item.title}}</div>
+                  <div>
+                    <span v-if="item.level == -1">/</span>
+                    <img v-if="item.level == 0" style="width: 86px;height: 20px" src="../../assets/images/news/jiaodih.png" alt="">
+                    <img v-if="item.level == 1" style="width: 86px;height: 20px" src="../../assets/images/news/zhongdengh.png" alt="">
+                    <img v-if="item.level == 2" style="width: 86px;height: 20px" src="../../assets/images/news/jiaogaoh.png" alt="">
+                    <img v-if="item.level == 3" style="width: 86px;height: 20px" src="../../assets/images/news/jigaoh.png" alt="">
+                    <!-- <img v-if="item.result.indexOf('较低') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                    <img v-if="item.result.indexOf('中等') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                    <img v-if="item.result.indexOf('较高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                    <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt=""> -->
+                  </div>
+                  <div>
+                    <span v-if="item.lastLevel == -1">/</span>
+                    <img v-if="item.lastLevel == 0" style="width: 86px;height: 20px" src="../../assets/images/news/jiaodih.png" alt="">
+                    <img v-if="item.lastLevel == 1" style="width: 86px;height: 20px" src="../../assets/images/news/zhongdengh.png" alt="">
+                    <img v-if="item.lastLevel == 2" style="width: 86px;height: 20px" src="../../assets/images/news/jiaogaoh.png" alt="">
+                    <img v-if="item.lastLevel == 3" style="width: 86px;height: 20px" src="../../assets/images/news/jigaoh.png" alt="">
+                    <!-- <img v-if="item.result.indexOf('较低') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                    <img v-if="item.result.indexOf('中等') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                    <img v-if="item.result.indexOf('较高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                    <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt=""> -->
+                    
                   </div>
                 </li>
               </ul>
@@ -350,7 +587,7 @@
     <div class="table-style group_02" v-if="details.jjList && details.jjList.length > 0">
       <div class="table-border">
         <div class="gp2_top" style="padding-bottom: 20px">
-          <img src="../../assets/images/news/jiji.png" style="width: 60px;height: auto" alt="">
+          <!-- <img src="../../assets/images/news/jiji.png" style="width: 60px;height: auto" alt=""> -->
           <span class="gp2_t_txt">积极心理品质分析</span>
         </div>
         <div class="drwc_bw_shu">
@@ -479,7 +716,7 @@
 
           </div>
         </div>
-        <div class="drwc_b_ys drwc_b_yst" v-if="details.jjName != ''">
+        <!-- <div class="drwc_b_ys drwc_b_yst" v-if="details.jjName != ''">
           <p>
             <img src="../../assets/images/news/dengpao_wz.png" alt="">
             该受测者在{{details.jjName}}表现最好，得分最高。
@@ -489,6 +726,15 @@
           </p>
           <p>
             <span></span><span>情绪管理：该受测者整体状态较好，面对困难和挫折，会主动调整好心态。</span>
+          </p>
+        </div> -->
+        <div class="drwc_b_ys drwc_b_yst" v-if="details.jjName != ''">
+          <p>
+            <img src="../../assets/images/news/dengpao_wz.png" alt="">
+            该受测者在{{details.jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。具体表现如下：</p>
+          <p style="margin-left: 0.42rem;" v-for="(item, index) in details.jjDetail" :key="index">
+            <span style="width: 5px;height: 5px;background: #2A3487"></span>
+            <span style="flex: 1;">{{ item }}</span>
           </p>
         </div>
       </div>
@@ -7755,7 +8001,7 @@ export default {
         margin: 40px auto 0;
         z-index: 1;
         position: relative;
-        padding: 10px 30px 20px;
+        padding: 10px 20px 20px;
         p{
           display: flex;
           font-family: SourceHanSansCN, SourceHanSansCN;
@@ -8771,6 +9017,15 @@ export default {
               width: 84px;
             }
           }
+        }
+      }
+      .drwc_bw_shu1{
+        transform: scale(1);
+        padding: 0;
+        margin-top: 30px;
+        div{
+          line-height: 1.2;
+          text-align: center;
         }
       }
       // .gp7_box{

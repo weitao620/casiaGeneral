@@ -47,7 +47,7 @@
           <div class="act1_line" v-if="topAct == 3"></div>
         </div>
         <div
-          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 && bcType == 1 }]"
           @click="trendTab(4)"
           v-if="jjList.length > 0"
         >
@@ -55,10 +55,10 @@
             <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="" />
             <span>积极心理品质分析</span>
           </div>
-          <div class="act1_line" v-if="topAct == 4"></div>
+          <div class="act1_line" v-if="topAct == 4 && bcType == 1 "></div>
         </div>
         <div
-          :class="['r_t_tab', { r_t_tab_act1: topAct == 5 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 5 && bcType == 1  }]"
           @click="trendTab(5)"
         >
           
@@ -66,17 +66,18 @@
             <img style="width: 0.43rem;height:0.52rem;" src="../../assets/images/news/rengefenxi.png" alt=""/>
             <span>人格分析</span>
           </div>
-          <div class="act1_line" v-if="topAct == 5"></div>
+          <div class="act1_line" v-if="topAct == 5 && bcType == 1 "></div>
         </div>
+        <!-- {{bcType}}-{{topAct}} -->
         <div
-          :class="['r_t_tab', { r_t_tab_act1: topAct == 6 }]"
+          :class="['r_t_tab', { r_t_tab_act1: (topAct == 4 && bcType == 3) || (topAct == 5 && bcType == 2) ||(topAct == 6 && bcType == 1)}]"
           @click="trendTab(6)"
         >
           <div>
             <img style="width: 0.54rem;height:0.44rem;" src="../../assets/images/news/beizhu.png" alt="" />
             <span>备注</span>
           </div>
-          <div class="act1_line" v-if="topAct == 6"></div>
+          <div class="act1_line" v-if="(topAct == 4 && bcType == 3) || (topAct == 5 && bcType == 2) ||(topAct == 6 && bcType == 1)"></div>
         </div>
       </div>
       <div
@@ -349,9 +350,14 @@
               <img style="width: 0.52rem;height:0.45rem;" src="../../assets/images/news/bencigaik.png" alt="">
               <span>本次概况</span>
             </div>
+            <div class="drwc_bw_t">
+              <span class="drwcb_l"></span>
+              <span class="drwcb_t">心理健康水平概况</span>
+            </div>
             <div class="drwc_b_work">
+              
               <div class="dtm_contain">
-                <div class="dtmc_left" style="margin-top: -0.4rem;margin-right: 0">
+                <div class="dtmc_left" style="margin-top: 0.1rem;margin-right: 0">
                   <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length > 0">
                     <div id="myChart" class="my_chart" ref="myChart"></div>
                   </div>
@@ -359,9 +365,9 @@
                     <div class="dtmcl_c_nor">正常</div>
                   </div>
                   <div class="dtmcl_sys">
-                    <div class="dtmcl_du3">
+                    <!-- <div class="dtmcl_du3">
                       <span>数据解读</span>
-                    </div>
+                    </div> -->
                     <div class="dtmcl_sbox">
                       <div class="dtmcl_sb_t">风险评估：</div>
                       <div class="dtmcl_sb_c" v-if="details.reportWarningInfo">
@@ -416,9 +422,213 @@
               </div>
               
             </div>
-            <div class="drwc_b_ys" v-if="jjName != ''">
-              <p><span>优势评估：</span>该受测者在{{jjName}}得分最高，表现最好。</p>
+            <div class="drwc_b_ysl" v-if="jjList.length > 0">
+              <p></p>
             </div>
+            <div class="drwc_bw_t">
+              <span class="drwcb_l"></span>
+              <span class="drwcb_t">积极心理品质分析</span>
+            </div>
+            <div class="drwc_b_work">
+              
+              <div class="dtm_contain">
+                <div class="dtmc_left" style="margin-top: 0.1rem;margin-right: 0">
+                  <div class="drwc_bw_shu drwc_bw_shu1">
+                    <div class="tree_box">
+                      <!-- <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                      <div class="tb_s_c11"></div>
+                      <div class="tb_s_c12"></div>
+                      <div class="tb_s_c13"></div> -->
+                      <img class="tb_l1" src="../../assets/images/news/l1.png" alt="">
+                      <div class="tb_s_c11">
+                        {{ jjList.length > 3 ? jjList[3].subDim[0].name : '' }}
+                      </div>
+                      <div class="tb_s_c12">
+                        {{ jjList.length > 3 ? jjList[3].subDim[1].name : ''}}
+                      </div>
+                      <div class="tb_s_c13">
+                        {{ jjList.length > 3 ? "..." : ''}}
+                      </div>
+                      <div :class="['cir_box11', { cir_box12: jjList.length > 3 && jjList[3].result.indexOf('中等') != -1 }, { cir_box13: jjList.length > 3 && jjList[3].result.indexOf('较高') != -1 }, { cir_box14: jjList.length > 3 && jjList[3].result.indexOf('极高') != -1 }]">
+                        <div class="cir_img" v-if="jjList.length > 3"></div>
+                        <div class="cir_lay"></div>
+                        <div class="cir_cen">
+                          <div v-if="jjList.length > 3">
+                            <span v-for="item in jjList[3].title" :key="item.index">{{ item }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                      <div class="tb_s_c21"></div>
+                      <div class="tb_s_c22"></div>
+                      <div class="tb_s_c23"></div> -->
+                      <img class="tb_l2" src="../../assets/images/news/l2.png" alt="">
+                      <div class="tb_s_c21">
+                        {{ jjList.length > 1 ? jjList[1].subDim[0].name : '' }}
+                      </div>
+                      <div class="tb_s_c22">
+                        {{ jjList.length > 1 ? jjList[1].subDim[1].name : ''}}
+                      </div>
+                      <div class="tb_s_c23">
+                        {{ jjList.length > 1 ? "..." : ''}}
+                      </div>
+                      <div :class="['cir_box21', { cir_box22: jjList.length > 1 && jjList[1].result.indexOf('中等') != -1 }, { cir_box23: jjList.length > 1 && jjList[1].result.indexOf('较高') != -1 }, { cir_box24: jjList.length > 1 && jjList[1].result.indexOf('极高') != -1 }]">
+                        <div class="cir_img" v-if="jjList.length > 1"></div>
+                        <div class="cir_lay"></div>
+                        <div class="cir_cen">
+                          <div v-if="jjList.length > 1">
+                            <span v-for="item in jjList[1].title" :key="item.index">{{ item }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                      <div class="tb_s_c31"></div>
+                      <div class="tb_s_c32"></div>
+                      <div class="tb_s_c33"></div> -->
+                      <img class="tb_l3" src="../../assets/images/news/l3.png" alt="">
+                      <div class="tb_s_c31">
+                        {{ jjList.length > 0 ? jjList[0].subDim[0].name : '' }}
+                      </div>
+                      <div class="tb_s_c32">
+                        {{ jjList.length > 0 ? jjList[0].subDim[1].name : ''}}
+                      </div>
+                      <div class="tb_s_c33">
+                        {{ jjList.length > 0 ? "..." : ''}}
+                      </div>
+                      <div :class="['cir_box31', { cir_box32: jjList.length > 0 && jjList[0].result.indexOf('中等') != -1 }, { cir_box33: jjList.length > 0 && jjList[0].result.indexOf('较高') != -1 }, { cir_box34: jjList.length > 0 && jjList[0].result.indexOf('极高') != -1 }]">
+                        <div class="cir_img" v-if="jjList.length > 0"></div>
+                        <div class="cir_lay"></div>
+                        <div class="cir_cen">
+                          <div v-if="jjList.length > 0">
+                            <span v-for="item in jjList[0].title" :key="item.index">{{ item }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                      <div class="tb_s_c41"></div>
+                      <div class="tb_s_c42"></div>
+                      <div class="tb_s_c43"></div> -->
+                      <img class="tb_l4" src="../../assets/images/news/l4.png" alt="">
+                      <div class="tb_s_c41">
+                        {{ jjList.length > 2 ? jjList[2].subDim[0].name : '' }}
+                      </div>
+                      <div class="tb_s_c42">
+                        {{ jjList.length > 2 ? jjList[2].subDim[1].name : ''}}
+                      </div>
+                      <div class="tb_s_c43">
+                        {{ jjList.length > 2 ? "..." : ''}}
+                      </div>
+                      <div :class="['cir_box41', { cir_box42: jjList.length > 2 && jjList[2].result.indexOf('中等') != -1 }, { cir_box43: jjList.length > 2 && jjList[2].result.indexOf('较高') != -1 }, { cir_box44: jjList.length > 2 && jjList[2].result.indexOf('极高') != -1 }]">
+                        <div class="cir_img" v-if="jjList.length > 2"></div>
+                        <div class="cir_lay"></div>
+                        <div class="cir_cen">
+                          <div v-if="jjList.length > 2">
+                            <span v-for="item in jjList[2].title" :key="item.index">{{ item }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                      <div class="tb_s_c51"></div>
+                      <div class="tb_s_c52"></div>
+                      <div class="tb_s_c53"></div> -->
+                      <img class="tb_l5" src="../../assets/images/news/l5.png" alt="">
+                      <div class="tb_s_c51">
+                        {{ jjList.length > 4 ? jjList[4].subDim[0].name : '' }}
+                      </div>
+                      <div class="tb_s_c52">
+                        {{ jjList.length > 4 ? jjList[4].subDim[1].name : ''}}
+                      </div>
+                      <div class="tb_s_c53">
+                        {{ jjList.length > 4 ? "..." : ''}}
+                      </div>
+                      <div :class="['cir_box51', { cir_box52: jjList.length > 4 && jjList[4].result.indexOf('中等') != -1 }, { cir_box53: jjList.length > 4 && jjList[4].result.indexOf('较高') != -1 }, { cir_box54: jjList.length > 4 && jjList[4].result.indexOf('极高') != -1 }]">
+                        <div class="cir_img" v-if="jjList.length > 4"></div>
+                        <div class="cir_lay"></div>
+                        <div class="cir_cen">
+                          <div v-if="jjList.length > 4">
+                            <span v-for="item in jjList[4].title" :key="item.index">{{ item }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!-- <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length > 0">
+                    <div id="myChart" class="my_chart" ref="myChart"></div>
+                  </div>
+                  <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length == 0">
+                    <div class="dtmcl_c_nor">正常</div>
+                  </div> -->
+                  <div class="dtmcl_sys">
+                    <!-- <div class="dtmcl_du3">
+                      <span>数据解读</span>
+                    </div> -->
+                    <div class="dtmcl_sbox" v-if="jjName != ''">
+                      <div class="dtmcl_sb_t">优势评估：该受测者在{{jjName}}得分最高，表现最好{{ jjTotal != '' ? '，' + jjTotal : '' }}。</div>
+                      <!-- <div class="dtmcl_sb_c" v-if="details.reportWarningInfo">
+                        <ul v-if="details.warningList.length > 0">
+                          <li v-for="item in details.warningList" :key="item.id">
+                            <span>{{item.name}}风险</span>
+                            <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
+                            <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
+                            <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
+                          </li>
+                        </ul>
+                        <div v-else>
+                          正常
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="dtmcl_stip">
+                      <span>注：</span>
+                      <img src="../../assets/images/news/xing.png" alt="" style="margin-right: 0.04rem;">
+                      <span>越多表示在该维度上表现越好。</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="dtmc_right">
+                  <div class="dtmc_r_biao">
+                    <ul>
+                      <li>
+                        <div>指标</div>
+                        <div>本次结果</div>
+                        <div>上次结果</div>
+                      </li>
+                      <li v-for="item in details.jjList" :key="item.id">
+                        <div>{{item.title}}</div>
+                        <div>
+                          <span v-if="item.level == -1">/</span>
+                          <img v-if="item.level == 0" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                          <img v-if="item.level == 1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                          <img v-if="item.level == 2" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                          <img v-if="item.level == 3" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
+                          <!-- <img v-if="item.result.indexOf('较低') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                          <img v-if="item.result.indexOf('中等') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                          <img v-if="item.result.indexOf('较高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                          <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt=""> -->
+                        </div>
+                        <div>
+                          <span v-if="item.lastLevel == -1">/</span>
+                          <img v-if="item.lastLevel == 0" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                          <img v-if="item.lastLevel == 1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                          <img v-if="item.lastLevel == 2" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                          <img v-if="item.lastLevel == 3" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt="">
+                          <!-- <img v-if="item.result.indexOf('较低') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaodi.png" alt="">
+                          <img v-if="item.result.indexOf('中等') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/zhongdeng.png" alt="">
+                          <img v-if="item.result.indexOf('较高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jiaogao.png" alt="">
+                          <img v-if="item.result.indexOf('极高') != -1" style="width: 0.86rem;height: 0.2rem;" src="../../assets/images/news/jigao.png" alt=""> -->
+                          
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!-- <div class="drwc_b_ys" v-if="jjName != ''">
+              <p><span>优势评估：</span>该受测者在{{jjName}}得分最高，表现最好。</p>
+            </div> -->
           </div>
         </div>
 
@@ -537,6 +747,31 @@
                 </div>
               </div>
             </div>
+            <div class="drwc_b_tips drwc_b_tips1">
+              <img class="drwx_b_l" style="width:0.22rem;" src="../../assets/images/news/tishi.png" alt="">
+              <div class="drwx_b_r">
+                <p>本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》</p>
+              </div>
+              <img class="drwx_b_l" @click="toGuide" style="width:0.19rem;cursor: pointer;" src="../../assets/images/news/watch.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="drwc_box" ref="parts61">
+          <div class="drwc_common">
+            <div class="wdrj_box">
+              <div class="wdrj_main">
+                <div class="wdrj_title" >
+                  <img src="../../assets/images/news/dot.png" alt="" />
+                  补充说明1
+                </div>
+                <div class="wm_text" style="display: flex;align-items: center">
+                  <el-input v-if="!assessmentFlag1" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment1" @input="noteChange1" maxlength="300" show-word-limit></el-input>
+                  <el-input v-else  disabled :autosize="{ minRows: 3}" type="textarea" v-model="assessment1"></el-input>
+                  <el-button style="margin: 0 -0.3rem 0 0.2rem;" type="primary" v-if="!assessmentFlag1" @click="recordSub1">提交</el-button>
+                  <el-button style="margin: 0 -0.3rem 0 0.2rem;" type="primary primary1" v-if="assessmentFlag1" @click="assessmentFlag1 = !assessmentFlag1">修改</el-button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- <div class="drwc_box" ref="parts4" v-show="jjList.length > 0"> -->
@@ -624,9 +859,11 @@
               <p>
                 <img src="../../assets/images/news/dengpao_wz.png" alt="">
                 该受测者在{{jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。</p>
+              
             </div>
           </div>
         </div>
+
         <div class="drwc_box" ref="parts4" v-if="jjList.length > 0">
           <div class="drwc_common">
             <div class="drwc_bw_head">
@@ -756,11 +993,31 @@
             <div class="drwc_b_ys drwc_b_ysp" v-if="jjName != ''">
               <p>
                 <img src="../../assets/images/news/dengpao_wz.png" alt="">
-                该受测者在{{jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。</p>
+                该受测者在{{jjName}}表现最好，得分最高，管理者可以鼓励该受测者继续发挥自身在这些方面的优势。具体表现如下：</p>
+              <p style="margin-left: 0.42rem;" v-for="(item, index) in jjDetail" :key="index">
+                {{ index + 1 }}.{{ item }}
+              </p>
             </div>
           </div>
         </div>
-
+        <div class="drwc_box" ref="parts62">
+          <div class="drwc_common">
+            <div class="wdrj_box">
+              <div class="wdrj_main">
+                <div class="wdrj_title" >
+                  <img src="../../assets/images/news/dot.png" alt="" />
+                  补充说明2
+                </div>
+                <div class="wm_text" style="display: flex;align-items: center">
+                  <el-input v-if="!assessmentFlag2" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment2" @input="noteChange2" maxlength="300" show-word-limit></el-input>
+                  <el-input v-else  disabled :autosize="{ minRows: 3}" type="textarea" v-model="assessment2"></el-input>
+                  <el-button style="margin: 0 -0.3rem 0 0.2rem;" type="primary" v-if="!assessmentFlag2" @click="recordSub2">提交</el-button>
+                  <el-button style="margin: 0 -0.3rem 0 0.2rem;" type="primary primary1" v-if="assessmentFlag2" @click="assessmentFlag2 = !assessmentFlag2">修改</el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="drwc_box" ref="parts5">
           <div class="drwc_common">
             <div class="drwc_bw_head">
@@ -1182,6 +1439,10 @@ export default {
       btlActNum: 1,
       jjActNum: 1,
       rgActNum: 1,
+      assessment1: '',
+      assessmentFlag1: false,
+      assessment2: '',
+      assessmentFlag2: false,
       assessment: '',
       assessmentFlag: false,
       birdViewImg: '',
@@ -1255,6 +1516,8 @@ export default {
       part4: "",
       part5: "",
       part6: "",
+      part61: "",
+      part62: "",
       parta1: "",
       parta2: "",
       parta3: "",
@@ -1287,6 +1550,8 @@ export default {
       sysList2: [],
       jjList: [],
       jjName: '',
+      jjTotal: '',
+      jjDetail: [],
       rgList: [],
       depressionFlag: 1,
       anxietyFlag: 1,
@@ -1294,7 +1559,9 @@ export default {
       suicideFlag: 0,
       violenceFlag: 0,
       personalityFlag: 0,
-      tokenFlag: false
+      tokenFlag: false,
+      
+      bcType: 1
     };
   },
   computed: {
@@ -1547,6 +1814,52 @@ export default {
     rgChange(id) {
       this.rgActNum = id
     },
+    noteChange1(val) {
+      console.log(val)
+
+      let row = 0
+      val.split('\n').forEach(item => {
+        // if (item.length === 0) {
+        row += 1
+        // } else {
+        //   row += Math.ceil(item.replace())
+        // }
+      });
+      console.log(row)
+      if (row > 10) {
+        this.assessment1 = val.split('\n').slice(0, 10).join('\n')
+        this.$message({
+          type: "warning",
+          message: "最多不能超过10行!"
+        });
+      } else {
+        this.assessment1 = val
+      }
+      console.log(this.assessment1)
+    },
+    noteChange2(val) {
+      console.log(val)
+
+      let row = 0
+      val.split('\n').forEach(item => {
+        // if (item.length === 0) {
+        row += 1
+        // } else {
+        //   row += Math.ceil(item.replace())
+        // }
+      });
+      console.log(row)
+      if (row > 10) {
+        this.assessment2 = val.split('\n').slice(0, 10).join('\n')
+        this.$message({
+          type: "warning",
+          message: "最多不能超过10行!"
+        });
+      } else {
+        this.assessment2 = val
+      }
+      console.log(this.assessment2)
+    },
     noteChange(val) {
       console.log(val)
 
@@ -1570,11 +1883,103 @@ export default {
       }
       console.log(this.assessment)
     },
+    recordSub1() {
+      let that = this;
+      let param = {
+        reportId: that.reportId,
+        note: {
+          mental_health_note: that.assessment1,
+          positive_psychology_note: that.assessment2,
+          personality_note: that.assessment
+        }
+      }
+      console.log(param)
+      // return
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr1 = this.tokenFlag ? '/aimw/zkyx/report/updateNote' : '/aimw/report/updateNote'
+      this.$http
+        .put(Url + postStr1, param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            if (that.assessment1 != '') {
+              this.assessmentFlag1 = true
+              this.$message({
+                type: "success",
+                message: "心理健康维度分析补充说明提交成功!"
+              });
+            } else {
+              that.$message({
+                type: "success",
+                message: "心理健康维度分析补充说明已清空!"
+              })
+              this.assessmentFlag1 = false
+            }
+            this.details.note = that.assessment1
+            this.$forceUpdate()
+          } else {
+            this.$message({
+              type: "error",
+              message: "心理健康维度分析补充说明提交失败!"
+            });
+          }
+        });
+    },
+    recordSub2() {
+      let that = this;
+      let param = {
+        reportId: that.reportId,
+        note: {
+          mental_health_note: that.assessment1,
+          positive_psychology_note: that.assessment2,
+          personality_note: that.assessment
+        }
+      }
+      console.log(param)
+      // return
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      let postStr1 = this.tokenFlag ? '/aimw/zkyx/report/updateNote' : '/aimw/report/updateNote'
+      this.$http
+        .put(Url + postStr1, param)
+        .then(res => {
+          var data = res.data;
+          if (data.code == 0) {
+            if (that.assessment2 != '') {
+              this.assessmentFlag2 = true
+              this.$message({
+                type: "success",
+                message: "积极心理品质分析补充说明提交成功!"
+              });
+            } else {
+              that.$message({
+                type: "success",
+                message: "积极心理品质分析补充说明已清空!"
+              })
+              this.assessmentFlag2 = false
+            }
+            this.details.note2 = that.assessment2
+            this.$forceUpdate()
+          } else {
+            this.$message({
+              type: "error",
+              message: "积极心理品质分析补充说明提交失败!"
+            });
+          }
+        });
+    },
     recordSub() {
       let that = this;
       let param = {
         reportId: that.reportId,
-        note: that.assessment
+        note: {
+          mental_health_note: that.assessment1,
+          positive_psychology_note: that.assessment2,
+          personality_note: that.assessment
+        }
       }
       console.log(param)
       // return
@@ -1591,12 +1996,12 @@ export default {
               this.assessmentFlag = true
               this.$message({
                 type: "success",
-                message: "补充说明提交成功!"
+                message: "人格分析补充说明提交成功!"
               });
             } else {
               that.$message({
                 type: "success",
-                message: "补充说明已清空!"
+                message: "人格分析补充说明已清空!"
               })
               this.assessmentFlag = false
             }
@@ -2223,6 +2628,8 @@ export default {
                     title: "心理韧性",
                     result: data.data.resilienceResult,
                     subDim: data.data.resilienceSubdim,
+                    level: data.data.positiveResults.resilienceLevel,
+                    lastLevel: data.data.lastPositiveResults.resilienceLevel,
                     total: total,
                     // suggestDim: data.data.resilienceSuggestion,
                     sysDim: data.data.resilienceAnalysis,
@@ -2241,6 +2648,8 @@ export default {
                     title: "积极自我",
                     result: data.data.selfResult,
                     subDim: data.data.selfSubdim,
+                    level: data.data.positiveResults.selfLevel,
+                    lastLevel: data.data.lastPositiveResults.selfLevel,
                     total: total,
                     // suggestDim: data.data.selfSuggestion,
                     sysDim: data.data.selfAnalysis,
@@ -2259,6 +2668,8 @@ export default {
                     title: "积极情绪",
                     result: data.data.emotionResult,
                     subDim: data.data.emotionSubdim,
+                    level: data.data.positiveResults.emotionLevel,
+                    lastLevel: data.data.lastPositiveResults.emotionLevel,
                     total: total,
                     // suggestDim: data.data.emotionSuggestion,
                     sysDim: data.data.emotionAnalysis,
@@ -2277,6 +2688,8 @@ export default {
                     title: "积极成就",
                     result: data.data.achievementResult,
                     subDim: data.data.achievementSubdim,
+                    level: data.data.positiveResults.achievementLevel,
+                    lastLevel: data.data.lastPositiveResults.achievementLevel,
                     total: total,
                     // suggestDim: data.data.achievementSuggestion,
                     sysDim: data.data.achievementAnalysis,
@@ -2295,6 +2708,8 @@ export default {
                     title: "积极关系",
                     result: data.data.relationshipResult,
                     subDim: data.data.relationshipSubdim,
+                    level: data.data.positiveResults.relationshipLevel,
+                    lastLevel: data.data.lastPositiveResults.relationshipLevel,
                     total: total,
                     // suggestDim: data.data.relationshipSuggestion,
                     sysDim: data.data.relationshipAnalysis,
@@ -2305,25 +2720,43 @@ export default {
             }
             this.jjList = jjList0
             data.data.jjList = this.jjList;
-            if (jjList0.length > 0) {
-              let jjArr = jjList0.sort((a, b) => {
-                return Number(b.total) - Number(a.total);
-              });
-              console.log(jjArr)
-              // jjArr = jjArr.concat(jjArr)
-              this.jjName = jjArr[0].title + '上'
-              if (jjArr.length > 1) {
-                if (jjArr[1].total == jjArr[0].total) {
-                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
-                }
-              }
-              if (jjArr.length > 2) {
-                if (jjArr[2].total == jjArr[0].total) {
-                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
-                }
-              }
+            // if (jjList0.length > 0) {
+            //   let jjArr = jjList0.sort((a, b) => {
+            //     return Number(b.total) - Number(a.total);
+            //   });
+            //   console.log(jjArr)
+            //   // jjArr = jjArr.concat(jjArr)
+            //   this.jjName = jjArr[0].title + '上'
+            //   if (jjArr.length > 1) {
+            //     if (jjArr[1].total == jjArr[0].total) {
+            //       this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
+            //     }
+            //   }
+            //   if (jjArr.length > 2) {
+            //     if (jjArr[2].total == jjArr[0].total) {
+            //       this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
+            //     }
+            //   }
+            // }
+            // data.data.jjName = this.jjName
+            data.data.summary = [
+              "积极自我",
+              "简版总结",
+              "详细总结第1段@@详细总结第2段@@详细总结第3段"
+            ]
+            if (data.data.summary && data.data.summary != null) {
+              this.jjName = data.data.summary[0]
+              this.jjTotal = data.data.summary[1]
+              this.jjDetail = data.data.summary[2].split("@@")
             }
             data.data.jjName = this.jjName
+            data.data.jjTotal = this.jjTotal
+            data.data.jjDetail = this.jjDetail
+            console.log(this.jjName)
+            console.log(this.jjTotal)
+            console.log(this.jjDetail)
+
+            
             
             // 大五人格
             let personality = {}
@@ -2408,17 +2841,52 @@ export default {
             this.rgList = rgList0
             data.data.rgList = this.rgList;
             data.data.reportId = that.reportId
-            if (data.data.note) {
-              that.assessment = data.data.note
-              if (data.data.note == '') {
+            console.log(data.data.note)
+            if (data.data.note && data.data.note != '') {
+              let notes = JSON.parse(data.data.note)
+              
+              if (notes.mental_health_note == '') {
+                that.assessment1 = ''
+                that.assessmentFlag1 = false
+              } else {
+                that.assessment1 = notes.mental_health_note
+                that.assessmentFlag1 = true
+              }
+              if (notes.positive_psychology_note == '') {
+                that.assessment2 = ''
+                that.assessmentFlag2 = false
+              } else {
+                that.assessment2 = notes.positive_psychology_note
+                that.assessmentFlag2 = true
+              }
+              if (notes.personality_note == '') {
+                that.assessment = ''
                 that.assessmentFlag = false
               } else {
+                that.assessment = notes.personality_note
                 that.assessmentFlag = true
               }
+
+              // if (data.data.notes == '') {
+              //   that.assessmentFlag = false
+              // } else {
+              //   that.assessmentFlag = true
+              // }
+            } else {
+              that.assessmentFlag1 = false
+              that.assessmentFlag2 = false
+              that.assessmentFlag = false
+              that.assessment1 = ''
+              that.assessment2 = ''
+              that.assessment = ''
             }
             that.details = data.data
+            // that.getBird()
+
+
+
             // that.details = that.justInfo(data.data);
-            that.getBird()
+            
             // data.data.birdView = ''
             // this.details.birdView = data.data.birdView;
             // this.birdViewImg = data.data.birdView;
@@ -2644,6 +3112,8 @@ export default {
         this.part4 = this.$refs.parts4.offsetTop;
         this.part5 = this.$refs.parts5.offsetTop;
         this.part6 = this.$refs.parts6.offsetTop;
+        this.part61 = this.$refs.parts61.offsetTop;
+        this.part62 = this.$refs.parts62.offsetTop;
 
         this.parta1 = this.$refs.partr1.offsetTop;
         this.parta2 = this.$refs.partr2.offsetTop;
@@ -2655,23 +3125,46 @@ export default {
     trendTab(type) {
       this.topAct = type;
       if (type == 1) {
+        this.bcType = 1
         window.scrollTo(0, this.part1 - 20);
       }
       if (type == 2) {
+        this.bcType = 1
         window.scrollTo(0, this.part2 - 20);
       }
       if (type == 3) {
+        this.bcType = 1
         window.scrollTo(0, this.part3 - 20);
       }
       if (type == 4) {
+        this.bcType = 1
         window.scrollTo(0, this.part4 - 20);
       }
       if (type == 5) {
+        this.bcType = 1
         window.scrollTo(0, this.part5 - 20);
       }
       if (type == 6) {
-        window.scrollTo(0, this.part6 - 20);
+        console.log('111111')
+        if (this.bcType < 2) {
+          console.log('2')
+          this.bcType = 3
+          window.scrollTo(0, this.part61 - 20);
+        } else {
+          this.bcType = this.bcType - 1
+          if (this.bcType == 2) {
+            console.log('3')
+            window.scrollTo(0, this.part62 - 20);
+          } 
+          if (this.bcType == 1) {
+            console.log('4')
+            window.scrollTo(0, this.part6 - 20);
+          }
+        }
+        
+        // window.scrollTo(0, this.part6 - 20);
       }
+        
     },
     trendTabs(type) {
       this.topAct = type;
@@ -2752,6 +3245,7 @@ export default {
       }
     },
     toReview() {
+      this.bcType = 1
       this.reviewFlag = !this.reviewFlag;
       this.topBacks();
     },
@@ -5584,6 +6078,7 @@ export default {
     }
     .drwc_box{
       width: 14rem;
+      // height: 600px;
       margin: 0 auto 0.34rem;
       background: rgba(255,255,255,0.6);
       box-shadow: 0 0.2rem 0.16rem 0 rgba(228, 228, 235, 0.13);
@@ -5726,6 +6221,14 @@ export default {
             letter-spacing: 0.01rem;
           }
         }
+      }
+      .drwc_b_tips1{
+        border: 0;
+        border-radius: 0;
+        padding: 0.32rem 0;
+        border-top: 0.01rem solid #EAEBF1;
+        width: 90%;
+        margin: 0 auto;
       }
       .drwc_common{
         border: 0.04rem solid #FFFFFF;
@@ -6523,6 +7026,14 @@ export default {
             }
           }
         }
+        .drwc_b_ysl{
+          width: auto;
+          padding: 0rem 0.4rem 0.3rem;
+          // display: flex;
+          p{
+            border-top: 0.01rem solid #EAEBF1;
+          }
+        }
         .drwc_b_ys{
           width: auto;
           padding: 0rem 0.4rem 0.3rem;
@@ -6540,7 +7051,7 @@ export default {
             padding: 0.3rem 0 0;
             width: 100%;
             text-align: left;
-            border-top: 0.01rem solid #EAEBF1;
+            // border-top: 0.01rem solid #EAEBF1;
           }
           span{
             font-weight: 500;
@@ -6554,6 +7065,9 @@ export default {
             margin: 0.28rem auto 0.2rem;
             background: url(../../assets/images/news/tree.png) no-repeat center;
             background-size: 100% 100%;
+            div{
+              text-align: center;
+            }
             .tb_l1{
               width: 0.51rem;
               height: 0.82rem;
@@ -7424,6 +7938,11 @@ export default {
             }
           }
         }
+        .drwc_bw_shu1 {
+          transform: scale(0.5); 
+          margin-top: -1.1rem;
+          height: 3.7rem;
+        }
         .drwc_b_ysp{
           display: block;
           margin: 0 0.5rem;
@@ -7452,9 +7971,27 @@ export default {
             }
           }
         }
+        .drwc_bw_t{
+          display: flex;
+          align-items: center;
+          margin-left: 0.4rem;
+          .drwcb_l{
+            width: 0.04rem;
+            height: 0.18rem;
+            background: #737AFD;
+            margin-right: 0.08rem;
+          }
+          .drwcb_t{
+            font-family: SourceHanSansCN, SourceHanSansCN;
+            font-weight: 500;
+            font-size: 0.18rem;
+            color: #333E75;
+          }
+        }
         .drwc_b_work{
           display: flex;
           align-items: center;
+          
           .dtm_contain {
             display: flex;
             justify-content: space-between;
@@ -7492,7 +8029,7 @@ export default {
             .dtmc_left {
               width: 5.0rem;
               margin: 0 0.32rem 0.4rem 0.4rem;
-              border-radius: 0.16rem;
+              // border-radius: 0.16rem;
               overflow: hidden;
               .dtmcl_pic {
                 width: 3.08rem;
@@ -7515,8 +8052,8 @@ export default {
               .dtmcl_chart {
                 position: relative;
                 .dtmcl_c_nor{
-                  width: 2.2rem;
-                  height: 2.2rem;
+                  width: 1.8rem;
+                  height: 1.8rem;
                   display: flex;
                   justify-content: center;
                   align-items: center;
@@ -7529,8 +8066,8 @@ export default {
                   color: #82df95;
                 }
                 .my_chart {
-                  width: 2.2rem;
-                  height: 2.2rem;
+                  width: 1.8rem;
+                  height: 1.8rem;
                   margin: 0 auto;
                 }
                 .c_o_my_txt {
