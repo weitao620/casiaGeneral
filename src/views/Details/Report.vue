@@ -2881,7 +2881,7 @@ export default {
               that.assessment = ''
             }
             that.details = data.data
-            // that.getBird()
+            that.getBird()
 
 
 
