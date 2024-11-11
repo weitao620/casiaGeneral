@@ -1545,11 +1545,15 @@
         <span>沙具使用数量分布</span>
       </div>
       <div class="myChartZhu1" ref="myChartZhus1" id="myChartZhus1"></div>
+      
       <div class="dtmt_tle" style="margin:40px auto 10px">
         <label></label>
         <span>沙具使用时长占比</span>
       </div>
-      <div class="myChartRose1" ref="myChartRoses1" id="myChartRoses1"></div>
+      <div class="wsfs">
+        <div class="myChartRose1f" ref="myChartRoses1f" id="myChartRoses1f"></div>
+      </div>
+      
     </div>
     <div class="table-style group_02 group_03 group_04 group_05 group_06 group_07">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
@@ -1646,7 +1650,7 @@ export default {
       myChartPiess11: "",
       myChartPiess22: "",
       myChartPiess33: "",
-      myChartRoses1: "",
+      myChartRoses1f: "",
       myChartZhus1: "",
       myChartLds11: "",
       myChartLds22: "",
@@ -1724,8 +1728,74 @@ export default {
         // this.violenceFlag = 0
         // this.personalityFlag = 0
         console.log(11111)
-        this.getDetail(id, resolve, count, len)
+        setTimeout(() => {
+          this.getDetail(id, resolve, count, len)
+        }, 500);
         
+        // setTimeout(() => {
+          // let param = {
+          //   reportId: id
+          // }
+          // this.$http
+          //   .get(Url + "/aimw/report/reportBirdView", {
+          //     params: param
+          //   })
+          //   .then(res => {
+          //     let data = res.data;
+          //     if (data.code == 0) {
+          //       this.details.birdView = data.data.birdView
+          //       this.$http
+          //         .get(Url + "/aimw/report/reportReviewImgs", {
+          //           params: param
+          //         })
+          //         .then(res1 => {
+          //           let data1 = res1.data;
+          //           if (data1.code == 0) {
+          //             that.imgList = [
+          //               {
+          //                 name: "鸟瞰图",
+          //                 img: "data:image;base64," + data.data.birdView
+          //               },
+          //               {
+          //                 name: "西侧俯身45度视图",
+          //                 img: "data:image;base64," + data1.data.workView.westView
+          //               },
+          //               {
+          //                 name: "东侧俯身45度视图",
+          //                 img: "data:image;base64," + data1.data.workView.eastView
+          //               },
+          //               {
+          //                 name: "操作者视图",
+          //                 img: "data:image;base64," + data1.data.workView.operatorView
+          //               }
+          //             ];
+          //             let allAjax = {
+          //               row: this.details,
+          //               rowr: this.reviewData,
+          //               rows: this.sandInfo,
+          //               row3: this.imgList,
+          //               row4: this.sandUseNumInfoName,
+          //               row5: this.sandUseNumInfoNum
+          //             }
+          //             setTimeout(() => {
+          //               resolve(allAjax)
+          //               this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
+          //             }, 500);
+          //           } else {
+          //             that.$message.error(data.msg);
+          //           }
+          //         })
+          //         .catch(res => {
+          //           console.log(res);
+          //         });
+          //     } else {
+          //       that.$message.error(data.msg);
+          //     }
+          //   })
+          //   .catch(res => {
+          //     console.log(res);
+          //   });
+        // }, 500);
       })
     },
     async exportMeeting (type) {
@@ -2790,74 +2860,70 @@ export default {
 
             console.log(data.data)
             // setTimeout(() => {
-              let param = {
-                reportId: id
-              }
-              this.$http
-                .get(Url + "/aimw/report/reportBirdView", {
-                  params: param
-                })
-                .then(resp => {
-                  let datap = resp.data;
-                  if (datap.code == 0) {
-                    this.details.birdView = datap.data.birdView
-                    this.$http
-                      .get(Url + "/aimw/report/reportReviewImgs", {
-                        params: param
-                      })
-                      .then(res1 => {
-                        let data1 = res1.data;
-                        if (data1.code == 0) {
-                          that.imgList = [
-                            {
-                              name: "鸟瞰图",
-                              img: "data:image;base64," + this.details.birdView
-                            },
-                            {
-                              name: "西侧俯身45度视图",
-                              img: "data:image;base64," + data1.data.workView.westView
-                            },
-                            {
-                              name: "东侧俯身45度视图",
-                              img: "data:image;base64," + data1.data.workView.eastView
-                            },
-                            {
-                              name: "操作者视图",
-                              img: "data:image;base64," + data1.data.workView.operatorView
-                            }
-                          ];
-                          that.details = that.justInfo(data.data);
-                          let allAjax = {
-                            row: this.details,
-                            rowr: this.reviewData,
-                            rows: this.sandInfo,
-                            row3: this.imgList,
-                            row4: this.sandUseNumInfoName,
-                            row5: this.sandUseNumInfoNum
-                          }
-                          console.log(allAjax)
-                          setTimeout(() => {
-                            resolve(allAjax)
-                            this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
-                          }, 100);
-                        } else {
-                          that.$message.error(data.msg);
-                        }
-                      })
-                      .catch(res => {
-                        console.log(res);
-                      });
-                  } else {
-                    that.$message.error(data.msg);
-                  }
-                })
-                .catch(res => {
-                  console.log(res);
-                });
-            // }, 500);
-            // setTimeout(() => {
-            
+            that.details = that.justInfo(data.data);
             console.log(that.details)
+            let paramp = {
+              reportId: id
+            }
+            this.$http
+              .get(Url + "/aimw/report/reportBirdView", {
+                params: paramp
+              })
+              .then(resp => {
+                let datap = resp.data;
+                if (datap.code == 0) {
+                  this.details.birdView = datap.data.birdView
+                  this.$http
+                    .get(Url + "/aimw/report/reportReviewImgs", {
+                      params: paramp
+                    })
+                    .then(res1 => {
+                      let data1 = res1.data;
+                      if (data1.code == 0) {
+                        that.imgList = [
+                          {
+                            name: "鸟瞰图",
+                            img: "data:image;base64," + datap.data.birdView
+                          },
+                          {
+                            name: "西侧俯身45度视图",
+                            img: "data:image;base64," + data1.data.workView.westView
+                          },
+                          {
+                            name: "东侧俯身45度视图",
+                            img: "data:image;base64," + data1.data.workView.eastView
+                          },
+                          {
+                            name: "操作者视图",
+                            img: "data:image;base64," + data1.data.workView.operatorView
+                          }
+                        ];
+                        let allAjax = {
+                          row: this.details,
+                          rowr: this.reviewData,
+                          rows: this.sandInfo,
+                          row3: this.imgList,
+                          row4: this.sandUseNumInfoName,
+                          row5: this.sandUseNumInfoNum
+                        }
+                        setTimeout(() => {
+                          resolve(allAjax)
+                          this.loading.setText('正在请求数据 ( ' + count + ' / ' + len + ' )')
+                        }, 500);
+                      } else {
+                        that.$message.error(datap.msg);
+                      }
+                    })
+                    .catch(res1 => {
+                      console.log(res1);
+                    });
+                } else {
+                  that.$message.error(data.msg);
+                }
+              })
+              .catch(resp => {
+                console.log(resp);
+              });
             // }, 0);
           } else {
             that.$message.error(data.msg);
@@ -3086,8 +3152,60 @@ export default {
       });
       setTimeout(() => {
         var theIndex = -1;
-        this.myChartRoses1 = echarts.init(this.$refs.myChartRoses1);
-        this.myChartRoses1.setOption({
+        this.myChartRoses1f = echarts.init(this.$refs.myChartRoses1f);
+        this.myChartRoses1f.setOption({
+          // tooltip: {
+          //   trigger: "axis",
+          //   axisPointer: {
+          //     type: "shadow"
+          //   }
+          // },
+
+          // grid: {
+          //   left: "3%",
+          //   right: "4%",
+          //   top: "30",
+          //   bottom: "3%",
+          //   containLabel: true
+          // },
+          // xAxis: [
+          //   {
+          //     type: "category",
+          //     data: that.sandUseNumInfoName,
+          //     axisTick: {
+          //       show: false,
+          //       alignWithLabel: true
+          //     }
+          //   }
+          // ],
+          // yAxis: [
+          //   {
+          //     type: "value"
+          //   }
+          // ],
+          // series: [
+          //   {
+          //     name: "直接访问",
+          //     type: "bar",
+          //     animation: false,
+          //     barWidth: "16",
+          //     itemStyle: {
+          //       normal: {
+          //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          //           {
+          //             offset: 0,
+          //             color: "#00C2FF"
+          //           },
+          //           {
+          //             offset: 1,
+          //             color: "#0075FF"
+          //           }
+          //         ])
+          //       }
+          //     },
+          //     data: that.sandUseNumInfoNum
+          //   }
+          // ]
           tooltip: {
             trigger: "item",
             formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -3107,7 +3225,7 @@ export default {
                   shadowColor: "rgba(0, 0, 0, 0.5)"
                 },
                 normal: {
-                  color: function(params) {
+                  color: function() {
                     theIndex++;
                     var colorList = [
                       {
@@ -4433,9 +4551,10 @@ export default {
             margin-right: 9px;
           }
           .dt_per6{
-            width: 16px;
-            height: 17px;
-            margin-right: 13px;
+            width: 18px;
+            height: 19px;
+            margin-right: 10px;
+            margin-left: 2px;
           }
           .dt_per7{
             width: 19px;
@@ -4448,22 +4567,15 @@ export default {
             margin-right: 11px;
           }
         }
-         li:nth-child(2n+1){
+        li:nth-child(2n+1){
           width: 45%;
           // padding-right:10px;
         }
         li:nth-child(2n+2){
           width: 55%;
         }
-        // li:nth-child(3n+1){
-        //   width: 290px;
-        //   padding-right:10px;
-        // }
-        // li:nth-child(3n+2){
-        //   width: 270px;
-        // }
         // li:nth-child(3n+3){
-        //   width: 330px;
+        //   width: 40%;
         // }
       }
     }
@@ -4499,7 +4611,7 @@ export default {
     text-align: left;
     margin-left: 78px;
     margin-top: 16px;
-    margin-bottom: 26px;
+    margin-bottom: 0;
     .dtmcl_du {
       display: flex;
       align-items: center;
@@ -4571,7 +4683,7 @@ export default {
     padding: 20px 23px 30px;
     .myChartBox{
       position: relative;
-      margin: 20px auto 40px;
+      margin: 20px auto 0px;
       .myChartTips{
         position: absolute;
         top: 76px;
@@ -4619,7 +4731,7 @@ export default {
       }
     }
     .gp2_li {
-      margin-bottom: 38px;
+      margin-bottom: 16px;
       .gp2l_head {
         display: flex;
         align-items: center;
@@ -5336,18 +5448,18 @@ export default {
             color: #354B70;
             line-height: 36px;
             span {
-              margin-top: 10px;
-              margin-right: 10px;
-              text-align: center;
-              line-height: 16px;
-              width: 16px;
-              height: 16px;
-              background: linear-gradient(177deg, #1becff, #00c6ff);
-              border-radius: 50%;
-              font-size: 12px;
-              font-family: Source Han Sans CN;
-              font-weight: bold;
-              color: #ffffff;
+                margin-top: 10px;
+                margin-right: 10px;
+                text-align: center;
+                line-height: 16px;
+                width: 16px;
+                height: 16px;
+                background: linear-gradient(177deg, #1becff, #00c6ff);
+                border-radius: 50%;
+                font-size: 12px;
+                font-family: Source Han Sans CN;
+                font-weight: bold;
+                color: #ffffff;
             }
             p {
               font-size: 16px;
@@ -5420,6 +5532,7 @@ export default {
             text-align: left;
             padding-left: 0;
             flex: 1;
+
             span {
               color: #ff7e00;
             }
@@ -5475,6 +5588,7 @@ export default {
           }
           ul {
             li {
+              line-height: 39px;
               font-size: 14px;
               font-family: Source Han Sans CN;
               font-weight: 400;
@@ -5663,6 +5777,26 @@ export default {
       height: 8px;
     }
   }
+  .wm_text1{
+    // text-align: right;
+    width: 1060px;
+    padding: 0;
+    margin: 44px auto 60px;
+    word-break: break-all;
+    .wm_note{
+      background: linear-gradient(0deg, rgba(203, 235, 253, 0.1), rgba(161, 204, 250, 0.1));
+      border: 1px solid #769aff;
+      border-radius: 4px;
+      color: #333333;
+      padding: 15px 20px 15px !important;
+      resize: none;
+      font-size: 20px;
+      height: auto;
+      white-space: pre-wrap;
+      text-align: left;
+      max-height: 310px;
+    }
+  }
   .gp5_img_ul{
     display: flex;
     flex-wrap: wrap;
@@ -5693,26 +5827,6 @@ export default {
       }
     }
   }
-  .wm_text1{
-    // text-align: right;
-    width: 1060px;
-    padding: 0;
-    margin: 44px auto 60px;
-    word-break: break-all;
-    .wm_note{
-      background: linear-gradient(0deg, rgba(203, 235, 253, 0.1), rgba(161, 204, 250, 0.1));
-      border: 1px solid #769aff;
-      border-radius: 4px;
-      color: #333333;
-      padding: 15px 20px 15px !important;
-      resize: none;
-      font-size: 20px;
-      height: auto;
-      white-space: pre-wrap;
-      text-align: left;
-      max-height: 310px;
-    }
-  }
 }
 .group_06{
   background: #ffffff;
@@ -5734,7 +5848,7 @@ export default {
       color: #394B6D;
     }
   }
-  .myChartRose1, .myChartZhu1{
+  .myChartRose1f, .myChartZhu1{
     margin: 0 auto;
     width: 1060px;
     height: 400px;
