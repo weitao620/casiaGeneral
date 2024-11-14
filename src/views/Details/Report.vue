@@ -762,7 +762,7 @@
               <div class="wdrj_main">
                 <div class="wdrj_title" >
                   <img src="../../assets/images/news/dot.png" alt="" />
-                  补充说明1
+                  补充说明
                 </div>
                 <div class="wm_text" style="display: flex;align-items: center">
                   <el-input v-if="!assessmentFlag1" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment1" @input="noteChange1" maxlength="300" show-word-limit></el-input>
@@ -1006,7 +1006,7 @@
               <div class="wdrj_main">
                 <div class="wdrj_title" >
                   <img src="../../assets/images/news/dot.png" alt="" />
-                  补充说明2
+                  补充说明
                 </div>
                 <div class="wm_text" style="display: flex;align-items: center">
                   <el-input v-if="!assessmentFlag2" placeholder="请填写" :autosize="{ minRows: 3}" type="textarea" v-model="assessment2" @input="noteChange2" maxlength="300" show-word-limit></el-input>
@@ -2010,7 +2010,7 @@ export default {
           } else {
             this.$message({
               type: "error",
-              message: "补充说明提交失败!"
+              message: "人格分析补充说明提交失败!"
             });
           }
         });
@@ -2720,6 +2720,7 @@ export default {
             }
             this.jjList = jjList0
             data.data.jjList = this.jjList;
+            console.log(data.data.jjList)
             // if (jjList0.length > 0) {
             //   let jjArr = jjList0.sort((a, b) => {
             //     return Number(b.total) - Number(a.total);
@@ -3266,17 +3267,17 @@ export default {
           subtext: '风险',
           textStyle: {
             color: '#333E75',
-            fontSize: nowSize(40),
+            fontSize: nowSize(30),
             fontWeight: 500
           },
           subtextStyle: {
             color: '#FF748A',
-            fontSize: nowSize(25),
+            fontSize: nowSize(20),
             fontWeight: 500
           },
-          itemGap: nowSize(15), // 主副标题距离
+          itemGap: nowSize(10), // 主副标题距离
           left: 'center',
-          top: nowSize(65)
+          top: nowSize(55)
         },
         angleAxis: {
           max: 6, // 满分
@@ -3313,7 +3314,7 @@ export default {
         },
         polar: {
           center: ['50%', '50%'],
-          radius: nowSize(190) // 图形大小
+          radius: nowSize(160) // 图形大小
         },
         series: [
           {
@@ -3330,19 +3331,19 @@ export default {
               rich: {
                 a: {
                   color: 'rgba(51, 62, 117, 1)', // a、b不设置颜色的话，字体颜色就会是饼图颜色的混合色
-                  fontSize: nowSize(40),
+                  fontSize: nowSize(32),
                   fontWeight: '500'
                 },
                 b: {
                   color: 'rgba(117, 122, 144, 1)',
-                  fontSize: nowSize(24)
+                  fontSize: nowSize(20)
                 }
               }
             },
             emphasis: {
               label: {
                 show: true,
-                fontSize: nowSize(30),
+                fontSize: nowSize(24),
                 fontWeight: "bold"
               }
             },
@@ -3372,7 +3373,7 @@ export default {
             ],
             coordinateSystem: 'polar',
             roundCap: true,
-            barWidth: nowSize(20),
+            barWidth: nowSize(18),
             barGap: '-100%', // 两环重叠
             z: 2
           },
@@ -3390,7 +3391,7 @@ export default {
             ],
             coordinateSystem: 'polar',
             roundCap: true,
-            barWidth: nowSize(20),
+            barWidth: nowSize(18),
             barGap: '-100%', // 两环重叠
             z: 1
           }
