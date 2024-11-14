@@ -105,8 +105,10 @@
     </div> -->
     <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
+      <!-- <div class="gp2_top" style="padding: 30px 0">
+        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" /> -->
+      <div class="gp2_top" style="padding: 30px 0 20px">
+        <img style="width: auto;height:110px;" src="../../assets/images/model/m_010.png" alt="" />
         <span class="gp2_t_txt">作品解读</span>
         <span class="gp2_t_eng">Interpretation Of Works</span>
       </div>
@@ -114,8 +116,10 @@
         <p v-html="details.selfDiscription"></p>
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" />
+      <!-- <div class="gp2_top" style="padding: 30px 0">
+        <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" /> -->
+      <div class="gp2_top" style="padding: 30px 0 20px">
+        <img style="width: auto;height:100px;" src="../../assets/images/model/m_012.png" alt="" />
         <span class="gp2_t_txt">本次概况</span>
         <span class="gp2_t_eng">This Overview</span>
       </div>
@@ -315,11 +319,11 @@
     <div class="table-style group_02 group_03">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:132px;height:132px;" src="../../assets/images/model/m_007.png" alt="" />
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
         <span class="gp2_t_txt">维度分析</span>
         <span class="gp2_t_eng">Dimensional Analysis</span>
       </div>
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[0].flag == 1 ? 'block' : 'none', margin: '0 auto 40px'}">
+      <div class="gp3_box" :style="{display: details.sysList && details.sysList[0].flag == 1 ? 'block' : 'none', margin: '0 auto 0px'}">
         <div class="dtms_box" v-if="details.sysList">
           <div class="dtmsb_tle" :style="{ background: details.sysList[0].bg }">
             <h3>{{ details.sysList[0].title }}</h3>
@@ -432,6 +436,86 @@
             </p>
           </div>
         </div>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[0]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="table-style group_02 group_03">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <div class="gp2_top gp3_top">
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
+        <span class="gp2_t_txt">维度分析</span>
+        <span class="gp2_t_eng">Dimensional Analysis</span>
       </div>
       <div class="gp3_box" :style="{display: details.sysList && details.sysList[1].flag == 1 ? 'block' : 'none', margin: details.sysList && details.sysList[0].flag == 1 ? '0 auto 0' : '0 auto 40px'}">
         <div class="dtms_box" v-if="details.sysList">
@@ -545,11 +629,88 @@
             </p>
           </div>
         </div>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[1]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      
     </div>
-    <div class="table-style  group_02 group_03 group_04">
+    <div class="table-style  group_02 group_03">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '80px auto 0'}">
+      <div class="gp2_top gp3_top">
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
+        <span class="gp2_t_txt">维度分析</span>
+        <span class="gp2_t_eng">Dimensional Analysis</span>
+      </div>
+      <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '0px auto 0'}">
         <div class="dtms_box" v-if="details.sysList">
           <div class="dtmsb_tle" :style="{ background: details.sysList[2].bg }">
             <h3>{{ details.sysList[2].title }}</h3>
@@ -661,8 +822,80 @@
             </p>
           </div>
         </div>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[2]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="guide_box" v-if="details.suggestion && details.suggestion.length == 1">
+      
+      <!-- <div class="guide_box" v-if="details.suggestion && details.suggestion.length == 1">
         <div class="gb_main" style="margin-top:40px">
           <div class="dtmcl_tle">
             <img src="../../assets/images/report/guide_i.png" alt="" />
@@ -678,7 +911,6 @@
               <div v-if="Array.isArray(item)">
                 <ul>
                   <li v-for="(items, indexs) in item" :key="indexs">
-                    <!-- <span>{{ indexs + 1 }}</span> -->
                     <p>
                       {{ items }}
                     </p>
@@ -688,113 +920,24 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 1">
+    <!-- <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
+      <div class="gp2_top gp3_top">
         <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
         <span class="gp2_t_txt">指导建议</span>
         <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
-      <div class="guide_box" style="margin-top:40px">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <!-- <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <div v-if="index < 4">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <div v-for="(itemt, indext) in item" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
-                        </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                            <p v-if="!Array.isArray(items)">
-                              {{ items }}
-                            </p>
-                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(items, indexs) in itemp" :key="indexs">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
-                              <p>
-                                {{ items }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <!-- <span>1</span> -->
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 4">
+      
+    </div> -->
+    <!-- <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 4">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
+      <div class="gp2_top gp3_top">
         <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
         <span class="gp2_t_txt">指导建议</span>
         <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
+      </div>
       <div class="guide_box" style="margin-top:40px">
         <div class="gb_main">
           <div class="dtmcl_tle">
@@ -813,7 +956,7 @@
                   <div v-for="(itemt, indext) in item" :key="indext">
                     <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                       <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                        <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
                           {{ itemp }}
                         </div>
                         <ul v-if="Array.isArray(itemp)">
@@ -837,7 +980,7 @@
                     <div v-else>
                       <div v-if="indext == 0">
                         <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
@@ -850,7 +993,6 @@
                           </ul>
                           <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                             <li >
-                              <!-- <span>1</span> -->
                               <p>
                                 {{ itemp }}
                               </p>
@@ -866,11 +1008,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
+        <img style="width:auto;height:100px;" src="../../assets/images/model/renshenwx.png" alt="" />
+      <!-- <div class="gp2_top gp3_top">
+        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" /> -->
         <span class="gp2_t_txt">人身危险性分析</span>
         <span class="gp2_t_eng">Personal risk analysis</span>
       </div>
@@ -971,7 +1115,7 @@
                 </li>
               </ul>
             </div>
-            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
+            <div class="wdrj_suger" style="margin-top:10px" v-if="item.suggestDim != ''">
               <div class="wdrjs_title">
                 <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
               </div>
@@ -1012,7 +1156,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1025,7 +1169,7 @@
                               </p>
                               <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
                                 <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
                                   <p>{{itemf}}</p>
                                 </div>
                               </div>
@@ -1036,12 +1180,12 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                               <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexv + 1 }}</span>
                                 <p>
                                   {{ itemv }}
                                 </p>
@@ -1070,12 +1214,14 @@
     </div>
     <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <!-- <div class="gp2_top gp3_top">
+        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" /> -->
       <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
+        <img style="width:auto;height:100px;" src="../../assets/images/model/renshenwx.png" alt="" />
         <span class="gp2_t_txt">人身危险性分析</span>
         <span class="gp2_t_eng">Personal risk analysis</span>
       </div>
-      <div class="gp3_box gp3_box1" style="margin-top:40px;margin-bottom:40px;" v-if="details.sysList2">
+      <div class="gp3_box gp3_box1" style="margin-bottom:40px;" v-if="details.sysList2">
         <div v-for="(item, index) in details.sysList2" :key="item.title">
           <div v-if="index == 1" class="wdrjs_li wdrj_main" :style="{display:item.flag == 1 ? 'block' : 'none'}">
           
@@ -1173,7 +1319,7 @@
               </ul>
             </div>
             <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
-              <div class="wdrjs_title">
+              <div class="wdrjs_title" style="margin-top: 10px">
                 <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
               </div>
               <!-- <ul class="wdrjs_uls">
@@ -1213,7 +1359,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1226,7 +1372,7 @@
                               </p>
                               <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
                                 <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
                                   <p>{{itemf}}</p>
                                 </div>
                               </div>
@@ -1237,12 +1383,12 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                               <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexv + 1 }}</span>
                                 <p>
                                   {{ itemv }}
                                 </p>
@@ -1271,8 +1417,10 @@
     </div>
     <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top" style="padding:30px 0">
-        <img style="width:128px;height:116px;" src="../../assets/images/model/rengejd.png" alt="" />
+      <!-- <div class="gp2_top gp3_top" style="padding:20px 0">
+        <img style="width:128px;height:116px;" src="../../assets/images/model/rengejd.png" alt="" /> -->
+      <div class="gp2_top gp3_top" style="padding:30px 0 20px">
+        <img style="width:auto;height:100px;" src="../../assets/images/model/rengejd.png" alt="" />
         <span class="gp2_t_txt">人格解读</span>
         <span class="gp2_t_eng">Interpretation of personality</span>
       </div>
@@ -1461,8 +1609,10 @@
     </div>
     <div class="table-style group_02 group_03 group_04 group_05">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <!-- <div class="gp2_top gp3_top">
+        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" /> -->
       <div class="gp2_top gp3_top">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
+        <img style="width: auto;height:100px;" src="../../assets/images/model/m_010.png" alt="" />
         <span class="gp2_t_txt">附录</span>
         <span class="gp2_t_eng">Appendix</span>
       </div>
@@ -1614,8 +1764,10 @@
     </div>
     <div class="table-style group_02" style="background:#ffffff">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding-top:96px;">
-        <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
+      <!-- <div class="gp2_top" style="padding-top:96px;">
+        <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" /> -->
+      <div class="gp2_top" style="padding-top:80px;">
+        <img style="width:auto;height:100px;" src="../../assets/images/model/m_001.png" alt="" />
         <span class="gp2_t_txt">关于“AI心世界”</span>
         <span class="gp2_t_eng">About AI Mental World</span>
       </div>
@@ -3527,26 +3679,26 @@ export default {
 .group_03{
   background: #F2FAFF;
   .gp3_top{
-   padding-top: 71px;
+   padding: 30px 0 20px;
   }
   .gp3_box{
     width: 1060px;
-    min-height: 632px;
+    // min-height: 620px;
     margin: 0 auto;
     background: #FFFFFF;
     box-shadow: 0px 0px 65px 16px rgba(69, 85, 119, 0.11);
     border-radius: 4px;
     .dtms_box {
-      padding-bottom: 10px;
+      padding-bottom: 0px;
       .dtmsb_tle {
-        height: 180px;
+        height: 164px;
         h3 {
           font-size: 22px;
           font-family: Source Han Sans CN;
           font-weight: bold;
           color: #FFFFFF;
-          padding-top: 24px;
-          padding-bottom: 9px;
+          padding-top: 16px;
+          padding-bottom: 6px;
           line-height: 1;
           margin: 0;
         }
@@ -3558,7 +3710,7 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #ffffff;
-          margin-top: 15px;
+          margin-top: 10px;
           .dtt_img {
             position: relative;
             display: flex;
@@ -3607,7 +3759,7 @@ export default {
       .dtmsb_tar {
         width: 525px;
         height: 226px;
-        margin: 20px auto 40px;
+        margin: 12px auto 12px;
         position: relative;
         .dtmsb_ulc {
           position: absolute;
@@ -3788,16 +3940,16 @@ export default {
         }
       }
       .dtmcr_bts {
-        padding: 0 58px;
-        margin-bottom: 20px;
+        padding: 0 35px 10px;
+        margin-bottom: 0px;
         .db_img {
           display: flex;
           align-items: center;
-          font-size: 18px;
+          font-size: 22px;
           font-family: PingFang SC;
           font-weight: 400;
           color: #006cff;
-          margin-bottom: 10px;
+          margin-bottom: 4px;
           img {
             width: 28px;
             height: 28px;
@@ -3806,19 +3958,19 @@ export default {
         }
         p {
           text-align: left;
-          font-size: 16px;
+          font-size: 20px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          line-height: 24px;
-          margin-bottom: 10px;
+          line-height: 30px;
+          margin-bottom: 0px;
           color: #354b70;
           display: flex;
           align-items: flex-start;
           img{
             width: 4px;
-            height: 18px;
-            margin-top: 3px;
-            margin-right: 10px;
+            height: 20px;
+            margin-top: 6px;
+            margin-right: 8px;
           }
           span {
             margin-top: 5px;
@@ -3839,7 +3991,7 @@ export default {
       .wdrj_title {
         display: flex;
         align-items: center;
-        font-size: 22px;
+        font-size: 24px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: #354b70;
@@ -3853,7 +4005,7 @@ export default {
       .dtmsb_tar {
         width: 825px;
         height: 246px;
-        margin: -30px auto 30px;
+        margin: -30px auto 20px;
         position: relative;
         .top_top {
           position: absolute;
@@ -4057,7 +4209,7 @@ export default {
         }
       }
       .wdrj_suger {
-        margin-top: 50px;
+        margin-top: 20px;
         text-align: left;
         .wdrjs_uls{
           padding-left: 10px;
@@ -4067,27 +4219,30 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354B70;
-            line-height: 36px;
+            line-height: 30px;
             span {
-                margin-top: 10px;
-                margin-right: 10px;
+                margin-top: 6px;
+                margin-right: 6px;
                 text-align: center;
-                line-height: 16px;
-                width: 16px;
-                height: 16px;
+                line-height: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 20px;
+                height: 20px;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 12px;
+                font-size: 14px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
             }
             p {
-              font-size: 16px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354B70;
-              line-height: 36px;
+              line-height: 30px;
               flex: 1
             }
             img{
@@ -4099,7 +4254,7 @@ export default {
           }
         }
         .wdrjs_title {
-          font-size: 18px;
+          font-size: 22px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #354b70;
@@ -4109,7 +4264,7 @@ export default {
           margin-left: 3px;
           img {
             width: 4px;
-            height: 16px;
+            height: 20px;
             margin-right: 6px;
           }
           .wdrjst_res {
@@ -4122,7 +4277,7 @@ export default {
               margin-left: 20px;
             }
             .wdrjstr_txt {
-              font-size: 18px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #FE5FB8;
@@ -4145,7 +4300,7 @@ export default {
             margin-top: 10px;
           }
           p {
-            font-size: 16px;
+            font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354B70;
@@ -4171,7 +4326,7 @@ export default {
             margin-right: 6px;
           }
           span {
-            font-size: 18px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
@@ -4193,14 +4348,16 @@ export default {
           text-align: left;
           .pd24 {
             padding-left: 24px;
-            font-size: 16px;
+            font-size: 20px;
           }
           div {
             line-height: 39px;
-            font-size: 18px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
+            display: flex;
+            align-items: center;
             img {
               width: 16px;
               height: 12px;
@@ -4210,7 +4367,7 @@ export default {
           ul {
             li {
               line-height: 39px;
-              font-size: 14px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354b70;
@@ -4238,10 +4395,10 @@ export default {
         }
         .gb_contain {
           text-align: left;
-          padding: 10px 25px;
+          padding: 0px 25px;
           p {
             padding: 6px 0 6px;
-            font-size: 16px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
@@ -4259,19 +4416,19 @@ export default {
               display: flex;
               line-height: 26px;
               span {
-                margin-top: 4px;
-                margin-right: 10px;
+                margin-top: 6px;
+                margin-right: 6px;
                 text-align: center;
-                line-height: 10px;
-                width: 16px;
-                height: 16px;
+                line-height: 20px;
+                width: 20px;
+                height: 20px;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 12px;
+                font-size: 14px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
-                border: 1px solid #00c6ff;
+                // border: 1px solid #00c6ff;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -4281,6 +4438,7 @@ export default {
                 flex: 1;
                 display: flex;
                 flex-wrap: wrap;
+                line-height: 30px;
               }
             }
           }
@@ -4298,10 +4456,95 @@ export default {
   .gp2_main{
     padding: 44px 29px;
   }
+  .guide_box {
+    // margin-bottom: 104px;
+    .gb_main {
+      width: 1060px;
+      margin: 0 auto;
+      border-radius: 4px;
+      background: #ffffff;
+      overflow: hidden;
+      padding: 0 10px;
+      .dtmcl_tle {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        // background: linear-gradient(
+        //   90deg,
+        //   rgba(5, 157, 255, 0.7),
+        //   rgba(49, 204, 255, 0.7)
+        // );
+        // background: linear-gradient(
+        //   90deg,
+        //   rgba(5, 157, 255, 0.7),
+        //   rgba(49, 204, 255, 0.7)
+        // );
+        font-size: 22px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: #006cff;
+        img {
+          width: 30px;
+          height: 29px;
+          margin-right: 10px;
+          margin-left: 24px;
+        }
+      }
+      .gb_contain {
+        text-align: left;
+        padding: 0px 25px 20px;
+        p {
+          padding: 6px 0 6px;
+          font-size: 20px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #354b70;
+          display: flex;
+          align-items: flex-start;
+          img{
+            width: 4px;
+            height: 20px;
+            margin-top: 4px;
+            margin-right:6px;
+          }
+        }
+        ul {
+          li {
+            display: flex;
+            line-height: 30px;
+            span {
+              margin-top: 4px;
+                margin-right: 6px;
+                text-align: center;
+                line-height: 20px;
+                width: 20px;
+                height: 20px;
+                background: linear-gradient(177deg, #1becff, #00c6ff);
+                border-radius: 50%;
+                font-size: 14px;
+                font-family: Source Han Sans CN;
+                font-weight: bold;
+                color: #ffffff;
+                // border: 1px solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            p {
+              padding: 0;
+              flex: 1;
+              display: flex;
+              flex-wrap: wrap;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .group_04{
   .guide_box {
-    margin-bottom: 104px;
+    // margin-bottom: 104px;
     .gb_main {
       width: 1060px;
       margin: 0 auto;

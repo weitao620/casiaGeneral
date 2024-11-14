@@ -106,8 +106,8 @@
     </div> -->
     <div class="table-style group_02">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
+      <div class="gp2_top" style="padding: 30px 0 20px">
+        <img style="width: auto;height:110px;" src="../../assets/images/model/m_010.png" alt="" />
         <span class="gp2_t_txt">作品解读</span>
         <span class="gp2_t_eng">Interpretation Of Works</span>
       </div>
@@ -115,8 +115,8 @@
         <p v-html="details.selfDiscription"></p>
         <p style="margin-bottom:0" v-html="details.satisfyArea"></p>
       </div>
-      <div class="gp2_top" style="padding: 30px 0">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/m_012.png" alt="" />
+      <div class="gp2_top" style="padding: 30px 0 20px">
+        <img style="width: auto;height:100px;" src="../../assets/images/model/m_012.png" alt="" />
         <span class="gp2_t_txt">本次概况</span>
         <span class="gp2_t_eng">This Overview</span>
       </div>
@@ -316,11 +316,11 @@
     <div class="table-style group_02 group_03">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:132px;height:132px;" src="../../assets/images/model/m_007.png" alt="" />
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
         <span class="gp2_t_txt">维度分析</span>
         <span class="gp2_t_eng">Dimensional Analysis</span>
       </div>
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[0].flag == 1 ? 'block' : 'none', margin: '0 auto 40px'}">
+      <div class="gp3_box" :style="{display: details.sysList && details.sysList[0].flag == 1 ? 'block' : 'none', margin: '0 auto 0px'}">
         <div class="dtms_box" v-if="details.sysList">
           <div class="dtmsb_tle" :style="{ background: details.sysList[0].bg }">
             <h3>{{ details.sysList[0].title }}</h3>
@@ -376,6 +376,7 @@
             </ul> -->
           </div>
           <div class="dtmcr_bts">
+            <!-- :style="{ color: details.sysList[0].txtColor }" -->
             <div class="db_img">
               <img
                 src="../../assets/images/report/sys1.png"
@@ -432,6 +433,86 @@
             </p>
           </div>
         </div>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[0]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="table-style group_02 group_03">
+      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
+      <div class="gp2_top gp3_top">
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
+        <span class="gp2_t_txt">维度分析</span>
+        <span class="gp2_t_eng">Dimensional Analysis</span>
       </div>
       <div class="gp3_box" :style="{display: details.sysList && details.sysList[1].flag == 1 ? 'block' : 'none', margin: details.sysList && details.sysList[0].flag == 1 ? '0 auto 0' : '0 auto 40px'}">
         <div class="dtms_box" v-if="details.sysList">
@@ -545,11 +626,88 @@
             </p>
           </div>
         </div>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[1]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      
     </div>
-    <div class="table-style  group_02 group_03 group_04">
+    <div class="table-style  group_02 group_03">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '80px auto 0'}">
+      <div class="gp2_top gp3_top">
+        <img style="width:100px;height:100px;" src="../../assets/images/model/m_007.png" alt="" />
+        <span class="gp2_t_txt">维度分析</span>
+        <span class="gp2_t_eng">Dimensional Analysis</span>
+      </div>
+      <div class="gp3_box" :style="{display: details.sysList && details.sysList[2].flag == 1 ? 'block' : 'none', margin: '0px auto 0'}">
         <div class="dtms_box" v-if="details.sysList">
           <div class="dtmsb_tle" :style="{ background: details.sysList[2].bg }">
             <h3>{{ details.sysList[2].title }}</h3>
@@ -661,29 +819,73 @@
             </p>
           </div>
         </div>
-      </div>
-      <div class="guide_box" v-if="details.suggestion && details.suggestion.length == 1">
-        <div class="gb_main" style="margin-top:40px">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <!-- <span>{{ indexs + 1 }}</span> -->
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
+        <div class="guide_box">
+          <div class="gb_main">
+            <div class="dtmcl_tle">
+              <img src="../../assets/images/report/guide_i.png" alt="" />
+              <span>指导建议</span>
+            </div>
+            <div class="gb_contain" v-if="details.suggestionArr">
+              <div v-for="(item, index) in details.suggestionArr[2]" :key="index">
+                <div v-if="index < 4">
+                  <p v-if="!Array.isArray(item)">
+                    <img src="../../assets/images/report/icon0.png" alt="" /><span
+                      v-html="item"
+                    ></span>
+                  </p>
+                  <div v-if="Array.isArray(item)">
+                    <div v-for="(itemt, indext) in item" :key="indext">
+                      <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                        <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
+                            {{ itemp }}
+                          </div>
+                          <ul v-if="Array.isArray(itemp)">
+                            <li v-for="(items, indexs) in itemp" :key="indexs">
+                              <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                              <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                              <p v-if="!Array.isArray(items)">
+                                {{ items }}
+                              </p>
+                              <div style="padding-left:20px;" v-if="Array.isArray(items)">
+                                <div style="display: flex;align-items: center" v-for="(itemf, indexf) in items" :key="indexf">
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;margin-top: 0" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <p>{{itemf}}</p>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <div v-if="indext == 0">
+                          <div v-for="(itemp, indexp) in item" :key="indexp">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                              {{ itemp }}
+                            </div>
+                            <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li v-for="(items, indexs) in itemp" :key="indexs">
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexs + 1 }}</span>
+                                <p>
+                                  {{ items }}
+                                </p>
+                              </li>
+                            </ul>
+                            <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                              <li >
+                                <!-- <span>1</span> -->
+                                <p>
+                                  {{ itemp }}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -691,187 +893,12 @@
       </div>
       
     </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 1">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
-        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
-        <span class="gp2_t_txt">指导建议</span>
-        <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
-      <div class="guide_box" style="margin-top:40px">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <!-- <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <p v-if="!Array.isArray(item)">
-                <img src="../../assets/images/report/icon0.png" alt="" /><span
-                  v-html="item"
-                ></span>
-              </p>
-              <div v-if="Array.isArray(item)">
-                <ul>
-                  <li v-for="(items, indexs) in item" :key="indexs">
-                    <span>{{ indexs + 1 }}</span>
-                    <p>
-                      {{ items }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <div v-if="index < 4">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <div v-for="(itemt, indext) in item" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
-                        </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                            <p v-if="!Array.isArray(items)">
-                              {{ items }}
-                            </p>
-                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(items, indexs) in itemp" :key="indexs">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
-                              <p>
-                                {{ items }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <!-- <span>1</span> -->
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="table-style  group_02 group_03 group_04" v-if="details.suggestion && details.suggestion.length > 4">
-      <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <!-- <div class="gp2_top gp3_top">
-        <img style="width:129px;height:146px;" src="../../assets/images/model/m_009.png" alt="" />
-        <span class="gp2_t_txt">指导建议</span>
-        <span class="gp2_t_eng">Guidance Recommendations</span>
-      </div> -->
-      <div class="guide_box" style="margin-top:40px">
-        <div class="gb_main">
-          <div class="dtmcl_tle">
-            <img src="../../assets/images/report/guide_i.png" alt="" />
-            <span>指导建议</span>
-          </div>
-          <div class="gb_contain">
-            <div v-for="(item, index) in details.suggestion" :key="index">
-              <div v-if="index > 3">
-                <p v-if="!Array.isArray(item)">
-                  <img src="../../assets/images/report/icon0.png" alt="" /><span
-                    v-html="item"
-                  ></span>
-                </p>
-                <div v-if="Array.isArray(item)">
-                  <div v-for="(itemt, indext) in item" :key="indext">
-                    <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
-                      <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                        <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
-                          {{ itemp }}
-                        </div>
-                        <ul v-if="Array.isArray(itemp)">
-                          <li v-for="(items, indexs) in itemp" :key="indexs">
-                            <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
-                            <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
-                            <p v-if="!Array.isArray(items)">
-                              {{ items }}
-                            </p>
-                            <div style="padding-left:20px;" v-if="Array.isArray(items)">
-                              <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
-                                <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
-                                <p>{{itemf}}</p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div v-else>
-                      <div v-if="indext == 0">
-                        <div v-for="(itemp, indexp) in item" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
-                            {{ itemp }}
-                          </div>
-                          <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li v-for="(items, indexs) in itemp" :key="indexs">
-                              <span style="background: transparent;color: #00c6ff;">{{ indexs + 1 }}</span>
-                              <p>
-                                {{ items }}
-                              </p>
-                            </li>
-                          </ul>
-                          <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
-                            <li >
-                              <!-- <span>1</span> -->
-                              <p>
-                                {{ itemp }}
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
+    
     <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
+        <img style="width: auto;height:100px;" src="../../assets/images/model/renshenwx.png" alt="" />
         <span class="gp2_t_txt">人身危险性分析</span>
         <span class="gp2_t_eng">Personal risk analysis</span>
       </div>
@@ -972,7 +999,7 @@
                 </li>
               </ul>
             </div>
-            <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
+            <div class="wdrj_suger" style="margin-top:10px" v-if="item.suggestDim != ''">
               <div class="wdrjs_title">
                 <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
               </div>
@@ -1013,7 +1040,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1026,7 +1053,7 @@
                               </p>
                               <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
                                 <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
                                   <p>{{itemf}}</p>
                                 </div>
                               </div>
@@ -1037,12 +1064,12 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                               <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexv + 1 }}</span>
                                 <p>
                                   {{ itemv }}
                                 </p>
@@ -1072,7 +1099,7 @@
     <div class="table-style group_02 group_03" v-show="details.suicideFlag == 1 || details.violenceFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:128px;height:117px;" src="../../assets/images/model/renshenwx.png" alt="" />
+        <img style="width: auto;height:100px;" src="../../assets/images/model/renshenwx.png" alt="" />
         <span class="gp2_t_txt">人身危险性分析</span>
         <span class="gp2_t_eng">Personal risk analysis</span>
       </div>
@@ -1174,7 +1201,7 @@
               </ul>
             </div>
             <div class="wdrj_suger" style="margin-top:0" v-if="item.suggestDim != ''">
-              <div class="wdrjs_title">
+              <div class="wdrjs_title" style="margin-top: 10px">
                 <img src="../../assets/images/report/jy_001.png" alt="" />指导建议
               </div>
               <!-- <ul class="wdrjs_uls">
@@ -1214,7 +1241,7 @@
                     <div v-for="(itemt, indext) in items" :key="indext">
                       <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
                         <div v-for="(itemp, indexp) in itemt" :key="indexp">
-                          <div class="color-blue" style="padding: 0 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp)">
+                          <div class="color-blue" style="padding: 0 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp)">
                             {{ itemp }}
                           </div>
                           <ul v-if="Array.isArray(itemp)">
@@ -1227,7 +1254,7 @@
                               </p>
                               <div style="padding-left:20px;" v-if="Array.isArray(itemv)">
                                 <div style="display: flex;" v-for="(itemf, indexf) in itemv" :key="indexf">
-                                  <span style="background: transparent;color: #00c6ff;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                  <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
                                   <p>{{itemf}}</p>
                                 </div>
                               </div>
@@ -1238,12 +1265,12 @@
                       <div v-else>
                         <div v-if="indext == 0">
                           <div v-for="(itemp, indexp) in items" :key="indexp">
-                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 16px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                            <div class="color-blue" style="padding: 0px 0 4px;font-size: 20px;" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
                               {{ itemp }}
                             </div>
                             <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
                               <li v-for="(itemv, indexv) in itemp" :key="indexv">
-                                <span style="background: transparent;color: #00c6ff;">{{ indexv + 1 }}</span>
+                                <span style="background: transparent;color: #00c6ff;border: 1px solid #00c6ff;width: 18px;height: 18px;">{{ indexv + 1 }}</span>
                                 <p>
                                   {{ itemv }}
                                 </p>
@@ -1272,8 +1299,8 @@
     </div>
     <div class="table-style group_02 group_03" v-show="details.personalityFlag == 1">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top gp3_top" style="padding:30px 0">
-        <img style="width:128px;height:116px;" src="../../assets/images/model/rengejd.png" alt="" />
+      <div class="gp2_top gp3_top" style="padding:30px 0 20px">
+        <img style="width: auto;height:100px;" src="../../assets/images/model/rengejd.png" alt="" />
         <span class="gp2_t_txt">人格解读</span>
         <span class="gp2_t_eng">Interpretation of personality</span>
       </div>
@@ -1463,7 +1490,7 @@
     <div class="table-style group_02 group_03 group_04 group_05">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
       <div class="gp2_top gp3_top">
-        <img style="width:130px;height:135px;" src="../../assets/images/model/m_010.png" alt="" />
+        <img style="width: auto;height:100px;" src="../../assets/images/model/m_010.png" alt="" />
         <span class="gp2_t_txt">附录</span>
         <span class="gp2_t_eng">Appendix</span>
       </div>
@@ -1545,7 +1572,6 @@
         <span>沙具使用数量分布</span>
       </div>
       <div class="myChartZhu1" ref="myChartZhus1" id="myChartZhus1"></div>
-      
       <div class="dtmt_tle" style="margin:40px auto 10px">
         <label></label>
         <span>沙具使用时长占比</span>
@@ -1617,8 +1643,8 @@
     </div>
     <div class="table-style group_02" style="background:#ffffff">
       <img class="shui_bg" src="../../assets/images/model/shui.png" alt="" />
-      <div class="gp2_top" style="padding-top:96px;">
-        <img style="width:132px;height:127px;" src="../../assets/images/model/m_001.png" alt="" />
+      <div class="gp2_top" style="padding-top:80px;">
+        <img style="width: auto;height:100px;" src="../../assets/images/model/m_001.png" alt="" />
         <span class="gp2_t_txt">关于“AI心世界”</span>
         <span class="gp2_t_eng">About AI Mental World</span>
       </div>
@@ -2390,7 +2416,7 @@ export default {
             console.log(data.data.suggestion)
             if (data.data.suggestion && data.data.suggestion != '') {
               data.data.suggestion = data.data.suggestion.split("|||");
-              console.log(data.data.suggestion)
+              // console.log(data.data.suggestion)
               for (let i in data.data.suggestion) {
                 if (data.data.suggestion[i].indexOf("&&") != -1) {
                   data.data.suggestion[i] = data.data.suggestion[i].split("&&")
@@ -2398,13 +2424,24 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              // console.log(data.data.suggestion[i][j][k][m])
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2419,13 +2456,24 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              // console.log(data.data.suggestion[i][j][k][m])
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2446,9 +2494,45 @@ export default {
                 }
               }
             }
+            console.log(data.data.suggestion)
+            let suggestionArr = [
+              [],
+              [],
+              []
+            ]
+            if (data.data.suggestion.length == 1 && data.data.suggestion[0][0].indexOf("测评提示") != -1) {
+              suggestionArr = [
+                [data.data.suggestion[0][0]],
+                [data.data.suggestion[0][0]],
+                [data.data.suggestion[0][0]]
+              ]
+            }
+            if (data.data.suggestion.length > 1) {
+              if (data.data.suggestion.length == 2) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。'],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+                ]
+              }
+              if (data.data.suggestion.length == 4) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  [data.data.suggestion[2],data.data.suggestion[3]],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+                ]
+              }
+              if (data.data.suggestion.length == 6) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  [data.data.suggestion[2],data.data.suggestion[3]],
+                  [data.data.suggestion[4],data.data.suggestion[5]],
+                ]
+              }
+            }
             if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
               data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-              console.log(data.data.suggestionSuicide)
+              // console.log(data.data.suggestionSuicide)
               for (let i in data.data.suggestionSuicide) {
                 if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
                   data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
@@ -2456,13 +2540,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2477,13 +2572,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2515,13 +2621,24 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2536,13 +2653,24 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2794,6 +2922,29 @@ export default {
               else return 0;
             });
             data.data.sysList = this.sysList;
+            for (let i in data.data.sysList) {
+              // console.log(data.data.sysList[i].title)
+              for (let j in suggestionArr) {
+
+                // console.log(JSON.stringify(suggestionArr[j]))
+                // console.log(JSON.stringify(suggestionArr[j]).substring(0,50))
+                // console.log(JSON.stringify(suggestionArr[j]).substring(0,50).indexOf(data.data.sysList[i].title))
+                if (JSON.stringify(suggestionArr[j]).substring(0,50).indexOf(data.data.sysList[i].title) != -1) {
+                  data.data.sysList[i].suggArr = suggestionArr[j]
+                }
+              }
+            }
+            console.log( data.data.sysList)
+            let sArrs = []
+            for (let i in data.data.sysList) {
+              if (!data.data.sysList[i].suggArr) {
+                data.data.sysList[i].suggArr = ['测评提示，该受测者本维度心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+              }
+              sArrs.push(data.data.sysList[i].suggArr)
+            }
+            data.data.suggestionArr = sArrs
+            console.log(data.data.suggestion)
+            console.log(data.data.suggestionArr)
             let sysList02 = [
               {
                 title: "自我伤害",
@@ -3154,234 +3305,234 @@ export default {
         var theIndex = -1;
         this.myChartRoses1f = echarts.init(this.$refs.myChartRoses1f);
         this.myChartRoses1f.setOption({
-          // tooltip: {
-          //   trigger: "axis",
-          //   axisPointer: {
-          //     type: "shadow"
-          //   }
-          // },
-
-          // grid: {
-          //   left: "3%",
-          //   right: "4%",
-          //   top: "30",
-          //   bottom: "3%",
-          //   containLabel: true
-          // },
-          // xAxis: [
-          //   {
-          //     type: "category",
-          //     data: that.sandUseNumInfoName,
-          //     axisTick: {
-          //       show: false,
-          //       alignWithLabel: true
-          //     }
-          //   }
-          // ],
-          // yAxis: [
-          //   {
-          //     type: "value"
-          //   }
-          // ],
-          // series: [
-          //   {
-          //     name: "直接访问",
-          //     type: "bar",
-          //     animation: false,
-          //     barWidth: "16",
-          //     itemStyle: {
-          //       normal: {
-          //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          //           {
-          //             offset: 0,
-          //             color: "#00C2FF"
-          //           },
-          //           {
-          //             offset: 1,
-          //             color: "#0075FF"
-          //           }
-          //         ])
-          //       }
-          //     },
-          //     data: that.sandUseNumInfoNum
-          //   }
-          // ]
           tooltip: {
-            trigger: "item",
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+            trigger: "axis",
+            axisPointer: {
+              type: "shadow"
+            }
           },
+
+          grid: {
+            left: "3%",
+            right: "4%",
+            top: "30",
+            bottom: "3%",
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: "category",
+              data: that.sandUseNumInfoName,
+              axisTick: {
+                show: false,
+                alignWithLabel: true
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: "value"
+            }
+          ],
           series: [
             {
-              name: "面积模式",
-              type: "pie",
+              name: "直接访问",
+              type: "bar",
               animation: false,
-              radius: [30, "70%"],
-              center: ["50%", "50%"],
-              roseType: "area",
+              barWidth: "16",
               itemStyle: {
-                emphasis: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: "rgba(0, 0, 0, 0.5)"
-                },
                 normal: {
-                  color: function() {
-                    theIndex++;
-                    var colorList = [
-                      {
-                        c1: "#97CDFF",
-                        c2: "#C4ECFF"
-                      },
-                      {
-                        c1: "#FFD356",
-                        c2: "#FFEB8F"
-                      },
-                      {
-                        c1: "#FE8986",
-                        c2: "#FEAD7E"
-                      },
-                      {
-                        c1: "#FC4FB0",
-                        c2: "#FD76DA"
-                      },
-                      {
-                        c1: "#5FF0F9",
-                        c2: "#1BF6CA"
-                      },
-                      {
-                        c1: "#00B6F0",
-                        c2: "#00EAFE"
-                      },
-                      {
-                        c1: "#7279FF",
-                        c2: "#BABFFF"
-                      },
-                      {
-                        c1: "#0075FF",
-                        c2: "#00C2FF"
-                      }
-                    ];
-                    var userIndex = theIndex % colorList.length;
-                    return new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                      {
-                        offset: 0,
-                        color: colorList[userIndex].c1
-                      },
-                      {
-                        offset: 1,
-                        color: colorList[userIndex].c2
-                      }
-                    ]);
-                  }
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#00C2FF"
+                    },
+                    {
+                      offset: 1,
+                      color: "#0075FF"
+                    }
+                  ])
                 }
               },
-              labelLine: {
-                normal: {
-                  smooth: 0,
-                  length: 10,
-                  length2: 50
-                }
-              },
-              data: [
-                {
-                  value: that.reviewData.sandUseTimeInfo[0].num,
-                  name: that.reviewData.sandUseTimeInfo[0].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#79C2FF"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[1].num,
-                  name: that.reviewData.sandUseTimeInfo[1].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#FBD356"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[2].num,
-                  name: that.reviewData.sandUseTimeInfo[2].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#FF9E8C"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[3].num,
-                  name: that.reviewData.sandUseTimeInfo[3].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#FE5FB8"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[4].num,
-                  name: that.reviewData.sandUseTimeInfo[4].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#40E6F8"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[5].num,
-                  name: that.reviewData.sandUseTimeInfo[5].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#00C0FF"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[6].num,
-                  name: that.reviewData.sandUseTimeInfo[6].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#6671FF"
-                      }
-                    }
-                  }
-                },
-                {
-                  value: that.reviewData.sandUseTimeInfo[7].num,
-                  name: that.reviewData.sandUseTimeInfo[7].sandTypeName,
-                  label: {
-                    formatter: "{b} {a|{d}%}",
-                    rich: {
-                      a: {
-                        color: "#006cff"
-                      }
-                    }
-                  }
-                }
-              ]
+              data: that.sandUseNumInfoNum
             }
           ]
+          // tooltip: {
+          //   trigger: "item",
+          //   formatter: "{a} <br/>{b} : {c} ({d}%)"
+          // },
+          // series: [
+          //   {
+          //     name: "面积模式",
+          //     type: "pie",
+          //     animation: false,
+          //     radius: [30, "70%"],
+          //     center: ["50%", "50%"],
+          //     roseType: "area",
+          //     itemStyle: {
+          //       emphasis: {
+          //         shadowBlur: 10,
+          //         shadowOffsetX: 0,
+          //         shadowColor: "rgba(0, 0, 0, 0.5)"
+          //       },
+          //       normal: {
+          //         color: function() {
+          //           theIndex++;
+          //           var colorList = [
+          //             {
+          //               c1: "#97CDFF",
+          //               c2: "#C4ECFF"
+          //             },
+          //             {
+          //               c1: "#FFD356",
+          //               c2: "#FFEB8F"
+          //             },
+          //             {
+          //               c1: "#FE8986",
+          //               c2: "#FEAD7E"
+          //             },
+          //             {
+          //               c1: "#FC4FB0",
+          //               c2: "#FD76DA"
+          //             },
+          //             {
+          //               c1: "#5FF0F9",
+          //               c2: "#1BF6CA"
+          //             },
+          //             {
+          //               c1: "#00B6F0",
+          //               c2: "#00EAFE"
+          //             },
+          //             {
+          //               c1: "#7279FF",
+          //               c2: "#BABFFF"
+          //             },
+          //             {
+          //               c1: "#0075FF",
+          //               c2: "#00C2FF"
+          //             }
+          //           ];
+          //           var userIndex = theIndex % colorList.length;
+          //           return new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+          //             {
+          //               offset: 0,
+          //               color: colorList[userIndex].c1
+          //             },
+          //             {
+          //               offset: 1,
+          //               color: colorList[userIndex].c2
+          //             }
+          //           ]);
+          //         }
+          //       }
+          //     },
+          //     labelLine: {
+          //       normal: {
+          //         smooth: 0,
+          //         length: 10,
+          //         length2: 50
+          //       }
+          //     },
+          //     data: [
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[0].num,
+          //         name: that.reviewData.sandUseTimeInfo[0].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#79C2FF"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[1].num,
+          //         name: that.reviewData.sandUseTimeInfo[1].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#FBD356"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[2].num,
+          //         name: that.reviewData.sandUseTimeInfo[2].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#FF9E8C"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[3].num,
+          //         name: that.reviewData.sandUseTimeInfo[3].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#FE5FB8"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[4].num,
+          //         name: that.reviewData.sandUseTimeInfo[4].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#40E6F8"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[5].num,
+          //         name: that.reviewData.sandUseTimeInfo[5].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#00C0FF"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[6].num,
+          //         name: that.reviewData.sandUseTimeInfo[6].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#6671FF"
+          //             }
+          //           }
+          //         }
+          //       },
+          //       {
+          //         value: that.reviewData.sandUseTimeInfo[7].num,
+          //         name: that.reviewData.sandUseTimeInfo[7].sandTypeName,
+          //         label: {
+          //           formatter: "{b} {a|{d}%}",
+          //           rich: {
+          //             a: {
+          //               color: "#006cff"
+          //             }
+          //           }
+          //         }
+          //       }
+          //     ]
+          //   }
+          // ]
         });
         this.myChartZhus1 = echarts.init(this.$refs.myChartZhus1);
         this.myChartZhus1.setOption({
@@ -4906,26 +5057,26 @@ export default {
 .group_03{
   background: #F2FAFF;
   .gp3_top{
-   padding-top: 71px;
+   padding: 30px 0 20px;
   }
   .gp3_box{
     width: 1060px;
-    min-height: 632px;
+    // min-height: 620px;
     margin: 0 auto;
     background: #FFFFFF;
     box-shadow: 0px 0px 65px 16px rgba(69, 85, 119, 0.11);
     border-radius: 4px;
     .dtms_box {
-      padding-bottom: 10px;
+      padding-bottom: 0px;
       .dtmsb_tle {
-        height: 180px;
+        height: 164px;
         h3 {
           font-size: 22px;
           font-family: Source Han Sans CN;
           font-weight: bold;
           color: #FFFFFF;
-          padding-top: 24px;
-          padding-bottom: 9px;
+          padding-top: 16px;
+          padding-bottom: 6px;
           line-height: 1;
           margin: 0;
         }
@@ -4937,7 +5088,7 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #ffffff;
-          margin-top: 15px;
+          margin-top: 10px;
           .dtt_img {
             position: relative;
             display: flex;
@@ -4986,7 +5137,7 @@ export default {
       .dtmsb_tar {
         width: 525px;
         height: 226px;
-        margin: 20px auto 40px;
+        margin: 12px auto 12px;
         position: relative;
         .dtmsb_ulc {
           position: absolute;
@@ -5167,16 +5318,16 @@ export default {
         }
       }
       .dtmcr_bts {
-        padding: 0 58px;
-        margin-bottom: 20px;
+        padding: 0 35px 10px;
+        margin-bottom: 0px;
         .db_img {
           display: flex;
           align-items: center;
-          font-size: 18px;
+          font-size: 22px;
           font-family: PingFang SC;
           font-weight: 400;
           color: #006cff;
-          margin-bottom: 10px;
+          margin-bottom: 4px;
           img {
             width: 28px;
             height: 28px;
@@ -5185,19 +5336,19 @@ export default {
         }
         p {
           text-align: left;
-          font-size: 16px;
+          font-size: 20px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          line-height: 24px;
-          margin-bottom: 10px;
+          line-height: 30px;
+          margin-bottom: 0px;
           color: #354b70;
           display: flex;
           align-items: flex-start;
           img{
             width: 4px;
-            height: 18px;
-            margin-top: 3px;
-            margin-right: 10px;
+            height: 20px;
+            margin-top: 6px;
+            margin-right: 8px;
           }
           span {
             margin-top: 5px;
@@ -5218,7 +5369,7 @@ export default {
       .wdrj_title {
         display: flex;
         align-items: center;
-        font-size: 22px;
+        font-size: 24px;
         font-family: Source Han Sans CN;
         font-weight: 400;
         color: #354b70;
@@ -5232,7 +5383,7 @@ export default {
       .dtmsb_tar {
         width: 825px;
         height: 246px;
-        margin: -30px auto 30px;
+        margin: -30px auto 20px;
         position: relative;
         .top_top {
           position: absolute;
@@ -5436,7 +5587,7 @@ export default {
         }
       }
       .wdrj_suger {
-        margin-top: 50px;
+        margin-top: 20px;
         text-align: left;
         .wdrjs_uls{
           padding-left: 10px;
@@ -5446,27 +5597,30 @@ export default {
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354B70;
-            line-height: 36px;
+            line-height: 30px;
             span {
-                margin-top: 10px;
-                margin-right: 10px;
+                margin-top: 6px;
+                margin-right: 6px;
                 text-align: center;
-                line-height: 16px;
-                width: 16px;
-                height: 16px;
+                line-height: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 20px;
+                height: 20px;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 12px;
+                font-size: 14px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
             }
             p {
-              font-size: 16px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354B70;
-              line-height: 36px;
+              line-height: 30px;
               flex: 1
             }
             img{
@@ -5478,7 +5632,7 @@ export default {
           }
         }
         .wdrjs_title {
-          font-size: 18px;
+          font-size: 22px;
           font-family: Source Han Sans CN;
           font-weight: 400;
           color: #354b70;
@@ -5488,7 +5642,7 @@ export default {
           margin-left: 3px;
           img {
             width: 4px;
-            height: 16px;
+            height: 20px;
             margin-right: 6px;
           }
           .wdrjst_res {
@@ -5501,7 +5655,7 @@ export default {
               margin-left: 20px;
             }
             .wdrjstr_txt {
-              font-size: 18px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #FE5FB8;
@@ -5524,7 +5678,7 @@ export default {
             margin-top: 10px;
           }
           p {
-            font-size: 16px;
+            font-size: 18px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354B70;
@@ -5550,7 +5704,7 @@ export default {
             margin-right: 6px;
           }
           span {
-            font-size: 18px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
@@ -5572,14 +5726,16 @@ export default {
           text-align: left;
           .pd24 {
             padding-left: 24px;
-            font-size: 16px;
+            font-size: 20px;
           }
           div {
             line-height: 39px;
-            font-size: 18px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
+            display: flex;
+            align-items: center;
             img {
               width: 16px;
               height: 12px;
@@ -5589,7 +5745,7 @@ export default {
           ul {
             li {
               line-height: 39px;
-              font-size: 14px;
+              font-size: 20px;
               font-family: Source Han Sans CN;
               font-weight: 400;
               color: #354b70;
@@ -5617,10 +5773,10 @@ export default {
         }
         .gb_contain {
           text-align: left;
-          padding: 10px 25px;
+          padding: 0px 25px;
           p {
             padding: 6px 0 6px;
-            font-size: 16px;
+            font-size: 20px;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #354b70;
@@ -5638,19 +5794,19 @@ export default {
               display: flex;
               line-height: 26px;
               span {
-                margin-top: 4px;
-                margin-right: 10px;
+                margin-top: 5px;
+                margin-right: 6px;
                 text-align: center;
-                line-height: 10px;
-                width: 16px;
-                height: 16px;
+                line-height: 20px;
+                width: 20px;
+                height: 20px;
                 background: linear-gradient(177deg, #1becff, #00c6ff);
                 border-radius: 50%;
-                font-size: 12px;
+                font-size: 14px;
                 font-family: Source Han Sans CN;
                 font-weight: bold;
                 color: #ffffff;
-                border: 1px solid #00c6ff;
+                // border: 1px solid #00c6ff;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -5660,6 +5816,7 @@ export default {
                 flex: 1;
                 display: flex;
                 flex-wrap: wrap;
+                line-height: 30px;
               }
             }
           }
@@ -5677,10 +5834,95 @@ export default {
   .gp2_main{
     padding: 44px 29px;
   }
+  .guide_box {
+    // margin-bottom: 104px;
+    .gb_main {
+      width: 1060px;
+      margin: 0 auto;
+      border-radius: 4px;
+      background: #ffffff;
+      overflow: hidden;
+      padding: 0 10px;
+      .dtmcl_tle {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        // background: linear-gradient(
+        //   90deg,
+        //   rgba(5, 157, 255, 0.7),
+        //   rgba(49, 204, 255, 0.7)
+        // );
+        // background: linear-gradient(
+        //   90deg,
+        //   rgba(5, 157, 255, 0.7),
+        //   rgba(49, 204, 255, 0.7)
+        // );
+        font-size: 22px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        color: #006cff;
+        img {
+          width: 30px;
+          height: 29px;
+          margin-right: 10px;
+          margin-left: 24px;
+        }
+      }
+      .gb_contain {
+        text-align: left;
+        padding: 0px 25px 20px;
+        p {
+          padding: 6px 0 6px;
+          font-size: 20px;
+          font-family: Source Han Sans CN;
+          font-weight: 400;
+          color: #354b70;
+          display: flex;
+          align-items: flex-start;
+          img{
+            width: 4px;
+            height: 20px;
+            margin-top: 4px;
+            margin-right:6px;
+          }
+        }
+        ul {
+          li {
+            display: flex;
+            line-height: 30px;
+            span {
+              margin-top: 4px;
+                margin-right: 6px;
+                text-align: center;
+                line-height: 20px;
+                width: 20px;
+                height: 20px;
+                background: linear-gradient(177deg, #1becff, #00c6ff);
+                border-radius: 50%;
+                font-size: 14px;
+                font-family: Source Han Sans CN;
+                font-weight: bold;
+                color: #ffffff;
+                // border: 1px solid #00c6ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            p {
+              padding: 0;
+              flex: 1;
+              display: flex;
+              flex-wrap: wrap;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .group_04{
   .guide_box {
-    margin-bottom: 104px;
+    // margin-bottom: 104px;
     .gb_main {
       width: 1060px;
       margin: 0 auto;
@@ -5848,7 +6090,7 @@ export default {
       color: #394B6D;
     }
   }
-  .myChartRose1f, .myChartZhu1{
+  .myChartRose1, .myChartZhu1{
     margin: 0 auto;
     width: 1060px;
     height: 400px;

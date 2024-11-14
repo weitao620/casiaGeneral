@@ -25,14 +25,14 @@ export default {
     canvas.width = eleW * 2// 将画布宽&&高放大两倍
     canvas.height = eleH * 2
     var context = canvas.getContext("2d")
-    context.scale(1.5, 1.5) // 增强图片清晰度
+    context.scale(2, 2) // 增强图片清晰度
     context.translate(0, -eleOffsetTop)
     return new Promise((resolve, reject) => {
       // 在点击保存图片时，此时要保存的资源较多，造成模块并没有完全加载完毕，就已经生成了截图。// 解决方案：(延迟)
       setTimeout(() => {
         // 这句挺重要
         html2Canvas(el, {
-          scale: 2,
+          scale: 1.5,
           dpi: 300,
           useCORS: true,
           imageTimeout: 0

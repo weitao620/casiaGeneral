@@ -364,6 +364,7 @@ export default {
       };
       that.currentPage = page
       this.$http
+        // .get(Url + "/aimw/mentalFile/listMentalFilesInfo", {params: param} )
         .post(Url + "/aimw/mentalFile/listMentalFilesInfo", param)
         .then(res => {
           let data = res.data.data;
