@@ -2543,7 +2543,7 @@ export default {
             
             if (data.data.suggestion && data.data.suggestion != '') {
               data.data.suggestion = data.data.suggestion.split("|||");
-              console.log(data.data.suggestion)
+              // console.log(data.data.suggestion)
               for (let i in data.data.suggestion) {
                 if (data.data.suggestion[i].indexOf("&&") != -1) {
                   data.data.suggestion[i] = data.data.suggestion[i].split("&&")
@@ -2551,13 +2551,25 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!1")
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              // console.log(data.data.suggestion[i][j][k][m])
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2572,19 +2584,31 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!2")
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
                       }
                     } else {
                       for (let j in data.data.suggestion[i]) {
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!3")
                         if (data.data.suggestion[i][j].indexOf("@@") != -1) {
                           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
                           for (let m in data.data.suggestion[i][j]) {
@@ -2601,7 +2625,7 @@ export default {
             }
             if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
               data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-              console.log(data.data.suggestionSuicide)
+              // console.log(data.data.suggestionSuicide)
               for (let i in data.data.suggestionSuicide) {
                 if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
                   data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
@@ -2609,13 +2633,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2630,13 +2665,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2668,13 +2714,24 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2689,25 +2746,33 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
                       }
                     } else {
-                      console.log(data.data.suggestionViolence[i])
                       for (let j in data.data.suggestionViolence[i]) {
                         if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
-                          console.log(data.data.suggestionViolence[i][j])
                           for (let m in data.data.suggestionViolence[i][j]) {
-                            console.log(data.data.suggestionViolence[i][j][m])
                             if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
                             }

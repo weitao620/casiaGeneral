@@ -2536,7 +2536,7 @@ export default {
             
             if (data.data.suggestion && data.data.suggestion != '') {
               data.data.suggestion = data.data.suggestion.split("|||");
-              console.log(data.data.suggestion)
+              // console.log(data.data.suggestion)
               for (let i in data.data.suggestion) {
                 if (data.data.suggestion[i].indexOf("&&") != -1) {
                   data.data.suggestion[i] = data.data.suggestion[i].split("&&")
@@ -2544,13 +2544,25 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!1")
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              // console.log(data.data.suggestion[i][j][k][m])
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2565,19 +2577,31 @@ export default {
                     if (data.data.suggestion[i][j].indexOf("$$") != -1) {
                       data.data.suggestion[i][j] = data.data.suggestion[i][j].split("$$");
                       for (let k in data.data.suggestion[i][j]) {
-                        console.log(data.data.suggestion[i][j][k])
+                        // console.log(data.data.suggestion[i][j][k])
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!2")
                         if (data.data.suggestion[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestion[i][j][k] = data.data.suggestion[i][j][k].split("@@");
                           for (let m in data.data.suggestion[i][j][k]) {
-                            console.log(data.data.suggestion[i][j][k][m])
+                            // console.log(data.data.suggestion[i][j][k][m])
                             if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestion[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestion[i][j][k]]
+                            data.data.suggestion[i][j][k] = ass1;
+                            for (let m in data.data.suggestion[i][j][k]) {
+                              if (data.data.suggestion[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestion[i][j][k][m] = data.data.suggestion[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
                       }
                     } else {
                       for (let j in data.data.suggestion[i]) {
+                        // console.log("!!!!!!!!!!!!!!!!!!!!!3")
                         if (data.data.suggestion[i][j].indexOf("@@") != -1) {
                           data.data.suggestion[i][j] = data.data.suggestion[i][j].split("@@");
                           for (let m in data.data.suggestion[i][j]) {
@@ -2592,9 +2616,46 @@ export default {
                 }
               }
             }
+            console.log(data.data.suggestion)
+            let suggestionArr = [
+              [],
+              [],
+              []
+            ]
+            if (data.data.suggestion.length == 1 && data.data.suggestion[0][0].indexOf("测评提示") != -1) {
+              suggestionArr = [
+                [data.data.suggestion[0][0]],
+                [data.data.suggestion[0][0]],
+                [data.data.suggestion[0][0]]
+              ]
+            }
+            if (data.data.suggestion.length > 1) {
+              if (data.data.suggestion.length == 2) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。'],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+                ]
+              }
+              if (data.data.suggestion.length == 4) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  [data.data.suggestion[2],data.data.suggestion[3]],
+                  ['测评提示，该受测者整体心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+                ]
+              }
+              if (data.data.suggestion.length == 6) {
+                suggestionArr = [
+                  [data.data.suggestion[0],data.data.suggestion[1]],
+                  [data.data.suggestion[2],data.data.suggestion[3]],
+                  [data.data.suggestion[4],data.data.suggestion[5]],
+                ]
+              }
+            }
+
             if (data.data.suggestionSuicide && data.data.suggestionSuicide != '') {
               data.data.suggestionSuicide = data.data.suggestionSuicide.split("|||");
-              console.log(data.data.suggestionSuicide)
+              // console.log(data.data.suggestionSuicide)
               for (let i in data.data.suggestionSuicide) {
                 if (data.data.suggestionSuicide[i].indexOf("&&") != -1) {
                   data.data.suggestionSuicide[i] = data.data.suggestionSuicide[i].split("&&")
@@ -2602,13 +2663,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2623,13 +2695,24 @@ export default {
                     if (data.data.suggestionSuicide[i][j].indexOf("$$") != -1) {
                       data.data.suggestionSuicide[i][j] = data.data.suggestionSuicide[i][j].split("$$");
                       for (let k in data.data.suggestionSuicide[i][j]) {
-                        console.log(data.data.suggestionSuicide[i][j][k])
+                        // console.log(data.data.suggestionSuicide[i][j][k])
                         if (data.data.suggestionSuicide[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionSuicide[i][j][k] = data.data.suggestionSuicide[i][j][k].split("@@");
                           for (let m in data.data.suggestionSuicide[i][j][k]) {
-                            console.log(data.data.suggestionSuicide[i][j][k][m])
+                            // console.log(data.data.suggestionSuicide[i][j][k][m])
                             if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionSuicide[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionSuicide[i][j][k]]
+                            data.data.suggestionSuicide[i][j][k] = ass1;
+                            for (let m in data.data.suggestionSuicide[i][j][k]) {
+                              // console.log(data.data.suggestionSuicide[i][j][k][m])
+                              if (data.data.suggestionSuicide[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionSuicide[i][j][k][m] = data.data.suggestionSuicide[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2661,13 +2744,24 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
@@ -2682,25 +2776,33 @@ export default {
                     if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
                       data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
                       for (let k in data.data.suggestionViolence[i][j]) {
-                        console.log(data.data.suggestionViolence[i][j][k])
+                        // console.log(data.data.suggestionViolence[i][j][k])
                         if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
                           for (let m in data.data.suggestionViolence[i][j][k]) {
-                            console.log(data.data.suggestionViolence[i][j][k][m])
+                            // console.log(data.data.suggestionViolence[i][j][k][m])
                             if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                            }
+                          }
+                        } else {
+                          if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+                            let ass1 = [data.data.suggestionViolence[i][j][k]]
+                            data.data.suggestionViolence[i][j][k] = ass1;
+                            for (let m in data.data.suggestionViolence[i][j][k]) {
+                              // console.log(data.data.suggestionViolence[i][j][k][m])
+                              if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+                                data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+                              }
                             }
                           }
                         }
                       }
                     } else {
-                      console.log(data.data.suggestionViolence[i])
                       for (let j in data.data.suggestionViolence[i]) {
                         if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
                           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
-                          console.log(data.data.suggestionViolence[i][j])
                           for (let m in data.data.suggestionViolence[i][j]) {
-                            console.log(data.data.suggestionViolence[i][j][m])
                             if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
                               data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
                             }
@@ -2947,6 +3049,32 @@ export default {
               else return 0;
             });
             data.data.sysList = this.sysList;
+            for (let i in data.data.sysList) {
+              // console.log(data.data.sysList[i].title)
+              for (let j in suggestionArr) {
+
+                // console.log(JSON.stringify(suggestionArr[j]))
+                // console.log(JSON.stringify(suggestionArr[j]).substring(0,50))
+                // console.log(JSON.stringify(suggestionArr[j]).substring(0,50).indexOf(data.data.sysList[i].title))
+                if (JSON.stringify(suggestionArr[j]).substring(0,50).indexOf(data.data.sysList[i].title) != -1) {
+                  data.data.sysList[i].suggArr = suggestionArr[j]
+                } else {
+                  
+                }
+              }
+            }
+            console.log( data.data.sysList)
+            let sArrs = []
+            for (let i in data.data.sysList) {
+              if (!data.data.sysList[i].suggArr) {
+                data.data.sysList[i].suggArr = ['测评提示，该受测者本维度心理健康水平较好，如有条件，可定期参加成长型心理团体活动，维持身心健康。']
+              }
+              
+              sArrs.push(data.data.sysList[i].suggArr)
+            }
+            data.data.suggestionArr = sArrs
+            console.log(data.data.suggestion)
+            console.log(data.data.suggestionArr)
             let sysList02 = [
               {
                 title: "自我伤害",
