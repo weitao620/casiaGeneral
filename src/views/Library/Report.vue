@@ -79,18 +79,21 @@
             <el-select v-model="formSearch.warning" placeholder="全部">
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
-              <el-option label="" :value="1">
-                <img style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+              <el-option :label="!warningFlag ? '' : '轻度预警'" :value="1">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                <div v-else>轻度预警</div>
               </el-option>
-              <el-option label="" :value="2">
-                <img style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+              <el-option :label="!warningFlag ? '' : '中度预警'" :value="2">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                <div v-else>中度预警</div>
               </el-option>
-              <el-option label="" :value="3">
-                <img style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
+              <el-option :label="!warningFlag ? '' : '重度预警'" :value="3">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                <div v-else>重度预警</div>
               </el-option>
             </el-select>
             <!-- 选中后的列表 -->
-            <div class="img-option img-selected" v-if="formSearch.warning > 0 && formSearch.warning < 4">
+            <div class="img-option img-selected" v-if="formSearch.warning > 0 && formSearch.warning < 4 && !warningFlag">
               <img v-if="formSearch.warning == 1" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
               <img v-if="formSearch.warning == 2" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
               <img v-if="formSearch.warning == 3" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
@@ -139,18 +142,21 @@
             <el-select v-model="formSearchYou.warning" placeholder="全部">
               <el-option label="全部" :value="4"></el-option>
               <el-option label="正常" :value="0"></el-option>
-              <el-option label="" :value="1">
-                <img style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+              <el-option :label="!warningFlag ? '' : '轻度预警'" :value="1">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                <div v-else>轻度预警</div>
               </el-option>
-              <el-option label="" :value="2">
-                <img style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+              <el-option :label="!warningFlag ? '' : '中度预警'" :value="2">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                <div v-else>中度预警</div>
               </el-option>
-              <el-option label="" :value="3">
-                <img style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
+              <el-option :label="!warningFlag ? '' : '重度预警'" :value="3">
+                <img v-if="!warningFlag" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                <div v-else>重度预警</div>
               </el-option>
             </el-select>
             <!-- 选中后的列表 -->
-            <div class="img-option img-selected" v-if="formSearchYou.warning > 0 && formSearchYou.warning < 4">
+            <div class="img-option img-selected" v-if="formSearchYou.warning > 0 && formSearchYou.warning < 4 && !warningFlag">
               <img v-if="formSearchYou.warning == 1" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
               <img v-if="formSearchYou.warning == 2" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="">
               <img v-if="formSearchYou.warning == 3" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="">
@@ -284,22 +290,22 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <el-button v-if="!warningFlag" type="primary" plain size="small">正常</el-button>
+                  <img v-else class="primary_g_img" src="../../assets/images/index0.png" alt="">
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index1.png" alt="">
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index2.png" alt="">
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index3.png" alt="">
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
@@ -365,22 +371,23 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <el-button v-if="!warningFlag" type="primary" plain size="small">正常</el-button>
+                  <img v-else class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                  
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index1.png" alt="">
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index2.png" alt="">
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index3.png" alt="">
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
@@ -785,7 +792,8 @@ export default {
       wordList: [],
       trainFlag: true,
       // organizationObj: {}
-      isFourFlag: false
+      isFourFlag: false,
+      warningFlag: false
     };
   },
   computed: {
@@ -822,6 +830,12 @@ export default {
   },
   created() {},
   mounted() {
+    let that = this;
+    if (localStorage.getItem("algTypes")) {
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      let config = JSON.parse(algTypes.config)
+      this.warningFlag = config.warningType == 1 ? true : false
+    }
     this.fieldData();
     this.auth();
     this.addChange2();

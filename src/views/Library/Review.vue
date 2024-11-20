@@ -46,22 +46,22 @@
             <el-table-column prop="warning" label="评估结果">
               <template slot-scope="scope">
                 <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
-                  <el-button type="primary" plain size="small">正常</el-button>
+                  <el-button v-if="!warningFlag" type="primary" plain size="small">正常</el-button>
+                  <img v-else class="primary_g_img" src="../../assets/images/index0.png" alt="">
                 </div>
                 <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                  <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index1.png" alt="">
                   <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index2.png" alt="">
                   <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                 </div>
                 <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                  <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
-                  <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
+                  <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                  <img v-else class="primary_g_img" src="../../assets/images/index3.png" alt="">
                   <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                 </div>
               </template>
@@ -589,13 +589,20 @@ export default {
       pTimeFlag: false,
       partsForm: {
         time: ''
-      }
+      },
+      warningFlag: false
     };
   },
   created() {
 
   },
   mounted() {
+    let that = this;
+    if (localStorage.getItem("algTypes")) {
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      let config = JSON.parse(algTypes.config)
+      this.warningFlag = config.warningType == 1 ? true : false
+    }
     this.passport = this.$route.params.userID;
     this.auth()
     

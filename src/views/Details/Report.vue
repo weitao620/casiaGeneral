@@ -313,7 +313,7 @@
           </div>
         </div>
       </div>
-      <div class="drwc_box" v-show="snapshot">
+      <div class="drwc_box" v-show="snapshot && !reviewFlag">
         <div class="drwc_common"  ref="parts8">
           <div class="drwc_bw_head">
             <img style="width: 0.53rem;height: 0.50rem;" src="../../assets/images/news/picture.png" alt="">
@@ -439,14 +439,14 @@
                       </li>
                       <li v-for="item in details.rangeList" :key="item.id">
                         <div>{{item.name}}</div>
-                        <div>
+                        <div v-if="!warningFlag">
                           <span v-if="item.level == -1">/</span>
                           <span v-if="item.level == 0">正常</span>
                           <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
                           <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
                           <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
                         </div>
-                        <div>
+                        <div v-if="!warningFlag">
                           <span v-if="item.lastLevel == -1">/</span>
                           <span v-if="item.lastLevel == 0">正常</span>
                           <img v-if="item.lastLevel == 1" src="../../assets/images/news/di.png" alt="">
@@ -690,7 +690,7 @@
                 <div class="drwc_btr">
                   <div class="wdrj_box">
                     <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == btlActNum ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.id">
-                      <div class="wdrj_title">
+                      <div class="wdrj_title" v-if="!warningFlag">
                         <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
                         <span v-if="item.level == 0">正常</span>
                         <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
@@ -1644,6 +1644,12 @@ export default {
   },
   mounted() {
     let that = this;
+    if (localStorage.getItem("algTypes")) {
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      let config = JSON.parse(algTypes.config)
+      this.warningFlag = config.warningType == 1 ? true : false
+      this.suggestionFlag = config.suggestionType == 1 ? true : false
+    }
     if (localStorage.getItem('version')) {
       if (localStorage.getItem('version') == 2) {
         this.tokenFlag = true
@@ -2154,8 +2160,6 @@ export default {
       if (algTypes) {
         let config = JSON.parse(algTypes.config)
         this.snapshot = config.snapshot == 1 ? true : false
-        this.warningFlag = config.warningType == 1 ? true : false
-        this.suggestionFlag = config.suggestionType == 1 ? true : false
         if (this.snapshot){
           this.getSnapshot()
         }

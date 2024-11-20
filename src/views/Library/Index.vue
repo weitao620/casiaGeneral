@@ -201,15 +201,19 @@
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths1"></span>
-                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="" />
+                
+                <img v-if="!warningFlag" class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="" />
+                <div v-else>轻度预警</div>
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths2"></span>
-                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="" />
+                <img v-if="!warningFlag" class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/zhong.png" alt="" />
+                <div v-else>中度预警</div>
               </div>
               <div class="c_pie_li">
                 <span class="c_pie_th c_ths3"></span>
-                <img class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="" />
+                <img v-if="!warningFlag" class="c_p_l_img" style="width:0.67rem;" src="../../assets/images/news/gao.png" alt="" />
+                <div v-else>重度预警</div>
               </div>
             </div>
           </div>
@@ -420,22 +424,23 @@
               <el-table-column prop="warning" label="评估结果">
                 <template slot-scope="scope">
                   <div class="primary_g primary_r0" v-if="scope.row.warning == 0">
-                    <!-- <img class="primary_g_img" src="../../assets/images/index0.png" alt=""> -->
-                    <el-button type="primary" plain size="small">正常</el-button>
+                    <el-button v-if="!warningFlag" type="primary" plain size="small">正常</el-button>
+                    <img v-else class="primary_g_img" src="../../assets/images/index0.png" alt="">
+                    
                   </div>
                   <div class="primary_r primary_r1" v-if="scope.row.warning == 1">
-                    <img class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
-                    <!-- <img class="primary_g_img" src="../../assets/images/index1.png" alt=""> -->
+                    <img v-if="!warningFlag" class="primary_g_img" style="width:0.67rem;" src="../../assets/images/news/di.png" alt="">
+                    <img v-else class="primary_g_img" src="../../assets/images/index1.png" alt="">
                     <!-- <el-button type="danger" plain size="small">轻度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r2" v-if="scope.row.warning == 2">
-                    <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
-                    <!-- <img class="primary_g_img" src="../../assets/images/index2.png" alt=""> -->
+                    <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/zhong.png" alt="">
+                    <img v-else class="primary_g_img" src="../../assets/images/index2.png" alt="">
                     <!-- <el-button type="danger" plain size="small">中度预警</el-button> -->
                   </div>
                   <div class="primary_r primary_r3" v-if="scope.row.warning == 3">
-                    <img class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
-                    <!-- <img class="primary_g_img" src="../../assets/images/index3.png" alt=""> -->
+                    <img v-if="!warningFlag" class="primary_g_img" style="width: 0.67rem;" src="../../assets/images/news/gao.png" alt="">
+                    <img v-else class="primary_g_img" src="../../assets/images/index3.png" alt="">
                     <!-- <el-button type="danger" plain size="small">重度预警</el-button> -->
                   </div>
                   <!-- <div class="primary_r" v-if="scope.row.warning == 1">
@@ -553,7 +558,8 @@ export default {
       piePrect: [],
       pieName: [],
       screenWidth: document.body.clientWidth,
-      trainFlag: true
+      trainFlag: true,
+      warningFlag: false
     };
   },
   created() {
@@ -561,6 +567,11 @@ export default {
   },
   mounted() {
     let that = this;
+    if (localStorage.getItem("algTypes")) {
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      let config = JSON.parse(algTypes.config)
+      this.warningFlag = config.warningType == 1 ? true : false
+    }
     window.onresize = () => {
       return (() => {
         window.screenWidth = document.body.clientWidth
@@ -1097,42 +1108,79 @@ export default {
           },
           extraCssText: "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);",
           formatter: function(obj) {
-            let di = require('../../assets/images/news/di.png')
-            let zhong = require('../../assets/images/news/zhong.png')
-            let gao = require('../../assets/images/news/gao.png')
-            return (
-              '<div style="border-bottom: 1px solid rgba(255,255,255,.3);color:#354B70;font-weight: 600; font-size: 0.16rem;padding-bottom: 0px;margin-bottom: 0.02rem">' +
-              obj[0].name +
-              "</div>" +
-              '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #8ACBFF;border-radius: 50%;margin-right:0.04rem"></span>' +
-              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
-              "测评人数" +
-              "：<span style='color:#519AFE;font-weight: 600;'>" +
-              // "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
-              obj[0].value +
-              "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
-              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.67rem;height:0.22rem" src="' + di + '" alt="" />' +
-              "：<span style='color:#7C82FF;font-weight: 600;'>" +
-              // "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
-              obj[1].value +
-              "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
-              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.67rem;height:0.22rem" src="' + zhong + '" alt="" />' +
-              "：<span style='color:#FFBB79;font-weight: 600;'>" +
-              // "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
-              obj[2].value +
-              "</span></div>" +
-              '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
-              // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
-              '<img style="width:0.67rem;height:0.22rem" src="' + gao + '" alt="" />' +
-              "：<span style='color:#FF8481;font-weight: 600;'>" +
-              // "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
-              obj[3].value +
-              "</span></div>"
-            );
+            if (!that.warningFlag) {
+              let di = require('../../assets/images/news/di.png')
+              let zhong = require('../../assets/images/news/zhong.png')
+              let gao = require('../../assets/images/news/gao.png')
+              return (
+                '<div style="border-bottom: 1px solid rgba(255,255,255,.3);color:#354B70;font-weight: 600; font-size: 0.16rem;padding-bottom: 0px;margin-bottom: 0.02rem">' +
+                obj[0].name +
+                "</div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #8ACBFF;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
+                "测评人数" +
+                "：<span style='color:#519AFE;font-weight: 600;'>" +
+                // "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
+                obj[0].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
+                '<img style="width:0.67rem;height:0.22rem" src="' + di + '" alt="" />' +
+                "：<span style='color:#7C82FF;font-weight: 600;'>" +
+                // "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
+                obj[1].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
+                '<img style="width:0.67rem;height:0.22rem" src="' + zhong + '" alt="" />' +
+                "：<span style='color:#FFBB79;font-weight: 600;'>" +
+                // "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
+                obj[2].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
+                '<img style="width:0.67rem;height:0.22rem" src="' + gao + '" alt="" />' +
+                "：<span style='color:#FF8481;font-weight: 600;'>" +
+                // "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
+                obj[3].value +
+                "</span></div>"
+              );
+            } else {
+              return (
+                '<div style="border-bottom: 1px solid rgba(255,255,255,.3);color:#354B70;font-weight: 600; font-size: 0.16rem;padding-bottom: 0px;margin-bottom: 0.02rem">' +
+                obj[0].name +
+                "</div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #8ACBFF;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(268deg, #0075ff, #00c2ff);border-radius: 50%;margin-right:0.04rem"></span>' +
+                "测评人数" +
+                "：<span style='color:#519AFE;font-weight: 600;'>" +
+                // "：<span style='color:rgba(0,194,255,1);font-weight: 600;'>" +
+                obj[0].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #B5B8FF;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FEF569, #FFD800);border-radius: 50%;margin-right:0.04rem"></span>' +
+                "轻度预警" +
+                "：<span style='color:#7C82FF;font-weight: 600;'>" +
+                // "：<span style='color:rgba(255, 210, 0, 1);font-weight: 600;'>" +
+                obj[1].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFD29D;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(90deg, #FFCE9F, #FF849C);border-radius: 50%;margin-right:0.04rem"></span>' +
+                "中度预警" +
+                "：<span style='color:#FFBB79;font-weight: 600;'>" +
+                // "：<span style='color:rgba(252, 155, 47, 1);font-weight: 600;'>" +
+                obj[2].value +
+                "</span></div>" +
+                '<div style="display:flex;align-items:center;color:#7786AC;"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: #FFA3A3;border-radius: 50%;margin-right:0.04rem"></span>' +
+                // '<div style="display:flex;align-items:center"><span style="display:inline-block;width:0.08rem;height:0.08rem;background: linear-gradient(74deg, #FFAB96, #FF0F47);border-radius: 50%;margin-right:0.04rem"></span>' +
+                "重度预警" +
+                "：<span style='color:#FF8481;font-weight: 600;'>" +
+                // "：<span style='color:rgba(254, 39, 39, 1);font-weight: 600;'>" +
+                obj[3].value +
+                "</span></div>"
+              );
+            }
+            
           }
         },
         grid: {
