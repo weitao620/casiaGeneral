@@ -247,7 +247,12 @@ export default {
                 localStorage.setItem("userType", 1);
                 localStorage.setItem('allOrgs', that.ruleForm.allOrgsAbb)
                 localStorage.setItem("totalToken", data.data.token);
+                
+                // if (data.data.algTypes) {
+                //   localStorage.setItem('snapshot',data.data.algTypes.snapshot)
+                // }
                 if (data.data.algTypes.mentalDim) {
+                  
                   // mentalDim
                   // 心理健康维度(0b111111由低位到高位分别代表：抑郁、焦虑、强迫、自我伤害、敌对、PTSD)
 

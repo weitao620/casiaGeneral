@@ -623,6 +623,10 @@ export default {
   },
   data() {
     return {
+
+      jjName: '',
+      jjTotal: '',
+      jjDetail: [],
       partList: {},
       partListDui: {},
       pTimeFlag: false,
@@ -1333,7 +1337,14 @@ export default {
           let data = res.data;
           if (data.code == 0) {
             if (data.data.sandInfoRet.sandInfo) {
+              for (let i in data.data.sandInfoRet.sandInfo) {
+                data.data.sandInfoRet.sandInfo[i].type = data.data.sandInfoRet.sandInfo[i].bodies_type
+                data.data.sandInfoRet.sandInfo[i].name = data.data.sandInfoRet.sandInfo[i].bodies_name
+                data.data.sandInfoRet.sandInfo[i].time = data.data.sandInfoRet.sandInfo[i].bodies_time
+                data.data.sandInfoRet.sandInfo[i].isDel = data.data.sandInfoRet.sandInfo[i].bodies_isDel
+              }
               that.sandInfo = data.data.sandInfoRet.sandInfo;
+              
             } else {
               that.sandInfo = [];
             }
@@ -1873,6 +1884,8 @@ export default {
                     title: "心理韧性",
                     result: data.data.resilienceResult,
                     subDim: data.data.resilienceSubdim,
+                    level: data.data.positiveResults.resilienceLevel,
+                    lastLevel: data.data.lastPositiveResults.resilienceLevel,
                     total: total,
                     // suggestDim: data.data.resilienceSuggestion,
                     sysDim: data.data.resilienceAnalysis,
@@ -1891,6 +1904,8 @@ export default {
                     title: "积极自我",
                     result: data.data.selfResult,
                     subDim: data.data.selfSubdim,
+                    level: data.data.positiveResults.selfLevel,
+                    lastLevel: data.data.lastPositiveResults.selfLevel,
                     total: total,
                     // suggestDim: data.data.selfSuggestion,
                     sysDim: data.data.selfAnalysis,
@@ -1909,6 +1924,8 @@ export default {
                     title: "积极情绪",
                     result: data.data.emotionResult,
                     subDim: data.data.emotionSubdim,
+                    level: data.data.positiveResults.emotionLevel,
+                    lastLevel: data.data.lastPositiveResults.emotionLevel,
                     total: total,
                     // suggestDim: data.data.emotionSuggestion,
                     sysDim: data.data.emotionAnalysis,
@@ -1927,6 +1944,8 @@ export default {
                     title: "积极成就",
                     result: data.data.achievementResult,
                     subDim: data.data.achievementSubdim,
+                    level: data.data.positiveResults.achievementLevel,
+                    lastLevel: data.data.lastPositiveResults.achievementLevel,
                     total: total,
                     // suggestDim: data.data.achievementSuggestion,
                     sysDim: data.data.achievementAnalysis,
@@ -1945,6 +1964,8 @@ export default {
                     title: "积极关系",
                     result: data.data.relationshipResult,
                     subDim: data.data.relationshipSubdim,
+                    level: data.data.positiveResults.relationshipLevel,
+                    lastLevel: data.data.lastPositiveResults.relationshipLevel,
                     total: total,
                     // suggestDim: data.data.relationshipSuggestion,
                     sysDim: data.data.relationshipAnalysis,
@@ -1955,25 +1976,44 @@ export default {
             }
             this.jjList = jjList0
             data.data.jjList = this.jjList;
-            if (jjList0.length > 0) {
-              let jjArr = jjList0.sort((a, b) => {
-                return Number(a.total) - Number(b.total);
-              });
-              console.log(jjArr)
-              // jjArr = jjArr.concat(jjArr)
-              this.jjName = jjArr[0].title + '上'
-              if (jjArr.length > 1) {
-                if (jjArr[1].total == jjArr[0].total) {
-                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
-                }
-              }
-              if (jjArr.length > 2) {
-                if (jjArr[2].total == jjArr[0].total) {
-                  this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
-                }
-              }
+            // if (jjList0.length > 0) {
+            //   let jjArr = jjList0.sort((a, b) => {
+            //     return Number(a.total) - Number(b.total);
+            //   });
+            //   console.log(jjArr)
+            //   // jjArr = jjArr.concat(jjArr)
+            //   this.jjName = jjArr[0].title + '上'
+            //   if (jjArr.length > 1) {
+            //     if (jjArr[1].total == jjArr[0].total) {
+            //       this.jjName = jjArr[0].title + "、" + jjArr[1].title + '上'
+            //     }
+            //   }
+            //   if (jjArr.length > 2) {
+            //     if (jjArr[2].total == jjArr[0].total) {
+            //       this.jjName = jjArr[0].title + "、" + jjArr[1].title + '等方面'
+            //     }
+            //   }
+            // }
+            // data.data.jjName = this.jjName
+            
+            // data.data.summary = [
+            //   "积极自我",
+            //   "简版总结",
+            //   "详细总结第1段@@详细总结第2段@@详细总结第3段"
+            // ]
+
+            data.data.summary = positivePsychology.summary
+            if (data.data.summary && data.data.summary != null) {
+              this.jjName = data.data.summary[0]
+              this.jjTotal = data.data.summary[1]
+              this.jjDetail = data.data.summary[2].split("@@")
             }
             data.data.jjName = this.jjName
+            data.data.jjTotal = this.jjTotal
+            data.data.jjDetail = this.jjDetail
+            console.log(this.jjName)
+            console.log(this.jjTotal)
+            console.log(this.jjDetail)
             
             // 大五人格
             let personality = {}

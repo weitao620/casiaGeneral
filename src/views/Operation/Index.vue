@@ -199,7 +199,7 @@
                 >详细信息</el-button
               >
               <el-button @click="toWd(scope.row)" type="text" size="small"
-                >维度配置</el-button
+                >配置</el-button
               >
               <!-- <el-button v-if="power5" type="text" size="small" @click="onesStop(scope.row)"
                 >{{ scope.row.accountState ? "停用" : "启用" }}</el-button

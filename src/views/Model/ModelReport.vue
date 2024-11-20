@@ -413,7 +413,6 @@
                   <div>本次结果</div>
                   <div>上次结果</div>
                 </li>
-                
                 <li v-for="item in details.jjList" :key="item.id">
                   <div>{{item.title}}</div>
                   <div>
@@ -1106,6 +1105,10 @@ export default {
   name: "modelreport",
   data() {
     return {
+
+      jjName: '',
+      jjTotal: '',
+      jjDetail: [],
       myChartLds2: "",
       myChartLds3: "",
       myChartLds4: "",
@@ -10070,6 +10073,7 @@ export default {
             font-weight: 500;
             font-size: 24px;
             color: #333E75;
+            text-align: left;
           }
           .dtmcl_sb_c{
             flex: 1;

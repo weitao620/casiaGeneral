@@ -318,7 +318,7 @@ export default {
             this.$router.push({
               path: "/operation/index"
             });
-            this.$message.success('新增成功！');
+            this.$message.success('保存成功！');
           } else {
             this.$message.error(data.msg);
           }

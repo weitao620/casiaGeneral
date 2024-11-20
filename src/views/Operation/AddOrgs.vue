@@ -126,8 +126,37 @@
           </el-form-item>
           <div class="person_msg" style="margin-bottom: 0.1rem;">
             <img src="../../assets/images/personPass.png" alt="" />
-            维度配置
+            配置
           </div>
+          <div style="display: flex;align-items: center;margin-bottom: 0.2rem;margin-top: 0.2rem;">
+            <el-form-item label="预警显示类型：" style="margin-bottom: 0rem"></el-form-item>
+            <div style="margin-left: 0;height: 0.36rem;display: flex;align-items: center;" class="wd_box wd_boxs">
+              <el-radio-group v-model="warningType">
+                <el-radio :label="0">花朵</el-radio>
+                <el-radio :label="1">文字描述</el-radio>
+              </el-radio-group>
+            </div>
+          </div>
+          <div style="display: flex;align-items: center;margin-bottom: 0.2rem;margin-top: 0.2rem;">
+            <el-form-item label="指导建议类型：" style="margin-bottom: 0rem"></el-form-item>
+            <div style="margin-left: 0;height: 0.36rem;display: flex;align-items: center;" class="wd_box wd_boxs">
+              <el-radio-group v-model="suggestionType">
+                <el-radio :label="0">简版</el-radio>
+                <el-radio :label="1">复杂版</el-radio>
+              </el-radio-group>
+            </div>
+          </div>
+          <div style="display: flex;align-items: center;margin-bottom: 0.2rem;margin-top: 0.2rem;">
+            <el-form-item label="表情记录：" style="margin-bottom: 0rem"></el-form-item>
+            <div style="margin-left: 0;height: 0.36rem;display: flex;align-items: center;" class="wd_box">
+              <el-switch
+                  v-model="snapshot"
+                  @change="statusChange"
+                >
+                </el-switch>
+            </div>
+          </div>
+          
           <el-form-item required label="开通维度：" style="margin-bottom: 0.1rem"></el-form-item>
           <div style="margin-left: -0.24rem;" class="wd_box">
             
@@ -161,6 +190,9 @@ export default {
   name: "operationaddorgs",
   data() {
     return {
+      warningType: 0,
+      suggestionType: 0,
+      snapshot: false,
       nameFlag: false,
       nameAbbFlag: false,
       areaFlag: false,
@@ -256,6 +288,11 @@ export default {
     this.initAddressFrom(areaJson);
   },
   methods: {
+    statusChange(val) {
+      var that = this;
+      that.snapshot = val
+      console.log(val)
+    },
     xinliCheckAllChange(val) {
       console.log(val)
       this.xinliChecked = val ? this.xinliCheckedAll : [];
@@ -366,6 +403,7 @@ export default {
         location: this.formAddOrgs.address, // 详细地址
         website: this.formAddOrgs.website, // 机构网址
         mark: this.formAddOrgs.remark // 备注
+
       }
       console.log(params)
       // return
@@ -416,12 +454,19 @@ export default {
       console.log(this.mentalDim)
       console.log(this.positiveDim)
       console.log(this.personalityDim)
+      let snapshot = this.snapshot ? 1 : 0
+      let config = {
+        snapshot: snapshot,
+        warningType: this.warningType,
+        suggestionType: this.suggestionType
+      }
       // return
       let params = {
         nameAbb: this.formAddOrgs.nameAbb, // 机构id
         mentalDim: this.mentalDim, // 机构id
         positiveDim: this.positiveDim, // 机构id
-        personalityDim: this.personalityDim
+        personalityDim: this.personalityDim,
+        config: config
       }
       console.log(params)
       // return
@@ -457,6 +502,44 @@ export default {
 .add_user_wrap {
   text-align: left;
   margin: 0 0.22rem;
+  .el-switch {
+    font-size: 0.14rem;
+    line-height: 0.2rem;
+    height: 0.2rem;
+  }
+  .el-switch__label--left {
+    margin-right: 0.1rem;
+  }
+  .el-switch__label,
+  .el-switch__core {
+    height: 0.2rem;
+  }
+  .el-switch__core {
+    width: 0.60rem !important;
+    height: 0.3rem;
+    border-radius: 0.18rem;
+    border: 0;
+  }
+  .el-switch__label * {
+    line-height: 0.21rem;
+    font-size: 0.14rem;
+  }
+  .el-switch__core:after {
+    top: 0.03rem;
+    left: 0.03rem;
+    width: 0.24rem;
+    height: 0.24rem;
+  }
+  .el-switch.is-checked .el-switch__core::after {
+    margin-left: -0.27rem;
+  }
+  .el-switch__core {
+    border-color: #ffffff;
+    background: linear-gradient(-90deg, #d4e7ff 0%, #8fb1d7 100%);
+  }
+  .el-switch.is-checked .el-switch__core {
+    background: linear-gradient(-90deg, #0075FF, #00C2FF);
+  }
   .wd_box{
     .el-checkbox__label {
       padding-left: 0.06rem !important;
@@ -465,6 +548,20 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #7786ac !important;
+    }
+  }
+  .wd_boxs{
+    .el-radio-group{
+      display: flex;
+
+      .el-radio{
+
+      cursor: pointer;
+        margin-right: 0.2rem;
+        .el-radio__label{
+          cursor: pointer;
+        }
+      }
     }
   }
   //主要内容区

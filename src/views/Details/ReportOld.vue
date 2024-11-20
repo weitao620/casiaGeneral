@@ -2077,6 +2077,12 @@ export default {
             that.actionInfo = this.pagination(1, this.limit, fuluList);
             that.pageNum = fuluList.length == 0 ? 1 : Math.ceil(fuluList.length / that.limit);
             if (data.data.sandInfoRet.sandInfo) {
+              for (let i in data.data.sandInfoRet.sandInfo) {
+                data.data.sandInfoRet.sandInfo[i].type = data.data.sandInfoRet.sandInfo[i].bodies_type
+                data.data.sandInfoRet.sandInfo[i].name = data.data.sandInfoRet.sandInfo[i].bodies_name
+                data.data.sandInfoRet.sandInfo[i].time = data.data.sandInfoRet.sandInfo[i].bodies_time
+                data.data.sandInfoRet.sandInfo[i].isDel = data.data.sandInfoRet.sandInfo[i].bodies_isDel
+              }
               that.sandInfo = data.data.sandInfoRet.sandInfo;
             } else {
               that.sandInfo = [];

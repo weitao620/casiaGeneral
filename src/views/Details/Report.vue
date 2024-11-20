@@ -14,6 +14,20 @@
       
       <div class="r_ff_box">
         <div
+          v-if="snapshot"
+          :class="[
+            'r_t_tab',
+            { r_t_tab_act1: topAct == 8 }
+          ]"
+          @click="trendTab(8)"
+        >
+          <div>
+            <img src="../../assets/images/news/picture.png" alt="" />
+            <span>表情记录</span>
+          </div>
+          <div class="act1_line" v-if="topAct == 8"></div>
+        </div>
+        <div
           :class="[
             'r_t_tab',
             { r_t_tab_act1: topAct == 1 }
@@ -47,7 +61,7 @@
           <div class="act1_line" v-if="topAct == 3"></div>
         </div>
         <div
-          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 && bcType == 1 }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 4 }]"
           @click="trendTab(4)"
           v-if="jjList.length > 0"
         >
@@ -55,10 +69,10 @@
             <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="" />
             <span>积极心理品质分析</span>
           </div>
-          <div class="act1_line" v-if="topAct == 4 && bcType == 1 "></div>
+          <div class="act1_line" v-if="topAct == 4 "></div>
         </div>
         <div
-          :class="['r_t_tab', { r_t_tab_act1: topAct == 5 && bcType == 1  }]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 5}]"
           @click="trendTab(5)"
         >
           
@@ -66,18 +80,18 @@
             <img style="width: 0.43rem;height:0.52rem;" src="../../assets/images/news/rengefenxi.png" alt=""/>
             <span>人格分析</span>
           </div>
-          <div class="act1_line" v-if="topAct == 5 && bcType == 1 "></div>
+          <div class="act1_line" v-if="topAct == 5"></div>
         </div>
         <!-- {{bcType}}-{{topAct}} -->
         <div
-          :class="['r_t_tab', { r_t_tab_act1: (topAct == 4 && bcType == 3) || (topAct == 5 && bcType == 2) ||(topAct == 6 && bcType == 1)}]"
+          :class="['r_t_tab', { r_t_tab_act1: topAct == 6}]"
           @click="trendTab(6)"
         >
           <div>
             <img style="width: 0.54rem;height:0.44rem;" src="../../assets/images/news/beizhu.png" alt="" />
             <span>备注</span>
           </div>
-          <div class="act1_line" v-if="(topAct == 4 && bcType == 3) || (topAct == 5 && bcType == 2) ||(topAct == 6 && bcType == 1)"></div>
+          <div class="act1_line" v-if="topAct == 6"></div>
         </div>
       </div>
       <div
@@ -299,7 +313,31 @@
           </div>
         </div>
       </div>
-
+      <div class="drwc_box" v-show="snapshot">
+        <div class="drwc_common"  ref="parts8">
+          <div class="drwc_bw_head">
+            <img style="width: 0.53rem;height: 0.50rem;" src="../../assets/images/news/picture.png" alt="">
+            <span>表情记录</span>
+          </div>
+          <div class="drwc_b_work">
+            <div class="dtm_contain">
+              <div class="dtmc_left" style="width: 100%;display: flex;justify-content: center;">
+                <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-if="snap0View !=''">
+                  <img :src="'data:image;base64,' + snap0View" alt="" />
+                </div>
+                <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-else>
+                </div>
+                <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-if="snap1View !=''">
+                  <img :src="'data:image;base64,' + snap1View" alt="" />
+                </div>
+                <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-else>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="drwc_box drwc_box_t">
         <div class="drwc_b_tips">
           <img class="drwx_b_l" style="width:0.22rem;" src="../../assets/images/news/tishi.png" alt="">
@@ -864,7 +902,7 @@
           </div>
         </div>
 
-        <div class="drwc_box" ref="parts4" v-if="jjList.length > 0">
+        <div class="drwc_box" ref="parts4" v-show="jjList.length > 0">
           <div class="drwc_common">
             <div class="drwc_bw_head">
               <img style="width: 0.48rem;height:0.49rem;" src="../../assets/images/news/jiji.png" alt="">
@@ -1000,7 +1038,7 @@
             </div>
           </div>
         </div>
-        <div class="drwc_box" ref="parts62">
+        <div class="drwc_box" ref="parts62" v-show="jjList.length > 0">
           <div class="drwc_common">
             <div class="wdrj_box">
               <div class="wdrj_main">
@@ -1446,6 +1484,12 @@ export default {
       assessment: '',
       assessmentFlag: false,
       birdViewImg: '',
+      snapshot: false,
+      warningFlag: false,
+      suggestionFlag: false,
+      snap0View: '',
+
+      snap1View: '',
       actionInfo: [],
       limit: 10,
       total: 0,
@@ -1510,6 +1554,7 @@ export default {
       token: '',
       token0: '',
       part0: "",
+      part8: "",
       part1: "",
       part2: "",
       part3: "",
@@ -2105,6 +2150,17 @@ export default {
       if (this.tokenFlag) {
         param.token = this.token
       }
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      if (algTypes) {
+        let config = JSON.parse(algTypes.config)
+        this.snapshot = config.snapshot == 1 ? true : false
+        this.warningFlag = config.warningType == 1 ? true : false
+        this.suggestionFlag = config.suggestionType == 1 ? true : false
+        if (this.snapshot){
+          this.getSnapshot()
+        }
+      }
+      
       let postStr3 = this.tokenFlag ? '/aimw/zkyx/report/appendix' : '/aimw/report/appendix'
       this.$http
         .get(Url + postStr3, {
@@ -2124,6 +2180,12 @@ export default {
             that.actionInfo = this.pagination(1, this.limit, fuluList);
             that.pageNum = fuluList.length == 0 ? 1 : Math.ceil(fuluList.length / that.limit);
             if (data.data.sandInfoRet.sandInfo) {
+              for (let i in data.data.sandInfoRet.sandInfo) {
+                data.data.sandInfoRet.sandInfo[i].type = data.data.sandInfoRet.sandInfo[i].bodies_type
+                data.data.sandInfoRet.sandInfo[i].name = data.data.sandInfoRet.sandInfo[i].bodies_name
+                data.data.sandInfoRet.sandInfo[i].time = data.data.sandInfoRet.sandInfo[i].bodies_time
+                data.data.sandInfoRet.sandInfo[i].isDel = data.data.sandInfoRet.sandInfo[i].bodies_isDel
+              }
               that.sandInfo = data.data.sandInfoRet.sandInfo;
             } else {
               that.sandInfo = [];
@@ -2740,11 +2802,13 @@ export default {
             //   }
             // }
             // data.data.jjName = this.jjName
-            data.data.summary = [
-              "积极自我",
-              "简版总结",
-              "详细总结第1段@@详细总结第2段@@详细总结第3段"
-            ]
+            console.log(positivePsychology)
+            // data.data.summary = [
+            //   "积极自我",
+            //   "简版总结",
+            //   "详细总结第1段@@详细总结第2段@@详细总结第3段"
+            // ]
+            data.data.summary = positivePsychology.summary
             if (data.data.summary && data.data.summary != null) {
               this.jjName = data.data.summary[0]
               this.jjTotal = data.data.summary[1]
@@ -2958,6 +3022,29 @@ export default {
           console.log(res);
         });
     },
+    getSnapshot() {
+      let that = this;
+      var param = {
+        reportId: that.reportId
+      };
+      if (this.tokenFlag) {
+        param.token = this.token
+      }
+      this.$http
+        .post(Url + '/aimw/report/reportSnapshotView', param)
+        .then(res => {
+          let data = res.data;
+          if (data.code == 0) {
+            this.snap0View = data.data.snap0View;
+            this.snap1View = data.data.snap1View;
+          } else {
+            that.$message.error(data.msg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
     // 数据处理
     justInfo(list) {
       let data = list;
@@ -3107,6 +3194,7 @@ export default {
       setTimeout(() => {
         // 左边扶梯效果
         this.part0 = this.$refs.parts0.offsetTop;
+        this.part8 = this.$refs.parts8.offsetTop;
         this.part1 = this.$refs.parts1.offsetTop;
         this.part2 = this.$refs.parts2.offsetTop;
         this.part3 = this.$refs.parts3.offsetTop;
@@ -3125,6 +3213,7 @@ export default {
     },
     trendTab(type) {
       this.topAct = type;
+      console.log(type)
       if (type == 1) {
         this.bcType = 1
         window.scrollTo(0, this.part1 - 20);
@@ -3145,24 +3234,33 @@ export default {
         this.bcType = 1
         window.scrollTo(0, this.part5 - 20);
       }
+      if (type == 8) {
+        this.bcType = 1
+        window.scrollTo(0, this.part8 - 20);
+      }
       if (type == 6) {
-        console.log('111111')
+        console.log('进6')
         if (this.bcType < 2) {
-          console.log('2')
+          console.log('3')
           this.bcType = 3
           window.scrollTo(0, this.part61 - 20);
+          // this.bcType = 1
         } else {
           this.bcType = this.bcType - 1
           if (this.bcType == 2) {
-            console.log('3')
+            console.log('2')
             window.scrollTo(0, this.part62 - 20);
+            // this.bcType = 1
           } 
           if (this.bcType == 1) {
-            console.log('4')
+            console.log('1')
             window.scrollTo(0, this.part6 - 20);
+            // this.bcType = 1
           }
         }
-        
+        // setTimeout(() => {
+        //   this.bcType = 1
+        // }, 100);
         // window.scrollTo(0, this.part6 - 20);
       }
         
@@ -3189,6 +3287,7 @@ export default {
       this.scrollYs = window.pageYOffset;
       // console.log(this.scrollYs)
       if (this.reviewFlag) {
+        console.log(1)
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
         }
@@ -3207,42 +3306,77 @@ export default {
       } else {
         // console.log(this.part0)
         // console.log(this.scrollYs)
+        // this.bcType = 1
+        console.log(2)
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
         }
-        if (this.part0 < this.scrollYs && this.scrollYs < this.part1) {
-          this.topAct = 1;
+        if (this.snapshot) {
+
+          // console.log(12)
+          if (this.part0 < this.scrollYs && this.scrollYs < this.part8) {
+            this.topAct = 8;
+          }
+          if (this.part8 < this.scrollYs && this.scrollYs < this.part1) {
+            this.topAct = 1;
+          }
+          if (this.part1 < this.scrollYs && this.scrollYs < this.part2) {
+            this.topAct = 2;
+          }
+          if (this.part2 < this.scrollYs && this.scrollYs < this.part3) {
+            this.topAct = 3;
+            console.log(333)
+          }
+          if (this.part3 < this.scrollYs && this.scrollYs < this.part4) {
+            this.topAct = 4;
+            console.log(444)
+            // this.bcType = 1
+          }
+          if (this.part4 < this.scrollYs && this.scrollYs < this.part5) {
+            this.topAct = 5;
+            console.log(555)
+          }
+          if (this.part5 < this.scrollYs && this.scrollYs < this.part6) {
+            this.topAct = 6;
+            console.log(666)
+          }
+        } else {
+          console.log(122)
+          if (this.part0 < this.scrollYs && this.scrollYs < this.part1) {
+            this.topAct = 1;
+          }
+          if (this.part1 < this.scrollYs && this.scrollYs < this.part2) {
+            this.topAct = 2;
+          }
+          if (this.part2 < this.scrollYs && this.scrollYs < this.part3) {
+            this.topAct = 3;
+          }
+          if (this.part3 < this.scrollYs && this.scrollYs < this.part4) {
+            this.topAct = 4;
+            // if (this.suicideFlag == 1 || this.violenceFlag == 1) {
+            //   this.topAct = 3;
+            // } else {
+            //   this.topAct = 5;
+            // }
+          }
+          if (this.part4 < this.scrollYs && this.scrollYs < this.part5) {
+            this.topAct = 5;
+            // if (this.personalityFlag == 1) {
+            //   this.topAct = 5;
+            // } else {
+            //   this.topAct = 3;
+            // }
+          }
+          if (this.part5 < this.scrollYs && this.scrollYs < this.part6) {
+            this.topAct = 6;
+            // if (this.personalityFlag == 1) {
+            //   this.topAct = 5;
+            // } else {
+            //   this.topAct = 3;
+            // }
+          }
         }
-        if (this.part1 < this.scrollYs && this.scrollYs < this.part2) {
-          this.topAct = 2;
-        }
-        if (this.part2 < this.scrollYs && this.scrollYs < this.part3) {
-          this.topAct = 3;
-        }
-        if (this.part3 < this.scrollYs && this.scrollYs < this.part4) {
-          this.topAct = 4;
-          // if (this.suicideFlag == 1 || this.violenceFlag == 1) {
-          //   this.topAct = 3;
-          // } else {
-          //   this.topAct = 5;
-          // }
-        }
-        if (this.part4 < this.scrollYs && this.scrollYs < this.part5) {
-          this.topAct = 5;
-          // if (this.personalityFlag == 1) {
-          //   this.topAct = 5;
-          // } else {
-          //   this.topAct = 3;
-          // }
-        }
-        if (this.part5 < this.scrollYs && this.scrollYs < this.part6) {
-          this.topAct = 6;
-          // if (this.personalityFlag == 1) {
-          //   this.topAct = 5;
-          // } else {
-          //   this.topAct = 3;
-          // }
-        }
+        
       }
     },
     toReview() {
@@ -8036,6 +8170,7 @@ export default {
                 width: 3.08rem;
                 height: 1.73rem;
                 position: relative;
+                background: rgba(244, 243, 253, 1);
                 img {
                   width: 100%;
                   height: 100%;
@@ -9140,7 +9275,7 @@ export default {
     }
     .r_ff_box{
       width: 1.76rem;
-      padding: 0.27rem 0;
+      padding: 0.1rem 0;
       background: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0.02rem 0.6rem 0 rgba(208, 210, 248, 0.13);
       border-radius: 0.2rem;

@@ -1911,6 +1911,12 @@ export default {
           let data = res.data;
           if (data.code == 0) {
             if (data.data.sandInfoRet.sandInfo) {
+              for (let i in data.data.sandInfoRet.sandInfo) {
+                data.data.sandInfoRet.sandInfo[i].type = data.data.sandInfoRet.sandInfo[i].bodies_type
+                data.data.sandInfoRet.sandInfo[i].name = data.data.sandInfoRet.sandInfo[i].bodies_name
+                data.data.sandInfoRet.sandInfo[i].time = data.data.sandInfoRet.sandInfo[i].bodies_time
+                data.data.sandInfoRet.sandInfo[i].isDel = data.data.sandInfoRet.sandInfo[i].bodies_isDel
+              }
               that.sandInfo = data.data.sandInfoRet.sandInfo;
             } else {
               that.sandInfo = []
