@@ -338,7 +338,7 @@
           </div>
         </div>
       </div>
-      <div class="drwc_box drwc_box_t">
+      <div class="drwc_box drwc_box_t" v-if="!suggestionFlag">
         <div class="drwc_b_tips">
           <img class="drwx_b_l" style="width:0.22rem;" src="../../assets/images/news/tishi.png" alt="">
           <div class="drwx_b_r">
@@ -402,7 +402,7 @@
                   <div class="dtmcl_chart" v-show="details.reportWarningInfo && details.warningList.length == 0">
                     <div class="dtmcl_c_nor">正常</div>
                   </div>
-                  <div class="dtmcl_sys">
+                  <div class="dtmcl_sys" style="margin-top: 0.2rem;">
                     <!-- <div class="dtmcl_du3">
                       <span>数据解读</span>
                     </div> -->
@@ -412,17 +412,20 @@
                         <ul v-if="details.warningList.length > 0">
                           <li v-for="item in details.warningList" :key="item.id">
                             <span>{{item.name}}风险</span>
-                            <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
-                            <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
-                            <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
+                            <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/di.png" alt="">
+                            <span v-if="item.level == 1 && warningFlag" style="margin-left: 0.06rem;color:#ffe400;">轻度</span>
+                            <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhong.png" alt="">
+                            <span v-if="item.level == 2 && warningFlag" style="margin-left: 0.06rem;color:#fc9b2f;">中度</span>
+                            <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gao.png" alt="">
+                            <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#fe2727;">重度</span>
                           </li>
                         </ul>
                         <div v-else>
-                          正常
+                          {{!warningFlag ? '正常' : "该受测者心理健康水平良好。"}}
                         </div>
                       </div>
                     </div>
-                    <div class="dtmcl_stip">
+                    <div class="dtmcl_stip" v-if="!warningFlag">
                       <span>注：</span>
                       <img src="../../assets/images/news/hua.png" alt="">
                       <span>越多表示风险程度越高。</span>
@@ -446,12 +449,52 @@
                           <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
                           <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
                         </div>
+                        <div v-else>
+                          <span v-if="item.level == -1">/</span>
+                          <p v-if="item.level == 0">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
+                            <span class="dr_sp0">{{ item.score }}</span>
+                          </p>
+                          <p v-if="item.level == 1">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
+                            <span class="dr_sp1">{{ item.score }}</span>
+                          </p>
+                          <p v-if="item.level == 2">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
+                            <span class="dr_sp2">{{ item.score }}</span>
+                          </p>
+                          <p v-if="item.level == 3">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
+                            <span class="dr_sp3">{{ item.score }}</span>
+                          </p>
+                          
+                        </div>
                         <div v-if="!warningFlag">
                           <span v-if="item.lastLevel == -1">/</span>
                           <span v-if="item.lastLevel == 0">正常</span>
                           <img v-if="item.lastLevel == 1" src="../../assets/images/news/di.png" alt="">
                           <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhong.png" alt="">
                           <img v-if="item.lastLevel == 3" src="../../assets/images/news/gao.png" alt="">
+                        </div>
+                        <div v-else>
+                          <span v-if="item.lastLevel == -1">/</span>
+                          <p v-if="item.lastLevel == 0">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
+                            <span class="dr_sp0">{{ item.lastScore }}</span>
+                          </p>
+                          <p v-if="item.lastLevel == 1">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
+                            <span class="dr_sp1">{{ item.lastScore }}</span>
+                          </p>
+                          <p v-if="item.lastLevel == 2">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
+                            <span class="dr_sp2">{{ item.lastScore }}</span>
+                          </p>
+                          <p v-if="item.lastLevel == 3">
+                            <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
+                            <span class="dr_sp3">{{ item.lastScore }}</span>
+                          </p>
+                          
                         </div>
                       </li>
                     </ul>
@@ -690,12 +733,18 @@
                 <div class="drwc_btr">
                   <div class="wdrj_box">
                     <div class="wdrjs_li wdrj_main" :style="{display: item.flag == 1 && item.id == btlActNum ? 'block' : 'none'}" v-for="(item, index) in sysList" :key="item.id">
-                      <div class="wdrj_title" v-if="!warningFlag">
+                      <div class="wdrj_title">
                         <span><span style="font-weight:500">{{item.title}}</span>—测评结果：</span>
                         <span v-if="item.level == 0">正常</span>
-                        <img v-if="item.level == 1" src="../../assets/images/news/di.png" alt="">
-                        <img v-if="item.level == 2" src="../../assets/images/news/zhong.png" alt="">
-                        <img v-if="item.level == 3" src="../../assets/images/news/gao.png" alt="">
+                        <!-- <span v-if="item.level == 0 && warningFlag" style="margin-left: 0.06rem;color:#00e805;">正常</span> -->
+
+                        <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/di.png" alt="">
+                        <span v-if="item.level == 1 && warningFlag" style="margin-left: 0.06rem;color:#ffe400;">轻度</span>
+                        <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhong.png" alt="">
+                        <span v-if="item.level == 2 && warningFlag" style="margin-left: 0.06rem;color:#fc9b2f;">中度</span>
+                        <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gao.png" alt="">
+                        <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#fe2727;">重度</span>
+                        
                       </div>
                       <div class="dtmsb_tar">
                         <div style="position:relative" id="perViolenceEchart">
@@ -763,29 +812,105 @@
                           </li>
                         </ul>
                       </div>
-                      <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
-                        <div class="wdrjs_title">
-                          <img src="../../assets/images/news/dot.png" alt="" />指导建议
-                        </div>
-                        <ul class="wdrjs_uls">
-                          <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
-                            <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
-                              {{ items }}
-                            </p>
-                            <div v-if="Array.isArray(items)">
-                              <div v-for="(itemu, indexu) in items" :key="indexu">
-                                <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '500' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                      <div  v-if="!suggestionFlag">
+                        <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim != ''">
+                          <div class="wdrjs_title">
+                            <img src="../../assets/images/news/dot.png" alt="" />指导建议
+                          </div>
+                          <ul class="wdrjs_uls">
+                            <li v-for="(items, indexs) in item.suggestDim" :key="indexs">
+                              <p v-if="!Array.isArray(items)" :style="{'font-weight': String(items).indexOf('针对') != -1 ? '500' : '400'}">
+                                {{ items }}
+                              </p>
+                              <div v-if="Array.isArray(items)">
+                                <div v-for="(itemu, indexu) in items" :key="indexu">
+                                  <p v-for="(itemv, indexv) in itemu" :key="indexv" :style="{'font-weight': String(itemv).indexOf('针对') != -1 ? '500' : '400'}">{{String(itemv).indexOf('针对') != -1 ? '' : indexv +'.'}}{{ itemv }}</p>
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
+                      <div  v-else>
+                        <div class="wdrj_suger" style="margin-top:0rem" v-if="item.suggestDim2 != ''">
+                          <div class="wdrjs_title">
+                            <img src="../../assets/images/news/dot.png" alt="" />指导建议
+                          </div>
+                          <div class="gb_contain gb_contain_v2" v-if="item.suggestDim2 != ''">
+                            <div v-for="(item0, index0) in item.suggestDim2" :key="index0">
+                              <p v-if="!Array.isArray(item0)">
+                                <!-- <img src="../../assets/images/report/icon0.png" alt="" /> -->
+                                 <span style="width: 0.04rem;height: 0.18rem;margin-top: 0.02rem;margin-right: 0.06rem;background: rgba(115, 122, 253, 0.8);"></span>
+                                <span
+                                  v-html="item0"
+                                ></span>
+                              </p>
+                              <div v-if="Array.isArray(item0)">
+                                <div v-for="(itemt, indext) in item0" :key="indext">
+                                  <div v-if="Array.isArray(itemt) && String(itemt).indexOf('：') != -1">
+                                    <div v-for="(itemp, indexp) in itemt" :key="indexp">
+                                      <div class="color-blue" style="padding: 0.10rem 0 0.04rem;color:rgba(115, 122, 253, 1);" v-if="!Array.isArray(itemp)">
+                                        {{ itemp }}
+                                      </div>
+                                      <ul v-if="Array.isArray(itemp)">
+                                        <li v-for="(items, indexs) in itemp" :key="indexs">
+                                          <span v-if="String(itemp).indexOf('？') == -1">{{ indexs + 1 }}</span>
+                                          <span v-if="String(itemp).indexOf('？') != -1 && indexs < 1">{{ indexs + 1 }}</span>
+                                          <span v-if="String(itemp).indexOf('？') != -1 && indexs > 1">{{ indexs }}</span>
+                                          <p v-if="!Array.isArray(items)">
+                                            {{ items }}
+                                          </p>
+                                          <div style="padding-left:0.26rem;" v-if="Array.isArray(items)">
+                                            <div style="display: flex;" v-for="(itemf, indexf) in items" :key="indexf">
+                                              <span style="background: transparent;color: rgba(115, 122, 253, 0.8);" v-if="!Array.isArray(itemf)">{{ indexf + 1 }}</span>
+                                              <p>{{itemf}}</p>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div v-else>
+                                    <div v-if="indext == 0">
+                                      <div v-for="(itemp, indexp) in item0" :key="indexp">
+                                        <div class="color-blue" style="padding: 0.12rem 0 0.04rem;color: rgba(115, 122, 253,1);" v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') != -1">
+                                          {{ itemp }}
+                                        </div>
+                                        <ul v-if="Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                                          <li v-for="(items, indexs) in itemp" :key="indexs">
+                                            <span style="background: transparent;color: rgba(115, 122, 253, 0.8);">{{ indexs + 1 }}</span>
+                                            <p>
+                                              {{ items }}
+                                            </p>
+                                          </li>
+                                        </ul>
+                                        <ul v-if="!Array.isArray(itemp) && String(itemp).indexOf('：') == -1">
+                                          <li >
+                                            <!-- <span>1</span> -->
+                                            <p>
+                                              {{ itemp }}
+                                            </p>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                        
+
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="drwc_b_tips drwc_b_tips1">
+            <div class="drwc_b_tips drwc_b_tips1" v-if="!suggestionFlag">
               <img class="drwx_b_l" style="width:0.22rem;" src="../../assets/images/news/tishi.png" alt="">
               <div class="drwx_b_r">
                 <p>本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》</p>
@@ -2142,6 +2267,92 @@ export default {
     perctInfo (data) {
       return Math.round(data.toFixed(2) * 100) / 100
     },
+    suggestion2 (suggestionV2) {
+      let suggestion = suggestionV2
+      if (suggestion && suggestion != '') {
+        suggestion = suggestion.split("|||");
+
+        for (let i in suggestion) {
+          if (suggestion[i].indexOf("&&") != -1) {
+            suggestion[i] = suggestion[i].split("&&")
+            for (let j in suggestion[i]) {
+              if (suggestion[i][j].indexOf("$$") != -1) {
+                suggestion[i][j] = suggestion[i][j].split("$$");
+                for (let k in suggestion[i][j]) {
+                  // console.log(suggestion[i][j][k])
+                  if (suggestion[i][j][k].indexOf("@@") != -1) {
+                    suggestion[i][j][k] = suggestion[i][j][k].split("@@");
+                    for (let m in suggestion[i][j][k]) {
+                      // console.log(suggestion[i][j][k][m])
+                      if (suggestion[i][j][k][m].indexOf("##") != -1) {
+                        suggestion[i][j][k][m] = suggestion[i][j][k][m].split("##");
+                      }
+                    }
+                  } else {
+                    if (suggestion[i][j][k].indexOf("针对") == -1) {
+                      let ass1 = [suggestion[i][j][k]]
+                      suggestion[i][j][k] = ass1;
+                      for (let m in suggestion[i][j][k]) {
+                        // console.log(suggestion[i][j][k][m])
+                        if (suggestion[i][j][k][m].indexOf("##") != -1) {
+                          suggestion[i][j][k][m] = suggestion[i][j][k][m].split("##");
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          } else {
+            if (suggestion[i].indexOf("span") == -1) {
+              suggestion[i] = [suggestion[i]]
+            }
+            for (let j in suggestion[i]) {
+              if (suggestion[i][j].indexOf("$$") != -1) {
+                suggestion[i][j] = suggestion[i][j].split("$$");
+                for (let k in suggestion[i][j]) {
+                  // console.log(suggestion[i][j][k])
+                  if (suggestion[i][j][k].indexOf("@@") != -1) {
+                    suggestion[i][j][k] = suggestion[i][j][k].split("@@");
+                    for (let m in suggestion[i][j][k]) {
+                      // console.log(suggestion[i][j][k][m])
+                      if (suggestion[i][j][k][m].indexOf("##") != -1) {
+                        suggestion[i][j][k][m] = suggestion[i][j][k][m].split("##");
+                      }
+                    }
+                  } else {
+                    if (suggestion[i][j][k].indexOf("针对") == -1) {
+                      let ass1 = [suggestion[i][j][k]]
+                      suggestion[i][j][k] = ass1;
+                      for (let m in suggestion[i][j][k]) {
+                        // console.log(suggestion[i][j][k][m])
+                        if (suggestion[i][j][k][m].indexOf("##") != -1) {
+                          suggestion[i][j][k][m] = suggestion[i][j][k][m].split("##");
+                        }
+                      }
+                    }
+                  }
+                }
+              } else {
+                for (let j in suggestion[i]) {
+                  if (suggestion[i][j].indexOf("@@") != -1) {
+                    suggestion[i][j] = suggestion[i][j].split("@@");
+                    for (let m in suggestion[i][j]) {
+                      if (suggestion[i][j][m].indexOf("##") != -1) {
+                        suggestion[i][j][m] = suggestion[i][j][m].split("##");
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      // // console.log(data.data.suggestionSuicide)
+      // console.log(data.data.suggestionViolence2)
+      return suggestion
+    },
     getDetail() {
       let that = this;
       this.loading = this.$loading({
@@ -2396,6 +2607,8 @@ export default {
                 data.data.warnLen.push(oldWarning[i])
               }
             }
+            console.log(data.data.warningList)
+            console.log(data.data.warnLen)
             data.data.rangeList = data.data.warnLen;
             data.data.warningNum = data.data.whatWarn.length;
             
@@ -2406,6 +2619,92 @@ export default {
               console.log(data.data.mentalHealth)
               console.log(JSON.parse(data.data.mentalHealth))
               mentalHealth = JSON.parse(data.data.mentalHealth)
+
+              
+
+              // if (data.data.suggestionViolence && data.data.suggestionViolence != '') {
+              //   data.data.suggestionViolence = data.data.suggestionViolence.split("|||");
+              //   for (let i in data.data.suggestionViolence) {
+              //     if (data.data.suggestionViolence[i].indexOf("&&") != -1) {
+              //       data.data.suggestionViolence[i] = data.data.suggestionViolence[i].split("&&")
+              //       for (let j in data.data.suggestionViolence[i]) {
+              //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+              //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+              //           for (let k in data.data.suggestionViolence[i][j]) {
+              //             // console.log(data.data.suggestionViolence[i][j][k])
+              //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+              //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+              //               for (let m in data.data.suggestionViolence[i][j][k]) {
+              //                 // console.log(data.data.suggestionViolence[i][j][k][m])
+              //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+              //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+              //                 }
+              //               }
+              //             } else {
+              //               if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+              //                 let ass1 = [data.data.suggestionViolence[i][j][k]]
+              //                 data.data.suggestionViolence[i][j][k] = ass1;
+              //                 for (let m in data.data.suggestionViolence[i][j][k]) {
+              //                   // console.log(data.data.suggestionViolence[i][j][k][m])
+              //                   if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+              //                     data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+              //                   }
+              //                 }
+              //               }
+              //             }
+              //           }
+              //         }
+              //       }
+              //     } else {
+              //       if (data.data.suggestionViolence[i].indexOf("span") == -1) {
+              //         data.data.suggestionViolence[i] = [data.data.suggestionViolence[i]]
+              //       }
+              //       for (let j in data.data.suggestionViolence[i]) {
+              //         if (data.data.suggestionViolence[i][j].indexOf("$$") != -1) {
+              //           data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("$$");
+              //           for (let k in data.data.suggestionViolence[i][j]) {
+              //             // console.log(data.data.suggestionViolence[i][j][k])
+              //             if (data.data.suggestionViolence[i][j][k].indexOf("@@") != -1) {
+              //               data.data.suggestionViolence[i][j][k] = data.data.suggestionViolence[i][j][k].split("@@");
+              //               for (let m in data.data.suggestionViolence[i][j][k]) {
+              //                 // console.log(data.data.suggestionViolence[i][j][k][m])
+              //                 if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+              //                   data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+              //                 }
+              //               }
+              //             } else {
+              //               if (data.data.suggestionViolence[i][j][k].indexOf("针对") == -1) {
+              //                 let ass1 = [data.data.suggestionViolence[i][j][k]]
+              //                 data.data.suggestionViolence[i][j][k] = ass1;
+              //                 for (let m in data.data.suggestionViolence[i][j][k]) {
+              //                   // console.log(data.data.suggestionViolence[i][j][k][m])
+              //                   if (data.data.suggestionViolence[i][j][k][m].indexOf("##") != -1) {
+              //                     data.data.suggestionViolence[i][j][k][m] = data.data.suggestionViolence[i][j][k][m].split("##");
+              //                   }
+              //                 }
+              //               }
+              //             }
+              //           }
+              //         } else {
+              //           for (let j in data.data.suggestionViolence[i]) {
+              //             if (data.data.suggestionViolence[i][j].indexOf("@@") != -1) {
+              //               data.data.suggestionViolence[i][j] = data.data.suggestionViolence[i][j].split("@@");
+              //               for (let m in data.data.suggestionViolence[i][j]) {
+              //                 if (data.data.suggestionViolence[i][j][m].indexOf("##") != -1) {
+              //                   data.data.suggestionViolence[i][j][m] = data.data.suggestionViolence[i][j][m].split("##");
+              //                 }
+              //               }
+              //             }
+              //           }
+              //         }
+              //       }
+              //     }
+              //   }
+              // }
+              // // console.log(data.data.suggestionSuicide)
+              // console.log(data.data.suggestionViolence)
+
+
               if (that.depressionFlag == 1) {
                 if (mentalHealth.depression) {
                   data.data.depressionSubdim = JSON.parse(mentalHealth.depression.subdim);
@@ -2432,6 +2731,10 @@ export default {
                     }
                   }
                   console.log(data.data.depressionSuggestion)
+
+                  data.data.depressionSuggestion2 = that.suggestion2(mentalHealth.depression.suggestionV2)
+                  console.log(data.data.depressionSuggestion2)
+                  console.log(mentalHealth.depression.suggestionV2)
                   sysList0.push({
                     id: 1,
                     title: "抑郁",
@@ -2439,6 +2742,7 @@ export default {
                     level: warningInfo.depressionLevel,
                     subDim: data.data.depressionSubdim,
                     suggestDim: data.data.depressionSuggestion,
+                    suggestDim2: data.data.depressionSuggestion2,
                     sysDim: data.data.depressionAnalysis,
                     flag: that.depressionFlag
                   })
@@ -2469,6 +2773,9 @@ export default {
                     }
                   }
                   console.log(data.data.anxietySuggestion)
+
+                  data.data.anxietySuggestion2 = that.suggestion2(mentalHealth.anxiety.suggestionV2)
+
                   sysList0.push({
                     id: 2,
                     title: "焦虑",
@@ -2476,6 +2783,7 @@ export default {
                     level: warningInfo.anxietyLevel,
                     subDim: data.data.anxietySubdim,
                     suggestDim: data.data.anxietySuggestion,
+                    suggestDim2: data.data.anxietySuggestion2,
                     sysDim: data.data.anxietyAnalysis,
                     flag: that.anxietyFlag
                   })
@@ -2506,6 +2814,9 @@ export default {
                     }
                   }
                   console.log(data.data.forcedSuggestion)
+
+                  data.data.forcedSuggestion2 = that.suggestion2(mentalHealth.forced.suggestionV2)
+
                   sysList0.push({
                     id: 3,
                     title: "强迫",
@@ -2513,6 +2824,7 @@ export default {
                     level: warningInfo.forcedLevel,
                     subDim: data.data.forcedSubdim,
                     suggestDim: data.data.forcedSuggestion,
+                    suggestDim2: data.data.forcedSuggestion2,
                     sysDim: data.data.forcedAnalysis,
                     flag: that.forcedFlag
                   })
@@ -2543,6 +2855,7 @@ export default {
                     }
                   }
                   console.log(data.data.ptsdSuggestion)
+                  data.data.ptsdSuggestion2 = that.suggestion2(mentalHealth.ptsd.suggestionV2)
                   sysList0.push({
                     id: 4,
                     title: "PTSD",
@@ -2550,6 +2863,7 @@ export default {
                     level: warningInfo.ptsdLevel,
                     subDim: data.data.ptsdSubdim,
                     suggestDim: data.data.ptsdSuggestion,
+                    suggestDim2: data.data.ptsdSuggestion2,
                     sysDim: data.data.ptsdAnalysis,
                     flag: that.ptsdFlag
                   })
@@ -2580,6 +2894,7 @@ export default {
                     }
                   }
                   console.log(data.data.violenceSuggestion)
+                  data.data.violenceSuggestion2 = that.suggestion2(mentalHealth.violence.suggestionV2)
                   sysList0.push({
                     id: 5,
                     title: "敌对",
@@ -2587,6 +2902,7 @@ export default {
                     level: warningInfo.violenceLevel,
                     subDim: data.data.violenceSubdim,
                     suggestDim: data.data.violenceSuggestion,
+                    suggestDim2: data.data.violenceSuggestion2,
                     sysDim: data.data.violenceAnalysis,
                     flag: that.violenceFlag
                   })
@@ -2617,6 +2933,8 @@ export default {
                     }
                   }
                   console.log(data.data.suicideSuggestion)
+                  data.data.suicideSuggestion2 = that.suggestion2(mentalHealth.suicide.suggestionV2)
+
                   sysList0.push({
                     id: 6,
                     title: "自我伤害",
@@ -2624,6 +2942,7 @@ export default {
                     level: warningInfo.suicideLevel,
                     subDim: data.data.suicideSubdim,
                     suggestDim: data.data.suicideSuggestion,
+                    suggestDim2: data.data.suicideSuggestion2,
                     sysDim: data.data.suicideAnalysis,
                     flag: that.suicideFlag
                   })
@@ -3291,7 +3610,7 @@ export default {
       this.scrollYs = window.pageYOffset;
       // console.log(this.scrollYs)
       if (this.reviewFlag) {
-        console.log(1)
+        // console.log(1)
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
         }
@@ -3311,7 +3630,7 @@ export default {
         // console.log(this.part0)
         // console.log(this.scrollYs)
         // this.bcType = 1
-        console.log(2)
+        // console.log(2)
         if (this.scrollYs < this.part0) {
           this.topAct = 0;
         }
@@ -3329,20 +3648,20 @@ export default {
           }
           if (this.part2 < this.scrollYs && this.scrollYs < this.part3) {
             this.topAct = 3;
-            console.log(333)
+            // console.log(333)
           }
           if (this.part3 < this.scrollYs && this.scrollYs < this.part4) {
             this.topAct = 4;
-            console.log(444)
+            // console.log(444)
             // this.bcType = 1
           }
           if (this.part4 < this.scrollYs && this.scrollYs < this.part5) {
             this.topAct = 5;
-            console.log(555)
+            // console.log(555)
           }
           if (this.part5 < this.scrollYs && this.scrollYs < this.part6) {
             this.topAct = 6;
-            console.log(666)
+            // console.log(666)
           }
         } else {
           console.log(122)
@@ -6496,7 +6815,7 @@ export default {
                   .wdrj_title {
                     display: flex;
                     align-items: center;
-                    font-size: 0.22rem;
+                    font-size: 0.20rem;
                     font-family: Source Han Sans CN;
                     font-weight: 400;
                     color: #354b70;
@@ -6717,6 +7036,7 @@ export default {
                       }
                     }
                   }
+                  
                   .wdrj_suger {
                     margin-top: 0.5rem;
                     text-align: left;
@@ -6921,7 +7241,7 @@ export default {
                             line-height: 0.16rem;
                             width: 0.16rem;
                             height: 0.16rem;
-                            background: linear-gradient(177deg, #1becff, #00c6ff);
+                            background: linear-gradient(177deg, #6c7d7e, #00c6ff);
                             border-radius: 50%;
                             font-size: 0.12rem;
                             font-family: Source Han Sans CN;
@@ -6941,6 +7261,59 @@ export default {
                         }
                       }
                     }
+                    .gb_contain_v2{
+                      text-align: left;
+                      padding: 0 0.25rem;
+                      p {
+                        padding: 0.1rem 0 0.0rem;
+                        font-size: 0.16rem;
+                        font-family: Source Han Sans CN;
+                        font-weight: 400;
+                        color: #354b70;
+                        display: flex;
+                        align-items: flex-start;
+                        img {
+                          width: 0.04rem;
+                          height: 0.18rem;
+                          margin-top: 0.02rem;
+                          margin-right: 0.06rem;
+                        }
+                        .color-blue{
+                         color: rgba(115, 122, 253, 1);
+                        }
+                      }
+                      ul {
+                        li {
+                          display: flex;
+                          line-height: 0.36rem;
+                          span {
+                            margin-top: 0.09rem;
+                            margin-right: 0.08rem;
+                            text-align: center;
+                            line-height: 0.16rem;
+                            width: 0.16rem;
+                            height: 0.16rem;
+                            background: rgba(115, 122, 253, 0.6);
+                            border-radius: 50%;
+                            font-size: 0.12rem;
+                            font-family: Source Han Sans CN;
+                            font-weight: bold;
+                            color: #ffffff;
+                            border: 0.01rem solid rgba(115, 122, 253, 0.6);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                          }
+                          p {
+                            padding: 0;
+                            flex: 1;
+                            display: flex;
+                            flex-wrap: wrap;
+                          }
+                        }
+                      }
+                    }
+                    
                   }
                   .wdrj_suger1 {
                     margin-top: 0.1rem;
@@ -8268,7 +8641,8 @@ export default {
                   margin-right: 0.06rem;
                 }
                 span{
-                  font-size:0.2rem
+                  font-size:0.2rem;
+                  line-height: normal;
                 }
               }
               .dtmcl_sys {
@@ -8423,6 +8797,24 @@ export default {
                       display: flex;
                       justify-content: center;
                       align-items: center;
+                      p{
+                        display: flex;
+                        span{
+                          margin-left: 0.06rem;
+                        }
+                        .dr_sp0 {
+                          color: #00e805;
+                        }
+                        .dr_sp1 {
+                          color: #ffe400;
+                        }
+                        .dr_sp2 {
+                          color: #fc9b2f;
+                        }
+                        .dr_sp3 {
+                          color: #fe2727;
+                        }
+                      }
                       span{
                         font-family: SourceHanSansCN;
                         font-weight: 400;

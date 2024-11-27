@@ -111,17 +111,20 @@
               <ul v-if="details.warningList.length > 0">
                 <li v-for="item in details.warningList" :key="item.id">
                   <span>{{item.name}}风险</span>
-                  <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
-                  <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
-                  <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <span v-if="item.level == 1 && warningFlag" style="margin-left: 6px;color:#ffe400;">轻度</span>
+                  <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
+                  <span v-if="item.level == 2 && warningFlag" style="margin-left: 6px;color:#fc9b2f;">中度</span>
+                  <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 6px;color:#fe2727;">重度</span>
                 </li>
               </ul>
               <div v-else>
-                正常
+                {{!warningFlag ? '正常' : "该受测者心理健康水平良好。"}}
               </div>
             </div>
           </div>
-          <div class="dtmcl_stip">
+          <div class="dtmcl_stip" v-if="!warningFlag">
             <span>注：</span>
             <img src="../../assets/images/news/huas.png" alt="">
             <span>越多表示风险程度越高。</span>
@@ -143,7 +146,7 @@
                   <div>本次结果</div>
                   <div>上次结果</div>
                 </li>
-                <li v-for="item in details.rangeList" :key="item.id">
+                <!-- <li v-for="item in details.rangeList" :key="item.id">
                   <div>{{item.name}}</div>
                   <div>
                     <span v-if="item.level == -1">/</span>
@@ -158,6 +161,63 @@
                     <img v-if="item.lastLevel == 1" src="../../assets/images/news/dis.png" alt="">
                     <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhongs.png" alt="">
                     <img v-if="item.lastLevel == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                </li> -->
+                <li v-for="item in details.rangeList" :key="item.id">
+                  <div>{{item.name}}</div>
+                  <div v-if="!warningFlag">
+                    <span v-if="item.level == -1">/</span>
+                    <span v-if="item.level == 0">正常</span>
+                    <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                  <div v-else>
+                    <span v-if="item.level == -1">/</span>
+                    <p v-if="item.level == 0">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
+                      <span class="dr_sp0">{{ item.score }}</span>
+                    </p>
+                    <p v-if="item.level == 1">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
+                      <span class="dr_sp1">{{ item.score }}</span>
+                    </p>
+                    <p v-if="item.level == 2">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
+                      <span class="dr_sp2">{{ item.score }}</span>
+                    </p>
+                    <p v-if="item.level == 3">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
+                      <span class="dr_sp3">{{ item.score }}</span>
+                    </p>
+                    
+                  </div>
+                  <div v-if="!warningFlag">
+                    <span v-if="item.lastLevel == -1">/</span>
+                    <span v-if="item.lastLevel == 0">正常</span>
+                    <img v-if="item.lastLevel == 1" src="../../assets/images/news/dis.png" alt="">
+                    <img v-if="item.lastLevel == 2" src="../../assets/images/news/zhongs.png" alt="">
+                    <img v-if="item.lastLevel == 3" src="../../assets/images/news/gaos.png" alt="">
+                  </div>
+                  <div v-else>
+                    <span v-if="item.lastLevel == -1">/</span>
+                    <p v-if="item.lastLevel == 0">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
+                      <span class="dr_sp0">{{ item.lastScore }}</span>
+                    </p>
+                    <p v-if="item.lastLevel == 1">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
+                      <span class="dr_sp1">{{ item.lastScore }}</span>
+                    </p>
+                    <p v-if="item.lastLevel == 2">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
+                      <span class="dr_sp2">{{ item.lastScore }}</span>
+                    </p>
+                    <p v-if="item.lastLevel == 3">
+                      <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
+                      <span class="dr_sp3">{{ item.lastScore }}</span>
+                    </p>
+                    
                   </div>
                 </li>
               </ul>
@@ -441,7 +501,7 @@
       <div class="table-border">
         <div class="gp_all_tips">
           <img src="../../assets/images/part/tipss.png" alt="" />
-          本报告结果仅供参考，不作为评价或选拔使用，可详见《指导建议手册》。
+          温馨提示：本报告结果仅供参考，不作为评价或选拔使用{{!suggestionFlag ? '，可详见《指导建议手册》' : ''}}。
         </div>
         <div class="gp2_top" style="padding-bottom: 20px" v-if="index < 1">
           <img src="../../assets/images/news/xlweidu.png" style="width: 60px;height: auto" alt="">
@@ -457,9 +517,13 @@
                 <div class="wdrj_title wdrj_titles">
                   <span>测评结果：</span>
                   <span v-if="item.level == 0">正常</span>
-                  <img v-if="item.level == 1" src="../../assets/images/news/dis.png" alt="">
-                  <img v-if="item.level == 2" src="../../assets/images/news/zhongs.png" alt="">
-                  <img v-if="item.level == 3" src="../../assets/images/news/gaos.png" alt="">
+                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <span v-if="item.level == 1 && warningFlag" style="margin-left: 0.06rem;color:#ffe400;">轻度</span>
+                  <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
+                  <span v-if="item.level == 2 && warningFlag" style="margin-left: 0.06rem;color:#fc9b2f;">中度</span>
+                  <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#fe2727;">重度</span>
+
                 </div>
                 <div class="dtmsb_tar">
                   <div style="position:relative" id="perViolenceEchart">
@@ -1139,7 +1203,9 @@ export default {
       sandList: [],
       imgList: [],
       sandUseNumInfoName: [],
-      sandUseNumInfoNum: []
+      sandUseNumInfoNum: [],
+      warningFlag: false,
+      suggestionFlag: false
     };
   },
   props: {
@@ -1169,6 +1235,13 @@ export default {
     }
   },
   mounted() {
+    let that = this;
+    if (localStorage.getItem("algTypes")) {
+      let algTypes = JSON.parse(localStorage.getItem("algTypes"));
+      let config = JSON.parse(algTypes.config)
+      this.warningFlag = config.warningType == 1 ? true : false
+      this.suggestionFlag = config.suggestionType == 1 ? true : false
+    }
     this.loading = this.$loading({
       lock: true,
       text: "报告生成中",
@@ -1207,7 +1280,7 @@ export default {
       setTimeout(() => {
         this.getPdfFromHtml(this.$refs.sprintReportPerson, this.details.name + '-第' + this.details.evaluationTime + '次-' + this.details.reportId);
         this.$nextTick(() => {
-          // this.setPersonFlag(false)
+          this.setPersonFlag(false)
         })
       }, 1000)
     },
@@ -10206,6 +10279,25 @@ export default {
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  p{
+                    display: flex;
+                    align-items: center;
+                    span{
+                      margin-left: 6px;
+                    }
+                    .dr_sp0 {
+                      color: #00e805;
+                    }
+                    .dr_sp1 {
+                      color: #ffe400;
+                    }
+                    .dr_sp2 {
+                      color: #fc9b2f;
+                    }
+                    .dr_sp3 {
+                      color: #fe2727;
+                    }
+                  }
                   span{
                     font-family: PingFangSC, PingFang SC;
                     font-weight: 400;
