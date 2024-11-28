@@ -1351,7 +1351,7 @@ export default {
       let jfList = []
       // 
       for (let i in arr) {
-        // if (i < 2) {
+        // if (i < 4) {
           // if (this.getdev(arr[i]) != '') {
             jfList.push(this.getdev(arr[i]))
           // }
@@ -1391,6 +1391,9 @@ export default {
       
       
     },
+    areAllEqual(arr) {
+      return !arr.some((val, i) => val !== arr[0]);
+    },
     getdev(name) {
         //  更新数据devInfo.txt文件接口  
         let list0 = {}    
@@ -1417,6 +1420,8 @@ export default {
             arrStr.A1 = []
           }
           let c5 = arrStr.A1
+          let A1Flag = this.areAllEqual(arrStr.A1) ? '（无效）' : ''
+          console.log(A1Flag)
           let sum_c51 = 0
           let sum_c52 = 0
           let sum_c53 = 0
@@ -1439,11 +1444,16 @@ export default {
               sum_c55 = sum_c55 + (Number(c5[i])+1)
             }
           }
-          arrStr.A1_1 = (sum_c51/10).toFixed(2)
-          arrStr.A1_2 = (sum_c52/9).toFixed(2)
-          arrStr.A1_3 = (sum_c53/13).toFixed(2)
-          arrStr.A1_4 = (sum_c54/10).toFixed(2)
-          arrStr.A1_5 = (sum_c55/6).toFixed(2)
+          arrStr.A1_1 = (sum_c51/10).toFixed(2) + A1Flag
+          //  + '（' + A1Flag ? '（无效）' : '' + '）'
+          arrStr.A1_2 = (sum_c52/9).toFixed(2) + A1Flag
+          //  + '（' + A1Flag ? '（无效）' : '' + '）'
+          arrStr.A1_3 = (sum_c53/13).toFixed(2) + A1Flag
+          //  + '（' + A1Flag ? '（无效）' : '' + '）'
+          arrStr.A1_4 = (sum_c54/10).toFixed(2) + A1Flag
+          //  + '（' + A1Flag ? '（无效）' : '' + '）'
+          arrStr.A1_5 = (sum_c55/6).toFixed(2) + A1Flag
+          //  + '（' + A1Flag ? '（无效）' : '' + '）'
 
           if (!arrStr.C1) {
             arrStr.C1 = []
@@ -1451,6 +1461,9 @@ export default {
           arrStr.C1_1 = ''
           arrStr.C1_2 = ''
           let c1 = arrStr.C1
+          let C1Flag = this.areAllEqual(arrStr.C1) ? '（无效）' : ''
+
+          console.log(C1Flag)
           let sum_c11 = 0
           let sum_c12 = 0
           for (let i in c1){
@@ -1466,14 +1479,18 @@ export default {
               sum_c12 = sum_c12 + (Number(c1[i])+1)
             }
           }
-          arrStr.C1_1 = (sum_c11/5).toFixed(2)
-          arrStr.C1_2 = (sum_c12/5).toFixed(2)
+          arrStr.C1_1 = (sum_c11/5).toFixed(2) + C1Flag
+          //  + '（' + C1Flag ? '（无效）' : '' + '）'
+          arrStr.C1_2 = (sum_c12/5).toFixed(2) + C1Flag
+          //  + '（' + C1Flag ? '（无效）' : '' + '）'
 
           if (!arrStr.C2) {
             arrStr.C2 = []
           }
           arrStr.C2_1 = ''
           let c2 = arrStr.C2
+          let C2Flag = this.areAllEqual(arrStr.C2) ? '（无效）' : ''
+          console.log(C2Flag)
           let sum_c2 = 0
           for (let i in c2){
             let num = Number(i) + 1
@@ -1485,13 +1502,15 @@ export default {
               
             }
           }
-          arrStr.C2_1 = sum_c2
+          arrStr.C2_1 = sum_c2 + C2Flag
+          //  + '（' + C2Flag ? '（无效）' : '' + '）'
 
           if (!arrStr.C3) {
             arrStr.C3 = []
           }
           arrStr.C3_1 = ''
           let c3 = arrStr.C3
+          let C3Flag = this.areAllEqual(arrStr.C3) ? '（无效）' : ''
           let sum_c3 = 0
           for (let i in c3){
             sum_c3 = sum_c3 + (Number(c3[i])+1)
@@ -1500,7 +1519,8 @@ export default {
             arrStr.C3_1 = "没有量表"
 
           } else {
-            arrStr.C3_1 = sum_c3/arrStr.C3.length
+            arrStr.C3_1 = sum_c3/arrStr.C3.length + C3Flag
+            //  + '（' + C3Flag ? '（无效）' : '' + '）'
           }
           
 
@@ -1512,6 +1532,7 @@ export default {
           arrStr.C4_2 = ''
           arrStr.C4_3 = ''
           let c4 = arrStr.C4
+          let C4Flag = this.areAllEqual(arrStr.C4) ? '（无效）' : ''
           let sum_c41 = 0
           let sum_c42 = 0
           let sum_c43 = 0
@@ -1523,9 +1544,9 @@ export default {
             }
           }
           sum_c43 = sum_c41 - sum_c42
-          arrStr.C4_1 = sum_c41
-          arrStr.C4_2 = sum_c42
-          arrStr.C4_3 = sum_c43
+          arrStr.C4_1 = sum_c41 + C4Flag
+          arrStr.C4_2 = sum_c42 + C4Flag
+          arrStr.C4_3 = sum_c43 + C4Flag
 
           if (!arrStr.C9) {
             arrStr.C9 = []
@@ -1533,6 +1554,7 @@ export default {
           arrStr.C9_1 = ''
           console.log(arrStr.C9)
           let c9 = arrStr.C9
+          let C9Flag = this.areAllEqual(arrStr.C9) ? '（无效）' : ''
           let sum_c9 = 0
           for (let i in c9){
             let num = Number(i) + 1
@@ -1543,7 +1565,7 @@ export default {
               sum_c9 = sum_c9 + (Number(c9[i])+1)
             }
           }
-          arrStr.C9_1 = sum_c9
+          arrStr.C9_1 = sum_c9 + C9Flag
 
 
           list0 = {
