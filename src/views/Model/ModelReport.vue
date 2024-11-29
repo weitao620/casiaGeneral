@@ -111,12 +111,18 @@
               <ul v-if="details.warningList.length > 0">
                 <li v-for="item in details.warningList" :key="item.id">
                   <span>{{item.name}}风险</span>
-                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <!-- <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
                   <span v-if="item.level == 1 && warningFlag" style="margin-left: 6px;color:#ffe400;">轻度</span>
                   <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
                   <span v-if="item.level == 2 && warningFlag" style="margin-left: 6px;color:#fc9b2f;">中度</span>
                   <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
-                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 6px;color:#fe2727;">重度</span>
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 6px;color:#fe2727;">重度</span> -->
+                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <span v-if="item.level == 1 && warningFlag" style="margin-left: 6px;color:#333E75;font-weight: 600;">轻度</span>
+                  <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
+                  <span v-if="item.level == 2 && warningFlag" style="margin-left: 6px;color:#333E75;font-weight: 600;">中度</span>
+                  <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 6px;color:#333E75;font-weight: 600;">重度</span>
                 </li>
               </ul>
               <div v-else>
@@ -175,20 +181,24 @@
                   <div v-else>
                     <span v-if="item.level == -1">/</span>
                     <p v-if="item.level == 0">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
-                      <span class="dr_sp0">{{ item.score }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt=""> -->
+                      <span class="dr_sp0" style="color: #333E75;">正常</span>
+                      <span class="dr_sp0" style="color: #333E75;font-weight: 600;">{{ item.score }}</span>
                     </p>
                     <p v-if="item.level == 1">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
-                      <span class="dr_sp1">{{ item.score }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt=""> -->
+                      <span class="dr_sp1" style="color: #333E75;">轻度</span>
+                      <span class="dr_sp1" style="color: #333E75;font-weight: 600;">{{ item.score }}</span>
                     </p>
                     <p v-if="item.level == 2">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
-                      <span class="dr_sp2">{{ item.score }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt=""> -->
+                      <span class="dr_sp2" style="color: #333E75;">中度</span>
+                      <span class="dr_sp2" style="color: #333E75;font-weight: 600;">{{ item.score }}</span>
                     </p>
                     <p v-if="item.level == 3">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
-                      <span class="dr_sp3">{{ item.score }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt=""> -->
+                      <span class="dr_sp3" style="color: #333E75;">重度</span>
+                      <span class="dr_sp3" style="color: #333E75;font-weight: 600;">{{ item.score }}</span>
                     </p>
                     
                   </div>
@@ -202,20 +212,28 @@
                   <div v-else>
                     <span v-if="item.lastLevel == -1">/</span>
                     <p v-if="item.lastLevel == 0">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
-                      <span class="dr_sp0">{{ item.lastScore }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn1.png" alt="">
+                      <span class="dr_sp0">{{ item.lastScore }}</span> -->
+                      <span class="dr_sp0" style="color: #333E75;">正常</span>
+                      <span class="dr_sp0" style="color: #333E75;font-weight: 600;">{{ item.lastScore }}</span>
                     </p>
                     <p v-if="item.lastLevel == 1">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
-                      <span class="dr_sp1">{{ item.lastScore }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn2.png" alt="">
+                      <span class="dr_sp1">{{ item.lastScore }}</span> -->
+                      <span class="dr_sp1" style="color: #333E75;">轻度</span>
+                      <span class="dr_sp1" style="color: #333E75;font-weight: 600;">{{ item.lastScore }}</span>
                     </p>
                     <p v-if="item.lastLevel == 2">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
-                      <span class="dr_sp2">{{ item.lastScore }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn3.png" alt="">
+                      <span class="dr_sp2">{{ item.lastScore }}</span> -->
+                      <span class="dr_sp2" style="color: #333E75;">中度</span>
+                      <span class="dr_sp2" style="color: #333E75;font-weight: 600;">{{ item.lastScore }}</span>
                     </p>
                     <p v-if="item.lastLevel == 3">
-                      <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
-                      <span class="dr_sp3">{{ item.lastScore }}</span>
+                      <!-- <img style="width: auto;" src="../../assets/images/report/sys_btn4.png" alt="">
+                      <span class="dr_sp3">{{ item.lastScore }}</span> -->
+                      <span class="dr_sp3" style="color: #333E75;">重度</span>
+                      <span class="dr_sp3" style="color: #333E75;font-weight: 600;">{{ item.lastScore }}</span>
                     </p>
                     
                   </div>
@@ -517,12 +535,19 @@
                 <div class="wdrj_title wdrj_titles">
                   <span>测评结果：</span>
                   <span v-if="item.level == 0">正常</span>
-                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <!-- <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
                   <span v-if="item.level == 1 && warningFlag" style="margin-left: 0.06rem;color:#ffe400;">轻度</span>
                   <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
                   <span v-if="item.level == 2 && warningFlag" style="margin-left: 0.06rem;color:#fc9b2f;">中度</span>
                   <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
-                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#fe2727;">重度</span>
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#fe2727;">重度</span> -->
+                  
+                  <img v-if="item.level == 1 && !warningFlag" src="../../assets/images/news/dis.png" alt="">
+                  <span v-if="item.level == 1 && warningFlag" style="margin-left: 0.06rem;color:#333E75;">轻度</span>
+                  <img v-if="item.level == 2 && !warningFlag" src="../../assets/images/news/zhongs.png" alt="">
+                  <span v-if="item.level == 2 && warningFlag" style="margin-left: 0.06rem;color:#333E75;">中度</span>
+                  <img v-if="item.level == 3 && !warningFlag" src="../../assets/images/news/gaos.png" alt="">
+                  <span v-if="item.level == 3 && warningFlag" style="margin-left: 0.06rem;color:#333E75;">重度</span>
 
                 </div>
                 <div class="dtmsb_tar">
