@@ -326,11 +326,13 @@
                   <img :src="'data:image;base64,' + snap0View" alt="" />
                 </div>
                 <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-else>
+                  <img style="width: 0.78rem;height: auto" src="../../assets/images/news/zhanwei.png" alt="" />
                 </div>
                 <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-if="snap1View !=''">
                   <img :src="'data:image;base64,' + snap1View" alt="" />
                 </div>
                 <div class="dtmcl_pic" style="margin: 0 0.5rem;" v-else>
+                  <img style="width: 0.78rem;height: auto" src="../../assets/images/news/zhanwei.png" alt="" />
                 </div>
               </div>
               
@@ -3361,7 +3363,7 @@ export default {
             this.snap0View = data.data.snap0View;
             this.snap1View = data.data.snap1View;
           } else {
-            that.$message.error(data.msg);
+            // that.$message.error(data.msg);
           }
         })
         .catch(res => {
@@ -8548,6 +8550,9 @@ export default {
                 height: 1.73rem;
                 position: relative;
                 background: rgba(244, 243, 253, 1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img {
                   width: 100%;
                   height: 100%;
