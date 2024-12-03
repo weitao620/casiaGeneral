@@ -3271,6 +3271,7 @@ export default {
               that.assessment = ''
             }
             that.details = data.data
+            console.log(data.data)
             that.getBird()
 
 

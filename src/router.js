@@ -104,6 +104,12 @@ export default new Router({
       name: 'guide',
       component: () => import('./views/Details/Guide.vue')
     },
+    // 指导建议手册
+    {
+      path: '/model/grouppdf',
+      name: 'grouppdf',
+      component: () => import('./views/Model/GroupPdfs.vue')
+    },
     // 导出word
     {
       path: '/library/expword/:userID',
