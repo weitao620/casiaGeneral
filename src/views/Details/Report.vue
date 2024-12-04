@@ -911,6 +911,8 @@
                       </div>
                     </div>
                   </div>
+
+                  
                   <div class="bottom_right" v-if="item.subDim">
                     <span class="tt_txt">{{ item.subDim[1].name }}</span>
                     <div class="demsb_tool1">
@@ -918,7 +920,6 @@
                         本次得分：<span>{{
                           parseInt(item.subDim[1].score)
                         }}</span>
-                        
                       </div>
                     </div>
                   </div>
