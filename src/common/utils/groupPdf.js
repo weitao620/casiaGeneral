@@ -14,8 +14,8 @@ class PdfLoader {
         this.ele = ele
         this.pdfFileName = pdfFileName
         this.splitClassName = splitClassName || ''
-        this.A4_WIDTH = 841.89
-        this.A4_HEIGHT = 595.28
+        this.A4_WIDTH = 592.28
+        this.A4_HEIGHT = 841.89
     }
  
     async getPDF(resolve) {
@@ -57,6 +57,7 @@ class PdfLoader {
             ele.style.height = ele.clientHeight + 'px' // 获取元素的实际高度，不包括滚动条隐藏的部分
             // 一页pdf显示html页面生成的canvas高度;
             const pageHeight = (contentWidth / this.A4_WIDTH) * this.A4_HEIGHT // 这样写的目的在于保持宽高比例一致 pageHeight/canvas.width = a4纸高度/a4纸宽度// 宽度和canvas.width保持一致
+            console.log(pageHeight)
             // 未生成pdf的html页面高度
             let leftHeight = contentHeight
             // 页面偏移

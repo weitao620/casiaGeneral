@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="group-class" id="overviewpage">
+        <div class="group-class">
             <div class="download" @click="handleExport" >点击下载</div>
-            <div class="group_box">
-                <div class="list" v-for="(item,index) in 100">111111---{{ index }}</div>
+            <div class="group_box" id="overviewpage">
+                <div class="list" v-for="(item,index) in 100">111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}</div>
             </div>
             
         </div>
@@ -20,8 +20,8 @@
           handleExport() {
               let pdf = new PdfLoader(
                  document.querySelector("#overviewpage"),
-                "pdf",
-                "noSplitBox"
+                "pdf"
+                // "noSplitBox"
               );
               pdf.outPutPdfFn();
           },
@@ -33,7 +33,7 @@
         background: #ffffff;
         height: auto;
         .download{
-            background: #f24532;
+            background: #8a7e7d;
             color: #fff;
             display: flex;
             align-items: center;
@@ -42,14 +42,17 @@
             cursor: pointer;
         }
         .group_box{
+            width: 1200px;
             background: #7c6a6a;
+            margin: 0 auto;
             // height: auto;
             .list{
                 width: 1200px;
-                height: 100px;
-                background: #f00;
+                // height: 100px;
+                line-height: 2;
+                background: rgb(111, 204, 198);
                 color: #fff;
-                // margin: 20px auto;
+                margin: 0 auto;
             }
         }
         
