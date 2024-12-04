@@ -61,6 +61,7 @@ class PdfLoader {
             // 未生成pdf的html页面高度
             let leftHeight = contentHeight
             console.log(leftHeight)
+            console.log(leftHeight)
             // 页面偏移
             let position = 0
             // a4纸的尺寸[595,842],单位像素，html页面生成的canvas在pdf中图片的宽高
