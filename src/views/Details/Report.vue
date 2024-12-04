@@ -918,6 +918,7 @@
                         本次得分：<span>{{
                           parseInt(item.subDim[1].score)
                         }}</span>
+                        
                       </div>
                     </div>
                   </div>
