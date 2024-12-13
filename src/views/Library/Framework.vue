@@ -543,6 +543,9 @@ export default {
         departmentName: that.frameForm.name,
         departmentInfo: that.frameForm.frameAuthNotice
       };
+      
+      console.log(param)
+      // return
       that.$http
         .post(Url + "/aimw/organization/addDepartment", param)
         .then(res => {
@@ -671,19 +674,41 @@ export default {
         let num = pidStr.length;
         for (let i = num; i >= 0; i--) {
           let s = pidStr.substring(i - 1, i);
+          console.log(s)
           total++;
           if (s > 0) {
             cont = i;
             break;
           }
         }
-        let pidNo0 = Number(Number(pidStr.substring(0, cont)) + 1);
-        let newPid = pidNo0 * Math.pow(10, total);
+        let pidNo0 = ''
+        let newPid = ''
+        if (cont % 2 == 0) {
+          cont = cont + 1
+          total = total - 1
+          pidNo0 = Number(Number(pidStr.substring(0, cont)) + 1);
+          newPid = pidNo0 * Math.pow(10, total);
+        } else {
+          pidNo0 = Number(Number(pidStr.substring(0, cont)) + 1);
+          newPid = pidNo0 * Math.pow(10, total);
+        }
+        
+        console.log(cont)
+        console.log(String(pidNo0).substring(String(pidNo0).length - 2, String(pidNo0).length))
+        if (String(pidNo0).substring(String(pidNo0).length - 2, String(pidNo0).length) == '99') {
+          this.framePid = '';
+          this.$message.error('当前部门下的子部门个数已达上限，如需继续添加请联系管理员。');
+          return false
+        }
         this.framePid = newPid;
+        console.log(pidStr)
+        console.log(pidNo0)
+        console.log(newPid)
       } else {
         len1 = 0;
         pidStr = String(data.Pid);
         let num = pidStr.length;
+        console.log(num)
         for (let i = num; i >= 0; i--) {
           let s = pidStr.substring(i - 1, i);
           total++;
@@ -697,6 +722,8 @@ export default {
         );
         let newPid = pidNo0 * Math.pow(10, total - 2);
         this.framePid = newPid;
+        console.log(pidNo0)
+        console.log(newPid)
       }
       this.treeLabel = node.label;
       this.$refs.addTree1.blur();
@@ -803,6 +830,7 @@ export default {
         name: "",
         frameAuthNotice: ""
       };
+      this.addNameOne = this.frameFlag = false;
       this.addChange2();
       this.dialogAddFrame = true;
     },
