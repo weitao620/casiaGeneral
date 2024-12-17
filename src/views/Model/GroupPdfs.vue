@@ -1787,7 +1787,77 @@
                     <div class="yy_txt noSplitBox" style="text-align: center;">由表中可以看出，预备年级测评维度检出率由高到低分别为：焦虑（36.1%）、抑郁（23.0%）、敌对（21.6%）、自我伤害（17.4%）、强迫（17.2%）；初中一年级测评维度检出率由高到低分别为：焦虑（28.0%）、抑郁（24.4%）、自我伤害（20.2%）、敌对（16.1%）、强迫（15.4%）；高中一年级测评维度检出率由高到低分别为：焦虑（31.9%）、抑郁（24.3%）、自我伤害（20.7%）、强迫（18.8%）、敌对（18.6%）。</div>
 
 
+                    <div class="yy_t mulu_page">
+                        3.2 预备年级测评分析
+                    </div>
+                    <div class="yy_t mulu_page">
+                        3.2.1 预备年级测评结果概况
+                    </div>
+                    <div class="noSplitBox" style="width: 100%;height: 500px;margin: 30px auto;">
+                        <div style="width: 400px;height: 400px;">检出率--雷达图</div>
+                        <div>
+                            <div>
+                                <span></span>预备年级
+                            </div>
+                            <div>
+                                <span></span>全国常模
+                            </div>
+                            <div>
+                                <span></span>本校常模
+                            </div>
+                        </div>
+                        <div class="yy_txt noSplitBox" style="text-align: center;">图 6 预备年级学生心理健康问题检出率对比分布图</div>
+                    </div>
+                    <div>
+                        
+                        <table cellspacing="0" cellpadding="30">
+                            <tr class="pdf-details noSplitBox">
+                                <th></th>
+                                <th>抑郁</th>
+                                <th>焦虑</th>
+                                <th>强迫</th>
+                                <th>敌对</th>
+                                <th>自我伤害</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>预备年级</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>全国常模</td>
+                                <td>11.5%</td>
+                                <td>11.5%</td>
+                                <td>11.5%</td>
+                                <td>11.5%</td>
+                                <td>11.5%</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>本校常模</td>
+                                <td>21.5%</td>
+                                <td>21.5%</td>
+                                <td>21.5%</td>
+                                <td>21.5%</td>
+                                <td>21.5%</td>
+                            </tr>
+                        </table>
+                        <div class="yy_txt noSplitBox" style="text-align: center;">注：加*表示该年级检出率同时高于全国常模和本校常模</div>
+                        
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        与全国常模相比，预备年级学生在强迫、自我伤害方面表现较好，敌对、抑郁和焦虑方面有待改善。其中，焦虑维度和抑郁维度超出全国常模较多，分别超出 6.3%和 3.1%。
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        与本校常模相比，预备年级学生在强迫、自我伤害和抑郁方面表现较好，在敌对和焦虑方面有待改善。其中，焦虑和敌对维度超出本校常模较多，分别达到 4.2%和 2.3%。
+                    </div>
 
+
+                    <div class="yy_t mulu_page">
+                        附录：各维度沙盘表现特征
+                    </div>
 
 
 
