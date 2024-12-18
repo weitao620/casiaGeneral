@@ -40,8 +40,8 @@
                             pl60: item.mark == 3,
                             pl120: item.mark == 4
                         } ">
-                            <div v-if="item.id < 10">
-                                {{ item.ids }} {{ item.name }}
+                            <div v-if="item.index < 10">
+                                {{ item.indexs }} {{ item.name }}
                             </div>
                             <div v-else>
                                 {{ item.name }}
@@ -56,7 +56,7 @@
                         <!-- <div v-for="item1 in item.list" :key="item1.id">
                             <div class="ml_p0 pl30 noSplitBox" >
                                 <div>
-                                    {{ item.id }}.{{ item1.id }} {{ item1.name }}
+                                    {{ item.index }}.{{ item1.id }} {{ item1.name }}
                                 </div>
                                 <div class="ml_li">
                                 
@@ -68,7 +68,7 @@
                             <div v-for="item2 in item1.list" :key="item2.id">
                                 <div class="ml_p0 pl60 noSplitBox" >
                                     <div>
-                                        {{ item.id }}.{{ item1.id }}.{{ item2.id }} {{ item2.name }}
+                                        {{ item.index }}.{{ item1.id }}.{{ item2.id }} {{ item2.name }}
                                     </div>
                                     <div class="ml_li">
                                 
@@ -229,9 +229,9 @@
                     <div class="yy_t noSplitBox mulu_page">
                         2.2.1 正常样例
                     </div>
-                    <div v-for="item in expList1" :key="item.id">
+                    <div v-for="item in expList1" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            样例 {{item.id}}：{{item.name}}
+                            样例 {{item.index}}：{{item.name}}
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -279,9 +279,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -307,7 +307,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -371,15 +371,15 @@
                         <div class="yy_t noSplitBox">
                             【关键沙具】
                         </div>
-                        <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                        <!-- <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
                             <span style="font-weight: 400;">{{iteml.title}}：</span>
                             <span>{{iteml.txt}}</span>
-                        </div>
+                        </div> -->
                         <div class="yy_txt noSplitBox">
-                            {{item.txt2}}
+                            <!-- {{item.txt2}} -->
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -458,7 +458,7 @@
                              相关心理老师在咨询中如发现个体的心理状态比较严重，短期内不能改善时，建议家长及时带个体去医院就医，并遵医嘱服药，并做好相应的记录工作。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -544,9 +544,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -572,7 +572,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -636,7 +636,7 @@
                              学校可开展有利于人际沟通的班级活动等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -718,7 +718,7 @@
                              学校可与家长合作，综合孩子在学校和在家的状态，经心理老师评估后如果孩子整体状态没有向好的方向发展，学校应建议家长带孩子去医院就医，遵医嘱服药，并辅助进行心理咨询。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -814,9 +814,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -830,7 +830,7 @@
                         <div class="yy_t noSplitBox">
                             【关键沙具】
                         </div>
-                        <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                        <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.index">
                             <span style="font-weight: 400;">{{iteml.title}}：</span>
                             <span>{{iteml.txt}}</span>
                         </div>
@@ -842,7 +842,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -912,7 +912,7 @@
                              学校与相关管理者设立减压室，心理服务中心，鼓励个体进行对自己的焦虑情绪进行表达等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -986,7 +986,7 @@
                              学校应主动与家长合作，给学生一个放松的环境，鼓励学生发展自己的特长等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -1076,9 +1076,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -1104,7 +1104,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -1162,7 +1162,7 @@
                              用团体辅导的形式让个体表达人际间的情绪问题，让个体看到自己的人际交往模式，用团体的力量影响个体的认知和行为风格等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -1242,7 +1242,7 @@
                              对个体进行心理评估，定期对个体进行心理治疗或者咨询等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -1335,9 +1335,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -1363,7 +1363,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -1428,7 +1428,7 @@
                              提供更多的娱乐项目，丰富个体的生活，减轻压力，找到学习与生活之间的平衡状态等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -1493,7 +1493,7 @@
                         </div>
 
                         <div class="yy_t noSplitBox">
-                            【学校角度】
+                            【学校角度】1
                         </div>
                         <div class="yy_txt noSplitBox">
                             建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
@@ -1508,7 +1508,7 @@
                              对个体的价值进行多元化的评估，不以某个单一的结果衡量个体的价值，例如不以学生的成绩衡量个体的全部价值等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -1546,7 +1546,7 @@
                         
 
                         <div class="yy_t noSplitBox">
-                            【学校角度】
+                            【学校角度】2
                         </div>
                         <div class="yy_txt noSplitBox">
                             可建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
@@ -1580,10 +1580,10 @@
                         （4）男女不同性别各维度检出率：相较于女生，男生心理问题更加突出，且呈现更明显的敌对倾向。男生心理健康问题检出率的前三位为焦虑（45.4%）、抑郁（29.0%）和敌对（25.6%）；女生心理健康问题检出率的前三位为抑郁（18.9%）、自我伤害（16.7%）和焦虑（16.4%）。
                     </div> -->
                 </div>
-
+2
 
                 <!-- 3.测评结果 -->
-                <div class="yy_box">
+                <!-- <div class="yy_box"> -->
                     <div class="noSplitBox">
                         <div class="yy_o mulu_page">
                             3.测评结果
@@ -1854,11 +1854,7 @@
                         与本校常模相比，预备年级学生在强迫、自我伤害和抑郁方面表现较好，在敌对和焦虑方面有待改善。其中，焦虑和敌对维度超出本校常模较多，分别达到 4.2%和 2.3%。
                     </div>
 
-
-                    <div class="yy_t mulu_page">
-                        附录：各维度沙盘表现特征
-                    </div>
-
+                    
 
 
                     <div class="yy_txt noSplitBox" style="text-align: center;">
@@ -1933,9 +1929,9 @@
                     <div class="yy_t noSplitBox mulu_page">
                         2.2.1 正常样例
                     </div>
-                    <div v-for="item in expList1" :key="item.id">
+                    <div v-for="item in expList1" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            样例 {{item.id}}：{{item.name}}
+                            样例 {{item.index}}：{{item.name}}
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -1983,9 +1979,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -2011,7 +2007,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -2075,15 +2071,15 @@
                         <div class="yy_t noSplitBox">
                             【关键沙具】
                         </div>
-                        <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                        <!-- <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
                             <span style="font-weight: 400;">{{iteml.title}}：</span>
                             <span>{{iteml.txt}}</span>
-                        </div>
+                        </div> -->
                         <div class="yy_txt noSplitBox">
-                            {{item.txt2}}
+                            <!-- {{item.txt2}} -->
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -2162,7 +2158,7 @@
                              相关心理老师在咨询中如发现个体的心理状态比较严重，短期内不能改善时，建议家长及时带个体去医院就医，并遵医嘱服药，并做好相应的记录工作。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -2248,9 +2244,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -2276,7 +2272,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -2340,7 +2336,7 @@
                              学校可开展有利于人际沟通的班级活动等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -2422,7 +2418,7 @@
                              学校可与家长合作，综合孩子在学校和在家的状态，经心理老师评估后如果孩子整体状态没有向好的方向发展，学校应建议家长带孩子去医院就医，遵医嘱服药，并辅助进行心理咨询。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -2518,9 +2514,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -2546,7 +2542,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -2616,7 +2612,7 @@
                              学校与相关管理者设立减压室，心理服务中心，鼓励个体进行对自己的焦虑情绪进行表达等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -2690,7 +2686,7 @@
                              学校应主动与家长合作，给学生一个放松的环境，鼓励学生发展自己的特长等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -2780,9 +2776,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -2808,7 +2804,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -2866,7 +2862,7 @@
                              用团体辅导的形式让个体表达人际间的情绪问题，让个体看到自己的人际交往模式，用团体的力量影响个体的认知和行为风格等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -2946,7 +2942,7 @@
                              对个体进行心理评估，定期对个体进行心理治疗或者咨询等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -3039,9 +3035,9 @@
                     
                     
                     
-                    <div v-for="item in expListYy" :key="item.id">
+                    <div v-for="item in expListYy" :key="item.index">
                         <div class="yy_t noSplitBox">
-                            （{{item.id}}）{{item.name}}问题
+                            （{{item.index}}）{{item.name}}问题
                         </div>
                         <div class="yy_t noSplitBox">
                             <img style="width: 500px;height: auto;" src="../../assets//images/report/t001.png" alt="">
@@ -3067,7 +3063,7 @@
                     <div class="yy_t noSplitBox">
                         （三）指导建议
                     </div>
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （1）轻度问题
                         </div>
@@ -3132,7 +3128,7 @@
                              提供更多的娱乐项目，丰富个体的生活，减轻压力，找到学习与生活之间的平衡状态等等。
                         </div>
                     <!-- </div> -->
-                     <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                     <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （2）中度问题
                         </div>
@@ -3212,7 +3208,7 @@
                              对个体的价值进行多元化的评估，不以某个单一的结果衡量个体的价值，例如不以学生的成绩衡量个体的全部价值等等。
                         </div>
                     <!-- </div> -->
-                    <!-- <div v-for="item in expListYy" :key="item.id"> -->
+                    <!-- <div v-for="item in expListYy" :key="item.index"> -->
                         <div class="yy_t noSplitBox">
                             （3）重度问题
                         </div>
@@ -3250,7 +3246,7 @@
                         
 
                         <div class="yy_t noSplitBox">
-                            【学校角度】
+                            【学校角度】1
                         </div>
                         <div class="yy_txt noSplitBox">
                             可建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
@@ -3273,6 +3269,170 @@
                     <!-- </div> -->
 
 
+
+                    <div class="noSplitBox">
+                        <div class="yy_t mulu_page">
+                            附录：各维度沙盘表现特征
+                        </div>
+                        <table cellspacing="0" cellpadding="30">
+                            <tr class="pdf-details noSplitBox">
+                                <th>心理健康问题</th>
+                                <th>表现特征</th>
+                                <th>具体表现</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td rowspan="3">抑郁</td>
+                                <td>空洞与缺失</td>
+                                <td>沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>主题的单一化</td>
+                                <td>沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td rowspan="3">抑郁</td>
+                                <td>空洞与缺失</td>
+                                <td>沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>主题的单一化</td>
+                                <td>沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td rowspan="4">抑郁</td>
+                                <td>空洞与缺失</td>
+                                <td>沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>主题的单一化</td>
+                                <td>沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td rowspan="3">抑郁</td>
+                                <td>空洞与缺失</td>
+                                <td>沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>主题的单一化</td>
+                                <td>沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td rowspan="4">抑郁</td>
+                                <td>空洞与缺失</td>
+                                <td>沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>主题的单一化</td>
+                                <td>沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>使用封闭与孤立的元素</td>
+                                <td>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</td>
+                            </tr>
+                            <!-- <tr class="pdf-details noSplitBox">
+                                <th rowspan="3">1</th>
+                                <th rowspan="3">2</th>
+                                <th rowspan="4">3</th>
+                                <th rowspan="3">4</th>
+                                <th rowspan="4">5</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>预备年级</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>预备年级</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>预备年级</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                                <td>1.5%</td>
+                            </tr> -->
+                        </table>
+                    </div>
+                    
                     
                     <!-- <div class="yy_t noSplitBox">
                         （2）各学段各维度检出率：不同学段学生在心理健康问题上表现出不同的特点，焦虑、抑郁在各学段上的问题都比较突出。除焦虑、抑郁问题外，预备年级敌对问题相对突出，初中学段自我伤害比例有所提升，高中学段强迫问题显现。
@@ -3283,7 +3443,7 @@
                     <div class="yy_t noSplitBox">
                         （4）男女不同性别各维度检出率：相较于女生，男生心理问题更加突出，且呈现更明显的敌对倾向。男生心理健康问题检出率的前三位为焦虑（45.4%）、抑郁（29.0%）和敌对（25.6%）；女生心理健康问题检出率的前三位为抑郁（18.9%）、自我伤害（16.7%）和焦虑（16.4%）。
                     </div> -->
-                </div>
+                <!-- </div> -->
                 
                 <!-- <p class="noSplitBox mulu" style="height: 100px;">目录</p>
                 <p class="noSplitBox" style="height: 40px;">目录</p>
@@ -4161,6 +4321,8 @@ export default {
     }
 
     .group_box {
+
+        // transform: scale(0.8);
         width: 100%;
         background: #fff;
         margin: 0 auto;
@@ -4173,7 +4335,7 @@ export default {
             
             text-align: center;
             position: relative;
-            background: #f00;
+            // background: #f00;
             .table-border {
                 position: relative;
                 // width: 1191px;
@@ -4269,11 +4431,11 @@ table {
             border-right: 0;
 
             text-align: center;
-            font-size: 24px;
+            font-size: 20px;
             font-family: SourceHanSansCN-Regular, SourceHanSansCN;
             font-weight: 600;
             color: #333E75;
-            padding: 20px 10px;
+            padding: 10px 5px;
             //border-top: 0;
         }
 
@@ -4286,9 +4448,9 @@ table {
             border-right: 0;
             border-top: 0;
 
-            padding: 20px 10px;
+            padding: 10px 5px;
             text-align: center;
-            font-size: 24px;
+            font-size: 20px;
             font-family: SourceHanSansCN-Regular, SourceHanSansCN;
             font-weight: 400;
             color: #333E75;
@@ -4320,12 +4482,12 @@ table {
                 .ml_p0{
                     // display: flex;
                     
-                    padding-top: 15px;
-                    padding-bottom: 15px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
                     display: flex;
                     justify-content: space-between;
                     div{
-                        font-size: 30px;
+                        font-size: 20px;
                         font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                         font-weight: 400;
                         color: #333E75;
@@ -4349,28 +4511,28 @@ table {
             }
             .yy_box{
                 text-align: left;
-                padding: 30px 80px 30px;
+                padding: 20px 80px 20px;
                 .yy_o{
-                    font-size: 42px;
+                    font-size: 22px;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
                     color: #333E75;
-                    padding-top: 60px;
+                    padding-top: 20px;
                 }
                 .yy_t{
-                    font-size: 34px;
+                    font-size: 20px;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
                     color: #333E75;
-                    padding: 30px 0 10px;
+                    padding: 15px 0 5px;
                 }
                 .yy_txt{
-                    font-size: 30px;
+                    font-size: 20px;
                     font-family: SourceHanSansCN-Regular, SourceHanSansCN;
                     font-weight: 400;
                     color: #333E75;
                     text-indent: 60px;
-                    padding: 20px 0;
+                    padding: 5px 0;
                 }
             }
             

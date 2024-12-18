@@ -74,6 +74,7 @@ class PdfLoader {
         const context = canvas.getContext('2d')
         context.scale(2, 2) // 增强图片清晰度
         context.translate(0, -eleOffsetTop)
+        console.log(window.devicePixelRatio)
         // context.translate(-eleOffsetLeft - abs, -eleOffsetTop)
         ele.style.height = ele.scrollHeight + 'px' // 获取元素的滚动高度，用于截取被滚动条隐藏的部分
         html2canvas(ele, {
@@ -85,11 +86,12 @@ class PdfLoader {
           // dpi: 300 // 将分辨率提高到特定的DPI
             backgroundColor: null,
             allowTaint: false,
+            // imageTimeout: 20000, // 图片加载延迟，默认延迟为0，单位毫秒
             dpi: window.devicePixelRatio * 4,
             width: ele.width,
             height: ele.width,
             windowWidth: ele.scrollWidth,
-            scale: 1, // 按比例增加分辨率
+            scale: 0.8, // 按比例增加分辨率
             useCORS: true, // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
         }).then(async (canvas) => {
             const contentWidth = canvas.width
@@ -105,7 +107,7 @@ class PdfLoader {
             const imgWidth = this.A4_WIDTH // -10为了页面有右边距
             const imgHeight = (this.A4_WIDTH / contentWidth) * contentHeight
             const pageData = canvas.toDataURL('image/jpeg', 1.0)
-            
+            console.log(pageData)
             const pdf = jsPDF('', 'pt', 'a4')
             // 有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
             // 当内容未超过pdf一页显示的范围，无需分页
@@ -136,15 +138,17 @@ class PdfLoader {
                   }
                 }
             }
-
-            pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then(() => {
-                // 去除添加的空div 防止页面混乱
-                const doms = document.querySelectorAll('.emptyDiv')
-                for (let i = 0; i < doms.length; i++) {
-                    doms[i].remove()
-                }
-            })
-            this.ele.style.height = ''
+            // setTimeout(() => {
+                pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then(() => {
+                    // 去除添加的空div 防止页面混乱
+                    const doms = document.querySelectorAll('.emptyDiv')
+                    for (let i = 0; i < doms.length; i++) {
+                        doms[i].remove()
+                    }
+                })
+                this.ele.style.height = ''
+                
+            // }, 2000);
             resolve()
         })
     }
@@ -213,7 +217,7 @@ class PdfLoader {
                 
                 setTimeout(() => {
                     this.getPDF(resolve, reject)
-                }, 10);
+                }, 1000);
                 // 异步函数，导出成功后处理交互
                 
             // }, 100);
