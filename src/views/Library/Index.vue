@@ -1698,10 +1698,10 @@ export default {
               sum_c62 = sum_c62 + (5 - Number(c6[i]))
             }
             if (num == 12 || num == 13 ||num == 14 ||num == 18 ||num == 20){
-              sum_c63 = sum_c63 + (5 - Number(c6[i]))
+              sum_c63 = sum_c63 + (Number(c6[i])+1)
             }
             if (num == 2 || num == 6 ||num == 9 ||num == 10){
-              sum_c64 = sum_c64 + (5 - Number(c6[i]))
+              sum_c64 = sum_c64 + (Number(c6[i])+1)
             }
           }
           // sum_c43 = sum_c41 - sum_c42
