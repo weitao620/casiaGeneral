@@ -1,8 +1,8 @@
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import "./zhouzifangti-normal"
+// import "./zhouzifangti-normal"
 let muluPage = []
-
+let that = this;
 /*
  * 使用说明
  * ele:需要导出pdf的容器元素(dom节点 不是id)
@@ -38,21 +38,89 @@ let muluPage = []
  * @param {Array} [param.potionGroup=[]] - 需要计算位置的元素属性，格式是 data-position='xxx'，需要同时在节点上加上param.itemName，如<p data-position='p-position' class='pdf-group-item'></p>
  * @returns {Promise} 根据outputType返回不同的数据类型,是一个对象
  */
-
+// 画布添加水印
+function drawWaterMark(ctx, imgWidth, imgHeight, wmConfig) {
+    const fontSize = 20
+    ctx.font = `${fontSize}px ${wmConfig.font}`
+    ctx.lineWidth = 1
+    ctx.fillStyle = 'rgba(0,0,0,0.1)' // 根据页面的背景色来设置水印颜色
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'middle'
+   
+    // 文字坐标
+    const maxPx = Math.max(imgWidth, imgHeight)
+    const stepPx = 200
+    const arrayX = [0] // 初始水印位置 canvas坐标 0 0 点
+    while (arrayX[arrayX.length - 1] < maxPx / 2) {
+      arrayX.push(arrayX[arrayX.length - 1] + stepPx)
+    }
+    arrayX.push(
+      ...arrayX.slice(1, arrayX.length).map((el) => {
+        return -el
+      })
+    )
+    const lineHeightFactor = 1.5 // 行间距的倍数
+    for (let i = 0; i < arrayX.length; i++) {
+      for (let j = 0; j < arrayX.length; j++) {
+        ctx.save()
+        ctx.translate(imgWidth / 2, imgHeight / 2) // 画布旋转原点 移到 图片中心
+        ctx.rotate(-Math.PI / 5)
+        if (wmConfig.textArray.length > 3) {
+          wmConfig.textArray = wmConfig.textArray.slice(0, 3)
+        }
+        wmConfig.textArray.forEach((el, index) => {
+          const offsetY = fontSize * index * lineHeightFactor + 15
+          ctx.fillText(el, arrayX[i], arrayX[j] + offsetY)
+        })
+        ctx.restore()
+      }
+    }
+  }
+  // 给base64图片添加水印
+  function base64AddWaterMaker(base64Img, wmConfig) {
+    if (wmConfig.textArray.length === 0) {
+      console.error('****没有水印内容*****')
+      return base64Img
+    }
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      let resultBase64 = null
+      img.onload = () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        // canvas绘制图片，0 0  为左上角坐标原点
+        ctx.drawImage(img, 0, 0)
+        // 写入水印
+        drawWaterMark(ctx, img.width, img.height, wmConfig)
+        resultBase64 = canvas.toDataURL('image/png')
+        if (!resultBase64) {
+          reject()
+        } else {
+          resolve(resultBase64)
+        }
+      }
+      img.src = base64Img
+    })
+  }
 class PdfLoader {
-    constructor(ele, pdfFileName, splitClassName) {
+    constructor(ele, pdfFileName, splitClassName, loading) {
+        this.loading = loading
         this.ele = ele
         this.pdfFileName = pdfFileName
         this.splitClassName = splitClassName || ''
         this.A4_WIDTH = 595.28
         this.A4_HEIGHT = 841.89
         this.muluPage = []
+        this.muluEmptyPage = []
     }
  
     async getPDF(resolve) {
         
-       
+        
         const ele = this.ele
+        console.log(ele)
         const pdfFileName = this.pdfFileName
         const eleW = ele.offsetWidth // 获得该容器的宽
         const eleH = ele.scrollHeight // 获得该容器的高
@@ -72,7 +140,7 @@ class PdfLoader {
         canvas.width = eleW * 2 // 将画布宽&&高放大两倍
         canvas.height = eleH * 2
         const context = canvas.getContext('2d')
-        context.scale(2, 2) // 增强图片清晰度
+        context.scale(3, 3) // 增强图片清晰度
         context.translate(0, -eleOffsetTop)
         console.log(window.devicePixelRatio)
         // context.translate(-eleOffsetLeft - abs, -eleOffsetTop)
@@ -91,7 +159,7 @@ class PdfLoader {
             width: ele.width,
             height: ele.width,
             windowWidth: ele.scrollWidth,
-            scale: 0.8, // 按比例增加分辨率
+            scale: 0.75, // 按比例增加分辨率
             useCORS: true, // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
         }).then(async (canvas) => {
             const contentWidth = canvas.width
@@ -106,6 +174,14 @@ class PdfLoader {
             // a4纸的尺寸[595,842],单位像素，html页面生成的canvas在pdf中图片的宽高
             const imgWidth = this.A4_WIDTH // -10为了页面有右边距
             const imgHeight = (this.A4_WIDTH / contentWidth) * contentHeight
+            // const wmConfig = {
+            //     // fontSize: '48',
+            //     // font: 'microsoft yahei', // 字体
+            //     textArray: [`保密文件，谢绝外传`] // 水印文本内容，允许数组最大长度3 即：3行水印
+            // }
+            // let imgUrl = canvas.toDataURL('image/jpeg', 1.0)
+            // const resultBase64 = await base64AddWaterMaker(imgUrl, wmConfig)
+            // const pageData = resultBase64
             const pageData = canvas.toDataURL('image/jpeg', 1.0)
             console.log(pageData)
             const pdf = jsPDF('', 'pt', 'a4')
@@ -113,14 +189,16 @@ class PdfLoader {
             // 当内容未超过pdf一页显示的范围，无需分页
 
             // 设置字体
-            pdf.setFont('zhouzifangti');
+            // pdf.setFont('zhouzifangti');
             pdf.setFontSize(10);
+            pdf.setTextColor("#333E75");
             if (leftHeight < pageHeight) {
                 // 在pdf.addImage(pageData, 'JPEG', 左，上，宽度，高度)设置在pdf中显示；
 
                 pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight)
-                console.log(String(pdf.internal.getNumberOfPages()).length)
-                pdf.text(`第${pdf.internal.getNumberOfPages()}页`, imgWidth/2-10-String(pdf.internal.getNumberOfPages()).length*2.5, this.A4_HEIGHT-5);
+                console.log('String(pdf.internal.getNumberOfPages())')
+                console.log(String(pdf.internal.getNumberOfPages()))
+                pdf.text(`${pdf.internal.getNumberOfPages()}`, imgWidth/2-10-String(pdf.internal.getNumberOfPages()).length*2.5, this.A4_HEIGHT-10);
                 // pdf.addImage(pageData, 'JPEG', 20, 40, imgWidth, imgHeight);
             } else {
                 // 分页
@@ -131,33 +209,46 @@ class PdfLoader {
                   position -= (this.A4_HEIGHT)
                     console.log(leftHeight)
                     console.log(position)
-                    pdf.text(`第${pdf.internal.getNumberOfPages()}页`, imgWidth/2-10-String(pdf.internal.getNumberOfPages()).length*2.5, this.A4_HEIGHT-5);
+                    console.log('pdf.internal.getNumberOfPages()')
+                    console.log(pdf.internal.getNumberOfPages())
+                    console.log(this.muluEmptyPage)
+                    if (pdf.internal.getNumberOfPages() < this.muluEmptyPage) {
+
+                    } else {
+                        let pageA = pdf.internal.getNumberOfPages() - this.muluEmptyPage + 1
+                        pdf.text(`${pageA}`, imgWidth/2-10-String(pdf.internal.getNumberOfPages()).length*2.5, this.A4_HEIGHT-10);
+                    }
+                    
                   // 避免添加空白页
                   if (leftHeight > 0) {
                     pdf.addPage()
                   }
                 }
             }
-            // setTimeout(() => {
+            
                 pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then(() => {
                     // 去除添加的空div 防止页面混乱
                     const doms = document.querySelectorAll('.emptyDiv')
                     for (let i = 0; i < doms.length; i++) {
                         doms[i].remove()
                     }
+                    this.loading.close()
                 })
                 this.ele.style.height = ''
                 
-            // }, 2000);
+            
             resolve()
         })
     }
     //此方法是防止（图表之类）内容因为A4纸张问题被截断
     async outPutPdfFn(pdfFileName) {
         return new Promise((resolve, reject) => {
+
+            
             this.ele.style.height = 'initial'
             pdfFileName ? (this.pdfFileName = pdfFileName) : null
             const target = this.ele
+            console.log(target)
             const pageHeight =
                 (target.scrollWidth / this.A4_WIDTH) * this.A4_HEIGHT
             // 获取分割dom，此处为class类名为item的dom
@@ -191,7 +282,9 @@ class PdfLoader {
             }
             // setTimeout(() => {
                 const muluList = document.getElementsByClassName('mulu_page')
+                const muluEmpty = document.getElementsByClassName('mulu_empty_page')
                 console.log(muluList)
+                console.log(muluEmpty)
                 // this.ele.style.height = 'initial'
                 // pdfFileName ? (this.pdfFileName = pdfFileName) : null
                 // const target1 = this.ele
@@ -207,13 +300,32 @@ class PdfLoader {
                     // console.log(currentPage1)
                     console.log(muluList[i].offsetTop/pageHeight)
                     if (!Number.isNaN(muluList[i].offsetTop/pageHeight)){
-                        muluArr.push(Math.ceil(muluList[i].offsetTop/pageHeight))
+                        muluArr.push(Math.floor(muluList[i].offsetTop/pageHeight))
                     }
                 }
                 console.log(muluArr)
+                let muluEmptyArr = []
+                for (let i in muluEmpty){
+                    // const node1 = muluEmpty[i]
+                    // console.log(node1)
+                    // const bound1 = node1.getBoundingClientRect()
+                    // console.log(bound1)
+                    // const offset2Ele1 = bound1.top - eleBounding1.top
+                    // const currentPage1 = Math.ceil(
+                    //     (bound1.bottom - eleBounding1.top) / (pageHeight-10)
+                    // ) // 当前元素应该在哪一页
+                    // console.log(currentPage1)
+                    console.log(muluEmpty[i].offsetTop/pageHeight)
+                    if (!Number.isNaN(muluEmpty[i].offsetTop/pageHeight)){
+                        muluEmptyArr.push(Math.ceil(muluEmpty[i].offsetTop/pageHeight))
+                    }
+                }
+                console.log(muluArr)
+                console.log(muluEmptyArr[0])
                 // this.emit('muluPage', muluArr);
                 // this.outPutPdfFn1(muluArr)
                 this.muluPage = muluArr
+                this.muluEmptyPage = muluEmptyArr[0] + 1
                 
                 setTimeout(() => {
                     this.getPDF(resolve, reject)
