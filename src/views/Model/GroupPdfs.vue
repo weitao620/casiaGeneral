@@ -2850,6 +2850,7 @@ export default {
                 gradeTxt1: '',
                 gradeTxt2: '',
                 gradeTxt3: '',
+                zsFlag: false,
                 txtStr: '',
                 txtStr52:'',
                 txtStr51:'',
@@ -5813,8 +5814,32 @@ export default {
                             return Number(b.percentage) - Number(a.percentage);
                         }).slice(0, 3)
                         console.log(fzsClass3)
-                        
+                        if (JSON.stringify(zsClass3) == JSON.stringify(fzsClass3)) {
+                            // this.zsFlag = true
+                            zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                            for (let i in zsClass3) {
+                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                if (i < zsClass3.length - 1){
+                                    zsTxt += '，'
+                                } else {
+                                    zsTxt += '。'
+                                }
+                            }
+                        } else {
+                            // this.zsFlag = false
+                            // **年级直升班的心理健康问题检出率的前三位为**（**%）、**（**%）、强迫（**%）；**年级非直升班的心理健康问题检出率的前三位为：**（**%）、抑郁（**%）、**（**%）。
+                            // zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                            for (let i in zsClass3) {
+                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                if (i < zsClass3.length - 1){
+                                    zsTxt += '，'
+                                } else {
+                                    zsTxt += '。'
+                                }
+                            }
+                        }
                         this.gradeTxt3 = zsTxt
+
                         this.part8 = true;
                     } else {
                         that.$message.error(data.msg);
