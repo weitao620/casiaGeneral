@@ -83,8 +83,8 @@
                             <div class="yy_txt noSplitBox">
                                 （1）全校各维度检出率：在具体的心理健康维度上，检出率由高到低依次为：
                                 <span v-for="(item,index) in detail.wdJcList" :key="item.grade">
-                                    {{ index > 0 ? '、' : '' }}{{ item.grade }}（{{ item.total }}%）
-                                </span>。
+                                    {{ item.grade }}（{{ item.total }}%）{{ index < detail.wdJcList.length - 1 ? '、' : '' }}{{ index == detail.wdJcList.length - 1 ? '。' : '' }}
+                                </span>
                                
                                 <!-- 全部低于全国常模 -->
                                 <span v-if="detail.wdLevelTxt === 1">与全国常模相比，所有维度检出率都低于全国常模，该校测评年级心理健康整体表现较好。</span>
@@ -106,10 +106,10 @@
                                 （2）各学段各维度检出率：{{detail.gradeTxt1}}{{detail.gradeTxt2}}
                             </div>
                             <div class="yy_txt noSplitBox">
-                                （3）初中一年级直升与非直升班各维度检出率：初中一年级非直升班相比直升班心理问题更加显著。直升班的心理健康问题检出率的前三位为焦虑（28.0%）、抑郁（21.5%）、强迫（16.7%）；非直升班的心理健康问题检出率的前三位为：焦虑（27.9%）、抑郁（27.2%）、自我伤害（23.7%）。
+                                （3）{{detail.gradeTxt3}}
                             </div>
                             <div class="yy_txt noSplitBox">
-                                （4）男女不同性别各维度检出率：相较于女生，男生心理问题更加突出，且呈现更明显的敌对倾向。男生心理健康问题检出率的前三位为焦虑（45.4%）、抑郁（29.0%）和敌对（25.6%）；女生心理健康问题检出率的前三位为抑郁（18.9%）、自我伤害（16.7%）和焦虑（16.4%）。
+                                （4）男女不同性别各维度检出率：{{detail.gradeTxt4}}
                             </div>
                         </div>
                     </div>
@@ -127,28 +127,27 @@
                             2.1.1 筛查评估对象和样本
                         </div>
                         <div class="yy_txt noSplitBox">
-                            北京市八一学校对 46 个班级共 1873 名学生开展了心理健康筛查评估。其中，预备年级 10 个班级，初中 20 个班级，高中 16 个班级。
+                            {{schoolName}}对{{detail.totalClasses}}个班级共{{detail.totalStudents}}名学生开展了心理健康筛查评估。其中，预备年级{{ detail.yuBei.numClasses }}个班级，初中{{ detail.chuZhong.numClasses }}个班级，高中{{ detail.gaoZhong.numClasses }}个班级。
                         </div>
                         <div class="yy_txt noSplitBox">
-                            参加本次筛查评估的 1873 名学生中，预备年级学生有 413 人（占比22.1%），初中生有 840 人（占比 44.9%），高中生有 620 人（占比
-                            33.1%）。各学段的学生人数占比分布情况如下图：
+                            参加本次筛查评估的{{detail.totalStudents}}名学生中，预备年级学生有{{ detail.yuBei.numStudents }}人（占比{{detail.yuBei.percent}}%），初中生有{{ detail.chuZhong.numStudents }}人（占比 {{detail.chuZhong.percent}}%），高中生有{{ detail.gaoZhong.numStudents }}人（占比{{detail.gaoZhong.percent}}%）。各学段的学生人数占比分布情况如下图：
                         </div>
                         <div class="noSplitBox">
                             <div style="width: 100%;height: auto;">
                                 <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart1">
                                 </div>
-                                <div class="yy_biao" style="text-align: center;">图1 北京市八一学校参加筛查评估学生学段分布图</div>
+                                <div class="yy_biao" style="text-align: center;">图1 {{schoolName}}参加筛查评估学生学段分布图</div>
                             </div>
                         </div>
                         <div class="yy_txt noSplitBox">
-                            参加本次筛查评估的 1873 位学生中，男生共 999 人，占比为 53.3%；女生共 874 人，占比为 46.7% ，各学段学生性别分布情况见下图：
+                            参加本次筛查评估的{{detail.totalStudents}}位学生中，男生共{{detail.maleStudents}}人，占比为{{detail.maleStudentsPre}}%；女生共{{detail.femaleStudents}}人，占比为{{detail.femaleStudentsPre}}% ，各学段学生性别分布情况见下图：
                         </div>
                         <div class="noSplitBox">
 
                             <div style="width: 100%;height: auto;margin: 20px auto 10px;">
                                 <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart2">
                                     学段--饼状图</div>
-                                <div class="yy_biao" style="text-align: center;">图 2 北京市八一学校参加筛查评估男女性别人数对比图</div>
+                                <div class="yy_biao" style="text-align: center;">图 2 {{schoolName}}参加筛查评估男女性别人数对比图</div>
                             </div>
                         </div>
 
@@ -156,7 +155,7 @@
                             各班级学生人数占比分布情况见下表：
                         </div>
                         <div class="yy_biao noSplitBox" style="">
-                            表 1 北京市八一学校参加筛查评估各班级人数占比图
+                            表 1 {{schoolName}}参加筛查评估各班级人数占比图
                         </div>
                         <table cellspacing="0">
                             <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
@@ -165,11 +164,11 @@
                                 <th style="width:20%">人次</th>
                                 <th style="width:20%">占比</th>
                             </tr>
-                            <tr v-for="(item, index) in oneData1" :key="index" class="pdf-details noSplitBox">
+                            <tr v-for="(item, index) in this.detail.gradeList" :key="index" class="pdf-details noSplitBox">
+                                <td>{{ item.name }}</td>
                                 <td>{{ item.grade }}</td>
-                                <td>{{ item.class }}</td>
-                                <td>{{ item.personNum }}</td>
-                                <td>{{ item.percent }}</td>
+                                <td>{{ item.count }}</td>
+                                <td>{{ item.proportion }}%</td>
                             </tr>
                         </table>
 
@@ -230,38 +229,41 @@
                             2.2 典型样例
                         </div>
                         <div class="yy_txt noSplitBox">
-                            为了让报告更具实用性和操作性，在本次测评的 1873
-                            名学生中，根据测评系统的评估结果在每个维度的不同风险水平中各抽取一个相对应的典型沙盘案例进行专家分析（仅展示沙盘的图像基础信息，隐去学生个人信息）。通过真实的案例，老师们可以将评测系统的评估结果与学生的实际情况进行更直观的比对，提升心理老师的专业技能，以便更好地支撑对学生心理的筛查和干预。
+                            为了让报告更具实用性和操作性，在本次测评的{{detail.totalStudents}}名学生中，根据测评系统的评估结果在每个维度的不同风险水平中各抽取一个相对应的典型沙盘案例进行专家分析（仅展示沙盘的图像基础信息，隐去学生个人信息）。通过真实的案例，老师们可以将评测系统的评估结果与学生的实际情况进行更直观的比对，提升心理老师的专业技能，以便更好地支撑对学生心理的筛查和干预。
                         </div>
-                        <div class="yy_t noSplitBox mulu_page">
-                            2.2.1 正常样例
-                        </div>
-                        <div v-for="(item, index) in expList1" :key="index">
-                            <div class="noSplitBox">
-                                <div class="yy_t">
-                                    样例 {{ index + 1 }}：{{ item.name }}
+                         <!-- 正常 -->
+                        <div>
+                            <div class="yy_t noSplitBox mulu_page">
+                                2.2.1 正常样例
+                            </div>
+                            <div v-for="(item, index) in expList1" :key="index">
+                                <div class="noSplitBox">
+                                    <div class="yy_t">
+                                        样例 {{ index + 1 }}：{{ item.name }}
+                                    </div>
+                                    <div class="yy_txt">
+                                        <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
+                                    </div>
                                 </div>
-                                <div class="yy_txt">
-                                    <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
+                                <div class="yy_t noSplitBox">
+                                    （1）箱庭空间配置
+                                </div>
+                                <div class="yy_txt noSplitBox">
+                                    {{ item.txt1 }}
+                                </div>
+                                <div class="yy_t noSplitBox">
+                                    （2）关键沙具分析
+                                </div>
+                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                    <span>{{ iteml.txt }}</span>
+                                </div>
+                                <div class="yy_txt noSplitBox">
+                                    {{ item.txt2 }}
                                 </div>
                             </div>
-                            <div class="yy_t noSplitBox">
-                                （1）箱庭空间配置
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                {{ item.txt1 }}
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （2）关键沙具分析
-                            </div>
-                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                <span>{{ iteml.txt }}</span>
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                {{ item.txt2 }}
-                            </div>
                         </div>
+                        
                         <!-- 抑郁 -->
                         <div>
                             <div class="yy_t noSplitBox mulu_page">
@@ -1796,44 +1798,42 @@
                                 </tr>
                                 <tr class="pdf-details">
                                     <td>差值</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
+                                    <td>{{cmCha[0].num}}%</td>
+                                    <td>{{cmCha[1].num}}%</td>
+                                    <td>{{cmCha[2].num}}%</td>
+                                    <td>{{cmCha[3].num}}%</td>
+                                    <td>{{cmCha[4].num}}%</td>
                                 </tr>
                                 <tr class="pdf-details">
                                     <td>八一学校</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
+                                    <td>{{schoolCM[0]}}%</td>
+                                    <td>{{schoolCM[1]}}%</td>
+                                    <td>{{schoolCM[2]}}%</td>
+                                    <td>{{schoolCM[3]}}%</td>
+                                    <td>{{schoolCM[4]}}%</td>
                                 </tr>
                                 <tr class="pdf-details">
                                     <td>全国常模</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
+                                    <td>{{ChinaCM[0]}}%</td>
+                                    <td>{{ChinaCM[1]}}%</td>
+                                    <td>{{ChinaCM[2]}}%</td>
+                                    <td>{{ChinaCM[3]}}%</td>
+                                    <td>{{ChinaCM[4]}}%</td>
                                 </tr>
                             </table>
-                            <div class="yy_biao" style="text-align: center;margin-top: -20px;margin-bottom: 20px;">图 3
-                                心理健康问题检出率对比分布</div>
+                            <div class="yy_biao" style="text-align: center;margin-top: -20px;margin-bottom: 20px;">图 3 心理健康问题检出率对比分布</div>
 
                             <div class="yy_txt">
-                                八一学校的学生中，较为突出的两类心理健康问题为焦虑和抑郁，分别为 31.9%和 24.3%，存在敌对和强迫的学生相对较少，分别为 18.6%和 18.8%。
+                                {{schoolName}}的学生中，{{detail.jcTxt}}
                             </div>
                             <div class="yy_txt">
-                                与全国常模相比，本校学生在自我伤害、敌对方面问题较小，强迫、抑郁和焦虑方面有待改善。其中，抑郁维度超出常模 4.4%。
+                                {{ detail.cmTxt }}
                             </div>
                         </div>
                         <div class="noSplitBox">
                             <div style="width: 100%;height: auto;margin: 10px auto 0px;">
                                 <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart" ref="myChart4">
                                 </div>
-
                             </div>
                             <table class="cm_table" cellspacing="0" style="margin-bottom: 10px;">
                                 <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
@@ -1850,11 +1850,11 @@
                                                 style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #8ACBFF"></span><span>轻度问题</span>
                                         </div>
                                     </td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
+                                    <td>{{wdJcListArr[0].mildProportion}}%</td>
+                                    <td>{{wdJcListArr[1].mildProportion}}%</td>
+                                    <td>{{wdJcListArr[2].mildProportion}}%</td>
+                                    <td>{{wdJcListArr[3].mildProportion}}%</td>
+                                    <td>{{wdJcListArr[4].mildProportion}}%</td>
                                 </tr>
                                 <tr class="pdf-details noSplitBox">
                                     <td>
@@ -1862,11 +1862,11 @@
                                                 style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FFDDA0"></span><span>中度问题</span>
                                         </div>
                                     </td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
+                                    <td>{{wdJcListArr[0].moderateProportion}}%</td>
+                                    <td>{{wdJcListArr[1].moderateProportion}}%</td>
+                                    <td>{{wdJcListArr[2].moderateProportion}}%</td>
+                                    <td>{{wdJcListArr[3].moderateProportion}}%</td>
+                                    <td>{{wdJcListArr[4].moderateProportion}}%</td>
                                 </tr>
                                 <tr class="pdf-details noSplitBox">
                                     <td>
@@ -1874,11 +1874,11 @@
                                                 style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FE9D9D"></span><span>重度问题</span>
                                         </div>
                                     </td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
+                                    <td>{{wdJcListArr[0].severeProportion}}%</td>
+                                    <td>{{wdJcListArr[1].severeProportion}}%</td>
+                                    <td>{{wdJcListArr[2].severeProportion}}%</td>
+                                    <td>{{wdJcListArr[3].severeProportion}}%</td>
+                                    <td>{{wdJcListArr[4].severeProportion}}%</td>
                                 </tr>
                             </table>
                             <div class="noSplitBox legends noSplitBox1"
@@ -1908,9 +1908,12 @@
 
 
                         <div class="yy_txt noSplitBox">
-                            根据图 4 所示的心理健康轻问题检出率分布图，我们可以得出以下几点重要发现：
+                            根据图 4 所示的心理健康问题检出率分布图，我们可以得出以下几点重要发现：
                         </div>
-                        <div class="yy_txt noSplitBox">
+                        <div v-html="detail.wdpStr">
+
+                        </div>
+                        <!-- <div class="yy_txt noSplitBox">
                             <span style="font-weight: 500;">焦虑问题最为普遍：</span>
                             <span>在所有心理健康问题中，焦虑问题的检出率最高，达到 31.9%。其中，焦虑轻度问题占绝大多数，占比高达 25.7%，焦虑中度问题占比 3.6%，焦虑重度问题占比
                                 2.6%。这表明焦虑是本校中小学生中最常见的心理健康问题。</span>
@@ -1933,7 +1936,7 @@
                         </div>
                         <div class="yy_txt noSplitBox">
                             综上所述，焦虑问题是本校中小学生最突出的心理健康问题，其次为抑郁问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
-                        </div>
+                        </div> -->
                         <div class="noSplitBox">
                             <div class="yy_t mulu_page">
                                 3.1.2 不同性别各维度检出率
@@ -1944,10 +1947,10 @@
                                 <div class="yy_biao" style="text-align: center;">图 5 不同性别学生心理健康问题检出率分布图</div>
                             </div>
                             <div class="yy_txt">
-                                根据图 5 的数据显示，男生在心理健康问题检出率的前三位为焦虑、抑郁、敌对；女生在心理健康问题检出率的前三位为抑郁、自我伤害、焦虑。
+                                根据图 5 的数据显示，{{detail.genderTxt5}}
                             </div>
                             <div class="yy_txt">
-                                具体来看，男生在焦虑（45.4%）、抑郁（29.0%）、敌对（25.6%）、强迫（25.0%）和自我伤害（24.2%）五个维度上的检出率均高于女生。尤其是在焦虑维度，男生的检出率明显超过女生。这可能与男生通常更难以通过社交和情感交流缓解压力有关，导致他们更容易陷入焦虑状态。此外，社会对男生的情感表达常常存在一定的压制，使得他们在面临心理困扰时更倾向于内化这些情绪，而非寻求支持或倾诉，从而加剧了焦虑的表现。因此，针对男生的心理健康干预措施应更加重视情感表达能力的培养和社交支持网络的构建，以帮助他们有效应对心理压力。
+                                {{detail.genderTxt51}}{{detail.genderTxt52}}
                             </div>
                         </div>
 
@@ -1959,7 +1962,7 @@
                                 3.1.3 各个学段各维度检出率
                             </div>
                             <div class="yy_biao" style="text-align: center;">表 4 各个学段各维度检出率对比表</div>
-
+                            <!-- gradeDimensionProportion -->
                             <table cellspacing="0">
                                 <tr class="pdf-details" style="background: #e9e9e9">
                                     <th></th>
@@ -1969,15 +1972,12 @@
                                     <th>敌对</th>
                                     <th>自我伤害</th>
                                 </tr>
-                                <tr class="pdf-details">
-                                    <td>预备年级</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
-                                    <td>1.5%</td>
+
+                                <tr class="pdf-details" v-for="item in detail.gradeListOrg" :key="item.grade">
+                                    <td>{{item.grade}}</td>
+                                    <td v-for="(itemp,indexp) in item.pList" :key="itemp.name">{{itemp.percent}}%{{ itemp.percent > ChinaCM[indexp] && itemp.percent > schoolCM[indexp] ? '*' : ''}}</td>
                                 </tr>
-                                <tr class="pdf-details">
+                                <!-- <tr class="pdf-details">
                                     <td>初中一年级</td>
                                     <td>11.5%</td>
                                     <td>11.5%</td>
@@ -1992,23 +1992,25 @@
                                     <td>21.5%</td>
                                     <td>21.5%</td>
                                     <td>21.5%</td>
-                                </tr>
+                                </tr> -->
+                                
                                 <tr class="pdf-details">
                                     <td>全国常模</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
+                                    <td>{{ChinaCM[0]}}%</td>
+                                    <td>{{ChinaCM[1]}}%</td>
+                                    <td>{{ChinaCM[2]}}%</td>
+                                    <td>{{ChinaCM[3]}}%</td>
+                                    <td>{{ChinaCM[4]}}%</td>
                                 </tr>
                                 <tr class="pdf-details">
                                     <td>本校常模</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
+                                    <td>{{schoolCM[0]}}%</td>
+                                    <td>{{schoolCM[1]}}%</td>
+                                    <td>{{schoolCM[2]}}%</td>
+                                    <td>{{schoolCM[3]}}%</td>
+                                    <td>{{schoolCM[4]}}%</td>
                                 </tr>
+                                
                             </table>
                             <div class="yy_biao" style="text-align: center;margin-top: -30px">注：加*表示该年级检出率同时高于全国常模和本校常模
                             </div>
@@ -2017,12 +2019,12 @@
                         <!-- 这里需要细分一下 -->
 
                         <div class="yy_txt noSplitBox" style="margin-bottom: 30px;">
-                            由表中可以看出，预备年级测评维度检出率由高到低分别为：焦虑（36.1%）、抑郁（23.0%）、敌对（21.6%）、自我伤害（17.4%）、强迫（17.2%）；初中一年级测评维度检出率由高到低分别为：焦虑（28.0%）、抑郁（24.4%）、自我伤害（20.2%）、敌对（16.1%）、强迫（15.4%）；高中一年级测评维度检出率由高到低分别为：焦虑（31.9%）、抑郁（24.3%）、自我伤害（20.7%）、强迫（18.8%）、敌对（18.6%）。
+                            由表中可以看出，{{ detail.gradeTxtOrg }}
                         </div>
 
 
                         <!-- 需要一个学段的数组 -->
-                        <div v-for="(item, index) in gradeList" :key="index">
+                        <div v-for="(item, index) in gradeAllList" :key="index">
                             <div class="yy_t noSplitBox mulu_page">
                                 3.{{ index + 2 }} {{ item.name }}测评分析
                             </div>
@@ -2061,30 +2063,27 @@
                                     </tr>
                                     <tr class="pdf-details noSplitBox">
                                         <td>{{ item.name }}</td>
-                                        <td>1.5%</td>
-                                        <td>1.5%</td>
-                                        <td>1.5%</td>
-                                        <td>1.5%</td>
-                                        <td>1.5%</td>
+                                        <td v-for="itemw in item.wdList" :key="itemw.name">{{itemw.percent}}%</td>
                                     </tr>
-                                    <tr class="pdf-details noSplitBox">
+                                    
+                                    <tr class="pdf-details">
                                         <td>全国常模</td>
-                                        <td>11.5%</td>
-                                        <td>11.5%</td>
-                                        <td>11.5%</td>
-                                        <td>11.5%</td>
-                                        <td>11.5%</td>
+                                        <td>{{ChinaCM[0]}}%</td>
+                                        <td>{{ChinaCM[1]}}%</td>
+                                        <td>{{ChinaCM[2]}}%</td>
+                                        <td>{{ChinaCM[3]}}%</td>
+                                        <td>{{ChinaCM[4]}}%</td>
                                     </tr>
-                                    <tr class="pdf-details noSplitBox">
+                                    <tr class="pdf-details">
                                         <td>本校常模</td>
-                                        <td>21.5%</td>
-                                        <td>21.5%</td>
-                                        <td>21.5%</td>
-                                        <td>21.5%</td>
-                                        <td>21.5%</td>
+                                        <td>{{schoolCM[0]}}%</td>
+                                        <td>{{schoolCM[1]}}%</td>
+                                        <td>{{schoolCM[2]}}%</td>
+                                        <td>{{schoolCM[3]}}%</td>
+                                        <td>{{schoolCM[4]}}%</td>
                                     </tr>
                                 </table>
-                                <div class="yy_txt noSplitBox" style="text-align: center;">图 {{ 6 + 6 * index }}
+                                <div class="yy_biao noSplitBox" style="text-align: center;margin-top: -30px">图 {{ 6 + 6 * index }}
                                     {{ item.name }}学生心理健康问题检出率对比分布图</div>
 
                                 <!-- </div> -->
@@ -2092,11 +2091,12 @@
 
 
                             <div class="yy_txt noSplitBox">
-                                与全国常模相比，预备年级学生在强迫、自我伤害方面表现较好，敌对、抑郁和焦虑方面有待改善。其中，焦虑维度和抑郁维度超出全国常模较多，分别超出 6.3%和 3.1%。
+                                {{ item.allTxt0 }}
                             </div>
                             <div class="yy_txt noSplitBox">
-                                与本校常模相比，预备年级学生在强迫、自我伤害和抑郁方面表现较好，在敌对和焦虑方面有待改善。其中，焦虑和敌对维度超出本校常模较多，分别达到 4.2%和 2.3%。
+                                {{ item.allTxt1 }}
                             </div>
+                            
                             <!-- 初中多一个 -->
 
                             <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto 30px;"
@@ -2105,8 +2105,7 @@
                                     :ref="'myChart9' + index"></div>
                                 <div class="yy_biao" style="text-align: center;">直升与非直升学生心理健康问题检出率分布图</div>
                                 <div class="yy_txt">
-                                    从上图中可以看出，初中 11-20 班（非本校直升）学生在敌对、自我伤害和抑郁等维度上表现出更高的检出率，尤其是抑郁和自我伤害问题更为明显。相对而言，初中 1-10
-                                    班（本校直升）学生在强迫和焦虑维度稍高，说明该群体可能存在较高的自我要求和对学业的焦虑。
+                                    {{ allTxtZs3 }}
                                 </div>
                             </div>
                             <!-- <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto;">
@@ -2131,7 +2130,7 @@
                                         <ul>
                                             <li><span class="r_cir1"></span>{{ itemw.name }}</li>
                                             <li><span class="r_line1"></span>全国常模</li>
-                                            <li><span class="r_line2"></span>本校常模</li>
+                                            <li><span class="r_line2"></span>年级常模</li>
                                         </ul>
                                     </div>
                                     <div class="yy_biao" style="text-align: center;">图 {{ 6 + 6 * index + indexw + 1 }}
@@ -2148,8 +2147,8 @@
                                         </tr>
                                         <tr class="pdf-details noSplitBox">
                                             <td>高于全国常模和年级常模</td>
-                                            <td>
-                                                3 班、4 班*、5 班*、7 班、8 班*、10 班
+                                            <td v-if="item.cwdName">
+                                                {{ item.cwdName[indexw]}}
                                             </td>
 
                                         </tr>
@@ -2173,12 +2172,12 @@
                                     <th>自我伤害</th>
                                 </tr>
                                 <tr class="pdf-details noSplitBox" v-for="(itemc, indexc) in item.csList" :key="indexc">
-                                    <td>{{ itemc.name }}</td>
-                                    <td>{{ itemc.name }}*</td>
-                                    <td>{{ itemc.name }}</td>
-                                    <td>{{ itemc.name }}*</td>
-                                    <td>{{ itemc.name }}</td>
-                                    <td>{{ itemc.name }}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.name}}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.depressionPercentage }}%{{ itemc.depressionPercentage > ChinaCM[0] && itemc.depressionPercentage > item.wdList[0].percent ? '*' : ''}}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.anxietyPercentage }}%{{ itemc.anxietyPercentage > ChinaCM[1] && itemc.anxietyPercentage > item.wdList[1].percent ? '*' : ''}}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.forcedPercentage }}%{{ itemc.forcedPercentage > ChinaCM[2] && itemc.forcedPercentage > item.wdList[2].percent ? '*' : ''}}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.violencePercentage }}%{{ itemc.violencePercentage > ChinaCM[3] && itemc.violencePercentage > item.wdList[3].percent ? '*' : ''}}</td>
+                                    <td v-if="itemc.nameFlag">{{ itemc.suicidePercentage }}%{{ itemc.suicidePercentage > ChinaCM[4] & itemc.suicidePercentage > item.wdList[4].percent ? '*' : ''}}</td>
                                 </tr>
 
                             </table>
@@ -2557,8 +2556,8 @@
 
                                     </table>
                                     <div class="yy_txt noSplitBox">
-                                        在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
+                                        <!-- {{nanTxt}} -->
+                                        在抑郁维度中，；女生正常人数为
                                         147
                                         人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
                                     </div>
@@ -2597,9 +2596,18 @@
                             <div class="yy_txt noSplitBox">
                                 说明：重点关注人群名单（共 40 人，占预备年级总人数 9.9%），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
                             </div>
-                            <div class="yy_txt noSplitBox" style="color: #f00;">
+                            <div v-if="item.name.indexOf('初中') == -1" class="yy_txt noSplitBox" style="color: #f00;">
                                 {{ item.name }}重点关注人群名单见附件一。
                             </div>
+                            <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
+                                直升班（初中 1-10 班）重点关注人群名单见附件一。
+                            </div>
+                            <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
+                                非直升班（初中 11-20 班）重点关注人群名单见附件二。
+                            </div>
+                             
+                            
+                        
                             <!-- <div class="noSplitBox" style="width: 100%;height: 40px;"></div> -->
                         </div>
                     </div>
@@ -2839,6 +2847,44 @@ const Url = 'http://36.110.172.217:11008'
 export default {
     data() {
         return {
+            allTxtZs3: '',
+            zsClassWd: [],
+            fzsClassWd: [],
+            cmCha: [0,0,0,0,0],
+            schoolCM: [0,0,0,0,0],
+            ChinaCM: [19.9,29.8,17.3,20.2,21.9],
+            wdJcListArr: [
+                {
+                    name: '抑郁',
+                    mildProportion: 0,
+                    moderateProportion: 0,
+                    severeProportion: 0,
+                },
+                {
+                    name: '焦虑',
+                    mildProportion: 0,
+                    moderateProportion: 0,
+                    severeProportion: 0,
+                },
+                {
+                    name: '强迫',
+                    mildProportion: 0,
+                    moderateProportion: 0,
+                    severeProportion: 0,
+                },
+                {
+                    name: '敌对',
+                    mildProportion: 0,
+                    moderateProportion: 0,
+                    severeProportion: 0,
+                },
+                {
+                    name: '自我伤害',
+                    mildProportion: 0,
+                    moderateProportion: 0,
+                    severeProportion: 0,
+                },
+            ],
             detail:{
                 yyQg: 19.9,
                 jlQg: 29.8,
@@ -2850,14 +2896,29 @@ export default {
                 gradeTxt1: '',
                 gradeTxt2: '',
                 gradeTxt3: '',
+                gradeTxt4: '',
+                wdpStr: '',
+                jcTxt: '',
+                cmTxt: '',
+                genderTxt5: '',
+                genderTxt51: '',
+                genderTxt52: '',
+                manOrgs: [],
+                womanOrgs: [],
                 zsFlag: false,
                 txtStr: '',
                 txtStr52:'',
                 txtStr51:'',
+                gradeListOrg: [],
+                gradeTxtOrg: '',
+                schoolList:[],
+                gradeList: [],
                 totalClasses: '',
                 totalStudents: '',
                 maleStudents: '',
                 femaleStudents: '',
+                maleStudentsPre: '',
+                femaleStudentsPre: '',
                 yuBei:{
 
                 },
@@ -2883,6 +2944,8 @@ export default {
             part6: false,
             part7: false,
             part8: false,
+            part9: false,
+            part10: false,
 
 
             partList: {},
@@ -3957,7 +4020,7 @@ export default {
                     txt2: '通过这些沙具的配置和选择，可以看出来访者当前处于一种深刻思考生命和死亡的状态。头骨、大脑和心脏分别代表了生命的脆弱性、智慧和情感，而中央的骷髅则进一步强调了对生命本质的探索和对死亡的思考。整体来看，来访者可能在经历某种内心的转变或反思，试图理解和平衡理性和情感，同时面对生命的有限性和深层次的恐惧。这种配置也反映了来访者对内心深处某些未解决的问题或恐惧的关注，可能需要更多的心理支持和探索。'
                 }
             ],
-            gradeList: [
+            gradeAllList: [
                 {
                     name: '预备年级',
                     wdList: [
@@ -4074,7 +4137,6 @@ export default {
         console.log(muluArr)
         this.muluList = muluArr
         console.log(this.muluList)
-        this.echartInit()
         window.addEventListener("resize", () => {
             setTimeout(() => {
                 this.myChart1.resize();
@@ -4087,7 +4149,7 @@ export default {
     },
     computed: {
         bindmodel() {
-            const { part1, part2, part3, part4, part5, part6, part7, part8 } = this;
+            const { part1, part2, part3, part4, part5, part6, part7, part8, part9, part10 } = this;
             return {
                 part1,
                 part2,
@@ -4096,7 +4158,9 @@ export default {
                 part5,
                 part6,
                 part7,
-                part8
+                part8,
+                part9,
+                part10
             };
         }
     },
@@ -4112,7 +4176,9 @@ export default {
                 this.part6 = newVal.part6;
                 this.part7 = newVal.part7;
                 this.part8 = newVal.part8;
-                if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8) {
+                this.part9 = newVal.part9;
+                this.part10 = newVal.part10;
+                if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8&& this.part9 && this.part10) {
                     this.part1 = false;
                     this.part2 = false;
                     this.part3 = false;
@@ -4121,8 +4187,12 @@ export default {
                     this.part6 = false;
                     this.part7 = false;
                     this.part8 = false;
-                    // this.personExport();
+                    this.part9 = false;
+                    this.part10 = false;
                     this.loading.close();
+                    console.log(this.gradeAllList)
+                   
+                    this.echartInit()
                     // this.loading = this.$loading({
                     //     lock: true,
                     //     text: "报告生成中",
@@ -4146,7 +4216,19 @@ export default {
             this.pTimeFlag = false
         },
         echartInit() {
+            let that = this;
             // 参加筛查评估学生学段分布图
+            let arr1 = []
+            console.log(that.detail.schoolList)
+            for (let i in that.detail.schoolList) {
+                let obj1 = {
+                    value: Number(that.detail.schoolList[i].percent),
+                    name: that.detail.schoolList[i].name
+                }
+                arr1.push(obj1)
+            }
+            console.log(arr1)
+            console.log(that.detail.totalStudents)
             this.myChart1 = echarts.init(this.$refs.myChart1);
             this.myChart1.setOption({
                 tooltip: {
@@ -4165,7 +4247,7 @@ export default {
                     left: 'center',
                     top: '135',
                     style: {
-                        text: '1873',
+                        text: that.detail.totalStudents,
                         textAlign: 'center',
                         fill: '#333E75',
                         fontSize: 20
@@ -4198,16 +4280,30 @@ export default {
                                 // with: 2
                             }
                         },
-                        data: [
-                            { value: 413, name: '预备年级' },
-                            { value: 840, name: '初中段' },
-                            { value: 620, name: '高中段' }
-                        ]
+                        data: arr1
                     }
                 ]
             });
 
             // 参加筛查评估男女性别人数对比图
+            let arr2 = []
+            arr2.push(['product', '男', '女'])
+            console.log(that.detail.schoolList)
+            for (let i in that.detail.schoolList) {
+                let obj2 = [
+                    that.detail.schoolList[i].name,
+                    that.detail.schoolList[i].numMaleStudents,
+                    that.detail.schoolList[i].numFemaleStudents,
+                ]
+                arr2.push(obj2)
+            }
+            console.log(arr2)
+            // [
+            //             ['product', '男', '女'],
+            //             ['预备年级', 226, 180],
+            //             ['初中', 443, 397],
+            //             ['高中', 330, 290]
+            //         ]
             this.myChart2 = echarts.init(this.$refs.myChart2);
             this.myChart2.setOption({
                 legend: {
@@ -4226,12 +4322,7 @@ export default {
                     // bottom: '10%'   // 底部距离
                 },
                 dataset: {
-                    source: [
-                        ['product', '男', '女'],
-                        ['预备年级', 226, 180],
-                        ['初中', 443, 397],
-                        ['高中', 330, 290]
-                    ]
+                    source: arr2
                 },
                 xAxis: {
                     type: 'category',
@@ -4344,11 +4435,11 @@ export default {
                         fontSize: "16",
                         data: [
                             {
-                                value: [10, 22, 33, 14, 65],
+                                value: that.schoolCM,
                                 name: '八一中学'
                             },
                             {
-                                value: [30, 40, 30, 50, 60],
+                                value: that.ChinaCM,
                                 name: '全国常模',
                                 lineStyle: {
                                     type: 'dashed'
@@ -4360,6 +4451,14 @@ export default {
             });
 
             // 心理健康检出率分布图
+            let lv41 = []
+            let lv42 = []
+            let lv43 = []
+            for (let i in that.wdJcListArr) {
+                lv41.push(that.wdJcListArr[i].mildProportion)
+                lv42.push(that.wdJcListArr[i].moderateProportion)
+                lv43.push(that.wdJcListArr[i].severeProportion)
+            }
             this.myChart4 = echarts.init(this.$refs.myChart4);
             console.log(this.myChart4);
             this.myChart4.setOption({
@@ -4398,7 +4497,7 @@ export default {
                     axisTick: {
                         show: false // 不显示坐标轴刻度线
                     },
-                    data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害']
+                    data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害'].reverse()
                 },
                 series: [
                     {
@@ -4407,46 +4506,58 @@ export default {
                         barWidth: 25,
                         stack: 'total',
                         label: {
-                            show: true,
-                            formatter: (params) => params.value + '%'
+                            normal: {
+                                show: true,
+                                // position: 'top', // 在顶部显示
+                                formatter: (params) => params.value + '%'
+                            }
+                            
                         },
                         emphasis: {
                             focus: 'series'
                         },
-                        data: [12, 22, 30, 32, 1]
+                        
+                        data: lv41.reverse()
                     },
                     {
                         name: '中度问题',
                         type: 'bar',
                         stack: 'total',
                         label: {
-                            show: true,
-                            // formatter: (params) => Math.round(params.value * 1000) / 10 + '%'
-                            formatter: (params) => params.value + '%'
+                            normal: {
+                                show: true,
+                                // position: 'top', // 在顶部显示
+                                formatter: (params) => params.value + '%'
+                            }
                         },
                         emphasis: {
                             focus: 'series'
                         },
-                        data: [20, 32, 10, 13, 9]
+                        data: lv42.reverse()
                     },
                     {
                         name: '重度问题',
                         type: 'bar',
                         stack: 'total',
                         label: {
-                            show: true,
-                            // formatter: (params) => Math.round(params.value * 1000) / 10 + '%'
-                            formatter: (params) => params.value + '%'
+                            normal: {
+                                show: true,
+                                // position: 'top', // 在顶部显示
+                                formatter: (params) => params.value + '%'
+                            }
                         },
                         emphasis: {
                             focus: 'series'
                         },
-                        data: [20, 12, 1, 14, 9]
+                        data: lv43.reverse()
                     }
                 ]
             });
 
             // 不同性别学生心理健康问题检出率分布图
+            // for(let i in this.detail.manOrg) {
+
+            // }
             this.myChart5 = echarts.init(this.$refs.myChart5);
             console.log(this.myChart5);
             this.myChart5.setOption({
@@ -4490,7 +4601,7 @@ export default {
                     axisTick: {
                         show: false // 不显示坐标轴刻度线
                     },
-                    data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害']
+                    data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害'].reverse()
                 },
                 series: [
                     {
@@ -4507,7 +4618,7 @@ export default {
                                 return params.value + '%'; // 自定义数值格式，以美元符号开头，小数点后保留两位
                             }
                         },
-                        data: [10, 100]
+                        data: that.detail.manOrgs
                     },
                     {
                         name: '女',
@@ -4522,13 +4633,21 @@ export default {
                                 return params.value + '%'; // 自定义数值格式，以美元符号开头，小数点后保留两位
                             }
                         },
-                        data: [20, 82]
+                        data: that.detail.womanOrgs
                     }
                 ]
             });
 
-            for (let i in this.gradeList) {
-                if (this.gradeList[i].name.indexOf('初中') != '-1') {
+            for (let i in this.gradeAllList) {
+                if (this.gradeAllList[i].name.indexOf('初中') != '-1') {
+                    let zsData = []
+                    for( let i in this.zsClassWd) {
+                        zsData.push(this.zsClassWd[i].percentage)
+                    }
+                    let fzsData = []
+                    for( let i in this.fzsClassWd) {
+                        fzsData.push(this.fzsClassWd[i].percentage)
+                    }
                     // 直升与非直升学生心理健康问题检出率分布图
                     let zName = 'myChart9' + i
                     this[zName] = echarts.init(this.$refs[zName][0]);
@@ -4591,7 +4710,7 @@ export default {
                                         return params.value + '%'; // 自定义数值格式，以美元符号开头，小数点后保留两位
                                     }
                                 },
-                                data: [10, 100, 20, 55, 5]
+                                data: zsData
                             },
                             {
                                 name: '11-20班（非本校直升）',
@@ -4606,7 +4725,7 @@ export default {
                                         return params.value + '%'; // 自定义数值格式，以美元符号开头，小数点后保留两位
                                     }
                                 },
-                                data: [20, 82, 40, 85, 51]
+                                data: fzsData
                             }
                         ]
                     });
@@ -4781,6 +4900,11 @@ export default {
                 }
                 // 雷达图
                 // this['myChart1' + i] = null
+                let plist =  this.gradeAllList[i].wdList
+                let pArr = []
+                for (let i in plist) {
+                    pArr.push(plist[i].percent)
+                }
                 let cName = 'myChart1' + i
                 this[cName] = echarts.init(this.$refs[cName][0]);
                 console.log(this[cName]);
@@ -4815,22 +4939,25 @@ export default {
                             fontSize: "16",
                             data: [
                                 {
-                                    value: [10, 22, 33, 14, 65],
-                                    name: '八一中学'
+                                    value: pArr,
+                                    name:  this.gradeAllList[i].name,
+                                    label: {
+                                        show: true
+                                    }
                                 },
                                 {
-                                    value: [30, 40, 30, 50, 60],
+                                    value: this.ChinaCM,
                                     name: '全国常模',
                                     lineStyle: {
                                         type: 'dashed'
-                                    },
+                                    }
                                 },
                                 {
-                                    value: [20, 10, 50, 10, 40],
+                                    value: this.schoolCM,
                                     name: '本校常模',
                                     lineStyle: {
                                         type: 'dashed'
-                                    },
+                                    }
                                 }
                             ]
                         }
@@ -4922,8 +5049,16 @@ export default {
 
 
 
-                let wdList = this.gradeList[i].wdList
+                let wdList = this.gradeAllList[i].wdList
+
                 for (let j in wdList) {
+                    let className = []
+                    let classPercent = []
+                    for(let k in this.gradeAllList[i].cwdList[j]) {
+                        className.push(this.gradeAllList[i].cwdList[j][k].name)
+                        classPercent.push(this.gradeAllList[i].cwdList[j][k].percent)
+                    }
+                    
                     let cName2 = 'myChart2' + i + j;
                     this[cName2] = echarts.init(this.$refs[cName2][0]);
                     console.log(this[cName2]);
@@ -4948,7 +5083,7 @@ export default {
                         xAxis: [
                             {
                                 type: "category",
-                                data: ['1班', '2班', '3班', '4班', '5班', '6班', '7班', '8班'],
+                                data: className,
                                 axisPointer: {
                                     type: "shadow"
                                 },
@@ -4965,7 +5100,7 @@ export default {
                             type: "value",
                             name: "",
                             min: 0,
-                            // max: 100,
+                            // max: wdList[j].percent+10,
                             // interval: 2,
                             axisLabel: {
                                 color: "#333E75",
@@ -4988,7 +5123,7 @@ export default {
                                 //         ])
                                 //     }
                                 // },
-                                data: [1, 2, 3, 4, 5, 6, 7, 8],
+                                data: classPercent,
                                 markLine: {
                                     symbol: "none",
                                     lineStyle: {
@@ -4998,7 +5133,7 @@ export default {
                                     },
                                     data: [
                                         {
-                                            yAxis: 3,
+                                            yAxis: wdList[j].percent,
                                             name: "",
                                             lineStyle: {
                                                 type: "dashed",
@@ -5013,7 +5148,7 @@ export default {
                                             }
                                         },
                                         {
-                                            yAxis: 2,
+                                            yAxis: Number(this.ChinaCM[j]),
                                             name: "",
                                             lineStyle: {
                                                 type: "dashed",
@@ -5078,6 +5213,42 @@ export default {
             
             return countMap;
         },
+        toFixed (d, n) {
+            var s = n + "";
+            if (!d) d = 0;
+            if (s.indexOf(".") == -1) s += ".";
+            s += new Array(d + 1).join("0");
+            if (new RegExp("^(-|\\+)?(\\d+(\\.\\d{0," + (d + 1) + "})?)\\d*$").test(s)) {
+                var s = "0" + RegExp.$2, pm = RegExp.$1, a = RegExp.$3.length, b = true;
+                if (a == d + 2) {
+                    a = s.match(/\d/g);
+                    if (parseInt(a[a.length - 1]) > 4) {
+                        for (var i = a.length - 2; i >= 0; i--) {
+                            a[i] = parseInt(a[i]) + 1;
+                            if (a[i] == 10) {
+                                a[i] = 0;
+                                b = i != 1;
+                            } else break;
+                        }
+                    }
+                    s = a.join("").replace(new RegExp("(\\d+)(\\d{" + d + "})\\d$"), "$1.$2");
+        
+                }
+                // if (b) s = s.substr(1);
+                if (b) s = s.substring(1);
+                return (pm + s).replace(/\.$/, "");
+            }
+            return this + "";
+        },
+        noRepeat2(arr) { //数组去重
+            for (var i = 0; i < arr.length; i++) {
+                if (arr.indexOf(arr[i]) != i) {
+                    arr.splice(i,1);//删除数组元素后数组长度减1后面的元素前移
+                    i--;//数组下标回退
+                }
+            }
+            return arr;
+        },
         // 下载报告
         partsSub() {
             var that = this;
@@ -5127,7 +5298,70 @@ export default {
                 spinner: "el-icon-loading",
                 background: "rgba(0, 0, 0, 0.7)"
             });
+            // 男
+            let paramnan = {
+                startDate: star,
+                endDate: end,
+                code: '',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 1
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", paramnan)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('男')
+                        console.log(data)
+                        // lv1: wdJcList[i].mildProportion,
+                        //         lv2: wdJcList[i].moderateProportion,
+                        //         lv3: wdJcList[i].severeProportion,）
+                        let nanList = []
+                        for (let i in data) {
+                            let nanTxt = '在'+data[i].grade+'维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；' 
+                            nanList.push(nanTxt)
+                        }
+                        // this.nanList
 
+                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+                        //                 人（0.4%）；女生正常人数为
+                        //                 147
+                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+
+                        this.part9 = true
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 女
+            let paramnv = {
+                startDate: star,
+                endDate: end,
+                code: '',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 0
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", paramnv)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('女')
+                        console.log(data)
+                        for (let i in data) {
+                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。' 
+                        }
+                        this.part10 = true
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
             // 各维度检出率（3.2.3 可用添加性别和code)   有男女之分 可一起查可分开查
             let param1 = {
                 startDate: star,
@@ -5145,10 +5379,36 @@ export default {
                             {},{},{},{},{}
                         ]
                         let wdJcTotal = []
+                        let schoolCM = [0,0,0,0,0]
+                        // let ChinaCM = [0,0,0,0,0]
+                        
+                        let cmCha = [
+                            {
+                                name: '抑郁',
+                                num: 0
+                            },
+                            {
+                                name: '焦虑',
+                                num: 0
+                            },
+                            {
+                                name: '强迫',
+                                num: 0
+                            },
+                            {
+                                name: '敌对',
+                                num: 0
+                            },
+                            {
+                                name: '自我伤害',
+                                num: 0
+                            },
+                        ]
                         for (let i in data) {
                             if (data[i].grade == '抑郁'){
                                 wdJcList[0] = data[i]
-                                
+                                schoolCM[0] = data[i].total
+                                cmCha[0].num = (Number(data[i].total) - Number(this.detail.yyQg)).toFixed(1)
                                 if (data[i].total > this.detail.yyQg) {
                                     data[i].level = 3
                                 } else if (data[i].total < this.detail.yyQg) {
@@ -5160,6 +5420,8 @@ export default {
                             }
                             if (data[i].grade == '焦虑'){
                                 wdJcList[1] = data[i]
+                                schoolCM[1] = data[i].total
+                                cmCha[1].num = (Number(data[i].total) - Number(this.detail.jlQg)).toFixed(1)
                                 if (data[i].total > this.detail.jlQg) {
                                     data[i].level = 3
                                 } else if (data[i].total < this.detail.jlQg) {
@@ -5171,6 +5433,8 @@ export default {
                             }
                             if (data[i].grade == '强迫'){
                                 wdJcList[2] = data[i]
+                                schoolCM[2] = data[i].total
+                                cmCha[2].num = (Number(data[i].total) - Number(this.detail.qpQg)).toFixed(1)
                                 if (data[i].total > this.detail.qpQg) {
                                     data[i].level = 3
                                 } else if (data[i].total < this.detail.qpQg) {
@@ -5182,6 +5446,8 @@ export default {
                             }
                             if (data[i].grade == '敌对'){
                                 wdJcList[3] = data[i]
+                                schoolCM[3] = data[i].total
+                                cmCha[3].num = (Number(data[i].total) - Number(this.detail.ddQg)).toFixed(1)
                                 if (data[i].total > this.detail.ddQg) {
                                     data[i].level = 3
                                 } else if (data[i].total < this.detail.ddQg) {
@@ -5193,6 +5459,8 @@ export default {
                             }
                             if (data[i].grade == '自我伤害'){
                                 wdJcList[4] = data[i]
+                                schoolCM[4] = data[i].total
+                                cmCha[4].num = (Number(data[i].total) - Number(this.detail.zwshQg)).toFixed(1)
                                 if (data[i].total > this.detail.zwshQg) {
                                     data[i].level = 3
                                 } else if (data[i].total < this.detail.zwshQg) {
@@ -5203,10 +5471,568 @@ export default {
                                 wdJcTotal[4] = data[i].level
                             }
                         }
+                        let wdJcListArr = JSON.parse(JSON.stringify(wdJcList))
+                        this.wdJcListArr = wdJcListArr
+                        
+                        console.log(wdJcListArr)
                         console.log(wdJcList)
+                        this.schoolCM = schoolCM
+                        this.cmCha = cmCha
+                        let c1 =0
+                        let c2 =0
+                        let c3 =0
+                        for (let i in cmCha) {
+                            if (cmCha[i].num < 0) {
+                                c1++
+                            }
+                            if (cmCha[i].num == 0) {
+                                c2++
+                            }
+                            if (cmCha[i].num > 0) {
+                                c3++
+                            }
+                        }
+                        console.log(cmCha)
+                        let cmChaSort = JSON.parse(JSON.stringify(cmCha)).sort((a, b) => {
+                            return Number(b.num) - Number(a.num);
+                        })
+                        console.log(cmChaSort)
+                        let cmTxt = ''
+                        // A.若学校常模-全国常模都为正，
+                        if (c3 == 5) {
+
+                            cmTxt += '与全国常模相比，本校学生整体各维度检出率都高于全国常模，心理健康问题有待改善，'
+                            let cmChaArr = []
+                            for (let i in cmChaSort) {
+                                if (cmChaSort[i].num == cmChaSort[0].num) {
+                                    cmChaArr.push(cmChaSort[i].name)
+                                }
+                            }
+                            if (cmChaArr.length < 5) {
+                                cmTxt += '其中，'+ cmChaArr.join('、') + '维度（皆）超出全国常模'+ cmChaSort[0].num + '%。'
+                            } else {
+                                cmTxt += '各维度皆超出全国常模' + cmChaSort[0].num + '%。'
+                            }
+                        }
+                        // B.若学校常模-全国常模都为负，
+                        if (c1 == 5) {
+                            // cmTxt += '其中，**（和**问题）相对较小，（皆）低于全国常模**%。'
+                            // cmTxt += '各维度皆低于全国常模**%。'
+                            cmTxt += '与全国常模相比，本校学生整体各维度都低于全国常模，心理健康问题总体表现较好，'
+                            let cmChaArr1 = []
+                            for (let i in cmChaSort) {
+                                if (cmChaSort[i].num == cmChaSort[5].num) {
+                                    cmChaArr1.push(cmChaSort[i].name)
+                                }
+                            }
+                            console.log(cmChaArr1)
+                            console.log(cmChaArr1.reverse())
+                            if (cmChaArr1.length < 5) {
+                                cmTxt += '其中，'+ cmChaArr1.reverse().join('、') + '问题相对较小，（皆）低于全国常模'+ cmChaSort[0].num + '%。'
+                            } else {
+                                cmTxt += '各维度皆低于全国常模' + cmChaSort[5].num + '%。'
+                            }
+                            
+                        }
+                        // C.若学校常模-全国常模都为0，则第一、二、三句输出：
+                        if (c2 == 5) {
+                            cmTxt += '与全国常模相比，本校各维度检出率与全国常模基本持平，说明本校心理健康问题与全国状况相当。'
+                        }
+                        // D.若学校常模-全国常模有正、有负
+                        if (c3 < 5 && c2 < 5 && c1 < 5) {
+                            cmTxt += '与全国常模相比，本校学生在'
+                            let csStr1 = []
+                            let csStr2 = []
+                            let csStr3 = []
+                            for (let i in cmChaSort) {
+                                if (cmChaSort[i].num > 0) {
+                                    csStr1.push(cmChaSort[i].name)
+                                    if (cmChaSort[i].num == cmChaSort[0].num) {
+                                        csStr3.push(cmChaSort[i].name)
+                                    }
+                                }
+                                if (cmChaSort[i].num < 0) {
+                                    csStr2.push(cmChaSort[i].name)
+                                }
+                                
+                            }
+                            if (csStr2.length >0) {
+                                // 显示负的
+                                cmTxt += csStr2.join('、') + '方面问题较小'
+                                if(csStr1.length == 0) {
+                                    cmTxt += '。'
+                                } else {
+                                    cmTxt += '，'
+                                }
+                            }
+                            if (csStr1.length >0) {
+                                // 显示正的
+                                cmTxt += csStr1.join('、') + '方面有待改善，'
+                                cmTxt += '其中，'
+                                // 输出差值为正，且最大的维度
+                                console.log(csStr3)
+                                console.log(csStr3.join())
+                                console.log(csStr3.join('、'))
+                                let csStr3s = csStr3.length > 1 ? '皆' : ''
+                                cmTxt += csStr3.join('、') + '维度'+ csStr3s +'超出全国常模'+cmChaSort[0].num+'%。'
+                                
+                                console.log(cmTxt)
+                            }
+                            
+                            
+                            
+                            
+                            
+                            console.log(csStr1, csStr2, csStr3)
+                        }   
+                        this.detail.cmTxt = cmTxt
+                        console.log(c1,c2,c3)
                         wdJcList.sort((a, b) => {
                             return Number(b.total) - Number(a.total);
                         });
+                        let wdArrNum = []
+                        let wdNum = []
+                        
+                        for (let i in wdJcList) {
+                            wdArrNum.push({
+                                name: wdJcList[i].grade,
+                                num: wdJcList[i].total,
+                                lv1: wdJcList[i].mildProportion,
+                                lv2: wdJcList[i].moderateProportion,
+                                lv3: wdJcList[i].severeProportion,
+                            })
+                            wdNum.push(wdJcList[i].total)
+                        }
+                        // const countw = {};
+                        // for (const num of wdNum) {
+                        //     countw[num] = countw[num] ? countw[num] + 1 : 1;
+                        // }
+                        // console.log(countw[wdNum[0]], countw[wdNum[1]], countw[wdNum[2]], countw[wdNum[3]], countw[wdNum[4]])
+                        // console.log(wdArrNum)
+                        console.log(wdNum)
+                        let wdNumNo = that.noRepeat2(wdNum)
+                        console.log(wdNumNo)
+                        let wdpStr = ''
+                        if (wdNumNo.length == 5) {
+                            // A.若五个维度检出率彼此各不相同，则输出
+                            // （第一句）**问题最为普遍：在所有心理健康问题中，**问题的检出率最高，达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。这表明**是本校中小学生中最常见的心理健康问题。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[0].name +'问题最为普遍：</span>'
+                                wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，' + wdArrNum[0].name +'问题的检出率最高，达到'+ wdArrNum[0].num + '%。其中，' + wdArrNum[0].name + '轻度问题占比为' + wdArrNum[0].lv1 + '%，'  + wdArrNum[0].name + '中度问题占比为' + wdArrNum[0].lv2 + '%，' + wdArrNum[0].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。这表明' + wdArrNum[0].name + '是本校中小学生中最常见的心理健康问题。</span>'
+                            wdpStr += '</div>'
+                            // （第二句）**问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。**问题仅次于**问题，成为本校中小学生心理健康问题中的第二大常见类型。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[1].name +'问题次之：</span>'
+                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[1].name +'问题的检出率为'+ wdArrNum[1].num + '%。其中，' + wdArrNum[1].name + '轻度问题占比为' + wdArrNum[1].lv1 + '%，'  + wdArrNum[1].name + '中度问题占比为' + wdArrNum[1].lv2 + '%，' + wdArrNum[1].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。' + wdArrNum[1].name + '问题仅次于' + wdArrNum[0].name + '问题，成为本校中小学生心理健康问题中的第二大常见类型。</span>'
+                            wdpStr += '</div>'
+                            // （第三句）**问题不容忽视：**问题的检出率为**%，其中**轻度问题占比为 20.1%，**中度问题占比 **%，**重度问题占比**%。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[2].name +'问题不容忽视：</span>'
+                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[2].name +'问题的检出率为'+ wdArrNum[2].num + '%。其中，' + wdArrNum[2].name + '轻度问题占比为' + wdArrNum[2].lv1 + '%，'  + wdArrNum[2].name + '中度问题占比为' + wdArrNum[2].lv2 + '%，' + wdArrNum[2].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。</span>'
+                            wdpStr += '</div>'
+                            // （第四句）**、**问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比，**重度问题占比**%。**问题的总检出率为**%，其中**轻度问题占比最大，为 **%，**中度问题占比**%，**重度问题占比**%。这两类问题虽然检出率相对较低，但也需要引起注意。
+                            
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[3].name + '、' + wdArrNum[4].name +'问题相对较少：</span>'
+                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[3].name +'问题的检出率为'+ wdArrNum[3].num + '%。其中' + wdArrNum[3].name + '轻度问题占比为' + wdArrNum[3].lv1 + '%，'  + wdArrNum[3].name + '中度问题占比为' + wdArrNum[3].lv2 + '%，' + wdArrNum[3].name + '重度问题占比为' + wdArrNum[3].lv3 + '%。' + wdArrNum[4].name +'问题的检出率为'+ wdArrNum[4].num + '%。其中' + wdArrNum[4].name + '轻度问题占比为' + wdArrNum[4].lv1 + '%，'  + wdArrNum[4].name + '中度问题占比为' + wdArrNum[4].lv2 + '%，' + wdArrNum[4].name + '重度问题占比为' + wdArrNum[4].lv3 + '%。这两类问题虽然检出率相对较低，但也需要引起注意。</span>'
+                            wdpStr += '</div>'
+                            // （第五句）综上所述，**问题是本校中小学生最突出的心理健康问题，其次为**问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
+                        
+                            wdpStr += '<div class="yy_txt yy_txt_s1 noSplitBox">'
+                                wdpStr += '综上所述，' +wdArrNum[0].name+ '问题是本校中小学生最突出的心理健康问题，其次为' +wdArrNum[1].name+ '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                            wdpStr += '</div>'
+                           
+                            
+                            
+                            
+                        } else if(wdNumNo.length == 1) {
+                            // B.若五个维度检出率完全相同，则输出：
+                            // （第一句）各维度检出率相当，皆为**%。抑郁轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；焦虑轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；强迫轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；敌对轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；自我伤害轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '各维度检出率相当，皆为' + wdArrNum[0].num + '%。'
+                                for ( let i in wdArrNum) {
+                                    wdpStr +=  wdArrNum[i].name + '轻度问题占比为' + wdArrNum[i].lv1 + '%，'  + wdArrNum[i].name + '中度问题占比为' + wdArrNum[i].lv2 + '%，' + wdArrNum[i].name + '重度问题占比为' + wdArrNum[i].lv3 + '%'
+                                    if (i < wdArrNum.length - 1) {
+                                        wdpStr += '；'
+                                    } else{
+                                        wdpStr += '。'
+                                    }
+                                }
+                            wdpStr += '</div>'
+                            
+                            // （第二句）这表明，本校各维度心理健康问题占比均衡，学校和家长应该进行相应注意。其中，抑郁和自我伤害可能涉及到学生的生命安全，因此需要尤为关注。
+                        
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '这表明，本校各维度心理健康问题占比均衡，学校和家长应该进行相应注意。其中，抑郁和自我伤害可能涉及到学生的生命安全，因此需要尤为关注。'
+                            wdpStr += '</div>'
+                        } else if(wdNumNo.length == 2) {
+                            // D.若检出率仅有两种数值，则输出：
+                            let noArr1 = []
+                            let noArr2 = []
+                            for (let i in wdArrNum) {
+                                if (wdArrNum[i].num == wdNumNo[0]) {
+                                    noArr1.push(wdArrNum[i])
+                                }
+                                if (wdArrNum[i].num == wdNumNo[1]) {
+                                    noArr2.push(wdArrNum[i])
+                                }
+                            }
+                            
+                            // （第一句:）**（、**、**和**)问题最为普遍：在所有心理健康问题中，**、（**、**和**)问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**、（**、**和**)是本校中小学生中最常见的心理健康问题)。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">'
+                                let wdp1 = ''
+                                if (noArr1.length > 1) {
+                                    for (let i in noArr1) {
+                                        wdp1 += wdArrNum[0].name
+                                        if (i < noArr1.length - 2) {
+                                            wdp1 += '、'
+                                        }
+                                        if (i == noArr1.length -2) {
+                                            wdp1 += '和'
+                                        }
+                                    }
+                                } else {
+                                    wdp1 += wdArrNum[0].name
+                                }
+                                
+                                wdpStr += wdp1 + '问题最为普遍：</span>'
+                                wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，'
+                                
+                                wdpStr += wdp1 + '问题的检出率最高，'
+                                let no1Len = noArr1.length > 1 ? '皆' : ''
+                                wdpStr += no1Len + '达到'+ noArr1[0].num + '%。其中，'
+                                for ( let i in noArr1) {
+                                    wdpStr +=  noArr1[i].name + '轻度问题占比为' + noArr1[i].lv1 + '%，'  + noArr1[i].name + '中度问题占比为' + noArr1[i].lv2 + '%，' + noArr1[i].name + '重度问题占比为' + noArr1[i].lv3 + '%'
+                                    if (i < noArr1.length - 1) {
+                                        wdpStr += '；'
+                                    } else{
+                                        wdpStr += '。'
+                                    }
+                                }
+                                
+                                wdpStr += '这表明' + wdp1 + '是本校中小学生中最常见的心理健康问题。</span>'
+                            wdpStr += '</div>'
+                            // （第二句）**（、**、**和**)问题相对较少：**问题的检出率相对较低，（皆）为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，重度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（、**、**和**)问题虽然检出率相对较低，但也需要引起注意。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp2 = ''
+                                if (noArr2.length > 1) {
+                                    for (let i in noArr2) {
+                                        wdp2 += wdArrNum[0].name
+                                        if (i < noArr2.length - 2) {
+                                            wdp2 += '、'
+                                        }
+                                        if (i == noArr2.length -2) {
+                                            wdp2 += '和'
+                                        }
+                                    }
+                                } else {
+                                    wdp2 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp2 + '问题相对较少：</span>'
+                                wdpStr += '<span>'
+                                
+                                wdpStr += wdp2 + '问题的检出率相对较低，'
+                                let no2Len = noArr2.length > 1 ? '皆' : ''
+                                wdpStr += no2Len + '为'+ noArr2[0].num + '%，其中，'
+                                for ( let i in noArr2) {
+                                    wdpStr +=  noArr2[i].name + '轻度问题占比为' + noArr2[i].lv1 + '%，'  + noArr2[i].name + '中度问题占比为' + noArr2[i].lv2 + '%，' + noArr2[i].name + '重度问题占比为' + noArr2[i].lv3 + '%'
+                                    if (i < noArr2.length - 1) {
+                                        wdpStr += '；'
+                                    } else{
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += wdp2 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                            wdpStr += '</div>'
+                            // （第三句）综上所述，**（、**、**和**)问题是本校中小学生最突出的心理健康问题，**（、**、**和**)问题相对较少。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
+                            wdpStr += '<div class="yy_txt noSplitBox">'
+                                wdpStr += '综上所述，' + wdp1 + '问题是本校中小学生最突出的心理健康问题，' + wdp2 + '问题相对较少。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                            wdpStr += '</div>'
+                        } else{
+                            // C.若检出率有3-4个数值不同：
+                            if (wdNumNo.length == 3) { // 13344 11134
+                                let noArr31 = []
+                                let noArr32 = []
+                                let noArr33 = []
+                                for (let i in wdArrNum) {
+                                    if (wdArrNum[i].num == wdNumNo[0]) {
+                                        noArr31.push(wdArrNum[i])
+                                    }
+                                    if (wdArrNum[i].num == wdNumNo[1]) {
+                                        noArr32.push(wdArrNum[i])
+                                    }
+                                    if (wdArrNum[i].num == wdNumNo[2]) {
+                                        noArr33.push(wdArrNum[i])
+                                    }
+                                }
+                                // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp31 = ''
+                                    if (noArr31.length > 1) {
+                                        for (let i in noArr31) {
+                                            wdp31 += wdArrNum[0].name
+                                            if (i < noArr31.length - 2) {
+                                                wdp31 += '、'
+                                            }
+                                            if (i == noArr31.length -2) {
+                                                wdp31 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp31 += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp31 + '问题最为普遍：</span>'
+                                    wdpStr += '<span>在所有心理健康问题中，'
+                                    
+                                    wdpStr += wdp31 + '问题的检出率最高，'
+                                    let no31Len = noArr31.length > 1 ? '皆' : ''
+                                    wdpStr += no31Len + '达到'+ noArr31[0].num + '%。其中，'
+                                    for ( let i in noArr31) {
+                                        wdpStr +=  noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，'  + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
+                                        if (i < noArr31.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
+                                wdpStr += '</div>'
+                                // （第二句：）**（和**）问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（和**）是本校中小学生心理健康问题中的第二大常见类型。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp32 = ''
+                                    if (noArr32.length > 1) {
+                                        for (let i in noArr32) {
+                                            wdp32 += wdArrNum[0].name
+                                            if (i < noArr32.length - 2) {
+                                                wdp32 += '、'
+                                            }
+                                            if (i == noArr32.length -2) {
+                                                wdp32 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp32 += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp32 + '问题次之：</span>'
+                                    wdpStr += '<span>'
+                                    
+                                    wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
+                                    // let no2Len = noArr32.length > 1 ? '皆' : ''
+                                    // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
+                                    for ( let i in noArr32) {
+                                        wdpStr +=  noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，'  + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
+                                        if (i < noArr32.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
+                                wdpStr += '</div>'
+
+                                // （第三句）**（和**）问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（和**)问题虽然检出率相对较低，但也需要引起注意。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp33 = ''
+                                    if (noArr33.length > 1) {
+                                        for (let i in noArr33) {
+                                            wdp33 += wdArrNum[0].name
+                                            if (i < noArr33.length - 2) {
+                                                wdp33 += '、'
+                                            }
+                                            if (i == noArr33.length -2) {
+                                                wdp33 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp33 += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp33 + '问题相对较少：</span>'
+                                    wdpStr += '<span>'
+                                    wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，其中，'
+                                    // wdpStr += wdp33 + '问题的检出率相对较低，'
+                                    // let no33Len = noArr33.length > 1 ? '皆' : ''
+                                    // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
+                                    for ( let i in noArr33) {
+                                        wdpStr +=  noArr33[i].name + '轻度问题占比为' + noArr33[i].lv1 + '%，'  + noArr33[i].name + '中度问题占比为' + noArr33[i].lv2 + '%，' + noArr33[i].name + '重度问题占比为' + noArr33[i].lv3 + '%'
+                                        if (i < noArr33.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += wdp33 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                                wdpStr += '</div>'
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                                wdpStr += '</div>'
+                            }
+                            
+                            if (wdNumNo.length == 4) {
+                                let noArr31 = []
+                                let noArr32 = []
+                                let noArr33 = []
+                                let noArr34 = []
+                                for (let i in wdArrNum) {
+                                    if (wdArrNum[i].num == wdNumNo[0]) {
+                                        noArr31.push(wdArrNum[i])
+                                    }
+                                    if (wdArrNum[i].num == wdNumNo[1]) {
+                                        noArr32.push(wdArrNum[i])
+                                    }
+                                    if (wdArrNum[i].num == wdNumNo[2]) {
+                                        noArr33.push(wdArrNum[i])
+                                    }
+                                    if (wdArrNum[i].num == wdNumNo[3]) {
+                                        noArr34.push(wdArrNum[i])
+                                    }
+                                }
+                                // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp31 = ''
+                                    if (noArr31.length > 1) {
+                                        for (let i in noArr31) {
+                                            wdp31 += wdArrNum[0].name
+                                            if (i < noArr31.length - 2) {
+                                                wdp31 += '、'
+                                            }
+                                            if (i == noArr31.length -2) {
+                                                wdp31 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp31 += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp31 + '问题最为普遍：</span>'
+                                    wdpStr += '<span>在所有心理健康问题中，'
+                                    
+                                    wdpStr += wdp31 + '问题的检出率最高，'
+                                    let no31Len = noArr31.length > 1 ? '皆' : ''
+                                    wdpStr += no31Len + '达到'+ noArr31[0].num + '%。其中，'
+                                    for ( let i in noArr31) {
+                                        wdpStr +=  noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，'  + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
+                                        if (i < noArr31.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
+                                wdpStr += '</div>'
+                                // （第二句：）**（和**）问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（和**）是本校中小学生心理健康问题中的第二大常见类型。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp32 = ''
+                                    if (noArr32.length > 1) {
+                                        for (let i in noArr32) {
+                                            wdp32 += wdArrNum[0].name
+                                            if (i < noArr32.length - 2) {
+                                                wdp32 += '、'
+                                            }
+                                            if (i == noArr32.length -2) {
+                                                wdp32 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp32 += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp32 + '问题次之：</span>'
+                                    wdpStr += '<span>'
+                                    
+                                    wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
+                                    // let no2Len = noArr32.length > 1 ? '皆' : ''
+                                    // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
+                                    for ( let i in noArr32) {
+                                        wdpStr +=  noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，'  + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
+                                        if (i < noArr32.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
+                                wdpStr += '</div>'
+
+                                // （第三句）**（和**）问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（和**)问题虽然检出率相对较低，但也需要引起注意。
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '<span style="font-weight: 500;">'
+                                    let wdp33 = ''
+                                    if (noArr33.length > 1) {
+                                        for (let i in noArr33) {
+                                            wdp33 += wdArrNum[0].name
+                                            if (i < noArr33.length - 2) {
+                                                wdp33 += '、'
+                                            }
+                                            if (i == noArr33.length -2) {
+                                                wdp33 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp33 += wdArrNum[0].name
+                                    }
+                                    let wdp34 = ''
+                                    if (noArr34.length > 1) {
+                                        for (let i in noArr34) {
+                                            wdp34 += wdArrNum[0].name
+                                            if (i < noArr34.length - 2) {
+                                                wdp34 += '、'
+                                            }
+                                            if (i == noArr34.length -2) {
+                                                wdp34 += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp34 += wdArrNum[0].name
+                                    }
+                                    noArr33s = noArr33.concat(noArr34)
+                                    let wdp3s = ''
+                                    if (noArr33s.length > 1) {
+                                        for (let i in noArr33s) {
+                                            wdp3s += wdArrNum[0].name
+                                            if (i < noArr33s.length - 2) {
+                                                wdp3s += '、'
+                                            }
+                                            if (i == noArr33s.length -2) {
+                                                wdp3s += '和'
+                                            }
+                                        }
+                                    } else {
+                                        wdp3s += wdArrNum[0].name
+                                    }
+                                    wdpStr += wdp3s + '问题相对较少：</span>'
+                                    wdpStr += '<span>'
+                                    wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，' + wdp34 + '问题的检出率为' + noArr34[0].num + '%，其中，'
+                                    // wdpStr += wdp33 + '问题的检出率相对较低，'
+                                    // let no33Len = noArr33.length > 1 ? '皆' : ''
+                                    // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
+                                    for ( let i in noArr33s) {
+                                        wdpStr +=  noArr33s[i].name + '轻度问题占比为' + noArr33s[i].lv1 + '%，'  + noArr33s[i].name + '中度问题占比为' + noArr33s[i].lv2 + '%，' + noArr33s[i].name + '重度问题占比为' + noArr33s[i].lv3 + '%'
+                                        if (i < noArr33s.length - 1) {
+                                            wdpStr += '；'
+                                        } else{
+                                            wdpStr += '。'
+                                        }
+                                    }
+                                    wdpStr += wdp3s + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                                wdpStr += '</div>'
+                                wdpStr += '<div class="yy_txt noSplitBox">'
+                                    wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                                wdpStr += '</div>'
+                            }
+                            
+                            
+                        }
+                        this.detail.wdpStr = wdpStr
+                        // if (countw[wdNum[0]] == countw[wdNum[1]]== countw[wdNum[2]] == countw[wdNum[3]] == countw[wdNum[4]] == 1){
+                            
+                        // } else if(countw[wdNum[0]] == countw[wdNum[1]]== countw[wdNum[2]] == countw[wdNum[3]] == countw[wdNum[4]] == 5) {
+                            
+                        // }
                         console.log(wdJcTotal)
                         wdJcTotal.sort((a, b) => {
                             return Number(b) - Number(a);
@@ -5295,12 +6121,53 @@ export default {
                         
                         
                         console.log(wdJcList)
-                        
-                        console.log(this.areAllValuesEqual(wdJcTotal))
+
+                        let jcTxt = ''
+                        if(wdJcList.every(item=>item.total === wdJcList[0].total)){
+                            
+                            // 若五个维度检出率完全相同，则输出：
+                            console.log('全等')
+                            jcTxt += '各类心理健康问题相当，检出率皆为：'+ wdJcList[0].total +'%。'
+                        }else{
+                            // console.log(item)
+                            // console.log(item.index)
+
+                            
+                            // 若检出率前两个维度相同
+                            if (wdJcList[0].total == wdJcList[1].total) {
+                                // 检出率后两个维度也相同，但彼此不同
+                                if (wdJcList[3].total == wdJcList[4].total) {
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total +'%。'
+                                } else {// 后两个维度不同输出
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total +'%和'+ wdJcList[4].total +'%。'
+                                }
+                            } else { //检出率前两个维度不同
+                                // 后两个维度相同
+                                if (wdJcList[3].total == wdJcList[4].total) {
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total +'%和'+ wdJcList[1].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total +'%。'
+                                } else {
+                                    // 若五个维度检出率彼此各不相同或中间的跟其他四个相同，则先输出前两位及其检出率，后输出后两位及其检出率
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total +'%和'+ wdJcList[1].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total +'%和'+ wdJcList[4].total +'%。'
+                                }
+                            }
+                            
+                            console.log('有不等的')
+                        }
+                        this.detail.jcTxt = jcTxt
+                        // console.log(this.areAllValuesEqual(wdJcTotal))
                         this.detail.wdJcList = wdJcList
 
 
                         this.part1 = true;
+                        // 各个学段各维度检出率  不需要男女之分
+                        let param7 = {
+                            startDate: star,
+                            endDate: end,
+                            code: '',
+                            // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                            // gender: 1
+                        };
+                        this.getDim(param7, star, end)
                     } else {
                         that.$message.error(data.msg);
                     }
@@ -5326,24 +6193,52 @@ export default {
                         let chuZhong = {}
                         let gaoZhong = {}
                         for (let i in schoolList) {
+                            schoolList[i].percent = ((schoolList[i].numStudents/data.totalStudents)*100).toFixed(1)
                             if (schoolList[i].grade.indexOf('X') != -1) {
+                                schoolList[i].name = '预备年级'
                                 yuBei = schoolList[i]
                             }
                             if (schoolList[i].grade.indexOf('C') != -1) {
+                                schoolList[i].name = '初中'
                                 chuZhong = schoolList[i]
                             }
                             if (schoolList[i].grade.indexOf('G') != -1) {
+                                schoolList[i].name = '高中'
                                 gaoZhong = schoolList[i]
                             }
                         }
+                        data.schoolList = schoolList
+                        let gradeList = data.gradeList
+                        for (let i in gradeList) {
+                            // gradeList[i].percent = ((gradeList[i].numStudents/data.totalStudents)*100).toFixed(1)
+                            if (gradeList[i].grade.indexOf('X') != -1) {
+                                gradeList[i].name = '预备年级'
+                                // yuBei = gradeList[i]
+                            }
+                            if (gradeList[i].grade.indexOf('C') != -1) {
+                                gradeList[i].name = '初中'
+                                // chuZhong = gradeList[i]
+                            }
+                            if (gradeList[i].grade.indexOf('G') != -1) {
+                                gradeList[i].name = '高中'
+                                // gaoZhong = gradeList[i]
+                            }
+                        }
+                        data.gradeList = gradeList
+                        this.detail.gradeList = data.gradeList
+
                         this.detail.totalClasses = data.totalClasses
                         this.detail.totalStudents = data.totalStudents
                         this.detail.maleStudents = data.maleStudents
+                        this.detail.maleStudentsPre = ((data.maleStudents/data.totalStudents)*100).toFixed(1)
                         this.detail.femaleStudents = data.femaleStudents
+                        this.detail.femaleStudentsPre =  ((data.femaleStudents/data.totalStudents)*100).toFixed(1)
+
+                        this.detail.schoolList = data.schoolList
                         this.detail.yuBei = yuBei
                         this.detail.chuZhong = chuZhong
                         this.detail.gaoZhong = gaoZhong
-
+                        console.log(this.detail)
                         this.part2 = true;
                     } else {
                         that.$message.error(data.msg);
@@ -5386,6 +6281,574 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
+                        let man = []
+                        let woman = []
+                        let manOrg = []
+                        let womanOrg = []
+                        let man3 = []
+                        let woman3 = []
+                        let manSum = 0
+                        let womanSum = 0
+                        let datap = JSON.parse(JSON.stringify(data))
+                        for (let i in datap) {
+                            datap[i].exNum = Number((datap[i].maleProportion - datap[i].femaleProportion).toFixed(1))
+                            datap[i].absNum = Number(Math.abs(datap[i].maleProportion - datap[i].femaleProportion).toFixed(1))
+                            if (datap[i].grade == '抑郁') {
+                                data[0] = datap[i]
+                            }
+                            if (datap[i].grade == '焦虑') {
+                                data[1] = datap[i]
+                            }
+                            if (datap[i].grade == '强迫') {
+                                data[2] = datap[i]
+                            }
+                            if (datap[i].grade == '敌对') {
+                                data[3] = datap[i]
+                            }
+                            if (datap[i].grade == '自伤') {
+                                datap[i].grade == '自我伤害'
+                                data[4] = datap[i]
+                            }
+                            
+                        }
+                        console.log(data)
+                        let dataEx = JSON.parse(JSON.stringify(data)).sort((a, b) => {
+                            return Number(b.absNum) - Number(a.absNum);
+                        })
+                        console.log(dataEx)
+                        let genderTxt52 = ''
+                        let maxAbs = dataEx[0]  //最大差值
+                        if (maxAbs.absNum > 0) {
+                            // 若最大差值为抑郁，男检出率＞女检出率时，输出：
+                            if (maxAbs.grade == '抑郁') {
+                                if (maxAbs.maleProportion > maxAbs.femaleProportion) { //男检出率＞女检出率时
+                                    genderTxt52 += '尤其是在抑郁维度，男生的检出率明显高于女生。男生在遇到困难或挫折时，更难以用语言来表达自己的情感和需求，传统性别角色期待也让男生更难表现出软弱、哭泣等情绪。此外，对于男生来说，如果他们在学习上遇到困难或成绩不佳，可能会感到更加沮丧和无力，社会对男孩的学业期望也可能更高，从而增加了他们的学业压力。这些都可能让男生更容易陷入抑郁状态。因此，针对男生的心理健康干预措施应更加重视情感表达能力的培养和社交支持网络的构建，以帮助他们有效应对心理压力。'
+                                }
+                                if (maxAbs.maleProportion < maxAbs.femaleProportion) { //男检出率＜女检出率时
+                                    genderTxt52 += '尤其实在抑郁维度，女生的检出率明显高于男生。女生通常对情绪更加敏感，能够更快地识别和读懂情绪，这种敏感性也可能使她们更容易受到负面情绪的影响，从而增加抑郁的风险。此外，女生的可能更在意人际关系的成功和获得他人的认可，当她们在人际关系中遇到问题时，可能更容易受到打击，从而产生抑郁情绪。因此，针对女生的心理健康干预措施应更加注重钝感力和自我价值的培养。'
+                                }
+                            }
+                            // 若最大差值为焦虑，男检出率＞女检出率时，输出：
+                            if (maxAbs.grade == '焦虑') {
+                                if (maxAbs.maleProportion > maxAbs.femaleProportion) { //男检出率＞女检出率时
+                                    genderTxt52 += '尤其是在焦虑维度，男生的检出率明显超过女生。这可能与男生通常更难以通过社交和情感交流缓解压力有关，导致他们更容易陷入焦虑状态。此外，社会对男生的情感表达常常存在一定的压制，使得他们在面临心理困扰时更倾向于内化这些情绪，而非寻求支持或倾诉，从而加剧了焦虑的表现。因此，针对男生的心理健康干预措施应更加重视情感表达能力的培养和社交支持网络的构建，以帮助他们有效应对心理压力。'
+                                }
+                                if (maxAbs.maleProportion < maxAbs.femaleProportion) { //男检出率＜女检出率时
+                                    genderTxt52 += '尤其是在焦虑维度，女生的检出率明显超过男生。女生相对较为敏感，这种敏感会不自觉地主导她们的做事方法及心态情绪，她们往往会把事情看得很重，尤其是当如果事情没有朝着自己的预期发展，女生更容易缺乏自信、苦闷自卑，从而长期处于一种压抑、紧张、焦虑的状态中。此外，女生在人际关系上往往比男生更加细腻和复杂，更容易受到同学关系、师生关系等因素的影响，如果处理不好这些关系，就可能产生焦虑情绪。因此，应加强对女生的心理健康教育，帮助她们建立积极的心态和应对压力的能力。'
+                                }
+                            }
+                            // 若最大差值为强迫，男检出率＞女检出率时，输出：
+                            if (maxAbs.grade == '强迫') {
+                                if (maxAbs.maleProportion > maxAbs.femaleProportion) { //男检出率＞女检出率时
+                                    genderTxt52 += '尤其是在强迫维度，男生的检出率明显超过女生。男生在成长过程中可能面临更多的学业压力、社交压力等，这些压力也可能导致他们更容易产生焦虑情绪，进而发展为强迫症状。应当关注个体的心理健康状况，及时提供必要的支持和帮助。'
+                                }
+                                if (maxAbs.maleProportion < maxAbs.femaleProportion) { //男检出率＜女检出率时
+                                    genderTxt52 += '尤其是在强迫维度，女生的检出率明显超过男生。对于女生来说，她们可能面临更多的学业压力、家庭期望以及人际关系等方面的挑战。这些压力可能导致她们在某些方面产生过度焦虑和担忧，进而发展为强迫思维和行为。特别是对于那些性格内向、胆小拘谨、过分追求完美的女生来说，她们可能更容易受到这些心理社会因素的影响。因此，家长和教育工作者需要关注女生的心理健康状况，及时发现并干预潜在的强迫症状，为她们提供必要的支持和帮助。'
+                                }
+                            }
+                            // 若最大差值为敌对，男检出率＞女检出率时，输出：
+                            if (maxAbs.grade == '敌对') {
+                                if (maxAbs.maleProportion > maxAbs.femaleProportion) { //男检出率＞女检出率时
+                                    genderTxt52 += '尤其是在敌对维度，男生的检出率明显超过女生。男生与女生在生理上存在差异，这些差异可能导致他们在面对压力和挑战时的反应不同，相较于女生，男生通常更具冒险精神，做事容易冲动，性格直率，这些都可能让男生更倾向于通过攻击或敌对行为来应对压力。此外，社会文化传统可能赋予了男生“强者”的角色，从而使男生更容易产生敌对情绪，以维护自己的“强者”形象。为了缓解男生的敌对情绪，家长、教师和社会应共同努力，为他们创造一个更加和谐、公正和包容的成长环境。'
+                                }
+                                if (maxAbs.maleProportion < maxAbs.femaleProportion) { //男检出率＜女检出率时
+                                    genderTxt52 += '尤其是在敌对维度，女生的检出率明显超过男生。在学校中，女生可能更容易受到同伴关系、师生关系等因素的影响。如果她们感受到被孤立、排斥或受到不公平对待，可能更容易产生敌对情绪。同时，学习压力大、竞争激烈也可能导致女生更容易产生敌对态度来发泄自己的不满。此外，女生在面对问题时可能更倾向于采取保守或回避的应对方式，而不是积极寻求解决方案。这种应对方式可能使她们在面对困难时更容易陷入敌对情绪中。为了缓解女生的敌对情绪，家长、教师和社会应共同努力，为她们创造一个更加和谐、包容和支持的成长环境。同时，也需要加强对女生的心理健康教育，帮助她们建立积极的心态和应对压力的能力。'
+                                }
+                            }
+                            // 若最大差值为自我伤害，男检出率＞女检出率时，输出：
+                            if (maxAbs.grade == '自我伤害') {
+                                if (maxAbs.maleProportion > maxAbs.femaleProportion) { //男检出率＞女检出率时
+                                    genderTxt52 += '尤其是在自我伤害维度，男生的检出率明显超过女生。相对女生，男生可能更倾向于冲动和冒险行为，对风险的评估可能相对较低。这种性格特点可能导致他们在面对压力或情绪困扰时，更容易采取自我伤害等极端行为来应对。此外，传统的性别角色刻板印象认为男生应该坚强、勇敢，不应表达负面情绪。这种观念可能导致男生在面对情绪困扰时更难以寻求帮助，而采取自我伤害等极端行为来应对。为了预防和减少男生的自我伤害行为，家长、教师和社会应共同努力，为男生创造一个更加安全、包容和支持的成长环境。同时，也需要加强对男生的心理健康教育，帮助他们建立积极的心态和应对压力的能力。'
+                                }
+                                if (maxAbs.maleProportion < maxAbs.femaleProportion) { //男检出率＜女检出率时
+                                    genderTxt52 += '尤其是在自我伤害维度，女生的检出率明显超过男生。女生通常比男生更加敏感细腻，对人际关系、学业压力、家庭氛围等变化更容易产生情感波动。这种敏感度可能导致女生在面对压力或挫折时更容易产生自我伤害的想法。此外，女生在青春期阶段可能更加关注自我认同和自尊。当她们感到自己不被理解、接受或重视时，可能更容易产生自我伤害的行为来表达自己的不满和痛苦。为了预防和减少女生的自我伤害行为，家长、教师和社会应共同努力，为女生创造一个更加安全、包容和支持的成长环境。同时，也需要加强对女生的心理健康教育，帮助她们建立积极的心态和应对压力的能力。'
+                                }
+                            }
+                        } else {
+                            // 男女检出率差值最大的一个维度(最大差值=0，即男女各维度检出率完全一致），则输出检出率最高的一个维度（注：检出率相同时，按抑郁、焦虑、强迫、敌对、自我伤害顺序）：
+                            genderTxt52 += '其中，**维度检出率最高。'
+                            let maxEx0 = JSON.parse(JSON.stringify(data)).sort((a, b) => {
+                                return Number(b.maleProportion) - Number(a.maleProportion);
+                            })
+                            let maxWd = maxEx0[0] //最大维度
+                            if (maxWd.grade == '抑郁') {
+                                genderTxt52 += '中小学生的学业负担过重，学习竞争激烈，给他们带来了沉重的心理压力。长期处于这种高压状态下，容易导致心理失衡，进而引发抑郁。此外，中小学生正处于社交需求旺盛的时期，但在人际交往中可能会遇到各种问题，如被同学孤立等。这些负面的社交经历会使他们的自尊心受到打击，产生自我怀疑和自卑心理，从而引发抑郁。为缓解中小学生抑郁，需要家庭、学校和社会共同努力，为中小学生创造一个更加健康、积极、和谐的学习和成长环境。同时，也需要加强对中小学生的心理健康教育，提高他们的心理韧性和应对压力的能力。'
+                            }
+                            if (maxWd.grade == '焦虑') {
+                                genderTxt52 += '中小学生可能面临过度内心冲突，对自我威胁的结果感到担忧，或者心理体验被压抑，这些都可能引发焦虑状况。长时间追求完美、自我期望过高，如果希望和现实之间差距太大，可能会造成心理失衡，进而诱发焦虑症状反复发作。为了缓解中小学生的焦虑，需要家庭、学校和社会共同努力，为中小学生创造一个更加健康、积极、和谐的学习和成长环境。'
+                            }
+                            if (maxWd.grade == '强迫') {
+                                genderTxt52 += '中小学生可能由于各种原因形成了某些固定的、不合理的信念，这些信念会反复困扰他们，进而引发强迫行为。此外，长期处于高压状态下，学生可能更容易出现焦虑、抑郁等心理问题，继而引发强迫症状。学生在遇到问题时得不到及时的帮助和支持，他们可能会感到孤立无援，从而增加强迫的可能性。为缓解中小学生的强迫症状，需要加强对中小学生的心理健康教育，提高他们的心理韧性和应对压力的能力。'
+                            }
+                            if (maxWd.grade == '敌对') {
+                                genderTxt52 += '在应试教育背景下，学生的学习压力非常大，这种压力不仅来源于学校和家庭的期望，还来自于同伴间的竞争。长期的高强度学习压力可能导致学生产生敌对情绪，以发泄内心的不满。此外，进入青春期的孩子自我意识增强，具有很强的独立感，认为自己是大人了。但父母仍然会插手孩子的事情，这往往被孩子们看成是一种束缚，容易使孩子产生反感或逆反心理，引起敌对。为了降低敌对情绪的出现率，需要家庭、学校和社会共同努力，为孩子创造一个更加健康、积极、和谐的学习和成长环境。同时，也需要加强对孩子的心理健康教育，提高他们的心理韧性和应对压力的能力。'
+                            }
+                            if (maxWd.grade == '自我伤害') {
+                                genderTxt52 += '中小学生可能缺乏有效的情绪调节策略，当面临挫折或困难时，容易陷入消极情绪中无法自拔。为了逃避或缓解这种消极情绪，他们可能采取自我伤害行为。此外，父母忽视孩子的情感需求，缺乏对孩子的关注和支持，可能使孩子感到孤独和无助，从而通过自我伤害来寻求关注和安慰。当家庭关系紧张、冲突频繁时，使孩子长期处于紧张和焦虑状态，增加自我伤害的风险。为了降低自我伤害行为的发生率，需要家庭、学校和社会共同努力，为孩子创造一个更加健康、积极、和谐的学习和成长环境。同时，也需要加强对孩子的心理健康教育，提高他们的心理韧性和应对压力的能力。如果发现孩子有自我伤害的倾向或症状，应及时寻求专业医生的帮助和治疗。'
+                            }
+                        }
+                        
+                        this.detail.genderTxt52 = genderTxt52
+                        let manOrgs = []
+                        let womanOrgs = []
+                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                        for (let i in data) {
+                            // if (data[i].grade == '初中A直升班') {
+                           
+                                man.push({
+                                    grade: data[i].grade,
+                                    percentage: data[i].maleProportion,
+                                })
+                                manOrg.push({
+                                    grade: data[i].grade,
+                                    percentage: data[i].maleProportion
+                                })
+                                manOrgs.push(data[i].maleProportion)
+                                manSum += data[i].maleProportion
+                            // }  
+                            // if (data[i].grade == '初中B非直升班') {
+                                woman.push({
+                                    grade: data[i].grade,
+                                    percentage: data[i].femaleProportion
+                                })
+                                womanOrg.push({
+                                    grade: data[i].grade,
+                                    percentage: data[i].femaleProportion
+                                })
+                                womanOrgs.push(data[i].femaleProportion)
+                                
+
+                                womanSum += data[i].femaleProportion
+                            // }
+                        }
+                        console.log(manOrg)
+                        console.log(womanOrg)
+                        this.detail.manOrgs = manOrgs
+                        this.detail.womanOrgs = womanOrgs
+                        let genderTxt51 = ''
+                        if (JSON.stringify(manOrg) == JSON.stringify(womanOrg)) {
+                            // 具体来看，男生和女生在各维度检出率一致，说明男女生心理健康问题相当，由高到低皆为**（**%）、**（**%）、**（**%）、**（**%）、**（**%）。
+                            genderTxt51 += '具体来看，男生和女生在各维度检出率一致，说明男女生心理健康问题相当，由高到低皆为'
+                            let manOrgSort = JSON.parse(JSON.stringify(manOrg)).sort((a, b) => {
+                                return Number(b.percentage) - Number(a.percentage);
+                            })
+                            for ( let i in manOrgSort) {
+                                genderTxt51 += manOrgSort[i].grade + '（' + manOrgSort[i].percentage + '%）'
+                                if (i < manOrgSort.length - 1) {
+                                    genderTxt51 += '、'
+                                } else{
+                                    genderTxt51 += '。'
+                                }
+                            }
+                        } else {
+                            let cout1 = 0
+                            let cout2 = 0
+                            let cout3 = 0
+                            let arr1 = []
+                            let arr2 = []
+                            let arr3 = []
+                            for (let i in manOrg) {
+                                for (let j in womanOrg) {
+                                    if (manOrg[i].grade == womanOrg[j].grade){
+                                        if (manOrg[i].percentage - womanOrg[i].percentage > 0) {
+                                            cout1++
+                                            arr1.push(manOrg[j].grade)
+                                        }
+                                        if (womanOrg[i].percentage - manOrg[i].percentage > 0) {
+                                            cout2++
+                                            arr2.push(womanOrg[j].grade)
+                                        }
+                                        if (womanOrg[i].percentage == manOrg[i].percentage) {
+                                            cout3++
+                                            arr3.push(manOrg[j].grade)
+                                        }
+                                    }
+                                }
+                            }
+                            console.log("男>女："+cout1)
+                            console.log("女>男："+cout2)
+                            console.log("男=女："+cout3)
+                            if (cout1 == 5) {
+                                // 具体来看，男生/女生在**（**%）、**（**%）、**（**%）、**（**%）和**（**%）五个维度上的检出率均高于女生/男生。
+                                genderTxt51 += '具体来看，男生在'
+                                let manOrgSort = JSON.parse(JSON.stringify(manOrg)).sort((a, b) => {
+                                    return Number(b.percentage) - Number(a.percentage);
+                                })
+                                for ( let i in manOrgSort) {
+                                    genderTxt51 += manOrgSort[i].grade + '（' + manOrgSort[i].percentage + '%）'
+                                    if (i < manOrgSort.length - 2) {
+                                        genderTxt51 += '、'
+                                    }
+                                    if (i == manOrgSort.length - 2){
+                                        genderTxt51 += '和'
+                                    }
+                                }
+                                genderTxt51 += '五个维度上的检出率均高于女生。'
+                                
+                            } else if (cout2 == 5) {
+                                // 具体来看，男生/女生在**（**%）、**（**%）、**（**%）、**（**%）和**（**%）五个维度上的检出率均高于女生/男生。
+                                genderTxt51 += '具体来看，女生在'
+                                let womanOrgSort = JSON.parse(JSON.stringify(womanOrg)).sort((a, b) => {
+                                    return Number(b.percentage) - Number(a.percentage);
+                                })
+                                for ( let i in womanOrgSort) {
+                                    genderTxt51 += womanOrgSort[i].grade + '（' + womanOrgSort[i].percentage + '%）'
+                                    if (i < womanOrgSort.length - 2) {
+                                        genderTxt51 += '、'
+                                    }
+                                    if (i == womanOrgSort.length - 2){
+                                        genderTxt51 += '和'
+                                    }
+                                }
+                                genderTxt51 += '五个维度上的检出率均高于男生。'
+                                
+                            } else {
+                                // 具体来看，男生（在**和**维度上的检出率高于女生，）（在**和**维度上的检出率与女生持平，）（在**和**维度上的检出率低于女生）。
+                                genderTxt51 += '具体来看，男生'
+                                if (cout1 > 0) {
+                                    genderTxt51 += '在'
+                                    for (let i in arr1) {
+                                        genderTxt51 += arr1[i].grade
+                                        if (i < arr1.length - 2) {
+                                            genderTxt51 += '、'
+                                        }
+                                        if (i == arr1.length - 2){
+                                            genderTxt51 += '和'
+                                        }
+                                    }
+                                    genderTxt51 += '维度上的检出率高于女生，'
+                                }
+
+
+                                
+
+                                if (cout3 > 0) {
+                                    genderTxt51 += '在'
+                                    for (let i in arr3) {
+                                        genderTxt51 += arr3[i].grade
+                                        if (i < arr3.length - 2) {
+                                            genderTxt51 += '、'
+                                        }
+                                        if (i == arr3.length - 2){
+                                            genderTxt51 += '和'
+                                        }
+                                    }
+                                    genderTxt51 += '维度上的检出率与女生持平'
+                                }
+                                if (cout2 == 0) {
+                                    genderTxt51 += '。'
+                                } else{
+                                    if (cout1 == 0) {
+                                        genderTxt51 += '，'
+                                    }
+                                    
+                                }
+                                if (cout2 > 0) {
+                                    genderTxt51 += '在'
+                                    for (let i in arr2) {
+                                        genderTxt51 += arr2[i].grade
+                                        if (i < arr2.length - 2) {
+                                            genderTxt51 += '、'
+                                        }
+                                        if (i == arr2.length - 2){
+                                            genderTxt51 += '和'
+                                        }
+                                    }
+                                    genderTxt51 += '维度上的检出率低于女生。'
+                                }
+                                
+                            }
+                        }
+                        this.detail.genderTxt51 = genderTxt51
+                        console.log(man)
+                        console.log(woman)
+                        
+                        console.log(manSum)
+                        console.log(womanSum)
+
+                        man3 = man.sort((a, b) => {
+                            return Number(b.percentage) - Number(a.percentage);
+                        }).slice(0, 3)
+                        console.log(man3)
+                        woman3 = woman.sort((a, b) => {
+                            return Number(b.percentage) - Number(a.percentage);
+                        }).slice(0, 3)
+                        console.log(woman3)
+                        let man3Str = []
+                        for (let i in man3) {
+                            man3Str.push(man3[i].grade)
+                        }
+                        let woman3Str = []
+                        for (let i in woman3) {
+                            woman3Str.push(woman3[i].grade)
+                        }
+                        let genderTxt5 = '男生在心理健康问题检出率的前三位为' +man3Str.join('、')+ '；女生在心理健康问题检出率的前三位为' +woman3Str.join('、')+ '。'
+                        this.detail.genderTxt5 = genderTxt5
+                        
+                       
+                        // let manCot = man3.concat(woman3)
+                        // let gArr3 = []
+                        // for (let i in manCot) {
+                        //     let gInfo3 = manCot[i].grade
+                        //     gArr3.push(gInfo3)
+                        // }
+                        // const counts = {};
+                        // for (const num of gArr3) {
+                        //     counts[num] = counts[num] ? counts[num] + 1 : 1;
+                        // }
+                        // console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
+                        // let count = 0
+                        // let sName = []
+                        // if (counts['抑郁'] == 2) {
+                        //     count++
+                        //     sName.push('抑郁')
+                        // }
+                        // if (counts['焦虑'] == 2) {
+                        //     count++
+                        //     sName.push('焦虑')
+                        // }
+                        // if (counts['强迫'] == 2) {
+                        //     count++
+                        //     sName.push('强迫')
+                        // }
+                        // if (counts['敌对'] == 2) {
+                        //     count++
+                        //     sName.push('敌对')
+                        // }
+                        // if (counts['自我伤害'] == 2) {
+                        //     count++
+                        //     sName.push('自我伤害')
+                        // }
+                        // console.log(count)
+                            
+                        // if (count > 2) {
+                        //     if (manSum > womanSum) {
+                        //         genderTxt += '相较于女生，男生心理健康问题总体更加突出。'
+                        //     }
+                        //     if (manSum < womanSum) {
+                        //         genderTxt += '相较于男生，女生心理健康问题总体更加突出。'
+                        //     }
+                        //     if (manSum == womanSum) {
+                        //         genderTxt += '男女生的心理健康问题相当。'
+                        //     }
+                        // } else {
+                        //     if (manSum > womanSum) {
+                        //         genderTxt += '相较于女生，男生心理健康问题总体更加突出。'
+                        //     }
+                        //     if (manSum < womanSum) {
+                        //         genderTxt += '相较于男生，女生心理健康问题总体更加突出。'
+                        //     }
+                        //     if (manSum == womanSum) {
+                        //         genderTxt += '男女生的心理健康问题相当。'
+                        //     }
+                        // }
+                        let genderTxt = ''
+                        if (manSum > womanSum) {
+                            if (JSON.stringify(man3) == JSON.stringify(woman3)) {
+                                genderTxt += '相较于女生，男生心理健康问题总体更加突出。'
+                            } else {
+                                genderTxt += '相较于女生，男生心理健康问题更加突出，且呈现更明显的'
+                                let manCot = man3.concat(woman3)
+                                let gArr3 = []
+                                for (let i in manCot) {
+                                    let gInfo3 = manCot[i].grade
+                                    gArr3.push(gInfo3)
+                                }
+                                const counts = {};
+                                for (const num of gArr3) {
+                                    counts[num] = counts[num] ? counts[num] + 1 : 1;
+                                }
+                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
+                                let count = 0
+                                let sName = []
+                                if (counts['抑郁'] == 1) {
+                                    count++
+                                    sName.push('抑郁')
+                                }
+                                if (counts['焦虑'] == 1) {
+                                    count++
+                                    sName.push('焦虑')
+                                }
+                                if (counts['强迫'] == 1) {
+                                    count++
+                                    sName.push('强迫')
+                                }
+                                if (counts['敌对'] == 1) {
+                                    count++
+                                    sName.push('敌对')
+                                }
+                                if (counts['自我伤害'] == 1) {
+                                    count++
+                                    sName.push('自我伤害')
+                                }
+                                genderTxt += sName.join('、')
+                                
+                                genderTxt += '倾向。'
+                            }
+                        } else if (manSum < womanSum) {
+                            if (JSON.stringify(man3) == JSON.stringify(woman3)) {
+                                genderTxt += '相较于男生，女生心理健康问题总体更加突出。'
+                            } else {
+                                genderTxt += '相较于男生，女生心理健康问题更加突出，且呈现更明显的'
+                                let manCot = man3.concat(woman3)
+                                let gArr3 = []
+                                for (let i in manCot) {
+                                    let gInfo3 = manCot[i].grade
+                                    gArr3.push(gInfo3)
+                                }
+                                const counts = {};
+                                for (const num of gArr3) {
+                                    counts[num] = counts[num] ? counts[num] + 1 : 1;
+                                }
+                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
+                                let count = 0
+                                let sName = []
+                                if (counts['抑郁'] == 1) {
+                                    count++
+                                    sName.push('抑郁')
+                                }
+                                if (counts['焦虑'] == 1) {
+                                    count++
+                                    sName.push('焦虑')
+                                }
+                                if (counts['强迫'] == 1) {
+                                    count++
+                                    sName.push('强迫')
+                                }
+                                if (counts['敌对'] == 1) {
+                                    count++
+                                    sName.push('敌对')
+                                }
+                                if (counts['自我伤害'] == 1) {
+                                    count++
+                                    sName.push('自我伤害')
+                                }
+                                genderTxt += sName.join('、')
+                                
+                                genderTxt += '倾向。'
+                            }
+                        } else {
+                            if (JSON.stringify(man3) == JSON.stringify(woman3)) {
+                                genderTxt += '男女生的心理健康问题相当。'
+                            } else {
+                                genderTxt += '男女生的心理健康问题相当，但'
+                                let manCot = man3.concat(woman3)
+                                let gArr3 = []
+                                for (let i in manCot) {
+                                    let gInfo3 = manCot[i].grade
+                                    gArr3.push(gInfo3)
+                                }
+                                const counts = {};
+                                for (const num of gArr3) {
+                                    counts[num] = counts[num] ? counts[num] + 1 : 1;
+                                }
+                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
+                                let count = 0
+                                let sName = []
+                                if (counts['抑郁'] == 1) {
+                                    count++
+                                    sName.push('抑郁')
+                                }
+                                if (counts['焦虑'] == 1) {
+                                    count++
+                                    sName.push('焦虑')
+                                }
+                                if (counts['强迫'] == 1) {
+                                    count++
+                                    sName.push('强迫')
+                                }
+                                if (counts['敌对'] == 1) {
+                                    count++
+                                    sName.push('敌对')
+                                }
+                                if (counts['自我伤害'] == 1) {
+                                    count++
+                                    sName.push('自我伤害')
+                                }
+                                console.log(sName)
+                                let mstr3 = []
+                                for(let i in sName) {
+                                    if (JSON.stringify(man3).indexOf(sName[i]) != -1) {
+                                        mstr3.push(sName[i])
+                                    }
+                                }
+                                let wstr3 = []
+                                for(let i in sName) {
+                                    if (JSON.stringify(woman3).indexOf(sName[i]) != -1) {
+                                        wstr3.push(sName[i])
+                                    }
+                                }
+                                genderTxt += '男生呈现出更明显的' + mstr3.join('、')
+                                genderTxt += '倾向，'
+                                genderTxt += '女生呈现出更明显的' + mstr3.join('、')
+                                genderTxt += '倾向。'
+                            }
+                        }
+                        if (JSON.stringify(man3) == JSON.stringify(woman3)) {
+                            genderTxt += '男女生心理健康问题检出率的前三位皆为'
+                            for (let i in man3) {
+                                genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
+                                if (i < man3.length - 1){
+                                    genderTxt += '、'
+                                } else {
+                                    genderTxt += '。'
+                                }
+                            }
+                        } else {
+                            if (manSum > womanSum) {
+                                genderTxt += '男生心理健康问题检出率的前三位为'
+                                for (let i in man3) {
+                                    genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
+                                    if (i < man3.length - 2){
+                                        genderTxt += '、'
+                                    }
+                                    if (i == man3.length - 2){
+                                        genderTxt += '和'
+                                    }
+                                }
+                                genderTxt += '；女生心理健康问题检出率的前三位为'
+                                for (let i in woman3) {
+                                    genderTxt += woman3[i].grade + '（' + woman3[i].percentage + '%）'
+                                    if (i < woman3.length - 2){
+                                        genderTxt += '、'
+                                    }
+                                    if (i == woman3.length - 2){
+                                        genderTxt += '和'
+                                    }
+                                }
+                                genderTxt += '。'
+                            } else {
+                                if (manSum > womanSum) {
+                                    genderTxt += '；女生心理健康问题检出率的前三位为'
+                                    for (let i in woman3) {
+                                        genderTxt += woman3[i].grade + '（' + woman3[i].percentage + '%）'
+                                        if (i < woman3.length - 2){
+                                            genderTxt += '、'
+                                        }
+                                        if (i == woman3.length - 2){
+                                            genderTxt += '和'
+                                        }
+                                    }
+                                    genderTxt += '男生心理健康问题检出率的前三位为'
+                                    for (let i in man3) {
+                                        genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
+                                        if (i < man3.length - 2){
+                                            genderTxt += '、'
+                                        }
+                                        if (i == man3.length - 2){
+                                            genderTxt += '和'
+                                        }
+                                    }
+                                
+                                    genderTxt += '。'
+                                }
+                            }
+                            
+
+                        }
+                        
+                        this.detail.gradeTxt4 = genderTxt
+                        
                         this.part4 = true;
                     } else {
                         that.$message.error(data.msg);
@@ -5415,8 +6878,9 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-            // 各年级各班级各维度检出率情况(根据code X,C,G) 不需要男女之分
-            let param6 = {
+            
+            // 学段健康百分比  不需要男女之分
+            let param8 = {
                 startDate: star,
                 endDate: end,
                 code: '',
@@ -5424,11 +6888,246 @@ export default {
                 // gender: 1
             };
             this.$http
-                .post(Url + "/aimw/export/gradeClassDimensionProportion", param6)
+                .post(Url + "/aimw/export/gradeGroupHealthInfo", param8)
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        this.part6 = true;
+                        
+                        let zsClass = []
+                        let fzsClass = []
+                        // let zsClass0 = []
+                        // let fzsClass0 = []
+                        let zsClass3 = []
+                        let fzsClass3 = []
+                        let zsSum = 0
+                        let fzsSum = 0
+                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                        for (let i in data) {
+                            if (data[i].grade == '初中A直升班') {
+                                if (data[i].dimension == '抑郁'){
+                                    zsClass[0] = data[i]
+                                }
+                                if (data[i].dimension == '焦虑'){
+                                    zsClass[1] = data[i]
+                                }
+                                if (data[i].dimension == '强迫'){
+                                    zsClass[2] = data[i]
+                                }
+                                if (data[i].dimension == '敌对'){
+                                    zsClass[3] = data[i]
+                                }
+                                if (data[i].dimension == '自我伤害'){
+                                    zsClass[4] = data[i]
+                                }
+                                // zsClass.push(data[i])
+                                zsSum += data[i].percentage
+                            }  
+                            if (data[i].grade == '初中B非直升班') {
+                                // fzsClass.push(data[i])
+                                if (data[i].dimension == '抑郁'){
+                                    fzsClass[0] = data[i]
+                                }
+                                if (data[i].dimension == '焦虑'){
+                                    fzsClass[1] = data[i]
+                                }
+                                if (data[i].dimension == '强迫'){
+                                    fzsClass[2] = data[i]
+                                }
+                                if (data[i].dimension == '敌对'){
+                                    fzsClass[3] = data[i]
+                                }
+                                if (data[i].dimension == '自我伤害'){
+                                    fzsClass[4] = data[i]
+                                }
+
+                                fzsSum += data[i].percentage
+                            }
+                        }
+                        console.log(zsClass)
+                        console.log(fzsClass)
+                        for ( let i in zsClass) {
+                            delete zsClass[i].grade;
+                        }
+                        for ( let i in fzsClass) {
+                            delete fzsClass[i].grade;
+                        }
+                        console.log(zsClass)
+                        console.log(fzsClass)
+                        this.zsClassWd = zsClass
+                        this.fzsClassWd = fzsClass
+                        let zsClass0 = JSON.parse(JSON.stringify(zsClass))
+                        let fzsClass0 = JSON.parse(JSON.stringify(fzsClass))
+                        let zs1 = 0
+                        let zs2 = 0
+                        let zs3 = 0
+                        let zs1Arr = []
+                        let zs2Arr = []
+                        let zs3Arr = []
+                        for (let i in zsClass0) {
+                            // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
+                            if (zsClass0[i].percentage == fzsClass0[i].percentage) {
+                                zs1++
+                                zs1Arr.push(zsClass0[i].dimension)
+                            }
+                            if (zsClass0[i].percentage > fzsClass0[i].percentage) {
+                                zs2++
+                                zs2Arr.push(zsClass0[i].dimension)
+                            }
+                            if (zsClass0[i].percentage < fzsClass0[i].percentage) {
+                                zs3++
+                                zs3Arr.push(zsClass0[i].dimension)
+                            }
+                        }
+                        console.log(zs1)
+                        console.log(zs2)
+                        console.log(zs3)
+                        console.log(zs1Arr)
+                        console.log(zs2Arr)
+                        console.log(zs3Arr)
+                        let allTxtZs = ''
+                        if (zs1 == 5) {  // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
+                            // 从图 **可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。
+                            allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。'
+                        } else if (zs2 == 5) { // B.若初中一年级直升班比非直升班在各个维度上都高，则输出：
+                            allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）在各个维度上的检出率都比11-20班（非本校直升）高，说明直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
+                        } else if (zs3 == 5) { // C.若初中一年级直升班比非直升班在各个维度上都低，则输出，
+                            allTxtZs += '从上图可以看出，初中一年级11-20班（非本校直升）在各个维度上的检出率都比1-10班（本校直升）高，说明非直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
+                        } else { //D.若初中一年级直升班比非直升检出率存在高、低、一致的情况（至少存在两种情况），则输出：
+                            // 从图 ** 可以看出，初中一年级 11-20 班（非本校直升）学生（在**、**和**维度上表现出更高的检出率，说明非直升班学生可能存在较高的**、**和**；）（在**和**维度上直升班与非直升班检出率一致。）（相对而言，初中一年级1-10班（本校直升）学生在**和**维度上检出率较高，说明直升班学生可能存在较高的**和**。）
+                            allTxtZs += '从上图可以看出，初中一年级 11-20 班（非本校直升）学生'
+                            if (zs3Arr.length > 0) {
+                                // allTxtZs += '在'
+                                let zs3Txt = ''
+                                for (let q in zs3Arr) {
+                                    zs3Txt += zs3Arr[q]
+                                    if (q < zs3Arr.length - 2){
+                                        zs3Txt += '、'
+                                    }
+                                    if (q == zs3Arr.length - 2) {
+                                        zs3Txt += '和'
+                                    }
+                                }
+
+                                allTxtZs += '在' + zs3Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs3Txt + '；'
+                            }
+                            if (zs1Arr.length > 0) {
+                                // allTxtZs += '在'
+                                let zs1Txt = ''
+                                for (let q in zs1Arr) {
+                                    zs1Txt += zs1Arr[q]
+                                    if (q < zs1Arr.length - 2){
+                                        zs1Txt += '、'
+                                    }
+                                    if (q == zs1Arr.length - 2) {
+                                        zs1Txt += '和'
+                                    }
+                                }
+
+                                allTxtZs += '在' + zs1Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs1Txt
+                            }
+                            if (zs2Arr.length == 0) {
+                                allTxtZs += '。'
+                            } else{
+                                if (zs3Arr.length == 0) {
+                                    allTxtZs += '；'
+                                } else {
+                                    if (zs1Arr.length == 0) {
+
+                                    } else {
+                                        allTxtZs += '；'
+                                    }
+                                }
+                            }
+                            if (zs2Arr.length > 0) {
+                                // allTxtZs += '在'
+                                let zs2Txt = ''
+                                for (let q in zs2Arr) {
+                                    zs2Txt += zs2Arr[q]
+                                    if (q < zs2Arr.length - 2){
+                                        zs2Txt += '、'
+                                    }
+                                    if (q == zs2Arr.length - 2) {
+                                        zs2Txt += '和'
+                                    }
+                                }
+
+                                allTxtZs += '相对而言，初中一年级1-10班（本校直升）学生在' + zs2Txt + '维度上检出率较高，说明直升班学生可能存在较高' + zs2Txt + '。'
+                            }
+                        }
+                        this.allTxtZs3 = allTxtZs
+                        console.log(zsSum)
+                        console.log(fzsSum)
+                        let zsTxt = '初中一年级' + '直升与非直升班各维度检出率：'
+                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                        if (zsSum > fzsSum) {
+                            zsTxt += '初中一年级' + '直升班相比非直升班心理健康问题更加显著。'
+                        }
+                        // 若**年级直升班五个维度检出率之和＜非直升班，则输出：
+                        if (zsSum < fzsSum) {
+                            zsTxt += '初中一年级' + '非直升班相比直升班心理健康问题更加显著。'
+                        }
+                        // 若**年级直升班五个维度检出率之和=非直升班，则输出：
+                        if (zsSum == fzsSum) {
+                            zsTxt += '初中一年级' + '直升班与非直升班心理健康问题相当。'
+                        }
+                        let zsClassArr = []
+                        for (let i in zsClass) {
+                            zsClassArr.push({
+                                dimension: zsClass[i].dimension,
+                                percentage: zsClass[i].percentage
+                            })
+                        }
+                        zsClass3 = zsClassArr.sort((a, b) => {
+                            return Number(b.percentage) - Number(a.percentage);
+                        }).slice(0, 3)
+                        console.log(zsClass3)
+                        let fzsClassArr = []
+                        for (let i in fzsClass) {
+                            fzsClassArr.push({
+                                dimension: fzsClass[i].dimension,
+                                percentage: fzsClass[i].percentage
+                            })
+                        }
+                        fzsClass3 = fzsClassArr.sort((a, b) => {
+                            return Number(b.percentage) - Number(a.percentage);
+                        }).slice(0, 3)
+                        console.log(fzsClass3)
+                        if (JSON.stringify(zsClass3) == JSON.stringify(fzsClass3)) {
+                            // this.zsFlag = true
+                            zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                            for (let i in zsClass3) {
+                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                if (i < zsClass3.length - 1){
+                                    zsTxt += '，'
+                                } else {
+                                    zsTxt += '。'
+                                }
+                            }
+                        } else {
+                            // this.zsFlag = false
+                            // **年级直升班的心理健康问题检出率的前三位为**（**%）、**（**%）、强迫（**%）；**年级非直升班的心理健康问题检出率的前三位为：**（**%）、抑郁（**%）、**（**%）。
+                            // zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                            zsTxt += '初中一年级' + '直升班的心理健康问题检出率的前三位为'
+                            for (let i in zsClass3) {
+                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                if (i < zsClass3.length - 1){
+                                    zsTxt += '、'
+                                }
+                            }
+                            zsTxt += '；'
+                            zsTxt += '初中一年级' + '非直升班的心理健康问题检出率的前三位为'
+                            for (let i in fzsClass3) {
+                                zsTxt += fzsClass3[i].dimension + '（' + fzsClass3[i].percentage + '%）'
+                                if (i < fzsClass3.length - 1){
+                                    zsTxt += '、'
+                                }
+                            }
+                            zsTxt += '。'
+                            
+                        }
+                        this.detail.gradeTxt3 = zsTxt
+
+                        this.part8 = true;
                     } else {
                         that.$message.error(data.msg);
                     }
@@ -5436,14 +7135,31 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-            // 各个学段各维度检出率  不需要男女之分
-            let param7 = {
+
+            // 学段健康百分比  不需要男女之分
+            let param9 = {
                 startDate: star,
                 endDate: end,
                 code: '',
                 // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
                 // gender: 1
             };
+            this.$http
+                .post(Url + "/aimw/export/serverCrowdList", param9)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        this.part9 = true;
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+
+        },
+        getDim(param7, star, end) {
             this.$http
                 .post(Url + "/aimw/export/gradeDimensionProportion", param7)
                 .then(res => {
@@ -5453,12 +7169,15 @@ export default {
                         for (let i in data) {
                             if (data[i].departmentName.indexOf('X') != -1){
                                 data[i].grade = '预备年级'
+                                data[i].name = '预备年级'
                             }
                             if (data[i].departmentName.indexOf('C') != -1){
                                 data[i].grade = '初中一年级'
+                                 data[i].name = '初中一年级'
                             }
                             if (data[i].departmentName.indexOf('G') != -1){
                                 data[i].grade = '高中一年级'
+                                data[i].name = '高中一年级'
                             }
                             let iList = [
                                 {
@@ -5705,7 +7424,7 @@ export default {
                                         if (n < gradeWd[m].info3.length - 2){
                                             aTxt2 += '、'
                                         }
-                                        if (i == gradeWd[m].info3.length - 2) {
+                                        if (n == gradeWd[m].info3.length - 2) {
                                             aTxt2 += '和'
                                         }
                                     }
@@ -5735,7 +7454,310 @@ export default {
                         console.log(this.detail.gradeTxt1)
 
                         console.log(gradeWd)
+                        console.log(data)
+                        this.detail.gradeListOrg = JSON.parse(JSON.stringify(data))
+                        console.log(this.detail.gradeListOrg)
+                        let gradeTxtOrg = ''
+                        for (let i in this.detail.gradeListOrg) {
+                            let orgArr = this.detail.gradeListOrg[i]
+                            let pLists = JSON.parse(JSON.stringify(orgArr.pList)).sort((a, b) => {
+                                return Number(b.percent) - Number(a.percent);
+                            });
+                            gradeTxtOrg += orgArr.grade + '测评维度检出率由高到低分别为：' 
+                            for (let j in pLists) {
+                                gradeTxtOrg += pLists[j].name + '（' + pLists[j].percent + '%）'
+                                if (j < pLists.length - 1) {
+                                    gradeTxtOrg += '、'
+                                }
+                            }
+                            if (i < this.detail.gradeListOrg.length - 1) {
+                                gradeTxtOrg += '；'
+                            } else {
+                                gradeTxtOrg += '。'
+                            }
+                        }
+                        this.detail.gradeTxtOrg = gradeTxtOrg
+                        // 预备年级测评维度检出率由高到低分别为：焦虑（36.1%）、抑郁（23.0%）、敌对（21.6%）、自我伤害（17.4%）、强迫（17.2%）；初中一年级测评维度检出率由高到低分别为：焦虑（28.0%）、抑郁（24.4%）、自我伤害（20.2%）、敌对（16.1%）、强迫（15.4%）；高中一年级测评维度检出率由高到低分别为：焦虑（31.9%）、抑郁（24.3%）、自我伤害（20.7%）、强迫（18.8%）、敌对（18.6%）。
+                        let gradeListTain = JSON.parse(JSON.stringify(data))
                         
+                        for (let i in this.gradeAllList) {
+                            this.gradeAllList[i].wdList = gradeListTain[i].pList
+                            // gradeListTain[i].csList = gradeListTain[i].pList
+                            
+                        }
+                        // let gradeAllTxt1 = ''
+                        // gradeAllTxt1 += '与全国常模相比，'
+                        // 与全国常模相比，预备年级/**年级学生（第一句）在强迫、自我伤害方面表现较好，（第二句：在**方面与全国常模持平，）（第三句）在敌对、抑郁和焦虑方面有待改善，分别超出全国常模 6.3%、 3.1%。
+                        // 与全国常模相比，初中一年级学生（第一句）在强迫、自我伤害、敌对和焦虑方面表现较好。（第二句：在**方面与全国常模持平，）(第三句）在抑郁方面有待改善，超出全国常模 4.5%。
+                        for (let i in this.gradeAllList) {
+                            let wdList = gradeListTain[i].pList
+                            
+                            let allTxt = '与全国常模相比，'
+                            allTxt += this.gradeAllList[i].name + '学生'
+                            let allCont0 = 0 //大于
+                            let allCont1 = 0 //等于
+                            let allCont2 = 0 //小于
+                            for (let j in wdList) {
+                                wdList[j].percentNo =  Number(Math.abs(wdList[j].percent - this.ChinaCM[j]).toFixed(1))
+                                wdList[j].percentNum =  Number(wdList[j].percent - this.ChinaCM[j]).toFixed(1)
+                                if (wdList[j].percent > this.ChinaCM[j]) {
+                                    allCont0 ++
+                                }
+                                if (wdList[j].percent == this.ChinaCM[j]) {
+                                    allCont1 ++
+                                }
+                                if (wdList[j].percent < this.ChinaCM[j]) {
+                                    allCont2 ++
+                                }
+                            }
+                            console.log(wdList)
+                            let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
+                                return Number(b.percentNo) - Number(a.percentNo);
+                            }).slice(0,3);
+                            if (allCont0 == 5) { //都大于全国
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
+                                console.log(percentArr)
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '超出全国常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                            } else if (allCont1 == 5) { //都等于全国
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与全国常模持平，本年级心理健康问题与全国状况大致相当。'
+                            } else if (allCont2 == 5) { //都小于全国
+                                // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
+                                
+                                console.log(percentArr)
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于全国常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                            } else {
+                                let d0 = [] //高
+                                let d01 = [] //高
+                                let d1 = [] //等于
+                                let d2 = [] //低
+                                for (let j in wdList) {
+                                    if (wdList[j].percentNum > 0) {
+                                        d0.push(wdList[j].name)
+                                        d01.push(wdList[j].percentNo+'%')
+                                    }
+                                    if (wdList[j].percentNum == 0) {
+                                        d1.push(wdList[j].name)
+                                    }
+                                    if (wdList[j].percentNum < 0) {
+                                        d2.push(wdList[j].name)
+                                    }
+                                }
+                                if (d2.length > 0) {
+                                    allTxt += '在' + d2.join('、') + '方面表现较好，'
+                                }
+                                if (d1.length > 0) {
+                                    allTxt += '在' + d1.join('、') + '在方面与全国常模持平'
+                                }
+                                if (d0.length == 0) {
+                                    allTxt += '。'
+                                } else{
+                                    if (d2.length == 0) {
+                                        allTxt += '，'
+                                    } else {
+                                        if (d1.length == 0) {
+
+                                        } else {
+                                            allTxt += '，'
+                                        }
+                                    }
+                                }
+                                if (d0.length > 0) {
+                                    allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出全国常模' + d01.join('、') + '。'
+                                }
+                                
+                            }
+                            this.gradeAllList[i].allTxt0 = allTxt
+                            //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
+                                   
+                            //     } else {
+
+                            //     }
+                            
+                        }
+                        for (let i in this.gradeAllList) {
+                            let wdList = gradeListTain[i].pList
+                            
+                            let allTxt = '与本校常模相比，'
+                            allTxt += this.gradeAllList[i].name + '学生'
+                            let allCont0 = 0 //大于
+                            let allCont1 = 0 //等于
+                            let allCont2 = 0 //小于
+                            for (let j in wdList) {
+                                wdList[j].percentNo =  Number(Math.abs(wdList[j].percent - this.schoolCM[j]).toFixed(1))
+                                wdList[j].percentNum =  Number(wdList[j].percent - this.schoolCM[j]).toFixed(1)
+                                if (wdList[j].percent > this.schoolCM[j]) {
+                                    allCont0 ++
+                                }
+                                if (wdList[j].percent == this.schoolCM[j]) {
+                                    allCont1 ++
+                                }
+                                if (wdList[j].percent < this.schoolCM[j]) {
+                                    allCont2 ++
+                                }
+                            }
+                            console.log(wdList)
+                            let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
+                                return Number(b.percentNo) - Number(a.percentNo);
+                            }).slice(0,3);
+                            if (allCont0 == 5) { //都大于全国
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
+                                console.log(percentArr)
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '超出本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                            } else if (allCont1 == 5) { //都等于全国
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与本校常模持平，本年级心理健康问题与本校状况大致相当。'
+                            } else if (allCont2 == 5) { //都小于全国
+                                // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
+                                allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
+                                
+                                console.log(percentArr)
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                            } else {
+                                let d0 = [] //高
+                                let d01 = [] //高
+                                let d1 = [] //等于
+                                let d2 = [] //低
+                                for (let j in wdList) {
+                                    if (wdList[j].percentNum > 0) {
+                                        d0.push(wdList[j].name)
+                                        d01.push(wdList[j].percentNo+'%')
+                                    }
+                                    if (wdList[j].percentNum == 0) {
+                                        d1.push(wdList[j].name)
+                                    }
+                                    if (wdList[j].percentNum < 0) {
+                                        d2.push(wdList[j].name)
+                                    }
+                                }
+                                if (d2.length > 0) {
+                                    allTxt += '在' + d2.join('、') + '方面表现较好，'
+                                }
+                                if (d1.length > 0) {
+                                    allTxt += '在' + d1.join('、') + '在方面与本校常模持平'
+                                }
+                                if (d0.length == 0) {
+                                    allTxt += '。'
+                                } else{
+                                    if (d2.length == 0) {
+                                        allTxt += '，'
+                                    }
+                                }
+                                if (d0.length > 0) {
+                                    allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出本校常模' + d01.join('、') + '。'
+                                }
+                                
+                            }
+                            this.gradeAllList[i].allTxt1 = allTxt
+                            //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
+                                   
+                            //     } else {
+
+                            //     }
+                            
+                        }
+
+                        // for (let i in this.gradeAllList) {
+                        //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
+                        //         let wdList = gradeListTain[i].pList
+                            
+                        //         let allTxt = '与本校常模相比，'
+                        //         allTxt += this.gradeAllList[i].name + '学生'
+                        //         let allCont0 = 0 //大于
+                        //         let allCont1 = 0 //等于
+                        //         let allCont2 = 0 //小于
+                        //         for (let j in wdList) {
+                        //             wdList[j].percentNo =  Number(Math.abs(wdList[j].percent - this.schoolCM[j]).toFixed(1))
+                        //             wdList[j].percentNum =  Number(wdList[j].percent - this.schoolCM[j]).toFixed(1)
+                        //             if (wdList[j].percent > this.schoolCM[j]) {
+                        //                 allCont0 ++
+                        //             }
+                        //             if (wdList[j].percent == this.schoolCM[j]) {
+                        //                 allCont1 ++
+                        //             }
+                        //             if (wdList[j].percent < this.schoolCM[j]) {
+                        //                 allCont2 ++
+                        //             }
+                        //         }
+                        //         console.log(wdList)
+                        //         let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
+                        //             return Number(b.percentNo) - Number(a.percentNo);
+                        //         }).slice(0,3);
+                        //         if (allCont0 == 5) { //都大于全国
+                        //             allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
+                        //             console.log(percentArr)
+                        //             allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '超出本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                        //         } else if (allCont1 == 5) { //都等于全国
+                        //             allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与本校常模持平，本年级心理健康问题与本校状况大致相当。'
+                        //         } else if (allCont2 == 5) { //都小于全国
+                        //             // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
+                        //             allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
+                                    
+                        //             console.log(percentArr)
+                        //             allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                        //         } else {
+                        //             let d0 = [] //高
+                        //             let d01 = [] //高
+                        //             let d1 = [] //等于
+                        //             let d2 = [] //低
+                        //             for (let j in wdList) {
+                        //                 if (wdList[j].percentNum > 0) {
+                        //                     d0.push(wdList[j].name)
+                        //                     d01.push(wdList[j].percentNo+'%')
+                        //                 }
+                        //                 if (wdList[j].percentNum == 0) {
+                        //                     d1.push(wdList[j].name)
+                        //                 }
+                        //                 if (wdList[j].percentNum < 0) {
+                        //                     d2.push(wdList[j].name)
+                        //                 }
+                        //             }
+                        //             if (d2.length > 0) {
+                        //                 allTxt += '在' + d2.join('、') + '方面表现较好，'
+                        //             }
+                        //             if (d1.length > 0) {
+                        //                 allTxt += '在' + d1.join('、') + '在方面与本校常模持平'
+                        //             }
+                        //             if (d0.length == 0) {
+                        //                 allTxt += '。'
+                        //             } else{
+                        //                 if (d2.length == 0) {
+                        //                     allTxt += '，'
+                        //                 } else {
+                        //                     if (d1.length == 0) {
+
+                        //                     } else {
+                        //                         allTxt += '，'
+                        //                     }
+                        //                 }
+                        //             }
+                        //             if (d0.length > 0) {
+                        //                 allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出本校常模' + d01.join('、') + '。'
+                        //             }
+                                    
+                        //         }
+                        //         this.gradeAllList[i].allTxt2 = allTxt
+                        //     } else {
+                        //         this.gradeAllList[i].allTxt2 = ''
+                        //     }
+                            
+                        //     //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
+                                   
+                        //     //     } else {
+
+                        //     //     }
+                            
+                        // }
+                        // this.gradeAllList = gradeListTain
+                        console.log(this.gradeAllList)
+                        // 各年级各班级各维度检出率情况(根据code X,C,G) 不需要男女之分
+                        let param6 = {
+                            startDate: star,
+                            endDate: end,
+                            code: '',
+                            // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                            // gender: 1
+                        };
+                        this.getDim6(param6)
                         this.part7 = true;
                     } else {
                         that.$message.error(data.msg);
@@ -5744,103 +7766,156 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-            // 学段健康百分比  不需要男女之分
-            let param8 = {
-                startDate: star,
-                endDate: end,
-                code: '',
-                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
-                // gender: 1
-            };
+        },
+        getDim6(param6) {
             this.$http
-                .post(Url + "/aimw/export/gradeGroupHealthInfo", param8)
+                .post(Url + "/aimw/export/gradeClassDimensionProportion", param6)
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        
-                        let zsClass = []
-                        let fzsClass = []
-                        let zsClass3 = []
-                        let fzsClass3 = []
-                        let zsSum = 0
-                        let fzsSum = 0
-                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                        let xList = {
+                            name :'预备年级',
+                            csList: []
+                        }
+                        let cList = {
+                            name :'初中一年级',
+                            csList: []
+                        }
+                        let gList = {
+                            name :'高中一年级',
+                            csList: []
+                        }
                         for (let i in data) {
-                            if (data[i].grade == '初中A直升班') {
-                                zsClass.push(data[i])
-                                zsSum += data[i].percentage
-                            }  
-                            if (data[i].grade == '初中B非直升班') {
-                                fzsClass.push(data[i])
-                                fzsSum += data[i].percentage
+                            if (data[i].departmentName.indexOf('X') != -1){
+                                xList.csList.push(data[i])
+                            }
+                            if (data[i].departmentName.indexOf('C') != -1){
+                                cList.csList.push(data[i])
+                            }
+                            if (data[i].departmentName.indexOf('G') != -1){
+                                gList.csList.push(data[i])
                             }
                         }
-                        console.log(zsClass)
-                        console.log(fzsClass)
-                        console.log(zsSum)
-                        console.log(fzsSum)
-                        let zsTxt = ''
-                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
-                        if (zsSum > fzsSum) {
-                            zsTxt += '初中一年级' + '直升班相比非直升班心理健康问题更加显著。'
-                        }
-                        // 若**年级直升班五个维度检出率之和＜非直升班，则输出：
-                        if (zsSum < fzsSum) {
-                            zsTxt += '初中一年级' + '非直升班相比直升班心理健康问题更加显著。'
-                        }
-                        // 若**年级直升班五个维度检出率之和=非直升班，则输出：
-                        if (zsSum == fzsSum) {
-                            zsTxt += '初中一年级' + '直升班与非直升班心理健康问题相当。'
-                        }
-                        let zsClassArr = []
-                        for (let i in zsClass) {
-                            zsClassArr.push({
-                                dimension: zsClass[i].dimension,
-                                percentage: zsClass[i].percentage
-                            })
-                        }
-                        zsClass3 = zsClassArr.sort((a, b) => {
-                            return Number(b.percentage) - Number(a.percentage);
-                        }).slice(0, 3)
-                        console.log(zsClass3)
-                        let fzsClassArr = []
-                        for (let i in fzsClass) {
-                            fzsClassArr.push({
-                                dimension: fzsClass[i].dimension,
-                                percentage: fzsClass[i].percentage
-                            })
-                        }
-                        fzsClass3 = fzsClassArr.sort((a, b) => {
-                            return Number(b.percentage) - Number(a.percentage);
-                        }).slice(0, 3)
-                        console.log(fzsClass3)
-                        if (JSON.stringify(zsClass3) == JSON.stringify(fzsClass3)) {
-                            // this.zsFlag = true
-                            zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
-                            for (let i in zsClass3) {
-                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1){
-                                    zsTxt += '，'
-                                } else {
-                                    zsTxt += '。'
-                                }
+                        // let csLists = [xList,cList,gList]
+                        
+                        for (let i in this.gradeAllList) { 
+                            if (this.gradeAllList[i].name == "预备年级") {
+                                this.gradeAllList[i].csList = xList.csList
                             }
-                        } else {
-                            // this.zsFlag = false
-                            // **年级直升班的心理健康问题检出率的前三位为**（**%）、**（**%）、强迫（**%）；**年级非直升班的心理健康问题检出率的前三位为：**（**%）、抑郁（**%）、**（**%）。
-                            // zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
-                            for (let i in zsClass3) {
-                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1){
-                                    zsTxt += '，'
-                                } else {
-                                    zsTxt += '。'
-                                }
+                            if (this.gradeAllList[i].name == "初中一年级") {
+                                this.gradeAllList[i].csList = cList.csList
+                            }
+                            if (this.gradeAllList[i].name == "高中一年级") {
+                                this.gradeAllList[i].csList = gList.csList
                             }
                         }
-                        this.gradeTxt3 = zsTxt
+                        console.log(this.gradeAllList)
+                        for (let i in this.gradeAllList) {
+                            let cList = this.gradeAllList[i].csList
+                            console.log(this.gradeAllList[i].wdList[0])
+                            let yyArr = []
+                            let jlArr = []
+                            let qpArr = []
+                            let ddArr = []
+                            let zwshArr = []
+                            for (let j in cList) {
 
-                        this.part8 = true;
+                                yyArr.push(
+                                    {
+                                        name: cList[j].departmentName.split("届")[1],
+                                        num: cList[j].depressionNum,
+                                        percent: cList[j].depressionPercentage,
+                                        nj: this.gradeAllList[i].wdList[0].percent,
+                                        qg: this.ChinaCM[0],
+                                        njFlag: cList[j].depressionPercentage > this.gradeAllList[i].wdList[0].percent ? true : false,
+                                        qgFlag: cList[j].depressionPercentage > this.ChinaCM[0] ? true : false,
+                                    }
+                                )
+                                jlArr.push(
+                                    {
+                                        name: cList[j].departmentName.split("届")[1],
+                                        num: cList[j].anxietyNum,
+                                        percent: cList[j].anxietyPercentage,
+                                        nj: this.gradeAllList[i].wdList[1].percent,
+                                        qg: this.ChinaCM[1],
+                                        njFlag: cList[j].anxietyPercentage > this.gradeAllList[i].wdList[1].percent ? true : false,
+                                        qgFlag: cList[j].anxietyPercentage > this.ChinaCM[1] ? true : false,
+                                    }
+                                )
+                                qpArr.push(
+                                    {
+                                        name: cList[j].departmentName.split("届")[1],
+                                        num: cList[j].forcedNum,
+                                        percent: cList[j].forcedPercentage,
+                                        nj: this.gradeAllList[i].wdList[2].percent,
+                                        qg: this.ChinaCM[2],
+                                        njFlag: cList[j].forcedPercentage > this.gradeAllList[i].wdList[2].percent ? true : false,
+                                        qgFlag: cList[j].forcedPercentage > this.ChinaCM[2] ? true : false,
+                                    }
+                                )
+                                ddArr.push(
+                                    {
+                                        name: cList[j].departmentName.split("届")[1],
+                                        num: cList[j].violenceNum,
+                                        percent: cList[j].violencePercentage,
+                                        nj: this.gradeAllList[i].wdList[3].percent,
+                                        qg: this.ChinaCM[3],
+                                        njFlag: cList[j].violencePercentage > this.gradeAllList[i].wdList[3].percent ? true : false,
+                                        qgFlag: cList[j].violencePercentage > this.ChinaCM[3] ? true : false,
+                                    }
+                                )
+                                zwshArr.push(
+                                    {
+                                        name: cList[j].departmentName.split("届")[1],
+                                        num: cList[j].suicideNum,
+                                        percent: cList[j].suicidePercentage,
+                                        nj: this.gradeAllList[i].wdList[4].percent,
+                                        qg: this.ChinaCM[4],
+                                        njFlag: cList[j].suicidePercentage > this.gradeAllList[i].wdList[4].percent ? true : false,
+                                        qgFlag: cList[j].suicidePercentage > this.ChinaCM[4] ? true : false,
+                                    }
+                                )
+                            }
+                            this.gradeAllList[i].cwdList = [yyArr,jlArr,qpArr,ddArr,zwshArr]
+                            this.gradeAllList[i].cwdName = ['','','','','']
+                            this.gradeAllList[i].className = []
+                            for (let m in this.gradeAllList[i].cwdList) {
+                                let classArr = this.gradeAllList[i].cwdList[m]
+                                let nameStr = []
+                                for (let n in classArr) {
+                                    if (classArr[n].njFlag || classArr[n].qgFlag) {
+                                        if (classArr[n].njFlag && classArr[n].qgFlag){
+                                            nameStr.push(classArr[n].name+'*')
+                                            this.gradeAllList[i].className.push(classArr[n].name)
+                                        } else {
+                                            nameStr.push(classArr[n].name)
+                                        }
+                                        
+                                    }
+                                }
+                                this.gradeAllList[i].cwdName[m] = nameStr.join('、')
+                            }
+                            console.log(this.gradeAllList[i].className)
+                            let classArrx = this.gradeAllList[i].className
+                            for (let l in this.gradeAllList[i].csList) {
+                                this.gradeAllList[i].csList[l].nameFlag = false
+                                for (let o in classArrx) {
+                                    
+                                    this.gradeAllList[i].csList[l].name = this.gradeAllList[i].csList[l].departmentName.split("届")[1]
+                                    console.log(this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o])
+                                    
+                                    if (this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o]){
+                                        console.log("???"+this.gradeAllList[i].csList[l].departmentName.split("届")[1])
+                                        this.gradeAllList[i].csList[l].nameFlag = true
+                                    }
+                                }
+                                console.log(this.gradeAllList[i].csList[l])
+                            }
+                            
+                        }
+                        console.log(this.gradeAllList)
+                        // this.gradeAllList = this.gradeAllList
+                        this.part6 = true;
                     } else {
                         that.$message.error(data.msg);
                     }
@@ -5848,29 +7923,7 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-
-            // 学段健康百分比  不需要男女之分
-            let param9 = {
-                startDate: star,
-                endDate: end,
-                code: '',
-                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
-                // gender: 1
-            };
-            this.$http
-                .post(Url + "/aimw/export/serverCrowdList", param9)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        this.part9 = true;
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-
+            
         },
         apartsReport() {
             console.log('导出团体报告')
@@ -5881,8 +7934,8 @@ export default {
             this.partsForm = {
                 time: ''
             }
-
-            this.getSchoolInfo()
+            this.dialogPartFrame = true
+            // this.getSchoolInfo()
         },
         // 学校信息
         getSchoolInfo() {
@@ -5924,6 +7977,18 @@ export default {
     },
 };
 </script>
+<style lang="less">
+.yy_txt {
+        font-size: 20px;
+        font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+        font-weight: 400;
+        color: #333E75;
+        text-indent: 40px;
+        padding: 2px 0;
+        line-height: 32px;
+
+    }
+</style>
 <style lang="less" scoped>
 .group-class {
     background: #ffffff;
