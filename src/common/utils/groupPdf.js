@@ -154,12 +154,13 @@ class PdfLoader {
           // dpi: 300 // 将分辨率提高到特定的DPI
             backgroundColor: null,
             allowTaint: false,
+            logging: true,
             // imageTimeout: 20000, // 图片加载延迟，默认延迟为0，单位毫秒
             dpi: window.devicePixelRatio * 4,
             width: ele.width,
             height: ele.width,
             windowWidth: ele.scrollWidth,
-            scale: 0.75, // 按比例增加分辨率
+            scale: 0.65, // 按比例增加分辨率
             useCORS: true, // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
         }).then(async (canvas) => {
             const contentWidth = canvas.width
@@ -225,6 +226,7 @@ class PdfLoader {
                   }
                 }
             }
+            document.body.appendChild(canvas);
             
                 pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then(() => {
                     // 去除添加的空div 防止页面混乱

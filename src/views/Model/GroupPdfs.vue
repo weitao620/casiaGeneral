@@ -11,10 +11,10 @@
                     <img class="shui_bg" src="../../assets/images/report/shui.png" alt="" />
                     <div class="table-border noSplitBox">
                         <div class="g1_top">
-                            <span>{{schoolName}}</span>
+                            <span>{{ schoolName }}</span>
                         </div>
                         <div class="g1_top1">
-                            {{reportName}}
+                            {{ reportName }}
                         </div>
                         <div class="g1_top1">
                             中小学生心理健康筛查评估
@@ -23,7 +23,7 @@
                             团体报告
                         </div>
                         <div class="g2_top1">
-                            {{start}} ～ {{ end }}
+                            {{ start }} ～ {{ end }}
                         </div>
                     </div>
                 </div>
@@ -44,1798 +44,2008 @@
                             </div>
                             <div class="ml_li"></div>
                             <div>{{ index < 4 ? '1' : item.page }}</div>
-                            </div>
                         </div>
                     </div>
-                    <!-- 引言 -->
-                    <!--  -->
-                    <div class="fuck yy_box mulu_empty_page">
-                        <div class="noSplitBox" style="padding-bottom: 600px;">
+                </div>
+                <!-- 引言 -->
+                <!--  -->
+                <div class="fuck yy_box mulu_empty_page">
+                    <div class="noSplitBox" style="padding-bottom: 600px;">
 
-                            <div class="yy_o noSplitBox mulu_page">
-                                1.引言
-                            </div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                1.1 测评目的
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                {{start}} ～ {{ end }}，{{schoolName}}对校内 {{ detail.totalClasses }} 个班级（其中：预备年级（小学六年级）{{ detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{ detail.gaoZhong.numClasses }}个）的 {{detail.totalStudents}}
-                                名（其中：预备年级学生{{ detail.yuBei.numStudents }}名，初中一年级学生{{ detail.chuZhong.numStudents }}名，高中一年级学生{{ detail.gaoZhong.numStudents }}名；男生{{detail.maleStudents}}名，女生{{detail.femaleStudents}}名）学生进行了心理健康筛查评估。
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                本次筛查评估主要用于揭示本校中小学生的心理健康水平和心理健康问题，明确不同学段和不同性别学生分别需要重点关注的心理健康问题，发现具有心理健康问题风险的学生，从而为本校开展学生心理健康教育以及心理问题风险管理提供重要的依据。
-                            </div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                1.2 测评工具
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                此次筛查评估使用的测评工具为“AI
-                                心世界”智能心理测评系统。该系统结合心理投射和人工智能技术，在无意识状态下对受测者心理状态、个性特征和行为特征进行测量。该系统从五大心理健康问题（抑郁、焦虑、强迫、敌对、自我伤害）对中小学生心理状态进行科学评估。该系统完全自主研发，拥有
-                                10 余项国家发明专利，已通过中国心理学会标准化委员会成果鉴定和公安部安全与警用电子产品质量检测中心认证。
-                            </div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                1.3 相关结论
-                            </div>
-                            <!-- 根据测评人群涉及多个学段、直升与非直升实际情况，进行相应输出：------这里可能要做个判断几个学段，初一有没有直升和非直升 -->
-                            <div class="yy_txt noSplitBox">
-                                本报告从全校各维度检出率、各学段各维度检出率、初中一年级直升班与非直升班各维度检出率、男女不同性别各维度检出率情况进行分析，相关结论如下：
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                （1）全校各维度检出率：在具体的心理健康维度上，检出率由高到低依次为：
-                                <span v-for="(item,index) in detail.wdJcList" :key="item.grade">
-                                    {{ item.grade }}（{{ item.total }}%）{{ index < detail.wdJcList.length - 1 ? '、' : '' }}{{ index == detail.wdJcList.length - 1 ? '。' : '' }}
-                                </span>
-                               
-                                <!-- 全部低于全国常模 -->
-                                <span v-if="detail.wdLevelTxt === 1">与全国常模相比，所有维度检出率都低于全国常模，该校测评年级心理健康整体表现较好。</span>
-                                
-                                <!-- 全部等于全国常模 -->
-                                <span v-if="detail.wdLevelTxt === 2">与全国常模相比，所有维度都与之持平，本校心理健康问题与全国状况大致相当。</span>
-                                
-                                <!-- 全部大于全国常模 -->
-                                <span v-if="detail.wdLevelTxt === 3">与全国常模相比，所有维度检出率都高于全国常模，该校测评年级心理健康问题较为突出。</span>
-                                <!-- 部分大于全国常模 -->
-                                <span v-if="detail.wdLevelTxt === 4">其中，
-                                    
-                                    {{detail.txtStr}}检出率高于全国常模，问题较为突出。</span>
-                                <!-- 部分持平，最高持平全国常模 -->
-                                <span v-if="detail.wdLevelTxt === 5">与全国常模相比，
-                                    {{detail.txtStr52}}维度与之持平，{{detail.txtStr51}}维度低于全国常模。</span>
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                （2）各学段各维度检出率：{{detail.gradeTxt1}}{{detail.gradeTxt2}}
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                （3）{{detail.gradeTxt3}}
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                （4）男女不同性别各维度检出率：{{detail.gradeTxt4}}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="yy_box basic_box">
-                        <!-- <div class="fss"> -->
                         <div class="yy_o noSplitBox mulu_page">
-                            2.测评基本信息
+                            1.引言
                         </div>
                         <div class="yy_t noSplitBox mulu_page">
-                            2.1 筛查评估样本与内容
+                            1.1 测评目的
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            {{ start }} ～ {{ end }}，{{ schoolName }}对校内 {{ detail.totalClasses }}
+                            个班级（其中：预备年级（小学六年级）{{
+                                detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{
+                                detail.gaoZhong.numClasses }}个）的 {{ detail.totalStudents }}
+                            名（其中：预备年级学生{{ detail.yuBei.numStudents }}名，初中一年级学生{{ detail.chuZhong.numStudents
+                            }}名，高中一年级学生{{ detail.gaoZhong.numStudents
+                            }}名；男生{{ detail.maleStudents }}名，女生{{ detail.femaleStudents }}名）学生进行了心理健康筛查评估。
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            本次筛查评估主要用于揭示本校中小学生的心理健康水平和心理健康问题，明确不同学段和不同性别学生分别需要重点关注的心理健康问题，发现具有心理健康问题风险的学生，从而为本校开展学生心理健康教育以及心理问题风险管理提供重要的依据。
                         </div>
                         <div class="yy_t noSplitBox mulu_page">
-                            2.1.1 筛查评估对象和样本
+                            1.2 测评工具
                         </div>
                         <div class="yy_txt noSplitBox">
-                            {{schoolName}}对{{detail.totalClasses}}个班级共{{detail.totalStudents}}名学生开展了心理健康筛查评估。其中，预备年级{{ detail.yuBei.numClasses }}个班级，初中{{ detail.chuZhong.numClasses }}个班级，高中{{ detail.gaoZhong.numClasses }}个班级。
+                            此次筛查评估使用的测评工具为“AI
+                            心世界”智能心理测评系统。该系统结合心理投射和人工智能技术，在无意识状态下对受测者心理状态、个性特征和行为特征进行测量。该系统从五大心理健康问题（抑郁、焦虑、强迫、敌对、自我伤害）对中小学生心理状态进行科学评估。该系统完全自主研发，拥有
+                            10 余项国家发明专利，已通过中国心理学会标准化委员会成果鉴定和公安部安全与警用电子产品质量检测中心认证。
+                        </div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            1.3 相关结论
+                        </div>
+                        <!-- 根据测评人群涉及多个学段、直升与非直升实际情况，进行相应输出：------这里可能要做个判断几个学段，初一有没有直升和非直升 -->
+                        <div class="yy_txt noSplitBox">
+                            本报告从全校各维度检出率、各学段各维度检出率、初中一年级直升班与非直升班各维度检出率、男女不同性别各维度检出率情况进行分析，相关结论如下：
                         </div>
                         <div class="yy_txt noSplitBox">
-                            参加本次筛查评估的{{detail.totalStudents}}名学生中，预备年级学生有{{ detail.yuBei.numStudents }}人（占比{{detail.yuBei.percent}}%），初中生有{{ detail.chuZhong.numStudents }}人（占比 {{detail.chuZhong.percent}}%），高中生有{{ detail.gaoZhong.numStudents }}人（占比{{detail.gaoZhong.percent}}%）。各学段的学生人数占比分布情况如下图：
+                            （1）全校各维度检出率：在具体的心理健康维度上，检出率由高到低依次为：
+                            <span v-for="(item, index) in detail.wdJcList" :key="item.grade">
+                                {{ item.grade }}（{{ item.total }}%）{{ index < detail.wdJcList.length - 1 ? '、' : ''
+                                    }}{{ index == detail.wdJcList.length - 1 ? '。' : '' }} </span>
+
+                                    <!-- 全部低于全国常模 -->
+                                    <span
+                                        v-if="detail.wdLevelTxt === 1">与全国常模相比，所有维度检出率都低于全国常模，该校测评年级心理健康整体表现较好。</span>
+
+                                    <!-- 全部等于全国常模 -->
+                                    <span v-if="detail.wdLevelTxt === 2">与全国常模相比，所有维度都与之持平，本校心理健康问题与全国状况大致相当。</span>
+
+                                    <!-- 全部大于全国常模 -->
+                                    <span
+                                        v-if="detail.wdLevelTxt === 3">与全国常模相比，所有维度检出率都高于全国常模，该校测评年级心理健康问题较为突出。</span>
+                                    <!-- 部分大于全国常模 -->
+                                    <span v-if="detail.wdLevelTxt === 4">其中，
+
+                                        {{ detail.txtStr }}检出率高于全国常模，问题较为突出。</span>
+                                    <!-- 部分持平，最高持平全国常模 -->
+                                    <span v-if="detail.wdLevelTxt === 5">与全国常模相比，
+                                        {{ detail.txtStr52 }}维度与之持平，{{ detail.txtStr51 }}维度低于全国常模。</span>
                         </div>
-                        <div class="noSplitBox">
-                            <div style="width: 100%;height: auto;">
-                                <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart1">
-                                </div>
-                                <div class="yy_biao" style="text-align: center;">图1 {{schoolName}}参加筛查评估学生学段分布图</div>
+                        <div class="yy_txt noSplitBox">
+                            （2）各学段各维度检出率：{{ detail.gradeTxt1 }}{{ detail.gradeTxt2 }}
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            （3）{{ detail.gradeTxt3 }}
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            （4）男女不同性别各维度检出率：{{ detail.gradeTxt4 }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="yy_box basic_box">
+                    <div class="yy_o noSplitBox mulu_page">
+                        2.测评基本信息
+                    </div>
+                    <div class="yy_t noSplitBox mulu_page">
+                        2.1 筛查评估样本与内容
+                    </div>
+                    <div class="yy_t noSplitBox mulu_page">
+                        2.1.1 筛查评估对象和样本
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        {{ schoolName }}对{{ detail.totalClasses }}个班级共{{ detail.totalStudents
+                        }}名学生开展了心理健康筛查评估。其中，预备年级{{
+                            detail.yuBei.numClasses }}个班级，初中{{ detail.chuZhong.numClasses }}个班级，高中{{
+                            detail.gaoZhong.numClasses }}个班级。
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        参加本次筛查评估的{{ detail.totalStudents }}名学生中，预备年级学生有{{ detail.yuBei.numStudents
+                        }}人（占比{{ detail.yuBei.percent }}%），初中生有{{ detail.chuZhong.numStudents }}人（占比
+                        {{ detail.chuZhong.percent }}%），高中生有{{ detail.gaoZhong.numStudents
+                        }}人（占比{{ detail.gaoZhong.percent }}%）。各学段的学生人数占比分布情况如下图：
+                    </div>
+                    <div class="noSplitBox">
+                        <div style="width: 100%;height: auto;">
+                            <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart1">
+                            </div>
+                            <div class="yy_biao" style="text-align: center;">图1 {{ schoolName }}参加筛查评估学生学段分布图</div>
+                        </div>
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        参加本次筛查评估的{{ detail.totalStudents }}位学生中，男生共{{ detail.maleStudents }}人，占比为{{
+                            detail.maleStudentsPre }}%；女生共{{ detail.femaleStudents }}人，占比为{{ detail.femaleStudentsPre
+                        }}%
+                        ，各学段学生性别分布情况见下图：
+                    </div>
+                    <div class="noSplitBox">
+
+                        <div style="width: 100%;height: auto;margin: 20px auto 10px;">
+                            <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart2">
+                                学段--饼状图</div>
+                            <div class="yy_biao" style="text-align: center;">图 2 {{ schoolName }}参加筛查评估男女性别人数对比图
                             </div>
                         </div>
-                        <div class="yy_txt noSplitBox">
-                            参加本次筛查评估的{{detail.totalStudents}}位学生中，男生共{{detail.maleStudents}}人，占比为{{detail.maleStudentsPre}}%；女生共{{detail.femaleStudents}}人，占比为{{detail.femaleStudentsPre}}% ，各学段学生性别分布情况见下图：
-                        </div>
-                        <div class="noSplitBox">
+                    </div>
 
-                            <div style="width: 100%;height: auto;margin: 20px auto 10px;">
-                                <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart2">
-                                    学段--饼状图</div>
-                                <div class="yy_biao" style="text-align: center;">图 2 {{schoolName}}参加筛查评估男女性别人数对比图</div>
-                            </div>
+                    <div class="yy_int noSplitBox">
+                        各班级学生人数占比分布情况见下表：
+                    </div>
+                    <div class="yy_biao noSplitBox" style="">
+                        表 1 {{ schoolName }}参加筛查评估各班级人数占比图
+                    </div>
+                    <table cellspacing="0">
+                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                            <th style="width:20%">学段</th>
+                            <th style="width:40%">班级</th>
+                            <th style="width:20%">人次</th>
+                            <th style="width:20%">占比</th>
+                        </tr>
+                        <tr v-for="(item, index) in this.detail.gradeList" :key="index"
+                            class="pdf-details noSplitBox">
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.grade }}</td>
+                            <td>{{ item.count }}</td>
+                            <td>{{ item.proportion }}%</td>
+                        </tr>
+                    </table>
+
+                    <div class="yy_t noSplitBox mulu_page">
+                        2.1.2 筛查评估指标和内容
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        本次中小学生心理健康筛查评估采用线下团体测评的方式开展，即学生以班级为单位统一在校使用计算机创作电子箱庭（沙盘）进行测评，本次筛查评估内容包括学生的心理健康风险水平和心理健康问题两大方面。测评结果仅供参考，不作为诊断使用。
+                    </div>
+                    <div class="noSplitBox">
+
+                        <div class="yy_t  mulu_page">
+                            2.1.2.1 心理健康风险水平
+                        </div>
+                        <div class="yy_txt">
+                            将学生的心理健康水平划分为四个等级：正常、轻度问题、中度问题和重度问题，具体解释见下表：
                         </div>
 
-                        <div class="yy_int noSplitBox">
-                            各班级学生人数占比分布情况见下表：
-                        </div>
-                        <div class="yy_biao noSplitBox" style="">
-                            表 1 {{schoolName}}参加筛查评估各班级人数占比图
+                        <div class="yy_biao" style="text-align: center;">
+                            表 2 心理健康风险水平的解释和定义
                         </div>
                         <table cellspacing="0">
                             <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                <th style="width:20%">学段</th>
-                                <th style="width:40%">班级</th>
-                                <th style="width:20%">人次</th>
-                                <th style="width:20%">占比</th>
+                                <th style="width:200px">心理健康水平</th>
+                                <th>内容</th>
                             </tr>
-                            <tr v-for="(item, index) in this.detail.gradeList" :key="index" class="pdf-details noSplitBox">
+                            <tr v-for="(item, index) in oneData2" :key="index" class="pdf-details noSplitBox">
                                 <td>{{ item.name }}</td>
-                                <td>{{ item.grade }}</td>
-                                <td>{{ item.count }}</td>
-                                <td>{{ item.proportion }}%</td>
+                                <td style="text-align: left;">{{ item.content }}</td>
                             </tr>
                         </table>
 
+                    </div>
+
+                    <div class="noSplitBox">
                         <div class="yy_t noSplitBox mulu_page">
-                            2.1.2 筛查评估指标和内容
+                            2.1.2.2 心理健康问题
                         </div>
                         <div class="yy_txt noSplitBox">
-                            本次中小学生心理健康筛查评估采用线下团体测评的方式开展，即学生以班级为单位统一在校使用计算机创作电子箱庭（沙盘）进行测评，本次筛查评估内容包括学生的心理健康风险水平和心理健康问题两大方面。测评结果仅供参考，不作为诊断使用。
+                            本次筛查评估内容涵盖了我国中小学生常见的五类心理健康问题，包括：抑郁、焦虑、强迫、敌对、自我伤害。这些心理健康问题的具体解释见下表：
                         </div>
-                        <div class="noSplitBox">
-
-                            <div class="yy_t  mulu_page">
-                                2.1.2.1 心理健康风险水平
-                            </div>
-                            <div class="yy_txt">
-                                将学生的心理健康水平划分为四个等级：正常、轻度问题、中度问题和重度问题，具体解释见下表：
-                            </div>
-
-                            <div class="yy_biao" style="text-align: center;">
-                                表 2 心理健康风险水平的解释和定义
-                            </div>
-                            <table cellspacing="0">
-                                <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                    <th style="width:200px">心理健康水平</th>
-                                    <th>内容</th>
-                                </tr>
-                                <tr v-for="(item, index) in oneData2" :key="index" class="pdf-details noSplitBox">
-                                    <td>{{ item.name }}</td>
-                                    <td style="text-align: left;">{{ item.content }}</td>
-                                </tr>
-                            </table>
-
+                        <div class="yy_biao" style="">
+                            表 3 心理健康问题的筛查评估指标和解释
                         </div>
+                        <table cellspacing="0">
+                            <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                <th style="width:200px">心理健康问题</th>
+                                <th>内容</th>
+                            </tr>
+                            <tr v-for="(item, index) in oneData3" :key="index" class="pdf-details noSplitBox">
+                                <td>{{ item.name }}</td>
+                                <td style="text-align: left;">{{ item.content }}</td>
+                            </tr>
+                        </table>
+                    </div>
 
-                        <div class="noSplitBox">
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.1.2.2 心理健康问题
+                    <div class="yy_t noSplitBox mulu_page">
+                        2.2 典型样例
+                    </div>
+                    <div class="yy_txt noSplitBox">
+                        为了让报告更具实用性和操作性，在本次测评的{{ detail.totalStudents
+                        }}名学生中，根据测评系统的评估结果在每个维度的不同风险水平中各抽取一个相对应的典型沙盘案例进行专家分析（仅展示沙盘的图像基础信息，隐去学生个人信息）。通过真实的案例，老师们可以将评测系统的评估结果与学生的实际情况进行更直观的比对，提升心理老师的专业技能，以便更好地支撑对学生心理的筛查和干预。
+                    </div>
+                    <!-- 正常 -->
+                    <div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            2.2.1 正常样例
+                        </div>
+                        <div v-for="(item, index) in anliList0" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （1）箱庭空间配置
                             </div>
                             <div class="yy_txt noSplitBox">
-                                本次筛查评估内容涵盖了我国中小学生常见的五类心理健康问题，包括：抑郁、焦虑、强迫、敌对、自我伤害。这些心理健康问题的具体解释见下表：
+                                {{ item.txt1 }}
                             </div>
-                            <div class="yy_biao" style="">
-                                表 3 心理健康问题的筛查评估指标和解释
+                            <div class="yy_t noSplitBox">
+                                （2）关键沙具分析
                             </div>
-                            <table cellspacing="0">
-                                <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                    <th style="width:200px">心理健康问题</th>
-                                    <th>内容</th>
-                                </tr>
-                                <tr v-for="(item, index) in oneData3" :key="index" class="pdf-details noSplitBox">
-                                    <td>{{ item.name }}</td>
-                                    <td style="text-align: left;">{{ item.content }}</td>
-                                </tr>
-                            </table>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt2 }}
+                            </div>
                         </div>
+                    </div>
 
+                    <!-- 抑郁 -->
+                    <div>
                         <div class="yy_t noSplitBox mulu_page">
-                            2.2 典型样例
+                            2.2.2 抑郁维度样例
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （一）抑郁维度在沙盘中的表现特征
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>空洞与缺失</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>主题的单一化</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>使用封闭与孤立的元素</div>
                         </div>
                         <div class="yy_txt noSplitBox">
-                            为了让报告更具实用性和操作性，在本次测评的{{detail.totalStudents}}名学生中，根据测评系统的评估结果在每个维度的不同风险水平中各抽取一个相对应的典型沙盘案例进行专家分析（仅展示沙盘的图像基础信息，隐去学生个人信息）。通过真实的案例，老师们可以将评测系统的评估结果与学生的实际情况进行更直观的比对，提升心理老师的专业技能，以便更好地支撑对学生心理的筛查和干预。
+                            详细解释可见附录
                         </div>
-                         <!-- 正常 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.1 正常样例
-                            </div>
-                            <div v-for="(item, index) in expList1" :key="index">
-                                <div class="noSplitBox">
-                                    <div class="yy_t">
-                                        样例 {{ index + 1 }}：{{ item.name }}
-                                    </div>
-                                    <div class="yy_txt">
-                                        <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    （1）箱庭空间配置
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    （2）关键沙具分析
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
-                            </div>
+                        <div class="yy_t noSplitBox">
+                            （二）经典案例解读
                         </div>
-                        
-                        <!-- 抑郁 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.2 抑郁维度样例
+                        <div v-for="(item, index) in anliList1" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}问题
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
                             </div>
                             <div class="yy_t noSplitBox">
-                                （一）抑郁维度在沙盘中的表现特征
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>空洞与缺失</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>主题的单一化</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>使用封闭与孤立的元素</div>
+                                （1）箱庭空间配置
                             </div>
                             <div class="yy_txt noSplitBox">
-                                详细解释可见附录
+                                {{ item.txt1 }}
                             </div>
                             <div class="yy_t noSplitBox">
-                                （二）经典案例解读
+                                （2）关键沙具分析
                             </div>
-                            <div v-for="(item, index) in expListYy" :key="index">
-                                <div class="noSplitBox">
-                                    <div class="yy_t">
-                                        （{{ index + 1 }}）{{ item.name }}问题
-                                    </div>
-                                    <div class="yy_t">
-                                        <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                    </div>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【空间配置】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【关键沙具】
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
-                            </div>
-
-                            <div class="yy_t noSplitBox">
-                                （三）指导建议
-                            </div>
-                            <!-- 抑郁指导建议 -->
-                            <div class="yy_guide">
-                                <div class="yy_t noSplitBox">
-                                    （1）轻度问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>不否定自己的负面情绪，减少自我攻击的思维。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>找到自己喜欢做的事情，并投入其中。例如：去接近大自然，或者看影视剧，观看演唱会等。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>增加体育锻炼，或进行艺术活动与创作，例如音乐、舞蹈等。</div>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">情趣陶冶：</span>
-                                    <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">运动建议：</span>
-                                    <span>健步走、慢跑、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>尽量减少或杜绝对孩子的批评指责，适当降低对孩子的要求。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>欣赏孩子的进步与改变，及时夸奖孩子的积极心态或者行为。例如：孩子主动做家务，家长应及时赞赏和感谢孩子的付出。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>倾听孩子的烦恼或者心里话，进行情感共鸣而非语言评价。例如：家长询问孩子“今天在学校，你的感受怎么样？”，用心倾听孩子的感受，不去评价孩子。</div>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校尽量不采用成绩排名公示，减少评价，避免排名靠后的学生因成绩不好而自卑。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>创造同学之间的交流机会，组织学生感兴趣的课外活动。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校定期举行心理健康教育课程或活动，引导孩子主动觉察与接纳自己的负面情绪等等。</div>
-                                </div>
-
-                                <!-- 中度 -->
-                                <div class="yy_t noSplitBox">
-                                    （2）中度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照低风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>允许自己的抑郁症状出现并有所波动，不因自己努力后症状没有减轻而责怪自己。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当有自杀自伤意念或行为时，及时与身边关爱自己的人（家人、老师、同学和朋友等）寻求帮助等等。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应接纳孩子目前的状态。例如孩子因情绪问题成绩下降，家长不能打骂孩子，可以陪伴孩子找到成绩下降的原因，帮助孩子克服困难。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应为孩子提供宽松的生活与精神环境，陪伴孩子度过最艰难的时刻。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应多关注孩子的情绪，如果孩子的情绪持续低落、饮食或睡眠出现异常，应及时带孩子去医院就医，不指责孩子。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应关注孩子的自杀自伤风险，例如孩子身上是否有伤，用爱温暖孩子，避免孩子伤害自己，一旦发现自杀自伤现象，及时与专业医院或机构联系。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>如经专业医生诊断后，需服用药物，家长需监督管理服药情况。</div>
-                                </div>
-                                <div class="yy_t noSplitBox" style="font-weight: 500;">
-                                    家庭爱的链接:
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭欢聚：</span>
-                                    <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭旅行：</span>
-                                    <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭文化活动：</span>
-                                    <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭运动活动：</span>
-                                    <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校定期举行心理健康教育课程或活动，引导孩子主动觉察与接纳自己的负面情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校建立风险筛查与应对机制，例如：定期对学生的心理状态进行评估，对中风险人群给予心理支持；组织学生进行团体心理咨询，或者展开一对一个体咨询工作。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>相关心理老师在咨询中如发现个体的心理状态比较严重，短期内不能改善时，建议家长及时带个体去医院就医，并遵医嘱服药，并做好相应的记录工作。</div>
-                                </div>
-                                <!-- 重度 -->
-                                <div class="yy_t noSplitBox">
-                                    （3）重度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照中风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建议个体及时去医院就医，必要时进行住院治疗，并辅助心理咨询服务。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当自杀意念比较强烈时，建议个人拨打自杀干预热线，寻求专业的支持和帮助。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照中风险家庭环境建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应抽出大量的时间陪伴孩子，用爱心、信心和耐心滋养孩子的灵。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应多关注孩子的自杀自伤风险，学习危机干预的基本知识和技术，最大程度保护孩子。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校定期举行心理健康教育课程，如 AI 心理沙盘心境课程。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        学校定期进行危机排查工作，建立风险筛查与应对机制，对重度抑郁的学生进行重点关注，包括与家长合作及时反馈学生状况，建议家长带学生去医院就医，遵医嘱，必要时进行住院治疗。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对无法上学并住院治疗的抑郁症学生，学校应关注学生的治疗情况，当学生出院并具备上学条件时，应为学生提供良好的回归环境。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可开展相应心理课堂或讲座，引导全体同学尊重并正视抑郁症状，对有抑郁症学生提供帮助，避免因抑郁症状的污名化造成对个体的伤害。</div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- 焦虑 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.3 焦虑维度样例
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （一）焦虑维度在沙盘中的表现特征
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>布局的混乱与堆积</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>防御性结构</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>动态表现</div>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
                             </div>
                             <div class="yy_txt noSplitBox">
-                                详细解释可见附录
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （二）经典案例解读
-                            </div>
-                            <div v-for="(item, index) in expListJl" :key="index">
-                                <div class="yy_t noSplitBox">
-                                    （{{ index + 1 }}）{{ item.name }}问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【空间配置】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【关键沙具】
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
-                            </div>
-
-                            <div class="yy_t noSplitBox">
-                                （三）指导建议
-                            </div>
-                            <!-- 焦虑指导建议 -->
-                            <div class="yy_guide">
-                                <div class="yy_t noSplitBox">
-                                    （1）轻度问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        之前就害怕自己考不好，这种害怕和担心让自己没有办法安心学习识别自己的灾难化思维，例如是否过度担心未来没有发生的事，考试，对未来的焦虑影响了当下的学习状态。需要做出适当调整。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        觉察对自己焦虑的情绪是否有抵触或者否定的情绪，尽量用接纳的态度面对自己的焦虑情绪，不让情绪评价再次伤害自己。例如当发现自己有焦虑情绪时，不去批评自己又开始焦虑了，要正面评价这种焦虑的情绪，对自己说“我现在焦虑，说明我很上进，我想让自己变得更好，我只需要将焦虑控制在一定范围内就好”。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时进行心理咨询，表达自己的情绪，让焦虑情绪得到理解和看见，并有宣泄的出口。例如有痛苦的情绪及时向家长、老师、学校咨询师表达。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        觉察考试成绩对自己影响，开发更多的课外兴趣，用多个评价体系评估自己的能力。例如“我数学不好，但是我作文很好”，或者“我虽然学习不好，但是我画画很好，我一样是一个有价值，值得被爱的人”，或者“我虽然学习不好，也没有特长，但是我为人真诚热情，同学都喜欢和我玩，寻求我的帮助，我是一个很有价值的人”等等。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>增加体育锻炼，亲近大自然，放松心情，缓解紧张情绪。</div>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">情趣陶冶：</span>
-                                    <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">运动建议：</span>
-                                    <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学习、进步，允许个体犯错，尽量营造温馨和睦宽容有爱的家庭环境，让个体感受到爱与包容，个体的自我才能变得强大，才能容忍未来的不确定性。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长还可以多带个体出去游玩，感受自然的风景，缓解焦虑的情绪等等。</div>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可尽量减少对学生的显性评价，减少学生焦虑的来源。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可多组织户外运动，让学生的大脑得到放松。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可开展有利于人际沟通的班级活动等等。</div>
-                                </div>
-
-                                <!-- 中度 -->
-                                <div class="yy_t noSplitBox">
-                                    （2）中度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险个人角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>觉察自己的焦虑情绪是否已经降低了学习效率，当学习时无法集中注意力而被大量焦虑情绪淹没时，需要寻求心理咨询的帮助。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>主动寻求心理援助，例如去精神科医院就医，遵医嘱服药，并寻求心理咨询服务的帮助。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险家庭角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        己给自己很大的压力，如果孩子的情绪非常不好，鼓励孩子说出来家长应多观察孩子的情绪状态，例如孩子是否有灾难化思维，是否自，例如家长可以说“我看到你最近情绪一直都不太好，是考试成绩不理想的原因吗？你愿意说说吗?我能做什么，才能帮到你？”。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家庭成员首先要做到自己不焦虑，调节好自身情绪，避免将自己的焦虑传递给个体。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长不催促不强迫孩子的学习，不评价孩子的成绩，接纳学生目前的学习状态和成绩，对于孩子的小小进步给予肯定和鼓励，有利于孩子自信心的增加。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当孩子焦虑症状影响其学习时，家长应接纳孩子目前的状态，适度降低对孩子的期待，并帮孩子与学校老师及时沟通，给予适当的缓和空间。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时带个体去做心理咨询，求助专业人员的帮助。家人带领但不强迫个体去精神科医院就诊，遵医嘱服药，并寻求心理咨询服务的帮助。</div>
-                                </div>
-                                <div class="yy_t noSplitBox" style="font-weight: 500;">
-                                    家庭爱的链接:
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭欢聚：</span>
-                                    <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭旅行：</span>
-                                    <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭文化活动：</span>
-                                    <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭运动活动：</span>
-                                    <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险学校角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可设立减压室、心理服务中心，鼓励焦虑个体进行情绪表达。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        后如果孩子整体状态没有向好的方向发展，学校应建议家长带孩子学校可与家长合作，综合孩子在学校和在家的状态，经心理老师评估去医院就医，遵医嘱服药，并辅助进行心理咨询。
-                                    </div>
-                                </div>
-                                <!-- 重度 -->
-                                <div class="yy_t noSplitBox">
-                                    （3）重度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        当自己被大量的焦虑情绪困扰并且有身体的某些部位有异常反应，例如写字时出汗、手抖，感觉到心脏狂跳、心慌等，应及时与老师和家长反映，并由家长带领去专业医院就医，严格遵医嘱服药，并积极寻求心理咨询的帮助等等。
-                                    </div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险家庭环境建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长可尝试传递给孩子一个信息，即无论孩子成绩如何，自己都会100%爱孩子，孩子在自己心中的位置不会因考试成绩糟糕而有任何变化，给孩子提供充足的安全感。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>观察孩子的状态，必要时带孩子去专科医院就医，遵医嘱服药，照顾好孩子的生活。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可定期进行危机排查工作，尤其是在考试成绩出来之后，尽量避免公开成绩排名，避免学生过度的竞争与比较心态。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>考试成绩出来之后关注学生的情绪变化，与家长沟通合作，建立家校联盟。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>针对学生的学习困难，学校应为个体提供多样化的专项辅导课程，例如鼓励跨年级帮助，学长分享自己的成功经验，帮助个体克服学习中的困难。</div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        在重大事件到来之前，例如在考试之前（包括期中、期末考试以及升学考试），学校应组织主题为考试焦虑的团体辅导，有效缓解学生的考试焦虑，促使学生在考试时得到更好的发挥。
-                                    </div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>定期在校内组织心理活动，开展心理课堂，还可以邀请家长一同参与。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>针对高焦虑个体，建议其家长带领学生就医，遵医嘱服药，必要时进行住院治疗，并辅助心理咨询服务。</div>
-                                </div>
+                                {{ item.txt2 }}
                             </div>
                         </div>
-                        <!-- 强迫 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.4 强迫维度样例
+
+                        <div class="yy_t noSplitBox">
+                            （三）指导建议
+                        </div>
+                        <!-- 抑郁指导建议 -->
+                        <div class="yy_guide">
+                            <div class="yy_t noSplitBox">
+                                （1）轻度问题
                             </div>
                             <div class="yy_t noSplitBox">
-                                （一）强迫维度在沙盘中的表现特征
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>重复性和过度控制</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>对称性和极端整洁</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>对立元素同时出现</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>使用具有威胁性的沙具</div>
+                                【个人角度】
                             </div>
                             <div class="yy_txt noSplitBox">
-                                详细解释可见附录
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （二）经典案例解读
-                            </div>
-                            <div v-for="(item, index) in expListQp" :key="index">
-                                <div class="yy_t noSplitBox">
-                                    （{{ index + 1 }}）{{ item.name }}问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【空间配置】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【关键沙具】
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
-                            </div>
-
-                            <div class="yy_t noSplitBox">
-                                （三）指导建议
-                            </div>
-                            <!-- 强迫指导建议 -->
-                            <div class="yy_guide">
-                                <div class="yy_t noSplitBox">
-                                    （1）轻度问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>识别自己的某些强迫的观念，例如：外面非常脏，有无数细菌，回家要把每一个细菌都消灭或者洗掉，并觉察由这些信念引起的焦虑情绪，接纳和安抚这种焦虑的情绪。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对自己的强迫症状采取不批判、不对抗的态度，学会跟它们和平共处，带着症状去生活。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻找可替代的同样可以缓解焦虑情绪的行为，而这种行为对自己的身体和社会功能没有损害性。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>觉察学习、考试成绩对自己的意义，是否将自己的价值都寄托于它们之上，找到更多评价自己的体系，拓宽自己的价值视野。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>情绪不好时及时寻求家人和朋友的帮助。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时进行心理咨询，表达自己强迫的观念或行为以及由此引发的情绪，宣泄这些情绪，有利于症状的减轻。</div>
-                                </div>
-
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">情趣陶冶：</span>
-                                    <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">运动建议：</span>
-                                    <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        家庭成员对个体给予无条件的爱，尽量减少对个体的批判，看到个体强迫行为背后焦虑的情绪，看到个体对发生的事情有强烈的责任，理解并接纳个体的强迫思维和行为，用爱和关心拥抱个体，降低个体的焦虑。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>多带个体亲近大自然，感受放松的环境，缓解焦虑的情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时带个体去做心理咨询，求助专业人员的帮助。例如：箱庭治疗、ERP（暴露与反应阻止疗法）治疗等。</div>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>样化的技能，让个体在学习中体验到不让个体崩溃的压力，同时能学校与相关管理者应淡化成绩对个体的评价影响，并鼓励个体发展多促进个体成长进步。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>多开展团体活动，让个体宣泄自己的想法和情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校与相关管理者设立减压室，心理服务中心，鼓励个体进行对自己的焦虑情绪进行表达等等。</div>
-                                </div>
-
-                                <!-- 中度 -->
-                                <div class="yy_t noSplitBox">
-                                    （2）中度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险个人角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>理咨询服务的帮助主动寻求心理援助，例如去精神科医院就医，遵医嘱服药，并寻求心。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当强迫思维和行为影响到学习时，首先不否定自己，及时寻求身边人的理解和帮助。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照低风险家庭角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应观察孩子的行为或强迫思维，允许孩子有这些强迫症状，并和孩子一起面对它们。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家人带领但不强迫个体去精神科医院就诊，此外还可以带个体寻求心理咨询服务的帮助。</div>
-                                </div>
-                                <div class="yy_t noSplitBox" style="font-weight: 500;">
-                                    家庭爱的链接:
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭欢聚：</span>
-                                    <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭旅行：</span>
-                                    <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭文化活动：</span>
-                                    <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭运动活动：</span>
-                                    <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照低风险学校角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校定期进行危机排查工作，不强化成绩对学生的评价作用。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校应主动与家长合作，给学生一个放松的环境，鼓励学生发展自己的特长等等。</div>
-                                </div>
-                                <!-- 重度 -->
-                                <div class="yy_t noSplitBox">
-                                    （3）重度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照中风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当自己的强迫症状严重影响学习时，不对自己的症状产生巨大的排斥和反抗，相信自己通过专业的治疗，症状会有所缓解。</div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建议及时去医院就医，必要时进行住院治疗，严格遵医嘱，并辅助心理咨询服务。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照中风险家庭角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长或家人尽量不提学习成绩，为个体提供温暖的包容的环境，关心个体的身体健康和生理、心理需要，并满足这些需要，安抚个体的情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建议家长带领但不强迫个体去医院就医，并为孩子寻找合适的心理咨询服务。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参照中风险学校角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校应观察学生的在校状况，尊重并不歧视有明显强迫症状的学生，在教学安排上允许学生有强迫行为，并鼓励身边的同学帮助该个体，避免污名化对个体的二次伤害。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可以开展相应的心理健康课程，帮助个人正确认识强迫症或强迫症状，进行心理健康教育。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校可以开展相应的主题团体辅导活动，在安全、受保护的空间里，鼓励大家去表达自身，让个人明白并非只有自己才有，减轻个体的病耻感。</div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建议学校定时进行危机排查，鼓励其家人带领并不强迫个体就医，必要时进行住院治疗，有条件的话，可协助提供合适的心理咨询资源。</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 敌对 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.5 敌对维度样例
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （一）敌对维度在沙盘中的表现特征
+                                建议个人从以下几个方面调整自己：
                             </div>
                             <div class="yy_txt yy_txt_c noSplitBox">
                                 <span class="yy_crl"></span>
-                                <div>冲突性场景的构建</div>
+                                <div>不否定自己的负面情绪，减少自我攻击的思维。</div>
                             </div>
                             <div class="yy_txt yy_txt_c noSplitBox">
                                 <span class="yy_crl"></span>
-                                <div>攻击性沙具的使用</div>
+                                <div>找到自己喜欢做的事情，并投入其中。例如：去接近大自然，或者看影视剧，观看演唱会等。</div>
                             </div>
                             <div class="yy_txt yy_txt_c noSplitBox">
                                 <span class="yy_crl"></span>
-                                <div>界限和障碍的设置</div>
+                                <div>增加体育锻炼，或进行艺术活动与创作，例如音乐、舞蹈等。</div>
                             </div>
                             <div class="yy_txt noSplitBox">
-                                详细解释可见附录
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （二）经典案例解读
-                            </div>
-                            <div v-for="(item, index) in expListDd" :key="index">
-                                <div class="yy_t noSplitBox">
-                                    （{{ index + 1 }}）{{ item.name }}问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【空间配置】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【关键沙具】
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
-                            </div>
-
-                            <div class="yy_t noSplitBox">
-                                （三）指导建议
-                            </div>
-                            <!-- 敌对指导建议 -->
-                            <div class="yy_guide">
-                                <div class="yy_t noSplitBox">
-                                    （1）轻度问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>觉察自己愤怒的情绪或者其他的情绪，以及引起这些情绪的原因，面对和接纳这些情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻找舒缓自己情绪的活动，例如：户外运动或室内对抗性运动，宣泄自己的情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻求家人和朋友的帮助。例如：自己想打人时，用语言表达自己的愤怒，或者告诉家人和朋友，自己有想打人的冲动，用语言表达出来，而不是攻击行为。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时寻求学校心理老师的帮助。</div>
-                                </div>
-
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">情趣陶冶：</span>
-                                    <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">运动建议：</span>
-                                    <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>理解个体敌对行为背后的心理原因，关注个体内心的恐惧、悲伤等情绪，抱持这些负面情绪，用耐心和爱心支持个体。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时寻求专业机构或者心理咨询的帮助等等。</div>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对个体的负面行为给予负面的反馈，但不否定个体的人格，不伤害个体的自尊。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>用团体辅导的形式让个体表达人际间的情绪问题，让个体看到自己的人际交往模式，用团体的力量影响个体的认知和行为风格等等。</div>
-                                </div>
-
-                                <!-- 中度 -->
-                                <div class="yy_t noSplitBox">
-                                    （2）中度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>先运用理性学会控制自己的伤害行为，找到替代的非伤害的行为舒缓自己的情绪。例如：学习拳击（而不是打人）去发泄自己的情绪等等。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险家庭角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>父母或者家人自己不用暴力解决问题，包括肢体暴力和语言暴力，用温和的态度对待个体，用理性和商量的方式解决分歧与问题，给个体树立良好的榜样。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>教授或者影响个体用语言或者其他非伤害的形式表达自己的情绪或者想法，接纳个体的表达，并给予正向的回应。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>明白孩子的改变并非一朝一夕，家长要有耐心和爱心，陪伴孩子纠正自己的行为。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        家长对孩子的敌对行为不做出二次惩罚，例如孩子在学校打了同学，家长以坚定的态度和孩子沟通，而不是用打骂的方式教育孩子。家长教育孩子的方式直接影响了孩子处理关系的方式。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家人应学习如何科学应对个体的敌意行为，必要时寻求专业机构和心理咨询的帮助。</div>
-                                </div>
-                                <div class="yy_t noSplitBox" style="font-weight: 500;">
-                                    家庭爱的链接:
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭欢聚：</span>
-                                    <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭旅行：</span>
-                                    <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭文化活动：</span>
-                                    <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭运动活动：</span>
-                                    <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险学校角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>针对这一群体，多开展团体咨询，让孩子有机会体验到别人的想法增强孩子的理解和共情别人的能力。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对个体进行心理评估，定期对个体进行心理治疗或者咨询等等。</div>
-                                </div>
-                                <!-- 重度 -->
-                                <div class="yy_t noSplitBox">
-                                    （3）重度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当自己的愤怒情绪波动很大想用攻击行为解决问题时，让自己默数 10个数，或者深呼吸，用第三方的视角看自己当下的状态，觉察攻击行为的后果。</div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻求专业机构或心理咨询的帮助。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险家庭角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        家长积极与学校合作，向老师及时反馈在家状况，无论孩子表现多么糟糕，都不能以暴制暴，要用理性坚定的语言和温和的态度帮助孩子理解别人被攻击后的痛苦，并引导孩子做出积极的行为。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>必要时带领但不强迫个体去专业机构寻求帮助，并带孩子进行心理咨询。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险学校角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>与个体的家长或家人合作，探索行为背后的原因、情绪以及目的，励个体表达自己的负面情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>定期检查个体的心理状态，与个体家人合作，在专业机构和心理医生的建议下联合制定应对方案。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>鼓励个体做利他的行为，并在发现个体有这种行为之后给予高度的赞赏，让个体在利他行为之后体验到被欣赏和价值感，及时强化等等。</div>
-                                </div>
-
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建立监督机制，对比较严重的敌对行为给于惩罚。但不伤害个体的自尊，不否定个体的人格，创造个体为他人服务的可能性，提高个体的价值感。</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 自我伤害 -->
-                        <div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                2.2.6 自我伤害维度样例
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （一）自我伤害维度在沙盘中的表现特征
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>破坏性和荒凉感的场景</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>选择具有攻击性和残缺相关的沙具</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>孤立或受困的角色</div>
-                            </div>
-                            <div class="yy_txt yy_txt_c noSplitBox">
-                                <span class="yy_crl"></span>
-                                <div>重复的死亡和毁灭象征</div>
+                                <span style="font-weight: 400;">情趣陶冶：</span>
+                                <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
                             </div>
                             <div class="yy_txt noSplitBox">
-                                详细解释可见附录
-                            </div>
-                            <div class="yy_t noSplitBox">
-                                （二）经典案例解读
-                            </div>
-                            <div v-for="(item, index) in expListZwsh" :key="index">
-                                <div class="yy_t noSplitBox">
-                                    （{{ index + 1 }}）{{ item.name }}问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    <img class="yy_img" src="../../assets//images/report/t001.png" alt="">
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【空间配置】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt1 }}
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【关键沙具】
-                                </div>
-                                <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
-                                    <span style="font-weight: 500;">{{ iteml.title }}：</span>
-                                    <span>{{ iteml.txt }}</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    {{ item.txt2 }}
-                                </div>
+                                <span style="font-weight: 400;">运动建议：</span>
+                                <span>健步走、慢跑、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
                             </div>
 
                             <div class="yy_t noSplitBox">
-                                （三）指导建议
+                                【家庭角度】
                             </div>
-                            <!-- 自我伤害指导建议 -->
-                            <div class="yy_guide">
-                                <div class="yy_t noSplitBox">
-                                    （1）轻度问题
-                                </div>
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>觉察自己负面的情绪，以及这些情绪产生的情景以及原因。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻找家人或者朋友表达并宣泄自身负面的情绪，明白自己内心真实的想法。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>觉察自己是否将自己的人生价值放在某件单一的事情上，例如学习成绩、升学考试等。尝试寻找更多人生的意义，在自己喜欢或者擅长的事情上获得成就感和满足感。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>如果外部压力非常大，尝试屏蔽这些压力，守护好自己的世界，积极寻找支持自己的资源和力量。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>感觉自身需要的时候，可以寻找学校心理老师的帮助。</div>
-                                </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>尽量减少或杜绝对孩子的批评指责，适当降低对孩子的要求。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>欣赏孩子的进步与改变，及时夸奖孩子的积极心态或者行为。例如：孩子主动做家务，家长应及时赞赏和感谢孩子的付出。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>倾听孩子的烦恼或者心里话，进行情感共鸣而非语言评价。例如：家长询问孩子“今天在学校，你的感受怎么样？”，用心倾听孩子的感受，不去评价孩子。</div>
+                            </div>
 
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">情趣陶冶：</span>
-                                    <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">运动建议：</span>
-                                    <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校尽量不采用成绩排名公示，减少评价，避免排名靠后的学生因成绩不好而自卑。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>创造同学之间的交流机会，组织学生感兴趣的课外活动。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校定期举行心理健康教育课程或活动，引导孩子主动觉察与接纳自己的负面情绪等等。</div>
+                            </div>
 
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长不去对孩子提出过高的要求，觉察孩子的消极情绪，帮助孩子度过人生中的困难。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长鼓励孩子做自己喜欢的事，并对一点点的进步给于极大的鼓励和欣赏。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长关注孩子日常的情绪变化，有必要时，及时带孩子寻求专业机构或心理咨询帮助等等。</div>
-                                </div>
+                            <!-- 中度 -->
+                            <div class="yy_t noSplitBox">
+                                （2）中度问题
+                            </div>
 
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>降低社会评价体系对个体的影响，尽量避免公开公布成绩排名等信息。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>提供更多的娱乐项目，丰富个体的生活，减轻压力，找到学习与生活之间的平衡状态等等。</div>
-                                </div>
-
-                                <!-- 中度 -->
-                                <div class="yy_t noSplitBox">
-                                    （2）中度问题
-                                </div>
-
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>筋弹自己的手腕，用双手拍自己的四肢等，让自己紧张、焦虑与痛当有自伤想法或冲动时，用其他非伤害的动作感受自己，例如用橡皮苦的情绪得到舒缓。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>寻求专业机构、医院或者心理咨询的帮助等等。</div>
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照低风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>允许自己的抑郁症状出现并有所波动，不因自己努力后症状没有减轻而责怪自己。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当有自杀自伤意念或行为时，及时与身边关爱自己的人（家人、老师、同学和朋友等）寻求帮助等等。</div>
+                            </div>
 
 
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险家庭角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>面对有自伤行为的孩子，家长应及时发现并给予充分的关心和爱护，家长不能批评指责孩子，或者在孩子的威胁中任由孩子做任何事。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长给予孩子无条件的爱，不因孩子学习不好，就不爱孩子，让孩子感受到无论自己多么糟糕，家人都是爱自己、支持自己的。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>
-                                        家长可与孩子交谈，找到孩子自伤背后真正的原因，并做出相应的改变。例如孩子有自己的兴趣爱好，却不被家长支持，或者有自己的生活喜欢不被家长接纳，家长应给孩子更多的自由去探索世界，不必过分担心和焦虑孩子的未来。
-                                    </div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长发现孩子有自伤的行为之后，应带领但不强迫孩子去医院就医，遵医嘱服药，或者寻求心理咨询的帮助。</div>
-                                </div>
-                                <div class="yy_t noSplitBox" style="font-weight: 500;">
-                                    家庭爱的链接:
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭欢聚：</span>
-                                    <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭旅行：</span>
-                                    <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭文化活动：</span>
-                                    <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    <span style="font-weight: 400;">家庭运动活动：</span>
-                                    <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应接纳孩子目前的状态。例如孩子因情绪问题成绩下降，家长不能打骂孩子，可以陪伴孩子找到成绩下降的原因，帮助孩子克服困难。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应为孩子提供宽松的生活与精神环境，陪伴孩子度过最艰难的时刻。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应多关注孩子的情绪，如果孩子的情绪持续低落、饮食或睡眠出现异常，应及时带孩子去医院就医，不指责孩子。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应关注孩子的自杀自伤风险，例如孩子身上是否有伤，用爱温暖孩子，避免孩子伤害自己，一旦发现自杀自伤现象，及时与专业医院或机构联系。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>如经专业医生诊断后，需服用药物，家长需监督管理服药情况。</div>
+                            </div>
+                            <div class="yy_t noSplitBox" style="font-weight: 500;">
+                                家庭爱的链接:
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭欢聚：</span>
+                                <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭旅行：</span>
+                                <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭文化活动：</span>
+                                <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭运动活动：</span>
+                                <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
+                            </div>
 
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考低风险学校角度的建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>组织团体辅导活动，让个体在团体中表达自己的情绪感受，获得团体人际间的支持，增强个体的自我强度，应对生活中的压力。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对个体的价值进行多元化的评估，不以某个单一的结果衡量个体的价值，例如不以学生的成绩衡量个体的全部价值等等。</div>
-                                </div>
-                                <!-- 重度 -->
-                                <div class="yy_t noSplitBox">
-                                    （3）重度问题
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校定期举行心理健康教育课程或活动，引导孩子主动觉察与接纳自己的负面情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校建立风险筛查与应对机制，例如：定期对学生的心理状态进行评估，对中风险人群给予心理支持；组织学生进行团体心理咨询，或者展开一对一个体咨询工作。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>相关心理老师在咨询中如发现个体的心理状态比较严重，短期内不能改善时，建议家长及时带个体去医院就医，并遵医嘱服药，并做好相应的记录工作。</div>
+                            </div>
+                            <!-- 重度 -->
+                            <div class="yy_t noSplitBox">
+                                （3）重度问题
+                            </div>
 
-                                <div class="yy_t noSplitBox">
-                                    【个人角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议个人从以下几个方面调整自己：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险个人角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>当情绪非常痛苦时，及时拨打危机干预电话，寻求专业机构、医院、心理咨询、警察的帮助等等。</div>
-                                </div>
-
-
-                                <div class="yy_t noSplitBox">
-                                    【家庭角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议家长从以下几个方面与孩子相处：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险家庭角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长应与学校密切合作，经常了解孩子在学校的情况，特别是考试前或者考试成绩不理想之后，及时安抚孩子的情绪。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>家长还可以及时寻求医院、专业机构的帮助，在专业的方案指导下保护孩子，并寻找合适的心理咨询资源给孩子。</div>
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照中风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建议个体及时去医院就医，必要时进行住院治疗，并辅助心理咨询服务。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当自杀意念比较强烈时，建议个人拨打自杀干预热线，寻求专业的支持和帮助。</div>
+                            </div>
 
 
-                                <div class="yy_t noSplitBox">
-                                    【学校角度】
-                                </div>
-                                <div class="yy_txt noSplitBox">
-                                    建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>参考中风险学校角度建议。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对高危自伤人群给于重点关注，联合孩子家长制定专业看护方案，保护个体的人生安全。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>对学生建立心理档案，对高敏感的孩子给予特殊关注。</div>
-                                </div>
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>建立危机排查机制，与家长合作，联合专业机构、医院或者咨询师制定应对方案。</div>
-                                </div>
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照中风险家庭环境建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应抽出大量的时间陪伴孩子，用爱心、信心和耐心滋养孩子的灵。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应多关注孩子的自杀自伤风险，学习危机干预的基本知识和技术，最大程度保护孩子。</div>
+                            </div>
 
-                                <div class="yy_txt yy_txt_c noSplitBox">
-                                    <span class="yy_crl"></span>
-                                    <div>学校应建议家长带孩子去专科医院就医，遵医嘱服药，并辅助心理咨询治疗等等。</div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校定期举行心理健康教育课程，如 AI 心理沙盘心境课程。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    学校定期进行危机排查工作，建立风险筛查与应对机制，对重度抑郁的学生进行重点关注，包括与家长合作及时反馈学生状况，建议家长带学生去医院就医，遵医嘱，必要时进行住院治疗。
                                 </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对无法上学并住院治疗的抑郁症学生，学校应关注学生的治疗情况，当学生出院并具备上学条件时，应为学生提供良好的回归环境。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可开展相应心理课堂或讲座，引导全体同学尊重并正视抑郁症状，对有抑郁症学生提供帮助，避免因抑郁症状的污名化造成对个体的伤害。</div>
                             </div>
                         </div>
-                        <!-- </div> -->
-
-
                     </div>
 
 
-                    <!-- 3.测评结果 -->
-                    <div class="yy_box basic_box">
+                    <!-- 焦虑 -->
+                    <div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            2.2.3 焦虑维度样例
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （一）焦虑维度在沙盘中的表现特征
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>布局的混乱与堆积</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>防御性结构</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>动态表现</div>
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            详细解释可见附录
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （二）经典案例解读
+                        </div>
+                        <div v-for="(item, index) in anliList2" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}问题
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （1）箱庭空间配置
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt1 }}
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （2）关键沙具分析
+                            </div>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt2 }}
+                            </div>
+                        </div>
+
+                        <div class="yy_t noSplitBox">
+                            （三）指导建议
+                        </div>
+                        <!-- 焦虑指导建议 -->
+                        <div class="yy_guide">
+                            <div class="yy_t noSplitBox">
+                                （1）轻度问题
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    之前就害怕自己考不好，这种害怕和担心让自己没有办法安心学习识别自己的灾难化思维，例如是否过度担心未来没有发生的事，考试，对未来的焦虑影响了当下的学习状态。需要做出适当调整。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    觉察对自己焦虑的情绪是否有抵触或者否定的情绪，尽量用接纳的态度面对自己的焦虑情绪，不让情绪评价再次伤害自己。例如当发现自己有焦虑情绪时，不去批评自己又开始焦虑了，要正面评价这种焦虑的情绪，对自己说“我现在焦虑，说明我很上进，我想让自己变得更好，我只需要将焦虑控制在一定范围内就好”。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时进行心理咨询，表达自己的情绪，让焦虑情绪得到理解和看见，并有宣泄的出口。例如有痛苦的情绪及时向家长、老师、学校咨询师表达。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    觉察考试成绩对自己影响，开发更多的课外兴趣，用多个评价体系评估自己的能力。例如“我数学不好，但是我作文很好”，或者“我虽然学习不好，但是我画画很好，我一样是一个有价值，值得被爱的人”，或者“我虽然学习不好，也没有特长，但是我为人真诚热情，同学都喜欢和我玩，寻求我的帮助，我是一个很有价值的人”等等。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>增加体育锻炼，亲近大自然，放松心情，缓解紧张情绪。</div>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">情趣陶冶：</span>
+                                <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">运动建议：</span>
+                                <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学习、进步，允许个体犯错，尽量营造温馨和睦宽容有爱的家庭环境，让个体感受到爱与包容，个体的自我才能变得强大，才能容忍未来的不确定性。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长还可以多带个体出去游玩，感受自然的风景，缓解焦虑的情绪等等。</div>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可尽量减少对学生的显性评价，减少学生焦虑的来源。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可多组织户外运动，让学生的大脑得到放松。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可开展有利于人际沟通的班级活动等等。</div>
+                            </div>
+
+                            <!-- 中度 -->
+                            <div class="yy_t noSplitBox">
+                                （2）中度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险个人角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>觉察自己的焦虑情绪是否已经降低了学习效率，当学习时无法集中注意力而被大量焦虑情绪淹没时，需要寻求心理咨询的帮助。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>主动寻求心理援助，例如去精神科医院就医，遵医嘱服药，并寻求心理咨询服务的帮助。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险家庭角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    己给自己很大的压力，如果孩子的情绪非常不好，鼓励孩子说出来家长应多观察孩子的情绪状态，例如孩子是否有灾难化思维，是否自，例如家长可以说“我看到你最近情绪一直都不太好，是考试成绩不理想的原因吗？你愿意说说吗?我能做什么，才能帮到你？”。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家庭成员首先要做到自己不焦虑，调节好自身情绪，避免将自己的焦虑传递给个体。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长不催促不强迫孩子的学习，不评价孩子的成绩，接纳学生目前的学习状态和成绩，对于孩子的小小进步给予肯定和鼓励，有利于孩子自信心的增加。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当孩子焦虑症状影响其学习时，家长应接纳孩子目前的状态，适度降低对孩子的期待，并帮孩子与学校老师及时沟通，给予适当的缓和空间。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时带个体去做心理咨询，求助专业人员的帮助。家人带领但不强迫个体去精神科医院就诊，遵医嘱服药，并寻求心理咨询服务的帮助。</div>
+                            </div>
+                            <div class="yy_t noSplitBox" style="font-weight: 500;">
+                                家庭爱的链接:
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭欢聚：</span>
+                                <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭旅行：</span>
+                                <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭文化活动：</span>
+                                <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭运动活动：</span>
+                                <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险学校角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可设立减压室、心理服务中心，鼓励焦虑个体进行情绪表达。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    后如果孩子整体状态没有向好的方向发展，学校应建议家长带孩子学校可与家长合作，综合孩子在学校和在家的状态，经心理老师评估去医院就医，遵医嘱服药，并辅助进行心理咨询。
+                                </div>
+                            </div>
+                            <!-- 重度 -->
+                            <div class="yy_t noSplitBox">
+                                （3）重度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    当自己被大量的焦虑情绪困扰并且有身体的某些部位有异常反应，例如写字时出汗、手抖，感觉到心脏狂跳、心慌等，应及时与老师和家长反映，并由家长带领去专业医院就医，严格遵医嘱服药，并积极寻求心理咨询的帮助等等。
+                                </div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险家庭环境建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长可尝试传递给孩子一个信息，即无论孩子成绩如何，自己都会100%爱孩子，孩子在自己心中的位置不会因考试成绩糟糕而有任何变化，给孩子提供充足的安全感。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>观察孩子的状态，必要时带孩子去专科医院就医，遵医嘱服药，照顾好孩子的生活。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可定期进行危机排查工作，尤其是在考试成绩出来之后，尽量避免公开成绩排名，避免学生过度的竞争与比较心态。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>考试成绩出来之后关注学生的情绪变化，与家长沟通合作，建立家校联盟。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>针对学生的学习困难，学校应为个体提供多样化的专项辅导课程，例如鼓励跨年级帮助，学长分享自己的成功经验，帮助个体克服学习中的困难。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    在重大事件到来之前，例如在考试之前（包括期中、期末考试以及升学考试），学校应组织主题为考试焦虑的团体辅导，有效缓解学生的考试焦虑，促使学生在考试时得到更好的发挥。
+                                </div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>定期在校内组织心理活动，开展心理课堂，还可以邀请家长一同参与。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>针对高焦虑个体，建议其家长带领学生就医，遵医嘱服药，必要时进行住院治疗，并辅助心理咨询服务。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 强迫 -->
+                    <div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            2.2.4 强迫维度样例
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （一）强迫维度在沙盘中的表现特征
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>重复性和过度控制</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>对称性和极端整洁</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>对立元素同时出现</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>使用具有威胁性的沙具</div>
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            详细解释可见附录
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （二）经典案例解读
+                        </div>
+                        <div v-for="(item, index) in anliList3" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}问题
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （1）箱庭空间配置
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt1 }}
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （2）关键沙具分析
+                            </div>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt2 }}
+                            </div>
+                        </div>
+
+                        <div class="yy_t noSplitBox">
+                            （三）指导建议
+                        </div>
+                        <!-- 强迫指导建议 -->
+                        <div class="yy_guide">
+                            <div class="yy_t noSplitBox">
+                                （1）轻度问题
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>识别自己的某些强迫的观念，例如：外面非常脏，有无数细菌，回家要把每一个细菌都消灭或者洗掉，并觉察由这些信念引起的焦虑情绪，接纳和安抚这种焦虑的情绪。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对自己的强迫症状采取不批判、不对抗的态度，学会跟它们和平共处，带着症状去生活。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻找可替代的同样可以缓解焦虑情绪的行为，而这种行为对自己的身体和社会功能没有损害性。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>觉察学习、考试成绩对自己的意义，是否将自己的价值都寄托于它们之上，找到更多评价自己的体系，拓宽自己的价值视野。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>情绪不好时及时寻求家人和朋友的帮助。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时进行心理咨询，表达自己强迫的观念或行为以及由此引发的情绪，宣泄这些情绪，有利于症状的减轻。</div>
+                            </div>
+
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">情趣陶冶：</span>
+                                <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">运动建议：</span>
+                                <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    家庭成员对个体给予无条件的爱，尽量减少对个体的批判，看到个体强迫行为背后焦虑的情绪，看到个体对发生的事情有强烈的责任，理解并接纳个体的强迫思维和行为，用爱和关心拥抱个体，降低个体的焦虑。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>多带个体亲近大自然，感受放松的环境，缓解焦虑的情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时带个体去做心理咨询，求助专业人员的帮助。例如：箱庭治疗、ERP（暴露与反应阻止疗法）治疗等。</div>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>样化的技能，让个体在学习中体验到不让个体崩溃的压力，同时能学校与相关管理者应淡化成绩对个体的评价影响，并鼓励个体发展多促进个体成长进步。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>多开展团体活动，让个体宣泄自己的想法和情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校与相关管理者设立减压室，心理服务中心，鼓励个体进行对自己的焦虑情绪进行表达等等。</div>
+                            </div>
+
+                            <!-- 中度 -->
+                            <div class="yy_t noSplitBox">
+                                （2）中度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险个人角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>理咨询服务的帮助主动寻求心理援助，例如去精神科医院就医，遵医嘱服药，并寻求心。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当强迫思维和行为影响到学习时，首先不否定自己，及时寻求身边人的理解和帮助。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照低风险家庭角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应观察孩子的行为或强迫思维，允许孩子有这些强迫症状，并和孩子一起面对它们。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家人带领但不强迫个体去精神科医院就诊，此外还可以带个体寻求心理咨询服务的帮助。</div>
+                            </div>
+                            <div class="yy_t noSplitBox" style="font-weight: 500;">
+                                家庭爱的链接:
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭欢聚：</span>
+                                <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭旅行：</span>
+                                <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭文化活动：</span>
+                                <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭运动活动：</span>
+                                <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照低风险学校角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校定期进行危机排查工作，不强化成绩对学生的评价作用。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校应主动与家长合作，给学生一个放松的环境，鼓励学生发展自己的特长等等。</div>
+                            </div>
+                            <!-- 重度 -->
+                            <div class="yy_t noSplitBox">
+                                （3）重度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照中风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当自己的强迫症状严重影响学习时，不对自己的症状产生巨大的排斥和反抗，相信自己通过专业的治疗，症状会有所缓解。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建议及时去医院就医，必要时进行住院治疗，严格遵医嘱，并辅助心理咨询服务。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照中风险家庭角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长或家人尽量不提学习成绩，为个体提供温暖的包容的环境，关心个体的身体健康和生理、心理需要，并满足这些需要，安抚个体的情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建议家长带领但不强迫个体去医院就医，并为孩子寻找合适的心理咨询服务。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参照中风险学校角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校应观察学生的在校状况，尊重并不歧视有明显强迫症状的学生，在教学安排上允许学生有强迫行为，并鼓励身边的同学帮助该个体，避免污名化对个体的二次伤害。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可以开展相应的心理健康课程，帮助个人正确认识强迫症或强迫症状，进行心理健康教育。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校可以开展相应的主题团体辅导活动，在安全、受保护的空间里，鼓励大家去表达自身，让个人明白并非只有自己才有，减轻个体的病耻感。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建议学校定时进行危机排查，鼓励其家人带领并不强迫个体就医，必要时进行住院治疗，有条件的话，可协助提供合适的心理咨询资源。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 敌对 -->
+                    <div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            2.2.5 敌对维度样例
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （一）敌对维度在沙盘中的表现特征
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>冲突性场景的构建</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>攻击性沙具的使用</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>界限和障碍的设置</div>
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            详细解释可见附录
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （二）经典案例解读
+                        </div>
+                        <div v-for="(item, index) in anliList4" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}问题
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （1）箱庭空间配置
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt1 }}
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （2）关键沙具分析
+                            </div>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt2 }}
+                            </div>
+                        </div>
+
+                        <div class="yy_t noSplitBox">
+                            （三）指导建议
+                        </div>
+                        <!-- 敌对指导建议 -->
+                        <div class="yy_guide">
+                            <div class="yy_t noSplitBox">
+                                （1）轻度问题
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>觉察自己愤怒的情绪或者其他的情绪，以及引起这些情绪的原因，面对和接纳这些情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻找舒缓自己情绪的活动，例如：户外运动或室内对抗性运动，宣泄自己的情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻求家人和朋友的帮助。例如：自己想打人时，用语言表达自己的愤怒，或者告诉家人和朋友，自己有想打人的冲动，用语言表达出来，而不是攻击行为。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时寻求学校心理老师的帮助。</div>
+                            </div>
+
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">情趣陶冶：</span>
+                                <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">运动建议：</span>
+                                <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>理解个体敌对行为背后的心理原因，关注个体内心的恐惧、悲伤等情绪，抱持这些负面情绪，用耐心和爱心支持个体。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时寻求专业机构或者心理咨询的帮助等等。</div>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对个体的负面行为给予负面的反馈，但不否定个体的人格，不伤害个体的自尊。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>用团体辅导的形式让个体表达人际间的情绪问题，让个体看到自己的人际交往模式，用团体的力量影响个体的认知和行为风格等等。</div>
+                            </div>
+
+                            <!-- 中度 -->
+                            <div class="yy_t noSplitBox">
+                                （2）中度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>先运用理性学会控制自己的伤害行为，找到替代的非伤害的行为舒缓自己的情绪。例如：学习拳击（而不是打人）去发泄自己的情绪等等。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险家庭角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>父母或者家人自己不用暴力解决问题，包括肢体暴力和语言暴力，用温和的态度对待个体，用理性和商量的方式解决分歧与问题，给个体树立良好的榜样。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>教授或者影响个体用语言或者其他非伤害的形式表达自己的情绪或者想法，接纳个体的表达，并给予正向的回应。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>明白孩子的改变并非一朝一夕，家长要有耐心和爱心，陪伴孩子纠正自己的行为。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    家长对孩子的敌对行为不做出二次惩罚，例如孩子在学校打了同学，家长以坚定的态度和孩子沟通，而不是用打骂的方式教育孩子。家长教育孩子的方式直接影响了孩子处理关系的方式。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家人应学习如何科学应对个体的敌意行为，必要时寻求专业机构和心理咨询的帮助。</div>
+                            </div>
+                            <div class="yy_t noSplitBox" style="font-weight: 500;">
+                                家庭爱的链接:
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭欢聚：</span>
+                                <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭旅行：</span>
+                                <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭文化活动：</span>
+                                <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭运动活动：</span>
+                                <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险学校角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>针对这一群体，多开展团体咨询，让孩子有机会体验到别人的想法增强孩子的理解和共情别人的能力。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对个体进行心理评估，定期对个体进行心理治疗或者咨询等等。</div>
+                            </div>
+                            <!-- 重度 -->
+                            <div class="yy_t noSplitBox">
+                                （3）重度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当自己的愤怒情绪波动很大想用攻击行为解决问题时，让自己默数 10个数，或者深呼吸，用第三方的视角看自己当下的状态，觉察攻击行为的后果。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻求专业机构或心理咨询的帮助。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险家庭角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    家长积极与学校合作，向老师及时反馈在家状况，无论孩子表现多么糟糕，都不能以暴制暴，要用理性坚定的语言和温和的态度帮助孩子理解别人被攻击后的痛苦，并引导孩子做出积极的行为。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>必要时带领但不强迫个体去专业机构寻求帮助，并带孩子进行心理咨询。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险学校角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>与个体的家长或家人合作，探索行为背后的原因、情绪以及目的，励个体表达自己的负面情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>定期检查个体的心理状态，与个体家人合作，在专业机构和心理医生的建议下联合制定应对方案。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>鼓励个体做利他的行为，并在发现个体有这种行为之后给予高度的赞赏，让个体在利他行为之后体验到被欣赏和价值感，及时强化等等。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建立监督机制，对比较严重的敌对行为给于惩罚。但不伤害个体的自尊，不否定个体的人格，创造个体为他人服务的可能性，提高个体的价值感。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 自我伤害 -->
+                    <div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            2.2.6 自我伤害维度样例
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （一）自我伤害维度在沙盘中的表现特征
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>破坏性和荒凉感的场景</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>选择具有攻击性和残缺相关的沙具</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>孤立或受困的角色</div>
+                        </div>
+                        <div class="yy_txt yy_txt_c noSplitBox">
+                            <span class="yy_crl"></span>
+                            <div>重复的死亡和毁灭象征</div>
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            详细解释可见附录
+                        </div>
+                        <div class="yy_t noSplitBox">
+                            （二）经典案例解读
+                        </div>
+                        <div v-for="(item, index) in anliList5" :key="index">
+                            <div class="noSplitBox">
+                                <div class="yy_t">
+                                    样例 {{ index + 1 }}：{{ item.name }}问题
+                                </div>
+                                <div class="yy_txt">
+                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
+                                </div>
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （1）箱庭空间配置
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt1 }}
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                （2）关键沙具分析
+                            </div>
+                            <div class="yy_txt noSplitBox" v-for="iteml in item.list" :key="iteml.id">
+                                <span style="font-weight: 500;">{{ iteml.title }}：</span>
+                                <span>{{ iteml.txt }}</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{ item.txt2 }}
+                            </div>
+                        </div>
+
+                        <div class="yy_t noSplitBox">
+                            （三）指导建议
+                        </div>
+                        <!-- 自我伤害指导建议 -->
+                        <div class="yy_guide">
+                            <div class="yy_t noSplitBox">
+                                （1）轻度问题
+                            </div>
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>觉察自己负面的情绪，以及这些情绪产生的情景以及原因。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻找家人或者朋友表达并宣泄自身负面的情绪，明白自己内心真实的想法。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>觉察自己是否将自己的人生价值放在某件单一的事情上，例如学习成绩、升学考试等。尝试寻找更多人生的意义，在自己喜欢或者擅长的事情上获得成就感和满足感。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>如果外部压力非常大，尝试屏蔽这些压力，守护好自己的世界，积极寻找支持自己的资源和力量。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>感觉自身需要的时候，可以寻找学校心理老师的帮助。</div>
+                            </div>
+
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">情趣陶冶：</span>
+                                <span>养宠物、聆音、冥想、书法、绘画、唱歌、旅行等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">运动建议：</span>
+                                <span>健步走、慢跑、太极拳、游泳、骑自行车、跳舞、瑜伽、打球等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长不去对孩子提出过高的要求，觉察孩子的消极情绪，帮助孩子度过人生中的困难。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长鼓励孩子做自己喜欢的事，并对一点点的进步给于极大的鼓励和欣赏。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长关注孩子日常的情绪变化，有必要时，及时带孩子寻求专业机构或心理咨询帮助等等。</div>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>降低社会评价体系对个体的影响，尽量避免公开公布成绩排名等信息。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>提供更多的娱乐项目，丰富个体的生活，减轻压力，找到学习与生活之间的平衡状态等等。</div>
+                            </div>
+
+                            <!-- 中度 -->
+                            <div class="yy_t noSplitBox">
+                                （2）中度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>筋弹自己的手腕，用双手拍自己的四肢等，让自己紧张、焦虑与痛当有自伤想法或冲动时，用其他非伤害的动作感受自己，例如用橡皮苦的情绪得到舒缓。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>寻求专业机构、医院或者心理咨询的帮助等等。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险家庭角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>面对有自伤行为的孩子，家长应及时发现并给予充分的关心和爱护，家长不能批评指责孩子，或者在孩子的威胁中任由孩子做任何事。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长给予孩子无条件的爱，不因孩子学习不好，就不爱孩子，让孩子感受到无论自己多么糟糕，家人都是爱自己、支持自己的。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>
+                                    家长可与孩子交谈，找到孩子自伤背后真正的原因，并做出相应的改变。例如孩子有自己的兴趣爱好，却不被家长支持，或者有自己的生活喜欢不被家长接纳，家长应给孩子更多的自由去探索世界，不必过分担心和焦虑孩子的未来。
+                                </div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长发现孩子有自伤的行为之后，应带领但不强迫孩子去医院就医，遵医嘱服药，或者寻求心理咨询的帮助。</div>
+                            </div>
+                            <div class="yy_t noSplitBox" style="font-weight: 500;">
+                                家庭爱的链接:
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭欢聚：</span>
+                                <span>家庭共进晚餐、外出享受美食、品茶畅聊、共同享受美好厨房时光等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭旅行：</span>
+                                <span>共同制定旅行计划、海边沙滩享受日光浴、郊外徒步旅行登山等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭文化活动：</span>
+                                <span>全家一起阅读、赏花灯、写春联、看春晚、赏龙舟等。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                <span style="font-weight: 400;">家庭运动活动：</span>
+                                <span>全家一起散步、打球、与父亲进行拳击比赛等。</span>
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考低风险学校角度的建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>组织团体辅导活动，让个体在团体中表达自己的情绪感受，获得团体人际间的支持，增强个体的自我强度，应对生活中的压力。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对个体的价值进行多元化的评估，不以某个单一的结果衡量个体的价值，例如不以学生的成绩衡量个体的全部价值等等。</div>
+                            </div>
+                            <!-- 重度 -->
+                            <div class="yy_t noSplitBox">
+                                （3）重度问题
+                            </div>
+
+                            <div class="yy_t noSplitBox">
+                                【个人角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议个人从以下几个方面调整自己：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险个人角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>当情绪非常痛苦时，及时拨打危机干预电话，寻求专业机构、医院、心理咨询、警察的帮助等等。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【家庭角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议家长从以下几个方面与孩子相处：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险家庭角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长应与学校密切合作，经常了解孩子在学校的情况，特别是考试前或者考试成绩不理想之后，及时安抚孩子的情绪。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>家长还可以及时寻求医院、专业机构的帮助，在专业的方案指导下保护孩子，并寻找合适的心理咨询资源给孩子。</div>
+                            </div>
+
+
+                            <div class="yy_t noSplitBox">
+                                【学校角度】
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                建议学校或者相关管理者从以下几个方面对个体进行帮助与支持：
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>参考中风险学校角度建议。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对高危自伤人群给于重点关注，联合孩子家长制定专业看护方案，保护个体的人生安全。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>对学生建立心理档案，对高敏感的孩子给予特殊关注。</div>
+                            </div>
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>建立危机排查机制，与家长合作，联合专业机构、医院或者咨询师制定应对方案。</div>
+                            </div>
+
+                            <div class="yy_txt yy_txt_c noSplitBox">
+                                <span class="yy_crl"></span>
+                                <div>学校应建议家长带孩子去专科医院就医，遵医嘱服药，并辅助心理咨询治疗等等。</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <!-- 3.测评结果 -->
+                <div class="yy_box basic_box">
+                    <div class="noSplitBox">
+                        <div class="yy_o noSplitBox mulu_page">
+                            3.测评结果
+                        </div>
+                        <div class="yy_t noSplitBox mulu_page">
+                            3.1 总体测评结果
+                        </div>
+                        <div class="yy_t mulu_page">
+                            3.1.1 各维度检出率
+                        </div>
+                        <div class="legends" style="width: 100%;height: auto;margin: 10px auto 0px;">
+                            <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart3">
+                                检出率--雷达图</div>
+                            <div class="c_legend">
+                                <div>
+                                    <span></span>
+                                    <span>八一中学</span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                    <span>全国常模</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <table class="cm_table" cellspacing="0">
+                            <tr class="pdf-details" style="background: #e9e9e9">
+                                <th></th>
+                                <th>抑郁</th>
+                                <th>焦虑</th>
+                                <th>强迫</th>
+                                <th>敌对</th>
+                                <th>自我伤害</th>
+                            </tr>
+                            <tr class="pdf-details">
+                                <td>差值</td>
+                                <td>{{ cmCha[0].num }}%</td>
+                                <td>{{ cmCha[1].num }}%</td>
+                                <td>{{ cmCha[2].num }}%</td>
+                                <td>{{ cmCha[3].num }}%</td>
+                                <td>{{ cmCha[4].num }}%</td>
+                            </tr>
+                            <tr class="pdf-details">
+                                <td>八一学校</td>
+                                <td>{{ schoolCM[0] }}%</td>
+                                <td>{{ schoolCM[1] }}%</td>
+                                <td>{{ schoolCM[2] }}%</td>
+                                <td>{{ schoolCM[3] }}%</td>
+                                <td>{{ schoolCM[4] }}%</td>
+                            </tr>
+                            <tr class="pdf-details">
+                                <td>全国常模</td>
+                                <td>{{ ChinaCM[0] }}%</td>
+                                <td>{{ ChinaCM[1] }}%</td>
+                                <td>{{ ChinaCM[2] }}%</td>
+                                <td>{{ ChinaCM[3] }}%</td>
+                                <td>{{ ChinaCM[4] }}%</td>
+                            </tr>
+                        </table>
+                        <div class="yy_biao" style="text-align: center;margin-top: -20px;margin-bottom: 20px;">图 3
+                            心理健康问题检出率对比分布</div>
+
+                        <div class="yy_txt">
+                            {{ schoolName }}的学生中，{{ detail.jcTxt }}
+                        </div>
+                        <div class="yy_txt">
+                            {{ detail.cmTxt }}
+                        </div>
+                    </div>
+                    <div class="noSplitBox">
+                        <div style="width: 100%;height: auto;margin: 10px auto 0px;">
+                            <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart" ref="myChart4">
+                            </div>
+                        </div>
+                        <table class="cm_table" cellspacing="0" style="margin-bottom: 10px;">
+                            <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                <th></th>
+                                <th>抑郁</th>
+                                <th>焦虑</th>
+                                <th>强迫</th>
+                                <th>敌对</th>
+                                <th>自我伤害</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>
+                                    <div style="display: flex;justify-content: center;align-items: center;"><span
+                                            style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #8ACBFF"></span><span>轻度问题</span>
+                                    </div>
+                                </td>
+                                <td>{{ wdJcListArr[0].mildProportion }}%</td>
+                                <td>{{ wdJcListArr[1].mildProportion }}%</td>
+                                <td>{{ wdJcListArr[2].mildProportion }}%</td>
+                                <td>{{ wdJcListArr[3].mildProportion }}%</td>
+                                <td>{{ wdJcListArr[4].mildProportion }}%</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>
+                                    <div style="display: flex;justify-content: center;align-items: center;"><span
+                                            style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FFDDA0"></span><span>中度问题</span>
+                                    </div>
+                                </td>
+                                <td>{{ wdJcListArr[0].moderateProportion }}%</td>
+                                <td>{{ wdJcListArr[1].moderateProportion }}%</td>
+                                <td>{{ wdJcListArr[2].moderateProportion }}%</td>
+                                <td>{{ wdJcListArr[3].moderateProportion }}%</td>
+                                <td>{{ wdJcListArr[4].moderateProportion }}%</td>
+                            </tr>
+                            <tr class="pdf-details noSplitBox">
+                                <td>
+                                    <div style="display: flex;justify-content: center;align-items: center;"><span
+                                            style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FE9D9D"></span><span>重度问题</span>
+                                    </div>
+                                </td>
+                                <td>{{ wdJcListArr[0].severeProportion }}%</td>
+                                <td>{{ wdJcListArr[1].severeProportion }}%</td>
+                                <td>{{ wdJcListArr[2].severeProportion }}%</td>
+                                <td>{{ wdJcListArr[3].severeProportion }}%</td>
+                                <td>{{ wdJcListArr[4].severeProportion }}%</td>
+                            </tr>
+                        </table>
+                        <div class="noSplitBox legends noSplitBox1"
+                            style="width: 100%;height: auto;margin: 0px auto 10px;">
+                            <div class="c_legend">
+                                <div>
+                                    <span></span>
+                                    <span>轻度问题</span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                    <span>中度问题</span>
+                                </div>
+                                <div>
+                                    <span></span>
+                                    <span>重度问题</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="yy_biao" style="text-align: center;margin-top: 0px;margin-bottom: 20px;">图 4
+                            心理健康检出率分布图
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="yy_txt noSplitBox">
+                        根据图 4 所示的心理健康问题检出率分布图，我们可以得出以下几点重要发现：
+                    </div>
+                    <div v-html="detail.wdpStr">
+
+                    </div>
+                    <div class="noSplitBox">
+                        <div class="yy_t mulu_page">
+                            3.1.2 不同性别各维度检出率
+                        </div>
+                        <div style="width: 100%;height: auto;margin: 10px auto 0px;">
+                            <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart" ref="myChart5">
+                            </div>
+                            <div class="yy_biao" style="text-align: center;">图 5 不同性别学生心理健康问题检出率分布图</div>
+                        </div>
+                        <div class="yy_txt">
+                            根据图 5 的数据显示，{{ detail.genderTxt5 }}
+                        </div>
+                        <div class="yy_txt">
+                            {{ detail.genderTxt51 }}{{ detail.genderTxt52 }}
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="noSplitBox mulu_page">
+                        <div class="yy_t ">
+                            3.1.3 各个学段各维度检出率
+                        </div>
+                        <div class="yy_biao" style="text-align: center;">表 4 各个学段各维度检出率对比表</div>
+                        <!-- gradeDimensionProportion -->
+                        <table cellspacing="0">
+                            <tr class="pdf-details" style="background: #e9e9e9">
+                                <th></th>
+                                <th>抑郁</th>
+                                <th>焦虑</th>
+                                <th>强迫</th>
+                                <th>敌对</th>
+                                <th>自我伤害</th>
+                            </tr>
+
+                            <tr class="pdf-details" v-for="item in detail.gradeListOrg" :key="item.grade">
+                                <td>{{ item.grade }}</td>
+                                <td v-for="(itemp, indexp) in item.pList" :key="itemp.name">{{ itemp.percent }}%{{
+                                    itemp.percent > ChinaCM[indexp] && itemp.percent > schoolCM[indexp] ? '*' : ''
+                                }}
+                                </td>
+                            </tr>
+
+                            <tr class="pdf-details">
+                                <td>全国常模</td>
+                                <td>{{ ChinaCM[0] }}%</td>
+                                <td>{{ ChinaCM[1] }}%</td>
+                                <td>{{ ChinaCM[2] }}%</td>
+                                <td>{{ ChinaCM[3] }}%</td>
+                                <td>{{ ChinaCM[4] }}%</td>
+                            </tr>
+                            <tr class="pdf-details">
+                                <td>本校常模</td>
+                                <td>{{ schoolCM[0] }}%</td>
+                                <td>{{ schoolCM[1] }}%</td>
+                                <td>{{ schoolCM[2] }}%</td>
+                                <td>{{ schoolCM[3] }}%</td>
+                                <td>{{ schoolCM[4] }}%</td>
+                            </tr>
+
+                        </table>
+                        <div class="yy_biao" style="text-align: center;margin-top: -30px">注：加*表示该年级检出率同时高于全国常模和本校常模
+                        </div>
+                    </div>
+
+                    <!-- 这里需要细分一下 -->
+
+                    <div class="yy_txt noSplitBox" style="margin-bottom: 30px;">
+                        由表中可以看出，{{ detail.gradeTxtOrg }}
+                    </div>
+
+
+                    <!-- 需要一个学段的数组 -->
+                    <div v-for="(item, index) in gradeAllList" :key="index">
+                        <div class="yy_t noSplitBox mulu_page">
+                            3.{{ index + 2 }} {{ item.name }}测评分析
+                        </div>
                         <div class="noSplitBox">
-                            <div class="yy_o noSplitBox mulu_page">
-                                3.测评结果
-                            </div>
-                            <div class="yy_t noSplitBox mulu_page">
-                                3.1 总体测评结果
-                            </div>
                             <div class="yy_t mulu_page">
-                                3.1.1 各维度检出率
+                                3.{{ index + 2 }}.1 {{ item.name }}测评结果概况
                             </div>
                             <div class="legends" style="width: 100%;height: auto;margin: 10px auto 0px;">
-                                <div style="width: 100%;height: 320px;margin: 0 auto;" class="myChart" ref="myChart3">
-                                    检出率--雷达图</div>
-                                <div class="c_legend">
+                                <div style="width: 100%;height: 300px;margin: 0 auto;" class="myChart"
+                                    :ref="'myChart1' + index">检出率--雷达图</div>
+                                <div class="c_legend c_legend1">
                                     <div>
                                         <span></span>
-                                        <span>八一中学</span>
+                                        <span>{{ item.name }}</span>
                                     </div>
                                     <div>
                                         <span></span>
                                         <span>全国常模</span>
                                     </div>
+                                    <div>
+                                        <span></span>
+                                        <span>本校常模</span>
+                                    </div>
                                 </div>
 
                             </div>
-                            <table class="cm_table" cellspacing="0">
-                                <tr class="pdf-details" style="background: #e9e9e9">
-                                    <th></th>
-                                    <th>抑郁</th>
-                                    <th>焦虑</th>
-                                    <th>强迫</th>
-                                    <th>敌对</th>
-                                    <th>自我伤害</th>
-                                </tr>
-                                <tr class="pdf-details">
-                                    <td>差值</td>
-                                    <td>{{cmCha[0].num}}%</td>
-                                    <td>{{cmCha[1].num}}%</td>
-                                    <td>{{cmCha[2].num}}%</td>
-                                    <td>{{cmCha[3].num}}%</td>
-                                    <td>{{cmCha[4].num}}%</td>
-                                </tr>
-                                <tr class="pdf-details">
-                                    <td>八一学校</td>
-                                    <td>{{schoolCM[0]}}%</td>
-                                    <td>{{schoolCM[1]}}%</td>
-                                    <td>{{schoolCM[2]}}%</td>
-                                    <td>{{schoolCM[3]}}%</td>
-                                    <td>{{schoolCM[4]}}%</td>
-                                </tr>
-                                <tr class="pdf-details">
-                                    <td>全国常模</td>
-                                    <td>{{ChinaCM[0]}}%</td>
-                                    <td>{{ChinaCM[1]}}%</td>
-                                    <td>{{ChinaCM[2]}}%</td>
-                                    <td>{{ChinaCM[3]}}%</td>
-                                    <td>{{ChinaCM[4]}}%</td>
-                                </tr>
-                            </table>
-                            <div class="yy_biao" style="text-align: center;margin-top: -20px;margin-bottom: 20px;">图 3 心理健康问题检出率对比分布</div>
-
-                            <div class="yy_txt">
-                                {{schoolName}}的学生中，{{detail.jcTxt}}
-                            </div>
-                            <div class="yy_txt">
-                                {{ detail.cmTxt }}
-                            </div>
-                        </div>
-                        <div class="noSplitBox">
-                            <div style="width: 100%;height: auto;margin: 10px auto 0px;">
-                                <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart" ref="myChart4">
-                                </div>
-                            </div>
-                            <table class="cm_table" cellspacing="0" style="margin-bottom: 10px;">
+                            <table cellspacing="0">
                                 <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
                                     <th></th>
                                     <th>抑郁</th>
@@ -1845,996 +2055,746 @@
                                     <th>自我伤害</th>
                                 </tr>
                                 <tr class="pdf-details noSplitBox">
-                                    <td>
-                                        <div style="display: flex;justify-content: center;align-items: center;"><span
-                                                style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #8ACBFF"></span><span>轻度问题</span>
-                                        </div>
-                                    </td>
-                                    <td>{{wdJcListArr[0].mildProportion}}%</td>
-                                    <td>{{wdJcListArr[1].mildProportion}}%</td>
-                                    <td>{{wdJcListArr[2].mildProportion}}%</td>
-                                    <td>{{wdJcListArr[3].mildProportion}}%</td>
-                                    <td>{{wdJcListArr[4].mildProportion}}%</td>
-                                </tr>
-                                <tr class="pdf-details noSplitBox">
-                                    <td>
-                                        <div style="display: flex;justify-content: center;align-items: center;"><span
-                                                style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FFDDA0"></span><span>中度问题</span>
-                                        </div>
-                                    </td>
-                                    <td>{{wdJcListArr[0].moderateProportion}}%</td>
-                                    <td>{{wdJcListArr[1].moderateProportion}}%</td>
-                                    <td>{{wdJcListArr[2].moderateProportion}}%</td>
-                                    <td>{{wdJcListArr[3].moderateProportion}}%</td>
-                                    <td>{{wdJcListArr[4].moderateProportion}}%</td>
-                                </tr>
-                                <tr class="pdf-details noSplitBox">
-                                    <td>
-                                        <div style="display: flex;justify-content: center;align-items: center;"><span
-                                                style="margin-right:6px; width: 10px;height: 10px;border-radius: 50%;background: #FE9D9D"></span><span>重度问题</span>
-                                        </div>
-                                    </td>
-                                    <td>{{wdJcListArr[0].severeProportion}}%</td>
-                                    <td>{{wdJcListArr[1].severeProportion}}%</td>
-                                    <td>{{wdJcListArr[2].severeProportion}}%</td>
-                                    <td>{{wdJcListArr[3].severeProportion}}%</td>
-                                    <td>{{wdJcListArr[4].severeProportion}}%</td>
-                                </tr>
-                            </table>
-                            <div class="noSplitBox legends noSplitBox1"
-                                style="width: 100%;height: auto;margin: 0px auto 10px;">
-                                <div class="c_legend">
-                                    <div>
-                                        <span></span>
-                                        <span>轻度问题</span>
-                                    </div>
-                                    <div>
-                                        <span></span>
-                                        <span>中度问题</span>
-                                    </div>
-                                    <div>
-                                        <span></span>
-                                        <span>重度问题</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="yy_biao" style="text-align: center;margin-top: 0px;margin-bottom: 20px;">图 4
-                                心理健康检出率分布图
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="yy_txt noSplitBox">
-                            根据图 4 所示的心理健康问题检出率分布图，我们可以得出以下几点重要发现：
-                        </div>
-                        <div v-html="detail.wdpStr">
-
-                        </div>
-                        <!-- <div class="yy_txt noSplitBox">
-                            <span style="font-weight: 500;">焦虑问题最为普遍：</span>
-                            <span>在所有心理健康问题中，焦虑问题的检出率最高，达到 31.9%。其中，焦虑轻度问题占绝大多数，占比高达 25.7%，焦虑中度问题占比 3.6%，焦虑重度问题占比
-                                2.6%。这表明焦虑是本校中小学生中最常见的心理健康问题。</span>
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            <span style="font-weight: 500;">抑郁问题次之：</span>
-                            <span>抑郁问题的总检出率为 24.3%，其中抑郁轻度问题占比最大，为 21.7%，抑郁中度问题占比 2.4%，抑郁重度问题占比
-                                0.2%。抑郁问题仅次于焦虑问题，成为本校中小学生心理健康问题中的第二大常见类型。</span>
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            <span style="font-weight: 500;">自我伤害问题不容忽视：</span>
-                            <span>自我伤害问题的总检出率为 20.7%，其中自我伤害轻度问题占比最多，为 20.1%，自我伤害中度问题占比 0.5%，自我伤害重度问题占比
-                                0.1%。虽然自我伤害问题的检出率稍低一些，但它涉及到学生的生命安全，因此同样值得关注。</span>
-                        </div>
-
-                        <div class="yy_txt noSplitBox">
-                            <span style="font-weight: 500;">强迫问题和敌对问题相对较少：</span>
-                            <span>强迫问题的总检出率为 18.8%，其中强迫轻度问题占比最大，为 16.5%，强迫中度问题占比 1.5%，强迫重度问题占比 0.9%。敌对问题的总检出率为
-                                18.6%，其中敌对轻度问题占比最大，为 16.9%，敌对中度问题占比 1.6%，敌对重度问题占比 0.2%。这两类问题虽然检出率相对较低，但也需要引起注意。</span>
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            综上所述，焦虑问题是本校中小学生最突出的心理健康问题，其次为抑郁问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
-                        </div> -->
-                        <div class="noSplitBox">
-                            <div class="yy_t mulu_page">
-                                3.1.2 不同性别各维度检出率
-                            </div>
-                            <div style="width: 100%;height: auto;margin: 10px auto 0px;">
-                                <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart" ref="myChart5">
-                                </div>
-                                <div class="yy_biao" style="text-align: center;">图 5 不同性别学生心理健康问题检出率分布图</div>
-                            </div>
-                            <div class="yy_txt">
-                                根据图 5 的数据显示，{{detail.genderTxt5}}
-                            </div>
-                            <div class="yy_txt">
-                                {{detail.genderTxt51}}{{detail.genderTxt52}}
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="noSplitBox mulu_page">
-                            <div class="yy_t ">
-                                3.1.3 各个学段各维度检出率
-                            </div>
-                            <div class="yy_biao" style="text-align: center;">表 4 各个学段各维度检出率对比表</div>
-                            <!-- gradeDimensionProportion -->
-                            <table cellspacing="0">
-                                <tr class="pdf-details" style="background: #e9e9e9">
-                                    <th></th>
-                                    <th>抑郁</th>
-                                    <th>焦虑</th>
-                                    <th>强迫</th>
-                                    <th>敌对</th>
-                                    <th>自我伤害</th>
+                                    <td>{{ item.name }}</td>
+                                    <td v-for="itemw in item.wdList" :key="itemw.name">{{ itemw.percent }}%</td>
                                 </tr>
 
-                                <tr class="pdf-details" v-for="item in detail.gradeListOrg" :key="item.grade">
-                                    <td>{{item.grade}}</td>
-                                    <td v-for="(itemp,indexp) in item.pList" :key="itemp.name">{{itemp.percent}}%{{ itemp.percent > ChinaCM[indexp] && itemp.percent > schoolCM[indexp] ? '*' : ''}}</td>
-                                </tr>
-                                <!-- <tr class="pdf-details">
-                                    <td>初中一年级</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                    <td>11.5%</td>
-                                </tr>
-                                <tr class="pdf-details">
-                                    <td>高中一年级</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                    <td>21.5%</td>
-                                </tr> -->
-                                
                                 <tr class="pdf-details">
                                     <td>全国常模</td>
-                                    <td>{{ChinaCM[0]}}%</td>
-                                    <td>{{ChinaCM[1]}}%</td>
-                                    <td>{{ChinaCM[2]}}%</td>
-                                    <td>{{ChinaCM[3]}}%</td>
-                                    <td>{{ChinaCM[4]}}%</td>
+                                    <td>{{ ChinaCM[0] }}%</td>
+                                    <td>{{ ChinaCM[1] }}%</td>
+                                    <td>{{ ChinaCM[2] }}%</td>
+                                    <td>{{ ChinaCM[3] }}%</td>
+                                    <td>{{ ChinaCM[4] }}%</td>
                                 </tr>
                                 <tr class="pdf-details">
                                     <td>本校常模</td>
-                                    <td>{{schoolCM[0]}}%</td>
-                                    <td>{{schoolCM[1]}}%</td>
-                                    <td>{{schoolCM[2]}}%</td>
-                                    <td>{{schoolCM[3]}}%</td>
-                                    <td>{{schoolCM[4]}}%</td>
+                                    <td>{{ schoolCM[0] }}%</td>
+                                    <td>{{ schoolCM[1] }}%</td>
+                                    <td>{{ schoolCM[2] }}%</td>
+                                    <td>{{ schoolCM[3] }}%</td>
+                                    <td>{{ schoolCM[4] }}%</td>
                                 </tr>
-                                
                             </table>
-                            <div class="yy_biao" style="text-align: center;margin-top: -30px">注：加*表示该年级检出率同时高于全国常模和本校常模
-                            </div>
-                        </div>
+                            <div class="yy_biao noSplitBox" style="text-align: center;margin-top: -30px">图 {{ 6 + 6
+                                * index }}
+                                {{ item.name }}学生心理健康问题检出率对比分布图</div>
 
-                        <!-- 这里需要细分一下 -->
-
-                        <div class="yy_txt noSplitBox" style="margin-bottom: 30px;">
-                            由表中可以看出，{{ detail.gradeTxtOrg }}
+                            
                         </div>
 
 
-                        <!-- 需要一个学段的数组 -->
-                        <div v-for="(item, index) in gradeAllList" :key="index">
-                            <div class="yy_t noSplitBox mulu_page">
-                                3.{{ index + 2 }} {{ item.name }}测评分析
+                        <div class="yy_txt noSplitBox">
+                            {{ item.allTxt0 }}
+                        </div>
+                        <div class="yy_txt noSplitBox">
+                            {{ item.allTxt1 }}
+                        </div>
+
+                        <!-- 初中多一个 -->
+
+                        <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto 30px;"
+                            v-show="item.name.indexOf('初中') != -1">
+                            <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart"
+                                :ref="'myChart9' + index"></div>
+                            <div class="yy_biao" style="text-align: center;">直升与非直升学生心理健康问题检出率分布图</div>
+                            <div class="yy_txt">
+                                {{ allTxtZs3 }}
                             </div>
-                            <div class="noSplitBox">
+                        </div>
+
+
+                        <div class="yy_t mulu_page">
+                            3.{{ index + 2 }}.2 {{ item.name }}各维度检出率情况
+                        </div>
+                        <div v-for="(itemw, indexw) in item.wdList" :key="indexw">
+
+                            <div class="noSplitBox" style="width: 100%;height: auto;margin: 10px auto 15px;">
                                 <div class="yy_t mulu_page">
-                                    3.{{ index + 2 }}.1 {{ item.name }}测评结果概况
+                                    3.{{ index + 2 }}.2.{{ indexw + 1 }} {{ itemw.name }}维度
                                 </div>
-                                <div class="legends" style="width: 100%;height: auto;margin: 10px auto 0px;">
-                                    <div style="width: 100%;height: 300px;margin: 0 auto;" class="myChart"
-                                        :ref="'myChart1' + index">检出率--雷达图</div>
-                                    <div class="c_legend c_legend1">
-                                        <div>
-                                            <span></span>
-                                            <span>{{ item.name }}</span>
-                                        </div>
-                                        <div>
-                                            <span></span>
-                                            <span>全国常模</span>
-                                        </div>
-                                        <div>
-                                            <span></span>
-                                            <span>本校常模</span>
-                                        </div>
-                                    </div>
-
+                                <div style="width: 80%;height: 260px;margin: 0 auto;" class="myChart"
+                                    :ref="'myChart2' + index + indexw"></div>
+                                <div class="rtr_ul">
+                                    <ul>
+                                        <li><span class="r_cir1"></span>{{ itemw.name }}</li>
+                                        <li><span class="r_line1"></span>全国常模</li>
+                                        <li><span class="r_line2"></span>年级常模</li>
+                                    </ul>
                                 </div>
-                                <!-- <div class="noSplitBox"> -->
-                                <table cellspacing="0">
+                                <div class="yy_biao" style="text-align: center;">图 {{ 6 + 6 * index + indexw + 1 }}
+                                    {{ item.name }}{{ itemw.name }}检出率对比图</div>
+                                
+                                <div class="yy_biao" style="text-align: center;">表 {{ 4 + 5 * index + indexw + 1 }}
+                                    {{ itemw.name }}维度重点关注班级列表</div>
+                                <table cellspacing="0" style="width: 80%;">
                                     <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                        <th></th>
-                                        <th>抑郁</th>
-                                        <th>焦虑</th>
-                                        <th>强迫</th>
-                                        <th>敌对</th>
-                                        <th>自我伤害</th>
+
+                                        <th>情况描述</th>
+                                        <th>班级</th>
                                     </tr>
                                     <tr class="pdf-details noSplitBox">
-                                        <td>{{ item.name }}</td>
-                                        <td v-for="itemw in item.wdList" :key="itemw.name">{{itemw.percent}}%</td>
+                                        <td>高于全国常模和年级常模</td>
+                                        <td v-if="item.cwdName">
+                                            {{ item.cwdName[indexw] }}
+                                        </td>
+
                                     </tr>
-                                    
-                                    <tr class="pdf-details">
-                                        <td>全国常模</td>
-                                        <td>{{ChinaCM[0]}}%</td>
-                                        <td>{{ChinaCM[1]}}%</td>
-                                        <td>{{ChinaCM[2]}}%</td>
-                                        <td>{{ChinaCM[3]}}%</td>
-                                        <td>{{ChinaCM[4]}}%</td>
-                                    </tr>
-                                    <tr class="pdf-details">
-                                        <td>本校常模</td>
-                                        <td>{{schoolCM[0]}}%</td>
-                                        <td>{{schoolCM[1]}}%</td>
-                                        <td>{{schoolCM[2]}}%</td>
-                                        <td>{{schoolCM[3]}}%</td>
-                                        <td>{{schoolCM[4]}}%</td>
-                                    </tr>
+
                                 </table>
-                                <div class="yy_biao noSplitBox" style="text-align: center;margin-top: -30px">图 {{ 6 + 6 * index }}
-                                    {{ item.name }}学生心理健康问题检出率对比分布图</div>
-
-                                <!-- </div> -->
+                                <div class="yy_biao"
+                                    style="text-align: center;margin-top: -30px;margin-bottom: 10px;">
+                                    注：加*表示该班检出率同时高于全国常模和年级常模</div>
                             </div>
-
-
-                            <div class="yy_txt noSplitBox">
-                                {{ item.allTxt0 }}
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                {{ item.allTxt1 }}
-                            </div>
-                            
-                            <!-- 初中多一个 -->
-
-                            <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto 30px;"
-                                v-show="item.name.indexOf('初中') != -1">
-                                <div style="width: 75%;height: 280px;margin: 0 auto;" class="myChart"
-                                    :ref="'myChart9' + index"></div>
-                                <div class="yy_biao" style="text-align: center;">直升与非直升学生心理健康问题检出率分布图</div>
-                                <div class="yy_txt">
-                                    {{ allTxtZs3 }}
-                                </div>
-                            </div>
-                            <!-- <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto;">
-                            <div style="width: 400px;height: 400px;">{{item.name}}--柱状图</div>
-                            <div class="yy_biao" style="text-align: center;"></div>
-                        </div> -->
-
-
-                            <div class="yy_t mulu_page">
-                                3.{{ index + 2 }}.2 {{ item.name }}各维度检出率情况
-                            </div>
-                            <div v-for="(itemw, indexw) in item.wdList" :key="indexw">
-
-                                <div class="noSplitBox" style="width: 100%;height: auto;margin: 10px auto 15px;">
-                                    <div class="yy_t mulu_page">
-                                        3.{{ index + 2 }}.2.{{ indexw + 1 }} {{ itemw.name }}维度
-                                    </div>
-                                    <div style="width: 80%;height: 260px;margin: 0 auto;" class="myChart"
-                                        :ref="'myChart2' + index + indexw"></div>
-                                    <!-- <div class="myChartZhe1" id="myChartZhe1" ref="myChartZhe1"></div> -->
-                                    <div class="rtr_ul">
-                                        <ul>
-                                            <li><span class="r_cir1"></span>{{ itemw.name }}</li>
-                                            <li><span class="r_line1"></span>全国常模</li>
-                                            <li><span class="r_line2"></span>年级常模</li>
-                                        </ul>
-                                    </div>
-                                    <div class="yy_biao" style="text-align: center;">图 {{ 6 + 6 * index + indexw + 1 }}
-                                        {{ item.name }}{{ itemw.name }}检出率对比图</div>
-                                    <!-- </div>
-                            <div class="noSplitBox"> -->
-                                    <div class="yy_biao" style="text-align: center;">表 {{ 4 + 5 * index + indexw + 1 }}
-                                        {{ itemw.name }}维度重点关注班级列表</div>
-                                    <table cellspacing="0" style="width: 80%;">
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-
-                                            <th>情况描述</th>
-                                            <th>班级</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <td>高于全国常模和年级常模</td>
-                                            <td v-if="item.cwdName">
-                                                {{ item.cwdName[indexw]}}
-                                            </td>
-
-                                        </tr>
-
-                                    </table>
-                                    <div class="yy_biao"
-                                        style="text-align: center;margin-top: -30px;margin-bottom: 10px;">
-                                        注：加*表示该班检出率同时高于全国常模和年级常模</div>
-                                </div>
-                            </div>
-                            <div class="yy_t noSplitBox" style="text-align: center;margin: 30px 0 10px">
-                                {{ item.name }}各维度重点关注班级
-                            </div>
-                            <table cellspacing="0">
-                                <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                    <th>班级</th>
-                                    <th>抑郁</th>
-                                    <th>焦虑</th>
-                                    <th>强迫</th>
-                                    <th>敌对</th>
-                                    <th>自我伤害</th>
-                                </tr>
-                                <tr class="pdf-details noSplitBox" v-for="(itemc, indexc) in item.csList" :key="indexc">
-                                    <td v-if="itemc.nameFlag">{{ itemc.name}}</td>
-                                    <td v-if="itemc.nameFlag">{{ itemc.depressionPercentage }}%{{ itemc.depressionPercentage > ChinaCM[0] && itemc.depressionPercentage > item.wdList[0].percent ? '*' : ''}}</td>
-                                    <td v-if="itemc.nameFlag">{{ itemc.anxietyPercentage }}%{{ itemc.anxietyPercentage > ChinaCM[1] && itemc.anxietyPercentage > item.wdList[1].percent ? '*' : ''}}</td>
-                                    <td v-if="itemc.nameFlag">{{ itemc.forcedPercentage }}%{{ itemc.forcedPercentage > ChinaCM[2] && itemc.forcedPercentage > item.wdList[2].percent ? '*' : ''}}</td>
-                                    <td v-if="itemc.nameFlag">{{ itemc.violencePercentage }}%{{ itemc.violencePercentage > ChinaCM[3] && itemc.violencePercentage > item.wdList[3].percent ? '*' : ''}}</td>
-                                    <td v-if="itemc.nameFlag">{{ itemc.suicidePercentage }}%{{ itemc.suicidePercentage > ChinaCM[4] & itemc.suicidePercentage > item.wdList[4].percent ? '*' : ''}}</td>
-                                </tr>
-
-                            </table>
-                            <div class="yy_biao noSplitBox"
-                                style="text-align: center;margin-top: -30px;margin-bottom: 30px;">
-                                注：加*表示该班检出率同时高于全国常模和年级常模
-                            </div>
-
-                            <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto;">
-                                <div class="yy_t mulu_page">
-                                    3.{{ index + 2 }}.3 {{ item.name }}不同性别测评情况
-                                </div>
-                                <div v-show="item.name.indexOf('初中') == -1">
-                                    <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
-                                        :ref="'myChart3' + index"></div>
-                                    <table cellspacing="0" style="position: relative">
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th width="5%">
-                                                <div
-                                                    style="position: absolute;left: -1px;top: -1px;width: 97px;height: 106px;background: #fff;">
-                                                </div>
-                                            </th>
-                                            <th width="10%" colspan="2">抑郁</th>
-                                            <th width="10%" colspan="2">焦虑</th>
-                                            <th width="10%" colspan="2">强迫</th>
-                                            <th width="10%" colspan="2">敌对</th>
-                                            <th width="10%" colspan="2">自我伤害</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th></th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
-                                                <span>重度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
-                                                <span>中度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
-                                                <span>轻度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
-                                                <span>正常</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-
-                                    </table>
-                                    <div class="yy_txt noSplitBox">
-                                        在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
-                                        147
-                                        人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在焦虑维度中，男生正常人数为 100 人（44.3%），轻度问题为104 人（46.0%），中度问题为 13 人（5.8%），重度问题为 9
-                                        人（4.0%）；女生正常人数为
-                                        164
-                                        人（87.7%），轻度问题为 17 人（9.1%），中度问题为 1 人（0.5%），重度问题为 5 人（2.7%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在强迫维度中，男生正常人数为 170 人（75.2%），轻度问题为49 人（21.7%），中度问题为 2 人（0.9%），重度问题为 5
-                                        人（2.2%）；女生正常人数为
-                                        172
-                                        人（92.0%），轻度问题为 13 人（7.0%），中度问题为 0 人（0%），重度问题为 2 人（1.1%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在敌对维度中，男生正常人数为 154 人（68.1%），轻度问题为66 人（29.2%），中度问题为 5 人（2.2%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
-                                        170
-                                        人（90.9%），轻度问题为 13 人（7.0%），中度问题为 4 人（2.1%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在自我伤害维度中，男生正常人数为 179 人（79.2%），轻度问题为 45 人（19.9%），中度问题为 2 人（0.9%），重度问题为 0
-                                        人（0%）；女生正常人数为
-                                        162
-                                        人（86.6%），轻度问题为 25 人（13.4%），中度问题为 0 人（0%），重度问题为 0 人（0%）。
-                                    </div>
-                                </div>
-
-                                <div v-show="item.name.indexOf('初中') != -1">
-
-                                    <div class="yy_t" style="text-align: center;margin: 20px 0;">
-                                        {{ item.name }}直升班不同性别测评情况
-                                    </div>
-                                    <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
-                                        :ref="'myChart31' + index"></div>
-                                    <table cellspacing="0" style="position: relative">
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th width="5%">
-                                                <div
-                                                    style="position: absolute;left: -1px;top: -1px;width: 97px;height: 106px;background: #fff;">
-                                                </div>
-                                            </th>
-                                            <th width="10%" colspan="2">抑郁</th>
-                                            <th width="10%" colspan="2">焦虑</th>
-                                            <th width="10%" colspan="2">强迫</th>
-                                            <th width="10%" colspan="2">敌对</th>
-                                            <th width="10%" colspan="2">自我伤害</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th></th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
-                                                <span>重度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
-                                                <span>中度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
-                                                <span>轻度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
-                                                <span>正常</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-
-                                    </table>
-                                    <div class="yy_txt noSplitBox">
-                                        在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
-                                        147
-                                        人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在焦虑维度中，男生正常人数为 100 人（44.3%），轻度问题为104 人（46.0%），中度问题为 13 人（5.8%），重度问题为 9
-                                        人（4.0%）；女生正常人数为
-                                        164
-                                        人（87.7%），轻度问题为 17 人（9.1%），中度问题为 1 人（0.5%），重度问题为 5 人（2.7%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在强迫维度中，男生正常人数为 170 人（75.2%），轻度问题为49 人（21.7%），中度问题为 2 人（0.9%），重度问题为 5
-                                        人（2.2%）；女生正常人数为
-                                        172
-                                        人（92.0%），轻度问题为 13 人（7.0%），中度问题为 0 人（0%），重度问题为 2 人（1.1%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在敌对维度中，男生正常人数为 154 人（68.1%），轻度问题为66 人（29.2%），中度问题为 5 人（2.2%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
-                                        170
-                                        人（90.9%），轻度问题为 13 人（7.0%），中度问题为 4 人（2.1%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在自我伤害维度中，男生正常人数为 179 人（79.2%），轻度问题为 45 人（19.9%），中度问题为 2 人（0.9%），重度问题为 0
-                                        人（0%）；女生正常人数为
-                                        162
-                                        人（86.6%），轻度问题为 25 人（13.4%），中度问题为 0 人（0%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_t" style="text-align: center;margin: 20px 0;">
-                                        {{ item.name }}非直升班不同性别测评情况
-                                    </div>
-                                    <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
-                                        :ref="'myChart32' + index"></div>
-                                    <table cellspacing="0" style="position: relative">
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th width="5%">
-                                                <div
-                                                    style="position: absolute;left: -1px;top: -1px;width: 97px;height: 106px;background: #fff;">
-                                                </div>
-                                            </th>
-                                            <th width="10%" colspan="2">抑郁</th>
-                                            <th width="10%" colspan="2">焦虑</th>
-                                            <th width="10%" colspan="2">强迫</th>
-                                            <th width="10%" colspan="2">敌对</th>
-                                            <th width="10%" colspan="2">自我伤害</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
-                                            <th></th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
-                                                <span>重度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
-                                                <span>中度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
-                                                <span>轻度</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-                                        <tr class="pdf-details noSplitBox">
-                                            <th style="display: flex;align-items: center;justify-content: center">
-                                                <span
-                                                    style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
-                                                <span>正常</span>
-                                            </th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                            <th>男</th>
-                                            <th>女</th>
-                                        </tr>
-
-                                    </table>
-                                    <div class="yy_txt noSplitBox">
-                                        <!-- {{nanTxt}} -->
-                                        在抑郁维度中，；女生正常人数为
-                                        147
-                                        人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在焦虑维度中，男生正常人数为 100 人（44.3%），轻度问题为104 人（46.0%），中度问题为 13 人（5.8%），重度问题为 9
-                                        人（4.0%）；女生正常人数为
-                                        164
-                                        人（87.7%），轻度问题为 17 人（9.1%），中度问题为 1 人（0.5%），重度问题为 5 人（2.7%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在强迫维度中，男生正常人数为 170 人（75.2%），轻度问题为49 人（21.7%），中度问题为 2 人（0.9%），重度问题为 5
-                                        人（2.2%）；女生正常人数为
-                                        172
-                                        人（92.0%），轻度问题为 13 人（7.0%），中度问题为 0 人（0%），重度问题为 2 人（1.1%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在敌对维度中，男生正常人数为 154 人（68.1%），轻度问题为66 人（29.2%），中度问题为 5 人（2.2%），重度问题为 1
-                                        人（0.4%）；女生正常人数为
-                                        170
-                                        人（90.9%），轻度问题为 13 人（7.0%），中度问题为 4 人（2.1%），重度问题为 0 人（0%）。
-                                    </div>
-                                    <div class="yy_txt noSplitBox">
-                                        在自我伤害维度中，男生正常人数为 179 人（79.2%），轻度问题为 45 人（19.9%），中度问题为 2 人（0.9%），重度问题为 0
-                                        人（0%）；女生正常人数为
-                                        162
-                                        人（86.6%），轻度问题为 25 人（13.4%），中度问题为 0 人（0%），重度问题为 0 人（0%）。
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="yy_t mulu_page">
-                                3.{{ index + 2 }}.4 {{ item.name }}重点关注人群名单
-                            </div>
-                            <div class="yy_txt noSplitBox">
-                                说明：重点关注人群名单（共 40 人，占预备年级总人数 9.9%），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
-                            </div>
-                            <div v-if="item.name.indexOf('初中') == -1" class="yy_txt noSplitBox" style="color: #f00;">
-                                {{ item.name }}重点关注人群名单见附件一。
-                            </div>
-                            <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
-                                直升班（初中 1-10 班）重点关注人群名单见附件一。
-                            </div>
-                            <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
-                                非直升班（初中 11-20 班）重点关注人群名单见附件二。
-                            </div>
-                             
-                            
-                        
-                            <!-- <div class="noSplitBox" style="width: 100%;height: 40px;"></div> -->
                         </div>
-                    </div>
-                    <!-- 附录 -->
-                    <div class="yy_box noSplitBox mulu_page">
-                        <div class="yy_o " style="text-align: center;padding: 0 0 20px">
-                            附录：各维度沙盘表现特征
+                        <div class="yy_t noSplitBox" style="text-align: center;margin: 30px 0 10px">
+                            {{ item.name }}各维度重点关注班级
                         </div>
-                        <ul class="j_table">
-                            <li class="pdf-details" style="background: #e9e9e9">
-                                <div class="j_th">心理健康问题</div>
-                                <div class="j_th">表现特征</div>
-                                <div class="j_th" style="justify-content: center;">具体表现</div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;"></div>
-                                <div>空洞与缺失</div>
-                                <div>
-                                    沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">抑郁</div>
-                                <div>主题的单一化</div>
-                                <div>
-                                    沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details">
-                                <!-- <div rowspan="3">抑郁</div> -->
-                                <div style="border-bottom: 1px solid #fff;"></div>
-                                <div>空洞与缺失</div>
-                                <div>
-                                    沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">焦虑</div>
-                                <div>主题的单一化</div>
-                                <div>
-                                    沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details">
-                                <!-- <div rowspan="4">抑郁</div> -->
-                                <div style="border-bottom: 1px solid #fff;margin-bottom: -1px"></div>
-                                <div>空洞与缺失</div>
-                                <div>
-                                    沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div
-                                    style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;vertical-align: bottom;align-items: flex-end;padding-bottom: 16px;">
-                                    强迫</div>
-                                <div>主题的单一化</div>
-                                <div>
-                                    沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
-                                </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details">
-                                <!-- <div rowspan="3">抑郁</div> -->
+                        <table cellspacing="0">
+                            <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                <th>班级</th>
+                                <th>抑郁</th>
+                                <th>焦虑</th>
+                                <th>强迫</th>
+                                <th>敌对</th>
+                                <th>自我伤害</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox" v-for="(itemc, indexc) in item.csList" :key="indexc">
+                                <td v-if="itemc.nameFlag">{{ itemc.name }}</td>
+                                <td v-if="itemc.nameFlag">{{ itemc.depressionPercentage }}%{{
+                                    itemc.depressionPercentage > ChinaCM[0] && itemc.depressionPercentage >
+                                        item.wdList[0].percent ? '*' : '' }}</td>
+                                <td v-if="itemc.nameFlag">{{ itemc.anxietyPercentage }}%{{ itemc.anxietyPercentage >
+                                    ChinaCM[1] && itemc.anxietyPercentage > item.wdList[1].percent ? '*' : '' }}
+                                </td>
+                                <td v-if="itemc.nameFlag">{{ itemc.forcedPercentage }}%{{ itemc.forcedPercentage >
+                                    ChinaCM[2] && itemc.forcedPercentage > item.wdList[2].percent ? '*' : '' }}</td>
+                                <td v-if="itemc.nameFlag">{{ itemc.violencePercentage }}%{{ itemc.violencePercentage
+                                    > ChinaCM[3] && itemc.violencePercentage > item.wdList[3].percent ? '*' : '' }}
+                                </td>
+                                <td v-if="itemc.nameFlag">{{ itemc.suicidePercentage }}%{{ itemc.suicidePercentage >
+                                    ChinaCM[4] & itemc.suicidePercentage > item.wdList[4].percent ? '*' : '' }}</td>
+                            </tr>
 
-                                <div style="border-bottom: 1px solid #fff;"></div>
-                                <div>空洞与缺失</div>
-                                <div>
-                                    沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                        </table>
+                        <div class="yy_biao noSplitBox"
+                            style="text-align: center;margin-top: -30px;margin-bottom: 30px;">
+                            注：加*表示该班检出率同时高于全国常模和年级常模
+                        </div>
+
+                        <div class="noSplitBox" style="width: 100%;height: auto;margin: 30px auto;">
+                            <div class="yy_t mulu_page">
+                                3.{{ index + 2 }}.3 {{ item.name }}不同性别测评情况
+                            </div>
+                            <div v-show="item.name.indexOf('初中') == -1">
+                                <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
+                                    :ref="'myChart3' + index"></div>
+                                <table cellspacing="0" style="position: relative">
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th width="80px" style="position: relative;">
+                                            <div
+                                                style="position: absolute;left: -4px;top: -3px;width: 103%;height: 106px;background: #fff;">
+                                            </div>
+                                        </th>
+                                        <th width="200px" colspan="2">抑郁</th>
+                                        <th width="200px" colspan="2">焦虑</th>
+                                        <th width="200px" colspan="2">强迫</th>
+                                        <th width="200px" colspan="2">敌对</th>
+                                        <th width="200px" colspan="2">自我伤害</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th></th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" v-if="item.gradeNanData && item.gradeNvData">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
+                                            <span>重度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanData[0].severeNum }}</th>
+                                        <th>{{ item.gradeNvData[0].severeNum }}</th>
+                                        <th>{{ item.gradeNanData[1].severeNum }}</th>
+                                        <th>{{ item.gradeNvData[1].severeNum }}</th>
+                                        <th>{{ item.gradeNanData[2].severeNum }}</th>
+                                        <th>{{ item.gradeNvData[2].severeNum }}</th>
+                                        <th>{{ item.gradeNanData[3].severeNum }}</th>
+                                        <th>{{ item.gradeNvData[3].severeNum }}</th>
+                                        <th>{{ item.gradeNanData[4].severeNum }}</th>
+                                        <th>{{ item.gradeNvData[4].severeNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" v-if="item.gradeNanData && item.gradeNvData">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
+                                            <span>中度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanData[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNvData[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNanData[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNvData[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNanData[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNvData[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNanData[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNvData[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNanData[4].moderateNum }}</th>
+                                        <th>{{ item.gradeNvData[4].moderateNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" v-if="item.gradeNanData && item.gradeNvData">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
+                                            <span>轻度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanData[0].mildNum }}</th>
+                                        <th>{{ item.gradeNvData[0].mildNum }}</th>
+                                        <th>{{ item.gradeNanData[1].mildNum }}</th>
+                                        <th>{{ item.gradeNvData[1].mildNum }}</th>
+                                        <th>{{ item.gradeNanData[2].mildNum }}</th>
+                                        <th>{{ item.gradeNvData[2].mildNum }}</th>
+                                        <th>{{ item.gradeNanData[3].mildNum }}</th>
+                                        <th>{{ item.gradeNvData[3].mildNum }}</th>
+                                        <th>{{ item.gradeNanData[4].mildNum }}</th>
+                                        <th>{{ item.gradeNvData[4].mildNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" v-if="item.gradeNanData && item.gradeNvData">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
+                                            <span>正常</span>
+                                        </th>
+                                        <th>{{ item.gradeNanData[0].normalNum }}</th>
+                                        <th>{{ item.gradeNvData[0].normalNum }}</th>
+                                        <th>{{ item.gradeNanData[1].normalNum }}</th>
+                                        <th>{{ item.gradeNvData[1].normalNum }}</th>
+                                        <th>{{ item.gradeNanData[2].normalNum }}</th>
+                                        <th>{{ item.gradeNvData[2].normalNum }}</th>
+                                        <th>{{ item.gradeNanData[3].normalNum }}</th>
+                                        <th>{{ item.gradeNvData[3].normalNum }}</th>
+                                        <th>{{ item.gradeNanData[4].normalNum }}</th>
+                                        <th>{{ item.gradeNvData[4].normalNum }}</th>
+                                    </tr>
+
+                                </table>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNan && item.gradeNv'>
+                                    {{ item.gradeNan[0] }}{{ item.gradeNv[0] }}
                                 </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">敌对</div>
-                                <div>主题的单一化</div>
-                                <div>
-                                    沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNan && item.gradeNv'>
+                                    {{ item.gradeNan[1] }}{{ item.gradeNv[1] }}
                                 </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details noSplitBox">
-                                <!-- <div rowspan="4">抑郁</div> -->
-                                <div style="border-bottom: 1px solid #fff;"></div>
-                                <div>空洞与缺失</div>
-                                <div>
-                                    沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNan && item.gradeNv'>
+                                    {{ item.gradeNan[2] }}{{ item.gradeNv[2] }}
                                 </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div
-                                    style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;vertical-align: bottom;align-items: flex-end;padding-bottom: 16px;">
-                                    自我伤害</div>
-                                <div>主题的单一化</div>
-                                <div>
-                                    沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNan && item.gradeNv'>
+                                    {{ item.gradeNan[3] }}{{ item.gradeNv[3] }}
                                 </div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                            <li class="pdf-details">
-                                <div style="border-top: 1px solid #fff;"></div>
-                                <div>使用封闭与孤立的元素</div>
-                                <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
-                            </li>
-                        </ul>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNan && item.gradeNv'>
+                                    {{ item.gradeNan[4] }}{{ item.gradeNv[4] }}
+                                </div>
+                            </div>
+
+                            <div v-show="item.name.indexOf('初中') != -1">
+
+                                <div class="yy_t" style="text-align: center;margin: 20px 0;">
+                                    {{ item.name }}直升班不同性别测评情况
+                                </div>
+                                <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
+                                    :ref="'myChart31' + index"></div>
+                                <table cellspacing="0" style="position: relative">
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th width="80px" style="position: relative;">
+                                            <div
+                                                style="position: absolute;left: -4px;top: -3px;width: 103%;height: 106px;background: #fff;">
+                                            </div>
+                                        </th>
+                                        <th width="200px" colspan="2">抑郁</th>
+                                        <th width="200px" colspan="2">焦虑</th>
+                                        <th width="200px" colspan="2">强迫</th>
+                                        <th width="200px" colspan="2">敌对</th>
+                                        <th width="200px" colspan="2">自我伤害</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th></th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataz && item.gradeNvDataz">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
+                                            <span>重度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataz[0].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataz[0].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataz[1].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataz[1].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataz[2].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataz[2].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataz[3].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataz[3].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataz[4].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataz[4].severeNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataz && item.gradeNvDataz">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
+                                            <span>中度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataz[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataz[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataz[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataz[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataz[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataz[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataz[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataz[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataz[4].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataz[4].moderateNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataz && item.gradeNvDataz">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
+                                            <span>轻度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataz[0].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataz[0].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataz[1].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataz[1].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataz[2].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataz[2].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataz[3].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataz[3].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataz[4].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataz[4].mildNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataz && item.gradeNvDataz">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
+                                            <span>正常</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataz[0].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataz[0].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataz[1].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataz[1].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataz[2].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataz[2].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataz[3].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataz[3].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataz[4].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataz[4].normalNum }}</th>
+                                    </tr>
+
+                                </table>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanz && item.gradeNvz'>
+                                    {{ item.gradeNanz[0] }}{{ item.gradeNvz[0] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanz && item.gradeNvz'>
+                                    {{ item.gradeNanz[1] }}{{ item.gradeNvz[1] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanz && item.gradeNvz'>
+                                    {{ item.gradeNanz[2] }}{{ item.gradeNvz[2] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanz && item.gradeNvz'>
+                                    {{ item.gradeNanz[3] }}{{ item.gradeNvz[3] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanz && item.gradeNvz'>
+                                    {{ item.gradeNanz[4] }}{{ item.gradeNvz[4] }}
+                                </div>
+                                <div class="yy_t" style="text-align: center;margin: 20px 0;">
+                                    {{ item.name }}非直升班不同性别测评情况
+                                </div>
+                                <div style="width: 100%;height: 500px;margin: 0 auto;" class="myChart"
+                                    :ref="'myChart32' + index"></div>
+                                <table cellspacing="0" style="position: relative">
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th width="80px" style="position: relative;">
+                                            <div
+                                                style="position: absolute;left: -4px;top: -3px;width: 103%;height: 106px;background: #fff;">
+                                            </div>
+                                        </th>
+                                        <th width="200px" colspan="2">抑郁</th>
+                                        <th width="200px" colspan="2">焦虑</th>
+                                        <th width="200px" colspan="2">强迫</th>
+                                        <th width="200px" colspan="2">敌对</th>
+                                        <th width="200px" colspan="2">自我伤害</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
+                                        <th></th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                        <th>男</th>
+                                        <th>女</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataf && item.gradeNvDataf">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FE9D9D"></span>
+                                            <span>重度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataf[0].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataf[0].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataf[1].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataf[1].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataf[2].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataf[2].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataf[3].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataf[3].severeNum }}</th>
+                                        <th>{{ item.gradeNanDataf[4].severeNum }}</th>
+                                        <th>{{ item.gradeNvDataf[4].severeNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataf && item.gradeNvDataf">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #FFDDA0"></span>
+                                            <span>中度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataf[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataf[0].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataf[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataf[1].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataf[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataf[2].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataf[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataf[3].moderateNum }}</th>
+                                        <th>{{ item.gradeNanDataf[4].moderateNum }}</th>
+                                        <th>{{ item.gradeNvDataf[4].moderateNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataf && item.gradeNvDataf">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #8ACBFF"></span>
+                                            <span>轻度</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataf[0].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataf[0].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataf[1].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataf[1].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataf[2].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataf[2].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataf[3].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataf[3].mildNum }}</th>
+                                        <th>{{ item.gradeNanDataf[4].mildNum }}</th>
+                                        <th>{{ item.gradeNvDataf[4].mildNum }}</th>
+                                    </tr>
+                                    <tr class="pdf-details noSplitBox"
+                                        v-if="item.gradeNanDataf && item.gradeNvDataf">
+                                        <th style="display: flex;align-items: center;justify-content: center">
+                                            <span
+                                                style="width: 10px;height: 10px;border-radius: 50%;margin-right: 6px;background: #B5ECAF"></span>
+                                            <span>正常</span>
+                                        </th>
+                                        <th>{{ item.gradeNanDataf[0].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataf[0].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataf[1].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataf[1].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataf[2].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataf[2].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataf[3].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataf[3].normalNum }}</th>
+                                        <th>{{ item.gradeNanDataf[4].normalNum }}</th>
+                                        <th>{{ item.gradeNvDataf[4].normalNum }}</th>
+                                    </tr>
+
+                                </table>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanf && item.gradeNvf'>
+                                    {{ item.gradeNanf[0] }}{{ item.gradeNvf[0] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanf && item.gradeNvf'>
+                                    {{ item.gradeNanf[1] }}{{ item.gradeNvf[1] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanf && item.gradeNvf'>
+                                    {{ item.gradeNanf[2] }}{{ item.gradeNvf[2] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanf && item.gradeNvf'>
+                                    {{ item.gradeNanf[3] }}{{ item.gradeNvf[3] }}
+                                </div>
+                                <div class="yy_txt noSplitBox" v-if='item.gradeNanf && item.gradeNvf'>
+                                    {{ item.gradeNanf[4] }}{{ item.gradeNvf[4] }}
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="yy_t mulu_page">
+                            3.{{ index + 2 }}.4 {{ item.name }}重点关注人群名单
+                        </div>
+                        <div v-if="item.name.indexOf('初中') == -1 && item.gradeObj" class="yy_txt noSplitBox">
+                            说明：重点关注人群名单（共{{ item.gradeObj.gradeRiskNum }}人，占预备年级总人数{{ item.gradeObj.gradeRiskPercent
+                            }}），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
+                        </div>
+                        <div v-if="item.name.indexOf('初中') != -1 && item.gradeObj && item.gradeObjz && item.gradeObjf"
+                            class="yy_txt noSplitBox">
+                            说明：重点关注人群名单（共{{ item.gradeObj.gradeRiskNum }}人，占初中生总人数{{ item.gradeObj.gradeRiskPercent
+                            }}，其中直升班{{ item.gradeObjz.gradeRiskNum }}人，非直升班{{ item.gradeObjf.gradeRiskNum
+                            }}人），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
+                        </div>
+                        <div v-if="item.name.indexOf('初中') == -1" class="yy_txt noSplitBox" style="color: #f00;">
+                            {{ item.name }}重点关注人群名单见附件一。
+                        </div>
+                        <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
+                            直升班（初中 1-10 班）重点关注人群名单见附件一。
+                        </div>
+                        <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
+                            非直升班（初中 11-20 班）重点关注人群名单见附件二。
+                        </div>
+
+
+
                     </div>
-
-                    <!-- <div class="yy_t noSplitBox">
-    （2）各学段各维度检出率：不同学段学生在心理健康问题上表现出不同的特点，焦虑、抑郁在各学段上的问题都比较突出。除焦虑、抑郁问题外，预备年级敌对问题相对突出，初中学段自我伤害比例有所提升，高中学段强迫问题显现。
-</div>
-<div class="yy_t noSplitBox">
-    （3）初中一年级直升与非直升班各维度检出率：初中非直升班相比直升班心理问题更加显著。直升班的心理健康问题检出率的前三位为焦虑（28.0%）、抑郁（21.5%）、强迫（16.7%）；非直升班的心理健康问题检出率的前三位为：焦虑（27.9%）、抑郁（27.2%）、自我伤害（23.7%）。
-</div>
-<div class="yy_t noSplitBox">
-    （4）男女不同性别各维度检出率：相较于女生，男生心理问题更加突出，且呈现更明显的敌对倾向。男生心理健康问题检出率的前三位为焦虑（45.4%）、抑郁（29.0%）和敌对（25.6%）；女生心理健康问题检出率的前三位为抑郁（18.9%）、自我伤害（16.7%）和焦虑（16.4%）。
-</div> -->
-                    <!-- </div> -->
-
-                    <!-- <p class="noSplitBox mulu" style="height: 100px;">目录</p>
-<p class="noSplitBox" style="height: 40px;">目录</p>
-<p class="noSplitBox" style="height: 40px;">目录</p>
-<p class="noSplitBox" style="height: 40px;">目录</p>
-<p class="noSplitBox" style="height: 40px;">目录</p>
-<p class="noSplitBox" style="height: 40px;">目录</p> -->
-
-                    <!-- <div class="noSplitBox mulu" style="height: 800px;background: #f00;">1</div>
-<div class="noSplitBox mulu" style="height: 800px;background: #f00;">2</div>
-<div class="noSplitBox mulu" style="height: 800px;background: #f00;">3</div> -->
-
-                    <!-- <div class="list noSplitBox" v-for="(item, index) in 100">111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}
-</div>
-<div class="noSplitBox mulu_page">12313213</div>
-<div class="list noSplitBox" v-for="(item, index) in 100">111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index }}111111---{{ index
-}}111111---{{ index }}
-</div>
-<div class="noSplitBox mulu_page">12313213</div>
-<table class="mulu_page" cellspacing="0" cellpadding="30">
-<tr class="pdf-details noSplitBox">
-    <th style="width:80px">日期</th>
-    <th style="width:100px">姓名</th>
-    <th>地址</th>
-</tr>
-<tr v-for="(item, index) in tableData" :key="index" class="pdf-details noSplitBox">
-    <td>{{ item.date }}</td>
-    <td>{{ item.name }}</td>
-    <td>{{ item.address }}</td>
-</tr>
-</table>
-<div class="noSplitBox mulu_page">12313213</div> -->
-
-
-
-
-
-
                 </div>
+                <!-- 附录 -->
+                <div class="yy_box noSplitBox mulu_page">
+                    <div class="yy_o " style="text-align: center;padding: 0 0 20px">
+                        附录：各维度沙盘表现特征
+                    </div>
+                    <ul class="j_table">
+                        <li class="pdf-details" style="background: #e9e9e9">
+                            <div class="j_th">心理健康问题</div>
+                            <div class="j_th">表现特征</div>
+                            <div class="j_th" style="justify-content: center;">具体表现</div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;"></div>
+                            <div>空洞与缺失</div>
+                            <div>
+                                沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">抑郁</div>
+                            <div>主题的单一化</div>
+                            <div>
+                                沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;"></div>
+                            <div>空洞与缺失</div>
+                            <div>
+                                沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">焦虑</div>
+                            <div>主题的单一化</div>
+                            <div>
+                                沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;margin-bottom: -1px"></div>
+                            <div>空洞与缺失</div>
+                            <div>
+                                沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div
+                                style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;vertical-align: bottom;align-items: flex-end;padding-bottom: 16px;">
+                                强迫</div>
+                            <div>主题的单一化</div>
+                            <div>
+                                沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details">
+
+                            <div style="border-bottom: 1px solid #fff;"></div>
+                            <div>空洞与缺失</div>
+                            <div>
+                                沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;">敌对</div>
+                            <div>主题的单一化</div>
+                            <div>
+                                沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details noSplitBox">
+                            <div style="border-bottom: 1px solid #fff;"></div>
+                            <div>空洞与缺失</div>
+                            <div>
+                                沙盘中可能会有意留出大片空白区域，这可能象征着患者内心深处的空虚感或缺失感。沙盘作品中可能会出现大量暗淡的颜色，如灰色、黑色，或者完全避免使用颜色，选择无色或自然色的沙具，这反映了他们内心的灰暗和缺乏活力。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div
+                                style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;vertical-align: bottom;align-items: flex-end;padding-bottom: 16px;">
+                                自我伤害</div>
+                            <div>主题的单一化</div>
+                            <div>
+                                沙盘作品的主题可能非常单一，缺乏多样性，表现出患者对外界兴趣的减少和活动范围的缩小。沙盘中可能出现死亡、疾病、孤独等消极情景，如枯萎的植物、空荡荡的房屋、孤独的人物等，这些都是抑郁情绪的象征。沙盘中自然元素（如树木、河流、花朵）的缺失，可能表示个体与自然的联系减弱，感受不到生命的力量和支持。
+                            </div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-bottom: 1px solid #fff;border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                        <li class="pdf-details">
+                            <div style="border-top: 1px solid #fff;"></div>
+                            <div>使用封闭与孤立的元素</div>
+                            <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+
+
+
             </div>
-            <!-- 导出团体报告 -->
-            <el-dialog class="fix_pass fix_pass3" :close-on-click-modal="false" title="导出团体报告"
-                :visible.sync="dialogPartFrame">
-                <el-form ref="partsForm" :model="partsForm">
-
-                    <el-form-item label="学校名称：">
-                        <el-input disabled v-model="schoolName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="报告名称：">
-                        <el-input v-model="reportName" placeholder="请输入报告名称（例：**年秋季学期）"></el-input>
-                        <!-- <div style="width:4rem;height:0.36rem"></div> -->
-                        <div class="tip_left" v-show="reportFlag">
-                            <div class="tip_msg">
-                                <img src="../../assets/images/x.png" alt="" />
-                                报告名称不能为空
-                            </div>
-                        </div>
-                    </el-form-item>
-
-                    <el-form-item required class="time_data" label="测评时间段:">
-                        <el-date-picker v-model="partsForm.time" type="daterange" range-separator="~"
-                            start-placeholder="开始日期" end-placeholder="结束日期" @change="timeChange">
-                        </el-date-picker>
-                        <div class="tip_left" v-show="pTimeFlag">
-                            <div class="tip_msg">
-                                <img src="../../assets/images/x.png" alt="" />
-                                请选择测评时间段
-                            </div>
-                        </div>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="partsSub">下 载</el-button>
-                    <el-button @click="dialogPartFrame = false">取 消</el-button>
-                </div>
-            </el-dialog>
         </div>
+
+
+        <!-- 导出团体报告 -->
+        <el-dialog class="fix_pass fix_pass3" :close-on-click-modal="false" title="导出团体报告"
+            :visible.sync="dialogPartFrame">
+            <el-form ref="partsForm" :model="partsForm">
+
+                <el-form-item label="学校名称：">
+                    <el-input disabled v-model="schoolName"></el-input>
+                </el-form-item>
+                <el-form-item label="报告名称：">
+                    <el-input v-model="reportName" placeholder="请输入报告名称（例：**年秋季学期）"></el-input>
+                    <div class="tip_left" v-show="reportFlag">
+                        <div class="tip_msg">
+                            <img src="../../assets/images/x.png" alt="" />
+                            报告名称不能为空
+                        </div>
+                    </div>
+                </el-form-item>
+
+                <el-form-item required class="time_data" label="测评时间段:">
+                    <el-date-picker v-model="partsForm.time" type="daterange" range-separator="~"
+                        start-placeholder="开始日期" end-placeholder="结束日期" @change="timeChange">
+                    </el-date-picker>
+                    <div class="tip_left" v-show="pTimeFlag">
+                        <div class="tip_msg">
+                            <img src="../../assets/images/x.png" alt="" />
+                            请选择测评时间段
+                        </div>
+                    </div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="partsSub">下 载</el-button>
+                <el-button @click="dialogPartFrame = false">取 消</el-button>
+            </div>
+        </el-dialog>
+        <div class="group-class" style="margin: 50px auto;" v-for="(item, index) in gradeFjList" :key="index">
+            <div class="group_box" :id="'overviewpage' + index">
+
+                <div class="yy_box basic_box">
+                    <!-- <div :class="'noSplitBox' + index">
+                        <div class="yy_o" style="text-align: center;padding: 10px 0 15px">
+                            {{ item.pdfName }}
+                        </div>
+                    </div> -->
+
+                    <table cellspacing="0" style="margin-bottom: 0;">
+                        <tr :class="'noSplitBox' + index" style="background: #e9e9e9">
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>学号</th>
+                            <th>性别</th>
+                            <th>班级</th>
+                            <th>抑郁</th>
+                            <th>焦虑</th>
+                            <th>强迫</th>
+                            <th>敌对</th>
+                            <th>自我伤害</th>
+                            <th>沙具总数量较少</th>
+                            <th>用时较短</th>
+                        </tr>
+                        <tr v-for="(itemr, indexr) in item.reportInfoList" :key="indexr"
+                            :class="'noSplitBox' + index">
+                            <td>{{ itemr.id }}</td>
+                            <td>{{ itemr.name }}</td>
+                            <td>{{ itemr.passport }}</td>
+                            <td>{{ itemr.gender }}</td>
+                            <td>{{ itemr.departmentName }}</td>
+                            <td>{{ itemr.depressionLevel }}</td>
+                            <td>{{ itemr.anxietyLevel }}</td>
+                            <td>{{ itemr.forcedLevel }}</td>
+                            <td>{{ itemr.violenceLevel }}</td>
+                            <td>{{ itemr.suicideLevel }}</td>
+                            <td>{{ itemr.accountState }}</td>
+                            <td>{{ itemr.duringTime }}</td>
+                        </tr>
+                        
+                        
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
 </template>
 <script>
@@ -2847,12 +2807,26 @@ const Url = 'http://36.110.172.217:11008'
 export default {
     data() {
         return {
+            gradeFjList: [
+                {
+                    reportInfoList: []
+                },
+                {
+                    reportInfoList: []
+                },
+                {
+                    reportInfoList: []
+                },
+                {
+                    reportInfoList: []
+                }
+            ],
             allTxtZs3: '',
             zsClassWd: [],
             fzsClassWd: [],
-            cmCha: [0,0,0,0,0],
-            schoolCM: [0,0,0,0,0],
-            ChinaCM: [19.9,29.8,17.3,20.2,21.9],
+            cmCha: [0, 0, 0, 0, 0],
+            schoolCM: [0, 0, 0, 0, 0],
+            ChinaCM: [19.9, 29.8, 17.3, 20.2, 21.9],
             wdJcListArr: [
                 {
                     name: '抑郁',
@@ -2885,7 +2859,7 @@ export default {
                     severeProportion: 0,
                 },
             ],
-            detail:{
+            detail: {
                 yyQg: 19.9,
                 jlQg: 29.8,
                 qpQg: 17.3,
@@ -2907,11 +2881,11 @@ export default {
                 womanOrgs: [],
                 zsFlag: false,
                 txtStr: '',
-                txtStr52:'',
-                txtStr51:'',
+                txtStr52: '',
+                txtStr51: '',
                 gradeListOrg: [],
                 gradeTxtOrg: '',
-                schoolList:[],
+                schoolList: [],
                 gradeList: [],
                 totalClasses: '',
                 totalStudents: '',
@@ -2919,7 +2893,7 @@ export default {
                 femaleStudents: '',
                 maleStudentsPre: '',
                 femaleStudentsPre: '',
-                yuBei:{
+                yuBei: {
 
                 },
                 chuZhong: {
@@ -2945,7 +2919,118 @@ export default {
             part7: false,
             part8: false,
             part9: false,
+            part91: false,
+            part92: false,
             part10: false,
+            part101: false,
+            part102: false,
+            part11: false,
+            part121: false,
+            part122: false,
+            part131: false,
+            part132: false,
+            part140: false,
+            part141: false,
+            part142: false,
+            part143: false,
+            part144: false,
+            part145: false,
+            anliList0: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
+            anliList1: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
+            anliList2: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
+            anliList3: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
+            anliList4: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
+            anliList5: [
+                {
+                    id: '',
+                    ids: '',
+                    name: '',
+                    bireView: '',
+                    txt1: '',
+                    list: [
+                        {
+                            title: '',
+                            txt: ''
+                        }
+                    ],
+                    txt2: ''
+                }
+            ],
 
 
             partList: {},
@@ -3719,7 +3804,7 @@ export default {
                     id: 1,
                     ids: '',
                     name: '正常',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的中间是一条河流和一座桥，左侧布置了山和房屋，右侧则是一些植物和人。整个沙盘中还在下雨。这种配置表明来访者创造了一个既有自然元素（雨、河流、山、植物），又有生活设施（房屋）和人际互动（人）的场景。',
                     list: [
                         {
@@ -3752,7 +3837,7 @@ export default {
                 {
                     id: 2,
                     name: '正常',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的左侧布置了房屋，象征稳定和家庭生活。中间是一条河流，河上有桥，连接两岸。河对岸则是树木，象征自然和生长。这种配置表明来访者在沙盘中创造了一个从家庭到自然的过渡场景。',
                     list: [
                         {
@@ -3780,7 +3865,7 @@ export default {
                 {
                     id: 1,
                     name: '轻度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的四周布置了各种家具，而中间区域是空的。这种配置表明来访者创造了一个以家庭和日常生活为中心的场景，但中心区域留白，显示出某种空白或未填充的空间。',
                     list: [
                         {
@@ -3797,7 +3882,7 @@ export default {
                 {
                     id: 2,
                     name: '重度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘被河流分割成几块陆地，每块陆地上都布置了高山。这种配置表明来访者创造了一个由自然元素（河流和高山）构成的场景，每块陆地都被高山占据，而河流作为分隔线将这些陆地分开。',
                     list: [
                         {
@@ -3821,7 +3906,7 @@ export default {
                 {
                     id: 1,
                     name: '轻度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的四周被高山环绕，中间是一个湖泊，湖泊周围布置了各种动物和一些军事设施。这种配置表明来访者创造了一个封闭且中心化的环境，高山作为边界，湖泊作为核心，动物和军事设施围绕在湖泊周围。',
                     list: [
                         {
@@ -3846,7 +3931,7 @@ export default {
                 {
                     id: 2,
                     name: '重度',
-                    img: '',
+                    bireView: '',
                     txt1: '在沙盘中，左侧放置了一些残缺的肢体和眼球，中部有一个骷髅、大脑和心脏，周围是一些山围成的湖，右侧则是骷髅和修女。这种配置表明来访者可能在表达一种从创伤到内心深处再到某种精神或宗教层面的转变。',
                     list: [
                         {
@@ -3878,7 +3963,7 @@ export default {
                 {
                     id: 1,
                     name: '轻度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘中央的河流将教堂和寺庙分隔在左右两侧，显示出一种有意识的分割，象征了来访者在不同精神信仰或文化间的内心划分。这种分隔并非极端的隔绝，而是通过桥梁保持了一种连接的可能性，说明来访者在追求分隔的同时，也希望不同的内心需求能够沟通和协同。这种安排显示出其对秩序的需求 ，但没有达到极端的程度，仅是象征性的分隔，符合轻度强迫表现。',
                     list: [
                         {
@@ -3907,7 +3992,7 @@ export default {
                 {
                     id: 2,
                     name: '重度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘左下角的高山和西游记的师徒四人，以及左上角和右下角分别放置的佛祖和菩萨，显示出一种控制和特定的象征组合。这些象征物并未随意分布，而是被安排在特定角落并以特定关系呈现，反映出一种强迫性的象征排列。',
                     list: [
                         {
@@ -3931,7 +4016,7 @@ export default {
                 {
                     id: 1,
                     name: '轻度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的左侧放置了水和船只，这可能象征着情感、流动性和探索未知的旅程。中部布置了坦克和士兵，显示出一种冲突或战斗的状态。右侧则是堡垒和士兵，代表防御和安全。',
                     list: [
                         {
@@ -3956,7 +4041,7 @@ export default {
                 {
                     id: 2,
                     name: '重度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘中的河流将空间划分成多个陆地，象征着分离和界限。这种分割不仅表明了来访者在生活中感受到的隔阂或障碍，还暗示了他对不同情境或人际关系的警惕与防备。每块陆地上都布置了士兵和军事设施，这表明来访者在不同领域都感受到威胁与压力。他的沙盘配置显示出他对保护和防御的强烈需求，反映了他内心深处的焦虑和紧张。',
                     list: [
                         {
@@ -3976,7 +4061,7 @@ export default {
                 {
                     id: 1,
                     name: '轻度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘中零星分布着一些人，这些人姿态各异，分布在不同的位置。这种配置表明来访者创造了一个以人际关系和社会互动为中心的场景，每个人物的姿态和位置都有其特定的意义。',
                     list: [
                         {
@@ -3997,7 +4082,7 @@ export default {
                 {
                     id: 2,
                     name: '中度',
-                    img: '',
+                    bireView: '',
                     txt1: '沙盘的四角分别放置了头骨、大脑和心脏，中央则是一个骷髅。这种配置表明来访者创造了一个以象征死亡和生命核心元素为中心的场景，每个角落的元素都具有重要的象征意义。',
                     list: [
                         {
@@ -4149,7 +4234,8 @@ export default {
     },
     computed: {
         bindmodel() {
-            const { part1, part2, part3, part4, part5, part6, part7, part8, part9, part10 } = this;
+
+            const { part1, part2, part3, part4, part5, part6, part7, part8, part9, part91, part92, part10, part101, part102, part11, part121, part122, part131, part132, part140, part141, part142, part143, part144, part145 } = this;
             return {
                 part1,
                 part2,
@@ -4160,7 +4246,22 @@ export default {
                 part7,
                 part8,
                 part9,
-                part10
+                part91,
+                part92,
+                part10,
+                part101,
+                part102,
+                part11,
+                part121,
+                part122,
+                part131,
+                part132,
+                part140,
+                part141,
+                part142,
+                part143,
+                part144,
+                part145
             };
         }
     },
@@ -4177,8 +4278,24 @@ export default {
                 this.part7 = newVal.part7;
                 this.part8 = newVal.part8;
                 this.part9 = newVal.part9;
+                this.part91 = newVal.part91;
+                this.part92 = newVal.part92;
                 this.part10 = newVal.part10;
-                if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8&& this.part9 && this.part10) {
+                this.part101 = newVal.part101;
+                this.part102 = newVal.part102;
+                this.part11 = newVal.part11;
+                this.part121 = newVal.part121;
+                this.part122 = newVal.part122;
+                this.part131 = newVal.part131;
+                this.part132 = newVal.part132;
+                this.part140 = newVal.part140;
+                this.part141 = newVal.part141;
+                this.part142 = newVal.part142;
+                this.part143 = newVal.part143;
+                this.part144 = newVal.part144;
+                this.part145 = newVal.part145;
+                
+                if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8 && this.part9 && this.part91 && this.part92 && this.part10 && this.part101 && this.part102 && this.part11 && this.part121 && this.part122 && this.part131 && this.part132 && this.part140 && this.part141 && this.part142&& this.part143 && this.part144 && this.part145) {
                     this.part1 = false;
                     this.part2 = false;
                     this.part3 = false;
@@ -4188,20 +4305,74 @@ export default {
                     this.part7 = false;
                     this.part8 = false;
                     this.part9 = false;
+                    this.part91 = false;
+                    this.part92 = false;
                     this.part10 = false;
+                    this.part101 = false;
+                    this.part102 = false;
+                    this.part11 = false;
+                    this.part121 = false;
+                    this.part122 = false;
+                    this.part131 = false;
+                    this.part132 = false;
+
+                    this.part140 = false;
+                    this.part141 = false;
+                    this.part142 = false;
+                    this.part143 = false;
+                    this.part144 = false;
+                    this.part145 = false;
                     this.loading.close();
                     console.log(this.gradeAllList)
-                   
+                    console.log(this.gradeFjList)
+
                     this.echartInit()
-                    // this.loading = this.$loading({
-                    //     lock: true,
-                    //     text: "报告生成中",
-                    //     spinner: "el-icon-loading",
-                    //     background: "rgba(0, 0, 0, 0.7)"
-                    // });
-                    // setTimeout(() => {
-                    //     this.handleExport()
-                    // }, 100);
+                    this.loading = this.$loading({
+                        lock: true,
+                        text: "报告生成中",
+                        spinner: "el-icon-loading",
+                        background: "rgba(0, 0, 0, 0.7)"
+                    });
+                    setTimeout(() => {
+                        this.handleExport()
+                        setTimeout(() => {
+                            for (let i in this.gradeFjList) {
+                                let name = ''
+                                if (this.gradeFjList[i].code == 'X') {
+
+                                    name = '预备年级重点关注人群名单见附件一'
+                                    // this.gradeFjList[i].name = name
+                                }
+                                if (this.gradeFjList[i].code == 'G') {
+                                    name = '高中一年级年级重点关注人群名单见附件一'
+                                    // this.gradeFjList[i].name = name
+                                }
+                                if (this.gradeFjList[i].code == 'C') {
+                                    if (this.gradeFjList[i].isUpgrade == 1) {
+                                        name = '直升班（初中 1-10 班）重点关注人群名单见附件一'
+
+                                    }
+                                    if (this.gradeFjList[i].isUpgrade == 2) {
+                                        name = '非直升班（初中 11-20 班）重点关注人群名单见附件二'
+                                    }
+                                }
+                                this.gradeFjList[i].pdfName = name
+                                this.$forceUpdate()
+                                let id = "#overviewpage" + i
+                                let pdf = new PdfLoader(
+                                    document.querySelector(id),
+                                    name,
+                                    "noSplitBox" + i,
+                                    this.loading
+                                );
+                                // this.muluPage = pdf.muluPage
+                                pdf.outPutPdfFn();
+                            }
+                        }, 2000);
+
+
+
+                    }, 100);
 
 
                 } else {
@@ -4511,12 +4682,12 @@ export default {
                                 // position: 'top', // 在顶部显示
                                 formatter: (params) => params.value + '%'
                             }
-                            
+
                         },
                         emphasis: {
                             focus: 'series'
                         },
-                        
+
                         data: lv41.reverse()
                     },
                     {
@@ -4639,13 +4810,15 @@ export default {
             });
 
             for (let i in this.gradeAllList) {
-                if (this.gradeAllList[i].name.indexOf('初中') != '-1') {
+                if (this.gradeAllList[i].name.indexOf('初中') != -1) {
+                    console.log('初中')
+                    console.log(this.gradeAllList[i])
                     let zsData = []
-                    for( let i in this.zsClassWd) {
+                    for (let i in this.zsClassWd) {
                         zsData.push(this.zsClassWd[i].percentage)
                     }
                     let fzsData = []
-                    for( let i in this.fzsClassWd) {
+                    for (let i in this.fzsClassWd) {
                         fzsData.push(this.fzsClassWd[i].percentage)
                     }
                     // 直升与非直升学生心理健康问题检出率分布图
@@ -4732,14 +4905,14 @@ export default {
 
                     // 直升
                     const rawData1 = [
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8]
+                        [this.gradeAllList[i].gradeNanDataz[0].normalNum, this.gradeAllList[i].gradeNanDataz[1].normalNum, this.gradeAllList[i].gradeNanDataz[2].normalNum, this.gradeAllList[i].gradeNanDataz[3].normalNum, this.gradeAllList[i].gradeNanDataz[4].normalNum],
+                        [this.gradeAllList[i].gradeNanDataz[0].mildNum, this.gradeAllList[i].gradeNanDataz[1].mildNum, this.gradeAllList[i].gradeNanDataz[2].mildNum, this.gradeAllList[i].gradeNanDataz[3].mildNum, this.gradeAllList[i].gradeNanDataz[4].mildNum],
+                        [this.gradeAllList[i].gradeNanDataz[0].moderateNum, this.gradeAllList[i].gradeNanDataz[1].moderateNum, this.gradeAllList[i].gradeNanDataz[2].moderateNum, this.gradeAllList[i].gradeNanDataz[3].moderateNum, this.gradeAllList[i].gradeNanDataz[4].moderateNum],
+                        [this.gradeAllList[i].gradeNanDataz[0].severeNum, this.gradeAllList[i].gradeNanDataz[1].severeNum, this.gradeAllList[i].gradeNanDataz[2].severeNum, this.gradeAllList[i].gradeNanDataz[3].severeNum, this.gradeAllList[i].gradeNanDataz[4].severeNum],
+                        [this.gradeAllList[i].gradeNvDataz[0].normalNum, this.gradeAllList[i].gradeNvDataz[1].normalNum, this.gradeAllList[i].gradeNvDataz[2].normalNum, this.gradeAllList[i].gradeNvDataz[3].normalNum, this.gradeAllList[i].gradeNvDataz[4].normalNum],
+                        [this.gradeAllList[i].gradeNvDataz[0].mildNum, this.gradeAllList[i].gradeNvDataz[1].mildNum, this.gradeAllList[i].gradeNvDataz[2].mildNum, this.gradeAllList[i].gradeNvDataz[3].mildNum, this.gradeAllList[i].gradeNvDataz[4].mildNum],
+                        [this.gradeAllList[i].gradeNvDataz[0].moderateNum, this.gradeAllList[i].gradeNvDataz[1].moderateNum, this.gradeAllList[i].gradeNvDataz[2].moderateNum, this.gradeAllList[i].gradeNvDataz[3].moderateNum, this.gradeAllList[i].gradeNvDataz[4].moderateNum],
+                        [this.gradeAllList[i].gradeNvDataz[0].severeNum, this.gradeAllList[i].gradeNvDataz[1].severeNum, this.gradeAllList[i].gradeNvDataz[2].severeNum, this.gradeAllList[i].gradeNvDataz[3].severeNum, this.gradeAllList[i].gradeNvDataz[4].severeNum]
                     ];
                     const totalData1 = [];
                     for (let i = 0; i < rawData1[0].length; ++i) {
@@ -4816,14 +4989,14 @@ export default {
 
                     // 非直升
                     const rawData2 = [
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8],
-                        [1, 2, 3, 4, 5, 6, 7, 8]
+                        [this.gradeAllList[i].gradeNanDataf[0].normalNum, this.gradeAllList[i].gradeNanDataf[1].normalNum, this.gradeAllList[i].gradeNanDataf[2].normalNum, this.gradeAllList[i].gradeNanDataf[3].normalNum, this.gradeAllList[i].gradeNanDataf[4].normalNum],
+                        [this.gradeAllList[i].gradeNanDataf[0].mildNum, this.gradeAllList[i].gradeNanDataf[1].mildNum, this.gradeAllList[i].gradeNanDataf[2].mildNum, this.gradeAllList[i].gradeNanDataf[3].mildNum, this.gradeAllList[i].gradeNanDataf[4].mildNum],
+                        [this.gradeAllList[i].gradeNanDataf[0].moderateNum, this.gradeAllList[i].gradeNanDataf[1].moderateNum, this.gradeAllList[i].gradeNanDataf[2].moderateNum, this.gradeAllList[i].gradeNanDataf[3].moderateNum, this.gradeAllList[i].gradeNanDataf[4].moderateNum],
+                        [this.gradeAllList[i].gradeNanDataf[0].severeNum, this.gradeAllList[i].gradeNanDataf[1].severeNum, this.gradeAllList[i].gradeNanDataf[2].severeNum, this.gradeAllList[i].gradeNanDataf[3].severeNum, this.gradeAllList[i].gradeNanDataf[4].severeNum],
+                        [this.gradeAllList[i].gradeNvDataf[0].normalNum, this.gradeAllList[i].gradeNvDataf[1].normalNum, this.gradeAllList[i].gradeNvDataf[2].normalNum, this.gradeAllList[i].gradeNvDataf[3].normalNum, this.gradeAllList[i].gradeNvDataf[4].normalNum],
+                        [this.gradeAllList[i].gradeNvDataf[0].mildNum, this.gradeAllList[i].gradeNvDataf[1].mildNum, this.gradeAllList[i].gradeNvDataf[2].mildNum, this.gradeAllList[i].gradeNvDataf[3].mildNum, this.gradeAllList[i].gradeNvDataf[4].mildNum],
+                        [this.gradeAllList[i].gradeNvDataf[0].moderateNum, this.gradeAllList[i].gradeNvDataf[1].moderateNum, this.gradeAllList[i].gradeNvDataf[2].moderateNum, this.gradeAllList[i].gradeNvDataf[3].moderateNum, this.gradeAllList[i].gradeNvDataf[4].moderateNum],
+                        [this.gradeAllList[i].gradeNvDataf[0].severeNum, this.gradeAllList[i].gradeNvDataf[1].severeNum, this.gradeAllList[i].gradeNvDataf[2].severeNum, this.gradeAllList[i].gradeNvDataf[3].severeNum, this.gradeAllList[i].gradeNvDataf[4].severeNum]
                     ];
                     const totalData2 = [];
                     for (let i = 0; i < rawData2[0].length; ++i) {
@@ -4900,7 +5073,7 @@ export default {
                 }
                 // 雷达图
                 // this['myChart1' + i] = null
-                let plist =  this.gradeAllList[i].wdList
+                let plist = this.gradeAllList[i].wdList
                 let pArr = []
                 for (let i in plist) {
                     pArr.push(plist[i].percent)
@@ -4940,7 +5113,7 @@ export default {
                             data: [
                                 {
                                     value: pArr,
-                                    name:  this.gradeAllList[i].name,
+                                    name: this.gradeAllList[i].name,
                                     label: {
                                         show: true
                                     }
@@ -4964,88 +5137,93 @@ export default {
                     ]
                 });
                 // 维度和性别
-                const rawData = [
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8],
-                    [1, 2, 3, 4, 5, 6, 7, 8]
-                ];
-                const totalData = [];
-                for (let i = 0; i < rawData[0].length; ++i) {
-                    let sum = 0;
-                    for (let j = 0; j < rawData.length; ++j) {
-                        sum += rawData[j][i];
-                    }
-                    console.log(sum)
-                    totalData.push(sum);
-                }
-                console.log(totalData)
-                const grid = {
-                    left: 100,
-                    right: 0,
-                    top: 50,
-                    bottom: 20
-                };
-                const series = [
-                    '男-正常',
-                    '男-轻度',
-                    '男-中度',
-                    '男-重度',
-                    '女-正常',
-                    '女-轻度',
-                    '女-中度',
-                    '女-重度',
-                ].map((name, sid) => {
-                    return {
-                        name,
-                        type: 'bar',
-                        stack: sid < 4 ? 'total' : "Ad",
-                        barWidth: 20,
-                        barGap: 1,
-                        label: {
-                            show: true,
-                            // formatter: (params) => Math.round(params.value * 1000) / 10 + '%'
-                        },
-                        data: rawData[sid]
-                    };
-                });
-                let xName = 'myChart3' + i
-                this[xName] = echarts.init(this.$refs[xName][0]);
-                console.log(this[xName]);
-                this[xName].setOption({
-                    color: ['#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D', '#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D'],
-                    legend: {
-                        show: false,
-                        selectedMode: false
-                    },
-                    grid,
-                    yAxis: {
-                        type: 'value',
-                        splitLine: {
-                            show: false // 不显示网格线
+                if (this.gradeAllList[i].name.indexOf('初中') == -1) {
+                    console.log(this.gradeAllList[i].name)
+                    console.log(this.gradeAllList[i])
+                    const rawData = [
+                        [this.gradeAllList[i].gradeNanData[0].normalNum, this.gradeAllList[i].gradeNanData[1].normalNum, this.gradeAllList[i].gradeNanData[2].normalNum, this.gradeAllList[i].gradeNanData[3].normalNum, this.gradeAllList[i].gradeNanData[4].normalNum],
+                        [this.gradeAllList[i].gradeNanData[0].mildNum, this.gradeAllList[i].gradeNanData[1].mildNum, this.gradeAllList[i].gradeNanData[2].mildNum, this.gradeAllList[i].gradeNanData[3].mildNum, this.gradeAllList[i].gradeNanData[4].mildNum],
+                        [this.gradeAllList[i].gradeNanData[0].moderateNum, this.gradeAllList[i].gradeNanData[1].moderateNum, this.gradeAllList[i].gradeNanData[2].moderateNum, this.gradeAllList[i].gradeNanData[3].moderateNum, this.gradeAllList[i].gradeNanData[4].moderateNum],
+                        [this.gradeAllList[i].gradeNanData[0].severeNum, this.gradeAllList[i].gradeNanData[1].severeNum, this.gradeAllList[i].gradeNanData[2].severeNum, this.gradeAllList[i].gradeNanData[3].severeNum, this.gradeAllList[i].gradeNanData[4].severeNum],
+                        [this.gradeAllList[i].gradeNvData[0].normalNum, this.gradeAllList[i].gradeNvData[1].normalNum, this.gradeAllList[i].gradeNvData[2].normalNum, this.gradeAllList[i].gradeNvData[3].normalNum, this.gradeAllList[i].gradeNvData[4].normalNum],
+                        [this.gradeAllList[i].gradeNvData[0].mildNum, this.gradeAllList[i].gradeNvData[1].mildNum, this.gradeAllList[i].gradeNvData[2].mildNum, this.gradeAllList[i].gradeNvData[3].mildNum, this.gradeAllList[i].gradeNvData[4].mildNum],
+                        [this.gradeAllList[i].gradeNvData[0].moderateNum, this.gradeAllList[i].gradeNvData[1].moderateNum, this.gradeAllList[i].gradeNvData[2].moderateNum, this.gradeAllList[i].gradeNvData[3].moderateNum, this.gradeAllList[i].gradeNvData[4].moderateNum],
+                        [this.gradeAllList[i].gradeNvData[0].severeNum, this.gradeAllList[i].gradeNvData[1].severeNum, this.gradeAllList[i].gradeNvData[2].severeNum, this.gradeAllList[i].gradeNvData[3].severeNum, this.gradeAllList[i].gradeNvData[4].severeNum]
+                    ];
+                    const totalData = [];
+                    for (let i = 0; i < rawData[0].length; ++i) {
+                        let sum = 0;
+                        for (let j = 0; j < rawData.length; ++j) {
+                            sum += rawData[j][i];
                         }
-                    },
-                    xAxis: {
-                        axisLabel: {
+                        console.log(sum)
+                        totalData.push(sum);
+                    }
+                    console.log(totalData)
+                    const grid = {
+                        left: 100,
+                        right: 0,
+                        top: 50,
+                        bottom: 20
+                    };
+                    const series = [
+                        '男-正常',
+                        '男-轻度',
+                        '男-中度',
+                        '男-重度',
+                        '女-正常',
+                        '女-轻度',
+                        '女-中度',
+                        '女-重度',
+                    ].map((name, sid) => {
+                        return {
+                            name,
+                            type: 'bar',
+                            stack: sid < 4 ? 'total' : "Ad",
+                            barWidth: 20,
+                            barGap: 1,
+                            label: {
+                                show: true,
+                                // formatter: (params) => Math.round(params.value * 1000) / 10 + '%'
+                            },
+                            data: rawData[sid]
+                        };
+                    });
+                    let xName = 'myChart3' + i
+                    this[xName] = echarts.init(this.$refs[xName][0]);
+                    console.log(this[xName]);
+                    this[xName].setOption({
+                        color: ['#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D', '#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D'],
+                        legend: {
                             show: false,
-                            fontSize: 14,
-                            color: "#333E75"
+                            selectedMode: false
                         },
-                        axisTick: {
-                            show: false // 不显示坐标轴刻度线
+                        grid,
+                        yAxis: {
+                            type: 'value',
+                            splitLine: {
+                                show: false // 不显示网格线
+                            }
                         },
-                        axisLine: {
-                            show: false, // 不显示坐标轴线
+                        xAxis: {
+                            axisLabel: {
+                                show: false,
+                                fontSize: 14,
+                                color: "#333E75"
+                            },
+                            axisTick: {
+                                show: false // 不显示坐标轴刻度线
+                            },
+                            axisLine: {
+                                show: false, // 不显示坐标轴线
+                            },
+                            type: 'category',
+                            data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害']
                         },
-                        type: 'category',
-                        data: ['抑郁', '焦虑', '强迫', '敌对', '自我伤害']
-                    },
-                    series
-                });
+                        series
+                    });
+                }
+
 
 
 
@@ -5054,11 +5232,11 @@ export default {
                 for (let j in wdList) {
                     let className = []
                     let classPercent = []
-                    for(let k in this.gradeAllList[i].cwdList[j]) {
+                    for (let k in this.gradeAllList[i].cwdList[j]) {
                         className.push(this.gradeAllList[i].cwdList[j][k].name)
                         classPercent.push(this.gradeAllList[i].cwdList[j][k].percent)
                     }
-                    
+
                     let cName2 = 'myChart2' + i + j;
                     this[cName2] = echarts.init(this.$refs[cName2][0]);
                     console.log(this[cName2]);
@@ -5205,15 +5383,15 @@ export default {
         },
         countElements(array) {
             const countMap = new Map();
-            
+
             array.forEach(element => {
                 const currentCount = countMap.get(element) || 0;
                 countMap.set(element, currentCount + 1);
             });
-            
+
             return countMap;
         },
-        toFixed (d, n) {
+        toFixed(d, n) {
             var s = n + "";
             if (!d) d = 0;
             if (s.indexOf(".") == -1) s += ".";
@@ -5232,7 +5410,7 @@ export default {
                         }
                     }
                     s = a.join("").replace(new RegExp("(\\d+)(\\d{" + d + "})\\d$"), "$1.$2");
-        
+
                 }
                 // if (b) s = s.substr(1);
                 if (b) s = s.substring(1);
@@ -5243,7 +5421,7 @@ export default {
         noRepeat2(arr) { //数组去重
             for (var i = 0; i < arr.length; i++) {
                 if (arr.indexOf(arr[i]) != i) {
-                    arr.splice(i,1);//删除数组元素后数组长度减1后面的元素前移
+                    arr.splice(i, 1);//删除数组元素后数组长度减1后面的元素前移
                     i--;//数组下标回退
                 }
             }
@@ -5263,7 +5441,7 @@ export default {
                 this.pTimeFlag = true;
                 return false;
             }
-            
+
             let star = "";
             let end = "";
             if (that.partsForm.time != "" && that.partsForm.time) {
@@ -5298,70 +5476,8 @@ export default {
                 spinner: "el-icon-loading",
                 background: "rgba(0, 0, 0, 0.7)"
             });
-            // 男
-            let paramnan = {
-                startDate: star,
-                endDate: end,
-                code: '',
-                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
-                gender: 1
-            };
-            this.$http
-                .post(Url + "/aimw/export/dimensionProportion", paramnan)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        console.log('男')
-                        console.log(data)
-                        // lv1: wdJcList[i].mildProportion,
-                        //         lv2: wdJcList[i].moderateProportion,
-                        //         lv3: wdJcList[i].severeProportion,）
-                        let nanList = []
-                        for (let i in data) {
-                            let nanTxt = '在'+data[i].grade+'维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；' 
-                            nanList.push(nanTxt)
-                        }
-                        // this.nanList
 
-                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
-                        //                 人（0.4%）；女生正常人数为
-                        //                 147
-                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
 
-                        this.part9 = true
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            // 女
-            let paramnv = {
-                startDate: star,
-                endDate: end,
-                code: '',
-                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
-                gender: 0
-            };
-            this.$http
-                .post(Url + "/aimw/export/dimensionProportion", paramnv)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        console.log('女')
-                        console.log(data)
-                        for (let i in data) {
-                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。' 
-                        }
-                        this.part10 = true
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
             // 各维度检出率（3.2.3 可用添加性别和code)   有男女之分 可一起查可分开查
             let param1 = {
                 startDate: star,
@@ -5376,12 +5492,12 @@ export default {
                     let data = res.data.data;
                     if (res.data.code == 0) {
                         let wdJcList = [
-                            {},{},{},{},{}
+                            {}, {}, {}, {}, {}
                         ]
                         let wdJcTotal = []
-                        let schoolCM = [0,0,0,0,0]
+                        let schoolCM = [0, 0, 0, 0, 0]
                         // let ChinaCM = [0,0,0,0,0]
-                        
+
                         let cmCha = [
                             {
                                 name: '抑郁',
@@ -5405,7 +5521,7 @@ export default {
                             },
                         ]
                         for (let i in data) {
-                            if (data[i].grade == '抑郁'){
+                            if (data[i].grade == '抑郁') {
                                 wdJcList[0] = data[i]
                                 schoolCM[0] = data[i].total
                                 cmCha[0].num = (Number(data[i].total) - Number(this.detail.yyQg)).toFixed(1)
@@ -5418,7 +5534,7 @@ export default {
                                 }
                                 wdJcTotal[0] = data[i].level
                             }
-                            if (data[i].grade == '焦虑'){
+                            if (data[i].grade == '焦虑') {
                                 wdJcList[1] = data[i]
                                 schoolCM[1] = data[i].total
                                 cmCha[1].num = (Number(data[i].total) - Number(this.detail.jlQg)).toFixed(1)
@@ -5431,7 +5547,7 @@ export default {
                                 }
                                 wdJcTotal[1] = data[i].level
                             }
-                            if (data[i].grade == '强迫'){
+                            if (data[i].grade == '强迫') {
                                 wdJcList[2] = data[i]
                                 schoolCM[2] = data[i].total
                                 cmCha[2].num = (Number(data[i].total) - Number(this.detail.qpQg)).toFixed(1)
@@ -5444,7 +5560,7 @@ export default {
                                 }
                                 wdJcTotal[2] = data[i].level
                             }
-                            if (data[i].grade == '敌对'){
+                            if (data[i].grade == '敌对') {
                                 wdJcList[3] = data[i]
                                 schoolCM[3] = data[i].total
                                 cmCha[3].num = (Number(data[i].total) - Number(this.detail.ddQg)).toFixed(1)
@@ -5457,7 +5573,7 @@ export default {
                                 }
                                 wdJcTotal[3] = data[i].level
                             }
-                            if (data[i].grade == '自我伤害'){
+                            if (data[i].grade == '自我伤害') {
                                 wdJcList[4] = data[i]
                                 schoolCM[4] = data[i].total
                                 cmCha[4].num = (Number(data[i].total) - Number(this.detail.zwshQg)).toFixed(1)
@@ -5473,14 +5589,14 @@ export default {
                         }
                         let wdJcListArr = JSON.parse(JSON.stringify(wdJcList))
                         this.wdJcListArr = wdJcListArr
-                        
+
                         console.log(wdJcListArr)
                         console.log(wdJcList)
                         this.schoolCM = schoolCM
                         this.cmCha = cmCha
-                        let c1 =0
-                        let c2 =0
-                        let c3 =0
+                        let c1 = 0
+                        let c2 = 0
+                        let c3 = 0
                         for (let i in cmCha) {
                             if (cmCha[i].num < 0) {
                                 c1++
@@ -5509,7 +5625,7 @@ export default {
                                 }
                             }
                             if (cmChaArr.length < 5) {
-                                cmTxt += '其中，'+ cmChaArr.join('、') + '维度（皆）超出全国常模'+ cmChaSort[0].num + '%。'
+                                cmTxt += '其中，' + cmChaArr.join('、') + '维度（皆）超出全国常模' + cmChaSort[0].num + '%。'
                             } else {
                                 cmTxt += '各维度皆超出全国常模' + cmChaSort[0].num + '%。'
                             }
@@ -5528,11 +5644,11 @@ export default {
                             console.log(cmChaArr1)
                             console.log(cmChaArr1.reverse())
                             if (cmChaArr1.length < 5) {
-                                cmTxt += '其中，'+ cmChaArr1.reverse().join('、') + '问题相对较小，（皆）低于全国常模'+ cmChaSort[0].num + '%。'
+                                cmTxt += '其中，' + cmChaArr1.reverse().join('、') + '问题相对较小，（皆）低于全国常模' + cmChaSort[0].num + '%。'
                             } else {
                                 cmTxt += '各维度皆低于全国常模' + cmChaSort[5].num + '%。'
                             }
-                            
+
                         }
                         // C.若学校常模-全国常模都为0，则第一、二、三句输出：
                         if (c2 == 5) {
@@ -5554,18 +5670,18 @@ export default {
                                 if (cmChaSort[i].num < 0) {
                                     csStr2.push(cmChaSort[i].name)
                                 }
-                                
+
                             }
-                            if (csStr2.length >0) {
+                            if (csStr2.length > 0) {
                                 // 显示负的
                                 cmTxt += csStr2.join('、') + '方面问题较小'
-                                if(csStr1.length == 0) {
+                                if (csStr1.length == 0) {
                                     cmTxt += '。'
                                 } else {
                                     cmTxt += '，'
                                 }
                             }
-                            if (csStr1.length >0) {
+                            if (csStr1.length > 0) {
                                 // 显示正的
                                 cmTxt += csStr1.join('、') + '方面有待改善，'
                                 cmTxt += '其中，'
@@ -5574,25 +5690,25 @@ export default {
                                 console.log(csStr3.join())
                                 console.log(csStr3.join('、'))
                                 let csStr3s = csStr3.length > 1 ? '皆' : ''
-                                cmTxt += csStr3.join('、') + '维度'+ csStr3s +'超出全国常模'+cmChaSort[0].num+'%。'
-                                
+                                cmTxt += csStr3.join('、') + '维度' + csStr3s + '超出全国常模' + cmChaSort[0].num + '%。'
+
                                 console.log(cmTxt)
                             }
-                            
-                            
-                            
-                            
-                            
+
+
+
+
+
                             console.log(csStr1, csStr2, csStr3)
-                        }   
+                        }
                         this.detail.cmTxt = cmTxt
-                        console.log(c1,c2,c3)
+                        console.log(c1, c2, c3)
                         wdJcList.sort((a, b) => {
                             return Number(b.total) - Number(a.total);
                         });
                         let wdArrNum = []
                         let wdNum = []
-                        
+
                         for (let i in wdJcList) {
                             wdArrNum.push({
                                 name: wdJcList[i].grade,
@@ -5617,55 +5733,55 @@ export default {
                             // A.若五个维度检出率彼此各不相同，则输出
                             // （第一句）**问题最为普遍：在所有心理健康问题中，**问题的检出率最高，达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。这表明**是本校中小学生中最常见的心理健康问题。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[0].name +'问题最为普遍：</span>'
-                                wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，' + wdArrNum[0].name +'问题的检出率最高，达到'+ wdArrNum[0].num + '%。其中，' + wdArrNum[0].name + '轻度问题占比为' + wdArrNum[0].lv1 + '%，'  + wdArrNum[0].name + '中度问题占比为' + wdArrNum[0].lv2 + '%，' + wdArrNum[0].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。这表明' + wdArrNum[0].name + '是本校中小学生中最常见的心理健康问题。</span>'
+                            wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[0].name + '问题最为普遍：</span>'
+                            wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，' + wdArrNum[0].name + '问题的检出率最高，达到' + wdArrNum[0].num + '%。其中，' + wdArrNum[0].name + '轻度问题占比为' + wdArrNum[0].lv1 + '%，' + wdArrNum[0].name + '中度问题占比为' + wdArrNum[0].lv2 + '%，' + wdArrNum[0].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。这表明' + wdArrNum[0].name + '是本校中小学生中最常见的心理健康问题。</span>'
                             wdpStr += '</div>'
                             // （第二句）**问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。**问题仅次于**问题，成为本校中小学生心理健康问题中的第二大常见类型。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[1].name +'问题次之：</span>'
-                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[1].name +'问题的检出率为'+ wdArrNum[1].num + '%。其中，' + wdArrNum[1].name + '轻度问题占比为' + wdArrNum[1].lv1 + '%，'  + wdArrNum[1].name + '中度问题占比为' + wdArrNum[1].lv2 + '%，' + wdArrNum[1].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。' + wdArrNum[1].name + '问题仅次于' + wdArrNum[0].name + '问题，成为本校中小学生心理健康问题中的第二大常见类型。</span>'
+                            wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[1].name + '问题次之：</span>'
+                            wdpStr += '<span class="yy_txt_s1">' + wdArrNum[1].name + '问题的检出率为' + wdArrNum[1].num + '%。其中，' + wdArrNum[1].name + '轻度问题占比为' + wdArrNum[1].lv1 + '%，' + wdArrNum[1].name + '中度问题占比为' + wdArrNum[1].lv2 + '%，' + wdArrNum[1].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。' + wdArrNum[1].name + '问题仅次于' + wdArrNum[0].name + '问题，成为本校中小学生心理健康问题中的第二大常见类型。</span>'
                             wdpStr += '</div>'
                             // （第三句）**问题不容忽视：**问题的检出率为**%，其中**轻度问题占比为 20.1%，**中度问题占比 **%，**重度问题占比**%。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[2].name +'问题不容忽视：</span>'
-                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[2].name +'问题的检出率为'+ wdArrNum[2].num + '%。其中，' + wdArrNum[2].name + '轻度问题占比为' + wdArrNum[2].lv1 + '%，'  + wdArrNum[2].name + '中度问题占比为' + wdArrNum[2].lv2 + '%，' + wdArrNum[2].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。</span>'
+                            wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[2].name + '问题不容忽视：</span>'
+                            wdpStr += '<span class="yy_txt_s1">' + wdArrNum[2].name + '问题的检出率为' + wdArrNum[2].num + '%。其中，' + wdArrNum[2].name + '轻度问题占比为' + wdArrNum[2].lv1 + '%，' + wdArrNum[2].name + '中度问题占比为' + wdArrNum[2].lv2 + '%，' + wdArrNum[2].name + '重度问题占比为' + wdArrNum[0].lv3 + '%。</span>'
                             wdpStr += '</div>'
                             // （第四句）**、**问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比，**重度问题占比**%。**问题的总检出率为**%，其中**轻度问题占比最大，为 **%，**中度问题占比**%，**重度问题占比**%。这两类问题虽然检出率相对较低，但也需要引起注意。
-                            
+
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[3].name + '、' + wdArrNum[4].name +'问题相对较少：</span>'
-                                wdpStr += '<span class="yy_txt_s1">' + wdArrNum[3].name +'问题的检出率为'+ wdArrNum[3].num + '%。其中' + wdArrNum[3].name + '轻度问题占比为' + wdArrNum[3].lv1 + '%，'  + wdArrNum[3].name + '中度问题占比为' + wdArrNum[3].lv2 + '%，' + wdArrNum[3].name + '重度问题占比为' + wdArrNum[3].lv3 + '%。' + wdArrNum[4].name +'问题的检出率为'+ wdArrNum[4].num + '%。其中' + wdArrNum[4].name + '轻度问题占比为' + wdArrNum[4].lv1 + '%，'  + wdArrNum[4].name + '中度问题占比为' + wdArrNum[4].lv2 + '%，' + wdArrNum[4].name + '重度问题占比为' + wdArrNum[4].lv3 + '%。这两类问题虽然检出率相对较低，但也需要引起注意。</span>'
+                            wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">' + wdArrNum[3].name + '、' + wdArrNum[4].name + '问题相对较少：</span>'
+                            wdpStr += '<span class="yy_txt_s1">' + wdArrNum[3].name + '问题的检出率为' + wdArrNum[3].num + '%。其中' + wdArrNum[3].name + '轻度问题占比为' + wdArrNum[3].lv1 + '%，' + wdArrNum[3].name + '中度问题占比为' + wdArrNum[3].lv2 + '%，' + wdArrNum[3].name + '重度问题占比为' + wdArrNum[3].lv3 + '%。' + wdArrNum[4].name + '问题的检出率为' + wdArrNum[4].num + '%。其中' + wdArrNum[4].name + '轻度问题占比为' + wdArrNum[4].lv1 + '%，' + wdArrNum[4].name + '中度问题占比为' + wdArrNum[4].lv2 + '%，' + wdArrNum[4].name + '重度问题占比为' + wdArrNum[4].lv3 + '%。这两类问题虽然检出率相对较低，但也需要引起注意。</span>'
                             wdpStr += '</div>'
                             // （第五句）综上所述，**问题是本校中小学生最突出的心理健康问题，其次为**问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
-                        
+
                             wdpStr += '<div class="yy_txt yy_txt_s1 noSplitBox">'
-                                wdpStr += '综上所述，' +wdArrNum[0].name+ '问题是本校中小学生最突出的心理健康问题，其次为' +wdArrNum[1].name+ '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                            wdpStr += '综上所述，' + wdArrNum[0].name + '问题是本校中小学生最突出的心理健康问题，其次为' + wdArrNum[1].name + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
                             wdpStr += '</div>'
-                           
-                            
-                            
-                            
-                        } else if(wdNumNo.length == 1) {
+
+
+
+
+                        } else if (wdNumNo.length == 1) {
                             // B.若五个维度检出率完全相同，则输出：
                             // （第一句）各维度检出率相当，皆为**%。抑郁轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；焦虑轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；强迫轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；敌对轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；自我伤害轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '各维度检出率相当，皆为' + wdArrNum[0].num + '%。'
-                                for ( let i in wdArrNum) {
-                                    wdpStr +=  wdArrNum[i].name + '轻度问题占比为' + wdArrNum[i].lv1 + '%，'  + wdArrNum[i].name + '中度问题占比为' + wdArrNum[i].lv2 + '%，' + wdArrNum[i].name + '重度问题占比为' + wdArrNum[i].lv3 + '%'
-                                    if (i < wdArrNum.length - 1) {
-                                        wdpStr += '；'
-                                    } else{
-                                        wdpStr += '。'
-                                    }
+                            wdpStr += '各维度检出率相当，皆为' + wdArrNum[0].num + '%。'
+                            for (let i in wdArrNum) {
+                                wdpStr += wdArrNum[i].name + '轻度问题占比为' + wdArrNum[i].lv1 + '%，' + wdArrNum[i].name + '中度问题占比为' + wdArrNum[i].lv2 + '%，' + wdArrNum[i].name + '重度问题占比为' + wdArrNum[i].lv3 + '%'
+                                if (i < wdArrNum.length - 1) {
+                                    wdpStr += '；'
+                                } else {
+                                    wdpStr += '。'
                                 }
+                            }
                             wdpStr += '</div>'
-                            
+
                             // （第二句）这表明，本校各维度心理健康问题占比均衡，学校和家长应该进行相应注意。其中，抑郁和自我伤害可能涉及到学生的生命安全，因此需要尤为关注。
-                        
+
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '这表明，本校各维度心理健康问题占比均衡，学校和家长应该进行相应注意。其中，抑郁和自我伤害可能涉及到学生的生命安全，因此需要尤为关注。'
+                            wdpStr += '这表明，本校各维度心理健康问题占比均衡，学校和家长应该进行相应注意。其中，抑郁和自我伤害可能涉及到学生的生命安全，因此需要尤为关注。'
                             wdpStr += '</div>'
-                        } else if(wdNumNo.length == 2) {
+                        } else if (wdNumNo.length == 2) {
                             // D.若检出率仅有两种数值，则输出：
                             let noArr1 = []
                             let noArr2 = []
@@ -5677,80 +5793,80 @@ export default {
                                     noArr2.push(wdArrNum[i])
                                 }
                             }
-                            
+
                             // （第一句:）**（、**、**和**)问题最为普遍：在所有心理健康问题中，**、（**、**和**)问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%；**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**、（**、**和**)是本校中小学生中最常见的心理健康问题)。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">'
-                                let wdp1 = ''
-                                if (noArr1.length > 1) {
-                                    for (let i in noArr1) {
-                                        wdp1 += wdArrNum[0].name
-                                        if (i < noArr1.length - 2) {
-                                            wdp1 += '、'
-                                        }
-                                        if (i == noArr1.length -2) {
-                                            wdp1 += '和'
-                                        }
-                                    }
-                                } else {
+                            wdpStr += '<span class="yy_txt_s1" style="font-weight: 500;">'
+                            let wdp1 = ''
+                            if (noArr1.length > 1) {
+                                for (let i in noArr1) {
                                     wdp1 += wdArrNum[0].name
-                                }
-                                
-                                wdpStr += wdp1 + '问题最为普遍：</span>'
-                                wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，'
-                                
-                                wdpStr += wdp1 + '问题的检出率最高，'
-                                let no1Len = noArr1.length > 1 ? '皆' : ''
-                                wdpStr += no1Len + '达到'+ noArr1[0].num + '%。其中，'
-                                for ( let i in noArr1) {
-                                    wdpStr +=  noArr1[i].name + '轻度问题占比为' + noArr1[i].lv1 + '%，'  + noArr1[i].name + '中度问题占比为' + noArr1[i].lv2 + '%，' + noArr1[i].name + '重度问题占比为' + noArr1[i].lv3 + '%'
-                                    if (i < noArr1.length - 1) {
-                                        wdpStr += '；'
-                                    } else{
-                                        wdpStr += '。'
+                                    if (i < noArr1.length - 2) {
+                                        wdp1 += '、'
+                                    }
+                                    if (i == noArr1.length - 2) {
+                                        wdp1 += '和'
                                     }
                                 }
-                                
-                                wdpStr += '这表明' + wdp1 + '是本校中小学生中最常见的心理健康问题。</span>'
+                            } else {
+                                wdp1 += wdArrNum[0].name
+                            }
+
+                            wdpStr += wdp1 + '问题最为普遍：</span>'
+                            wdpStr += '<span class="yy_txt_s1">在所有心理健康问题中，'
+
+                            wdpStr += wdp1 + '问题的检出率最高，'
+                            let no1Len = noArr1.length > 1 ? '皆' : ''
+                            wdpStr += no1Len + '达到' + noArr1[0].num + '%。其中，'
+                            for (let i in noArr1) {
+                                wdpStr += noArr1[i].name + '轻度问题占比为' + noArr1[i].lv1 + '%，' + noArr1[i].name + '中度问题占比为' + noArr1[i].lv2 + '%，' + noArr1[i].name + '重度问题占比为' + noArr1[i].lv3 + '%'
+                                if (i < noArr1.length - 1) {
+                                    wdpStr += '；'
+                                } else {
+                                    wdpStr += '。'
+                                }
+                            }
+
+                            wdpStr += '这表明' + wdp1 + '是本校中小学生中最常见的心理健康问题。</span>'
                             wdpStr += '</div>'
                             // （第二句）**（、**、**和**)问题相对较少：**问题的检出率相对较低，（皆）为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，重度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（、**、**和**)问题虽然检出率相对较低，但也需要引起注意。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '<span style="font-weight: 500;">'
-                                let wdp2 = ''
-                                if (noArr2.length > 1) {
-                                    for (let i in noArr2) {
-                                        wdp2 += wdArrNum[0].name
-                                        if (i < noArr2.length - 2) {
-                                            wdp2 += '、'
-                                        }
-                                        if (i == noArr2.length -2) {
-                                            wdp2 += '和'
-                                        }
-                                    }
-                                } else {
+                            wdpStr += '<span style="font-weight: 500;">'
+                            let wdp2 = ''
+                            if (noArr2.length > 1) {
+                                for (let i in noArr2) {
                                     wdp2 += wdArrNum[0].name
-                                }
-                                wdpStr += wdp2 + '问题相对较少：</span>'
-                                wdpStr += '<span>'
-                                
-                                wdpStr += wdp2 + '问题的检出率相对较低，'
-                                let no2Len = noArr2.length > 1 ? '皆' : ''
-                                wdpStr += no2Len + '为'+ noArr2[0].num + '%，其中，'
-                                for ( let i in noArr2) {
-                                    wdpStr +=  noArr2[i].name + '轻度问题占比为' + noArr2[i].lv1 + '%，'  + noArr2[i].name + '中度问题占比为' + noArr2[i].lv2 + '%，' + noArr2[i].name + '重度问题占比为' + noArr2[i].lv3 + '%'
-                                    if (i < noArr2.length - 1) {
-                                        wdpStr += '；'
-                                    } else{
-                                        wdpStr += '。'
+                                    if (i < noArr2.length - 2) {
+                                        wdp2 += '、'
+                                    }
+                                    if (i == noArr2.length - 2) {
+                                        wdp2 += '和'
                                     }
                                 }
-                                wdpStr += wdp2 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                            } else {
+                                wdp2 += wdArrNum[0].name
+                            }
+                            wdpStr += wdp2 + '问题相对较少：</span>'
+                            wdpStr += '<span>'
+
+                            wdpStr += wdp2 + '问题的检出率相对较低，'
+                            let no2Len = noArr2.length > 1 ? '皆' : ''
+                            wdpStr += no2Len + '为' + noArr2[0].num + '%，其中，'
+                            for (let i in noArr2) {
+                                wdpStr += noArr2[i].name + '轻度问题占比为' + noArr2[i].lv1 + '%，' + noArr2[i].name + '中度问题占比为' + noArr2[i].lv2 + '%，' + noArr2[i].name + '重度问题占比为' + noArr2[i].lv3 + '%'
+                                if (i < noArr2.length - 1) {
+                                    wdpStr += '；'
+                                } else {
+                                    wdpStr += '。'
+                                }
+                            }
+                            wdpStr += wdp2 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
                             wdpStr += '</div>'
                             // （第三句）综上所述，**（、**、**和**)问题是本校中小学生最突出的心理健康问题，**（、**、**和**)问题相对较少。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。
                             wdpStr += '<div class="yy_txt noSplitBox">'
-                                wdpStr += '综上所述，' + wdp1 + '问题是本校中小学生最突出的心理健康问题，' + wdp2 + '问题相对较少。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                            wdpStr += '综上所述，' + wdp1 + '问题是本校中小学生最突出的心理健康问题，' + wdp2 + '问题相对较少。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
                             wdpStr += '</div>'
-                        } else{
+                        } else {
                             // C.若检出率有3-4个数值不同：
                             if (wdNumNo.length == 3) { // 13344 11134
                                 let noArr31 = []
@@ -5769,109 +5885,109 @@ export default {
                                 }
                                 // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp31 = ''
-                                    if (noArr31.length > 1) {
-                                        for (let i in noArr31) {
-                                            wdp31 += wdArrNum[0].name
-                                            if (i < noArr31.length - 2) {
-                                                wdp31 += '、'
-                                            }
-                                            if (i == noArr31.length -2) {
-                                                wdp31 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp31 = ''
+                                if (noArr31.length > 1) {
+                                    for (let i in noArr31) {
                                         wdp31 += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp31 + '问题最为普遍：</span>'
-                                    wdpStr += '<span>在所有心理健康问题中，'
-                                    
-                                    wdpStr += wdp31 + '问题的检出率最高，'
-                                    let no31Len = noArr31.length > 1 ? '皆' : ''
-                                    wdpStr += no31Len + '达到'+ noArr31[0].num + '%。其中，'
-                                    for ( let i in noArr31) {
-                                        wdpStr +=  noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，'  + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
-                                        if (i < noArr31.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr31.length - 2) {
+                                            wdp31 += '、'
+                                        }
+                                        if (i == noArr31.length - 2) {
+                                            wdp31 += '和'
                                         }
                                     }
-                                    wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
+                                } else {
+                                    wdp31 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp31 + '问题最为普遍：</span>'
+                                wdpStr += '<span>在所有心理健康问题中，'
+
+                                wdpStr += wdp31 + '问题的检出率最高，'
+                                let no31Len = noArr31.length > 1 ? '皆' : ''
+                                wdpStr += no31Len + '达到' + noArr31[0].num + '%。其中，'
+                                for (let i in noArr31) {
+                                    wdpStr += noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，' + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
+                                    if (i < noArr31.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
                                 wdpStr += '</div>'
                                 // （第二句：）**（和**）问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（和**）是本校中小学生心理健康问题中的第二大常见类型。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp32 = ''
-                                    if (noArr32.length > 1) {
-                                        for (let i in noArr32) {
-                                            wdp32 += wdArrNum[0].name
-                                            if (i < noArr32.length - 2) {
-                                                wdp32 += '、'
-                                            }
-                                            if (i == noArr32.length -2) {
-                                                wdp32 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp32 = ''
+                                if (noArr32.length > 1) {
+                                    for (let i in noArr32) {
                                         wdp32 += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp32 + '问题次之：</span>'
-                                    wdpStr += '<span>'
-                                    
-                                    wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
-                                    // let no2Len = noArr32.length > 1 ? '皆' : ''
-                                    // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
-                                    for ( let i in noArr32) {
-                                        wdpStr +=  noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，'  + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
-                                        if (i < noArr32.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr32.length - 2) {
+                                            wdp32 += '、'
+                                        }
+                                        if (i == noArr32.length - 2) {
+                                            wdp32 += '和'
                                         }
                                     }
-                                    wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
+                                } else {
+                                    wdp32 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp32 + '问题次之：</span>'
+                                wdpStr += '<span>'
+
+                                wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
+                                // let no2Len = noArr32.length > 1 ? '皆' : ''
+                                // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
+                                for (let i in noArr32) {
+                                    wdpStr += noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，' + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
+                                    if (i < noArr32.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
                                 wdpStr += '</div>'
 
                                 // （第三句）**（和**）问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（和**)问题虽然检出率相对较低，但也需要引起注意。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp33 = ''
-                                    if (noArr33.length > 1) {
-                                        for (let i in noArr33) {
-                                            wdp33 += wdArrNum[0].name
-                                            if (i < noArr33.length - 2) {
-                                                wdp33 += '、'
-                                            }
-                                            if (i == noArr33.length -2) {
-                                                wdp33 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp33 = ''
+                                if (noArr33.length > 1) {
+                                    for (let i in noArr33) {
                                         wdp33 += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp33 + '问题相对较少：</span>'
-                                    wdpStr += '<span>'
-                                    wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，其中，'
-                                    // wdpStr += wdp33 + '问题的检出率相对较低，'
-                                    // let no33Len = noArr33.length > 1 ? '皆' : ''
-                                    // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
-                                    for ( let i in noArr33) {
-                                        wdpStr +=  noArr33[i].name + '轻度问题占比为' + noArr33[i].lv1 + '%，'  + noArr33[i].name + '中度问题占比为' + noArr33[i].lv2 + '%，' + noArr33[i].name + '重度问题占比为' + noArr33[i].lv3 + '%'
-                                        if (i < noArr33.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr33.length - 2) {
+                                            wdp33 += '、'
+                                        }
+                                        if (i == noArr33.length - 2) {
+                                            wdp33 += '和'
                                         }
                                     }
-                                    wdpStr += wdp33 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                                } else {
+                                    wdp33 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp33 + '问题相对较少：</span>'
+                                wdpStr += '<span>'
+                                wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，其中，'
+                                // wdpStr += wdp33 + '问题的检出率相对较低，'
+                                // let no33Len = noArr33.length > 1 ? '皆' : ''
+                                // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
+                                for (let i in noArr33) {
+                                    wdpStr += noArr33[i].name + '轻度问题占比为' + noArr33[i].lv1 + '%，' + noArr33[i].name + '中度问题占比为' + noArr33[i].lv2 + '%，' + noArr33[i].name + '重度问题占比为' + noArr33[i].lv3 + '%'
+                                    if (i < noArr33.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += wdp33 + '问题虽然检出率相对较低，但也需要引起注意。</span>'
                                 wdpStr += '</div>'
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                                wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
                                 wdpStr += '</div>'
                             }
-                            
+
                             if (wdNumNo.length == 4) {
                                 let noArr31 = []
                                 let noArr32 = []
@@ -5893,145 +6009,145 @@ export default {
                                 }
                                 // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp31 = ''
-                                    if (noArr31.length > 1) {
-                                        for (let i in noArr31) {
-                                            wdp31 += wdArrNum[0].name
-                                            if (i < noArr31.length - 2) {
-                                                wdp31 += '、'
-                                            }
-                                            if (i == noArr31.length -2) {
-                                                wdp31 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp31 = ''
+                                if (noArr31.length > 1) {
+                                    for (let i in noArr31) {
                                         wdp31 += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp31 + '问题最为普遍：</span>'
-                                    wdpStr += '<span>在所有心理健康问题中，'
-                                    
-                                    wdpStr += wdp31 + '问题的检出率最高，'
-                                    let no31Len = noArr31.length > 1 ? '皆' : ''
-                                    wdpStr += no31Len + '达到'+ noArr31[0].num + '%。其中，'
-                                    for ( let i in noArr31) {
-                                        wdpStr +=  noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，'  + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
-                                        if (i < noArr31.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr31.length - 2) {
+                                            wdp31 += '、'
+                                        }
+                                        if (i == noArr31.length - 2) {
+                                            wdp31 += '和'
                                         }
                                     }
-                                    wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
+                                } else {
+                                    wdp31 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp31 + '问题最为普遍：</span>'
+                                wdpStr += '<span>在所有心理健康问题中，'
+
+                                wdpStr += wdp31 + '问题的检出率最高，'
+                                let no31Len = noArr31.length > 1 ? '皆' : ''
+                                wdpStr += no31Len + '达到' + noArr31[0].num + '%。其中，'
+                                for (let i in noArr31) {
+                                    wdpStr += noArr31[i].name + '轻度问题占比为' + noArr31[i].lv1 + '%，' + noArr31[i].name + '中度问题占比为' + noArr31[i].lv2 + '%，' + noArr31[i].name + '重度问题占比为' + noArr31[i].lv3 + '%'
+                                    if (i < noArr31.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += '这表明' + wdp31 + '是本校中小学生中最常见的心理健康问题。</span>'
                                 wdpStr += '</div>'
                                 // （第二句：）**（和**）问题次之：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（和**）是本校中小学生心理健康问题中的第二大常见类型。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp32 = ''
-                                    if (noArr32.length > 1) {
-                                        for (let i in noArr32) {
-                                            wdp32 += wdArrNum[0].name
-                                            if (i < noArr32.length - 2) {
-                                                wdp32 += '、'
-                                            }
-                                            if (i == noArr32.length -2) {
-                                                wdp32 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp32 = ''
+                                if (noArr32.length > 1) {
+                                    for (let i in noArr32) {
                                         wdp32 += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp32 + '问题次之：</span>'
-                                    wdpStr += '<span>'
-                                    
-                                    wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
-                                    // let no2Len = noArr32.length > 1 ? '皆' : ''
-                                    // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
-                                    for ( let i in noArr32) {
-                                        wdpStr +=  noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，'  + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
-                                        if (i < noArr32.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr32.length - 2) {
+                                            wdp32 += '、'
+                                        }
+                                        if (i == noArr32.length - 2) {
+                                            wdp32 += '和'
                                         }
                                     }
-                                    wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
+                                } else {
+                                    wdp32 += wdArrNum[0].name
+                                }
+                                wdpStr += wdp32 + '问题次之：</span>'
+                                wdpStr += '<span>'
+
+                                wdpStr += wdp32 + '问题的检出率为' + noArr32[0].num + '%，其中，'
+                                // let no2Len = noArr32.length > 1 ? '皆' : ''
+                                // wdpStr += no2Len + '为'+ noArr32[0].num + '%，其中，'
+                                for (let i in noArr32) {
+                                    wdpStr += noArr32[i].name + '轻度问题占比为' + noArr32[i].lv1 + '%，' + noArr32[i].name + '中度问题占比为' + noArr32[i].lv2 + '%，' + noArr32[i].name + '重度问题占比为' + noArr32[i].lv3 + '%'
+                                    if (i < noArr32.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += '这表明' + wdp32 + '是本校中小学生心理健康问题中的第二大常见类型。</span>'
                                 wdpStr += '</div>'
 
                                 // （第三句）**（和**）问题相对较少：**问题的检出率为 **%，其中**轻度问题占比为 **%，**中度问题占比**度问题占比**%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）**（和**)问题虽然检出率相对较低，但也需要引起注意。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '<span style="font-weight: 500;">'
-                                    let wdp33 = ''
-                                    if (noArr33.length > 1) {
-                                        for (let i in noArr33) {
-                                            wdp33 += wdArrNum[0].name
-                                            if (i < noArr33.length - 2) {
-                                                wdp33 += '、'
-                                            }
-                                            if (i == noArr33.length -2) {
-                                                wdp33 += '和'
-                                            }
-                                        }
-                                    } else {
+                                wdpStr += '<span style="font-weight: 500;">'
+                                let wdp33 = ''
+                                if (noArr33.length > 1) {
+                                    for (let i in noArr33) {
                                         wdp33 += wdArrNum[0].name
-                                    }
-                                    let wdp34 = ''
-                                    if (noArr34.length > 1) {
-                                        for (let i in noArr34) {
-                                            wdp34 += wdArrNum[0].name
-                                            if (i < noArr34.length - 2) {
-                                                wdp34 += '、'
-                                            }
-                                            if (i == noArr34.length -2) {
-                                                wdp34 += '和'
-                                            }
+                                        if (i < noArr33.length - 2) {
+                                            wdp33 += '、'
                                         }
-                                    } else {
+                                        if (i == noArr33.length - 2) {
+                                            wdp33 += '和'
+                                        }
+                                    }
+                                } else {
+                                    wdp33 += wdArrNum[0].name
+                                }
+                                let wdp34 = ''
+                                if (noArr34.length > 1) {
+                                    for (let i in noArr34) {
                                         wdp34 += wdArrNum[0].name
-                                    }
-                                    noArr33s = noArr33.concat(noArr34)
-                                    let wdp3s = ''
-                                    if (noArr33s.length > 1) {
-                                        for (let i in noArr33s) {
-                                            wdp3s += wdArrNum[0].name
-                                            if (i < noArr33s.length - 2) {
-                                                wdp3s += '、'
-                                            }
-                                            if (i == noArr33s.length -2) {
-                                                wdp3s += '和'
-                                            }
+                                        if (i < noArr34.length - 2) {
+                                            wdp34 += '、'
                                         }
-                                    } else {
+                                        if (i == noArr34.length - 2) {
+                                            wdp34 += '和'
+                                        }
+                                    }
+                                } else {
+                                    wdp34 += wdArrNum[0].name
+                                }
+                                noArr33s = noArr33.concat(noArr34)
+                                let wdp3s = ''
+                                if (noArr33s.length > 1) {
+                                    for (let i in noArr33s) {
                                         wdp3s += wdArrNum[0].name
-                                    }
-                                    wdpStr += wdp3s + '问题相对较少：</span>'
-                                    wdpStr += '<span>'
-                                    wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，' + wdp34 + '问题的检出率为' + noArr34[0].num + '%，其中，'
-                                    // wdpStr += wdp33 + '问题的检出率相对较低，'
-                                    // let no33Len = noArr33.length > 1 ? '皆' : ''
-                                    // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
-                                    for ( let i in noArr33s) {
-                                        wdpStr +=  noArr33s[i].name + '轻度问题占比为' + noArr33s[i].lv1 + '%，'  + noArr33s[i].name + '中度问题占比为' + noArr33s[i].lv2 + '%，' + noArr33s[i].name + '重度问题占比为' + noArr33s[i].lv3 + '%'
-                                        if (i < noArr33s.length - 1) {
-                                            wdpStr += '；'
-                                        } else{
-                                            wdpStr += '。'
+                                        if (i < noArr33s.length - 2) {
+                                            wdp3s += '、'
+                                        }
+                                        if (i == noArr33s.length - 2) {
+                                            wdp3s += '和'
                                         }
                                     }
-                                    wdpStr += wdp3s + '问题虽然检出率相对较低，但也需要引起注意。</span>'
+                                } else {
+                                    wdp3s += wdArrNum[0].name
+                                }
+                                wdpStr += wdp3s + '问题相对较少：</span>'
+                                wdpStr += '<span>'
+                                wdpStr += wdp33 + '问题的检出率为' + noArr33[0].num + '%，' + wdp34 + '问题的检出率为' + noArr34[0].num + '%，其中，'
+                                // wdpStr += wdp33 + '问题的检出率相对较低，'
+                                // let no33Len = noArr33.length > 1 ? '皆' : ''
+                                // wdpStr += no33Len + '为'+ noArr33[0].num + '%，其中，'
+                                for (let i in noArr33s) {
+                                    wdpStr += noArr33s[i].name + '轻度问题占比为' + noArr33s[i].lv1 + '%，' + noArr33s[i].name + '中度问题占比为' + noArr33s[i].lv2 + '%，' + noArr33s[i].name + '重度问题占比为' + noArr33s[i].lv3 + '%'
+                                    if (i < noArr33s.length - 1) {
+                                        wdpStr += '；'
+                                    } else {
+                                        wdpStr += '。'
+                                    }
+                                }
+                                wdpStr += wdp3s + '问题虽然检出率相对较低，但也需要引起注意。</span>'
                                 wdpStr += '</div>'
                                 wdpStr += '<div class="yy_txt noSplitBox">'
-                                    wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
+                                wdpStr += '综上所述，' + wdp31 + '问题是本校中小学生最突出的心理健康问题，其次为' + wdp32 + '问题。学校和家长应当对此给予高度重视，采取相应的预防和干预措施，以保障学生的心理健康。'
                                 wdpStr += '</div>'
                             }
-                            
-                            
+
+
                         }
                         this.detail.wdpStr = wdpStr
                         // if (countw[wdNum[0]] == countw[wdNum[1]]== countw[wdNum[2]] == countw[wdNum[3]] == countw[wdNum[4]] == 1){
-                            
+
                         // } else if(countw[wdNum[0]] == countw[wdNum[1]]== countw[wdNum[2]] == countw[wdNum[3]] == countw[wdNum[4]] == 5) {
-                            
+
                         // }
                         console.log(wdJcTotal)
                         wdJcTotal.sort((a, b) => {
@@ -6072,7 +6188,7 @@ export default {
                             let txtStr = ''
                             for (let i in txtArr4) {
                                 txtStr += txtArr4[i].grade
-                                if (i < txtArr4.length - 2){
+                                if (i < txtArr4.length - 2) {
                                     txtStr += '、'
                                 }
                                 if (i == txtArr4.length - 2) {
@@ -6097,7 +6213,7 @@ export default {
                             let txtStr52 = ''
                             for (let i in txtArr52) {
                                 txtStr52 += txtArr52[i].grade
-                                if (i < txtArr52.length - 2){
+                                if (i < txtArr52.length - 2) {
                                     txtStr52 += '、'
                                 }
                                 if (i == txtArr52.length - 2) {
@@ -6108,7 +6224,7 @@ export default {
                             let txtStr51 = ''
                             for (let i in txtStr51) {
                                 txtStr51 += txtStr51[i].grade
-                                if (i < txtStr51.length - 2){
+                                if (i < txtStr51.length - 2) {
                                     txtStr51 += '、'
                                 }
                                 if (i == txtStr51.length - 2) {
@@ -6118,39 +6234,39 @@ export default {
                             this.detail.txtStr51 = txtStr51
                         }
 
-                        
-                        
+
+
                         console.log(wdJcList)
 
                         let jcTxt = ''
-                        if(wdJcList.every(item=>item.total === wdJcList[0].total)){
-                            
+                        if (wdJcList.every(item => item.total === wdJcList[0].total)) {
+
                             // 若五个维度检出率完全相同，则输出：
                             console.log('全等')
-                            jcTxt += '各类心理健康问题相当，检出率皆为：'+ wdJcList[0].total +'%。'
-                        }else{
+                            jcTxt += '各类心理健康问题相当，检出率皆为：' + wdJcList[0].total + '%。'
+                        } else {
                             // console.log(item)
                             // console.log(item.index)
 
-                            
+
                             // 若检出率前两个维度相同
                             if (wdJcList[0].total == wdJcList[1].total) {
                                 // 检出率后两个维度也相同，但彼此不同
                                 if (wdJcList[3].total == wdJcList[4].total) {
-                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total +'%。'
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total + '%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total + '%。'
                                 } else {// 后两个维度不同输出
-                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total +'%和'+ wdJcList[4].total +'%。'
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率皆为' + wdJcList[0].total + '%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total + '%和' + wdJcList[4].total + '%。'
                                 }
                             } else { //检出率前两个维度不同
                                 // 后两个维度相同
                                 if (wdJcList[3].total == wdJcList[4].total) {
-                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total +'%和'+ wdJcList[1].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total +'%。'
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total + '%和' + wdJcList[1].total + '%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率皆为' + wdJcList[3].total + '%。'
                                 } else {
                                     // 若五个维度检出率彼此各不相同或中间的跟其他四个相同，则先输出前两位及其检出率，后输出后两位及其检出率
-                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total +'%和'+ wdJcList[1].total +'%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total +'%和'+ wdJcList[4].total +'%。'
+                                    jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total + '%和' + wdJcList[1].total + '%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total + '%和' + wdJcList[4].total + '%。'
                                 }
                             }
-                            
+
                             console.log('有不等的')
                         }
                         this.detail.jcTxt = jcTxt
@@ -6193,7 +6309,7 @@ export default {
                         let chuZhong = {}
                         let gaoZhong = {}
                         for (let i in schoolList) {
-                            schoolList[i].percent = ((schoolList[i].numStudents/data.totalStudents)*100).toFixed(1)
+                            schoolList[i].percent = ((schoolList[i].numStudents / data.totalStudents) * 100).toFixed(1)
                             if (schoolList[i].grade.indexOf('X') != -1) {
                                 schoolList[i].name = '预备年级'
                                 yuBei = schoolList[i]
@@ -6230,9 +6346,9 @@ export default {
                         this.detail.totalClasses = data.totalClasses
                         this.detail.totalStudents = data.totalStudents
                         this.detail.maleStudents = data.maleStudents
-                        this.detail.maleStudentsPre = ((data.maleStudents/data.totalStudents)*100).toFixed(1)
+                        this.detail.maleStudentsPre = ((data.maleStudents / data.totalStudents) * 100).toFixed(1)
                         this.detail.femaleStudents = data.femaleStudents
-                        this.detail.femaleStudentsPre =  ((data.femaleStudents/data.totalStudents)*100).toFixed(1)
+                        this.detail.femaleStudentsPre = ((data.femaleStudents / data.totalStudents) * 100).toFixed(1)
 
                         this.detail.schoolList = data.schoolList
                         this.detail.yuBei = yuBei
@@ -6309,7 +6425,7 @@ export default {
                                 datap[i].grade == '自我伤害'
                                 data[4] = datap[i]
                             }
-                            
+
                         }
                         console.log(data)
                         let dataEx = JSON.parse(JSON.stringify(data)).sort((a, b) => {
@@ -6387,38 +6503,38 @@ export default {
                                 genderTxt52 += '中小学生可能缺乏有效的情绪调节策略，当面临挫折或困难时，容易陷入消极情绪中无法自拔。为了逃避或缓解这种消极情绪，他们可能采取自我伤害行为。此外，父母忽视孩子的情感需求，缺乏对孩子的关注和支持，可能使孩子感到孤独和无助，从而通过自我伤害来寻求关注和安慰。当家庭关系紧张、冲突频繁时，使孩子长期处于紧张和焦虑状态，增加自我伤害的风险。为了降低自我伤害行为的发生率，需要家庭、学校和社会共同努力，为孩子创造一个更加健康、积极、和谐的学习和成长环境。同时，也需要加强对孩子的心理健康教育，提高他们的心理韧性和应对压力的能力。如果发现孩子有自我伤害的倾向或症状，应及时寻求专业医生的帮助和治疗。'
                             }
                         }
-                        
+
                         this.detail.genderTxt52 = genderTxt52
                         let manOrgs = []
                         let womanOrgs = []
                         // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
                         for (let i in data) {
                             // if (data[i].grade == '初中A直升班') {
-                           
-                                man.push({
-                                    grade: data[i].grade,
-                                    percentage: data[i].maleProportion,
-                                })
-                                manOrg.push({
-                                    grade: data[i].grade,
-                                    percentage: data[i].maleProportion
-                                })
-                                manOrgs.push(data[i].maleProportion)
-                                manSum += data[i].maleProportion
+
+                            man.push({
+                                grade: data[i].grade,
+                                percentage: data[i].maleProportion,
+                            })
+                            manOrg.push({
+                                grade: data[i].grade,
+                                percentage: data[i].maleProportion
+                            })
+                            manOrgs.push(data[i].maleProportion)
+                            manSum += data[i].maleProportion
                             // }  
                             // if (data[i].grade == '初中B非直升班') {
-                                woman.push({
-                                    grade: data[i].grade,
-                                    percentage: data[i].femaleProportion
-                                })
-                                womanOrg.push({
-                                    grade: data[i].grade,
-                                    percentage: data[i].femaleProportion
-                                })
-                                womanOrgs.push(data[i].femaleProportion)
-                                
+                            woman.push({
+                                grade: data[i].grade,
+                                percentage: data[i].femaleProportion
+                            })
+                            womanOrg.push({
+                                grade: data[i].grade,
+                                percentage: data[i].femaleProportion
+                            })
+                            womanOrgs.push(data[i].femaleProportion)
 
-                                womanSum += data[i].femaleProportion
+
+                            womanSum += data[i].femaleProportion
                             // }
                         }
                         console.log(manOrg)
@@ -6432,11 +6548,11 @@ export default {
                             let manOrgSort = JSON.parse(JSON.stringify(manOrg)).sort((a, b) => {
                                 return Number(b.percentage) - Number(a.percentage);
                             })
-                            for ( let i in manOrgSort) {
+                            for (let i in manOrgSort) {
                                 genderTxt51 += manOrgSort[i].grade + '（' + manOrgSort[i].percentage + '%）'
                                 if (i < manOrgSort.length - 1) {
                                     genderTxt51 += '、'
-                                } else{
+                                } else {
                                     genderTxt51 += '。'
                                 }
                             }
@@ -6449,7 +6565,7 @@ export default {
                             let arr3 = []
                             for (let i in manOrg) {
                                 for (let j in womanOrg) {
-                                    if (manOrg[i].grade == womanOrg[j].grade){
+                                    if (manOrg[i].grade == womanOrg[j].grade) {
                                         if (manOrg[i].percentage - womanOrg[i].percentage > 0) {
                                             cout1++
                                             arr1.push(manOrg[j].grade)
@@ -6465,43 +6581,43 @@ export default {
                                     }
                                 }
                             }
-                            console.log("男>女："+cout1)
-                            console.log("女>男："+cout2)
-                            console.log("男=女："+cout3)
+                            console.log("男>女：" + cout1)
+                            console.log("女>男：" + cout2)
+                            console.log("男=女：" + cout3)
                             if (cout1 == 5) {
                                 // 具体来看，男生/女生在**（**%）、**（**%）、**（**%）、**（**%）和**（**%）五个维度上的检出率均高于女生/男生。
                                 genderTxt51 += '具体来看，男生在'
                                 let manOrgSort = JSON.parse(JSON.stringify(manOrg)).sort((a, b) => {
                                     return Number(b.percentage) - Number(a.percentage);
                                 })
-                                for ( let i in manOrgSort) {
+                                for (let i in manOrgSort) {
                                     genderTxt51 += manOrgSort[i].grade + '（' + manOrgSort[i].percentage + '%）'
                                     if (i < manOrgSort.length - 2) {
                                         genderTxt51 += '、'
                                     }
-                                    if (i == manOrgSort.length - 2){
+                                    if (i == manOrgSort.length - 2) {
                                         genderTxt51 += '和'
                                     }
                                 }
                                 genderTxt51 += '五个维度上的检出率均高于女生。'
-                                
+
                             } else if (cout2 == 5) {
                                 // 具体来看，男生/女生在**（**%）、**（**%）、**（**%）、**（**%）和**（**%）五个维度上的检出率均高于女生/男生。
                                 genderTxt51 += '具体来看，女生在'
                                 let womanOrgSort = JSON.parse(JSON.stringify(womanOrg)).sort((a, b) => {
                                     return Number(b.percentage) - Number(a.percentage);
                                 })
-                                for ( let i in womanOrgSort) {
+                                for (let i in womanOrgSort) {
                                     genderTxt51 += womanOrgSort[i].grade + '（' + womanOrgSort[i].percentage + '%）'
                                     if (i < womanOrgSort.length - 2) {
                                         genderTxt51 += '、'
                                     }
-                                    if (i == womanOrgSort.length - 2){
+                                    if (i == womanOrgSort.length - 2) {
                                         genderTxt51 += '和'
                                     }
                                 }
                                 genderTxt51 += '五个维度上的检出率均高于男生。'
-                                
+
                             } else {
                                 // 具体来看，男生（在**和**维度上的检出率高于女生，）（在**和**维度上的检出率与女生持平，）（在**和**维度上的检出率低于女生）。
                                 genderTxt51 += '具体来看，男生'
@@ -6512,7 +6628,7 @@ export default {
                                         if (i < arr1.length - 2) {
                                             genderTxt51 += '、'
                                         }
-                                        if (i == arr1.length - 2){
+                                        if (i == arr1.length - 2) {
                                             genderTxt51 += '和'
                                         }
                                     }
@@ -6520,7 +6636,7 @@ export default {
                                 }
 
 
-                                
+
 
                                 if (cout3 > 0) {
                                     genderTxt51 += '在'
@@ -6529,7 +6645,7 @@ export default {
                                         if (i < arr3.length - 2) {
                                             genderTxt51 += '、'
                                         }
-                                        if (i == arr3.length - 2){
+                                        if (i == arr3.length - 2) {
                                             genderTxt51 += '和'
                                         }
                                     }
@@ -6537,11 +6653,11 @@ export default {
                                 }
                                 if (cout2 == 0) {
                                     genderTxt51 += '。'
-                                } else{
+                                } else {
                                     if (cout1 == 0) {
                                         genderTxt51 += '，'
                                     }
-                                    
+
                                 }
                                 if (cout2 > 0) {
                                     genderTxt51 += '在'
@@ -6550,19 +6666,19 @@ export default {
                                         if (i < arr2.length - 2) {
                                             genderTxt51 += '、'
                                         }
-                                        if (i == arr2.length - 2){
+                                        if (i == arr2.length - 2) {
                                             genderTxt51 += '和'
                                         }
                                     }
                                     genderTxt51 += '维度上的检出率低于女生。'
                                 }
-                                
+
                             }
                         }
                         this.detail.genderTxt51 = genderTxt51
                         console.log(man)
                         console.log(woman)
-                        
+
                         console.log(manSum)
                         console.log(womanSum)
 
@@ -6582,10 +6698,10 @@ export default {
                         for (let i in woman3) {
                             woman3Str.push(woman3[i].grade)
                         }
-                        let genderTxt5 = '男生在心理健康问题检出率的前三位为' +man3Str.join('、')+ '；女生在心理健康问题检出率的前三位为' +woman3Str.join('、')+ '。'
+                        let genderTxt5 = '男生在心理健康问题检出率的前三位为' + man3Str.join('、') + '；女生在心理健康问题检出率的前三位为' + woman3Str.join('、') + '。'
                         this.detail.genderTxt5 = genderTxt5
-                        
-                       
+
+
                         // let manCot = man3.concat(woman3)
                         // let gArr3 = []
                         // for (let i in manCot) {
@@ -6620,7 +6736,7 @@ export default {
                         //     sName.push('自我伤害')
                         // }
                         // console.log(count)
-                            
+
                         // if (count > 2) {
                         //     if (manSum > womanSum) {
                         //         genderTxt += '相较于女生，男生心理健康问题总体更加突出。'
@@ -6682,7 +6798,7 @@ export default {
                                     sName.push('自我伤害')
                                 }
                                 genderTxt += sName.join('、')
-                                
+
                                 genderTxt += '倾向。'
                             }
                         } else if (manSum < womanSum) {
@@ -6724,7 +6840,7 @@ export default {
                                     sName.push('自我伤害')
                                 }
                                 genderTxt += sName.join('、')
-                                
+
                                 genderTxt += '倾向。'
                             }
                         } else {
@@ -6767,13 +6883,13 @@ export default {
                                 }
                                 console.log(sName)
                                 let mstr3 = []
-                                for(let i in sName) {
+                                for (let i in sName) {
                                     if (JSON.stringify(man3).indexOf(sName[i]) != -1) {
                                         mstr3.push(sName[i])
                                     }
                                 }
                                 let wstr3 = []
-                                for(let i in sName) {
+                                for (let i in sName) {
                                     if (JSON.stringify(woman3).indexOf(sName[i]) != -1) {
                                         wstr3.push(sName[i])
                                     }
@@ -6788,7 +6904,7 @@ export default {
                             genderTxt += '男女生心理健康问题检出率的前三位皆为'
                             for (let i in man3) {
                                 genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
-                                if (i < man3.length - 1){
+                                if (i < man3.length - 1) {
                                     genderTxt += '、'
                                 } else {
                                     genderTxt += '。'
@@ -6799,20 +6915,20 @@ export default {
                                 genderTxt += '男生心理健康问题检出率的前三位为'
                                 for (let i in man3) {
                                     genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
-                                    if (i < man3.length - 2){
+                                    if (i < man3.length - 2) {
                                         genderTxt += '、'
                                     }
-                                    if (i == man3.length - 2){
+                                    if (i == man3.length - 2) {
                                         genderTxt += '和'
                                     }
                                 }
                                 genderTxt += '；女生心理健康问题检出率的前三位为'
                                 for (let i in woman3) {
                                     genderTxt += woman3[i].grade + '（' + woman3[i].percentage + '%）'
-                                    if (i < woman3.length - 2){
+                                    if (i < woman3.length - 2) {
                                         genderTxt += '、'
                                     }
-                                    if (i == woman3.length - 2){
+                                    if (i == woman3.length - 2) {
                                         genderTxt += '和'
                                     }
                                 }
@@ -6822,33 +6938,33 @@ export default {
                                     genderTxt += '；女生心理健康问题检出率的前三位为'
                                     for (let i in woman3) {
                                         genderTxt += woman3[i].grade + '（' + woman3[i].percentage + '%）'
-                                        if (i < woman3.length - 2){
+                                        if (i < woman3.length - 2) {
                                             genderTxt += '、'
                                         }
-                                        if (i == woman3.length - 2){
+                                        if (i == woman3.length - 2) {
                                             genderTxt += '和'
                                         }
                                     }
                                     genderTxt += '男生心理健康问题检出率的前三位为'
                                     for (let i in man3) {
                                         genderTxt += man3[i].grade + '（' + man3[i].percentage + '%）'
-                                        if (i < man3.length - 2){
+                                        if (i < man3.length - 2) {
                                             genderTxt += '、'
                                         }
-                                        if (i == man3.length - 2){
+                                        if (i == man3.length - 2) {
                                             genderTxt += '和'
                                         }
                                     }
-                                
+
                                     genderTxt += '。'
                                 }
                             }
-                            
+
 
                         }
-                        
+
                         this.detail.gradeTxt4 = genderTxt
-                        
+
                         this.part4 = true;
                     } else {
                         that.$message.error(data.msg);
@@ -6878,7 +6994,7 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-            
+
             // 学段健康百分比  不需要男女之分
             let param8 = {
                 startDate: star,
@@ -6892,7 +7008,7 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        
+
                         let zsClass = []
                         let fzsClass = []
                         // let zsClass0 = []
@@ -6904,39 +7020,39 @@ export default {
                         // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
                         for (let i in data) {
                             if (data[i].grade == '初中A直升班') {
-                                if (data[i].dimension == '抑郁'){
+                                if (data[i].dimension == '抑郁') {
                                     zsClass[0] = data[i]
                                 }
-                                if (data[i].dimension == '焦虑'){
+                                if (data[i].dimension == '焦虑') {
                                     zsClass[1] = data[i]
                                 }
-                                if (data[i].dimension == '强迫'){
+                                if (data[i].dimension == '强迫') {
                                     zsClass[2] = data[i]
                                 }
-                                if (data[i].dimension == '敌对'){
+                                if (data[i].dimension == '敌对') {
                                     zsClass[3] = data[i]
                                 }
-                                if (data[i].dimension == '自我伤害'){
+                                if (data[i].dimension == '自我伤害') {
                                     zsClass[4] = data[i]
                                 }
                                 // zsClass.push(data[i])
                                 zsSum += data[i].percentage
-                            }  
+                            }
                             if (data[i].grade == '初中B非直升班') {
                                 // fzsClass.push(data[i])
-                                if (data[i].dimension == '抑郁'){
+                                if (data[i].dimension == '抑郁') {
                                     fzsClass[0] = data[i]
                                 }
-                                if (data[i].dimension == '焦虑'){
+                                if (data[i].dimension == '焦虑') {
                                     fzsClass[1] = data[i]
                                 }
-                                if (data[i].dimension == '强迫'){
+                                if (data[i].dimension == '强迫') {
                                     fzsClass[2] = data[i]
                                 }
-                                if (data[i].dimension == '敌对'){
+                                if (data[i].dimension == '敌对') {
                                     fzsClass[3] = data[i]
                                 }
-                                if (data[i].dimension == '自我伤害'){
+                                if (data[i].dimension == '自我伤害') {
                                     fzsClass[4] = data[i]
                                 }
 
@@ -6945,10 +7061,10 @@ export default {
                         }
                         console.log(zsClass)
                         console.log(fzsClass)
-                        for ( let i in zsClass) {
+                        for (let i in zsClass) {
                             delete zsClass[i].grade;
                         }
-                        for ( let i in fzsClass) {
+                        for (let i in fzsClass) {
                             delete fzsClass[i].grade;
                         }
                         console.log(zsClass)
@@ -7000,7 +7116,7 @@ export default {
                                 let zs3Txt = ''
                                 for (let q in zs3Arr) {
                                     zs3Txt += zs3Arr[q]
-                                    if (q < zs3Arr.length - 2){
+                                    if (q < zs3Arr.length - 2) {
                                         zs3Txt += '、'
                                     }
                                     if (q == zs3Arr.length - 2) {
@@ -7015,7 +7131,7 @@ export default {
                                 let zs1Txt = ''
                                 for (let q in zs1Arr) {
                                     zs1Txt += zs1Arr[q]
-                                    if (q < zs1Arr.length - 2){
+                                    if (q < zs1Arr.length - 2) {
                                         zs1Txt += '、'
                                     }
                                     if (q == zs1Arr.length - 2) {
@@ -7027,7 +7143,7 @@ export default {
                             }
                             if (zs2Arr.length == 0) {
                                 allTxtZs += '。'
-                            } else{
+                            } else {
                                 if (zs3Arr.length == 0) {
                                     allTxtZs += '；'
                                 } else {
@@ -7043,7 +7159,7 @@ export default {
                                 let zs2Txt = ''
                                 for (let q in zs2Arr) {
                                     zs2Txt += zs2Arr[q]
-                                    if (q < zs2Arr.length - 2){
+                                    if (q < zs2Arr.length - 2) {
                                         zs2Txt += '、'
                                     }
                                     if (q == zs2Arr.length - 2) {
@@ -7097,7 +7213,7 @@ export default {
                             zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
                             for (let i in zsClass3) {
                                 zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1){
+                                if (i < zsClass3.length - 1) {
                                     zsTxt += '，'
                                 } else {
                                     zsTxt += '。'
@@ -7110,7 +7226,7 @@ export default {
                             zsTxt += '初中一年级' + '直升班的心理健康问题检出率的前三位为'
                             for (let i in zsClass3) {
                                 zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1){
+                                if (i < zsClass3.length - 1) {
                                     zsTxt += '、'
                                 }
                             }
@@ -7118,12 +7234,12 @@ export default {
                             zsTxt += '初中一年级' + '非直升班的心理健康问题检出率的前三位为'
                             for (let i in fzsClass3) {
                                 zsTxt += fzsClass3[i].dimension + '（' + fzsClass3[i].percentage + '%）'
-                                if (i < fzsClass3.length - 1){
+                                if (i < fzsClass3.length - 1) {
                                     zsTxt += '、'
                                 }
                             }
                             zsTxt += '。'
-                            
+
                         }
                         this.detail.gradeTxt3 = zsTxt
 
@@ -7137,26 +7253,90 @@ export default {
                 });
 
             // 学段健康百分比  不需要男女之分
-            let param9 = {
-                startDate: star,
-                endDate: end,
-                code: '',
-                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
-                // gender: 1
-            };
-            this.$http
-                .post(Url + "/aimw/export/serverCrowdList", param9)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        this.part9 = true;
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
+            // // 直升
+            // let paramnan = {
+            //     startDate: star,
+            //     endDate: end,
+            //     code: '',
+            //     isUpgrade: 1, //是否直升班(1:直升，2：非直升)	
+            //     // gender: 1
+            // };
+            // this.$http
+            //     .post(Url + "/aimw/export/serverCrowdList", paramnan)
+            //     .then(res => {
+            //         let data = res.data.data;
+            //         if (res.data.code == 0) {
+            //             console.log('直升')
+            //             console.log(data)
+            //             // // lv1: wdJcList[i].mildProportion,
+            //             // //         lv2: wdJcList[i].moderateProportion,
+            //             // //         lv3: wdJcList[i].severeProportion,）
+            //             // let nanList = []
+            //             // for (let i in data) {
+            //             //     let nanTxt = '在'+data[i].grade+'维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；' 
+            //             //     nanList.push(nanTxt)
+            //             // }
+            //             // // this.nanList
+
+            //             // // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+            //             // //                 人（0.4%）；女生正常人数为
+            //             // //                 147
+            //             // //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+
+            //             this.part9 = true
+            //         } else {
+            //             that.$message.error(data.msg);
+            //         }
+            //     })
+            //     .catch(res => {
+            //         console.log(res);
+            //     });
+            // // 非直升
+            // let paramnv = {
+            //     startDate: star,
+            //     endDate: end,
+            //     code: '',
+            //     isUpgrade: 2, //是否直升班(1:直升，2：非直升)	
+            //     // gender: 0
+            // };
+            // this.$http
+            //     .post(Url + "/aimw/export/serverCrowdList", paramnv)
+            //     .then(res => {
+            //         let data = res.data.data;
+            //         if (res.data.code == 0) {
+            //             console.log('非直升')
+            //             console.log(data)
+            //             // for (let i in data) {
+            //             //     let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。' 
+            //             // }
+            //             this.part10 = true
+            //         } else {
+            //             that.$message.error(data.msg);
+            //         }
+            //     })
+            //     .catch(res => {
+            //         console.log(res);
+            //     });
+            // let param9 = {
+            //     startDate: star,
+            //     endDate: end,
+            //     code: '',
+            //     // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+            //     // gender: 1
+            // };
+            // this.$http
+            //     .post(Url + "/aimw/export/serverCrowdList", param9)
+            //     .then(res => {
+            //         let data = res.data.data;
+            //         if (res.data.code == 0) {
+            //             this.part9 = true;
+            //         } else {
+            //             that.$message.error(data.msg);
+            //         }
+            //     })
+            //     .catch(res => {
+            //         console.log(res);
+            //     });
 
         },
         getDim(param7, star, end) {
@@ -7167,52 +7347,52 @@ export default {
                     if (res.data.code == 0) {
                         let gradeWd = []
                         for (let i in data) {
-                            if (data[i].departmentName.indexOf('X') != -1){
+                            if (data[i].departmentName.indexOf('X') != -1) {
                                 data[i].grade = '预备年级'
                                 data[i].name = '预备年级'
                             }
-                            if (data[i].departmentName.indexOf('C') != -1){
+                            if (data[i].departmentName.indexOf('C') != -1) {
                                 data[i].grade = '初中一年级'
-                                 data[i].name = '初中一年级'
+                                data[i].name = '初中一年级'
                             }
-                            if (data[i].departmentName.indexOf('G') != -1){
+                            if (data[i].departmentName.indexOf('G') != -1) {
                                 data[i].grade = '高中一年级'
                                 data[i].name = '高中一年级'
                             }
                             let iList = [
                                 {
                                     name: '抑郁',
-                                    numPer:{
-                                        num:  data[i].depressionNum,
-                                        percent:  data[i].depressionPercentage
+                                    numPer: {
+                                        num: data[i].depressionNum,
+                                        percent: data[i].depressionPercentage
                                     }
                                 },
                                 {
                                     name: '焦虑',
-                                    numPer:{
-                                        num:  data[i].anxietyNum,
-                                        percent:  data[i].anxietyPercentage
+                                    numPer: {
+                                        num: data[i].anxietyNum,
+                                        percent: data[i].anxietyPercentage
                                     }
                                 },
                                 {
                                     name: '强迫',
-                                    numPer:{
-                                        num:  data[i].forcedNum,
-                                        percent:  data[i].forcedPercentage
+                                    numPer: {
+                                        num: data[i].forcedNum,
+                                        percent: data[i].forcedPercentage
                                     }
                                 },
                                 {
                                     name: '敌对',
-                                    numPer:{
-                                        num:  data[i].violenceNum,
-                                        percent:  data[i].violencePercentage
+                                    numPer: {
+                                        num: data[i].violenceNum,
+                                        percent: data[i].violencePercentage
                                     }
                                 },
                                 {
                                     name: '自我伤害',
-                                    numPer:{
-                                        num:  data[i].suicideNum,
-                                        percent:  data[i].suicidePercentage
+                                    numPer: {
+                                        num: data[i].suicideNum,
+                                        percent: data[i].suicidePercentage
                                     }
                                 }
                             ]
@@ -7227,11 +7407,11 @@ export default {
                                 },
                                 {
                                     name: '强迫',
-                                    percent:  data[i].forcedPercentage
+                                    percent: data[i].forcedPercentage
                                 },
                                 {
                                     name: '敌对',
-                                    percent:  data[i].violencePercentage
+                                    percent: data[i].violencePercentage
                                 },
                                 {
                                     name: '自我伤害',
@@ -7259,7 +7439,7 @@ export default {
                             let info2 = JSON.parse(JSON.stringify(gradeWd[0].info)).sort((a, b) => {
                                 return Number(b.numPer.percent) - Number(a.numPer.percent);
                             });
-                            for (let i in info2){
+                            for (let i in info2) {
                                 aTxt1 += info2[i].name + '（' + info2.numPer.percent + '%）'
                                 if (i < info2.length - 1) {
                                     aTxt1 += '、'
@@ -7269,10 +7449,10 @@ export default {
                             }
                             // 第三段--第2句--若各个学段各维度检出率完全一致，则输出检出率由高到低的前三个维度。
                             aTxt2 += '其中，'
-                            let info3 = info2.slice(0,3)
-                            for (let i in info3){
+                            let info3 = info2.slice(0, 3)
+                            for (let i in info3) {
                                 aTxt2 += info3[i].name
-                                if (i < info3.length - 2){
+                                if (i < info3.length - 2) {
                                     aTxt2 += '、'
                                 }
                                 if (i == info3.length - 2) {
@@ -7280,17 +7460,17 @@ export default {
                                 }
                             }
                             aTxt2 += '问题在所有学段上都比较突出。'
-                           
+
                         } else {//若各个学段各维度检出率不完全一致
-                            
+
                             console.log(gradeWd)
                             // 第一种情况，先取四个一样的
-                            
+
                             // let gArr4 = []
                             let gArr3 = []
                             for (let i in gradeWd) {
                                 // gradeWd[i].info4 = gradeWd[i].info.slice(0,4)
-                                gradeWd[i].info3 = gradeWd[i].info.slice(0,3)
+                                gradeWd[i].info3 = gradeWd[i].info.slice(0, 3)
                                 // for (let j in gradeWd[i].info4) {
                                 //     let gInfo4 = gradeWd[i].info4[j].name
                                 //     gArr4.push(gInfo4)
@@ -7302,7 +7482,7 @@ export default {
                             }
                             console.log(gradeWd)
                             // console.log(gArr4)
-                            
+
                             console.log(gArr3)
                             const counts = {};
                             for (const num of gArr3) {
@@ -7334,7 +7514,7 @@ export default {
                             this.countElements(gArr3)
                             console.log(this.countElements(gArr3))
                             console.log(count)
-                            
+
                             if (count > 2) {
                                 // 若各个学段各维度检出率不完全一致，检出率由高到低前三位维度中完全相同（相同维度数=3），则输出：
                                 aTxt2 += sName.join('、')
@@ -7378,10 +7558,10 @@ export default {
                                     if (m > 1) {
                                         aTxt2 += '问题显现'
                                     }
-                                    if (m < gradeWd.length - 1){
+                                    if (m < gradeWd.length - 1) {
                                         aTxt2 += '，'
                                     } else {
-                                         aTxt2 += '。'
+                                        aTxt2 += '。'
                                     }
                                 }
                             } else if (count == 1) {
@@ -7408,20 +7588,20 @@ export default {
                                     if (m > 1) {
                                         aTxt2 += '问题显现'
                                     }
-                                    if (m < gradeWd.length - 1){
+                                    if (m < gradeWd.length - 1) {
                                         aTxt2 += '，'
                                     } else {
-                                         aTxt2 += '。'
+                                        aTxt2 += '。'
                                     }
                                 }
                             } else {
                                 // 若各个学段检出率不完全一致，由高到低前三位维度中相同维度数为0，则按年级由低到高相应输出：
-                               
+
                                 for (let m in gradeWd) {
                                     aTxt2 += gradeWd[m].grade
                                     for (let n in gradeWd[m].info3) {
                                         aTxt2 += gradeWd[m].info3[n].name
-                                        if (n < gradeWd[m].info3.length - 2){
+                                        if (n < gradeWd[m].info3.length - 2) {
                                             aTxt2 += '、'
                                         }
                                         if (n == gradeWd[m].info3.length - 2) {
@@ -7437,15 +7617,15 @@ export default {
                                     if (m > 1) {
                                         aTxt2 += '问题显现'
                                     }
-                                    if (m < gradeWd.length - 1){
+                                    if (m < gradeWd.length - 1) {
                                         aTxt2 += '，'
                                     } else {
-                                         aTxt2 += '。'
+                                        aTxt2 += '。'
                                     }
                                 }
                             }
 
-                            
+
                             // 第三段--第1句--若各个学段各维度任一检出率不一致则输出：
                             aTxt1 = "不同学段学生在心理健康问题上表现出不同的特点，"
                         }
@@ -7463,7 +7643,7 @@ export default {
                             let pLists = JSON.parse(JSON.stringify(orgArr.pList)).sort((a, b) => {
                                 return Number(b.percent) - Number(a.percent);
                             });
-                            gradeTxtOrg += orgArr.grade + '测评维度检出率由高到低分别为：' 
+                            gradeTxtOrg += orgArr.grade + '测评维度检出率由高到低分别为：'
                             for (let j in pLists) {
                                 gradeTxtOrg += pLists[j].name + '（' + pLists[j].percent + '%）'
                                 if (j < pLists.length - 1) {
@@ -7479,11 +7659,11 @@ export default {
                         this.detail.gradeTxtOrg = gradeTxtOrg
                         // 预备年级测评维度检出率由高到低分别为：焦虑（36.1%）、抑郁（23.0%）、敌对（21.6%）、自我伤害（17.4%）、强迫（17.2%）；初中一年级测评维度检出率由高到低分别为：焦虑（28.0%）、抑郁（24.4%）、自我伤害（20.2%）、敌对（16.1%）、强迫（15.4%）；高中一年级测评维度检出率由高到低分别为：焦虑（31.9%）、抑郁（24.3%）、自我伤害（20.7%）、强迫（18.8%）、敌对（18.6%）。
                         let gradeListTain = JSON.parse(JSON.stringify(data))
-                        
+
                         for (let i in this.gradeAllList) {
                             this.gradeAllList[i].wdList = gradeListTain[i].pList
                             // gradeListTain[i].csList = gradeListTain[i].pList
-                            
+
                         }
                         // let gradeAllTxt1 = ''
                         // gradeAllTxt1 += '与全国常模相比，'
@@ -7491,41 +7671,41 @@ export default {
                         // 与全国常模相比，初中一年级学生（第一句）在强迫、自我伤害、敌对和焦虑方面表现较好。（第二句：在**方面与全国常模持平，）(第三句）在抑郁方面有待改善，超出全国常模 4.5%。
                         for (let i in this.gradeAllList) {
                             let wdList = gradeListTain[i].pList
-                            
+
                             let allTxt = '与全国常模相比，'
                             allTxt += this.gradeAllList[i].name + '学生'
                             let allCont0 = 0 //大于
                             let allCont1 = 0 //等于
                             let allCont2 = 0 //小于
                             for (let j in wdList) {
-                                wdList[j].percentNo =  Number(Math.abs(wdList[j].percent - this.ChinaCM[j]).toFixed(1))
-                                wdList[j].percentNum =  Number(wdList[j].percent - this.ChinaCM[j]).toFixed(1)
+                                wdList[j].percentNo = Number(Math.abs(wdList[j].percent - this.ChinaCM[j]).toFixed(1))
+                                wdList[j].percentNum = Number(wdList[j].percent - this.ChinaCM[j]).toFixed(1)
                                 if (wdList[j].percent > this.ChinaCM[j]) {
-                                    allCont0 ++
+                                    allCont0++
                                 }
                                 if (wdList[j].percent == this.ChinaCM[j]) {
-                                    allCont1 ++
+                                    allCont1++
                                 }
                                 if (wdList[j].percent < this.ChinaCM[j]) {
-                                    allCont2 ++
+                                    allCont2++
                                 }
                             }
                             console.log(wdList)
                             let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
                                 return Number(b.percentNo) - Number(a.percentNo);
-                            }).slice(0,3);
+                            }).slice(0, 3);
                             if (allCont0 == 5) { //都大于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
                                 console.log(percentArr)
-                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '超出全国常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '超出全国常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else if (allCont1 == 5) { //都等于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与全国常模持平，本年级心理健康问题与全国状况大致相当。'
                             } else if (allCont2 == 5) { //都小于全国
                                 // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
-                                
+
                                 console.log(percentArr)
-                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于全国常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '低于全国常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else {
                                 let d0 = [] //高
                                 let d01 = [] //高
@@ -7534,7 +7714,7 @@ export default {
                                 for (let j in wdList) {
                                     if (wdList[j].percentNum > 0) {
                                         d0.push(wdList[j].name)
-                                        d01.push(wdList[j].percentNo+'%')
+                                        d01.push(wdList[j].percentNo + '%')
                                     }
                                     if (wdList[j].percentNum == 0) {
                                         d1.push(wdList[j].name)
@@ -7551,7 +7731,7 @@ export default {
                                 }
                                 if (d0.length == 0) {
                                     allTxt += '。'
-                                } else{
+                                } else {
                                     if (d2.length == 0) {
                                         allTxt += '，'
                                     } else {
@@ -7565,53 +7745,53 @@ export default {
                                 if (d0.length > 0) {
                                     allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出全国常模' + d01.join('、') + '。'
                                 }
-                                
+
                             }
                             this.gradeAllList[i].allTxt0 = allTxt
                             //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
-                                   
+
                             //     } else {
 
                             //     }
-                            
+
                         }
                         for (let i in this.gradeAllList) {
                             let wdList = gradeListTain[i].pList
-                            
+
                             let allTxt = '与本校常模相比，'
                             allTxt += this.gradeAllList[i].name + '学生'
                             let allCont0 = 0 //大于
                             let allCont1 = 0 //等于
                             let allCont2 = 0 //小于
                             for (let j in wdList) {
-                                wdList[j].percentNo =  Number(Math.abs(wdList[j].percent - this.schoolCM[j]).toFixed(1))
-                                wdList[j].percentNum =  Number(wdList[j].percent - this.schoolCM[j]).toFixed(1)
+                                wdList[j].percentNo = Number(Math.abs(wdList[j].percent - this.schoolCM[j]).toFixed(1))
+                                wdList[j].percentNum = Number(wdList[j].percent - this.schoolCM[j]).toFixed(1)
                                 if (wdList[j].percent > this.schoolCM[j]) {
-                                    allCont0 ++
+                                    allCont0++
                                 }
                                 if (wdList[j].percent == this.schoolCM[j]) {
-                                    allCont1 ++
+                                    allCont1++
                                 }
                                 if (wdList[j].percent < this.schoolCM[j]) {
-                                    allCont2 ++
+                                    allCont2++
                                 }
                             }
                             console.log(wdList)
                             let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
                                 return Number(b.percentNo) - Number(a.percentNo);
-                            }).slice(0,3);
+                            }).slice(0, 3);
                             if (allCont0 == 5) { //都大于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
                                 console.log(percentArr)
-                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '超出本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '超出本校常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else if (allCont1 == 5) { //都等于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与本校常模持平，本年级心理健康问题与本校状况大致相当。'
                             } else if (allCont2 == 5) { //都小于全国
                                 // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
-                                
+
                                 console.log(percentArr)
-                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
+                                allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '低于本校常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else {
                                 let d0 = [] //高
                                 let d01 = [] //高
@@ -7620,7 +7800,7 @@ export default {
                                 for (let j in wdList) {
                                     if (wdList[j].percentNum > 0) {
                                         d0.push(wdList[j].name)
-                                        d01.push(wdList[j].percentNo+'%')
+                                        d01.push(wdList[j].percentNo + '%')
                                     }
                                     if (wdList[j].percentNum == 0) {
                                         d1.push(wdList[j].name)
@@ -7637,7 +7817,7 @@ export default {
                                 }
                                 if (d0.length == 0) {
                                     allTxt += '。'
-                                } else{
+                                } else {
                                     if (d2.length == 0) {
                                         allTxt += '，'
                                     }
@@ -7645,21 +7825,21 @@ export default {
                                 if (d0.length > 0) {
                                     allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出本校常模' + d01.join('、') + '。'
                                 }
-                                
+
                             }
                             this.gradeAllList[i].allTxt1 = allTxt
                             //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
-                                   
+
                             //     } else {
 
                             //     }
-                            
+
                         }
 
                         // for (let i in this.gradeAllList) {
                         //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
                         //         let wdList = gradeListTain[i].pList
-                            
+
                         //         let allTxt = '与本校常模相比，'
                         //         allTxt += this.gradeAllList[i].name + '学生'
                         //         let allCont0 = 0 //大于
@@ -7691,7 +7871,7 @@ export default {
                         //         } else if (allCont2 == 5) { //都小于全国
                         //             // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
                         //             allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
-                                    
+
                         //             console.log(percentArr)
                         //             allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name+ '低于本校常模相对较多，分别为'+percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo+ '%。'
                         //         } else {
@@ -7733,19 +7913,19 @@ export default {
                         //             if (d0.length > 0) {
                         //                 allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出本校常模' + d01.join('、') + '。'
                         //             }
-                                    
+
                         //         }
                         //         this.gradeAllList[i].allTxt2 = allTxt
                         //     } else {
                         //         this.gradeAllList[i].allTxt2 = ''
                         //     }
-                            
+
                         //     //     if (this.gradeAllList[i].name.indexOf('初中') != -1) {
-                                   
+
                         //     //     } else {
 
                         //     //     }
-                            
+
                         // }
                         // this.gradeAllList = gradeListTain
                         console.log(this.gradeAllList)
@@ -7774,31 +7954,31 @@ export default {
                     let data = res.data.data;
                     if (res.data.code == 0) {
                         let xList = {
-                            name :'预备年级',
+                            name: '预备年级',
                             csList: []
                         }
                         let cList = {
-                            name :'初中一年级',
+                            name: '初中一年级',
                             csList: []
                         }
                         let gList = {
-                            name :'高中一年级',
+                            name: '高中一年级',
                             csList: []
                         }
                         for (let i in data) {
-                            if (data[i].departmentName.indexOf('X') != -1){
+                            if (data[i].departmentName.indexOf('X') != -1) {
                                 xList.csList.push(data[i])
                             }
-                            if (data[i].departmentName.indexOf('C') != -1){
+                            if (data[i].departmentName.indexOf('C') != -1) {
                                 cList.csList.push(data[i])
                             }
-                            if (data[i].departmentName.indexOf('G') != -1){
+                            if (data[i].departmentName.indexOf('G') != -1) {
                                 gList.csList.push(data[i])
                             }
                         }
                         // let csLists = [xList,cList,gList]
-                        
-                        for (let i in this.gradeAllList) { 
+
+                        for (let i in this.gradeAllList) {
                             if (this.gradeAllList[i].name == "预备年级") {
                                 this.gradeAllList[i].csList = xList.csList
                             }
@@ -7876,44 +8056,45 @@ export default {
                                     }
                                 )
                             }
-                            this.gradeAllList[i].cwdList = [yyArr,jlArr,qpArr,ddArr,zwshArr]
-                            this.gradeAllList[i].cwdName = ['','','','','']
+                            this.gradeAllList[i].cwdList = [yyArr, jlArr, qpArr, ddArr, zwshArr]
+                            this.gradeAllList[i].cwdName = ['', '', '', '', '']
                             this.gradeAllList[i].className = []
                             for (let m in this.gradeAllList[i].cwdList) {
                                 let classArr = this.gradeAllList[i].cwdList[m]
                                 let nameStr = []
                                 for (let n in classArr) {
                                     if (classArr[n].njFlag || classArr[n].qgFlag) {
-                                        if (classArr[n].njFlag && classArr[n].qgFlag){
-                                            nameStr.push(classArr[n].name+'*')
+                                        if (classArr[n].njFlag && classArr[n].qgFlag) {
+                                            nameStr.push(classArr[n].name + '*')
                                             this.gradeAllList[i].className.push(classArr[n].name)
                                         } else {
                                             nameStr.push(classArr[n].name)
                                         }
-                                        
+
                                     }
                                 }
                                 this.gradeAllList[i].cwdName[m] = nameStr.join('、')
                             }
-                            console.log(this.gradeAllList[i].className)
+                            // console.log(this.gradeAllList[i].className)
                             let classArrx = this.gradeAllList[i].className
                             for (let l in this.gradeAllList[i].csList) {
                                 this.gradeAllList[i].csList[l].nameFlag = false
                                 for (let o in classArrx) {
-                                    
+
                                     this.gradeAllList[i].csList[l].name = this.gradeAllList[i].csList[l].departmentName.split("届")[1]
-                                    console.log(this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o])
-                                    
-                                    if (this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o]){
-                                        console.log("???"+this.gradeAllList[i].csList[l].departmentName.split("届")[1])
+                                    // console.log(this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o])
+
+                                    if (this.gradeAllList[i].csList[l].departmentName.split("届")[1] == classArrx[o]) {
+                                        // console.log("???"+this.gradeAllList[i].csList[l].departmentName.split("届")[1])
                                         this.gradeAllList[i].csList[l].nameFlag = true
                                     }
                                 }
-                                console.log(this.gradeAllList[i].csList[l])
+                                // console.log(this.gradeAllList[i].csList[l])
                             }
-                            
+
                         }
                         console.log(this.gradeAllList)
+                        this.genderQuestion(param6.startDate, param6.endDate)
                         // this.gradeAllList = this.gradeAllList
                         this.part6 = true;
                     } else {
@@ -7923,7 +8104,992 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
+
+        },
+        replaceNullsWithZero(obj) {
+            Object.keys(obj).forEach(key => {
+                if (obj[key] === null) {
+                    obj[key] = 0;
+                }
+            });
+            return obj;
+        },
+        genderQuestion(star, end) {
+            console.log('---------------------------')
+            console.log(this.gradeAllList)
+            let objX = {
+                code: "X",
+                gradeObj: {
+                    gradeRiskNum: 37,
+                    gradeRiskPercent: "8.53%",
+                    gradeTotal: 434,
+                    isUpgrade: null
+                },
+                gradeNan: [],
+                gradeNv: []
+            }
+            // 预备年级不同性别测评情况
+            //重点关注人员名单
+            let param9 = {
+                startDate: star,
+                endDate: end,
+                code: 'X',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                // gender: 1
+            };
+
+            this.$http
+                .post(Url + "/aimw/export/serverCrowdList", param9)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('预备年级--重点关注：')
+                        console.log(data)
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('预备年级') != -1) {
+                                this.gradeAllList[i].gradeObj = data[0]
+                            }
+                        }
+
+                        this.gradeFjList[0] = data[0]
+                        this.$forceUpdate()
+                        this.part9 = true;
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 男
+            let param91 = {
+                startDate: star,
+                endDate: end,
+                code: 'X',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 1
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param91)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('预备年级--男：' + data)
+                        console.log(data)
+                        // console.log('男')
+                        // console.log(data)
+
+                        // lv1: wdJcList[i].mildProportion,
+                        //         lv2: wdJcList[i].moderateProportion,
+                        //         lv3: wdJcList[i].severeProportion,）
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nanList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nanTxt = '在' + data[i].grade + '维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；'
+                            nanList.push(nanTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('预备年级') != -1) {
+                                this.gradeAllList[i].gradeNan = nanList
+                                this.gradeAllList[i].gradeNanData = data
+                            }
+                        }
+
+                        // this.nanList
+
+                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+                        //                 人（0.4%）；女生正常人数为
+                        //                 147
+                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+                        this.$forceUpdate()
+                        this.part91 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 女
+            let param92 = {
+                startDate: star,
+                endDate: end,
+                code: 'X',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 0
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param92)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('预备年级--女：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nvList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。'
+                            nvList.push(nvTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('预备年级') != -1) {
+                                this.gradeAllList[i].gradeNv = nvList
+                                this.gradeAllList[i].gradeNvData = data
+                            }
+                        }
+                        this.$forceUpdate()
+                        this.part92 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+
+            // 高中年级不同性别测评情况
+            //重点关注人员名单
+            let param10 = {
+                startDate: star,
+                endDate: end,
+                code: 'G',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                // gender: 1
+            };
+
+            this.$http
+                .post(Url + "/aimw/export/serverCrowdList", param10)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('高中年级--重点关注：' + data)
+                        console.log(data)
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('高中一年级') != -1) {
+                                this.gradeAllList[i].gradeObj = data[0]
+                            }
+                        }
+                        this.gradeFjList[3] = data[0]
+
+                        this.$forceUpdate()
+                        this.part10 = true;
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 男
+            let param101 = {
+                startDate: star,
+                endDate: end,
+                code: 'G',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 1
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param101)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('高中年级--男：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        // console.log('男')
+                        // console.log(data)
+                        // lv1: wdJcList[i].mildProportion,
+                        //         lv2: wdJcList[i].moderateProportion,
+                        //         lv3: wdJcList[i].severeProportion,）
+                        let nanList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nanTxt = '在' + data[i].grade + '维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；'
+                            nanList.push(nanTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('高中一年级') != -1) {
+                                this.gradeAllList[i].gradeNan = nanList
+                                this.gradeAllList[i].gradeNanData = data
+                            }
+                        }
+                        this.$forceUpdate()
+                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+                        //                 人（0.4%）；女生正常人数为
+                        //                 147
+                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+
+                        this.part101 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 女
+            let param102 = {
+                startDate: star,
+                endDate: end,
+                code: 'G',
+                // isUpgrade: 0, //是否直升班(1:直升，2：非直升)	
+                gender: 0
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param102)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('高中年级--女：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nvList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。'
+                            nvList.push(nvTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('高中一年级') != -1) {
+                                this.gradeAllList[i].gradeNv = nvList
+                                this.gradeAllList[i].gradeNvData = data
+                            }
+                        }
+                        this.$forceUpdate()
+                        // console.log('女')
+                        // console.log(data)
+                        // for (let i in data) {
+                        //     let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。' 
+                        // }
+                        this.part102 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+
+            // 初中年级不同性别测评情况
+            //重点关注人员名单
+            // 全部
+            let param11 = {
+                startDate: star,
+                endDate: end,
+                code: 'C',
+                // isUpgrade: 1, //是否直升班(1:直升，2：非直升)	
+                // gender: 1
+            };
+
+            this.$http
+                .post(Url + "/aimw/export/serverCrowdList", param11)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('初中年级--重点关注--全部：' + data)
+                        console.log(data)
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+                                for (let j in data) {
+                                    if (data[j].isUpgrade == 1) {
+                                        this.gradeAllList[i].gradeObjz = data[j]
+                                        this.gradeFjList[1] = data[j]
+                                    }
+                                    if (data[j].isUpgrade == 2) {
+                                        this.gradeAllList[i].gradeObjf = data[j]
+                                        this.gradeFjList[2] = data[j]
+                                    }
+                                    if (data[j].isUpgrade === null) {
+                                        this.gradeAllList[i].gradeObj = data[j]
+                                    }
+                                }
+                                // this.gradeAllList[i].gradeObj = data[0]
+                            }
+                        }
+
+                        this.$forceUpdate()
+                        this.part11 = true;
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 直升
+            // let param12 = {
+            //     startDate: star,
+            //     endDate: end,
+            //     code: 'C',
+            //     isUpgrade: 1, //是否直升班(1:直升，2：非直升)	
+            //     // gender: 1
+            // };
+
+            // this.$http
+            //     .post(Url + "/aimw/export/serverCrowdList", param12)
+            //     .then(res => {
+            //         let data = res.data.data;
+            //         if (res.data.code == 0) {
+            //             console.log('初中年级--重点关注--直升：' + data)
+            //             console.log(data)
+            //             for (let i in this.gradeAllList) {
+            //                 if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+            //                     this.gradeAllList[i].gradeObjz = data[0]
+            //                 }
+            //             }
+            //             this.$forceUpdate()
+            //             this.part12 = true;
+            //         } else {
+            //             that.$message.error(data.msg);
+            //         }
+            //     })
+            //     .catch(res => {
+            //         console.log(res);
+            //     });
+            // 男
+            let param121 = {
+                startDate: star,
+                endDate: end,
+                code: 'C',
+                isUpgrade: 1, //是否直升班(1:直升，2：非直升)	
+                gender: 1
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param121)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('初中年级--直升--男：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nanList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nanTxt = '在' + data[i].grade + '维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；'
+                            nanList.push(nanTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+                                this.gradeAllList[i].gradeNanz = nanList
+                                this.gradeAllList[i].gradeNanDataz = data
+                            }
+                        }
+
+                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+                        //                 人（0.4%）；女生正常人数为
+                        //                 147
+                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+                        this.$forceUpdate()
+                        this.part121 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 女
+            let param122 = {
+                startDate: star,
+                endDate: end,
+                code: 'C',
+                isUpgrade: 1, //是否直升班(1:直升，2：非直升)	
+                gender: 0
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param122)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('初中年级--直升--女：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nvList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。'
+                            nvList.push(nvTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+                                this.gradeAllList[i].gradeNvz = nvList
+                                this.gradeAllList[i].gradeNvDataz = data
+                            }
+                        }
+                        this.$forceUpdate()
+                        this.part122 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 非直升
+            // let param13 = {
+            //     startDate: star,
+            //     endDate: end,
+            //     code: 'C',
+            //     isUpgrade: 2, //是否直升班(1:直升，2：非直升)	
+            //     // gender: 1
+            // };
+
+            // this.$http
+            //     .post(Url + "/aimw/export/serverCrowdList", param13)
+            //     .then(res => {
+            //         let data = res.data.data;
+            //         if (res.data.code == 0) {
+            //             console.log('初中年级--重点关注--非直升：' + data)
+            //             console.log(data)
+            //             for (let i in this.gradeAllList) {
+            //                 if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+            //                     this.gradeAllList[i].gradeObjf = data[0]
+            //                 }
+            //             }
+            //             this.$forceUpdate()
+            //             this.part13 = true;
+            //         } else {
+            //             that.$message.error(data.msg);
+            //         }
+            //     })
+            //     .catch(res => {
+            //         console.log(res);
+            //     });
+            // 男
+            let param131 = {
+                startDate: star,
+                endDate: end,
+                code: 'C',
+                isUpgrade: 2, //是否直升班(1:直升，2：非直升)	
+                gender: 1
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param131)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('初中年级--非直升--男：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nanList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nanTxt = '在' + data[i].grade + '维度中，男生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）；'
+                            nanList.push(nanTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+                                this.gradeAllList[i].gradeNanf = nanList
+                                this.gradeAllList[i].gradeNanDataf = data
+                            }
+                        }
+
+                        // 在抑郁维度中，男生正常人数为 171 人（75.7%），轻度问题为48 人（21.2%），中度问题为 6 人（2.7%），重度问题为 1
+                        //                 人（0.4%）；女生正常人数为
+                        //                 147
+                        //                 人（78.6%），轻度问题为 37 人（19.8%），中度问题为 3 人（1.6%），重度问题为 0 人（0%）。
+                        this.$forceUpdate()
+                        this.part131 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 女
+            let param132 = {
+                startDate: star,
+                endDate: end,
+                code: 'C',
+                isUpgrade: 2, //是否直升班(1:直升，2：非直升)	
+                gender: 0
+            };
+            this.$http
+                .post(Url + "/aimw/export/dimensionProportion", param132)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        console.log('初中年级--非直升--女：' + data)
+                        console.log(data)
+                        let datas = JSON.parse(JSON.stringify(data))
+                        for (let i in datas) {
+                            if (datas[i].grade == '抑郁') {
+                                data[0] = datas[i]
+                            }
+                            if (datas[i].grade == '焦虑') {
+                                data[1] = datas[i]
+                            }
+                            if (datas[i].grade == '强迫') {
+                                data[2] = datas[i]
+                            }
+                            if (datas[i].grade == '敌对') {
+                                data[3] = datas[i]
+                            }
+                            if (datas[i].grade == '自我伤害') {
+                                data[4] = datas[i]
+                            }
+                        }
+                        let nvList = []
+                        // let nanTxt = ''
+                        for (let i in data) {
+                            data[i] = this.replaceNullsWithZero(data[i])
+                            let nvTxt = '女生正常人数为' + data[i].normalNum + '人（' + data[i].normalProportion + '%），轻度问题为' + data[i].mildNum + '人（' + data[i].mildProportion + '%），中度问题为' + data[i].moderateNum + '人（' + data[i].moderateProportion + '%），重度问题为' + data[i].severeNum + '人（' + data[i].severeProportion + '%）。'
+                            nvList.push(nvTxt)
+                        }
+                        for (let i in this.gradeAllList) {
+                            if (this.gradeAllList[i].name.indexOf('初中一年级') != -1) {
+                                this.gradeAllList[i].gradeNvf = nvList
+                                this.gradeAllList[i].gradeNvDataf = data
+                            }
+                        }
+                        this.$forceUpdate()
+                        this.part132 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            // 典型案例
             
+            let param140 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '正常', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param140)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList0 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part140 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            let param141 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '抑郁', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param141)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList1 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part141 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            let param142 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '焦虑', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param142)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList2 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part142 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            let param143 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '强迫', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param143)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList3 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part143 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            let param144 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '敌对', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param144)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList4 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part144 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+            let param145 = {
+                startDate: star,
+                endDate: end,
+                dimensionType: '自我伤害', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+            };
+            this.$http
+                .post(Url + "/aimw/export/classicCaseList", param145)
+                .then(res => {
+                    let data = res.data.data;
+                    if (res.data.code == 0) {
+                        
+                        console.log(data)
+                        console.log(data)
+                        for (let i in data) {
+                            data[i].name = data[i].riskLevel
+                            let result0 = data[i].result.replace(/\n/g, "")
+                            console.log(result0)
+                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                            console.log(data[i].txt1)
+                            data[i].txt2 = ''
+                            let str0 = result0.split('关键沙具分析')[1]
+                            console.log(str0)
+                            let arr0 = str0.split('- ')
+                            let arr1 = []
+                            for (let j in arr0) {
+                                if (arr0[j] != '') {
+                                    console.log(arr0[j].split('**'))
+                                    arr1.push({
+                                        title: arr0[j].split('**')[1],
+                                        txt: arr0[j].split('**')[2].split('：')[1]
+                                    })
+                                }
+                            }
+                            console.log(arr0)
+                            data[i].list = arr1
+                        }
+                        this.anliList5 = data
+                        console.log(data)
+                        this.$forceUpdate()
+                        this.part145 = true
+
+                    } else {
+                        that.$message.error(data.msg);
+                    }
+                })
+                .catch(res => {
+                    console.log(res);
+                });
+        },
+        extractBetween(str, startChar, endChar) {
+            const regex = new RegExp(`${startChar}(.*?)${endChar}`);
+            const match = str.match(regex);
+            return match ? match[1] : '';
         },
         apartsReport() {
             console.log('导出团体报告')
@@ -7957,7 +9123,7 @@ export default {
         handleExport() {
             let pdf = new PdfLoader(
                 document.querySelector("#overviewpage"),
-                "pdf",
+                this.schoolName + "中小学生心理健康筛查评估报告",
                 "noSplitBox",
                 this.loading
             );
@@ -7979,15 +9145,15 @@ export default {
 </script>
 <style lang="less">
 .yy_txt {
-        font-size: 20px;
-        font-family: SourceHanSansCN-Regular, SourceHanSansCN;
-        font-weight: 400;
-        color: #333E75;
-        text-indent: 40px;
-        padding: 2px 0;
-        line-height: 32px;
+    font-size: 20px;
+    font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+    font-weight: 400;
+    color: #333E75;
+    text-indent: 40px;
+    padding: 2px 0;
+    line-height: 32px;
 
-    }
+}
 </style>
 <style lang="less" scoped>
 .group-class {
@@ -8442,7 +9608,7 @@ table {
 
             .yy_img {
                 width: 480px;
-                height: auto;
+                height: 270px;
                 border-radius: 16px;
             }
 
