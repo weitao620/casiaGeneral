@@ -105,19 +105,27 @@ function drawWaterMark(ctx, imgWidth, imgHeight, wmConfig) {
     })
   }
 class PdfLoader {
-    constructor(ele, pdfFileName, splitClassName, loading) {
+    constructor(ele, pdfFileName, splitClassName, loading, type, newEle, viewList) {
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!"+type)
         this.loading = loading
-        this.ele = ele
+        this.type = type
+        if (type == 2) {
+          this.ele = newEle
+          this.viewList = viewList
+          this.newEle = newEle
+        } else {
+          this.ele = ele
+        }
         this.pdfFileName = pdfFileName
         this.splitClassName = splitClassName || ''
         this.A4_WIDTH = 595.28
         this.A4_HEIGHT = 841.89
         this.muluPage = []
         this.muluEmptyPage = []
+        
     }
  
     async getPDF(resolve) {
-        
         
         const ele = this.ele
         console.log(ele)
@@ -160,7 +168,7 @@ class PdfLoader {
             width: ele.width,
             height: ele.width,
             windowWidth: ele.scrollWidth,
-            scale: 0.65, // 按比例增加分辨率
+            scale: 1, // 按比例增加分辨率
             useCORS: true, // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
         }).then(async (canvas) => {
             const contentWidth = canvas.width
@@ -193,6 +201,8 @@ class PdfLoader {
             // pdf.setFont('zhouzifangti');
             pdf.setFontSize(10);
             pdf.setTextColor("#333E75");
+            // document.body.appendChild(canvas);
+            // return false
             if (leftHeight < pageHeight) {
                 // 在pdf.addImage(pageData, 'JPEG', 左，上，宽度，高度)设置在pdf中显示；
 
@@ -226,9 +236,10 @@ class PdfLoader {
                   }
                 }
             }
-            document.body.appendChild(canvas);
-            
-                pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then(() => {
+            // document.body.appendChild(canvas);
+
+                pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then((res) => {
+                  console.log(res)
                     // 去除添加的空div 防止页面混乱
                     const doms = document.querySelectorAll('.emptyDiv')
                     for (let i = 0; i < doms.length; i++) {
@@ -236,6 +247,7 @@ class PdfLoader {
                     }
                     this.loading.close()
                 })
+                console.log(pdf.output('datauristring'))
                 this.ele.style.height = ''
                 
             
@@ -328,10 +340,73 @@ class PdfLoader {
                 // this.outPutPdfFn1(muluArr)
                 this.muluPage = muluArr
                 this.muluEmptyPage = muluEmptyArr[0] + 1
-                
+
+
+                // setTimeout(() => {
+                //   if (this.type == 2) {
+                //     let canvasList = []
+                //     for (let i in this.viewList) {
+                //       let eleNew = this.viewList[i]
+                //       let eleWNew = eleNew.offsetWidth // 获得该容器的宽
+                //       let eleHNew = eleNew.scrollHeight // 获得该容器的高
+                //       let eleOffsetTopNew = eleNew.offsetTop // 获得该容器到文档顶部的距离
+                //       let eleOffsetLeftNew = eleNew.offsetLeft // 获得该容器到文档最左的距离
+                //       window.pageYoffset = 0
+                //       // document.documentElement.scrollTop = 0
+                //       // document.body.scrollTop = 0
+                //       let canvasNew = document.createElement('canvas' + i)
+                //       let absNew = 0
+                //       const win_inNew =
+                //           document.documentElement.clientWidth || document.body.clientWidth // 获得当前可视窗口的宽度（不包含滚动条）
+                //       const win_outNew = window.innerWidth // 获得当前窗口的宽度（包含滚动条）
+                //       if (win_outNew > win_inNew) {
+                //           absNew = (win_outNew - win_inNew) / 2 // 获得滚动条宽度的一半
+                //       }
+                //       canvasNew.width = eleWNew * 2 // 将画布宽&&高放大两倍
+                //       canvasNew.height = eleHNew * 2
+                //       // let contextNew = canvas.getContext('2d')
+                //       // contextNew.scale(3, 3) // 增强图片清晰度
+                //       // contextNew.translate(0, -eleOffsetTopNew)
+                //       // context.translate(-eleOffsetLeft - abs, -eleOffsetTop)
+                //       eleNew.style.height = eleNew.scrollHeight + 'px' // 获取元素的滚动高度，用于截取被滚动条隐藏的部分
+                //       html2canvas(eleNew, {
+                //           backgroundColor: null,
+                //           allowTaint: false,
+                //           logging: true,
+                //           // imageTimeout: 20000, // 图片加载延迟，默认延迟为0，单位毫秒
+                //           dpi: window.devicePixelRatio * 4,
+                //           width: eleNew.width,
+                //           height: eleNew.width,
+                //           windowWidth: eleNew.scrollWidth,
+                //           scale: 0.9, // 按比例增加分辨率
+                //           useCORS: true, // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
+                //       }).then(canvas => {
+                //           let ctx = canvas.getContext('2d')
+                //           ctx.scale(3, 3) // 增强图片清晰度
+                //           ctx.translate(0, -eleOffsetTopNew)
+                //           // ctx.fillStyle = 'white'; // 设置背景色为白色
+                //           // ctx.fillRect(0, 0, canvas.width, canvas.height);
+                //           let pageDataNew = canvas.toDataURL('image/jpeg', 1.0)
+                //           console.log("????"+pageDataNew)
+                //           // document.body.appendChild(canvasNew);
+                //           canvasList.push(pageDataNew)
+                //           document.getElementById('imageContainer' + i).src = pageDataNew
+                //           // return false
+                //       })
+                //     }
+          
+                  
+                //     console.log(canvasList)
+                //   }
+                //   setTimeout(() => {
+                //       this.getPDF(resolve, reject)
+                //   }, 10000);
+                // }, 2000);
+
+
                 setTimeout(() => {
-                    this.getPDF(resolve, reject)
-                }, 1000);
+                  this.getPDF(resolve, reject)
+              }, 1000);
                 // 异步函数，导出成功后处理交互
                 
             // }, 100);

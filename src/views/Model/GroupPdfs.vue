@@ -4,125 +4,144 @@
 
             <div class="download" @click="apartsReport">点击下载</div>
             <div class="downloads"></div>
+            <!-- <div class="group_box" id="overviewNew">
+                <img style="width: 100%;display: block;" id="imageContainer0" src="" alt="">
+                <img style="width: 100%;display: block;" id="imageContainer1" src="" alt="">
+                <img style="width: 100%;display: block;" id="imageContainer2" src="" alt="">
+                <img style="width: 100%;display: block;" id="imageContainer3" src="" alt="">
+            </div> -->
             <!-- 导出pdf的盒子，随着页面增多，需要拆成两个盒子，再拼接，确保清晰度 -->
             <div class="group_box" id="overviewpage">
-                <!-- 封面 -->
-                <div class="group_style">
-                    <img class="shui_bg" src="../../assets/images/report/shui.png" alt="" />
-                    <div class="table-border noSplitBox">
-                        <div class="g1_top">
-                            <span>{{ schoolName }}</span>
-                        </div>
-                        <div class="g1_top1">
-                            {{ reportName }}
-                        </div>
-                        <div class="g1_top1">
-                            中小学生心理健康筛查评估
-                        </div>
-                        <div class="g1_top1">
-                            团体报告
-                        </div>
-                        <div class="g2_top1">
-                            {{ start }} ～ {{ end }}
-                        </div>
-                    </div>
-                </div>
-                <!-- 目录 -->
-                <div class="ml_box">
-                    <div class="ml_p noSplitBox">
-                        目录
-                    </div>
-                    <div class="noSplitBox" v-for="(item, index) in muluList" :key="index">
-                        <div :class="{
-                            ml_p0: true,
-                            pl30: item.mark == 2,
-                            pl60: item.mark == 3,
-                            pl90: item.mark == 4
-                        }">
-                            <div>
-                                {{ item.ids }} {{ item.name }}
+                <div id="viewImage1">
+                    <!-- 封面 -->
+                    <div class="group_style">
+                        <img class="shui_bg" src="../../assets/images/report/shui.png" alt="" />
+                        <div class="table-border noSplitBox">
+                            <div class="g1_top">
+                                <span>{{ schoolName }}</span>
                             </div>
-                            <div class="ml_li"></div>
-                            <div>{{ index < 4 ? '1' : item.page }}</div>
+                            <div class="g1_top1">
+                                {{ reportName }}
+                            </div>
+                            <div class="g1_top1">
+                                中小学生心理健康筛查评估
+                            </div>
+                            <div class="g1_top1">
+                                团体报告
+                            </div>
+                            <div class="g2_top1">
+                                {{ start }} ～ {{ end }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 目录 -->
+                    <div class="ml_box">
+                        <div class="ml_p noSplitBox">
+                            目录
+                        </div>
+                        <div class="noSplitBox" v-for="(item, index) in muluList" :key="index">
+                            <div :class="{
+                                ml_p0: true,
+                                pl30: item.mark == 2,
+                                pl60: item.mark == 3,
+                                pl90: item.mark == 4
+                            }">
+                                <div>
+                                    {{ item.ids }} {{ item.name }}
+                                </div>
+                                <div class="ml_li"></div>
+                                <!-- <div>{{ index < 4 ? '1' : item.page }}</div> -->
+                                <div>{{ item.page }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 引言 -->
+                    <!--  -->
+                    <div class="fuck yy_box mulu_empty_page">
+                        <div class="noSplitBox" style="padding-bottom: 600px;">
+
+                            <div class="yy_o noSplitBox mulu_page">
+                                1.引言
+                            </div>
+                            <div class="yy_t noSplitBox mulu_page">
+                                1.1 测评目的
+                            </div>
+                            <div class="yy_txt noSplitBox" v-if="version == '81'">
+                                {{ start }} ～ {{ end }}，{{ schoolName }}对校内 {{ detail.totalClasses }}
+                                个班级（其中：预备年级（小学六年级）{{
+                                    detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{
+                                    detail.gaoZhong.numClasses }}个）的 {{ detail.totalStudents }}
+                                名（其中：预备年级学生{{ detail.yuBei.numStudents }}名，初中一年级学生{{ detail.chuZhong.numStudents
+                                }}名，高中一年级学生{{ detail.gaoZhong.numStudents
+                                }}名；男生{{ detail.maleStudents }}名，女生{{ detail.femaleStudents }}名）学生进行了心理健康筛查评估。
+                            </div>
+                            <div class="yy_txt noSplitBox" v-if="version == 'all'">
+                                这里需要调整-----
+                                {{ start }} ～ {{ end }}，{{ schoolName }}对校内 {{ detail.totalClasses }}
+                                个班级（其中：预备年级（小学六年级）{{
+                                    detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{
+                                    detail.gaoZhong.numClasses }}个）的 {{ detail.totalStudents }}
+                                名（其中：预备年级学生{{ detail.yuBei.numStudents }}名，初中一年级学生{{ detail.chuZhong.numStudents
+                                }}名，高中一年级学生{{ detail.gaoZhong.numStudents
+                                }}名；男生{{ detail.maleStudents }}名，女生{{ detail.femaleStudents }}名）学生进行了心理健康筛查评估。
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                本次筛查评估主要用于揭示本校中小学生的心理健康水平和心理健康问题，明确不同学段和不同性别学生分别需要重点关注的心理健康问题，发现具有心理健康问题风险的学生，从而为本校开展学生心理健康教育以及心理问题风险管理提供重要的依据。
+                            </div>
+                            <div class="yy_t noSplitBox mulu_page">
+                                1.2 测评工具
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                此次筛查评估使用的测评工具为“AI
+                                心世界”智能心理测评系统。该系统结合心理投射和人工智能技术，在无意识状态下对受测者心理状态、个性特征和行为特征进行测量。该系统从五大心理健康问题（抑郁、焦虑、强迫、敌对、自我伤害）对中小学生心理状态进行科学评估。该系统完全自主研发，拥有
+                                10 余项国家发明专利，已通过中国心理学会标准化委员会成果鉴定和公安部安全与警用电子产品质量检测中心认证。
+                            </div>
+                            <div class="yy_t noSplitBox mulu_page">
+                                1.3 相关结论
+                            </div>
+                            <!-- 根据测评人群涉及多个学段、直升与非直升实际情况，进行相应输出：------这里可能要做个判断几个学段，初一有没有直升和非直升 -->
+                            <div class="yy_txt noSplitBox">
+                                本报告从全校各维度检出率、各学段各维度检出率、{{version == '81' ? '初中一年级直升班与非直升班各维度检出率、' : ''}}男女不同性别各维度检出率情况进行分析，相关结论如下：
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                （1）全校各维度检出率：在具体的心理健康维度上，检出率由高到低依次为：
+                                <span v-for="(item, index) in detail.wdJcList" :key="item.grade">
+                                    {{ item.grade }}（{{ item.total }}%）{{ index < detail.wdJcList.length - 1 ? '、' : ''
+                                        }}{{ index == detail.wdJcList.length - 1 ? '。' : '' }} </span>
+
+                                        <!-- 全部低于全国常模 -->
+                                        <span
+                                            v-if="detail.wdLevelTxt === 1">与全国常模相比，所有维度检出率都低于全国常模，该校测评年级心理健康整体表现较好。</span>
+
+                                        <!-- 全部等于全国常模 -->
+                                        <span v-if="detail.wdLevelTxt === 2">与全国常模相比，所有维度都与之持平，本校心理健康问题与全国状况大致相当。</span>
+
+                                        <!-- 全部大于全国常模 -->
+                                        <span
+                                            v-if="detail.wdLevelTxt === 3">与全国常模相比，所有维度检出率都高于全国常模，该校测评年级心理健康问题较为突出。</span>
+                                        <!-- 部分大于全国常模 -->
+                                        <span v-if="detail.wdLevelTxt === 4">其中，
+
+                                            {{ detail.txtStr }}检出率高于全国常模，问题较为突出。</span>
+                                        <!-- 部分持平，最高持平全国常模 -->
+                                        <span v-if="detail.wdLevelTxt === 5">与全国常模相比，
+                                            {{ detail.txtStr52 }}维度与之持平，{{ detail.txtStr51 }}维度低于全国常模。</span>
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                （2）各学段各维度检出率：{{ detail.gradeTxt1 }}{{ detail.gradeTxt2 }}
+                            </div>
+                            <div class="yy_txt noSplitBox" v-if="version == '81'">
+                                （3）{{ detail.gradeTxt3 }}
+                            </div>
+                            <div class="yy_txt noSplitBox">
+                                {{version == '81' ? '（4）' : '（3）'}}男女不同性别各维度检出率：{{ detail.gradeTxt4 }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- 引言 -->
-                <!--  -->
-                <div class="fuck yy_box mulu_empty_page">
-                    <div class="noSplitBox" style="padding-bottom: 600px;">
+                
 
-                        <div class="yy_o noSplitBox mulu_page">
-                            1.引言
-                        </div>
-                        <div class="yy_t noSplitBox mulu_page">
-                            1.1 测评目的
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            {{ start }} ～ {{ end }}，{{ schoolName }}对校内 {{ detail.totalClasses }}
-                            个班级（其中：预备年级（小学六年级）{{
-                                detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{
-                                detail.gaoZhong.numClasses }}个）的 {{ detail.totalStudents }}
-                            名（其中：预备年级学生{{ detail.yuBei.numStudents }}名，初中一年级学生{{ detail.chuZhong.numStudents
-                            }}名，高中一年级学生{{ detail.gaoZhong.numStudents
-                            }}名；男生{{ detail.maleStudents }}名，女生{{ detail.femaleStudents }}名）学生进行了心理健康筛查评估。
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            本次筛查评估主要用于揭示本校中小学生的心理健康水平和心理健康问题，明确不同学段和不同性别学生分别需要重点关注的心理健康问题，发现具有心理健康问题风险的学生，从而为本校开展学生心理健康教育以及心理问题风险管理提供重要的依据。
-                        </div>
-                        <div class="yy_t noSplitBox mulu_page">
-                            1.2 测评工具
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            此次筛查评估使用的测评工具为“AI
-                            心世界”智能心理测评系统。该系统结合心理投射和人工智能技术，在无意识状态下对受测者心理状态、个性特征和行为特征进行测量。该系统从五大心理健康问题（抑郁、焦虑、强迫、敌对、自我伤害）对中小学生心理状态进行科学评估。该系统完全自主研发，拥有
-                            10 余项国家发明专利，已通过中国心理学会标准化委员会成果鉴定和公安部安全与警用电子产品质量检测中心认证。
-                        </div>
-                        <div class="yy_t noSplitBox mulu_page">
-                            1.3 相关结论
-                        </div>
-                        <!-- 根据测评人群涉及多个学段、直升与非直升实际情况，进行相应输出：------这里可能要做个判断几个学段，初一有没有直升和非直升 -->
-                        <div class="yy_txt noSplitBox">
-                            本报告从全校各维度检出率、各学段各维度检出率、初中一年级直升班与非直升班各维度检出率、男女不同性别各维度检出率情况进行分析，相关结论如下：
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            （1）全校各维度检出率：在具体的心理健康维度上，检出率由高到低依次为：
-                            <span v-for="(item, index) in detail.wdJcList" :key="item.grade">
-                                {{ item.grade }}（{{ item.total }}%）{{ index < detail.wdJcList.length - 1 ? '、' : ''
-                                    }}{{ index == detail.wdJcList.length - 1 ? '。' : '' }} </span>
-
-                                    <!-- 全部低于全国常模 -->
-                                    <span
-                                        v-if="detail.wdLevelTxt === 1">与全国常模相比，所有维度检出率都低于全国常模，该校测评年级心理健康整体表现较好。</span>
-
-                                    <!-- 全部等于全国常模 -->
-                                    <span v-if="detail.wdLevelTxt === 2">与全国常模相比，所有维度都与之持平，本校心理健康问题与全国状况大致相当。</span>
-
-                                    <!-- 全部大于全国常模 -->
-                                    <span
-                                        v-if="detail.wdLevelTxt === 3">与全国常模相比，所有维度检出率都高于全国常模，该校测评年级心理健康问题较为突出。</span>
-                                    <!-- 部分大于全国常模 -->
-                                    <span v-if="detail.wdLevelTxt === 4">其中，
-
-                                        {{ detail.txtStr }}检出率高于全国常模，问题较为突出。</span>
-                                    <!-- 部分持平，最高持平全国常模 -->
-                                    <span v-if="detail.wdLevelTxt === 5">与全国常模相比，
-                                        {{ detail.txtStr52 }}维度与之持平，{{ detail.txtStr51 }}维度低于全国常模。</span>
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            （2）各学段各维度检出率：{{ detail.gradeTxt1 }}{{ detail.gradeTxt2 }}
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            （3）{{ detail.gradeTxt3 }}
-                        </div>
-                        <div class="yy_txt noSplitBox">
-                            （4）男女不同性别各维度检出率：{{ detail.gradeTxt4 }}
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="yy_box basic_box">
+                <div class="yy_box basic_box" id="viewImage2">
                     <div class="yy_o noSplitBox mulu_page">
                         2.测评基本信息
                     </div>
@@ -242,15 +261,15 @@
                         </table>
                     </div>
 
-                    <div class="yy_t noSplitBox mulu_page">
+                    <div class="yy_t noSplitBox mulu_page" v-if="version == '81'">
                         2.2 典型样例
                     </div>
-                    <div class="yy_txt noSplitBox">
+                    <div class="yy_txt noSplitBox" v-if="version == '81'">
                         为了让报告更具实用性和操作性，在本次测评的{{ detail.totalStudents
                         }}名学生中，根据测评系统的评估结果在每个维度的不同风险水平中各抽取一个相对应的典型沙盘案例进行专家分析（仅展示沙盘的图像基础信息，隐去学生个人信息）。通过真实的案例，老师们可以将评测系统的评估结果与学生的实际情况进行更直观的比对，提升心理老师的专业技能，以便更好地支撑对学生心理的筛查和干预。
                     </div>
                     <!-- 正常 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.1 正常样例
                         </div>
@@ -260,7 +279,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -284,7 +303,7 @@
                     </div>
 
                     <!-- 抑郁 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.2 抑郁维度样例
                         </div>
@@ -315,7 +334,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}问题
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -573,7 +592,7 @@
 
 
                     <!-- 焦虑 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.3 焦虑维度样例
                         </div>
@@ -604,7 +623,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}问题
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -891,7 +910,7 @@
                         </div>
                     </div>
                     <!-- 强迫 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.4 强迫维度样例
                         </div>
@@ -926,7 +945,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}问题
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -1196,7 +1215,7 @@
                     </div>
 
                     <!-- 敌对 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.5 敌对维度样例
                         </div>
@@ -1227,7 +1246,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}问题
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -1489,7 +1508,7 @@
                     </div>
 
                     <!-- 自我伤害 -->
-                    <div>
+                    <div v-if="version == '81'">
                         <div class="yy_t noSplitBox mulu_page">
                             2.2.6 自我伤害维度样例
                         </div>
@@ -1524,7 +1543,7 @@
                                     样例 {{ index + 1 }}：{{ item.name }}问题
                                 </div>
                                 <div class="yy_txt">
-                                    <img class="yy_img" v-if="item.bireView == ''" src="../../assets//images/report/t001.png" alt="">
+                                    <img class="yy_img" v-if="item.bireView != ''" src="../../assets//images/report/t001.png" alt="">
                                     <img class="yy_img" v-else :src="'data:image;base64,' + item.bireView" alt="" />
                                 </div>
                             </div>
@@ -1791,7 +1810,7 @@
 
 
                 <!-- 3.测评结果 -->
-                <div class="yy_box basic_box">
+                <div class="yy_box basic_box" id="viewImage3">
                     <div class="noSplitBox">
                         <div class="yy_o noSplitBox mulu_page">
                             3.测评结果
@@ -2577,7 +2596,7 @@
                     </div>
                 </div>
                 <!-- 附录 -->
-                <div class="yy_box noSplitBox mulu_page">
+                <div class="yy_box noSplitBox mulu_page" id="viewImage4">
                     <div class="yy_o " style="text-align: center;padding: 0 0 20px">
                         附录：各维度沙盘表现特征
                     </div>
@@ -2802,11 +2821,13 @@ import PdfLoader from "@/common/utils/groupPdf";
 import echarts from "../../assets/js/echarts";
 import { color } from "highcharts";
 import Urls from "@/assets/js/url.js";
+import { version } from "videojs-flash";
 const Url = 'http://36.110.172.217:11008'
 // import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 export default {
     data() {
         return {
+            version: 'all',
             gradeFjList: [
                 {
                     reportInfoList: []
@@ -3388,371 +3409,316 @@ export default {
                     ]
                 }
             ],
-            tableData: [
-                { date: '2016-05-02', name: '王大虎', address: '上海市普陀区金沙江路 111 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-02', name: '王大虎', address: '上海市普陀区金沙江路 111 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' },
-                { date: '2016-05-04', name: '王二虎', address: '上海市普陀区金沙江路 112 锤' },
-                { date: '2016-05-01', name: '王三虎', address: '上海市普陀区金沙江路 113 子' },
-                { date: '2016-05-03', name: '王四虎', address: '上海市普陀区金沙江路 114 呢' },
-                { date: '2016-05-03', name: '王没虎', address: '上海市普陀区金沙江路 110 弄' }
+            muluListAll: [
+                {
+                    id: 1,
+                    ids: '1',
+                    name: '引言',
+                    page: '',
+                    mark: 1,
+                    list: [
+                        {
+                            id: 1,
+                            name: '测评目的',
+                            page: '',
+                            mark: 2
+                        },
+                        {
+                            id: 2,
+                            name: '测评工具',
+                            page: '',
+                            mark: 2
+                        },
+                        {
+                            id: 3,
+                            name: '相关结论',
+                            page: '',
+                            mark: 2
+                        }
+                    ]
+
+                },
+                {
+                    id: 2,
+                    name: '测评基本信息',
+                    page: '',
+                    mark: 1,
+                    list: [
+                        {
+                            id: 1,
+                            name: '筛查评估样本与内容',
+                            page: '',
+                            mark: 2,
+                            list: [
+                                {
+                                    id: 1,
+                                    name: '筛查评估对象和样本',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 2,
+                                    name: '筛查评估指标和内容',
+                                    page: '',
+                                    mark: 3,
+                                    list: [
+                                        {
+                                            id: 1,
+                                            name: '心理健康风险水平',
+                                            page: '',
+                                            mark: 4,
+                                        },
+                                        {
+                                            id: 2,
+                                            name: '心理健康问题',
+                                            page: '',
+                                            mark: 4,
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: '测评结果',
+                    page: '',
+                    mark: 1,
+                    list: [
+                        {
+                            id: 1,
+                            name: '总体测评结果',
+                            page: '',
+                            mark: 2,
+                            list: [
+                                {
+                                    id: 1,
+                                    name: '各维度检出率',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 2,
+                                    name: '不同性别各维度检出率',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 3,
+                                    name: '各个学段各维度检出率',
+                                    page: '',
+                                    mark: 3
+                                }
+                            ]
+                        },
+                        {
+                            id: 2,
+                            name: '预备年级测评分析',
+                            page: '',
+                            mark: 2,
+                            list: [
+                                {
+                                    id: 1,
+                                    name: '预备年级测评结果概况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 2,
+                                    name: '预备年级各维度检出率情况',
+                                    page: '',
+                                    mark: 3,
+                                    list: [
+                                        {
+                                            id: 1,
+                                            name: '抑郁维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 2,
+                                            name: '焦虑维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 3,
+                                            name: '强迫维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 4,
+                                            name: '敌对维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 5,
+                                            name: '自我伤害维度',
+                                            page: '',
+                                            mark: 4
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: 3,
+                                    name: '预备年级不同性别测评情况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 4,
+                                    name: '预备年级重点关注人群名单',
+                                    page: '',
+                                    mark: 3
+                                }
+                            ]
+                        },
+                        {
+                            id: 3,
+                            name: '初中一年级测评分析',
+                            page: '',
+                            mark: 2,
+                            list: [
+                                {
+                                    id: 1,
+                                    name: '初中一年级测评结果概况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 2,
+                                    name: '初中一年级各维度检出率情况',
+                                    page: '',
+                                    mark: 3,
+                                    list: [
+                                        {
+                                            id: 1,
+                                            name: '抑郁维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 2,
+                                            name: '焦虑维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 3,
+                                            name: '强迫维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 4,
+                                            name: '敌对维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 5,
+                                            name: '自我伤害维度',
+                                            page: '',
+                                            mark: 4
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: 3,
+                                    name: '初中一年级不同性别测评情况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 4,
+                                    name: '初中一年级重点关注人群名单',
+                                    page: '',
+                                    mark: 3
+                                }
+                            ]
+                        },
+                        {
+                            id: 4,
+                            name: '高中一年级测评分析',
+                            page: '',
+                            mark: 2,
+                            list: [
+                                {
+                                    id: 1,
+                                    name: '高中一年级测评结果概况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 2,
+                                    name: '高中一年级各维度检出率情况',
+                                    page: '',
+                                    mark: 3,
+                                    list: [
+                                        {
+                                            id: 1,
+                                            name: '抑郁维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 2,
+                                            name: '焦虑维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 3,
+                                            name: '强迫维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 4,
+                                            name: '敌对维度',
+                                            page: '',
+                                            mark: 4
+                                        },
+                                        {
+                                            id: 5,
+                                            name: '自我伤害维度',
+                                            page: '',
+                                            mark: 4
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: 3,
+                                    name: '高中一年级不同性别测评情况',
+                                    page: '',
+                                    mark: 3
+                                },
+                                {
+                                    id: 4,
+                                    name: '高中一年级重点关注人群名单',
+                                    page: '',
+                                    mark: 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: '',
+                    name: '附录：各维度沙盘表现特征',
+                    page: '',
+                    mark: 1,
+                    list: [
+
+                    ]
+                }
             ],
             oneData1: [
                 {
                     grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '预备年级',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '初中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
-                    class: 'X2025 届 1 班',
-                    personNum: '41',
-                    percent: '2.19%'
-                }, {
-                    grade: '高中',
                     class: 'X2025 届 1 班',
                     personNum: '41',
                     percent: '2.19%'
@@ -4200,6 +4166,9 @@ export default {
     },
     mounted() {
         let muluArr = []
+        if (this.version == "all") {
+            this.muluList = this.muluListAll
+        }
         for (let i in this.muluList) {
             this.muluList[i].ids = this.muluList[i].id
             muluArr.push(this.muluList[i])
@@ -4294,90 +4263,171 @@ export default {
                 this.part143 = newVal.part143;
                 this.part144 = newVal.part144;
                 this.part145 = newVal.part145;
-                
-                if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8 && this.part9 && this.part91 && this.part92 && this.part10 && this.part101 && this.part102 && this.part11 && this.part121 && this.part122 && this.part131 && this.part132 && this.part140 && this.part141 && this.part142&& this.part143 && this.part144 && this.part145) {
-                    this.part1 = false;
-                    this.part2 = false;
-                    this.part3 = false;
-                    this.part4 = false;
-                    this.part5 = false;
-                    this.part6 = false;
-                    this.part7 = false;
-                    this.part8 = false;
-                    this.part9 = false;
-                    this.part91 = false;
-                    this.part92 = false;
-                    this.part10 = false;
-                    this.part101 = false;
-                    this.part102 = false;
-                    this.part11 = false;
-                    this.part121 = false;
-                    this.part122 = false;
-                    this.part131 = false;
-                    this.part132 = false;
+                let partFlag = false
+                if (this.version == '81') {
+                    if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8 && this.part9 && this.part91 && this.part92 && this.part10 && this.part101 && this.part102 && this.part11 && this.part121 && this.part122 && this.part131 && this.part132 && this.part140 && this.part141 && this.part142&& this.part143 && this.part144 && this.part145) {
+                        this.part1 = false;
+                        this.part2 = false;
+                        this.part3 = false;
+                        this.part4 = false;
+                        this.part5 = false;
+                        this.part6 = false;
+                        this.part7 = false;
+                        this.part8 = false;
+                        this.part9 = false;
+                        this.part91 = false;
+                        this.part92 = false;
+                        this.part10 = false;
+                        this.part101 = false;
+                        this.part102 = false;
+                        this.part11 = false;
+                        this.part121 = false;
+                        this.part122 = false;
+                        this.part131 = false;
+                        this.part132 = false;
 
-                    this.part140 = false;
-                    this.part141 = false;
-                    this.part142 = false;
-                    this.part143 = false;
-                    this.part144 = false;
-                    this.part145 = false;
-                    this.loading.close();
-                    console.log(this.gradeAllList)
-                    console.log(this.gradeFjList)
+                        this.part140 = false;
+                        this.part141 = false;
+                        this.part142 = false;
+                        this.part143 = false;
+                        this.part144 = false;
+                        this.part145 = false;
+                        this.loading.close();
+                        console.log(this.gradeAllList)
+                        console.log(this.gradeFjList)
 
-                    this.echartInit()
-                    this.loading = this.$loading({
-                        lock: true,
-                        text: "报告生成中",
-                        spinner: "el-icon-loading",
-                        background: "rgba(0, 0, 0, 0.7)"
-                    });
-                    setTimeout(() => {
-                        this.handleExport()
+                        this.echartInit()
+                        this.loading = this.$loading({
+                            lock: true,
+                            text: "报告生成中",
+                            spinner: "el-icon-loading",
+                            background: "rgba(0, 0, 0, 0.7)"
+                        });
                         setTimeout(() => {
-                            for (let i in this.gradeFjList) {
-                                let name = ''
-                                if (this.gradeFjList[i].code == 'X') {
+                            this.handleExport()
+                            setTimeout(() => {
+                                for (let i in this.gradeFjList) {
+                                    let name = ''
+                                    if (this.gradeFjList[i].code == 'X') {
 
-                                    name = '预备年级重点关注人群名单见附件一'
-                                    // this.gradeFjList[i].name = name
-                                }
-                                if (this.gradeFjList[i].code == 'G') {
-                                    name = '高中一年级年级重点关注人群名单见附件一'
-                                    // this.gradeFjList[i].name = name
-                                }
-                                if (this.gradeFjList[i].code == 'C') {
-                                    if (this.gradeFjList[i].isUpgrade == 1) {
-                                        name = '直升班（初中 1-10 班）重点关注人群名单见附件一'
-
+                                        name = '预备年级重点关注人群名单见附件一'
+                                        // this.gradeFjList[i].name = name
                                     }
-                                    if (this.gradeFjList[i].isUpgrade == 2) {
-                                        name = '非直升班（初中 11-20 班）重点关注人群名单见附件二'
+                                    if (this.gradeFjList[i].code == 'G') {
+                                        name = '高中一年级年级重点关注人群名单见附件一'
+                                        // this.gradeFjList[i].name = name
                                     }
+                                    if (this.gradeFjList[i].code == 'C') {
+                                        if (this.gradeFjList[i].isUpgrade == 1) {
+                                            name = '直升班（初中 1-10 班）重点关注人群名单见附件一'
+
+                                        }
+                                        if (this.gradeFjList[i].isUpgrade == 2) {
+                                            name = '非直升班（初中 11-20 班）重点关注人群名单见附件二'
+                                        }
+                                    }
+                                    this.gradeFjList[i].pdfName = name
+                                    this.$forceUpdate()
+                                    let id = "#overviewpage" + i
+                                    let pdf = new PdfLoader(
+                                        document.querySelector(id),
+                                        name,
+                                        "noSplitBox" + i,
+                                        this.loading,
+                                        1
+                                    );
+                                    // this.muluPage = pdf.muluPage
+                                    pdf.outPutPdfFn();
                                 }
-                                this.gradeFjList[i].pdfName = name
-                                this.$forceUpdate()
-                                let id = "#overviewpage" + i
-                                let pdf = new PdfLoader(
-                                    document.querySelector(id),
-                                    name,
-                                    "noSplitBox" + i,
-                                    this.loading
-                                );
-                                // this.muluPage = pdf.muluPage
-                                pdf.outPutPdfFn();
-                            }
-                        }, 2000);
+                            }, 2000);
 
 
 
-                    }, 100);
+                        }, 100);
 
 
-                } else {
-
+                    }
                 }
+                if (this.version == 'all') {
+                    if (this.part1 && this.part2 && this.part3 && this.part4 && this.part5 && this.part6 && this.part7 && this.part8 && this.part9 && this.part91 && this.part92 && this.part10 && this.part101 && this.part102 && this.part11 && this.part121 && this.part122 && this.part131 && this.part132) {
+                        this.part1 = false;
+                        this.part2 = false;
+                        this.part3 = false;
+                        this.part4 = false;
+                        this.part5 = false;
+                        this.part6 = false;
+                        this.part7 = false;
+                        this.part8 = false;
+                        this.part9 = false;
+                        this.part91 = false;
+                        this.part92 = false;
+                        this.part10 = false;
+                        this.part101 = false;
+                        this.part102 = false;
+                        this.part11 = false;
+                        this.part121 = false;
+                        this.part122 = false;
+                        this.part131 = false;
+                        this.part132 = false;
+
+                        
+                        this.loading.close();
+                        console.log(this.gradeAllList)
+                        console.log(this.gradeFjList)
+
+                        this.echartInit()
+                        this.loading = this.$loading({
+                            lock: true,
+                            text: "报告生成中",
+                            spinner: "el-icon-loading",
+                            background: "rgba(0, 0, 0, 0.7)"
+                        });
+                        setTimeout(() => {
+                            this.handleExport()
+                            setTimeout(() => {
+                                for (let i in this.gradeFjList) {
+                                    let name = ''
+                                    if (this.gradeFjList[i].code == 'X') {
+
+                                        name = '预备年级重点关注人群名单见附件一'
+                                        // this.gradeFjList[i].name = name
+                                    }
+                                    if (this.gradeFjList[i].code == 'G') {
+                                        name = '高中一年级年级重点关注人群名单见附件一'
+                                        // this.gradeFjList[i].name = name
+                                    }
+                                    if (this.gradeFjList[i].code == 'C') {
+                                        if (this.gradeFjList[i].isUpgrade == 1) {
+                                            name = '直升班（初中 1-10 班）重点关注人群名单见附件一'
+
+                                        }
+                                        if (this.gradeFjList[i].isUpgrade == 2) {
+                                            name = '非直升班（初中 11-20 班）重点关注人群名单见附件二'
+                                        }
+                                    }
+                                    this.gradeFjList[i].pdfName = name
+                                    this.$forceUpdate()
+                                    let id = "#overviewpage" + i
+                                    let pdf = new PdfLoader(
+                                        document.querySelector(id),
+                                        name,
+                                        "noSplitBox" + i,
+                                        this.loading,
+                                        1
+                                    );
+                                    // this.muluPage = pdf.muluPage
+                                    pdf.outPutPdfFn();
+                                }
+                            }, 2000);
+
+
+
+                        }, 100);
+
+
+                    }
+                }
+                
             }
         }
     },
@@ -7008,240 +7058,242 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-
-                        let zsClass = []
-                        let fzsClass = []
-                        // let zsClass0 = []
-                        // let fzsClass0 = []
-                        let zsClass3 = []
-                        let fzsClass3 = []
-                        let zsSum = 0
-                        let fzsSum = 0
-                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
-                        for (let i in data) {
-                            if (data[i].grade == '初中A直升班') {
-                                if (data[i].dimension == '抑郁') {
-                                    zsClass[0] = data[i]
-                                }
-                                if (data[i].dimension == '焦虑') {
-                                    zsClass[1] = data[i]
-                                }
-                                if (data[i].dimension == '强迫') {
-                                    zsClass[2] = data[i]
-                                }
-                                if (data[i].dimension == '敌对') {
-                                    zsClass[3] = data[i]
-                                }
-                                if (data[i].dimension == '自我伤害') {
-                                    zsClass[4] = data[i]
-                                }
-                                // zsClass.push(data[i])
-                                zsSum += data[i].percentage
-                            }
-                            if (data[i].grade == '初中B非直升班') {
-                                // fzsClass.push(data[i])
-                                if (data[i].dimension == '抑郁') {
-                                    fzsClass[0] = data[i]
-                                }
-                                if (data[i].dimension == '焦虑') {
-                                    fzsClass[1] = data[i]
-                                }
-                                if (data[i].dimension == '强迫') {
-                                    fzsClass[2] = data[i]
-                                }
-                                if (data[i].dimension == '敌对') {
-                                    fzsClass[3] = data[i]
-                                }
-                                if (data[i].dimension == '自我伤害') {
-                                    fzsClass[4] = data[i]
-                                }
-
-                                fzsSum += data[i].percentage
-                            }
-                        }
-                        console.log(zsClass)
-                        console.log(fzsClass)
-                        for (let i in zsClass) {
-                            delete zsClass[i].grade;
-                        }
-                        for (let i in fzsClass) {
-                            delete fzsClass[i].grade;
-                        }
-                        console.log(zsClass)
-                        console.log(fzsClass)
-                        this.zsClassWd = zsClass
-                        this.fzsClassWd = fzsClass
-                        let zsClass0 = JSON.parse(JSON.stringify(zsClass))
-                        let fzsClass0 = JSON.parse(JSON.stringify(fzsClass))
-                        let zs1 = 0
-                        let zs2 = 0
-                        let zs3 = 0
-                        let zs1Arr = []
-                        let zs2Arr = []
-                        let zs3Arr = []
-                        for (let i in zsClass0) {
-                            // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
-                            if (zsClass0[i].percentage == fzsClass0[i].percentage) {
-                                zs1++
-                                zs1Arr.push(zsClass0[i].dimension)
-                            }
-                            if (zsClass0[i].percentage > fzsClass0[i].percentage) {
-                                zs2++
-                                zs2Arr.push(zsClass0[i].dimension)
-                            }
-                            if (zsClass0[i].percentage < fzsClass0[i].percentage) {
-                                zs3++
-                                zs3Arr.push(zsClass0[i].dimension)
-                            }
-                        }
-                        console.log(zs1)
-                        console.log(zs2)
-                        console.log(zs3)
-                        console.log(zs1Arr)
-                        console.log(zs2Arr)
-                        console.log(zs3Arr)
-                        let allTxtZs = ''
-                        if (zs1 == 5) {  // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
-                            // 从图 **可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。
-                            allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。'
-                        } else if (zs2 == 5) { // B.若初中一年级直升班比非直升班在各个维度上都高，则输出：
-                            allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）在各个维度上的检出率都比11-20班（非本校直升）高，说明直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
-                        } else if (zs3 == 5) { // C.若初中一年级直升班比非直升班在各个维度上都低，则输出，
-                            allTxtZs += '从上图可以看出，初中一年级11-20班（非本校直升）在各个维度上的检出率都比1-10班（本校直升）高，说明非直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
-                        } else { //D.若初中一年级直升班比非直升检出率存在高、低、一致的情况（至少存在两种情况），则输出：
-                            // 从图 ** 可以看出，初中一年级 11-20 班（非本校直升）学生（在**、**和**维度上表现出更高的检出率，说明非直升班学生可能存在较高的**、**和**；）（在**和**维度上直升班与非直升班检出率一致。）（相对而言，初中一年级1-10班（本校直升）学生在**和**维度上检出率较高，说明直升班学生可能存在较高的**和**。）
-                            allTxtZs += '从上图可以看出，初中一年级 11-20 班（非本校直升）学生'
-                            if (zs3Arr.length > 0) {
-                                // allTxtZs += '在'
-                                let zs3Txt = ''
-                                for (let q in zs3Arr) {
-                                    zs3Txt += zs3Arr[q]
-                                    if (q < zs3Arr.length - 2) {
-                                        zs3Txt += '、'
+                        if(this.version == '81') {
+                            let zsClass = []
+                            let fzsClass = []
+                            // let zsClass0 = []
+                            // let fzsClass0 = []
+                            let zsClass3 = []
+                            let fzsClass3 = []
+                            let zsSum = 0
+                            let fzsSum = 0
+                            // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                            for (let i in data) {
+                                if (data[i].grade == '初中A直升班') {
+                                    if (data[i].dimension == '抑郁') {
+                                        zsClass[0] = data[i]
                                     }
-                                    if (q == zs3Arr.length - 2) {
-                                        zs3Txt += '和'
+                                    if (data[i].dimension == '焦虑') {
+                                        zsClass[1] = data[i]
                                     }
+                                    if (data[i].dimension == '强迫') {
+                                        zsClass[2] = data[i]
+                                    }
+                                    if (data[i].dimension == '敌对') {
+                                        zsClass[3] = data[i]
+                                    }
+                                    if (data[i].dimension == '自我伤害') {
+                                        zsClass[4] = data[i]
+                                    }
+                                    // zsClass.push(data[i])
+                                    zsSum += data[i].percentage
                                 }
+                                if (data[i].grade == '初中B非直升班') {
+                                    // fzsClass.push(data[i])
+                                    if (data[i].dimension == '抑郁') {
+                                        fzsClass[0] = data[i]
+                                    }
+                                    if (data[i].dimension == '焦虑') {
+                                        fzsClass[1] = data[i]
+                                    }
+                                    if (data[i].dimension == '强迫') {
+                                        fzsClass[2] = data[i]
+                                    }
+                                    if (data[i].dimension == '敌对') {
+                                        fzsClass[3] = data[i]
+                                    }
+                                    if (data[i].dimension == '自我伤害') {
+                                        fzsClass[4] = data[i]
+                                    }
 
-                                allTxtZs += '在' + zs3Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs3Txt + '；'
-                            }
-                            if (zs1Arr.length > 0) {
-                                // allTxtZs += '在'
-                                let zs1Txt = ''
-                                for (let q in zs1Arr) {
-                                    zs1Txt += zs1Arr[q]
-                                    if (q < zs1Arr.length - 2) {
-                                        zs1Txt += '、'
-                                    }
-                                    if (q == zs1Arr.length - 2) {
-                                        zs1Txt += '和'
-                                    }
+                                    fzsSum += data[i].percentage
                                 }
-
-                                allTxtZs += '在' + zs1Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs1Txt
                             }
-                            if (zs2Arr.length == 0) {
-                                allTxtZs += '。'
-                            } else {
-                                if (zs3Arr.length == 0) {
-                                    allTxtZs += '；'
+                            console.log(zsClass)
+                            console.log(fzsClass)
+                            for (let i in zsClass) {
+                                delete zsClass[i].grade;
+                            }
+                            for (let i in fzsClass) {
+                                delete fzsClass[i].grade;
+                            }
+                            console.log(zsClass)
+                            console.log(fzsClass)
+                            this.zsClassWd = zsClass
+                            this.fzsClassWd = fzsClass
+                            let zsClass0 = JSON.parse(JSON.stringify(zsClass))
+                            let fzsClass0 = JSON.parse(JSON.stringify(fzsClass))
+                            let zs1 = 0
+                            let zs2 = 0
+                            let zs3 = 0
+                            let zs1Arr = []
+                            let zs2Arr = []
+                            let zs3Arr = []
+                            for (let i in zsClass0) {
+                                // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
+                                if (zsClass0[i].percentage == fzsClass0[i].percentage) {
+                                    zs1++
+                                    zs1Arr.push(zsClass0[i].dimension)
+                                }
+                                if (zsClass0[i].percentage > fzsClass0[i].percentage) {
+                                    zs2++
+                                    zs2Arr.push(zsClass0[i].dimension)
+                                }
+                                if (zsClass0[i].percentage < fzsClass0[i].percentage) {
+                                    zs3++
+                                    zs3Arr.push(zsClass0[i].dimension)
+                                }
+                            }
+                            console.log(zs1)
+                            console.log(zs2)
+                            console.log(zs3)
+                            console.log(zs1Arr)
+                            console.log(zs2Arr)
+                            console.log(zs3Arr)
+                            let allTxtZs = ''
+                            if (zs1 == 5) {  // A.若初中一年级直升班与非直升班在各个维度上检出率完全一致，则输出：
+                                // 从图 **可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。
+                                allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）与11-20班（非本校直升）在各维度上检出率一致，说明初中一年级直升班与非直升班的心理健康问题相当。'
+                            } else if (zs2 == 5) { // B.若初中一年级直升班比非直升班在各个维度上都高，则输出：
+                                allTxtZs += '从上图可以看出，初中一年级1-10班（本校直升）在各个维度上的检出率都比11-20班（非本校直升）高，说明直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
+                            } else if (zs3 == 5) { // C.若初中一年级直升班比非直升班在各个维度上都低，则输出，
+                                allTxtZs += '从上图可以看出，初中一年级11-20班（非本校直升）在各个维度上的检出率都比1-10班（本校直升）高，说明非直升班学生的心理健康问题比非直升班严峻，学校管理者应当给予关注和重视。'
+                            } else { //D.若初中一年级直升班比非直升检出率存在高、低、一致的情况（至少存在两种情况），则输出：
+                                // 从图 ** 可以看出，初中一年级 11-20 班（非本校直升）学生（在**、**和**维度上表现出更高的检出率，说明非直升班学生可能存在较高的**、**和**；）（在**和**维度上直升班与非直升班检出率一致。）（相对而言，初中一年级1-10班（本校直升）学生在**和**维度上检出率较高，说明直升班学生可能存在较高的**和**。）
+                                allTxtZs += '从上图可以看出，初中一年级 11-20 班（非本校直升）学生'
+                                if (zs3Arr.length > 0) {
+                                    // allTxtZs += '在'
+                                    let zs3Txt = ''
+                                    for (let q in zs3Arr) {
+                                        zs3Txt += zs3Arr[q]
+                                        if (q < zs3Arr.length - 2) {
+                                            zs3Txt += '、'
+                                        }
+                                        if (q == zs3Arr.length - 2) {
+                                            zs3Txt += '和'
+                                        }
+                                    }
+
+                                    allTxtZs += '在' + zs3Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs3Txt + '；'
+                                }
+                                if (zs1Arr.length > 0) {
+                                    // allTxtZs += '在'
+                                    let zs1Txt = ''
+                                    for (let q in zs1Arr) {
+                                        zs1Txt += zs1Arr[q]
+                                        if (q < zs1Arr.length - 2) {
+                                            zs1Txt += '、'
+                                        }
+                                        if (q == zs1Arr.length - 2) {
+                                            zs1Txt += '和'
+                                        }
+                                    }
+
+                                    allTxtZs += '在' + zs1Txt + '维度上表现出更高的检出率，说明非直升班学生可能存在较高的' + zs1Txt
+                                }
+                                if (zs2Arr.length == 0) {
+                                    allTxtZs += '。'
                                 } else {
-                                    if (zs1Arr.length == 0) {
-
-                                    } else {
+                                    if (zs3Arr.length == 0) {
                                         allTxtZs += '；'
-                                    }
-                                }
-                            }
-                            if (zs2Arr.length > 0) {
-                                // allTxtZs += '在'
-                                let zs2Txt = ''
-                                for (let q in zs2Arr) {
-                                    zs2Txt += zs2Arr[q]
-                                    if (q < zs2Arr.length - 2) {
-                                        zs2Txt += '、'
-                                    }
-                                    if (q == zs2Arr.length - 2) {
-                                        zs2Txt += '和'
-                                    }
-                                }
+                                    } else {
+                                        if (zs1Arr.length == 0) {
 
-                                allTxtZs += '相对而言，初中一年级1-10班（本校直升）学生在' + zs2Txt + '维度上检出率较高，说明直升班学生可能存在较高' + zs2Txt + '。'
-                            }
-                        }
-                        this.allTxtZs3 = allTxtZs
-                        console.log(zsSum)
-                        console.log(fzsSum)
-                        let zsTxt = '初中一年级' + '直升与非直升班各维度检出率：'
-                        // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
-                        if (zsSum > fzsSum) {
-                            zsTxt += '初中一年级' + '直升班相比非直升班心理健康问题更加显著。'
-                        }
-                        // 若**年级直升班五个维度检出率之和＜非直升班，则输出：
-                        if (zsSum < fzsSum) {
-                            zsTxt += '初中一年级' + '非直升班相比直升班心理健康问题更加显著。'
-                        }
-                        // 若**年级直升班五个维度检出率之和=非直升班，则输出：
-                        if (zsSum == fzsSum) {
-                            zsTxt += '初中一年级' + '直升班与非直升班心理健康问题相当。'
-                        }
-                        let zsClassArr = []
-                        for (let i in zsClass) {
-                            zsClassArr.push({
-                                dimension: zsClass[i].dimension,
-                                percentage: zsClass[i].percentage
-                            })
-                        }
-                        zsClass3 = zsClassArr.sort((a, b) => {
-                            return Number(b.percentage) - Number(a.percentage);
-                        }).slice(0, 3)
-                        console.log(zsClass3)
-                        let fzsClassArr = []
-                        for (let i in fzsClass) {
-                            fzsClassArr.push({
-                                dimension: fzsClass[i].dimension,
-                                percentage: fzsClass[i].percentage
-                            })
-                        }
-                        fzsClass3 = fzsClassArr.sort((a, b) => {
-                            return Number(b.percentage) - Number(a.percentage);
-                        }).slice(0, 3)
-                        console.log(fzsClass3)
-                        if (JSON.stringify(zsClass3) == JSON.stringify(fzsClass3)) {
-                            // this.zsFlag = true
-                            zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
-                            for (let i in zsClass3) {
-                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1) {
-                                    zsTxt += '，'
-                                } else {
-                                    zsTxt += '。'
+                                        } else {
+                                            allTxtZs += '；'
+                                        }
+                                    }
                                 }
-                            }
-                        } else {
-                            // this.zsFlag = false
-                            // **年级直升班的心理健康问题检出率的前三位为**（**%）、**（**%）、强迫（**%）；**年级非直升班的心理健康问题检出率的前三位为：**（**%）、抑郁（**%）、**（**%）。
-                            // zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
-                            zsTxt += '初中一年级' + '直升班的心理健康问题检出率的前三位为'
-                            for (let i in zsClass3) {
-                                zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
-                                if (i < zsClass3.length - 1) {
-                                    zsTxt += '、'
-                                }
-                            }
-                            zsTxt += '；'
-                            zsTxt += '初中一年级' + '非直升班的心理健康问题检出率的前三位为'
-                            for (let i in fzsClass3) {
-                                zsTxt += fzsClass3[i].dimension + '（' + fzsClass3[i].percentage + '%）'
-                                if (i < fzsClass3.length - 1) {
-                                    zsTxt += '、'
-                                }
-                            }
-                            zsTxt += '。'
+                                if (zs2Arr.length > 0) {
+                                    // allTxtZs += '在'
+                                    let zs2Txt = ''
+                                    for (let q in zs2Arr) {
+                                        zs2Txt += zs2Arr[q]
+                                        if (q < zs2Arr.length - 2) {
+                                            zs2Txt += '、'
+                                        }
+                                        if (q == zs2Arr.length - 2) {
+                                            zs2Txt += '和'
+                                        }
+                                    }
 
+                                    allTxtZs += '相对而言，初中一年级1-10班（本校直升）学生在' + zs2Txt + '维度上检出率较高，说明直升班学生可能存在较高' + zs2Txt + '。'
+                                }
+                            }
+                            this.allTxtZs3 = allTxtZs
+                            console.log(zsSum)
+                            console.log(fzsSum)
+                            let zsTxt = '初中一年级' + '直升与非直升班各维度检出率：'
+                            // 若**年级直升班五个维度检出率之和＞非直升班，则输出：
+                            if (zsSum > fzsSum) {
+                                zsTxt += '初中一年级' + '直升班相比非直升班心理健康问题更加显著。'
+                            }
+                            // 若**年级直升班五个维度检出率之和＜非直升班，则输出：
+                            if (zsSum < fzsSum) {
+                                zsTxt += '初中一年级' + '非直升班相比直升班心理健康问题更加显著。'
+                            }
+                            // 若**年级直升班五个维度检出率之和=非直升班，则输出：
+                            if (zsSum == fzsSum) {
+                                zsTxt += '初中一年级' + '直升班与非直升班心理健康问题相当。'
+                            }
+                            let zsClassArr = []
+                            for (let i in zsClass) {
+                                zsClassArr.push({
+                                    dimension: zsClass[i].dimension,
+                                    percentage: zsClass[i].percentage
+                                })
+                            }
+                            zsClass3 = zsClassArr.sort((a, b) => {
+                                return Number(b.percentage) - Number(a.percentage);
+                            }).slice(0, 3)
+                            console.log(zsClass3)
+                            let fzsClassArr = []
+                            for (let i in fzsClass) {
+                                fzsClassArr.push({
+                                    dimension: fzsClass[i].dimension,
+                                    percentage: fzsClass[i].percentage
+                                })
+                            }
+                            fzsClass3 = fzsClassArr.sort((a, b) => {
+                                return Number(b.percentage) - Number(a.percentage);
+                            }).slice(0, 3)
+                            console.log(fzsClass3)
+                            if (JSON.stringify(zsClass3) == JSON.stringify(fzsClass3)) {
+                                // this.zsFlag = true
+                                zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                                for (let i in zsClass3) {
+                                    zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                    if (i < zsClass3.length - 1) {
+                                        zsTxt += '，'
+                                    } else {
+                                        zsTxt += '。'
+                                    }
+                                }
+                            } else {
+                                // this.zsFlag = false
+                                // **年级直升班的心理健康问题检出率的前三位为**（**%）、**（**%）、强迫（**%）；**年级非直升班的心理健康问题检出率的前三位为：**（**%）、抑郁（**%）、**（**%）。
+                                // zsTxt += '初中一年级' + '直升班和非直升班的心理健康问题检出率的前三位皆为'
+                                zsTxt += '初中一年级' + '直升班的心理健康问题检出率的前三位为'
+                                for (let i in zsClass3) {
+                                    zsTxt += zsClass3[i].dimension + '（' + zsClass3[i].percentage + '%）'
+                                    if (i < zsClass3.length - 1) {
+                                        zsTxt += '、'
+                                    }
+                                }
+                                zsTxt += '；'
+                                zsTxt += '初中一年级' + '非直升班的心理健康问题检出率的前三位为'
+                                for (let i in fzsClass3) {
+                                    zsTxt += fzsClass3[i].dimension + '（' + fzsClass3[i].percentage + '%）'
+                                    if (i < fzsClass3.length - 1) {
+                                        zsTxt += '、'
+                                    }
+                                }
+                                zsTxt += '。'
+
+                            }
+                            this.detail.gradeTxt3 = zsTxt
                         }
-                        this.detail.gradeTxt3 = zsTxt
+                        
 
                         this.part8 = true;
                     } else {
@@ -8790,301 +8842,303 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-            // 典型案例
+            // 典型样例
+            if (this.version == '81') {
+                let param140 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '正常', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param140)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList0 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part140 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                let param141 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '抑郁', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param141)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList1 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part141 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                let param142 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '焦虑', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param142)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList2 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part142 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                let param143 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '强迫', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param143)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList3 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part143 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                let param144 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '敌对', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param144)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList4 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part144 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                let param145 = {
+                    startDate: star,
+                    endDate: end,
+                    dimensionType: '自我伤害', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
+                    riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
+                };
+                this.$http
+                    .post(Url + "/aimw/export/classicCaseList", param145)
+                    .then(res => {
+                        let data = res.data.data;
+                        if (res.data.code == 0) {
+                            
+                            console.log(data)
+                            console.log(data)
+                            for (let i in data) {
+                                data[i].name = data[i].riskLevel
+                                let result0 = data[i].result.replace(/\n/g, "")
+                                console.log(result0)
+                                data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
+                                console.log(data[i].txt1)
+                                data[i].txt2 = ''
+                                let str0 = result0.split('关键沙具分析')[1]
+                                console.log(str0)
+                                let arr0 = str0.split('- ')
+                                let arr1 = []
+                                for (let j in arr0) {
+                                    if (arr0[j] != '') {
+                                        console.log(arr0[j].split('**'))
+                                        arr1.push({
+                                            title: arr0[j].split('**')[1],
+                                            txt: arr0[j].split('**')[2].split('：')[1]
+                                        })
+                                    }
+                                }
+                                console.log(arr0)
+                                data[i].list = arr1
+                            }
+                            this.anliList5 = data
+                            console.log(data)
+                            this.$forceUpdate()
+                            this.part145 = true
+
+                        } else {
+                            that.$message.error(data.msg);
+                        }
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+            }
             
-            let param140 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '正常', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param140)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList0 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part140 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            let param141 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '抑郁', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param141)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList1 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part141 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            let param142 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '焦虑', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param142)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList2 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part142 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            let param143 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '强迫', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param143)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList3 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part143 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            let param144 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '敌对', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param144)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList4 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part144 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
-            let param145 = {
-                startDate: star,
-                endDate: end,
-                dimensionType: '自我伤害', //维度类别(正常、抑郁、焦虑、强迫、敌对、自我伤害)
-                riskLevel: '' //风险水平(正常、轻度问题、中度问题和重度问题)
-            };
-            this.$http
-                .post(Url + "/aimw/export/classicCaseList", param145)
-                .then(res => {
-                    let data = res.data.data;
-                    if (res.data.code == 0) {
-                        
-                        console.log(data)
-                        console.log(data)
-                        for (let i in data) {
-                            data[i].name = data[i].riskLevel
-                            let result0 = data[i].result.replace(/\n/g, "")
-                            console.log(result0)
-                            data[i].txt1 = this.extractBetween(result0, '箱庭空间配置', '具体来说：')
-                            console.log(data[i].txt1)
-                            data[i].txt2 = ''
-                            let str0 = result0.split('关键沙具分析')[1]
-                            console.log(str0)
-                            let arr0 = str0.split('- ')
-                            let arr1 = []
-                            for (let j in arr0) {
-                                if (arr0[j] != '') {
-                                    console.log(arr0[j].split('**'))
-                                    arr1.push({
-                                        title: arr0[j].split('**')[1],
-                                        txt: arr0[j].split('**')[2].split('：')[1]
-                                    })
-                                }
-                            }
-                            console.log(arr0)
-                            data[i].list = arr1
-                        }
-                        this.anliList5 = data
-                        console.log(data)
-                        this.$forceUpdate()
-                        this.part145 = true
-
-                    } else {
-                        that.$message.error(data.msg);
-                    }
-                })
-                .catch(res => {
-                    console.log(res);
-                });
         },
         extractBetween(str, startChar, endChar) {
             const regex = new RegExp(`${startChar}(.*?)${endChar}`);
@@ -9125,7 +9179,10 @@ export default {
                 document.querySelector("#overviewpage"),
                 this.schoolName + "中小学生心理健康筛查评估报告",
                 "noSplitBox",
-                this.loading
+                this.loading,
+                1
+                // document.querySelector("#overviewNew"),
+                // [document.querySelector("#viewImage1"), document.querySelector("#viewImage2"), document.querySelector("#viewImage3"),document.querySelector("#viewImage4")]
             );
             // this.muluPage = pdf.muluPage
             pdf.outPutPdfFn();
@@ -9404,6 +9461,9 @@ table {
 <style lang="less" scoped>
 .group-class {
     .group_box {
+        #viewImage1, #viewImage2, #viewImage3, #viewImage4{
+            background: #ffffff;
+        }
         .ml_box {
             text-align: left;
             padding: 0 80px 30px;
