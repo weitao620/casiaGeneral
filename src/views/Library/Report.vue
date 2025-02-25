@@ -169,6 +169,16 @@
               导出团体报告
             </el-button>
           </div>
+          <div class="el_two" v-if="tabActive == 0 && power26">
+            <el-button
+              class="el_btn_two"
+              @click="schoolReport"
+              type="primary"
+            >
+              <i class="iconfont icon-icon-"></i>
+              导出校级团体报告
+            </el-button>
+          </div>
           <div class="el_two" v-if="tabActive == 0 && power15">
             <el-button
               class="el_btn_two"
@@ -419,6 +429,41 @@
     <!-- <div style="height:0;width:100%;overflow:hidden">
       <wordFile :wList="wordList"></wordFile>
     </div> -->
+    <!-- 导出校级团体报告 -->
+    <el-dialog class="fix_pass fix_pass3" :close-on-click-modal="false" title="导出校级团体报告"
+      :visible.sync="dialogPartFrame1">
+      <el-form ref="partsForm1" :model="partsForm1">
+
+          <el-form-item label="学校名称：">
+              <el-input disabled v-model="schoolName1"></el-input>
+          </el-form-item>
+          <el-form-item label="报告名称：">
+              <el-input v-model="reportName1" placeholder="请输入报告名称（例：**年秋季学期）"></el-input>
+              <div class="tip_left" v-show="reportFlag1">
+                  <div class="tip_msg">
+                      <img src="../../assets/images/x.png" alt="" />
+                      报告名称不能为空
+                  </div>
+              </div>
+          </el-form-item>
+
+          <el-form-item required class="time_data" label="测评时间段:">
+              <el-date-picker v-model="partsForm1.time" type="daterange" range-separator="~"
+                  start-placeholder="开始日期" end-placeholder="结束日期" @change="timeChange">
+              </el-date-picker>
+              <div class="tip_left" v-show="pTimeFlag1">
+                  <div class="tip_msg">
+                      <img src="../../assets/images/x.png" alt="" />
+                      请选择测评时间段
+                  </div>
+              </div>
+          </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="schoolSub">下 载</el-button>
+          <el-button @click="dialogPartFrame1 = false">取 消</el-button>
+      </div>
+  </el-dialog>
     <!-- 导出团体报告 -->
     <el-dialog
       class="fix_pass fix_pass3"
@@ -491,6 +536,11 @@
         :gList="partList"
       ></PartsReport>
     </div>
+    <div style="height:0;width:100%;overflow:hidden">
+      <GroupPdfsAll
+        :sList="schoolList"
+      ></GroupPdfsAll>
+    </div>
   </div>
 </template>
 
@@ -498,6 +548,7 @@
 // import wordFile from "../Details/WordFile.vue";
 
 import PartsReport from "../Model/PartsReport.vue";
+import GroupPdfsAll from "../Model/GroupPdfsAll.vue";
 import personReport from "../Model/ModelReport.vue";
 import someReport from "../Model/ExportPdf.vue";
 import { mapGetters, mapMutations } from "vuex";
@@ -513,12 +564,25 @@ export default {
   components: {
     personReport,
     someReport,
-    PartsReport
+    PartsReport,
+    GroupPdfsAll
     // wordFile
   },
   data() {
     return {
+      schoolName1: '',
+      reportName1: '',
+      reportFlag1: false,
+      start: '',
+      end: '',
+      pTimeFlag1: false,
+      dialogPartFrame1: false,
+      partsForm1: {
+          time: ''
+      },
+
       partList: {},
+      schoolList: {},
       pTimeFlag: false,
       organizationFlag: false,
       pTypeFlag: false,
@@ -702,7 +766,8 @@ export default {
       "setGradesFlag",
       "setPersonFlag",
       "setSomePdfFlag",
-      "setPartsFlag"
+      "setPartsFlag",
+      "setSchoolFlag"
     ]),
     renderContent(h, { node, data, store }) {
       if (data.Mark == 1) {
@@ -2788,6 +2853,78 @@ export default {
       }
       return num;
     },
+    schoolReport() {
+        console.log('导出团体报告')
+        let that = this;
+        this.pTimeFlag1 = false;
+        this.reportFlag1 = false;
+        this.reportName1 = ''
+        this.partsForm1 = {
+            time: ''
+        }
+        // this.dialogPartFrame1 = true
+        this.getSchoolInfo()
+    },
+    // 学校信息
+    getSchoolInfo() {
+        let that = this;
+        that.$http
+            .get(Url + "/aimw/organization/listOrganizationInfo")
+            .then(res => {
+                var data = res.data.data;
+                if (res.data.code == 0) {
+                    // that.id = data.id;
+                    that.schoolName1 = data.name;
+                    this.dialogPartFrame1 = true
+                }
+            })
+            .catch(res => {
+                console.log(res);
+            });
+    },
+    // 下载报告
+    schoolSub() {
+      var that = this;
+      console.log(this.partsForm1)
+      this.pTimeFlag1 = false;
+      this.reportFlag1 = false
+      if (that.reportName1 == '') {
+          this.reportFlag1 = true;
+          return false;
+      }
+      if (that.partsForm1.time == '') {
+          this.pTimeFlag1 = true;
+          return false;
+      }
+
+      let star = "";
+      let end = "";
+      if (that.partsForm1.time != "" && that.partsForm1.time) {
+          this.start = that.formTimes2(that.partsForm1.time[0])
+          this.end = that.formTimes2(that.partsForm1.time[1])
+          star =
+              that.formTimes(that.partsForm1.time[0]).replace(/-/g, "") +
+              "000000";
+          end =
+              that.formTimes(that.partsForm1.time[1]).replace(/-/g, "") +
+              "235959";
+      }
+      
+      let param = {
+          startDate: star,
+          endDate: end,
+          start: this.start,
+          end: this.end,
+          reportName: this.reportName1,
+          schoolName: this.schoolName1,
+          code: ''
+          // gender: 1
+      };
+      console.log(param)
+      this.schoolList = param
+      this.setSchoolFlag(true);
+      this.dialogPartFrame1 = false
+    },
     apartsReport() {
       console.log('导出团体报告')
       let that = this;
@@ -2885,6 +3022,46 @@ export default {
       }
       this.organizationFlag = false
     },
+    // // 下载报告
+    // schoolSub() {
+    //   var that = this;
+    //   console.log(this.partsForm1)
+    //   this.pTimeFlag1 = false;
+    //   this.reportFlag1 = false
+    //   if (that.reportName1 == '') {
+    //       this.reportFlag1 = true;
+    //       return false;
+    //   }
+    //   if (that.partsForm1.time == '') {
+    //       this.pTimeFlag1 = true;
+    //       return false;
+    //   }
+
+    //   let star = "";
+    //   let end = "";
+    //   if (that.partsForm1.time != "" && that.partsForm1.time) {
+    //       this.start = that.formTimes1(that.partsForm1.time[0])
+    //       this.end = that.formTimes1(that.partsForm1.time[1])
+    //       star =
+    //           that.formTimes(that.partsForm1.time[0]).replace(/-/g, "") +
+    //           "000000";
+    //       end =
+    //           that.formTimes(that.partsForm1.time[1]).replace(/-/g, "") +
+    //           "235959";
+    //   }
+      
+    //   let param = {
+    //       startDate: star,
+    //       endDate: end,
+    //       code: ''
+    //       // gender: 1
+    //   };
+    //   console.log(param)
+    //   this.schoolList = param
+    //   this.setSchoolFlag(true);
+    //   this.dialogPartFrame1 = false
+      
+    // },
     // 下载报告
     partsSub() {
       var that = this;
@@ -3215,6 +3392,20 @@ export default {
     },
     libraryHome(e) {
       this.$router.push({ name: "login" });
+    },
+    formTimes2(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? "0" + m : m;
+        var d = date.getDate();
+        d = d < 10 ? "0" + d : d;
+        var h = date.getHours();
+        h = h < 10 ? "0" + h : h;
+        var minute = date.getMinutes();
+        minute = minute < 10 ? "0" + minute : minute;
+        var second = date.getSeconds();
+        second = second < 10 ? "0" + second : second;
+        return y + "年" + m + "月" + d + "日";
     },
     formTimes1(date) {
       var y = date.getFullYear();

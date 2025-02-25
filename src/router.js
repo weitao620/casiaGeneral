@@ -58,11 +58,24 @@ export default new Router({
       name: 'detailsreportmobile',
       component: () => import('./views/Details/ReportMobile.vue')
     },
+    
     // 导出word
     {
       path: '/library/expword/:userID',
       name: 'expword',
       component: () => import('./views/Library/ExpWord.vue')
+    },
+    // 校级团体报告81
+    {
+      path: '/model/grouppdfs',
+      name: 'grouppdfs',
+      component: () => import('./views/Model/GroupPdfs.vue')
+    },
+    // 校级团体报告 通用
+    {
+      path: '/model/grouppdfsall',
+      name: 'grouppdfsall',
+      component: () => import('./views/Model/GroupPdfsAll.vue')
     },
     {
       path: '/library',

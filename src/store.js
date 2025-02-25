@@ -15,6 +15,7 @@ export default new Vuex.Store({
     mqttUpdate: false,
     sysType: 1,
     partsFlag: false,
+    schoolFlag: false,
     oneTotalFlag: false
   },
   mutations: {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     setPartsFlag(state, data) {
       state.partsFlag = data;
+    },
+    setSchoolFlag(state, data) {
+      state.schoolFlag = data;
     },
     setOneTotalFlag(state, data) {
       state.oneTotalFlag = data;
@@ -82,6 +86,9 @@ export default new Vuex.Store({
     },
     getPartsFlag(state) {
       return state.partsFlag;
+    },
+    getSchoolFlag(state) {
+      return state.schoolFlag;
     },
     getOneTotalFlag(state) {
       return state.OneTotalFlag;
