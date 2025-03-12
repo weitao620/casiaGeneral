@@ -29,7 +29,7 @@
                             <div class="g1_top1">
                                 团体报告
                             </div>
-                            <div class="g2_top1">
+                            <div class="g2_top1" v-if="start != ''">
                                 {{ start }} ～ {{ end }}
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 1.1 测评目的
                             </div>
                             <div class="yy_txt noSplitBox">
-                                {{ start }} ～ {{ end }}，{{ schoolName }}对校内 {{ detail.totalClasses }}
+                                {{start != '' ? start+'～'+end+'，' : ''}}{{ schoolName }}对校内 {{ detail.totalClasses }}
                                 个班级（其中：预备年级（小学六年级）{{
                                     detail.yuBei.numClasses }}个，初中{{ detail.chuZhong.numClasses }}个，高中{{
                                     detail.gaoZhong.numClasses }}个）的 {{ detail.totalStudents }}
@@ -2146,7 +2146,7 @@
                                     <tr class="pdf-details noSplitBox">
                                         <td>高于全国常模和年级常模</td>
                                         <td v-if="item.cwdName">
-                                            {{ item.cwdName[indexw] }}
+                                            {{ item.cwdName[indexw] == '' ? '无' : item.cwdName[indexw] }}
                                         </td>
 
                                     </tr>
@@ -2168,6 +2168,9 @@
                                 <th>强迫</th>
                                 <th>敌对</th>
                                 <th>自我伤害</th>
+                            </tr>
+                            <tr class="pdf-details noSplitBox" style="border-top: 0;height: 60px;" v-if="item.csList.length == 0">
+                                <td colspan="6">无</td>
                             </tr>
                             <tr class="pdf-details noSplitBox" v-for="(itemc, indexc) in item.csList" :key="indexc">
                                 <td v-if="itemc.nameFlag">{{ itemc.name }}</td>
@@ -2560,26 +2563,26 @@
 
                         </div>
                         <div class="yy_t mulu_page">
-                            3.{{ index + 2 }}.4 {{ item.name }}重点关注人群名单
+                            3.{{ index + 2 }}.4 {{ item.name }}重点关注人员名单
                         </div>
                         <div v-if="item.name.indexOf('初中') == -1 && item.gradeObj" class="yy_txt noSplitBox">
-                            说明：重点关注人群名单（共{{ item.gradeObj.gradeRiskNum }}人，占预备年级总人数{{ item.gradeObj.gradeRiskPercent
+                            说明：重点关注人员名单（共{{ item.gradeObj.gradeRiskNum }}人，占预备年级总人数{{ item.gradeObj.gradeRiskPercent
                             }}），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
                         </div>
                         <div v-if="item.name.indexOf('初中') != -1 && item.gradeObj && item.gradeObjz && item.gradeObjf"
                             class="yy_txt noSplitBox">
-                            说明：重点关注人群名单（共{{ item.gradeObj.gradeRiskNum }}人，占初中生总人数{{ item.gradeObj.gradeRiskPercent
+                            说明：重点关注人员名单（共{{ item.gradeObj.gradeRiskNum }}人，占初中生总人数{{ item.gradeObj.gradeRiskPercent
                             }}，其中直升班{{ item.gradeObjz.gradeRiskNum }}人，非直升班{{ item.gradeObjf.gradeRiskNum
                             }}人），主要包含单项维度达到重度问题人群、多项维度预警人群以及操作流程性问题人群（沙具总数少、时间短）这三类人群。
                         </div>
                         <div v-if="item.name.indexOf('初中') == -1" class="yy_txt noSplitBox" style="color: #f00;">
-                            {{ item.name }}重点关注人群名单见附件一。
+                            {{ item.name }}重点关注人员名单见附件一。
                         </div>
                         <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
-                            直升班（初中 1-10 班）重点关注人群名单见附件一。
+                            直升班（初中 1-10 班）重点关注人员名单见附件一。
                         </div>
                         <div v-if="item.name.indexOf('初中') != -1" class="yy_txt noSplitBox" style="color: #f00;">
-                            非直升班（初中 11-20 班）重点关注人群名单见附件二。
+                            非直升班（初中 11-20 班）重点关注人员名单见附件二。
                         </div>
 
 
@@ -2766,7 +2769,7 @@
                                 <span>{{ schoolName }}</span>
                             </div>
                             <div class="g1_top1">
-                                {{ reportName }}
+                                {{ item.code }}重点关注人员名单 
                             </div>
                             <div class="g1_top1">
                                 中小学生心理健康筛查评估
@@ -2774,7 +2777,7 @@
                             <div class="g1_top1" style="font-size: 40px;">
                                 {{ item.pdfName }}
                             </div>
-                            <div class="g2_top1">
+                            <div class="g2_top1" v-if="start != ''">
                                 {{ start }} ～ {{ end }}
                             </div>
                         </div>
@@ -2787,18 +2790,21 @@
 
                     <table cellspacing="0" style="margin-bottom: 0;">
                         <tr :class="'noSplitBox' + index" style="background: #e9e9e9">
-                            <th>序号</th>
-                            <th>姓名</th>
-                            <th>学号</th>
-                            <th>性别</th>
-                            <th>班级</th>
-                            <th>抑郁</th>
-                            <th>焦虑</th>
-                            <th>强迫</th>
-                            <th>敌对</th>
-                            <th>自我伤害</th>
-                            <th>沙具总数量较少</th>
-                            <th>用时较短</th>
+                            <th style="width: 40px;">序号</th>
+                            <th style="width: 60px;">姓名</th>
+                            <th style="width: auto;">学号</th>
+                            <th style="width: 40px;">性别</th>
+                            <th style="width: auto;">班级</th>
+                            <th style="width: 42px;">抑郁</th>
+                            <th style="width: 42px;">焦虑</th>
+                            <th style="width: 42px;">强迫</th>
+                            <th style="width: 42px;">敌对</th>
+                            <th style="width: 80px;">自我伤害</th>
+                            <th style="width: 80px;">沙具总数量较少</th>
+                            <th style="width: 80px;">用时较短</th>
+                        </tr>
+                        <tr style="border-top: 0;height: 60px;" v-if="item.reportInfoList.length == 0">
+                            <td colspan="12">无</td>
                         </tr>
                         <tr v-for="(itemr, indexr) in item.reportInfoList" :key="indexr"
                             :class="'noSplitBox' + index">
@@ -3270,7 +3276,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '预备年级重点关注人群名单',
+                                    name: '预备年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -3334,7 +3340,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '初中一年级重点关注人群名单',
+                                    name: '初中一年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -3398,7 +3404,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '高中一年级重点关注人群名单',
+                                    name: '高中一年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -3577,7 +3583,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '预备年级重点关注人群名单',
+                                    name: '预备年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -3641,7 +3647,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '初中一年级重点关注人群名单',
+                                    name: '初中一年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -3705,7 +3711,7 @@ export default {
                                 },
                                 {
                                     id: 4,
-                                    name: '高中一年级重点关注人群名单',
+                                    name: '高中一年级重点关注人员名单',
                                     page: '',
                                     mark: 3
                                 }
@@ -4314,20 +4320,20 @@ export default {
                                 let name = ''
                                 if (this.gradeFjList[i].code == 'X') {
 
-                                    name = '预备年级重点关注人群名单见附件一'
+                                    name = '预备年级重点关注人员名单见附件一'
                                     // this.gradeFjList[i].name = name
                                 }
                                 if (this.gradeFjList[i].code == 'G') {
-                                    name = '高中一年级重点关注人群名单见附件一'
+                                    name = '高中一年级重点关注人员名单见附件一'
                                     // this.gradeFjList[i].name = name
                                 }
                                 if (this.gradeFjList[i].code == 'C') {
                                     if (this.gradeFjList[i].isUpgrade == 1) {
-                                        name = '直升班（初中 1-10 班）重点关注人群名单见附件一'
+                                        name = '直升班（初中 1-10 班）重点关注人员名单见附件一'
 
                                     }
                                     if (this.gradeFjList[i].isUpgrade == 2) {
-                                        name = '非直升班（初中 11-20 班）重点关注人群名单见附件二'
+                                        name = '非直升班（初中 11-20 班）重点关注人员名单见附件二'
                                     }
                                 }
                                 this.gradeFjList[i].pdfName = name
@@ -5778,7 +5784,7 @@ export default {
                             let wdp1 = ''
                             if (noArr1.length > 1) {
                                 for (let i in noArr1) {
-                                    wdp1 += wdArrNum[0].name
+                                    wdp1 += noArr1[i].name
                                     if (i < noArr1.length - 2) {
                                         wdp1 += '、'
                                     }
@@ -5787,7 +5793,7 @@ export default {
                                     }
                                 }
                             } else {
-                                wdp1 += wdArrNum[0].name
+                                wdp1 += noArr1[0].name
                             }
 
                             wdpStr += wdp1 + '问题最为普遍：</span>'
@@ -5813,7 +5819,7 @@ export default {
                             let wdp2 = ''
                             if (noArr2.length > 1) {
                                 for (let i in noArr2) {
-                                    wdp2 += wdArrNum[0].name
+                                    wdp2 += noArr2[i].name
                                     if (i < noArr2.length - 2) {
                                         wdp2 += '、'
                                     }
@@ -5822,7 +5828,7 @@ export default {
                                     }
                                 }
                             } else {
-                                wdp2 += wdArrNum[0].name
+                                wdp2 += noArr2[0].name
                             }
                             wdpStr += wdp2 + '问题相对较少：</span>'
                             wdpStr += '<span>'
@@ -5867,7 +5873,7 @@ export default {
                                 let wdp31 = ''
                                 if (noArr31.length > 1) {
                                     for (let i in noArr31) {
-                                        wdp31 += wdArrNum[0].name
+                                        wdp31 += noArr31[i].name
                                         if (i < noArr31.length - 2) {
                                             wdp31 += '、'
                                         }
@@ -5876,7 +5882,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp31 += wdArrNum[0].name
+                                    wdp31 += noArr31[0].name
                                 }
                                 wdpStr += wdp31 + '问题最为普遍：</span>'
                                 wdpStr += '<span>在所有心理健康问题中，'
@@ -5900,7 +5906,7 @@ export default {
                                 let wdp32 = ''
                                 if (noArr32.length > 1) {
                                     for (let i in noArr32) {
-                                        wdp32 += wdArrNum[0].name
+                                        wdp32 += noArr32[i].name
                                         if (i < noArr32.length - 2) {
                                             wdp32 += '、'
                                         }
@@ -5909,7 +5915,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp32 += wdArrNum[0].name
+                                    wdp32 += noArr32[0].name
                                 }
                                 wdpStr += wdp32 + '问题次之：</span>'
                                 wdpStr += '<span>'
@@ -5934,7 +5940,7 @@ export default {
                                 let wdp33 = ''
                                 if (noArr33.length > 1) {
                                     for (let i in noArr33) {
-                                        wdp33 += wdArrNum[0].name
+                                        wdp33 += noArr33[i].name
                                         if (i < noArr33.length - 2) {
                                             wdp33 += '、'
                                         }
@@ -5943,7 +5949,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp33 += wdArrNum[0].name
+                                    wdp33 += noArr33[0].name
                                 }
                                 wdpStr += wdp33 + '问题相对较少：</span>'
                                 wdpStr += '<span>'
@@ -5971,6 +5977,7 @@ export default {
                                 let noArr32 = []
                                 let noArr33 = []
                                 let noArr34 = []
+                                console.log(wdArrNum)
                                 for (let i in wdArrNum) {
                                     if (wdArrNum[i].num == wdNumNo[0]) {
                                         noArr31.push(wdArrNum[i])
@@ -5985,13 +5992,18 @@ export default {
                                         noArr34.push(wdArrNum[i])
                                     }
                                 }
+                                console.log(noArr31)
+                                console.log(noArr32)
+                                console.log(noArr33)
+                                console.log(noArr34)
                                 // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
                                 wdpStr += '<div class="yy_txt noSplitBox">'
                                 wdpStr += '<span style="font-weight: 500;">'
                                 let wdp31 = ''
+                                
                                 if (noArr31.length > 1) {
                                     for (let i in noArr31) {
-                                        wdp31 += wdArrNum[0].name
+                                        wdp31 += noArr31[i].name
                                         if (i < noArr31.length - 2) {
                                             wdp31 += '、'
                                         }
@@ -6000,7 +6012,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp31 += wdArrNum[0].name
+                                    wdp31 += noArr31[0].name
                                 }
                                 wdpStr += wdp31 + '问题最为普遍：</span>'
                                 wdpStr += '<span>在所有心理健康问题中，'
@@ -6022,9 +6034,10 @@ export default {
                                 wdpStr += '<div class="yy_txt noSplitBox">'
                                 wdpStr += '<span style="font-weight: 500;">'
                                 let wdp32 = ''
+                                console.log(noArr32)
                                 if (noArr32.length > 1) {
                                     for (let i in noArr32) {
-                                        wdp32 += wdArrNum[0].name
+                                        wdp32 += noArr32[i].name
                                         if (i < noArr32.length - 2) {
                                             wdp32 += '、'
                                         }
@@ -6033,7 +6046,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp32 += wdArrNum[0].name
+                                    wdp32 += noArr32[0].name
                                 }
                                 wdpStr += wdp32 + '问题次之：</span>'
                                 wdpStr += '<span>'
@@ -6058,7 +6071,7 @@ export default {
                                 let wdp33 = ''
                                 if (noArr33.length > 1) {
                                     for (let i in noArr33) {
-                                        wdp33 += wdArrNum[0].name
+                                        wdp33 += noArr33[i].name
                                         if (i < noArr33.length - 2) {
                                             wdp33 += '、'
                                         }
@@ -6067,12 +6080,12 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp33 += wdArrNum[0].name
+                                    wdp33 += noArr33[0].name
                                 }
                                 let wdp34 = ''
                                 if (noArr34.length > 1) {
                                     for (let i in noArr34) {
-                                        wdp34 += wdArrNum[0].name
+                                        wdp34 += noArr34[i].name
                                         if (i < noArr34.length - 2) {
                                             wdp34 += '、'
                                         }
@@ -6081,13 +6094,13 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp34 += wdArrNum[0].name
+                                    wdp34 += noArr34[0].name
                                 }
-                                noArr33s = noArr33.concat(noArr34)
+                                let noArr33s = noArr33.concat(noArr34)
                                 let wdp3s = ''
                                 if (noArr33s.length > 1) {
                                     for (let i in noArr33s) {
-                                        wdp3s += wdArrNum[0].name
+                                        wdp3s += noArr33s[i].name
                                         if (i < noArr33s.length - 2) {
                                             wdp3s += '、'
                                         }
@@ -6096,7 +6109,7 @@ export default {
                                         }
                                     }
                                 } else {
-                                    wdp3s += wdArrNum[0].name
+                                    wdp3s += noArr33s[0].name
                                 }
                                 wdpStr += wdp3s + '问题相对较少：</span>'
                                 wdpStr += '<span>'
@@ -6263,7 +6276,7 @@ export default {
                         };
                         this.getDim(param7, star, end)
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -6335,7 +6348,7 @@ export default {
                         console.log(this.detail)
                         this.part2 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -6356,7 +6369,7 @@ export default {
                     if (res.data.code == 0) {
                         this.part3 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -6602,7 +6615,7 @@ export default {
                                 if (cout1 > 0) {
                                     genderTxt51 += '在'
                                     for (let i in arr1) {
-                                        genderTxt51 += arr1[i].grade
+                                        genderTxt51 += arr1[i]
                                         if (i < arr1.length - 2) {
                                             genderTxt51 += '、'
                                         }
@@ -6610,16 +6623,22 @@ export default {
                                             genderTxt51 += '和'
                                         }
                                     }
-                                    genderTxt51 += '维度上的检出率高于女生，'
+                                    genderTxt51 += '维度上的检出率高于女生'
                                 }
 
-
+                                if (cout2 == 0 && cout3 == 0 ) {
+                                    genderTxt51 += '。'
+                                } else {
+                                    if (cout1 > 0) {
+                                        genderTxt51 += '，'
+                                    }
+                                }
 
 
                                 if (cout3 > 0) {
                                     genderTxt51 += '在'
                                     for (let i in arr3) {
-                                        genderTxt51 += arr3[i].grade
+                                        genderTxt51 += arr3[i]
                                         if (i < arr3.length - 2) {
                                             genderTxt51 += '、'
                                         }
@@ -6629,18 +6648,31 @@ export default {
                                     }
                                     genderTxt51 += '维度上的检出率与女生持平'
                                 }
-                                if (cout2 == 0) {
+                                
+                                if (cout2 == 0 && cout3 > 0) {
                                     genderTxt51 += '。'
                                 } else {
-                                    if (cout1 == 0) {
-                                        genderTxt51 += '，'
-                                    }
+                                    // if (cout2 > 0) {
+                                    //     genderTxt51 += '，'
+                                    // }
+                                    if (cout1 == 0 && cout3 == 0) {
 
+                                    } else {
+                                        if (cout3 == 0) {
+
+                                        } else {
+                                            if (cout2  > 0 ) {
+                                                genderTxt51 += '，'
+                                            }
+                                            
+                                        }
+                                        
+                                    }
                                 }
                                 if (cout2 > 0) {
                                     genderTxt51 += '在'
                                     for (let i in arr2) {
-                                        genderTxt51 += arr2[i].grade
+                                        genderTxt51 += arr2[i]
                                         if (i < arr2.length - 2) {
                                             genderTxt51 += '、'
                                         }
@@ -6945,7 +6977,7 @@ export default {
 
                         this.part4 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -6966,7 +6998,7 @@ export default {
                     if (res.data.code == 0) {
                         this.part5 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -7224,7 +7256,7 @@ export default {
 
                         this.part8 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -7264,7 +7296,7 @@ export default {
 
             //             this.part9 = true
             //         } else {
-            //             that.$message.error(data.msg);
+            //             this.$message.error(data.msg);
             //         }
             //     })
             //     .catch(res => {
@@ -7290,7 +7322,7 @@ export default {
             //             // }
             //             this.part10 = true
             //         } else {
-            //             that.$message.error(data.msg);
+            //             this.$message.error(data.msg);
             //         }
             //     })
             //     .catch(res => {
@@ -7310,7 +7342,7 @@ export default {
             //         if (res.data.code == 0) {
             //             this.part9 = true;
             //         } else {
-            //             that.$message.error(data.msg);
+            //             this.$message.error(data.msg);
             //         }
             //     })
             //     .catch(res => {
@@ -7419,7 +7451,7 @@ export default {
                                 return Number(b.numPer.percent) - Number(a.numPer.percent);
                             });
                             for (let i in info2) {
-                                aTxt1 += info2[i].name + '（' + info2.numPer.percent + '%）'
+                                aTxt1 += info2[i].name + '（' + info2[i].numPer.percent + '%）'
                                 if (i < info2.length - 1) {
                                     aTxt1 += '、'
                                 } else {
@@ -7703,23 +7735,40 @@ export default {
                                     }
                                 }
                                 if (d2.length > 0) {
-                                    allTxt += '在' + d2.join('、') + '方面表现较好，'
+                                    allTxt += '在' + d2.join('、') + '方面表现较好'
                                 }
+                                if (d1.length == 0 && d0.length == 0 ) {
+                                    allTxt += '。'
+                                } else {
+                                    if (d2.length > 0) {
+                                        allTxt += '，'
+                                    }
+                                }
+
                                 if (d1.length > 0) {
                                     allTxt += '在' + d1.join('、') + '在方面与全国常模持平'
                                 }
-                                if (d0.length == 0) {
+                                
+                                
+
+                                
+                                if (d0.length == 0 && d1.length > 0) {
                                     allTxt += '。'
                                 } else {
-                                    if (d2.length == 0) {
-                                        allTxt += '，'
+                                    if (d2.length == 0 && d1.length == 0) {
+
                                     } else {
                                         if (d1.length == 0) {
 
                                         } else {
-                                            allTxt += '，'
+                                            if (d0.length  > 0 ) {
+                                                allTxt += '，'
+                                            }
+                                            
                                         }
+                                        
                                     }
+                                    
                                 }
                                 if (d0.length > 0) {
                                     allTxt += '在' + d0.join('、') + '在方面有待改善，（分别）超出全国常模' + d01.join('、') + '。'
@@ -7919,7 +7968,7 @@ export default {
                         this.getDim6(param6)
                         this.part7 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8077,7 +8126,7 @@ export default {
                         // this.gradeAllList = this.gradeAllList
                         this.part6 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8094,6 +8143,7 @@ export default {
             return obj;
         },
         genderQuestion(star, end) {
+            let that = this;
             console.log('---------------------------')
             console.log(this.gradeAllList)
             let objX = {
@@ -8134,7 +8184,7 @@ export default {
                         this.$forceUpdate()
                         this.part9 = true;
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8203,7 +8253,7 @@ export default {
                         this.part91 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8259,7 +8309,7 @@ export default {
                         this.part92 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8294,7 +8344,7 @@ export default {
                         this.part10 = true;
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8360,7 +8410,7 @@ export default {
                         this.part101 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8421,7 +8471,7 @@ export default {
                         this.part102 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8469,7 +8519,7 @@ export default {
                         this.part11 = true;
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8499,7 +8549,7 @@ export default {
             //             this.$forceUpdate()
             //             this.part12 = true;
             //         } else {
-            //             that.$message.error(data.msg);
+            //             this.$message.error(data.msg);
             //         }
             //     })
             //     .catch(res => {
@@ -8560,7 +8610,7 @@ export default {
                         this.part121 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8616,7 +8666,7 @@ export default {
                         this.part122 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8646,7 +8696,7 @@ export default {
             //             this.$forceUpdate()
             //             this.part13 = true;
             //         } else {
-            //             that.$message.error(data.msg);
+            //             this.$message.error(data.msg);
             //         }
             //     })
             //     .catch(res => {
@@ -8707,7 +8757,7 @@ export default {
                         this.part131 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8763,7 +8813,7 @@ export default {
                         this.part132 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8813,7 +8863,7 @@ export default {
                         this.part140 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8862,7 +8912,7 @@ export default {
                         this.part141 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8911,7 +8961,7 @@ export default {
                         this.part142 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -8960,7 +9010,7 @@ export default {
                         this.part143 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -9009,7 +9059,7 @@ export default {
                         this.part144 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {
@@ -9058,7 +9108,7 @@ export default {
                         this.part145 = true
 
                     } else {
-                        that.$message.error(data.msg);
+                        this.$message.error(data.msg);
                     }
                 })
                 .catch(res => {

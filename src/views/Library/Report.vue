@@ -438,7 +438,7 @@
               <el-input disabled v-model="schoolName1"></el-input>
           </el-form-item>
           <el-form-item label="报告名称：">
-              <el-input v-model="reportName1" placeholder="请输入报告名称（例：**年秋季学期）"></el-input>
+              <el-input required v-model="reportName1" placeholder="请输入报告名称（例：**年秋季学期）"></el-input>
               <div class="tip_left" v-show="reportFlag1">
                   <div class="tip_msg">
                       <img src="../../assets/images/x.png" alt="" />
@@ -2892,22 +2892,15 @@ export default {
           this.reportFlag1 = true;
           return false;
       }
-      if (that.partsForm1.time == '') {
-          this.pTimeFlag1 = true;
-          return false;
-      }
-
       let star = "";
       let end = "";
       if (that.partsForm1.time != "" && that.partsForm1.time) {
           this.start = that.formTimes2(that.partsForm1.time[0])
           this.end = that.formTimes2(that.partsForm1.time[1])
           star =
-              that.formTimes(that.partsForm1.time[0]).replace(/-/g, "") +
-              "000000";
+              that.formTimes(that.partsForm1.time[0]);
           end =
-              that.formTimes(that.partsForm1.time[1]).replace(/-/g, "") +
-              "235959";
+              that.formTimes(that.partsForm1.time[1]);
       }
       
       let param = {
@@ -2917,7 +2910,8 @@ export default {
           end: this.end,
           reportName: this.reportName1,
           schoolName: this.schoolName1,
-          code: ''
+          schoolId: '137'
+          // code: ''
           // gender: 1
       };
       console.log(param)
@@ -2928,7 +2922,7 @@ export default {
     apartsReport() {
       console.log('导出团体报告')
       let that = this;
-      this.addChange3();
+      // this.addChange3();
       this.pTimeFlag = this.pTypeFlag = this.organizationFlag = false;
       this.partsForm = {
         time: '',

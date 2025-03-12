@@ -529,11 +529,10 @@
                                         <th>班级</th>
                                     </tr>
                                     <tr class="pdf-details noSplitBox">
-                                        <td style="width: 250px;">高于全国常模和年级常模</td>
+                                        <td style="width: 2.5rem;">高于全国常模和年级常模</td>
                                         <td v-if="item.cwdName">
                                             {{ item.cwdName[indexw] == '' ? '无' : item.cwdName[indexw] }}
                                         </td>
-                                       
                                         
 
                                     </tr>
@@ -592,7 +591,7 @@
                                 <tr class="pdf-details noSplitBox" style="background: #e9e9e9">
                                     <th width="80px" style="position: relative;">
                                         <div
-                                            style="position: absolute;left: -2%;top: -6%;width: 102%;height: 211%;background: #fff;">
+                                            style="position: absolute;left: -4px;top: -3px;width: 103%;height: 73px;background: #fff;">
                                         </div>
                                     </th>
                                     <th width="200px" colspan="2">抑郁</th>
@@ -807,11 +806,7 @@
                             <div>使用封闭与孤立的元素</div>
                             <div>沙盘中的物体可能被安排在一个封闭的空间内，如围墙、围栏等，反映出患者有隔离感，不愿意与外界交流。</div>
                         </li>
-                    </ul>
-                </div>
-                <div class="yy_box noSplitBox">
-                    <ul class="j_table">
-                        <li class="pdf-details">
+                        <li class="pdf-details noSplitBox">
                             <div style="border-bottom: 1px solid #fff;"></div>
                             <div>空洞与缺失</div>
                             <div>
@@ -889,9 +884,6 @@
                         <tr style="border-top: 0;height: 60px;" v-if="item.reportInfoList.length == 0">
                             <td colspan="12">无</td>
                         </tr>
-                        <tr style="border: 0;height: 60px;" v-if="item.reportInfoList.length == 0">
-                            <td colspan="12" style="border: 0;"></td>
-                        </tr>
                         <tr v-for="(itemr, indexr) in item.reportInfoList" :key="indexr"
                             :class="'noSplitBox' + index">
                             <td>{{ indexr+1 }}</td>
@@ -899,11 +891,11 @@
                             <td>{{ itemr.passport }}</td>
                             <td>{{ itemr.gender == 1 ? '男' : '女' }}</td>
                             <td>{{ itemr.departmentName }}</td>
-                            <td>{{ itemr.depressionLevel == 2 || itemr.depressionLevel == 3? '轻度' : itemr.depressionLevel == 4 || itemr.depressionLevel == 5 ? '中度' : itemr.depressionLevel == 6 ? '重度' : '正常'}}</td>
-                            <td>{{ itemr.anxietyLevel == 2 || itemr.anxietyLevel == 3? '轻度' : itemr.anxietyLevel == 4 || itemr.anxietyLevel == 5 ? '中度' : itemr.anxietyLevel == 6 ? '重度' : '正常' }}</td>
-                            <td>{{ itemr.forcedLevel == 2 || itemr.forcedLevel == 3? '轻度' : itemr.forcedLevel == 4 || itemr.forcedLevel == 5 ? '中度' : itemr.forcedLevel == 6 ? '重度' : '正常' }}</td>
-                            <td>{{ itemr.violenceLevel == 2 || itemr.violenceLevel == 3? '轻度' : itemr.violenceLevel == 4 || itemr.violenceLevel == 5 ? '中度' : itemr.violenceLevel == 6 ? '重度' : '正常' }}</td>
-                            <td>{{ itemr.suicideLevel == 2 || itemr.suicideLevel == 3? '轻度' : itemr.suicideLevel == 4 || itemr.suicideLevel == 5 ? '中度' : itemr.suicideLevel == 6 ? '重度' : '正常' }}</td>
+                            <td>{{ itemr.depressionLevel == 1 ? '轻度' : itemr.depressionLevel == 2 ? '中度' : itemr.depressionLevel == 3 ? '重度' : '正常'}}</td>
+                            <td>{{ itemr.anxietyLevel == 1 ? '轻度' : itemr.anxietyLevel == 2 ? '中度' : itemr.anxietyLevel == 3 ? '重度' : '正常' }}</td>
+                            <td>{{ itemr.forcedLevel == 1 ? '轻度' : itemr.forcedLevel == 2 ? '中度' : itemr.forcedLevel == 3 ? '重度' : '正常' }}</td>
+                            <td>{{ itemr.violenceLevel == 1 ? '轻度' : itemr.violenceLevel == 2 ? '中度' : itemr.violenceLevel == 3 ? '重度' : '正常' }}</td>
+                            <td>{{ itemr.suicideLevel == 1 ? '轻度' : itemr.suicideLevel == 2 ? '中度' : itemr.suicideLevel == 3 ? '重度' : '正常' }}</td>
                             <td>{{ itemr.bodiesCount < 3? '是' : '否'}}</td>
                             <td>{{ itemr.duringTime < 300 ? '是' : '否' }}</td>
                         </tr>
@@ -2497,11 +2489,7 @@ export default {
     },
     watch: {
         schoolPdfs1: function(newVal, oldVal) {
-            // console.log(newVal);
-            // console.log(oldVal);
             if (newVal) {
-                // console.log('3333')
-                
                 // 开始调接口，接口完事后，调用这个方法进行下载
                 this.loading = this.$loading({
                     lock: true,
@@ -2646,8 +2634,6 @@ export default {
                                     ]
                                 }
                             ]
-                            // console.log(data)
-                            // console.log(this.muluList[2].list)
                             this.muluList[2].list = []
                             this.muluList[2].list.push({
                                 id: 1,
@@ -2761,10 +2747,8 @@ export default {
                                     }
                                 }
                             }
-                            console.log(muluArr)
                             this.muluList = muluArr
                             this.partAll = data.length*2
-                            console.log(this.muluList)
                             setTimeout(() => {
                                 this.schoolSub()
                             }, 2000);
@@ -2777,13 +2761,10 @@ export default {
                     });
                 
             } else {
-                // console.log('2222')
-                // this.zipFlag = false;
             }
         },
         bindmodel: {
             handler: function (newVal) {
-                console.log(newVal)
                 this.part1 = newVal.part1;
                 this.part2 = newVal.part2;
                 this.part3 = newVal.part3;
@@ -2811,10 +2792,6 @@ export default {
                         
 
                         
-                        
-                        console.log(this.gradeAllList)
-                        console.log(this.gradeFjList)
-
                         this.echartInit()
                         // this.loading = this.$loading({
                         //     lock: true,
@@ -2862,14 +2839,12 @@ export default {
     methods: {
         ...mapMutations(["setSchoolFlag"]),
         timeChange(val) {
-            console.log(val)
             this.pTimeFlag1 = false
         },
         echartInit() {
             let that = this;
             // 参加筛查评估学生学段分布图
             let arr1 = []
-            console.log(that.detail.schoolList)
             for (let i in that.detail.schoolList) {
                 let obj1 = {
                     value: Number(that.detail.schoolList[i].percent),
@@ -2877,8 +2852,6 @@ export default {
                 }
                 arr1.push(obj1)
             }
-            console.log(arr1)
-            console.log(that.detail.totalStudents)
             this.myChart1 = echarts.init(this.$refs.myChart1);
             this.myChart1.setOption({
                 tooltip: {
@@ -2929,7 +2902,6 @@ export default {
             // 参加筛查评估男女性别人数对比图
             let arr2 = []
             arr2.push(['product', '男', '女'])
-            console.log(that.detail.schoolList)
             for (let i in that.detail.schoolList) {
                 let obj2 = [
                     that.detail.schoolList[i].name,
@@ -2938,7 +2910,6 @@ export default {
                 ]
                 arr2.push(obj2)
             }
-            console.log(arr2)
             this.myChart2 = echarts.init(this.$refs.myChart2);
             this.myChart2.setOption({
                 color: ['#8ACBFF', '#FFB0DB'],
@@ -3002,7 +2973,6 @@ export default {
                                 color: "#333E75",
                                 fontSize: 16,
                                 formatter: function (params) {
-                                    console.log(params)
                                     if (params.value[1] > 0) {
                                         return params.value[1];
                                     } else {
@@ -3025,7 +2995,6 @@ export default {
                                 color: "#333E75",
                                 fontSize: 16,
                                 formatter: function (params) {
-                                    console.log(params)
                                     if (params.value[2] > 0) {
                                         return params.value[2];
                                     } else {
@@ -3039,7 +3008,6 @@ export default {
             });
             // 心理健康问题检出率对比分布
             this.myChart3 = echarts.init(this.$refs.myChart3);
-            console.log(this.myChart3);
             this.myChart3.setOption({
                 color: ['#ff8e00', '#0d7ce4'],
                 title: {
@@ -3096,7 +3064,6 @@ export default {
                 lv43.push(that.wdJcListArr[i].severeProportion)
             }
             this.myChart4 = echarts.init(this.$refs.myChart4);
-            console.log(this.myChart4);
             this.myChart4.setOption({
                 color: ['#8ACBFF', '#FFDDA0', '#FE9D9D'],
                 tooltip: {
@@ -3192,7 +3159,6 @@ export default {
 
             // 不同性别学生心理健康问题检出率分布图
             this.myChart5 = echarts.init(this.$refs.myChart5);
-            console.log(this.myChart5);
             this.myChart5.setOption({
                 color: ['#8ACBFF', '#FFB0DB'],
                 tooltip: {
@@ -3282,7 +3248,6 @@ export default {
                 }
                 let cName = 'myChart1' + i
                 this[cName] = echarts.init(this.$refs[cName][0]);
-                console.log(this[cName]);
                 this[cName].setOption({
                     color: ['#ff8e00', '#0d7ce4', '#c2361f'],
                     title: {
@@ -3339,9 +3304,6 @@ export default {
                     ]
                 });
                 // 维度和性别
-                // if (this.gradeAllList[i].name.indexOf('初中') == -1) {
-                    console.log(this.gradeAllList[i].name)
-                    console.log(this.gradeAllList[i])
                     const rawData = [
                         [this.gradeAllList[i].gradeNanData[0].normalNum, this.gradeAllList[i].gradeNanData[1].normalNum, this.gradeAllList[i].gradeNanData[2].normalNum, this.gradeAllList[i].gradeNanData[3].normalNum, this.gradeAllList[i].gradeNanData[4].normalNum],
                         [this.gradeAllList[i].gradeNanData[0].mildNum, this.gradeAllList[i].gradeNanData[1].mildNum, this.gradeAllList[i].gradeNanData[2].mildNum, this.gradeAllList[i].gradeNanData[3].mildNum, this.gradeAllList[i].gradeNanData[4].mildNum],
@@ -3358,10 +3320,8 @@ export default {
                         for (let j = 0; j < rawData.length; ++j) {
                             sum += rawData[j][i];
                         }
-                        console.log(sum)
                         totalData.push(sum);
                     }
-                    console.log(totalData)
                     const grid = {
                         left: 100,
                         right: 0,
@@ -3393,7 +3353,6 @@ export default {
                     });
                     let xName = 'myChart3' + i
                     this[xName] = echarts.init(this.$refs[xName][0]);
-                    console.log(this[xName]);
                     this[xName].setOption({
                         color: ['#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D', '#B5ECAF', '#8ACBFF', '#FFDDA0', '#FE9D9D'],
                         legend: {
@@ -3441,7 +3400,6 @@ export default {
 
                     let cName2 = 'myChart2' + i + j;
                     this[cName2] = echarts.init(this.$refs[cName2][0]);
-                    console.log(this[cName2]);
                     this[cName2].setOption({
                         color: ['#ff8e00', '#0d7ce4', '#c2361f'],
                         tooltip: {
@@ -3624,7 +3582,6 @@ export default {
         schoolSub() {
             var that = this;
            
-            console.log(this.sList)
             this.start =  this.sList.start
             this.end =  this.sList.end
             this.reportName1 =  this.sList.reportName
@@ -3635,8 +3592,8 @@ export default {
             // 各维度检出率（3.2.3 可用添加性别和code)   有男女之分 可一起查可分开查
             let param1 = {
                 code: 2,
-                startDate: "",
-                endDate: "",
+                startDate: star,
+                endDate: end,
                 id: schoolId
             };
             this.$http
@@ -3752,8 +3709,6 @@ export default {
                         let wdJcListArr = JSON.parse(JSON.stringify(wdJcList))
                         this.wdJcListArr = wdJcListArr
 
-                        console.log(wdJcListArr)
-                        console.log(wdJcList)
                         this.schoolCM = schoolCM
                         this.cmCha = cmCha
                         let c1 = 0
@@ -3770,11 +3725,9 @@ export default {
                                 c3++
                             }
                         }
-                        console.log(cmCha)
                         let cmChaSort = JSON.parse(JSON.stringify(cmCha)).sort((a, b) => {
                             return Number(b.num) - Number(a.num);
                         })
-                        console.log(cmChaSort)
                         let cmTxt = ''
                         // A.若学校常模-全国常模都为正，
                         if (c3 == 5) {
@@ -3803,8 +3756,6 @@ export default {
                                     cmChaArr1.push(cmChaSort[i].name)
                                 }
                             }
-                            console.log(cmChaArr1)
-                            console.log(cmChaArr1.reverse())
                             if (cmChaArr1.length < 5) {
                                 cmTxt += '其中，' + cmChaArr1.reverse().join('、') + '问题相对较小，（皆）低于全国常模' + cmChaSort[0].num + '%。'
                             } else {
@@ -3848,23 +3799,13 @@ export default {
                                 cmTxt += csStr1.join('、') + '方面有待改善，'
                                 cmTxt += '其中，'
                                 // 输出差值为正，且最大的维度
-                                console.log(csStr3)
-                                console.log(csStr3.join())
-                                console.log(csStr3.join('、'))
                                 let csStr3s = csStr3.length > 1 ? '皆' : ''
                                 cmTxt += csStr3.join('、') + '维度' + csStr3s + '超出全国常模' + cmChaSort[0].num + '%。'
 
-                                console.log(cmTxt)
                             }
 
-
-
-
-
-                            console.log(csStr1, csStr2, csStr3)
                         }
                         this.detail.cmTxt = cmTxt
-                        console.log(c1, c2, c3)
                         wdJcList.sort((a, b) => {
                             return Number(b.total) - Number(a.total);
                         });
@@ -3881,9 +3822,7 @@ export default {
                             })
                             wdNum.push(wdJcList[i].total)
                         }
-                        console.log(wdNum)
                         let wdNumNo = that.noRepeat2(wdNum)
-                        console.log(wdNumNo)
                         let wdpStr = ''
                         if (wdNumNo.length == 5) {
                             // A.若五个维度检出率彼此各不相同，则输出
@@ -4149,7 +4088,6 @@ export default {
                                 let noArr32 = []
                                 let noArr33 = []
                                 let noArr34 = []
-                                console.log(wdArrNum)
                                 for (let i in wdArrNum) {
                                     if (wdArrNum[i].num == wdNumNo[0]) {
                                         noArr31.push(wdArrNum[i])
@@ -4164,10 +4102,6 @@ export default {
                                         noArr34.push(wdArrNum[i])
                                     }
                                 }
-                                console.log(noArr31)
-                                console.log(noArr32)
-                                console.log(noArr33)
-                                console.log(noArr34)
                                 // （第一句:）**（和**)问题最为普遍：在所有心理健康问题中，**（和**）问题的检出率最高，（皆）达到 **%。其中，**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。(**轻度问题占比为 **%，**中度问题占比 **%，**重度问题占比 **%。）这表明**（、**）是本校中小学生中最常见的心理健康问题。
                                 wdpStr += '<div class="yy_txt">'
                                 wdpStr += '<span style="font-weight: 500;">'
@@ -4206,7 +4140,6 @@ export default {
                                 wdpStr += '<div class="yy_txt">'
                                 wdpStr += '<span style="font-weight: 500;">'
                                 let wdp32 = ''
-                                console.log(noArr32)
                                 if (noArr32.length > 1) {
                                     for (let i in noArr32) {
                                         wdp32 += noArr32[i].name
@@ -4307,7 +4240,6 @@ export default {
 
                         }
                         this.detail.wdpStr = wdpStr
-                        console.log(wdJcTotal)
                         wdJcTotal.sort((a, b) => {
                             return Number(b) - Number(a);
                         });
@@ -4342,7 +4274,6 @@ export default {
                                     txtArr4.push(wdJcList[i])
                                 }
                             }
-                            console.log(txtArr4)
                             let txtStr = ''
                             for (let i in txtArr4) {
                                 txtStr += txtArr4[i].grade
@@ -4366,8 +4297,6 @@ export default {
                                     txtArr51.push(wdJcList[i])
                                 }
                             }
-                            console.log(txtArr52)
-                            console.log(txtArr51)
                             let txtStr52 = ''
                             for (let i in txtArr52) {
                                 txtStr52 += txtArr52[i].grade
@@ -4394,13 +4323,11 @@ export default {
 
 
 
-                        console.log(wdJcList)
 
                         let jcTxt = ''
                         if (wdJcList.every(item => item.total === wdJcList[0].total)) {
 
                             // 若五个维度检出率完全相同，则输出：
-                            console.log('全等')
                             jcTxt += '各类心理健康问题相当，检出率皆为：' + wdJcList[0].total + '%。'
                         } else {
                             // 若检出率前两个维度相同
@@ -4420,11 +4347,8 @@ export default {
                                     jcTxt += '较为突出的两类心理健康问题为' + wdJcList[0].grade + '和' + wdJcList[1].grade + '，检出率分别为' + wdJcList[0].total + '%和' + wdJcList[1].total + '%，存在' + wdJcList[3].grade + '和' + wdJcList[4].grade + '的学生相对较少，检出率分别为' + wdJcList[3].total + '%和' + wdJcList[4].total + '%。'
                                 }
                             }
-
-                            console.log('有不等的')
                         }
                         this.detail.jcTxt = jcTxt
-                        // console.log(this.areAllValuesEqual(wdJcTotal))
                         this.detail.wdJcList = wdJcList
 
 
@@ -4522,8 +4446,6 @@ export default {
                         
                         this.detail.gradeNumTxt2 = gradeNumStr2
                         this.detail.schoolList = data.schoolList
-                        
-                        console.log(this.detail)
                         this.part2 = true;
                     } else {
                         this.$message.error(data.msg);
@@ -4543,7 +4465,6 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        console.log('无用接口')
                         this.part3 = true;
                     } else {
                         this.$message.error(data.msg);
@@ -4576,7 +4497,6 @@ export default {
                                 data[i].grade = '自我伤害'
                             }
                         }
-                        // console.log(data)
                         let datap = JSON.parse(JSON.stringify(data))
                         for (let i in datap) {
                             datap[i].exNum = Number((datap[i].maleProportion - datap[i].femaleProportion).toFixed(1))
@@ -4598,11 +4518,9 @@ export default {
                             }
 
                         }
-                        console.log(data)
                         let dataEx = JSON.parse(JSON.stringify(data)).sort((a, b) => {
                             return Number(b.absNum) - Number(a.absNum);
                         })
-                        console.log(dataEx)
                         let genderTxt52 = ''
                         let maxAbs = dataEx[0]  //最大差值
                         if (maxAbs.absNum > 0) {
@@ -4708,8 +4626,6 @@ export default {
                             womanSum += data[i].femaleProportion
                             // }
                         }
-                        console.log(manOrg)
-                        console.log(womanOrg)
                         this.detail.manOrgs = manOrgs
                         this.detail.womanOrgs = womanOrgs
                         let genderTxt51 = ''
@@ -4752,20 +4668,12 @@ export default {
                                     }
                                 }
                             }
-                            // console.log(arr1)
-                            // console.log(arr2)
-                            // console.log(arr3)
-                            console.log("男>女：" + cout1)
-                            console.log("女>男：" + cout2)
-                            console.log("男=女：" + cout3)
-                            console.log(manOrg)
                             if (cout1 == 5) {
                                 // 具体来看，男生/女生在**（**%）、**（**%）、**（**%）、**（**%）和**（**%）五个维度上的检出率均高于女生/男生。
                                 genderTxt51 += '具体来看，男生在'
                                 let manOrgSort = JSON.parse(JSON.stringify(manOrg)).sort((a, b) => {
                                     return Number(b.percentage) - Number(a.percentage);
                                 })
-                                console.log(manOrgSort)
                                 for (let i in manOrgSort) {
                                     genderTxt51 += manOrgSort[i].grade + '（' + manOrgSort[i].percentage + '%）'
                                     if (i < manOrgSort.length - 2) {
@@ -4795,7 +4703,6 @@ export default {
                                 genderTxt51 += '五个维度上的检出率均高于男生。'
 
                             } else {
-                                console.log(arr1)
                                 // 具体来看，男生（在**和**维度上的检出率高于女生，）（在**和**维度上的检出率与女生持平，）（在**和**维度上的检出率低于女生）。
                                 genderTxt51 += '具体来看，男生'
                                 if (cout1 > 0) {
@@ -4870,20 +4777,13 @@ export default {
                             }
                         }
                         this.detail.genderTxt51 = genderTxt51
-                        console.log(man)
-                        console.log(woman)
-
-                        console.log(manSum)
-                        console.log(womanSum)
 
                         man3 = man.sort((a, b) => {
                             return Number(b.percentage) - Number(a.percentage);
                         }).slice(0, 3)
-                        console.log(man3)
                         woman3 = woman.sort((a, b) => {
                             return Number(b.percentage) - Number(a.percentage);
                         }).slice(0, 3)
-                        console.log(woman3)
                         let man3Str = []
                         for (let i in man3) {
                             man3Str.push(man3[i].grade)
@@ -4913,7 +4813,6 @@ export default {
                                 for (const num of gArr3) {
                                     counts[num] = counts[num] ? counts[num] + 1 : 1;
                                 }
-                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
                                 let count = 0
                                 let sName = []
                                 if (counts['抑郁'] == 1) {
@@ -4955,7 +4854,6 @@ export default {
                                 for (const num of gArr3) {
                                     counts[num] = counts[num] ? counts[num] + 1 : 1;
                                 }
-                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
                                 let count = 0
                                 let sName = []
                                 if (counts['抑郁'] == 1) {
@@ -4997,7 +4895,6 @@ export default {
                                 for (const num of gArr3) {
                                     counts[num] = counts[num] ? counts[num] + 1 : 1;
                                 }
-                                console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
                                 let count = 0
                                 let sName = []
                                 if (counts['抑郁'] == 1) {
@@ -5020,7 +4917,6 @@ export default {
                                     count++
                                     sName.push('自我伤害')
                                 }
-                                console.log(sName)
                                 let mstr3 = []
                                 for (let i in sName) {
                                     if (JSON.stringify(man3).indexOf(sName[i]) != -1) {
@@ -5123,7 +5019,6 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        console.log('无用接口')
                         this.part5 = true;
                     } else {
                         this.$message.error(data.msg);
@@ -5143,7 +5038,6 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        console.log('无用接口')
                         this.part8 = true;
                     } else {
                         this.$message.error(data.msg);
@@ -5152,12 +5046,6 @@ export default {
                 .catch(res => {
                     console.log(res);
                 });
-                
-            
-            
-            
-            
-
         },
         getDim7(param7, star, end) {
             this.$http
@@ -5166,8 +5054,6 @@ export default {
                     let data = res.data.data;
                     if (res.data.code == 0) {
                         let gradeWd = []
-                        console.log("~~~~~~~~~~~!!!!!!!!!!!!!")
-                        console.log(data)
                         for (let i in data) {
                             data[i].classType = Number(i) + 1
                             data[i].grade = data[i].departmentName
@@ -5244,9 +5130,7 @@ export default {
                         for (let i in gradeWd) {
                             strList.push(JSON.stringify(gradeWd[i].pList))
                         }
-                        console.log(strList)
                         let a1 = this.areAllValuesEqual(strList)
-                        console.log(a1)
                         let aTxt1 = ''
                         let aTxt2 = ''
                         if (a1) { //若各个学段各维度检出率完全一致
@@ -5255,7 +5139,6 @@ export default {
                             let info2 = JSON.parse(JSON.stringify(gradeWd[0].info)).sort((a, b) => {
                                 return Number(b.numPer.percent) - Number(a.numPer.percent);
                             });
-                            console.log(info2)
                             for (let i in info2) {
                                 aTxt1 += info2[i].name + '（' + info2[i].numPer.percent + '%）'
                                 if (i < info2.length - 1) {
@@ -5293,7 +5176,6 @@ export default {
 
                         } else {//若各个学段各维度检出率不完全一致
 
-                            console.log(gradeWd)
                             // 第一种情况，先取四个一样的
 
                             // let gArr4 = []
@@ -5310,15 +5192,10 @@ export default {
                                     gArr3.push(gInfo3)
                                 }
                             }
-                            console.log(gradeWd)
-                            // console.log(gArr4)
-
-                            console.log(gArr3)
                             const counts = {};
                             for (const num of gArr3) {
                                 counts[num] = counts[num] ? counts[num] + 1 : 1;
                             }
-                            console.log(counts['抑郁'], counts['焦虑'], counts['强迫'], counts['敌对'], counts['自我伤害'])
                             let count = 0
                             let sName = []
                             if (counts['抑郁'] == 3) {
@@ -5342,9 +5219,6 @@ export default {
                                 sName.push('自我伤害')
                             }
                             this.countElements(gArr3)
-                            console.log(this.countElements(gArr3))
-                            console.log(count)
-
                             if (count > 2) {
                                 // 若各个学段各维度检出率不完全一致，检出率由高到低前三位维度中完全相同（相同维度数=3），则输出：
                                 aTxt2 += sName.join('、')
@@ -5370,7 +5244,6 @@ export default {
                                 aTxt2 += '在各学段上的问题都比较突出。除'
                                 aTxt2 += sName.join('、')
                                 aTxt2 += '问题外，'
-                                console.log(gradeWd)
                                 for (let m in gradeWd) {
                                     aTxt2 += gradeWd[m].departmentName
                                     let info31 = []
@@ -5462,12 +5335,7 @@ export default {
                         }
                         this.detail.gradeTxt1 = aTxt1
                         this.detail.gradeTxt2 = aTxt2
-                        console.log(this.detail.gradeTxt1)
-
-                        console.log(gradeWd)
-                        console.log(data)
                         this.detail.gradeListOrg = JSON.parse(JSON.stringify(data))
-                        console.log(this.detail.gradeListOrg)
                         let gradeTxtOrg = ''
                         for (let i in this.detail.gradeListOrg) {
                             
@@ -5492,10 +5360,7 @@ export default {
                         this.detail.gradeTxtOrg = gradeTxtOrg
                         // 预备年级测评维度检出率由高到低分别为：焦虑（36.1%）、抑郁（23.0%）、敌对（21.6%）、自我伤害（17.4%）、强迫（17.2%）；初中一年级测评维度检出率由高到低分别为：焦虑（28.0%）、抑郁（24.4%）、自我伤害（20.2%）、敌对（16.1%）、强迫（15.4%）；高中一年级测评维度检出率由高到低分别为：焦虑（31.9%）、抑郁（24.3%）、自我伤害（20.7%）、强迫（18.8%）、敌对（18.6%）。
                         let gradeListTain = JSON.parse(JSON.stringify(data))
-                        console.log(gradeListTain)
                         gradeListTain = gradeListTain
-                        console.log(this.gradeAllList)
-                        // console.log(gradeListTain)
                         let gradeAllArr = []
                         for (let i in gradeListTain) {
                             gradeAllArr.push({
@@ -5508,10 +5373,7 @@ export default {
                             // this.gradeAllList[i].wdList = gradeListTain[i].pList
                             // gradeListTain[i].csList = gradeListTain[i].pList
                         }
-                        // console.log(gradeAllArr)
                         this.gradeAllList = gradeAllArr
-                        console.log(gradeAllArr)
-                        console.log(this.gradeAllList)
                         // return
                         // let gradeAllTxt1 = ''
                         // gradeAllTxt1 += '与全国常模相比，'
@@ -5538,13 +5400,11 @@ export default {
                                     allCont2++
                                 }
                             }
-                            console.log(wdList)
                             let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
                                 return Number(b.percentNo) - Number(a.percentNo);
                             }).slice(0, 3);
                             if (allCont0 == 5) { //都大于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
-                                console.log(percentArr)
                                 allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '超出全国常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else if (allCont1 == 5) { //都等于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与全国常模持平，本年级心理健康问题与全国状况大致相当。'
@@ -5552,7 +5412,6 @@ export default {
                                 // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
 
-                                console.log(percentArr)
                                 allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '低于全国常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else {
                                 let d0 = [] //高
@@ -5641,21 +5500,17 @@ export default {
                                     allCont2++
                                 }
                             }
-                            console.log(wdList)
                             let percentArr = JSON.parse(JSON.stringify(wdList)).sort((a, b) => {
                                 return Number(b.percentNo) - Number(a.percentNo);
                             }).slice(0, 3);
                             if (allCont0 == 5) { //都大于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均有待改善，其中，'
-                                console.log(percentArr)
                                 allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '超出本校常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else if (allCont1 == 5) { //都等于全国
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面都与本校常模持平，本年级心理健康问题与本校状况大致相当。'
                             } else if (allCont2 == 5) { //都小于全国
                                 // allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，**、**和**低于全国常模相对较多，分别为**%、**%和%。'
                                 allTxt += '在抑郁、焦虑、强迫、敌对、自我伤害方面均表现比较好，其中，'
-
-                                console.log(percentArr)
                                 allTxt += percentArr[0].name + '、' + percentArr[1].name + '和' + percentArr[2].name + '低于本校常模相对较多，分别为' + percentArr[0].percentNo + '%、' + percentArr[1].percentNo + '%和' + percentArr[2].percentNo + '%。'
                             } else {
                                 let d0 = [] //高
@@ -5695,7 +5550,6 @@ export default {
                             this.gradeAllList[i].allTxt1 = allTxt
 
                         }
-                        console.log(this.gradeAllList)
                         // 各年级各班级各维度检出率情况(根据code X,C,G) 不需要男女之分
                         let param6 = {
                             startDate: star,
@@ -5718,8 +5572,6 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        console.log(data)
-                        console.log(this.gradeAllList)
                         for (let i in data) {
                             data[i].name = data[i].departmentName
                             for (let j in this.gradeAllList) {
@@ -5728,12 +5580,8 @@ export default {
                                 }
                             }
                         }
-                        console.log(this.gradeAllList)
-                        
-                        console.log(this.gradeAllList)
                         for (let i in this.gradeAllList) {
                             let cList = this.gradeAllList[i].csList
-                            console.log(this.gradeAllList[i].wdList[0])
                             let yyArr = []
                             let jlArr = []
                             let qpArr = []
@@ -5816,7 +5664,6 @@ export default {
                                 }
                                 this.gradeAllList[i].cwdName[m] = nameStr.join('、')
                             }
-                            // console.log(this.gradeAllList[i].className)
                             let classArrx = this.gradeAllList[i].className
                             for (let l in this.gradeAllList[i].csList) {
                                 this.gradeAllList[i].csList[l].nameFlag = false
@@ -5824,18 +5671,14 @@ export default {
 
                                     
                                     if (this.gradeAllList[i].csList[l].departmentName == classArrx[o]) {
-                                        // console.log("???"+this.gradeAllList[i].csList[l].departmentName.split("届")[1])
                                         this.gradeAllList[i].csList[l].nameFlag = true
                                         this.gradeAllList[i].csListz.push(this.gradeAllList[i].csList[l])
                                     }
                                 }
-                                // console.log(this.gradeAllList[i].csList[l])
                             }
 
                         }
-                        console.log(this.gradeAllList)
                         this.genderQuestion(param6.startDate, param6.endDate)
-                        // this.gradeAllList = this.gradeAllList
                         this.part6 = true;
                     } else {
                         this.$message.error(data.msg);
@@ -5856,8 +5699,6 @@ export default {
         },
         genderQuestion(star, end) {
             let that = this
-            console.log('---------------------------')
-            console.log(this.gradeAllList)
             
             // 预备年级不同性别测评情况
             //重点关注人员名单
@@ -5872,8 +5713,6 @@ export default {
                 .then(res => {
                     let data = res.data.data;
                     if (res.data.code == 0) {
-                        console.log('预备年级--重点关注：')
-                        console.log(data)
                         for (let i in this.gradeAllList) {
                             for (let j in data){
                                 if (data[j].code == this.gradeAllList[i].name) {
@@ -5896,7 +5735,6 @@ export default {
             let allNum = 0
             for (let i in this.gradeAllList) {
                 let gradeLists = this.gradeAllList[i]
-                console.log(this.gradeAllList)
                 // 男
                 let paramNan = {
                     code: 1,
@@ -5910,8 +5748,6 @@ export default {
                     .then(res => {
                         let data = res.data.data;
                         if (res.data.code == 0) {
-                            console.log('预备年级--男：' + data)
-                            console.log(data)
                             if (data.length == 0) {
                                 data = [
                                     {
@@ -6012,7 +5848,6 @@ export default {
                             this.$forceUpdate()
                             allNum++
                             this.partNum = allNum
-                            // console.log(this.partNum)
                             // this.part91 = true
 
                         } else {
@@ -6035,8 +5870,6 @@ export default {
                     .then(res => {
                         let data = res.data.data;
                         if (res.data.code == 0) {
-                            // console.log('预备年级--女：' + data)
-                            // console.log(data)
                             if (data.length == 0) {
                                 data = [
                                     {
@@ -6154,7 +5987,7 @@ export default {
             return match ? match[1] : '';
         },
         schoolReport() {
-            // console.log('导出团体报告')
+            console.log('导出团体报告')
             let that = this;
             this.pTimeFlag1 = false;
             this.reportFlag1 = false;
@@ -6178,12 +6011,6 @@ export default {
             pdf.outPutPdfFn();
             this.muluPage = pdf.muluPage
             this.muluEmptyPage = pdf.muluEmptyPage
-
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            console.log(this.muluList)
-
-            console.log(this.muluPage)
-            console.log(this.muluEmptyPage)
             for (let i in this.muluList) {
                 this.muluList[i].page = pdf.muluPage[i] - this.muluEmptyPage + 1
             }

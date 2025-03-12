@@ -77,7 +77,6 @@ function drawWaterMark(ctx, imgWidth, imgHeight, wmConfig) {
   // 给base64图片添加水印
   function base64AddWaterMaker(base64Img, wmConfig) {
     if (wmConfig.textArray.length === 0) {
-      // console.error('****没有水印内容*****')
       return base64Img
     }
     return new Promise((resolve, reject) => {
@@ -104,7 +103,6 @@ function drawWaterMark(ctx, imgWidth, imgHeight, wmConfig) {
   }
 class PdfLoader {
     constructor(ele, pdfFileName, splitClassName, loading, type, newEle, viewList) {
-      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!"+type)
         this.loading = loading
         this.type = type
         if (type == 2) {
@@ -126,7 +124,6 @@ class PdfLoader {
     async getPDF(resolve) {
         
         const ele = this.ele
-        // console.log(ele)
         const pdfFileName = this.pdfFileName
         const eleW = ele.offsetWidth // 获得该容器的宽
         const eleH = ele.scrollHeight // 获得该容器的高
@@ -148,7 +145,6 @@ class PdfLoader {
         const context = canvas.getContext('2d')
         context.scale(3, 3) // 增强图片清晰度
         context.translate(0, -eleOffsetTop)
-        // console.log(window.devicePixelRatio)
         ele.style.height = ele.scrollHeight + 'px' // 获取元素的滚动高度，用于截取被滚动条隐藏的部分
         html2canvas(ele, {
             backgroundColor: null,
@@ -167,7 +163,6 @@ class PdfLoader {
             ele.style.height = ele.clientHeight + 'px' // 获取元素的实际高度，不包括滚动条隐藏的部分
             // 一页pdf显示html页面生成的canvas高度;
             const pageHeight = (contentWidth / this.A4_WIDTH) * this.A4_HEIGHT // 这样写的目的在于保持宽高比例一致 pageHeight/canvas.width = a4纸高度/a4纸宽度// 宽度和canvas.width保持一致
-            // console.log()
             // 未生成pdf的html页面高度
             let leftHeight = contentHeight
             // 页面偏移
@@ -176,7 +171,6 @@ class PdfLoader {
             const imgWidth = this.A4_WIDTH // -10为了页面有右边距
             const imgHeight = (this.A4_WIDTH / contentWidth) * contentHeight
             const pageData = canvas.toDataURL('image/jpeg', 1.0)
-            // console.log(pageData)
             const pdf = jsPDF('', 'pt', 'a4')
             // 有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
             // 当内容未超过pdf一页显示的范围，无需分页
@@ -191,8 +185,6 @@ class PdfLoader {
                 // 在pdf.addImage(pageData, 'JPEG', 左，上，宽度，高度)设置在pdf中显示；
 
                 pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight)
-                // console.log('String(pdf.internal.getNumberOfPages())')
-                // console.log(String(pdf.internal.getNumberOfPages()))
                 pdf.text(`${pdf.internal.getNumberOfPages()}`, imgWidth/2-10-String(pdf.internal.getNumberOfPages()).length*2.5, this.A4_HEIGHT-10);
                 // pdf.addImage(pageData, 'JPEG', 20, 40, imgWidth, imgHeight);
             } else {
@@ -202,11 +194,6 @@ class PdfLoader {
                   pdf.addImage(pageData, "JPEG", 0, position, imgWidth, imgHeight)
                   leftHeight -= (pageHeight)
                   position -= (this.A4_HEIGHT)
-                    // console.log(leftHeight)
-                    // console.log(position)
-                    // console.log('pdf.internal.getNumberOfPages()')
-                    // console.log(pdf.internal.getNumberOfPages())
-                    // console.log(this.muluEmptyPage)
                     if (pdf.internal.getNumberOfPages() < this.muluEmptyPage) {
 
                     } else {
@@ -222,16 +209,13 @@ class PdfLoader {
             }
             // document.body.appendChild(canvas);
 
-                // pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then((res) => {
-                //   // console.log(res)
-                //     // 去除添加的空div 防止页面混乱
-                //     const doms = document.querySelectorAll('.emptyDiv')
-                //     for (let i = 0; i < doms.length; i++) {
-                //         doms[i].remove()
-                //     }
-                //     // this.loading.close()
-                // })
-                // console.log(pdf.output('datauristring'))
+                pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then((res) => {
+                    // 去除添加的空div 防止页面混乱
+                    const doms = document.querySelectorAll('.emptyDiv')
+                    for (let i = 0; i < doms.length; i++) {
+                        doms[i].remove()
+                    }
+                })
                 this.ele.style.height = ''
                 
             
@@ -246,7 +230,6 @@ class PdfLoader {
             this.ele.style.height = 'initial'
             pdfFileName ? (this.pdfFileName = pdfFileName) : null
             const target = this.ele
-            // console.log(target)
             const pageHeight =
                 (target.scrollWidth / this.A4_WIDTH) * this.A4_HEIGHT
 
@@ -255,16 +238,13 @@ class PdfLoader {
             // 进行分割操作，当dom内容已超出a4的高度，则将该dom前插入一个空dom，把他挤下去，分割
             let pageNum = 1 // pdf页数
             const eleBounding = this.ele.getBoundingClientRect()
-            // console.log(eleBounding)
             for (let i = 0; i < domList.length; i++) {
                 const node = domList[i]
                 const bound = node.getBoundingClientRect()
-                // console.log(bound)
                 const offset2Ele = bound.top - eleBounding.top
                 const currentPage = Math.ceil(
                     (bound.bottom - eleBounding.top) / (pageHeight-10)
                 ) // 当前元素应该在哪一页
-                // console.log(currentPage)
                 if (pageNum < currentPage) {
                     pageNum++
                     const divParent = domList[i].parentNode // 获取该div的父节点
@@ -276,13 +256,10 @@ class PdfLoader {
                     newNode.style.width = '100%'
                     newNode.style.border = '0'
                     divParent.insertBefore(newNode, node) //在每一个节点前面插入一个空的新节点，防止内容被分割截断
-                    // divParent.innerHtml= pageNum
                 }
             }
             const muluList = document.getElementsByClassName('mulu_page')
             const muluEmpty = document.getElementsByClassName('mulu_empty_page')
-            console.log(muluList)
-            console.log(muluEmpty)
             let muluArr = []
             for (let j = 0; j < muluList.length; j++){
               const node1 = muluList[j]
@@ -290,25 +267,16 @@ class PdfLoader {
               const currentPage1 = Math.ceil(
                   (bound1.top - eleBounding.top) / (pageHeight-10)
               ) // 当前元素应该在哪一页
-              muluArr.push(currentPage1)
-              // if (!Number.isNaN(muluList[j].offsetTop/pageHeight)){
-              //     muluArr.push(Math.ceil(muluList[j].offsetTop/pageHeight))
-              // }
             }
-            console.log(muluArr)
             let muluEmptyArr = []
             for (let i in muluEmpty){
-                // console.log(muluEmpty[i].offsetTop/pageHeight)
                 if (!Number.isNaN(muluEmpty[i].offsetTop/pageHeight)){
                     muluEmptyArr.push(Math.ceil(muluEmpty[i].offsetTop/pageHeight))
                 }
             }
-            console.log(muluArr)
-            // console.log(muluEmptyArr[0])
             
             this.muluPage = muluArr
             this.muluEmptyPage = muluEmptyArr[0]
-            console.log(this.muluEmptyPage)
 
             setTimeout(() => {
               this.getPDF(resolve, reject)
