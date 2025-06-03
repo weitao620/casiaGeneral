@@ -222,15 +222,15 @@ class PdfLoader {
             }
             // document.body.appendChild(canvas);
 
-                // pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then((res) => {
-                //   // console.log(res)
-                //     // 去除添加的空div 防止页面混乱
-                //     const doms = document.querySelectorAll('.emptyDiv')
-                //     for (let i = 0; i < doms.length; i++) {
-                //         doms[i].remove()
-                //     }
-                //     // this.loading.close()
-                // })
+                pdf.save(pdfFileName + '.pdf', { returnPromise: true }).then((res) => {
+                  // console.log(res)
+                    // 去除添加的空div 防止页面混乱
+                    // const doms = document.querySelectorAll('.emptyDiv')
+                    // for (let i = 0; i < doms.length; i++) {
+                    //     doms[i].remove()
+                    // }
+                    // this.loading.close()
+                })
                 // console.log(pdf.output('datauristring'))
                 this.ele.style.height = ''
                 

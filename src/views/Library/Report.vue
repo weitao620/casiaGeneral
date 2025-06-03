@@ -548,7 +548,7 @@
 // import wordFile from "../Details/WordFile.vue";
 
 import PartsReport from "../Model/PartsReport.vue";
-import GroupPdfsAll from "../Model/GroupPdfsAll.vue";
+import GroupPdfsAll from "../Model/DstrictPdfsAll.vue";
 import personReport from "../Model/ModelReport.vue";
 import someReport from "../Model/ExportPdf.vue";
 import { mapGetters, mapMutations } from "vuex";
